@@ -15,4 +15,4 @@ V001/002/013/014/015는 A범위pass. V026/027/035~041은 A하위만pass이며 �
 
 재현: backend전용환경에서 `.venv/bin/python -m pytest tests -q`, frontend의Node22.23.1 환경에서 `npm run build`, `npm run test:e2e -- tests/auth-tenants.spec.ts`. 8000/5173에기존서버가있으면먼저자신의서버를종료한다. 도구는낯선프로세스를종료하지않는다. private원본실패로그/JUnit/credentials는공유하지않고 정제된집계만전달한다.
 
-`commit`은검증전baseline, 소스파일지문이검증대상을지정한다. 실제소스커밋은후속문서기록의 `tested_source_commit`을따른다. 증거생성과최종커밋은자기SHA를미리기입하지않는다. 개인학습/순수자동작업시간은미측정이고달력경과를80h실투입에서차감하지않는다.
+실제검증소스commit은 `291eec857d0a241b8bc7a49d8b14aae8616fbf55`다. `commit`/`tested_source_commit`은이소스revision, `baseline_commit`은검증전이력이다. 소스파일지문과대조한후문서후속commit에서기록하여자기SHA를미리기입하지않는다. 개인학습/순수자동작업시간은미측정이고달력경과를80h실투입에서차감하지않는다.

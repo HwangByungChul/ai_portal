@@ -1,9 +1,9 @@
 {
   "suite_id": "A-auth",
   "utc_time": "2026-10-04T23:16:41.696902+00:00",
-  "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-  "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-  "tested_source_commit": null,
+  "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+  "commit_role": "tested source implementation revision",
+  "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
   "versions": {
     "node": "22.23.1",
     "npm": "10.9.8",
@@ -43,9 +43,9 @@
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -86,14 +86,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -134,14 +135,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -182,14 +184,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -230,14 +233,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -278,14 +282,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -326,14 +331,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -374,14 +380,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -422,14 +429,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -470,14 +478,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -518,14 +527,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -566,14 +576,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -614,14 +625,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -662,14 +674,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -710,14 +723,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -758,14 +772,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -806,14 +821,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -854,14 +870,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -902,14 +919,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -950,14 +968,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -998,14 +1017,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -1046,14 +1066,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -1094,14 +1115,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -1142,14 +1164,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -1190,14 +1213,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -1238,14 +1262,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -1286,14 +1311,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -1334,14 +1360,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -1382,14 +1409,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -1430,14 +1458,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -1478,14 +1507,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -1526,14 +1556,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -1574,14 +1605,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -1622,14 +1654,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -1670,14 +1703,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -1718,14 +1752,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -1766,14 +1801,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -1814,14 +1850,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -1862,14 +1899,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -1910,14 +1948,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -1958,14 +1997,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -2006,14 +2046,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -2054,14 +2095,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -2102,14 +2144,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -2150,14 +2193,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -2198,14 +2242,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -2246,14 +2291,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -2294,14 +2340,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -2342,14 +2389,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -2390,14 +2438,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -2438,14 +2487,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -2486,14 +2536,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth.py"
+      "source": "src/backend/tests/test_auth.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -2534,14 +2585,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth_restart.py"
+      "source": "src/backend/tests/test_auth_restart.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -2582,14 +2634,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth_restart.py"
+      "source": "src/backend/tests/test_auth_restart.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -2630,14 +2683,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth_restart.py"
+      "source": "src/backend/tests/test_auth_restart.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -2678,14 +2732,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_auth_restart.py"
+      "source": "src/backend/tests/test_auth_restart.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -2726,14 +2781,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_config.py"
+      "source": "src/backend/tests/test_config.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -2774,14 +2830,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_config.py"
+      "source": "src/backend/tests/test_config.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -2822,14 +2879,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_config.py"
+      "source": "src/backend/tests/test_config.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -2870,14 +2928,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_config.py"
+      "source": "src/backend/tests/test_config.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -2918,14 +2977,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_config.py"
+      "source": "src/backend/tests/test_config.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -2966,14 +3026,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_config.py"
+      "source": "src/backend/tests/test_config.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -3014,14 +3075,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_config.py"
+      "source": "src/backend/tests/test_config.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -3062,14 +3124,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_config.py"
+      "source": "src/backend/tests/test_config.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -3110,14 +3173,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_devdb.py"
+      "source": "src/backend/tests/test_devdb.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -3158,14 +3222,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_devdb.py"
+      "source": "src/backend/tests/test_devdb.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -3206,14 +3271,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_devdb.py"
+      "source": "src/backend/tests/test_devdb.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -3254,14 +3320,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_devdb.py"
+      "source": "src/backend/tests/test_devdb.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -3302,14 +3369,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_devdb.py"
+      "source": "src/backend/tests/test_devdb.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -3350,14 +3418,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_devdb.py"
+      "source": "src/backend/tests/test_devdb.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -3398,14 +3467,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_devdb.py"
+      "source": "src/backend/tests/test_devdb.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -3446,14 +3516,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_devdb.py"
+      "source": "src/backend/tests/test_devdb.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -3494,14 +3565,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_devdb.py"
+      "source": "src/backend/tests/test_devdb.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -3542,14 +3614,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_health.py"
+      "source": "src/backend/tests/test_health.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -3590,14 +3663,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_health.py"
+      "source": "src/backend/tests/test_health.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -3638,14 +3712,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -3686,14 +3761,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -3734,14 +3810,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -3782,14 +3859,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -3830,14 +3908,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -3878,14 +3957,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -3926,14 +4006,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -3974,14 +4055,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -4022,14 +4104,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -4070,14 +4153,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -4118,14 +4202,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -4166,14 +4251,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -4214,14 +4300,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -4262,14 +4349,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -4310,14 +4398,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -4358,14 +4447,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -4406,14 +4496,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -4454,14 +4545,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -4502,14 +4594,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -4550,14 +4643,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -4598,14 +4692,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -4646,14 +4741,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -4694,14 +4790,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -4742,14 +4839,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -4790,14 +4888,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -4838,14 +4937,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -4886,14 +4986,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -4934,14 +5035,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -4982,14 +5084,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -5030,14 +5133,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -5078,14 +5182,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -5126,14 +5231,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -5174,14 +5280,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -5222,14 +5329,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -5270,14 +5378,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -5318,14 +5427,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -5366,14 +5476,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -5414,14 +5525,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -5462,14 +5574,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -5510,14 +5623,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -5558,14 +5672,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -5606,14 +5721,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -5654,14 +5770,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -5702,14 +5819,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -5750,14 +5868,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -5798,14 +5917,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -5846,14 +5966,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -5894,14 +6015,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -5942,14 +6064,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -5990,14 +6113,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_memberships.py"
+      "source": "src/backend/tests/test_memberships.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -6038,14 +6162,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_migrations.py"
+      "source": "src/backend/tests/test_migrations.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -6086,14 +6211,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_migrations.py"
+      "source": "src/backend/tests/test_migrations.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -6134,14 +6260,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_migrations.py"
+      "source": "src/backend/tests/test_migrations.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -6182,14 +6309,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_migrations.py"
+      "source": "src/backend/tests/test_migrations.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -6230,14 +6358,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_migrations.py"
+      "source": "src/backend/tests/test_migrations.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -6278,14 +6407,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_migrations.py"
+      "source": "src/backend/tests/test_migrations.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -6326,14 +6456,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_pool_context.py"
+      "source": "src/backend/tests/test_pool_context.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -6374,14 +6505,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_pool_context.py"
+      "source": "src/backend/tests/test_pool_context.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -6422,14 +6554,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_pool_context.py"
+      "source": "src/backend/tests/test_pool_context.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -6470,14 +6603,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_pool_context.py"
+      "source": "src/backend/tests/test_pool_context.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -6518,14 +6652,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_pool_context.py"
+      "source": "src/backend/tests/test_pool_context.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -6566,14 +6701,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_pool_context.py"
+      "source": "src/backend/tests/test_pool_context.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -6614,14 +6750,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_pool_context.py"
+      "source": "src/backend/tests/test_pool_context.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -6662,14 +6799,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_pool_context.py"
+      "source": "src/backend/tests/test_pool_context.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -6710,14 +6848,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -6758,14 +6897,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -6806,14 +6946,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -6854,14 +6995,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -6902,14 +7044,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -6950,14 +7093,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -6998,14 +7142,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -7046,14 +7191,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -7094,14 +7240,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -7142,14 +7289,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -7190,14 +7338,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -7238,14 +7387,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -7286,14 +7436,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -7334,14 +7485,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -7382,14 +7534,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -7430,14 +7583,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -7478,14 +7632,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -7526,14 +7681,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -7574,14 +7730,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -7622,14 +7779,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -7670,14 +7828,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -7718,14 +7877,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -7766,14 +7926,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -7814,14 +7975,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -7862,14 +8024,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -7910,14 +8073,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -7958,14 +8122,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -8006,14 +8171,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -8054,14 +8220,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -8102,14 +8269,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -8150,14 +8318,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -8198,14 +8367,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -8246,14 +8416,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -8294,14 +8465,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -8342,14 +8514,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -8390,14 +8563,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -8438,14 +8612,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -8486,14 +8661,15 @@
       "expected": "Assertions in the named backend test pass against its applicable owned fixture",
       "observed": "All test assertions passed",
       "safe_error_code": null,
-      "source": "src/backend/tests/test_schema_rls.py"
+      "source": "src/backend/tests/test_schema_rls.py",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -8534,14 +8710,15 @@
       "expected": "Real browser, API and owned database assertions pass",
       "observed": "All UI assertions passed",
       "safe_error_code": null,
-      "source": "src/frontend/tests/auth-tenants.spec.ts"
+      "source": "src/frontend/tests/auth-tenants.spec.ts",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -8582,14 +8759,15 @@
       "expected": "Real browser, API and owned database assertions pass",
       "observed": "All UI assertions passed",
       "safe_error_code": null,
-      "source": "src/frontend/tests/auth-tenants.spec.ts"
+      "source": "src/frontend/tests/auth-tenants.spec.ts",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -8630,14 +8808,15 @@
       "expected": "Real browser, API and owned database assertions pass",
       "observed": "All UI assertions passed",
       "safe_error_code": null,
-      "source": "src/frontend/tests/auth-tenants.spec.ts"
+      "source": "src/frontend/tests/auth-tenants.spec.ts",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -8678,14 +8857,15 @@
       "expected": "Real browser, API and owned database assertions pass",
       "observed": "All UI assertions passed",
       "safe_error_code": null,
-      "source": "src/frontend/tests/auth-tenants.spec.ts"
+      "source": "src/frontend/tests/auth-tenants.spec.ts",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -8726,14 +8906,15 @@
       "expected": "Real browser, API and owned database assertions pass",
       "observed": "All UI assertions passed",
       "safe_error_code": null,
-      "source": "src/frontend/tests/auth-tenants.spec.ts"
+      "source": "src/frontend/tests/auth-tenants.spec.ts",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -8774,14 +8955,15 @@
       "expected": "Real browser, API and owned database assertions pass",
       "observed": "All UI assertions passed",
       "safe_error_code": null,
-      "source": "src/frontend/tests/auth-tenants.spec.ts"
+      "source": "src/frontend/tests/auth-tenants.spec.ts",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -8822,14 +9004,15 @@
       "expected": "Real browser, API and owned database assertions pass",
       "observed": "All UI assertions passed",
       "safe_error_code": null,
-      "source": "src/frontend/tests/auth-tenants.spec.ts"
+      "source": "src/frontend/tests/auth-tenants.spec.ts",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -8870,14 +9053,15 @@
       "expected": "Real browser, API and owned database assertions pass",
       "observed": "All UI assertions passed",
       "safe_error_code": null,
-      "source": "src/frontend/tests/auth-tenants.spec.ts"
+      "source": "src/frontend/tests/auth-tenants.spec.ts",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -8918,14 +9102,15 @@
       "expected": "Real browser, API and owned database assertions pass",
       "observed": "All UI assertions passed",
       "safe_error_code": null,
-      "source": "src/frontend/tests/auth-tenants.spec.ts"
+      "source": "src/frontend/tests/auth-tenants.spec.ts",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -8966,14 +9151,15 @@
       "expected": "Real browser, API and owned database assertions pass",
       "observed": "All UI assertions passed",
       "safe_error_code": null,
-      "source": "src/frontend/tests/auth-tenants.spec.ts"
+      "source": "src/frontend/tests/auth-tenants.spec.ts",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -9014,14 +9200,15 @@
       "expected": "Real browser, API and owned database assertions pass",
       "observed": "All UI assertions passed",
       "safe_error_code": null,
-      "source": "src/frontend/tests/auth-tenants.spec.ts"
+      "source": "src/frontend/tests/auth-tenants.spec.ts",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -9062,14 +9249,15 @@
       "expected": "Real browser, API and owned database assertions pass",
       "observed": "All UI assertions passed",
       "safe_error_code": null,
-      "source": "src/frontend/tests/auth-tenants.spec.ts"
+      "source": "src/frontend/tests/auth-tenants.spec.ts",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -9110,14 +9298,15 @@
       "expected": "Real browser, API and owned database assertions pass",
       "observed": "All UI assertions passed",
       "safe_error_code": null,
-      "source": "src/frontend/tests/auth-tenants.spec.ts"
+      "source": "src/frontend/tests/auth-tenants.spec.ts",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -9158,14 +9347,15 @@
       "expected": "Real browser, API and owned database assertions pass",
       "observed": "All UI assertions passed",
       "safe_error_code": null,
-      "source": "src/frontend/tests/auth-tenants.spec.ts"
+      "source": "src/frontend/tests/auth-tenants.spec.ts",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -9206,14 +9396,15 @@
       "expected": "Real browser, API and owned database assertions pass",
       "observed": "All UI assertions passed",
       "safe_error_code": null,
-      "source": "src/frontend/tests/auth-tenants.spec.ts"
+      "source": "src/frontend/tests/auth-tenants.spec.ts",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -9254,14 +9445,15 @@
       "expected": "Real browser, API and owned database assertions pass",
       "observed": "All UI assertions passed",
       "safe_error_code": null,
-      "source": "src/frontend/tests/auth-tenants.spec.ts"
+      "source": "src/frontend/tests/auth-tenants.spec.ts",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -9302,14 +9494,15 @@
       "expected": "Real browser, API and owned database assertions pass",
       "observed": "All UI assertions passed",
       "safe_error_code": null,
-      "source": "src/frontend/tests/auth-tenants.spec.ts"
+      "source": "src/frontend/tests/auth-tenants.spec.ts",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -9350,14 +9543,15 @@
       "expected": "Real browser, API and owned database assertions pass",
       "observed": "All UI assertions passed",
       "safe_error_code": null,
-      "source": "src/frontend/tests/auth-tenants.spec.ts"
+      "source": "src/frontend/tests/auth-tenants.spec.ts",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -9398,14 +9592,15 @@
       "expected": "Real browser, API and owned database assertions pass",
       "observed": "All UI assertions passed",
       "safe_error_code": null,
-      "source": "src/frontend/tests/auth-tenants.spec.ts"
+      "source": "src/frontend/tests/auth-tenants.spec.ts",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:16:41.696902+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -9446,14 +9641,15 @@
       "expected": "Real browser, API and owned database assertions pass",
       "observed": "All UI assertions passed",
       "safe_error_code": null,
-      "source": "src/frontend/tests/auth-tenants.spec.ts"
+      "source": "src/frontend/tests/auth-tenants.spec.ts",
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:08:32.338803+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -9507,14 +9703,15 @@
       },
       "safe_error_code": null,
       "expected": "Session dates, membership revocation, login windows and own RLS rows survive real API restart",
-      "detail_of_backend_case": true
+      "detail_of_backend_case": true,
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:08:35.738065+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -9561,14 +9758,15 @@
       },
       "safe_error_code": null,
       "expected": "Absolute/idle expired and logged-out old cookies remain 401 after restart",
-      "detail_of_backend_case": true
+      "detail_of_backend_case": true,
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:09:06.992388+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -9623,14 +9821,15 @@
       },
       "safe_error_code": null,
       "expected": "Real owned DB outage returns safe 503 with no confirmed logout or write; explicit recovery is consistent",
-      "detail_of_backend_case": true
+      "detail_of_backend_case": true,
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     },
     {
       "suite_id": "A-auth",
       "utc_time": "2026-10-04T23:09:09.067478+00:00",
-      "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-      "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-      "tested_source_commit": null,
+      "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+      "commit_role": "tested source implementation revision",
+      "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
       "versions": {
         "node": "22.23.1",
         "npm": "10.9.8",
@@ -9705,7 +9904,8 @@
       },
       "safe_error_code": null,
       "expected": "20 authenticated local GET requests have p95 <=300ms and no idle extension",
-      "detail_of_backend_case": true
+      "detail_of_backend_case": true,
+      "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
     }
   ],
   "runtime_cleanup": [
@@ -9744,5 +9944,6 @@
     "fixture_removed": true,
     "private_credentials_removed": true,
     "database_state_after": "stopped"
-  }
+  },
+  "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
 }

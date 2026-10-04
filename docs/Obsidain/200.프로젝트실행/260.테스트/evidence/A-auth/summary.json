@@ -1,9 +1,9 @@
 {
   "suite_id": "A-auth",
   "utc_time": "2026-10-04T23:16:41.696902+00:00",
-  "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-  "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-  "tested_source_commit": null,
+  "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+  "commit_role": "tested source implementation revision",
+  "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
   "versions": {
     "node": "22.23.1",
     "npm": "10.9.8",
@@ -384,5 +384,6 @@
     "remaining_80h_not_measured": true
   },
   "next_plan": "03 일반 대화와 중앙 AI 구현 계획.md",
-  "B_implementation_status": "not_started"
+  "B_implementation_status": "not_started",
+  "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
 }

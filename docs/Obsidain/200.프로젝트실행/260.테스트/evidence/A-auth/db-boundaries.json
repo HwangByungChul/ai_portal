@@ -1,9 +1,9 @@
 {
   "suite_id": "A-auth",
   "utc_time": "2026-10-04T23:16:41.696902+00:00",
-  "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
-  "commit_role": "pre-test baseline; tested source revision recorded after local commit",
-  "tested_source_commit": null,
+  "commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
+  "commit_role": "tested source implementation revision",
+  "tested_source_commit": "291eec857d0a241b8bc7a49d8b14aae8616fbf55",
   "versions": {
     "node": "22.23.1",
     "npm": "10.9.8",
@@ -172,5 +172,6 @@
     "unrelated_5432_targeted": false
   },
   "rollback_and_reuse_evidence": "test_pool_context/test_schema_rls/test_memberships in current 176-pass suite",
-  "historical_A01_A05_evidence": "preserved, not counted again"
+  "historical_A01_A05_evidence": "preserved, not counted again",
+  "baseline_commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89"
 }
