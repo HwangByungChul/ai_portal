@@ -14,3 +14,5 @@ A-auth 증거는 A06 당시 결과로 보존한다. B01의 가격/토큰수는 �
 기존 httpx0.28.1 pin은 유지했다. SDK3.24.0이 요구하는 httpx2 2.13.1을 hash lock에 추가했고 Starlette TestClient가 이를 사용하면서 과거 A06 경고1은 현재 suite에서 발생하지 않았다. 경고를 숨기지 않았다. SDK transport 가짜시험은 B04에서 httpx2.MockTransport를 사용한다.
 
 baseline_commit은 검증전 이력, tested_source_commit은 정확소스의 로컬commit이다. 소스지문을 대조하고 커밋 생성 후 후속 문서commit에서 SHA를 채운다. private 원본로그/JUnit/자격·토큰캐시는 Git에 넣지 않는다. 달력경과는 개인학습 실투입/잔여80h와 구분한다.
+
+검증소스 로컬commit: `189f95a76ca09862903320ab86b03f87caf069cd`. 소스지문 대조 후 후속 문서commit에서 기록했다.

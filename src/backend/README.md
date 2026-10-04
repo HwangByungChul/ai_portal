@@ -122,11 +122,11 @@ local쿠키는ai_session_dev/HttpOnly/Lax/Path=/,HTTPS profile은__Host-ai_sessi
 .venv/bin/python -m pytest -q
 ```
 
-현재최종176개(A04까지172+A06신규4)가통과했다. 기존A작업의각시험횟수는이력이며현재횟수에중복합산하지않는다. A01 도구스모크는별도55433임시클러스터, A02는소유55432의새접두/marker DB만시험후정리한다. 처음55432가정지였으면종료후정지로되돌린다. 기존설정fixture/실원장/5432는reset하지않는다. 각fixture는자기event loop와pool을함께닫아닫힌loop를재사용하지않는다.
+A06 당시176개(A04까지172+A06신규4)가통과했다. 현재 B01은238개(기존176+신규62)다. 기존A작업의각시험횟수는이력이며현재횟수에중복합산하지않는다. A01 도구스모크는별도55433임시클러스터, A02는소유55432의새접두/marker DB만시험후정리한다. 처음55432가정지였으면종료후정지로되돌린다. 기존설정fixture/실원장/5432는reset하지않는다. 각fixture는자기event loop와pool을함께닫아닫힌loop를재사용하지않는다.
 
 실제ai_web자체접속에서권한속성/무문맥·잘못된문맥/본인·조직·관리자경계/복합FK·불변binding/현재권한회수/SQL권한·제어함수/풀정상·rollback·취소·동시분리/checksum·초기화원자성/비fixture·재seed거부를검증했다. A03에서는실제인증/CSRF/cookie/만료·회수/횟수·동시제한/DB실패·현재capability·세션발급감사rollback을추가검증했다. A04의관리API/현재회수/CAS·감사원자성/읽기창/권한잠금재검사도검증했다. 브라우저20개와실DB장애/재시작도A06에서통합검증했다. 문서/Grant/Graph·실AI원장·전체V41/Q20은후속이다.
 
-Starlette1.7.0 TestClient/httpx0.28.1 deprecation경고1개가있다. 경고를숨기거나httpx2를자동추가하지않았으며시험은통과했다. 상세결과는Obsidain `250.구현/02 인증과 테넌트 기반 구현 결과.md`,정제증거는 `260.테스트/evidence/A-auth/A04-*.json`에관리한다. A01/A02/A03증거는이력으로보존한다.
+A06 당시 Starlette1.7.0 TestClient/httpx0.28.1 deprecation경고1개가있었다. 당시에는 경고를숨기거나httpx2를추가하지않았다. B01에서 SDK필수httpx2 2.13.1이설치돼TestClient가이를사용하며현재전체238시험은경고0이다. 기존httpx0.28.1 pin은유지했다. 상세결과는Obsidain `250.구현/02 인증과 테넌트 기반 구현 결과.md`,정제증거는 `260.테스트/evidence/A-auth/A04-*.json`에관리한다. A01/A02/A03증거는이력으로보존한다.
 
 ## 실제 조직·관리 API 계약 — A04
 
@@ -148,7 +148,7 @@ A05에서는새시험전용scripts/portal_test_server.py/control.py로별도mark
 
 `tests/test_auth_restart.py`는실제127.0.0.1:8000 child/별도합성DB로재시작·절대/유휴만료·소속회수/RLS·실DB stop/start와login/logout/member 503·복구/명시retry를검증한다. 자신이생성한child와소유55432만제어하며외부서버를종료하지않는다. API와fixture양쪽pool을닫은후잔여0을확인하고DB/비밀번호파일을정리한다.
 
-최종176pass/경고1,frontend build/실제브라우저20pass. 인증된GET /api/v1/me/tenants20회p95 5.766ms(목표300ms)/idle불변. 현재A승인계획pool대기5초·startupwait5초/statement5초/lock2초, 공통pool2초·idletransaction5초정합은B01에서다룬다. 실AI/검색성능으로이국소측정을확대하지않는다.
+A06 당시최종176pass/경고1,frontend build/실제브라우저20pass. 인증된GET /api/v1/me/tenants20회p95 5.766ms(목표300ms)/idle불변. A06 당시승인계획pool대기5초·startupwait5초/statement5초/lock2초였으며, B01에서공통pool2초·idletransaction5초로정합시켰다. 실AI/검색성능으로이국소측정을확대하지않는다.
 
 정제증거는Obsidain260.테스트/evidence/A-auth의summary.json/test-results.json/db-boundaries.json/README.md,다음B01계획은250.구현/03 일반 대화와 중앙 AI 구현 계획.md다. 이 절은 A06 당시 검증 이력이다. B01 현재 상태는 다음 절을 따른다. A/B01 통과로 전체V41/Q20 완료를 표시하지 않는다. 원본로그/JUnit/비밀은.runtime안의private로만보관한다.
 
@@ -172,3 +172,5 @@ A05에서는새시험전용scripts/portal_test_server.py/control.py로별도mark
 Decimal 고정 price-20261004-v1: 생성 예약3.64원, 질의/문서 임베딩 예약각0.20원. 환율2000원/USD·보호계수1.2·0.01원 올림의 내부 추정이며 실제 청구 환율/금액이 아니다. 토큰/model/tier 불일치는 비용0으로 변환하지 않고 거부한다. SDK 설치는 호출 성공 검증과 구분하며 제공자 어댑터/재시도0은 B04 이후 연결한다.
 
 최종 B01 시험 결과는 Obsidain250.구현/04 일반 대화와 중앙 AI 구현 결과.md와260.테스트/evidence/B-chat/B01-*.json에서 관리한다. A06의176회 기록·A-auth 증거는 당시 결과로 보존하고 현재 suite에 중복 합산하지 않는다.
+
+B01 현재검증: backend238pass/경고0/208.77초,build/기존A browser20pass/runner error0/28.21초. 검증소스 로컬commit `189f95a76ca09862903320ab86b03f87caf069cd`;정확소스지문은B-chat/B01-test-summary.json에기록했다.
