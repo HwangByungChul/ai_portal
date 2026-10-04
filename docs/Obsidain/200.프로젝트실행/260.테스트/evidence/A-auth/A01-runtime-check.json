@@ -1,0 +1,100 @@
+{
+  "suite_id": "I250-A01-runtime",
+  "utc_time": "2026-10-04T12:25:57.927719+00:00",
+  "project_db_events": [
+    {
+      "action": "prepare",
+      "state": "prepared",
+      "port": 55432,
+      "cluster_id": "0f5ed7368c5c"
+    },
+    {
+      "action": "start",
+      "state": "running",
+      "port": 55432,
+      "cluster_id": "0f5ed7368c5c",
+      "pid": 65926,
+      "server_version": "15.18 (Homebrew)",
+      "database": "postgres",
+      "runtime_role": "mvp_bootstrap"
+    },
+    {
+      "action": "status",
+      "state": "running",
+      "port": 55432,
+      "cluster_id": "0f5ed7368c5c",
+      "pid": 65926,
+      "server_version": "15.18 (Homebrew)",
+      "database": "postgres",
+      "runtime_role": "mvp_bootstrap"
+    },
+    {
+      "action": "stop",
+      "state": "stopped",
+      "port": 55432,
+      "cluster_id": "0f5ed7368c5c"
+    },
+    {
+      "action": "start",
+      "state": "running",
+      "port": 55432,
+      "cluster_id": "0f5ed7368c5c",
+      "pid": 65944,
+      "server_version": "15.18 (Homebrew)",
+      "database": "postgres",
+      "runtime_role": "mvp_bootstrap"
+    },
+    {
+      "action": "status",
+      "state": "running",
+      "port": 55432,
+      "cluster_id": "0f5ed7368c5c",
+      "pid": 65944,
+      "server_version": "15.18 (Homebrew)",
+      "database": "postgres",
+      "runtime_role": "mvp_bootstrap"
+    },
+    {
+      "action": "final_stop",
+      "state": "stopped",
+      "port": 55432,
+      "cluster_id": "0f5ed7368c5c"
+    }
+  ],
+  "http_events": [
+    {
+      "cycle": 1,
+      "http_status": 200,
+      "body_fields": [
+        "data",
+        "meta"
+      ],
+      "data": {
+        "status": "ok"
+      },
+      "cache_control": "no-store"
+    },
+    {
+      "cycle": 2,
+      "http_status": 200,
+      "body_fields": [
+        "data",
+        "meta"
+      ],
+      "data": {
+        "status": "ok"
+      },
+      "cache_control": "no-store"
+    }
+  ],
+  "existing_5432_same_version_and_start_time": true,
+  "existing_server": {
+    "version": "15.18 (Homebrew)",
+    "started_at": "2026-10-04T07:56:02.717071+09:00"
+  },
+  "project_db_final_state": "stopped",
+  "api_final_state": "stopped",
+  "paid_ai_calls": 0,
+  "unix_socket_path_bytes": 57,
+  "project_socket_path_bytes_if_used": 108
+}

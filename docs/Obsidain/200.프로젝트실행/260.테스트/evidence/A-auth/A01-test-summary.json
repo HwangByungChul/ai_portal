@@ -1,0 +1,62 @@
+{
+  "suite_id": "I250-A01",
+  "utc_time": "2026-10-04T12:30:51.091704+00:00",
+  "baseline_commit": "0c2f78a1d1ec48ad1ef18f4df12bed4d3712bb7e",
+  "status": "pass",
+  "scope": "development environment, health and owned PostgreSQL tool only",
+  "tests": {
+    "passed": 19,
+    "failed": 0,
+    "warnings": 1,
+    "duration_seconds": 6.42,
+    "warning_code": "STARLETTE_HTTPX_TESTCLIENT_DEPRECATED"
+  },
+  "lock": {
+    "direct_requirements": 9,
+    "locked_distributions": 30,
+    "pip_check": "pass",
+    "installed_with_require_hashes": true
+  },
+  "versions": {
+    "python": "3.13.2",
+    "node_available": "22.23.1",
+    "postgresql": "15.18",
+    "fastapi": "0.142.2",
+    "starlette": "1.7.0",
+    "psycopg": "3.3.6"
+  },
+  "elapsed_minutes_automated_work": 23.6,
+  "human_learning_time": "not_measured",
+  "paid_ai_calls": 0,
+  "synthetic_evaluation_files_unchanged": 9,
+  "implementation": {
+    "A01": "complete",
+    "A02": "not_started",
+    "A03": "not_started",
+    "A04": "not_started",
+    "A05": "not_started",
+    "A06": "not_started"
+  },
+  "requirements": {
+    "V-001": "not_run",
+    "V-002": "not_run",
+    "V-013": "not_run",
+    "V-014": "not_run",
+    "V-015": "not_run"
+  },
+  "tested_source_sha256": {
+    "src/backend/.env.example": "11f21c7f415ebff28fb762170afa5f45c7410946c21f3a059a9de8beeab1802c",
+    "src/backend/README.md": "89c9da6759bea2c9c754638a1ab11bf072748f52c0065b86d53ac735e792efaf",
+    "src/backend/pyproject.toml": "ed3de576a892d0bd132bfbdfe74fe4881d229fa46ec10af6f08acd4e7ead15e5",
+    "src/backend/requirements.in": "62214b4e9960617d4555850463c1e085df533f3ff545951bb8ec2e98d8e3270f",
+    "src/backend/requirements.lock": "df2846ee7c9bc1d7869ce036ac1bd8e2af41488b541a3af082e637b2ba5ae84e",
+    "src/backend/app/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/backend/app/config.py": "5a55515be12b3b0520c5796887683f5eca3528f4052d285153e799dc0e527456",
+    "src/backend/app/main.py": "e832a1e96e3f5f8961e52048685d7409ccdc7f33ff8a989266024bd9075de283",
+    "src/backend/scripts/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/backend/scripts/devdb.py": "b34820eeaf8aeab64a8c552920f37cbfbe58519d2444743a0506d6b15c521972",
+    "src/backend/tests/test_health.py": "743f25a06e5f6cd476bea92cb1118af885dc7f0a9c49747f6fe118921d170cba",
+    "src/backend/tests/test_config.py": "0d1a12e4b1cb434ccd8f8297f4a6e257af90561c50d081f35b27f7c9675a19c4",
+    "src/backend/tests/test_devdb.py": "f9c9eee09242e76d580322dfe0988f1340c3ccc2fb48ae5481676d217dcda0d5"
+  }
+}

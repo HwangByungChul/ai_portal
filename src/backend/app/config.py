@@ -1,0 +1,30 @@
+from datetime import date
+from typing import Literal
+from urllib.parse import urlsplit
+
+from pydantic import Field, SecretStr, model_validator
+from pydantic_settings import BaseSettings, SettingsConfigDict
+
+
+class Settings(BaseSettings):
+    model_config = SettingsConfigDict(env_prefix="AI_", extra="forbid", env_file=None)
+
+    profile: Literal["local", "https"] = "local"
+    origin: str = "http://127.0.0.1:5173"
+    mode: Literal["mock", "real"] = "mock"
+    budget_period: date = date(2026, 10, 1)
+    db_port: int = Field(default=55432, ge=1, le=65535)
+    bind_host: Literal["127.0.0.1"] = "127.0.0.1"
+    web_dsn: SecretStr | None = Field(default=None, repr=False)
+    login_hmac_secret: SecretStr | None = Field(default=None, repr=False)
+
+    @model_validator(mode="after")
+    def validate_origin(self) -> "Settings":
+        parsed = urlsplit(self.origin)
+        if self.profile == "local":
+            if self.origin != "http://127.0.0.1:5173":
+                raise ValueError("local origin must match the configured loopback portal")
+        elif (parsed.scheme != "https" or not parsed.hostname or parsed.username
+              or parsed.password or parsed.path or parsed.query or parsed.fragment):
+            raise ValueError("HTTPS origin must contain only a scheme, host and optional port")
+        return self
