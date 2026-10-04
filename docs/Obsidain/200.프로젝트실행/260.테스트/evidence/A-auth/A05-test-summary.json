@@ -223,5 +223,6 @@
   "scope_limit": "A01~05 implemented; A06 integrated restart/outage/performance not run. A04 backend 172-case result is historical and was not rerun in A05. AI/GraphRAG/document grants/Q20/full V41 not completed.",
   "wall_elapsed_minutes_since_baseline": 498.8,
   "active_automated_work_minutes": null,
-  "elapsed_basis": "Calendar elapsed since baseline includes user response/resumption delay; not active work or personal learning time."
+  "elapsed_basis": "Calendar elapsed since baseline includes user response/resumption delay; not active work or personal learning time.",
+  "implementation_commit": "990014ebc1b87d56cf44711cdac00d6514249514"
 }
