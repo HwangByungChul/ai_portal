@@ -50,7 +50,7 @@ D240-03 문서 작성/자체 점검 완료. 사용자 “네 진행 바랍니다
 |---|---|---|---|
 | API-01 | GET /health | 비민감 생존확인,tenant불필요 | 200 status=ok. DB주소/키/내부구성 없음 |
 | API-02 | POST /auth/login | login_id,password·Origin/지정헤더·실패창 | 200 본인 user_id/display_name, session_expires_at, csrf_token + Set-Cookie. 인증token JSON 없음 |
-| API-03 | GET /auth/me | 유효session,tenant불필요 | 200 본인정보/만료/CSRF. 자동poll은유휴연장안함 |
+| API-03 | GET /auth/me | 유효session,tenant불필요 | 200 본인정보/만료/CSRF·현재capabilities. 공통변경권한일때만platform_availability enabled/revision;15절. 자동poll은유휴연장안함 |
 | API-04 | POST /auth/logout | CSRF/Origin,현재 session회수 | 200 logout_confirmed=true + cookie삭제. DB회수실패503 |
 | API-05 | GET /me/tenants | 유효session,본인활성소속만 | 200 tenant_id/display_name/effective_role/can_manage. PADMIN관리대상만관리허용 |
 
@@ -61,10 +61,10 @@ D240-03 문서 작성/자체 점검 완료. 사용자 “네 진행 바랍니다
 | ID | Method·경로 | 입력/권한 | 성공 응답 |
 |---|---|---|---|
 | API-06 | GET /agents | 현재 조직허용general/rules_rag | 200 agent_key/name/description/config_version/available/safe_block_reason. 키/내부system지시문 없음 |
-| API-07 | POST /conversations | 본인,선택적client_conversation_id UUID | 201 conversation_id/tenant_id/created_at. 같은clientID 재전송은200기존본인대화 |
-| API-08 | GET /conversations | 본인목록,cursor/limit | 200 최소목록·시각/최근state. 타인없음 |
+| API-07 | POST /conversations | 본인,필수agent_key,선택적client_conversation_id UUID | 201 conversation_id/tenant_id/agent_key/created_at. 같은clientID/Agent는200기존대화,다른Agent409 |
+| API-08 | GET /conversations | 본인목록,cursor/limit | 200 최소목록·agent_key/시각/최근state. 타인없음 |
 | API-09 | GET /conversations/{conversation_id}/messages | 본인+현재 조직,cursor/limit | 200 질문/답변·run state/answer_kind·현재 권한으로표시한근거 |
-| API-10 | POST /runs | client_send_id,conversation_id또는null,agent_key,prompt,document_refs선택 | 202 run_id/conversation_id/state/stage/revision/is_terminal/replayed=false. 같은 전송은200/202기존run |
+| API-10 | POST /runs | client_send_id,conversation_id또는null,agent_key,prompt,document_refs선택. 기존대화Agent일치필수 | 202 run_id/conversation_id/agent_key/state/stage/revision/execution_mode/is_terminal/replayed=false. 같은전송200/202;대화Agent불일치409/provider0 |
 | API-11 | GET /runs/by-send/{client_send_id} | 본인+현재 조직 | 200 접수된run참조/현재state. 응답 미수신시접수여부확인용 |
 | API-12 | GET /runs/{run_id} | 본인+현재 조직 | 200 저장 state/stage/revision/answer_kind/content_status/usage_status/result(허용최종 결과만) |
 | API-13 | POST /runs/{run_id}/cancel | 본인+현재 조직 | 진행취소접수202,즉시취소/이미종결200. 실제state와cancel_requested_at |
@@ -84,13 +84,13 @@ document_refs는최대5개의 `{document_id,version_id}`이며문서범위를좁
 | API-18 | GET /admin/memberships | 관리,cursor/limit | 200 현재 조직user_id/display_name/role/active/revision. 다른조직소속/비밀번호 없음 |
 | API-19 | PATCH /admin/memberships/{user_id} | 관리,active,expected_revision. TADMIN은USER대상만 | 200 해당조직상태/revision. 전역계정/B소속자동정지 없음 |
 | API-20 | PUT /admin/memberships/{user_id}/role | PADMIN관리소속,role USER/TADMIN,expected_revision | 200 새role/revision. 자기/다른PADMIN권한변경·PADMIN부여 불가 |
-| API-21 | GET /admin/documents | 관리,cursor/limit | 200 opaque문서ID/범위/처리상태/삭제/버전·revision. 개인title는read ACL있을때만 |
+| API-21 | GET /admin/documents | 관리,cursor/limit | 200 opaque문서/버전ID·visibility/access_state·processing/publication/cleanup_state·revision·can_read_content. title는현재read ACL일때만 포함 |
 | API-22 | POST /admin/documents | 관리,multipart file+metadata(client_upload_id,title,visibility,owner_user_id,reader_ids) | 202 document/version/index/job ID와queued또는reused상태. 등록≠색인완료 |
 | API-23 | POST /admin/documents/{document_id}/versions | 관리,multipart file+metadata(client_upload_id,title,expected_revision). private는본문ACL도필요 | 202 새version/index/job. owner/scope/readers변경 없음 |
 | API-24 | DELETE /admin/documents/{document_id} | 원 소유 조직관리,expected_revision | 200 access_state=deleted,cleanup_state=pending. 이미삭제되고관리허용이면200동일상태 |
 | API-25 | GET /admin/jobs | 관리,cursor/limit | 200 opaque job/doc/version/index ID·stage/state/시각/safe_error_code. 본문/title/rawstack 없음 |
-| API-26 | GET /admin/jobs/{job_id} | 관리,현재 조직 | 200 최소상태·retry_allowed/safe_reason,publication_state. 권한회수시본문없음 |
-| API-27 | POST /admin/jobs/{job_id}/retry | 관리,client_retry_id,expected_revision. 현재작업/문서/Agent/한도 | 202 새Job/원Job연결,중복200/202기존Job. 불명call미해결이면409 |
+| API-26 | GET /admin/jobs/{job_id} | 관리,현재 조직 | 200 job_kind/execution_mode·최소상태/revision·retry_allowed/safe_reason·publication/cleanup_state. body/title 없음 |
+| API-27 | POST /admin/jobs/{job_id}/retry | 관리,internal_index만,client_retry_id/expected_revision. 현재작업/문서/Agent/한도 | 202 새Job/원Job연결,중복200/202. needs_review/cleanup일반재처리409 |
 | API-28 | GET /admin/share-recipients | 원소유관리조직,합성A/B의활성수신후보만 | 200 설정된recipient tenant_id/display_name. 관리소속/사용자/내용목록 아님 |
 | API-29 | GET /admin/documents/{document_id}/versions/{version_id}/grants | 원 소유 조직관리,org문서 | 200 버전별Grant최소목록/active/revision |
 | API-30 | POST /admin/documents/{document_id}/versions/{version_id}/grants | 원소유org관리,recipient_tenant_id,expected_publication_revision | 201 exact-version Grant,같은활성Grant중복200기존값. private/재공유거부 |
@@ -109,7 +109,7 @@ document_refs는최대5개의 `{document_id,version_id}`이며문서범위를좁
 
 | ID | Method·경로 | 입력/권한 | 성공 응답 |
 |---|---|---|---|
-| API-39 | GET /platform/summary | 현재PADMIN + global_usage_read,tenant불필요 | 200 프로젝트합계/예약/불명·공통중지/승인30,000원. 개인질문/전조직본문 없음 |
+| API-39 | GET /platform/summary | 현재PADMIN + global_usage_read,tenant불필요 | 200 period/execution_mode·프로젝트합계/예약/불명·enabled/revision·승인30,000/운영25,000원. 개인질문/전조직본문 없음 |
 | API-40 | PUT /platform/availability | 현재PADMIN + global_stop_write,enabled,expected_revision | 200 공통중지/재개상태/revision. cap증액/조직별권한확대없음 |
 | API-41 | PUT /platform/tenant-budgets/{tenant_id} | PADMIN + 해당관리소속,allocated_cap_krw,expected_revision. X-Tenant-ID는같은조직 | 200 프로젝트상한/잔여조건내조직배정,개별usage변조없음 |
 
@@ -124,7 +124,7 @@ API-41은조직별배정경로이므로tenant문맥을필수로한다. API-39/40
 | RunView | run_id/tenant_id/conversation_id/agent_key/config_version/state/stage/revision/is_terminal/answer_kind/content_status/execution_mode/usage_status/error_code/created_at/ended_at/result |
 | result | null 또는message_id/text/evidence. completed라도현재표시권한이없는자료는D240-05의render_current_answer 결과에따라본문/인용을차단·정제 |
 | EvidenceView | ordinal/availability. available만document_id/version_id/title/location/quote/source_link. unavailable에는ordinal/일반안내만,원소유/version/title/quote 없음 |
-| JobView | job_id/document_id/version_id/index_id/state/stage/revision/publication_state/retry_allowed/safe_reason/created_at/ended_at. 개인title/원문경로/raw오류 없음 |
+| JobView | job_id/document_id/version_id/index_id/job_kind/execution_mode/state/stage/revision/publication_state/cleanup_state/retry_allowed/safe_reason/created_at/ended_at. 개인title/원문경로/raw오류 없음 |
 | MutationView | 변경대상불투명ID/허용변경값/revision/server_time,저장성공뒤에만반환 |
 
 expected_revision은양의정수,unknown필드는422로거부한다. 금액입력은음수/NaN/Infinity 없는Decimal 문자열로받고비교/예약은서버numeric/Decimal로한다. 최종상한/반올림은D240-04의계약을따른다. 등록시org문서owner는현재등록주체,private는같은조직의지정owner/reader를검사하고org에private reader설정을섞지않는다. 실제/모의실행모드도클라이언트입력필드가아닌서버실행설정이다.
@@ -209,13 +209,13 @@ accepted→running은서버worker가run revision/epoch를CAS로claim한후에만
 |---|---|
 | queued | 접수저장,아직claim안됨→running/blocked/interrupted |
 | running | 유효lease에서parse/chunk/embed/extract/validate/publish. 현재 허가검사→completed/failed/blocked/interrupted/needs_review |
-| completed | 검증과publication pointer/Job종결commit.새index가실제공개됨 |
+| completed | internal_index는검증/pointer/종결commit으로공개완료; internal_cleanup은대상payload정리/종결commit. job_kind를함께확인 |
 | failed | 원인확인된실패. 현재 권한/한도와안전단계검사후새Job접수가능 |
 | blocked | 삭제/권한회수/중지/한도차단.조건이복구되고현재 허가가있을때만새재처리 |
 | interrupted | lease/프로세스중단,최종공개없음. 유료dispatch불명없음을확인한안전단계만수동재처리 |
 | needs_review | dispatched call의실제결과/usage가불명. 자동/일반UI재처리불가,시스템대조후안전한판정으로이동 |
 
-queued/running만활동중이다. 실패/중단/차단된Job을재처리할때새job_id와retry_of_job_id를만들고이전종결이력은보존한다. 동일index/진행Job/client_retry_id는같은참조를반환한다. 이미동일pipeline index가완료되면reused=true로기존완료Job을반환하며재임베딩하지않는다. needs_review는증거를대조하는운영/시스템절차로만interrupted/failed등안전상태를판정하고사람이usage를임의0 수정하는API를만들지않는다.
+queued/running만활동중이다. 실패/중단/차단된Job을재처리할때새job_id와retry_of_job_id를만들고이전종결이력은보존한다. 동일index/진행Job/client_retry_id는같은참조를반환한다. 이미동일pipeline/mode index가완료되면reused=true로기존완료Job을반환하며재임베딩하지않는다. needs_review는증거를대조하는운영/시스템절차로만interrupted/failed등안전상태를판정하고사람이usage를임의0 수정하는API를만들지않는다.
 
 index_build는staging/building/validated/published/failed/interrupted 상태를사용한다. publications의pointer가해당index를가리킬때만공개다. 문서관리응답은processing_state와publication_state를별도로반환한다. 새버전실패가다른유효버전을숨기거나Job진행률100으로위조하지않도록D240-05에서현재검색버전/cleanup세부를정한다.
 
@@ -347,3 +347,19 @@ D240-04는모든generation/query/document embedding의현재 허가·중지/한�
 - [RFC 9110 HTTP Semantics](https://www.rfc-editor.org/rfc/rfc9110.html): 요청/응답·상태코드·조건부수정·안전한조회/재전송 의미참고.
 - [WHATWG Server-sent events](https://html.spec.whatwg.org/multipage/server-sent-events.html): UTF-8 text/event-stream 이벤트/연결의기술형식참고. 이번fetch parser가영속replay를구현했다고주장하지않음.
 - [MDN Using Fetch](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API/Using_Fetch): headers/credentials·response stream·AbortController와HTTP오류처리참고. fetch중단과업무취소는별도설계.
+
+## 15. D240-08 응답·상태 통합 계약 — 종합 사용자 검토 대기
+
+갱신한API표와이절을현재계약으로사용한다. endpoint는기존41개다. [[200.프로젝트실행/240.설계/09 설계 검토 결과와 구현 전달]]에데이터/화면/검증연결을묶었다. 앱API구현/시험은아직이다.
+
+API-03 capabilities는 `can_view_platform_usage = 현재PADMIN AND global_usage_read`, `can_change_platform_availability = 현재PADMIN AND global_stop_write`다. 후자가true일때만조건부platform_availability={enabled,revision}를포함한다. writer-only는API-39조회불가, reader-only는API-40변경불가. 실제PUT도현재권한/expected_revision을다시검사한다. API-05는본인소속의effective_role/can_manage만반환하고globalpermission을조직관리권한으로확대하지않는다.
+
+대화생성/API-10 null대화는필수agent_key에binding한다. API-09 대화상세/메시지응답에도parent agent_key를제공한다. 기존대화Agent불일치409 CONVERSATION_AGENT_MISMATCH·신규provider0,같은clientID다른payload409. Agent설정version은신규run의현재snapshot이며과거완료본문을새지시문으로rewrite하지않는다.
+
+RAG provider JSON delta는내부buffer, typedfact/역할/현재근거를검증한서버render만draft 후보, DBcommit후terminal/final이다. API-09/12/14 snapshot/terminal/15/16은같은현재본문gate를사용한다. 완료state를유지해도출처하나불허이면content_status=unavailable/result.text=null;query/history에도보호assistant와연결turn을넣지않는다. general의과거본문은본인/current session·소속조건이며Agentstop만으로과거기록을소거하지않는다.
+
+API-21 can_read_content=false이면title필드를**생략**하고빈문자/파일명추정값을대체하지않는다. true라도이후원문조회때현재ACL재검사한다. JobView는job_kind/execution_mode/revision/실제단계·retry_allowed/safe_reason/publication_state/cleanup_state만보충한다. internal_index단계는validate_source/parse_plan/embed_batches/validate_index/publish, cleanup은실제정리상태만표시한다. 서버가실제batch카운트를제공할때만UI진행수치로쓴다.
+
+API-35/36은period/execution_mode·operation/state·usage_status·알려진tokens/estimated_accounted_krw/reserved_krw/unknown_count를최소반환한다. unknown tokens/금액확인은null/별도예약으로구분하며0확정하지않는다. 본인usage는다른사용자/조직전체잔여없음, 관리자usage도개인본문/제목join없음. API-37/38/41은allocated/local cap/accounted/reserved/blocked/revision을서버정의로반환하고배정/정산동시검사를화면계산으로대체하지않는다.
+
+run/Job execution_mode=real/mock은DB실행mode에대응하고budget/call.mode와일치해야한다. 시험결과의M/R는검증방법이며제품상태enum이아니다. receipt/lateusage의기발생정산은후속권한회수와분리한다. pipeline/mode/checkpoint불일치·needs_review는기존배치를재발사하지않는다. index와cleanup Job의종결/공개를혼동하지않는다.

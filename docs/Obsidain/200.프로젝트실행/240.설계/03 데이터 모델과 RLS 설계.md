@@ -51,12 +51,13 @@ schema는 `security`, `portal`, `rag`, `ops`로 책임을 구분한다. A/B별 s
 | security.platform_access | user_id PK/FK, is_padmin, permissions, active, revision | 공통 집계/중지 권한. 일반 역할 UI로 쓰기 금지 |
 | security.managed_tenants | `(tenant_id,user_id)` PK, active, revision | membership/platform_access 참조. PADMIN 관리 대상만 저장, TADMIN은 membership.role로 판정 |
 | security.sessions | session_id PK, token_hash UNIQUE, user_id, auth_revision, csrf_secret, issued_at, last_activity_at, expires_at, revoked_at | token 원문 없음.8h/유휴30m·최신 계정 revision 검증, 유휴 갱신 단조 증가 |
-| security.login_windows | `(key_kind,key_digest)` PK, window_started_at, count | login 실패/IP 시도 창. 입력 login/IP를 서버 HMAC digest로 저장, 존재하지 않는 계정에도 창 적용 |
+| security.login_windows | `(purpose,key_kind,key_digest)` PK, window_started_at, count | 로그인 input/IP·run 접수·등록/재처리·조회 창을 purpose별 독립 namespace로 유지. HMAC key, 고정창/원자 count. 로그인창과 API창을 상호 reset하지 않음 |
+| security.operation_receipts | `(tenant_id,initiator_user_id,operation_kind,client_operation_id)` PK, request_hash, document/version/index/job 불투명참조, created_at | upload/retry 접수와 같은 transaction. 현재 관리권한의 최소 결과 함수만; 제목/파일명/본문/원문hash/비밀 없음. 같은ID 다른내용409 |
 | security.document_access | `(tenant_id,document_id)` PK, owner_user_id, visibility, deleted_at, acl_revision, created_at | owner는 같은 tenant membership FK. 제목/파일명/본문 없음. 권한·삭제 상태의 정본 |
 | security.private_readers | `(tenant_id,document_id,user_id)` PK | 같은 조직 member FK, private 문서만 등록 초기 생성, read만 허용 |
 | security.publications | `(tenant_id,document_id,version_id)` PK, published_index_id NULL 허용, active, revision | 정확 버전의 공개 gate. payload/index와 복합 FK, 정본 공개 상태. 삭제면 이 gate만으로 읽기 허용 불가 |
 | security.share_grants | grant_id PK, owner_tenant_id, document_id, version_id, recipient_tenant_id, active, revision, issued_by, issued_at, revoked_at | 원 소유 publication FK. org만/owner≠recipient. 해당 버전/수신 조직의 활성 Grant 최대1개 |
-| security.job_authorizations | `(tenant_id,job_id)` PK, initiator_user_id, document_id, version_id, index_id, action=internal_index, lease_hash, lease_epoch, expires_at, revoked_at | 특정 Job 위임 범위/lease 정본. 최신 계정/소속/작업 권한 + Job 참조 검증; 임의 문서 확대 금지 |
+| security.job_authorizations | `(tenant_id,job_id)` PK, initiator_user_id, document_id/version_id/index_id, action internal_index/internal_cleanup, deletion_revision 조건부, lease_hash/lease_epoch/expires_at/revoked_at | index는현재 initiator 권한 필수. cleanup은삭제대상/위임/revision/lease의purge-only예외, 본문SELECT/새임베딩/재공개 없음;18절 |
 
 `membership.role`은 USER/TADMIN만 저장한다. 평가 ACT-PADMIN은 platform_access와 managed_tenants 및 활성 membership을 결합한 effective_role이다. P-A의 A membership은USER로 저장하되 effective_role=PADMIN, B 관리 소속은 없다. DUAL-ADM의 TADMIN은 각 조직 membership에 저장한다. 기존 합성 manifest의 액터 역할 표기는 평가 라벨로 보존한다.
 
@@ -67,10 +68,10 @@ document_access/private_readers/publications/Grant는 정책의 단일 정본이
 | 테이블 | 키·주요 필드 | 제약·책임 |
 |---|---|---|
 | portal.agent_configs | `(tenant_id,agent_key)` PK, config_version, enabled, settings, updated_by/at | agent_key=general/rules_rag. 모델 선택 UI 없음. 실제 사용한 config snapshot을 실행에 보존 |
-| portal.conversations | `(tenant_id,conversation_id)` PK, owner_user_id, created_at, updated_at | owner는같은 조직 membership FK, owner/tenant불변 |
-| portal.messages | `(tenant_id,message_id)` PK, conversation_id, owner_user_id, sequence_no, role, body, run_id NULL허용, created_at | `(tenant,conversation,owner)` FK, `(tenant,conversation,sequence)` UNIQUE. 질문/답변은 개인 콘텐츠 |
-| portal.runs | `(tenant_id,run_id)` PK, conversation_id, owner_user_id, client_send_id, request_hash, agent_key/config_snapshot, state, revision, cancel_requested_at, started_at/ended_at, error_code | `(tenant,owner,client_send_id)` UNIQUE. 대화/Agent FK, 동일전송 충돌검사. 상태 enum은D240-03 확정 |
-| portal.answer_evidence | `(tenant_id,run_id,ordinal)` PK, source_tenant_id, document_id, version_id, index_id, evidence_id, source_hash, location_snapshot | 본인run FK + 출처의 정확version/index/evidence FK. 원 소유와 답변 소유tenant가 다른 합법적 공유 참조만 명시 허용 |
+| portal.conversations | `(tenant_id,conversation_id)` PK, owner_user_id, agent_key, client_conversation_id NULL허용, created_at, updated_at | owner는같은 조직 membership FK, tenant/owner/agent_key 불변. 고정Agent FK와 `(tenant,conversation,owner,agent_key)` UNIQUE; client ID는tenant/owner범위 UNIQUE |
+| portal.messages | `(tenant_id,message_id)` PK, conversation_id/owner_user_id/sequence_no/role/body/run_id, server payload_kind/payload_purged, created_at | 부모owner/대화Agent·run FK/UNIQUE sequence. 분류불변/본문RLS·source seal은18절;rag assistant를general로위장금지 |
+| portal.runs | `(tenant_id,run_id)` PK, conversation_id, owner_user_id, client_send_id/request_hash, agent_key/config_snapshot, origin_session_id, execution_mode, state/stage/revision, execution_epoch/heartbeat_at/lease_expires_at, answer_kind/source_count/provenance_sealed, cancel_requested_at, started_at/ended_at, error_code | `(tenant,owner,client_send_id)` UNIQUE. `(tenant,conversation,owner,agent_key)` FK로대화Agent일치. 본문/quote snapshot은여기에복제하지않음; 상태/lease/본문gate는18절 |
+| portal.answer_evidence | `(tenant_id,run_id,ordinal)` PK, source_tenant_id/document_id/version_id/index_id/evidence_id, source_hash/location_snapshot/quote_snapshot/payload_purged | 본인run·정확source FK·sealed count일치. control provenance열과본문권한분리;합법cross-tenant Grant검사/현재quote ACL |
 
 대화/메시지/run/answer_evidence의 RLS는 본인+현재 조직을 강제한다. admin도 타인 개인 내용을 읽지 못한다. usage 운영 화면은 이 테이블을join해 질문/답변을 반환하지 않는다. 저장 답변에 인용 본문을 넣는지와 회수 후 표시 방식은D240-05에 전달하며 이번 문서에서 완료 처리하지 않는다.
 
@@ -80,13 +81,13 @@ client_send_id는 같은 정상 질문을 합치는 내용hash가 아니다. 같
 
 | 테이블 | 키·주요 필드 | 제약·책임 |
 |---|---|---|
-| rag.document_versions | `(tenant_id,document_id,version_id)` PK, version_no, title, source_object_key, source_sha256, media_type, byte_length, created_at | document_access FK, 문서 내version_no UNIQUE. 민감 title/path는 콘텐츠 RLS 대상 |
-| rag.index_builds | `(tenant_id,index_id)` PK, document_id, version_id, pipeline_fingerprint, embedding_model/dimensions, schema_revision, state, revision, created_at | 정확 원문version FK. 동일docversion/pipeline UNIQUE, dimensions=1536 |
-| rag.jobs | `(tenant_id,job_id)` PK, index_id, initiator_user_id, state, stage, attempt_no, error_code, heartbeat_at, lease_epoch, created_at/ended_at | index/initiator membership FK. 완료/공개를 UI가 임의 설정 못함. 제목·원문path·raw오류/청크 없음 |
-| rag.chunks | `(tenant_id,index_id,chunk_id)` PK, document_id, version_id, ordinal, text, location, embedding vector(1536), source_sha256 | `(tenant,index,doc,version)` FK. `(tenant,index,ordinal)` UNIQUE |
+| rag.document_versions | `(tenant_id,document_id,version_id)` PK, version_no/title/source_object_key/source_sha256/media_type/byte_length, ingest_hmac/parser_revision/source_mapping/payload_purged, created_at | document_access FK·문서내version UNIQUE. title/path/hash는공개운영필드아님;parser구간/삭제tombstone보존 |
+| rag.index_builds | `(tenant_id,index_id)` PK, document_id/version_id, execution_mode/pipeline_fingerprint/source_fingerprint, embedding_model/dimensions/schema_revision, state/revision, expected/completed_batches/checkpoint_summary/coverage/payload_purged, created_at | 정확version FK, `(tenant,doc,version,pipeline,mode)` UNIQUE·1536차원. mode간공개/재사용금지·검증후pointer전환 |
+| rag.jobs | `(tenant_id,job_id)` PK, index_id, initiator_user_id, job_kind internal_index/internal_cleanup, execution_mode, state/stage/revision, retry_of_job_id, attempt_no, error_code, heartbeat_at/lease_epoch/lease_expires_at, created_at/ended_at | index/initiator membership FK. activity/epoch검사; 제목/원문path/raw오류없음. completed의공개/정리는job_kind별검증 |
+| rag.chunks | `(tenant_id,index_id,chunk_id)` PK, document_id/version_id/ordinal/text/location/embedding vector(1536)/source_sha256, batch_ordinal/call_id/payload_purged | 정확index/version FK·ordinal UNIQUE. staging/삭제후payload NULL허용, 공개완성값검증·batch checkpoint와벡터같은transaction |
 | rag.entities | `(tenant_id,index_id,entity_id)` PK, document_id, version_id, semantic_key, type, label, properties | index/doc/version FK. 문서index별 개체 인스턴스. 같은 이름으로 A/B를 합치지 않음 |
 | rag.relations | `(tenant_id,index_id,relation_id)` PK, from_entity_id, to_entity_id, relation_type, properties | 양 끝을동일tenant/index entity에FK. 동일문서 근거 없이 관계생성 금지 |
-| rag.evidence | `(tenant_id,index_id,evidence_id)` PK, document_id, version_id, chunk_id, start/end 위치, exact_quote, source_sha256 | 동일index/chunk/doc/version FK. 인용 위치와 원문hash 검증 |
+| rag.evidence | `(tenant_id,index_id,evidence_id)` PK, document_id/version_id/chunk_id/start/end/exact_quote/source_sha256/payload_purged | 동일index/chunk/doc/version FK. 원문mapping/hash·관계별구간검증,소거후식별tombstone보존 |
 | rag.relation_evidence | `(tenant_id,index_id,relation_id,evidence_id)` PK | relation/evidence 각각복합FK. 관계와 그 관계의근거만 연결 |
 
 index_build의state는 처리 상태, publications의published_index_id는 사용자 공개 상태다. 두 의미를 섞지 않는다. staging chunk/entity/relation/evidence는 worker만 접근하며, 사람은 공개 gate가 가리키는 동일 index만 조회한다. 완성 전 새 index를 현재 공개index로 교체하지 않는다. 검증 실패/권한회수/중지면pointer를갱신하지 않는다.
@@ -101,10 +102,10 @@ published evidence FK는 삭제 즉시 파괴하지 않는다. 먼저 접근 차
 
 | 테이블 | 키·주요 필드 | 제약·책임 |
 |---|---|---|
-| ops.project_budget | budget_id PK, period, approved_cap_krw=30000, operational_cap_krw, reserved_krw, accounted_krw, stopped, revision | 2026-10 프로젝트1행, 승인cap30,000원. reserved/accounted≥0, operational≤approved |
-| ops.tenant_budgets | `(tenant_id,budget_id)` PK, allocated_cap_krw, local_cap_krw, reserved_krw, accounted_krw, revision | project FK, local≤allocated. 합산배정/사용예약은프로젝트행과함께 잠금 |
-| ops.call_attempts | `(tenant_id,call_id)` PK, run_id 또는 job_id, initiator_user_id, operation, attempt_no, permit_revision, reserved_krw, state, usage_snapshot, price_snapshot, provider_request_id NULL허용 | owner/run 또는특정Job FK. 정확히 하나의 실행 대상(run_id XOR job_id). run/job 각각 `(tenant_id,대상ID,operation,attempt_no)` 부분 UNIQUE. run owner/Job initiator를 FK로 일치 |
-| ops.usage_events | `(tenant_id,event_id)` PK, call_id, event_kind, delta_reserved_krw, delta_accounted_krw, token_counts, created_at | call FK, `(tenant,call,event_kind)` UNIQUE(정산1회). append-only. state별허용event는D240-04 확정 |
+| ops.project_budget | budget_id PK, period/mode, approved_cap_krw, operational_cap_krw, reserved_krw/accounted_krw, active_slot, stopped/stop_latch, revision | `(period,mode)` UNIQUE. 2026-10 real 승인30,000/운영25,000; mock 별도. 기발생정산상한초과는기록후중지, 비용소거없음 |
+| ops.tenant_budgets | `(tenant_id,budget_id)` PK, allocated_cap_krw/local_cap_krw/reserved_krw/accounted_krw/active_slot/stopped/revision | project period/mode FK·local≤allocated·합산배정≤운영상한. 기발생정산상한초과보존,현재 project/tenant 잠금으로허가 |
+| ops.call_attempts | `(tenant_id,call_id)` PK, run_id XOR job_id, initiator_user_id/operation/attempt_no, budget_id/mode/Agent/config_revision/step_key/input_fingerprint, permit_revision/permit_expires_at/dispatch_claim/epoch/dispatched_at, reserved_krw/state/usage_snapshot/price_snapshot/provider_request_id/provider_end_status/slot_held/cost_overrun | tenant/대상/owner FK·step/attempt 부분 UNIQUE. 한번dispatch/정산,usage Unknown과remote종결별도,권한회수뒤기발생정산보존 |
+| ops.usage_events | `(tenant_id,event_id)` PK, call_id/event_kind/delta_reserved_krw/delta_accounted_krw/token_counts/price_snapshot/created_at | append-only·`(tenant,call,event_kind)` UNIQUE·state CAS. reserve/mark_unknown/settle/release; settle/release 상호배타 |
 | ops.audit_events | event_id PK, scope_kind, tenant_id 조건부, actor_id, action, opaque_target_id, result, safe_reason, revisions, created_at | tenant 기록는tenant필수/조직RLS, platform 기록는고정함수만조회. 본문/비밀 없음 |
 
 금액은 nonnegative numeric(18,6) KRW로 저장하고 정산 delta만 음수 가능하다. USD단가/환산값/기준시각은불변price_snapshot, 실제/모의는별도필드로남긴다. ops에는 질문/답변/문서제목/원문경로/키를 저장하지 않는다. 정교한청구/동적가격UI를 추가하지 않는다. counter는예약/event와동일 트랜잭션의집계캐시이며불일치발견시신규허가를차단한다.
@@ -141,10 +142,10 @@ erDiagram
 | K-02 | document→version→index→chunk/evidence/Graph의tenant/document/version/index를복합UNIQUE/FK로일치 |
 | K-03 | relation양끝entity와해당evidence는같은tenant/index. 관계마다별도근거연결 |
 | K-04 | Grant는원소유publication exact-version FK, recipient≠owner, org만허용하는제한 함수/제약. private공유불가 |
-| K-05 | conversation/owner의UNIQUE와message/run FK로타인대화쓰기방지. 전송ID는tenant/owner범위 |
+| K-05 | conversation의tenant/owner/agent_key UNIQUE와message/run FK로타인대화/Agent덮어쓰기방지. client_conversation/send ID는tenant/owner범위 |
 | K-06 | answer_evidence만적법한cross-tenant source FK를명시,저장/공개시Grant검사. FK가현재조회허가는아님 |
 | K-07 | private scope/owner/readers초기등록후변경제한,권한변경은revision+감사와원자처리 |
-| K-08 | 같은version/pipeline의index UNIQUE,활동중Job은index당최대1개. 재처리시험/시도는별도기록보존 |
+| K-08 | 같은version/pipeline/mode index UNIQUE·활동Job index당최대1개. mode간checkpoint/재사용금지,재처리시도보존 |
 | K-09 | call/event UNIQUE와counter nonnegative. 중복확정/해제금지,불명usage를0확정하지않음 |
 
 파일은DB밖의비공개영역에 `storage/tenants/{owner_tenant_uuid}/documents/{document_uuid}/{version_uuid}/source` 서버생성키로보관한다. 원파일명을path로사용하지않고path traversal/symlink경계이탈을막는다. 정적공개URL은발급하지않으며다운로드는현재ACL과payload RLS검사후서버가처리한다. 수신B는A의object를참조하고B에자동복제하지않는다.
@@ -156,10 +157,10 @@ source_object_key/source_sha256은DB에저장하고원파일은불변이다. 등
 | 역할 | 속성·권한 | 금지 |
 |---|---|---|
 | mvp_schema_owner | NOLOGIN,NOSUPERUSER,NOBYPASSRLS, portal/rag/ops 테이블 소유. tenant 콘텐츠에는ENABLE+FORCE RLS | 앱 연결/worker로 사용 금지 |
-| mvp_policy_executor | NOLOGIN, security의비콘텐츠제어테이블/제한 함수소유, 필요한최소 운영필드함수 | 콘텐츠 테이블소유/본문SELECT·superuser/BYPASSRLS금지 |
+| mvp_policy_executor | NOLOGIN, security 비콘텐츠제어/제한함수소유·최소운영함수·run/answer_evidence 비콘텐츠control열의한정SELECT | 콘텐츠테이블소유/본문·title·quote·vectorSELECT·superuser/BYPASSRLS금지 |
 | mvp_migrator | 배포/초기화에서만사용,소유역할로변경가능 | 앱환경에자격노출/실행사용금지 |
 | mvp_web_runtime | LOGIN,NOSUPERUSER,NOBYPASSRLS,NOCREATEROLE,NOCREATEDB. 본인포털/허용콘텐츠 RLS 쿼리·제한관리함수 | worker/meter/owner역할membership·SET ROLE·DDL/TRUNCATE·원장쓰기 없음 |
-| mvp_index_runtime | LOGIN,같은비우회속성. 특정유효Job의staging문서읽기/색인쓰기·최소Job함수 | 일반웹권한/타Job·대화본문·원장직접 쓰기 없음 |
+| mvp_index_runtime | LOGIN,비우회. 유효internal_index의staging읽기/쓰기·최소Job함수;internal_cleanup은삭제target purge-only | 일반웹/타Job·대화본문·원장직접쓰기·cleanup의내용SELECT/provider/publish 없음 |
 | mvp_meter_runtime | LOGIN,같은비우회속성. call/예약/정산제한 함수,현재허가참조 | 문서/대화본문·owner/worker권한·사람임의원장수정 없음 |
 
 세 runtime은server에만보관한다. 같은FastAPI 내부에서web 저장소·index worker·usage 책임별pool/자격을사용하고DB 계정을프론트/사용자에게제공하지않는다. 공개API가DB 역할을선택하는필드를받지않는다. `mvp_policy_executor`는security 제어 자료만읽는좁은권한이며콘텐츠RLS를우회하는전역관리자가아니다. 다른runtime 역할상속/암묵권한은실제pg_roles/role membership/grant점검으로확인한다.
@@ -173,9 +174,9 @@ portal/rag/tenant ops 테이블은ENABLE/FORCE RLS, PUBLIC 권한제거, 행/행
 | 정책ID/대상 | SELECT USING | INSERT/UPDATE WITH CHECK·DELETE |
 |---|---|---|
 | P-01 사람의 tenant 조회/신규 허가 공통 gate | 유효 principal + 선택 tenant의 활성 소속. 누락/잘못된 문맥 false | 동일 공통 gate. 잘못된 tenant/owner 쓰기 거부. 기존 call의 시스템 정산은 P-07의 한정 예외 |
-| P-02 대화/message/run/answer_evidence | row.tenant=active tenant AND owner=current user | 동일 + 부모대화owner일치,불변필드변경금지 |
+| P-02 대화/message/run/answer_evidence | 본인/현재조직 기본gate. RAG assistant 본문은sealed provenance+모든source 현재허가; 근거quote는각source 현재허가. run metadata와본문분리;18절 | 부모대화tenant/owner/Agent 일치, 서버payload분류/FK불변·종결CAS. 사용자임의source/분류/quote쓰기금지 |
 | P-03 document_version/chunk/evidence/entity/relation | 현재 권한문서/version의공개index조건: 원조직활성member의org읽기 OR 같은 조직private owner/reader OR 수신active Grant exact version. 삭제/비활성gate거부 | web의일반쓰기없음. 등록/문서관리함수또는P-04만. 공유recipient쓰기예외없음 |
-| P-04 index worker | DB role=index runtime AND 유효job lease AND기록된doc/version/index AND현재주체작업 권한. 공개전staging만해당Job에허용 | 동일한위임범위의staging행쓰기. job상태/publication갱신은제한 함수로검사 |
+| P-04 index worker | internal_index: 비우회index role/유효lease/정확target/현재주체작업권한. internal_cleanup: target ID 최소조회만,본문읽기없음 | index는staging/제한publish. cleanup은삭제revision에묶인purge-only함수;재공개/새call/다른문서쓰기금지 |
 | P-05 Job 최소상태 | web은현재 조직관리자또는읽기ACL있는해당문서. worker는유효lease의자기Job | 현재 조직관리의접수/재시도함수또는제한worker전이,임의completed쓰기불가 |
 | P-06 Agent 설정 | 현재 조직활성member에게허용고정Agent | 현재 조직TADMIN 또는관리소속PADMIN의설정함수,role권한확인 |
 | P-07 call/usage/조직budget | 본인call 또는현재 조직관리의최소 필드. budget은허용한도조회 | web 원장 쓰기 없음, meter 정산 함수만. 신규 예약은 현재 권한 필요, 이미 허가된 call 정산은 저장 permit/tenant·call 상태로 판정하고 이후 소속 회수를 이유로 누락하지 않음. 배정/중지는 현재 관리 권한 |
@@ -218,10 +219,10 @@ RLS의booleanhelper와인증/관리/집계함수는정해진입력/최소출력�
 | 인터페이스 | 호출자·검사 | 반환/변경 |
 |---|---|---|
 | load_login_credential / session_validate / session_create_or_revoke / record_login_window | web인증공통모듈.현재 계정/해시검증흐름,로그인창원자잠금. 임의 session생성API없음 | password hash는인증모듈내부만.외부JSON에는안전한본인정보/CSRF만 |
-| current_membership / can_manage_tenant / can_read_document_version | web/index/meter중필요한역할,현재 문맥과security정본 | boolean/본인허용조직/최소member.정책 함수는payload읽기없음 |
+| current_membership / can_manage_tenant / can_read_document_version / can_read_rag_answer_payload | 필요role·현재문맥/security정본·RAG sealed provenance ID 최소권한 | boolean/최소허용조직·member. 보호payload/누락source/재귀정책우회없음 |
 | list_document_operations / mutate_document_policy / mutate_membership | web의현재 관리주체. D240-01의대상role/자기승격/owner불변검사 | 문서불투명ID/단계·범위운영정보 또는허가된변경+revision+감사 |
-| claim_job / validate_job_lease / advance_job_or_publish | index runtime + 현재작업 권한/특정doc/index/lease | 제한lease/상태·정확publication pointer,다른Job본문없음 |
-| reserve_call / settle_call / update_budget / aggregate_usage | meter의허가/정산,web의정당한관리변경/최소조회 | 원자예약/append정산/정제집계.본문join없음 |
+| claim_job / validate_job_lease / advance_job_or_publish / purge_deleted_payloads / purge_derived_answer_payloads | index role·job_kind/특정target/lease·index현재권한또는cleanup삭제위임 | index 공개/상태또는한정write-only purge. 다른Job/대화본문 반환없음 |
+| reserve_call / claim_dispatch / record_provider_observation / mark_unknown / settle_call / release_undispatched / update_budget / aggregate_usage | meter permit/state/현재신규허가·web 정당한관리변경/최소조회 | 한번예약/dispatch/정산·본문join없음. unknown/slot중복해제금지 |
 
 SECURITY DEFINER가필요한함수는security 제어 자료/해당최소 운영행에필요한권한만보유한다. RLS콘텐츠를읽는함수는일반runtime정책을따르고,policy_executor에게전콘텐츠SELECT를부여하지않는다. worker와meter업무쓰기권한은각runtime에서만호출가능하게한다. 모든 PUBLIC EXECUTE를회수하고허용DB역할에만EXECUTE를부여한다. 고정search_path는pg_catalog/security/pg_temp이며모든relation을schema-qualified로참조하고동적SQL/호출자지정테이블명은받지않는다. 함수생성/권한회수는동일마이그레이션트랜잭션으로처리한다.
 
@@ -328,3 +329,34 @@ D240-03에는 tenant 헤더/user/owner·conversation/run/client_send_id·doc/ver
 - [PostgreSQL Transaction Isolation](https://www.postgresql.org/docs/current/transaction-iso.html), [Explicit Locking](https://www.postgresql.org/docs/current/explicit-locking.html): READ COMMITTED최신조회와행잠금/경합의참고. 이설계의잠금순서/lease값은MVP선택값.
 - [PostgreSQL CREATE FUNCTION](https://www.postgresql.org/docs/current/sql-createfunction.html): SECURITY DEFINER권한·고정search_path/pg_temp·PUBLIC EXECUTE회수의참고.
 - [pgvector 공식저장소](https://github.com/pgvector/pgvector): 정확검색/근사검색과필터의참고. 이번데이터규모에서는정확검색을선택,설치version은미확인.
+
+## 18. D240-08 데이터 통합 계약 — 종합 사용자 검토 대기
+
+현재 논리 모델은 **31개: security13 + portal5 + rag8 + ops5**다. operation_receipts를 실제 정의표에 반영했다. 아래는 기존 테이블의 필드/정책 보완이며 새 서버/제품/논리 테이블을 추가하지 않는다. [[200.프로젝트실행/240.설계/09 설계 검토 결과와 구현 전달]]을 통합 전달 기준으로 사용하고 실제DDL/함수/시험은250/260에서 작성한다.
+
+| 대상 | 통합할 필드/제약 |
+|---|---|
+| portal.messages | server payload_kind·run FK·payload_purged. user/general/rag 분류는연결run의불변Agent/answer_kind와검증; UI가general로바꿔우회불가. user본문은own gate, rag assistant는아래all-source gate |
+| portal.answer_evidence | 정확source IDs/hash/location와필요한quote snapshot·payload_purged. source FK tombstone보존. quote/위치는각source현재허가;provenance control열과콘텐츠열권한분리 |
+| rag.document_versions | 내부ingest HMAC·source mapping/parser revision·payload_purged. title/source object는본문ACL. 운영함수에rawhash/파일명없음 |
+| rag.index_builds | execution_mode, pipeline/source fingerprint, expected/completed batch요약·coverage/산출물수·payload_purged. UNIQUE는doc/version/pipeline/mode;mode간공개/재사용금지 |
+| rag.chunks/evidence/entities/relations | batch ordinal/call 참조와원문mapping, source별인스턴스, payload_purged. staging/삭제후text/quote/vector/label/propertiesNULL허용;공개검증시정상산출물필수 |
+| ops.call_attempts | budget_id/mode/Agent/config revision·step_key/input fingerprint·permit_expires_at/dispatch_claim/epoch/dispatched_at·usage evidence/status·provider_end_status/slot_held/cost_overrun |
+| ops.usage_events | reserve/mark_unknown/settle/release, delta금액/토큰·불변price snapshot. CAS+UNIQUE로settle/release상호배타 |
+| ops.tenant_budgets | 해당period/mode budget FK·allocation/local cap/예약/추정비용·active_slot/revision/stop. 배정합계≤프로젝트운영상한,새허가에서만한도검사 |
+
+run state=accepted/running/cancel_requested/completed/failed/cancelled/blocked/interrupted. stage=queued/authorization/retrieval/generation/finalizing/terminal. Job state=queued/running/completed/failed/blocked/interrupted/needs_review. index state=staging/building/validated/published/failed/interrupted. call state=reserved/dispatched/usage_unknown/settled/released_no_dispatch. provider_end_status=not_started/observed/unknown과slot_held는별개다. answer_kind=answer/insufficient_evidence/null; API content_status와usage_status는현재 권한/원장에 따라 계산하고 본인 소유만으로final을 반환하지 않는다.
+
+대화 생성은고정agent_key를필수로받아부모row에저장한다. API-10 conversation=null도agent_key로대화생성→질문/run접수를같은transaction으로묶는다. 다른Agent 후속run은409 CONVERSATION_AGENT_MISMATCH·provider0;다른Agent선택은새대화다. 같은client_conversation_id에다른Agent를지정하면409다.config_version은대화에영구고정하지않고신규run마다현재허용설정snapshot을저장한다.
+
+**RAG 본문 RLS의 저장/조회 구조:** portal.runs에는안전state/불투명source_count/provenance_sealed만두고답변본문/quote는복제하지않는다. 답변본문은messages, 인용은answer_evidence에각각저장한다. final 저장transaction에서source_count와전체provenance를동시에seal하고변조/누락을막는다. 정상RAG answer는source_count≥1이며실제FK수와일치해야한다. local insufficient_evidence는정해진비사실안내로구분한다.
+
+`can_read_rag_answer_payload`는본인/current tenant·서버불변Agent/종류·sealed source count·모든exact source의현재publication/ACL/Grant/hash조건을확인한다. 안전run조회가성공해도messages의보호RAG행은SELECT를 허용하지 않는다.assistant본문반환0/쿼리거부 중DDL정책에맞는결과를확인하고직접SQL로우회하지못한다. answer_evidence의현재허용quote만부분조회할수있다. source검사실패/DB장애는fail-closed다.
+
+policy executor에허용하는추가SELECT는run owner/Agent/source_count/sealed와answer_evidence의provenance ID/hash등**비콘텐츠열만**이다. 이열들을읽는role전용RLS/control함수를본문/quote읽기정책과분리하여삭제/회수된source도gate검사대상에서빠지지않게한다. 본문row정책을다시호출하는재귀를피하고단순“보이는근거만ALL검사”로누락을허용하지않는다. executor에message.body/document.title/text/quote/vector SELECT·table ownership/BYPASSRLS를주지않는다. runtime에control전용provenance경로를전체콘텐츠조회로재사용할권한이없음을실제grant/직접SQL로검사한다.
+
+**cleanup:** job_kind/action=internal_cleanup은삭제transaction이특정target/삭제revision/system lease로위임한다. 삭제/사람권한회수 후에도정리만이어가되대상ID최소조회와내용NULL/payload_purged 쓰기만허용한다. 원문/본문SELECT·provider호출·indexpublish 불가. 최소tombstone FK와원장유지,동명다른문서불변. 파생message purge는provenance로대상run을찾는고정함수의write-only동작이며타인대화본문을반환하지않는다. cleanup 완료는실제대상payload정리확인후commit하며API-27 일반index retry 대상이아니다.
+
+rate window purpose는login_input/login_ip/run_admission/document_admission/http_read로구분한다. rate key는current user/tenant/purpose의HMAC이며기존로그인 실패15분창과API분당창을서로혼합/reset하지않는다. 현재계정/membership/globalpermission 검사는창값으로대체하지않는다.
+
+31모델단계별migration 순서는250의기능plan에서FK의존/실제필수시험과함께확정한다. 설계모델31개가현재DB테이블31개생성을뜻하지않으며첫기능의완료를전체RAG/RLS 완료로확대하지않는다.

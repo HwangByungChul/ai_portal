@@ -304,3 +304,9 @@ portal의 삭제 문서 관련 저장 assistant 본문/인용 snapshot 사본도
 [Microsoft GraphRAG Local Search](https://microsoft.github.io/graphrag/query/local_search/)는Graph 구조와원문을함께문맥으로사용하는원리를설명한다.이번MVP의SQL/규칙추출/2hop/tenant권한구현을공식라이브러리가제공한다고가정하지않는다.
 
 [OpenAI Structured Outputs](https://developers.openai.com/api/docs/guides/structured-outputs)는schema기반출력과refusal처리의참고다. schema에맞는값이사실/권한/관련성을증명하지않으므로서버fact검증/현재ACL과실제시험을별도로둔다. 모델/단가/timeout/예산은05를유지한다. runtime라이브러리버전/SDK호환/추출품질/검색측정/DB-RLS/키설정은미확인이다.
+
+## 17. D240-08 통합 결과 — 종합 사용자 검토 대기
+
+03 P-02/18절에all-source RAG payload gate·provenance control열권한·source_count/seal·write-only cleanup을반영했다.04 API표/15절에typedRAG buffer와본문unavailable·processing/publication/cleanup·job_kind를반영했다. 관리자는상태정보로개인title/본문을복원하지못한다. render_current_answer의Agent검사는불변유형/소유binding을확인하는뜻이며,과거저장답변은Agent enabled/config변경만으로차단하지않는다. 현재source/세션/소속gate는계속필수다. internal_cleanup은삭제위임/lease에한정된내용소거이고index처리/공개/유료호출권한이아니다. 개인reader의UI편집은범위밖이며회수시험은신뢰된운영/시험초기화가현재policy를변경해검증한다.
+
+현재 통합 검토/구현 전달: [[200.프로젝트실행/240.설계/09 설계 검토 결과와 구현 전달]]. 선행 작성 당시 후속 계획은 이력이며 실제 구현/시험·유료 호출은 미수행이다.
