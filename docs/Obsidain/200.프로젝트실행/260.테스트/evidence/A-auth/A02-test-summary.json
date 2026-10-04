@@ -60,5 +60,6 @@
     "src/backend/pyproject.toml": "ed3de576a892d0bd132bfbdfe74fe4881d229fa46ec10af6f08acd4e7ead15e5",
     "src/backend/.env.example": "11f21c7f415ebff28fb762170afa5f45c7410946c21f3a059a9de8beeab1802c"
   },
-  "scope_limit": "Actual first 11 business tables and web/owner/tenant/session/pool boundaries. No HTTP authentication, document/Graph permissions, real ledger, browser, V41 or Q20 pass claim."
+  "scope_limit": "Actual first 11 business tables and web/owner/tenant/session/pool boundaries. No HTTP authentication, document/Graph permissions, real ledger, browser, V41 or Q20 pass claim.",
+  "implementation_commit": "3fd5d12bad40533fb248f5b1d374c7e3d3853c05"
 }
