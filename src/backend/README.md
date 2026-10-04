@@ -1,6 +1,6 @@
-# AI 플랫폼 backend — A01~04 인증·조직 관리 기반
+# AI 플랫폼 backend — A01~05 인증·조직 관리와 화면 연결
 
-전용환경/첫11개업무테이블/RLS·풀과실제로그인·본인세션확인·로그아웃이구현되어있다. 조직/관리API까지구현했으며화면·AI는후속이다. health200은 전체 플랫폼 완료를 뜻하지 않는다.
+전용환경/첫11개업무테이블/RLS·풀과실제로그인·본인세션확인·로그아웃이구현되어있다. 조직/관리API와실제포털화면까지연결했으며전체A통합시험·AI는후속이다. health200은 전체 플랫폼 완료를 뜻하지 않는다.
 
 ## 환경과 설치
 
@@ -137,3 +137,9 @@ GET /api/v1/admin/memberships는X-Tenant-ID UUID헤더하나가필수다. 허용
 PATCH /api/v1/admin/memberships/{user_id}는JSON active(strict bool)/expected_revision(양의정수)를받는다. PUT .../{user_id}/role은role USER 또는TADMIN/expected_revision을받는다. Origin/X-Requested-With/CSRF/현재조직헤더는필수이며추가body필드는422다. TADMIN은다른일반USER의소속활성만,담당PADMIN은다른USER↔TADMIN역할/활성변경을허용한다. 자기·플랫폼관리자대상(비활성/미담당포함)·PADMIN부여는차단한다.
 
 행잠금뒤현재권한을재검사하고변경/revision+1/audit/성공세션touch를한transaction에서처리한다. 권한확인뒤없는조직대상404,stale revision409,감사실패·잠금시간초과503이며실패변경은rollback한다. 메타데이터tenant_id는허용된현재문맥만반환한다. 쿠키/CSRF·비밀번호를curl명령이나공유로그에복사하지않는다. 화면연결과브라우저검증은A05다.
+
+## 포털 화면 연결 — A05
+
+src/frontend의README대로같은터미널에서Node22.23.1을선택하고npm ci/npm run dev로실행한다. 포털주소는http://127.0.0.1:5173,이API는127.0.0.1:8000이다. Vite가/api를같은출처로연결하고Origin은바꾸지않는다. 로그인/조직선택/사용자관리는실제API를사용하며프론트설정에web DSN/HMAC/합성비밀번호를복사하지않는다.
+
+A05에서는새시험전용scripts/portal_test_server.py/control.py로별도marker DB/실제API/Vite/Chromium을실행했다. 기존active fixture/실원장의reset권한을추가하지않았고제품HTTP에fault경로는없다. 20개브라우저시험/build통과,테스트종료후API연결0/해당DB·비밀번호파일정리/전용55432정지를확인했다. 기존11개업무테이블과private설정·migration5개·합성9개파일은보존했다. 전체백엔드172시험은A04기록이며A06에서프론트와통합재검증한다.

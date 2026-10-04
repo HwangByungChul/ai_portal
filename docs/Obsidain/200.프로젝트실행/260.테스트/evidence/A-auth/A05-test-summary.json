@@ -1,0 +1,227 @@
+{
+  "task": "I250-A05",
+  "client_date": "2026-10-05",
+  "utc_time": "2026-10-04T22:44:52.725251+00:00",
+  "baseline_commit": "60e0a5845d659879b09a2b45e0e0339f674a62ca",
+  "mode": "mock",
+  "paid_api_calls": 0,
+  "build": {
+    "status": "pass",
+    "command": "npm run build",
+    "modules": 22,
+    "js_bytes": 236820,
+    "css_bytes": 8320,
+    "size_basis": "rounded Vite output"
+  },
+  "browser": {
+    "status": "pass",
+    "passed": 20,
+    "failed": 0,
+    "skipped": 0,
+    "runner_errors": 0,
+    "duration_ms": 29374.291,
+    "command": "npm run test:e2e -- tests/auth-tenants.spec.ts",
+    "tests": [
+      {
+        "test_id": "A05_01_user_login_restore_and_direct_denial",
+        "status": "pass",
+        "duration_ms": 1173
+      },
+      {
+        "test_id": "A05_02_generic_login_failure_and_password_clear",
+        "status": "pass",
+        "duration_ms": 958
+      },
+      {
+        "test_id": "A05_03_tadmin_active_changes_and_protected_rows",
+        "status": "pass",
+        "duration_ms": 1789
+      },
+      {
+        "test_id": "A05_04_padmin_role_changes",
+        "status": "pass",
+        "duration_ms": 1434
+      },
+      {
+        "test_id": "A05_05_no_members_has_no_organization",
+        "status": "pass",
+        "duration_ms": 860
+      },
+      {
+        "test_id": "A05_06_global_permission_does_not_enable_tenant_admin",
+        "status": "pass",
+        "duration_ms": 864
+      },
+      {
+        "test_id": "A05_07_two_tabs_independent_tenants",
+        "status": "pass",
+        "duration_ms": 1326
+      },
+      {
+        "test_id": "A05_08_late_actual_A_response_discarded",
+        "status": "pass",
+        "duration_ms": 1023
+      },
+      {
+        "test_id": "A05_09_membership_revoked_A_keeps_B_and_session",
+        "status": "pass",
+        "duration_ms": 1346
+      },
+      {
+        "test_id": "A05_10_demoted_admin_menu_and_rows_removed",
+        "status": "pass",
+        "duration_ms": 1309
+      },
+      {
+        "test_id": "A05_11_expired_session_clears_content",
+        "status": "pass",
+        "duration_ms": 1310
+      },
+      {
+        "test_id": "A05_12_conflict_refresh_without_auto_mutation",
+        "status": "pass",
+        "duration_ms": 1714
+      },
+      {
+        "test_id": "A05_13_logout_DB_failure_hidden_until_retry_confirmed",
+        "status": "pass",
+        "duration_ms": 1740
+      },
+      {
+        "test_id": "A05_14_logout_network_failure_hidden_until_retry",
+        "status": "pass",
+        "duration_ms": 1112
+      },
+      {
+        "test_id": "A05_15_logout_broadcast_clears_other_tab",
+        "status": "pass",
+        "duration_ms": 1196
+      },
+      {
+        "test_id": "A05_16_read_storage_failure_and_retry",
+        "status": "pass",
+        "duration_ms": 1724
+      },
+      {
+        "test_id": "A05_17_mobile_layout_real_management",
+        "status": "pass",
+        "duration_ms": 994
+      },
+      {
+        "test_id": "A05_18_password_fill_failure_redacted",
+        "status": "pass",
+        "duration_ms": 743
+      },
+      {
+        "test_id": "A05_19_server_cursor_pagination",
+        "status": "pass",
+        "duration_ms": 1359
+      },
+      {
+        "test_id": "A05_20_blank_login_visuals_no_credentials",
+        "status": "pass",
+        "duration_ms": 781
+      }
+    ]
+  },
+  "versions": {
+    "node": "v22.23.1",
+    "npm": "10.9.8",
+    "direct_packages": {
+      "react": "19.3.0",
+      "react-dom": "19.3.0",
+      "vite": "8.3.2",
+      "@vitejs/plugin-react": "6.1.1",
+      "typescript": "7.0.2",
+      "@types/react": "19.3.0",
+      "@types/react-dom": "19.3.0",
+      "@types/node": "22.20.5",
+      "@playwright/test": "1.63.0"
+    },
+    "lockfile_version": 3,
+    "locked_packages_including_other_platform_optional": 73,
+    "installed_packages_reported_by_npm_ci": 30,
+    "react_compiler_installed": false
+  },
+  "development_sequence": [
+    "Disconnected entry: initial login label failure",
+    "Initial build missing Vite CSS types; browser 17 pass/2 fixture-selector failures",
+    "Vite client types, precise role label selector, single DB clock expiry fixture corrected; build/20 browser passes",
+    "Mobile heading spacing and safe reporter hardened; final build/20 browser passes"
+  ],
+  "preserved_inputs_sha256": {
+    "data/synthetic/document_manifest.json": "bfcfaeef880fa1c551dcce5a4bc5061ce4409d781448eca88bd044b803876f6e",
+    "data/evaluation/questions.json": "c36b6e64c4c2db8ceccb3050097e5d592eca0b44cac9768e1176efedda0bdd7e",
+    "data/synthetic/documents/D-S-v1.md": "b0a98ddc64c3b95c9312cc08ad1626e77c402ebcaea69ef0a9a13a039711c026",
+    "data/synthetic/documents/D-A-R2.md": "84ed0eb5be4874b7afaef43dcf177948f320e18b235c9b07f03526bce8806a7c",
+    "data/synthetic/documents/D-B-P.md": "049c0103b6b3f426e2bd0a64c7f004d146b55b9f64432d187ba6b9a9b6becb90",
+    "data/synthetic/documents/D-A-P.md": "b3b5b3500dc9befe7d50b7eba3438a90a6efbe56b08cb7c8400a5e3b5a262d46",
+    "data/synthetic/documents/D-A-R1.md": "b21abba9786aa11c43d57a3899e52208bb253af342ea691ad198ca9b9639f509",
+    "data/synthetic/documents/D-S-v2.md": "e2d5db78c6c61638a30a2b61efaad9fd7cb59b4eb2dbad77bcdd3b4058efc859",
+    "data/synthetic/documents/D-B-R1.md": "5bb42596cd3c5e656e5aa543ec4d939f9f8c83bd831f7434d707a64b1198bf07"
+  },
+  "unchanged_applied_migrations_sha256": {
+    "src/backend/migrations/002_context_control.sql": "06bace1838d4def9e47d7162f3db0276a9fd5722399ac268ee06e4d23d3a3500",
+    "src/backend/migrations/001_auth_portal.sql": "1cea48eca5c80c13bbccb07aeebe38c9380e26fe8e2dfaea909b276b43009b3c",
+    "src/backend/migrations/003_session_control.sql": "9595273cb0bc0d37bd6e9bd1af7bae141cdb6a33e7e03bd5e8747b00e12b3d59",
+    "src/backend/migrations/004_membership_control.sql": "312a448b529c724cd21d3cfb77987ce4e628878058f96e14b52d938f9ce358a3",
+    "src/backend/migrations/000_roles.sql": "93eb2ed791a0c65e507b5bb84ec94e25d6bbd58da989f854680cee2bb6895047"
+  },
+  "tested_source_sha256": {
+    "src/backend/app/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/backend/app/auth/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/backend/app/auth/crypto.py": "df0d8314077ffa75183969205b43ef137a8cec5188b69866cbaf03f55a5cf08e",
+    "src/backend/app/auth/guards.py": "6dfe923f2f2bf835677a7b310377cbd6bb447789111fc61ff623432db4799146",
+    "src/backend/app/auth/repository.py": "e5952131a85e7397f7ba25e0911616946c8d17b5687a1086c593fec30f4140c9",
+    "src/backend/app/auth/routes.py": "5833792214d5877bdf4caeb51fac7703c4f9053b14a294f1fcb7448936cfde01",
+    "src/backend/app/auth/service.py": "fbed9213288b7bb831d5efe07d37f79cbf58f6c45253aa9bb3fa5d2a1e1d3d82",
+    "src/backend/app/config.py": "26e08ae6e1c70bd13016a461df6be4bda0b072a5ec5061f87993a4a71dac9e73",
+    "src/backend/app/db.py": "7e473765c3bc83c3f3f5ba741e30b22d097bb34579775a22dd7bd985aea9fa67",
+    "src/backend/app/errors.py": "6c639019e98b6f7cc4d43f0f749c163a75ed31e989f711ac2a993f334d22a281",
+    "src/backend/app/main.py": "90780f3625f54abeab86f9e61f9ee116cbb90e360c0e82eba76be4e9f3e63299",
+    "src/backend/app/tenants/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/backend/app/tenants/repository.py": "bbf044e117b2c672dee37032323a1ecd2cfc9b4e57c021c28e19dc9fce87689c",
+    "src/backend/app/tenants/routes.py": "24d4fc9de7f7078abe47b9dfa6312d820caa0080165e794f38a70dff7282d396",
+    "src/backend/app/types.py": "8cdbab6de928a1f856a91134f3ad222f3313b5166e141f1128851188b4f464cd",
+    "src/backend/migrations/000_roles.sql": "93eb2ed791a0c65e507b5bb84ec94e25d6bbd58da989f854680cee2bb6895047",
+    "src/backend/migrations/001_auth_portal.sql": "1cea48eca5c80c13bbccb07aeebe38c9380e26fe8e2dfaea909b276b43009b3c",
+    "src/backend/migrations/002_context_control.sql": "06bace1838d4def9e47d7162f3db0276a9fd5722399ac268ee06e4d23d3a3500",
+    "src/backend/migrations/003_session_control.sql": "9595273cb0bc0d37bd6e9bd1af7bae141cdb6a33e7e03bd5e8747b00e12b3d59",
+    "src/backend/migrations/004_membership_control.sql": "312a448b529c724cd21d3cfb77987ce4e628878058f96e14b52d938f9ce358a3",
+    "src/backend/scripts/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/backend/scripts/devdb.py": "b34820eeaf8aeab64a8c552920f37cbfbe58519d2444743a0506d6b15c521972",
+    "src/backend/scripts/migrate.py": "00e6d2a9150faba55c882b89f9f07ade6b7729592387fa678f76ed39a8379bc3",
+    "src/backend/scripts/portal_test_control.py": "2d1824748de3fb3e0ae486cf73977ed7ea83f3de1774999a9f606b9366653f1f",
+    "src/backend/scripts/portal_test_server.py": "53b37501387d249836a1d9aa71530a7f2a69e07341b18c5f099b365f73e60a58",
+    "src/backend/scripts/seed.py": "53486b1a6e255995c4ebb718465b7467464b89036ffc40b15f32dc9be69bbc71",
+    "src/frontend/.nvmrc": "7d2df647f25529bd87500319c41564e032e2be642e565350fa6136d7a1ec4d10",
+    "src/frontend/index.html": "ca7eb029ee06457d5e53d07fc0d983666b4ceb4b1b5bea4868269f4b3458704d",
+    "src/frontend/package-lock.json": "401c8c23464f53627b0c6f3d9aee6ddb578ea26eaf84e78237556b4e7a3a03f0",
+    "src/frontend/package.json": "1b6be302c5f51766d0af497a5235762faf98ffad54a0387932ad4be0461d8236",
+    "src/frontend/playwright.config.ts": "36e0f6fd7bed7a7474e1d9f170c8a4e6aa50c77f0b04ff411eeb5be4ba6b256a",
+    "src/frontend/src/App.tsx": "ae273387368328b19fb2fea6e81e0b7648daaee05ed096b9bdc10d1328c4df5a",
+    "src/frontend/src/LoginPage.tsx": "f521e41bae95708a25b572fff6ea62efe587653348b936ce249b9fbed424822d",
+    "src/frontend/src/MembersPage.tsx": "1ffbc7c09277dccf04539c73dd061bcfd1f5e09e63df8dce377683ae5dcb2495",
+    "src/frontend/src/TenantHeader.tsx": "720c8897fcfcdeab7341e31131f3f3c340ac585330001499394fc48689a3457d",
+    "src/frontend/src/api.ts": "195251831600bd795d2db561156a8e519de60cc5b411dc8338cd7e7649be1ef6",
+    "src/frontend/src/main.tsx": "0618b26fb98720701ba546bf5bff7ffe2b0e9c06009d2ff9d9e03ea9eb2be3aa",
+    "src/frontend/src/session.ts": "0812bf82902c83ad045befa3624a0caa3fd2d444686bbabd06380a25da95f185",
+    "src/frontend/src/styles.css": "a794f13573d8cfb3a785fd4720bbd35e97fa707550f87ef6c4f1d272b14f006a",
+    "src/frontend/src/types.ts": "daa1a9bd89dd3963bbf6b6634bec8791cfad27dc172b2320d08743ea8bad94d4",
+    "src/frontend/tests/auth-tenants.spec.ts": "e982b546e7e5be3268007300c0f505ee09609cdceb6db47750b5e271e704b986",
+    "src/frontend/tests/safe-reporter.ts": "92730b4f5655d870c69446ca0b8a210b79a4734b5957cdc512f3487ba4f4094b",
+    "src/frontend/tests/support.ts": "df0539e23d3310cd69581caa0a13135eedcc65aa3bebafc3fc9abc9ed3133d59",
+    "src/frontend/tsconfig.json": "5736d64481f5b17801326a293310614ef37a82d07a8437e977ee98ad4141eb82",
+    "src/frontend/vite.config.ts": "9947f9973727f9349ae23802532319869ad4da62a59c885843b69c9433836761"
+  },
+  "visuals": {
+    "screenshots": "Only empty login form; no user/password/session entered",
+    "desktop": "A05-login-desktop.png",
+    "mobile": "A05-login-mobile.png"
+  },
+  "human_learning_hours": null,
+  "scope_limit": "A01~05 implemented; A06 integrated restart/outage/performance not run. A04 backend 172-case result is historical and was not rerun in A05. AI/GraphRAG/document grants/Q20/full V41 not completed.",
+  "wall_elapsed_minutes_since_baseline": 498.8,
+  "active_automated_work_minutes": null,
+  "elapsed_basis": "Calendar elapsed since baseline includes user response/resumption delay; not active work or personal learning time."
+}

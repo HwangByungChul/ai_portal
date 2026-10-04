@@ -1,0 +1,24 @@
+{
+  "task": "I250-A05",
+  "client_date": "2026-10-05",
+  "status": "pass",
+  "paid_api_calls": 0,
+  "primary_business_tables_unchanged": true,
+  "primary_tables": 11,
+  "app_environment_unchanged": true,
+  "synthetic_evaluation_inputs_unchanged": true,
+  "previous_migrations_unchanged": true,
+  "cleanup": {
+    "kind": "A05-runtime-cleanup",
+    "api_pool_connections": 0,
+    "fixture_removed": true,
+    "private_credentials_removed": true,
+    "database_state_after": "stopped"
+  },
+  "build_and_browser_wall_seconds": 31.59,
+  "test_runtime": "Owned marked disposable DB, real Uvicorn and Vite, Chromium browser",
+  "primary_fixture_reset": false,
+  "test_fault_scope": "Only private A05 fixture, never product HTTP fault routes",
+  "failure_output": "Sole safe reporter; no error/body/stdout/attachment fields in public evidence; real password-fill failure redaction tested",
+  "screenshots": "Blank login only; automatic trace/video/failure screenshots disabled"
+}
