@@ -28,3 +28,12 @@ class Settings(BaseSettings):
               or parsed.password or parsed.path or parsed.query or parsed.fragment):
             raise ValueError("HTTPS origin must contain only a scheme, host and optional port")
         return self
+
+    @property
+    def session_cookie_name(self) -> str:
+        return 'ai_session_dev' if self.profile == 'local' else '__Host-ai_session'
+
+    def require_auth_configuration(self) -> None:
+        secret = self.login_hmac_secret.get_secret_value() if self.login_hmac_secret else ''
+        if self.web_dsn is None or len(secret) < 32 or not secret.isascii():
+            raise ValueError('AUTH_CONFIGURATION_REQUIRED')

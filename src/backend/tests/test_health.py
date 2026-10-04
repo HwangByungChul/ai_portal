@@ -6,7 +6,7 @@ from app.main import create_app
 
 
 def test_health_has_only_safe_status():
-    with TestClient(create_app()) as client:
+    with TestClient(create_app(health_only=True)) as client:
         response = client.get('/api/v1/health')
     assert response.status_code == 200
     assert response.json()['data'] == {'status': 'ok'}
@@ -20,6 +20,6 @@ def test_health_has_only_safe_status():
 
 
 def test_health_needs_no_database_and_does_not_publish_login():
-    with TestClient(create_app()) as client:
+    with TestClient(create_app(health_only=True)) as client:
         assert client.get('/api/v1/health').status_code == 200
         assert client.post('/api/v1/auth/login', json={}).status_code == 404

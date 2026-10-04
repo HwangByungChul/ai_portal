@@ -1,0 +1,37 @@
+{
+  "task": "I250-A03",
+  "paid_api_calls": 0,
+  "initial_cluster_state": "stopped",
+  "primary_pending_migrations_applied": [
+    "003_session_control.sql"
+  ],
+  "session_survives_api_restart": true,
+  "automatic_me_does_not_touch_idle": true,
+  "login_failure_window_survives_api_restart": true,
+  "logout_old_cookie_denied": true,
+  "window_counts": {
+    "login_input": 5,
+    "login_ip": 7
+  },
+  "forwarded_ip_ignored": true,
+  "connections_after_stop": 0,
+  "argon2_verification_ms": {
+    "samples": [
+      29.67,
+      24.18,
+      24.08,
+      24.96,
+      24.97
+    ],
+    "mean": 25.57,
+    "memory_kib": 19456,
+    "time_cost": 2,
+    "parallelism": 1
+  },
+  "secrets_in_runtime_logs": false,
+  "existing_web_credentials_and_hmac_preserved": true,
+  "final_cluster_state": "stopped",
+  "original_migrations_unchanged": 3,
+  "synthetic_evaluation_inputs_unchanged": 9,
+  "scope_limit": "API restart evidence covers only A03 session and login window persistence; A06 complete integration/restart/DB outage/browser is still pending."
+}

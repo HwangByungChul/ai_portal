@@ -32,3 +32,24 @@ def db_fixture(owned_cluster):
 
 @pytest.fixture
 def fixture_state(db_fixture): return db_fixture
+
+@pytest.fixture
+def auth_settings(db_fixture):
+    from pydantic import SecretStr
+    from app.config import Settings
+    from app.auth.crypto import new_secret
+    return Settings(web_dsn=SecretStr(db_fixture.db.runtime_dsn()),login_hmac_secret=SecretStr(new_secret()))
+
+@pytest.fixture
+def client(auth_settings):
+    from fastapi.testclient import TestClient
+    from app.main import create_app
+    with TestClient(create_app(auth_settings),base_url='http://127.0.0.1:8000',client=('127.0.0.1',50000)) as client:
+        yield client
+
+@pytest.fixture
+def login(db_fixture):
+    from support import login as perform_login
+    def call(client,actor):
+        return perform_login(client,actor,db_fixture.passwords)
+    return call

@@ -71,7 +71,7 @@ def test_internal_context_mismatch_and_missing_tenant_fail(db_fixture):
 
 def test_app_lifespan_uses_web_pool_and_closes(db_fixture):
     settings=Settings(web_dsn=SecretStr(db_fixture.db.runtime_dsn()))
-    app=create_app(settings)
+    app=create_app(settings,health_only=True)
     with TestClient(app) as client:
         assert client.get('/api/v1/health').status_code==200
         pool=app.state.pool
