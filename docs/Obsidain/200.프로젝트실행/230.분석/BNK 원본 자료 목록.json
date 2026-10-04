@@ -1,0 +1,571 @@
+{
+  "checked_date_kst": "2026-10-04",
+  "root": "/Users/jwpios/antigravity/20260824_BNK _그룹 공동 생성형 AI 플랫폼 도입",
+  "asset_count": 93,
+  "excludes": [
+    "archives not expanded",
+    "reference/client portfolio",
+    "migrated development reviews",
+    "temporary Office lock files"
+  ],
+  "assets": [
+    {
+      "path": "01.RFP/붙임 1. 제안요청서(RFP)_그룹 공동 생성형 AI 플랫폼 도입.docx",
+      "bytes": 237996,
+      "sha256": "1056537c1c22200e47ddd910030e0f9b600be7d70594ee68fe8488c2dd9305da",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "01.RFP/붙임 2. 서식_그룹 공동 생성형 AI 플랫폼 도입.docx",
+      "bytes": 49089,
+      "sha256": "76c9e2f19255bf92689d7a3a838ff827aebca3f7721a03bdde2fab0fd0281177",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "02.제안목차/BNK_AI플랫폼·AI거버넌스포털_제안서상세작성계획(황병철)_v0.3.xlsx",
+      "bytes": 122720,
+      "sha256": "891fe96896c14556e042be229afdab98413343c54c2148a67f3dadef6fc2a203",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "02.제안목차/BNK_AI플랫폼·AI거버넌스포털_제안서상세작성계획_v1.0.xlsx",
+      "bytes": 82252,
+      "sha256": "452555b1980f46e48fd1413766f17414f84f43f31f1addef4de29403a017856f",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "02.제안목차/BNK_금융지주_홈페이지_재구축_RFP_반영_제안목차_v0.5.xlsx",
+      "bytes": 67102,
+      "sha256": "497f44cbab9fc15af6fe783f012513df31c5cfa2a7f95b24454a72e2ecf8115f",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "02.제안목차/BNK금융지주_그룹공동AI플랫폼_제안준비_체크리스트_v2.1_20260824.xlsx",
+      "bytes": 55010,
+      "sha256": "c14b0112d1c020f1ff39466d46ef94bc6df12accea6b1cef215de6c8718aac65",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "02.제안목차/BNK금융지주_그룹공동AI플랫폼_제안준비_체크리스트_v2.1_20260825 JWP.xlsx",
+      "bytes": 56338,
+      "sha256": "641d5ab806c982f063994a2c826c5941c2d2c83daaa80aef2b212f333360893a",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "02.제안목차/BNK금융지주_그룹공동AI플랫폼_포털_v4_20260826_JWP_연계검토.xlsx",
+      "bytes": 32751,
+      "sha256": "cbed4e06dfc1111f1e698ffa4f4ddfeddb48de68523d6341d39bf72a65d076ff",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "03.사전분석/BNK_AI_거버넌스_포털_애플리케이션_아키텍처_HighEnd_v3.png",
+      "bytes": 626241,
+      "sha256": "fde39ac9a678219e25a919e560309db058ddff91564decfe2cdc52fc7fb303a9",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "03.사전분석/BNK_AI_거버넌스_포털_전체_기능_구성도.png",
+      "bytes": 591284,
+      "sha256": "e8825a391aebc8e884d8e7a2aca860370aade104e535411b42768e0209a2d3a2",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "03.사전분석/BNK_그룹_공동_생성형_AI_플랫폼_전체_기능_구성도.png",
+      "bytes": 762533,
+      "sha256": "6a96fc8496feac070f3cc04cc6060c623accb6f17977400bae5a5bd2bc0dfd30",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "03.사전분석/BNK_그룹_공동_생성형_AI_플랫폼_전체_아키텍처_구성도.png",
+      "bytes": 685576,
+      "sha256": "c4ccbe5940be221b5734a01a2854cc167bba159c3efd71f21be0f474c93457e9",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "03.사전분석/BNK_그룹_공동_생성형_AI_플랫폼_제안전략_보고서_20260824.docx",
+      "bytes": 2468614,
+      "sha256": "46dc81b1fae2fc5f8fc6b7156478d8e5a499e7bc11f95bc20cfcc921bce7f2d2",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/2차/4.2-01_AI_Chat_화면_2차.png",
+      "bytes": 231710,
+      "sha256": "88886bd858783c1320ffa73ddbab2eb66ae4b6168b97c6077a6ed0af81daa9f9",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/2차/4.2-02_My_Agent_목록_2차.png",
+      "bytes": 233794,
+      "sha256": "9d6c951d59c208e7ac2ff9daf0034177fe005f0ec552171e6e546639df00844f",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/2차/4.2-03_Agent_상세_2차.png",
+      "bytes": 214501,
+      "sha256": "11296224dca4aa458e6446b31fe71289c5fd59d13d485a9fda132bce84b655b9",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/2차/4.2-04_My_Knowledge_2차.png",
+      "bytes": 213137,
+      "sha256": "19adf62673c091e3e1a03f2a21fdb08ea6125d0e236fa771352c7760f28e1c7e",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/2차/4.2-05_대화이력_개인설정_2차.png",
+      "bytes": 186173,
+      "sha256": "1ab2e04a748d4a03940078f40c96d7c94e1cb0c069fda34e23317a9783ce36bf",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/2차/BNK_AI_플랫폼 통합 진입_Home_화면_v1.png",
+      "bytes": 1265768,
+      "sha256": "8e70ca00d960367a740b4b2560b83db2169ff682a48b486dfdbfa01c0ed984e0",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/4.2-01_AI_Chat_화면.png",
+      "bytes": 205055,
+      "sha256": "839e05614e627791cab745f8fa14fde6632a38dbba0f266eeb8d02278417955d",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/4.2-02_My_Agent_목록.png",
+      "bytes": 184986,
+      "sha256": "bfdcd8283fab4933672be08c93563b0a16df808cd0bec1d2d3ab0a20f64b8aac",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/4.2-03_Agent_상세.png",
+      "bytes": 171709,
+      "sha256": "a8f8c6cc73068492b8a7cc3e184a0245d1f17b1f3ffd7c1876e929de8753b348",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/4.2-04_My_Knowledge.png",
+      "bytes": 172307,
+      "sha256": "a2c0cd82f462811d733ce481931a5a4551beafed4cc4275e9f1ba5fcb09bf1bc",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/4.2-05_대화이력_개인설정.png",
+      "bytes": 163949,
+      "sha256": "12c5338c77f22315b2363dd0dec954a6eba628ba6f38b5c80f29d30c0d44a7de",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/4.3-01_Marketplace_Home.png",
+      "bytes": 193499,
+      "sha256": "181ad17ddd575833bc4026f889fa859eff42e6a0ca75883c481023ab4a83c02d",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/4.3-02_통합카탈로그_검색.png",
+      "bytes": 171240,
+      "sha256": "20da3d5e23dc9b7b063f603de699c7e720446db3679a92225661c2efeb65bd06",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/4.3-03_Agent_상세_권한신청.png",
+      "bytes": 166984,
+      "sha256": "580bd449795c2281654f06b472b18fdf54a3c7785ea73052d103ded39af2a1e6",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/4.3-04_AI자산_템플릿_복제.png",
+      "bytes": 169601,
+      "sha256": "f5f94558b33b0d35986b51f00f6de9f44a23dd041b72a832e6e98d4298f60b39",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/4.3-05_My_Marketplace.png",
+      "bytes": 173129,
+      "sha256": "5f78cf5529523d308ea0bb2bb56720ecceb6bcd8d9bd20a9788c7c9c9a4ac7ce",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/4.3-06_커뮤니티_지식공유.png",
+      "bytes": 185975,
+      "sha256": "a1a29de887a315e936996923472aaf9792b6109a7fd363c15db38ea2a85bb741",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/4.4-01_Builder_Home.png",
+      "bytes": 177696,
+      "sha256": "a19250bcb350e256c02f7a8b20332d6e0f99ead5ddc4c4cac65ebf92939ef3f1",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/4.4-02_Agent_기본설정_Prompt.png",
+      "bytes": 186635,
+      "sha256": "2ccc0cbc84d7d9ff1c40f0593489a34bab76b51aa103d66f7e54b559fee0757c",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/4.4-03_Workflow_Canvas.png",
+      "bytes": 170785,
+      "sha256": "5e8933bb0fdb6d4a5820a26046ffe83ef0cfd1289fc443f269e8af3957f7ca49",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/4.4-04_Knowledge_RAG_설정.png",
+      "bytes": 188610,
+      "sha256": "e4456c2784074fedca701e5145115937d617b354648a6482ce3ab38e7061758a",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/4.4-05_MCP_Tool_연동.png",
+      "bytes": 190516,
+      "sha256": "5473f497c1153e6d833259cc9762c04ab18567886377d047c81bf636ae988419",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/4.4-06_Test_Trace_Debug.png",
+      "bytes": 187387,
+      "sha256": "08ae49e9135a08df94cf5660b7b85b1a2d2fab3acac2b57c0441b86ccc1244e1",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/4.4-07_평가_승인_배포.png",
+      "bytes": 190405,
+      "sha256": "93050788a7a42fa31514154abf7758025601857e46df70e09a2af8f4e20e6dd7",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/5-01_통합_거버넌스_대시보드.png",
+      "bytes": 162611,
+      "sha256": "99eb3c35a81ea250d2fb0cf5a0c201b6c41717754a28f2de72d4279c15fbf63c",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/5-02_AI_자산_등록부.png",
+      "bytes": 173158,
+      "sha256": "3cf75b8321250983d45758bb1f6be304869dc50d1bc92fd4a9cb648e0f0847ca",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/5-03_AI_위험평가.png",
+      "bytes": 168588,
+      "sha256": "ecf1e13017898bfbc65d7553a550100c87cd499c1ec45423359b9faae99d4616",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/5-04_정책_가드레일_관리.png",
+      "bytes": 173865,
+      "sha256": "1e38322a58a4d69b803781b45bb617ab33bba25fe64af629ebede32fb7335385",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/5-05_데이터_Scope_접근권한.png",
+      "bytes": 169759,
+      "sha256": "2861a1183c824a7da7cfdeea2d4d463df07c8475383791d8c7316f41a8208d71",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/5-06_예외_승인_Workflow.png",
+      "bytes": 183815,
+      "sha256": "7de6ab76e9af46ade2241622e2e5fe963f027c1400755440f168a5ace8a98fb3",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/5-07_모니터링_감사로그.png",
+      "bytes": 155829,
+      "sha256": "65b5e356ee30f4a117e9f7470fa4a6a3cfd4ad946da0cc1ae2961d1065d83137",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/5-08_컴플라이언스_보고서.png",
+      "bytes": 187751,
+      "sha256": "4ed13cbc0b793c1054ec2a9fcee1031efd8e11b99c6d8c4e8e736b0f3f51f43a",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/6-01_플랫폼_운영_대시보드.png",
+      "bytes": 172795,
+      "sha256": "c27ff5fcac2fb48944fd0972921cf77f05e3042de233523fb4fe6f84694616eb",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/6-02_사용자_역할_권한.png",
+      "bytes": 162567,
+      "sha256": "cd4cea829757f2769ac7f1caec54cec4411186d2640b0a9e9791bd7664fc31b6",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/6-03_AI_서비스_자산_운영.png",
+      "bytes": 171614,
+      "sha256": "b48d19d4f3dbe110a16ff23e615f47fba82e0d58690aeceb06672b56a7fafd07",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/6-04_계열사_AI_과제_관리.png",
+      "bytes": 156538,
+      "sha256": "9702426da6934d1cd1725dea6e953ab84b5299d5019734f310f99e45db19d3e3",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/6-05_GPU_CPU_Quota_자원관리.png",
+      "bytes": 163591,
+      "sha256": "5a4901f96ea5a75eb983d6f2bfb159062d72d8f322db0d70bc77075a57df4ebf",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/6-06_서비스_배포_환경_Rollback.png",
+      "bytes": 162974,
+      "sha256": "952843300a242067cbf6a1d446cc4cf0bab83377bb324a91e5b48c92fc944412",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/6-07_모니터링_미터링_빌링.png",
+      "bytes": 159735,
+      "sha256": "6e21df14e330c169255772dd2b9668290cdc33f95998b7541b7d0d84bd1cb471",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/6-08_콘텐츠_사이트_커뮤니티.png",
+      "bytes": 167084,
+      "sha256": "c78cd6d00068b45f0e787719c4b02d9a0fc11b96b79b54eafc02dc1bce0f756f",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/BNK_AI_플랫폼_통합진입_Home_화면_v1.png",
+      "bytes": 239984,
+      "sha256": "4a527df037e3b5130978fb373031bbafb9b047b3d4a96a61c7d2e95b15eafbcb",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "04.시연/BNK_AI_플랫폼 통합 진입_Home_화면_v1.png",
+      "bytes": 1265768,
+      "sha256": "8e70ca00d960367a740b4b2560b83db2169ff682a48b486dfdbfa01c0ed984e0",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "05.작업/BNK_S-001_포털구축범위와목표.pptx",
+      "bytes": 213739,
+      "sha256": "cfbd9898ccf7a5114aa07ff9d5af85750357a85619508ee93f4ff6a9c8653a49",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "05.작업/BNK금융지주_그룹공동생성형AI플랫폼도입_제안서_취합_20260902_공유.pptx",
+      "bytes": 11647521,
+      "sha256": "f11268f7885edd0fb2305cf789ce2670800b3838b26f66da70af7fbfb3d3a2ea",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "05.작업/BNK금융지주_그룹공동생성형AI플랫폼도입_제안서_취합_20260902_원본.pptx",
+      "bytes": 28747091,
+      "sha256": "9bfe97eb08ed0641698ebd6be6e98c936eeb8ef9918cdf9291b6709063e79581",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "05.작업/BNK금융지주_그룹공동생성형AI플랫폼도입_제안서_파트너협업_v0.1.pptx",
+      "bytes": 355729,
+      "sha256": "6941a5facfc96db43193b850bfc3ad345b13cc79563b164c0e174a072edcf485",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "10.Obsidain/그룹 공동 생성형 AI 플랫폼/01. 실제 구축 설계/00-index.md",
+      "bytes": 1482,
+      "sha256": "3a363fac0f98b3568296401176570eb69100a87f4c2b1280953c850d3964583b",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "10.Obsidain/그룹 공동 생성형 AI 플랫폼/01. 실제 구축 설계/01-target-architecture.md",
+      "bytes": 3680,
+      "sha256": "950731a085c83002d26325222675b8a7f3c1d9d9c30880f711c87f200c6c096c",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "10.Obsidain/그룹 공동 생성형 AI 플랫폼/01. 실제 구축 설계/02-component-boundaries.md",
+      "bytes": 3934,
+      "sha256": "e0ac0443cba8f6ec6bcce2384dbb1c626680436b5ab22d09f434593303b90dfe",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "10.Obsidain/그룹 공동 생성형 AI 플랫폼/01. 실제 구축 설계/03-tenant-data-security.md",
+      "bytes": 7146,
+      "sha256": "9aab44743128ef1edc5000406ccfcf3cb067adcbd2a019311a6268a5567e5317",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "10.Obsidain/그룹 공동 생성형 AI 플랫폼/01. 실제 구축 설계/04-ai-services.md",
+      "bytes": 5124,
+      "sha256": "c653d97f3d7982ea7b0a0ea4716abd0213ba51529167ea68212552c11e1459f8",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "10.Obsidain/그룹 공동 생성형 AI 플랫폼/01. 실제 구축 설계/05-lifecycle-data-flow.md",
+      "bytes": 4414,
+      "sha256": "c4e154d09de0cc5afa841c2240555ce7ba8fbc000c043622119c0993b446bdf8",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "10.Obsidain/그룹 공동 생성형 AI 플랫폼/01. 실제 구축 설계/06-resilience-operations.md",
+      "bytes": 4702,
+      "sha256": "8c0b2fe16b43ac44f74f14b14bc7f4d7c85e8a94d8ede0f6ed0a61b33368524f",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "10.Obsidain/그룹 공동 생성형 AI 플랫폼/01. 실제 구축 설계/07-testing-acceptance.md",
+      "bytes": 4416,
+      "sha256": "a3a4c05a814f825d513b8ac2d68c5a32211c4838ac74b24c316e3d1a9c2ae912",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "10.Obsidain/그룹 공동 생성형 AI 플랫폼/01. 실제 구축 설계/08-eight-month-roadmap.md",
+      "bytes": 3984,
+      "sha256": "9c427aca46d87b6999a5123ef37b78b978eabc55d18d1c1480b444cc6dcbe682",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "10.Obsidain/그룹 공동 생성형 AI 플랫폼/01. 실제 구축 설계/09-rfp-traceability-baseline.md",
+      "bytes": 5790,
+      "sha256": "00cfb828c2e3b2c874bdad3c7936b662d7677a62abce86d50e136919cd8422d5",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "10.Obsidain/그룹 공동 생성형 AI 플랫폼/01. 실제 구축 설계/2026-08-25-bnk-group-ai-platform-build-design.md",
+      "bytes": 7150,
+      "sha256": "e6eadcc37c614798ff1ee8aff43b97122846d24bd22146c5c5431c31e09171e1",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "10.Obsidain/그룹 공동 생성형 AI 플랫폼/02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "bytes": 55344,
+      "sha256": "358476fb394fecc900705ae76eb8905a42054403099aa57add7ca81b3f125802",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "10.Obsidain/그룹 공동 생성형 AI 플랫폼/03. IA/2026-08-25-bnk-ai-platform-ia-design.md",
+      "bytes": 11433,
+      "sha256": "ecd6a83d4735137bd0d6d5fae4a07732d6efcfde17890200389458d700bb8397",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "10.Obsidain/그룹 공동 생성형 AI 플랫폼/03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+      "bytes": 98442,
+      "sha256": "d5fd478da8bc345aa0ce22b5eb96843fb79680abbd3f409b523a4471b1f2a388",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "10.Obsidain/그룹 공동 생성형 AI 플랫폼/04. 아키텍처/2026-08-25-bnk-multitenant-software-architecture-image-design.md",
+      "bytes": 7291,
+      "sha256": "f8589e299a9a15700e6e9591d0e045d7c9393326e8ea018a39ac3d4604146bf1",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "10.Obsidain/그룹 공동 생성형 AI 플랫폼/04. 아키텍처/BNK_그룹공동AI플랫폼_멀티테넌트_SW아키텍처_v1.0.png",
+      "bytes": 1046117,
+      "sha256": "b43ce54dec026af7d18b14bc1a691eb6a670178e09a89ef6ad1d2ab96d35ecbf",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "10.Obsidain/그룹 공동 생성형 AI 플랫폼/환영합니다!.md",
+      "bytes": 285,
+      "sha256": "197b64d57cbc963bc0a0ed4df92de7226b3d8a1474464d03964b8e71eb2bf8d5",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "11.구축/BNK_AI_거버넌스_포털_전체_기능_구성도.png",
+      "bytes": 591284,
+      "sha256": "e8825a391aebc8e884d8e7a2aca860370aade104e535411b42768e0209a2d3a2",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "11.구축/BNK_End_to_End_Multi_Tenant_Architecture_PPT_구성안.md",
+      "bytes": 19586,
+      "sha256": "edcfea5ca6699cf7a9de39249ad8197d4c1bd75bba81ec5b5ca153ddddc0400d",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "11.구축/BNK_그룹_공동_생성형_AI_플랫폼_전체_기능_구성도.png",
+      "bytes": 762533,
+      "sha256": "6a96fc8496feac070f3cc04cc6060c623accb6f17977400bae5a5bd2bc0dfd30",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "11.구축/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "bytes": 55344,
+      "sha256": "358476fb394fecc900705ae76eb8905a42054403099aa57add7ca81b3f125802",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "11.구축/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+      "bytes": 98442,
+      "sha256": "d5fd478da8bc345aa0ce22b5eb96843fb79680abbd3f409b523a4471b1f2a388",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "11.구축/BNK_통합_AI_포털_상세_기능_구성도_v2.png",
+      "bytes": 394597,
+      "sha256": "ecad5daa9a75b0066dbc9bcfd7daa524ad59c810efc43f1b5d5d2ff41619adc0",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "11.구축/Codex 이미지 2026년 8월 26일 오전 09_45_25.png",
+      "bytes": 368290,
+      "sha256": "512fc5743c89a914a4bde3599743b7e35977ed689b6e31b1c3b4a2ba1d5d7957",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "11.구축/Codex 이미지 2026년 8월 26일 오전 09_48_40.png",
+      "bytes": 305320,
+      "sha256": "d44805b0c5daee089bf5bdb85c50da12fbf6d50ee37930d655db7b9804f15f9f",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "11.구축/Codex 이미지 2026년 8월 26일 오전 10_02_57.png",
+      "bytes": 931676,
+      "sha256": "9fac6880499d31075cafb6b2d8f89048bf73d4e9360f405fe1637c1927a174f8",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "11.구축/Codex 이미지 2026년 8월 26일 오전 10_12_14.png",
+      "bytes": 419161,
+      "sha256": "c43a3bf7cf8fe0150f901eb7b0ab09120f9442c8719c85080c25323eb1a32a0b",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "11.구축/Multi Tenant Architecture 2.png",
+      "bytes": 1683967,
+      "sha256": "3b2bb34cb249c9399e759d881b4905e8dc89fa3e630382b0dbae4562e076a925",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "11.구축/Multi Tenant Architecture.png",
+      "bytes": 1683967,
+      "sha256": "3b2bb34cb249c9399e759d881b4905e8dc89fa3e630382b0dbae4562e076a925",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "11.구축/그룹공동AI플랫폼_상세범위_정리본.xlsx",
+      "bytes": 35931,
+      "sha256": "233a3c930dc7cc98501ac70207737fba39e3fdc3353b5ddd7011a0a4ff31beb1",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "11.구축/목표 시스템 구조_최종.png",
+      "bytes": 1805048,
+      "sha256": "b9dd027c4eaf1cfef39cd3ef342b043334de14b279917300c62079c5814104e1",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "11.구축/인프라 아키텍쳐_2.png",
+      "bytes": 1788577,
+      "sha256": "70397d9e736c6aac73c577c60c8611c809d7a89b3de9858f9acc18476c3f72db",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "11.구축/하드웨어 구성도.png",
+      "bytes": 1506920,
+      "sha256": "3ec620c944a94b6f93b7084514b96a1d7a94b4c8c6da256e3b98eaba6015f0ea",
+      "inspection": "location and content fingerprint only"
+    },
+    {
+      "path": "11.구축/하드웨어_네트워크 구성도.png",
+      "bytes": 1719706,
+      "sha256": "f663776c6730982a36e4e24f12b678bd149b04ecac0a855ece12948637923b25",
+      "inspection": "location and content fingerprint only"
+    }
+  ]
+}
