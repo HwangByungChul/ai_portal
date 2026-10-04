@@ -940,5 +940,6 @@
       "status": "pass",
       "duration_ms": 883.0
     }
-  ]
+  ],
+  "implementation_commit": "928b25d6b67b4fd6b84205d88d86fb373e509ab5"
 }
