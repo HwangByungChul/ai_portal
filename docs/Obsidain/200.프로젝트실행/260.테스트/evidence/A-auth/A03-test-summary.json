@@ -74,5 +74,6 @@
     "src/backend/pyproject.toml": "ed3de576a892d0bd132bfbdfe74fe4881d229fa46ec10af6f08acd4e7ead15e5",
     "src/backend/.env.example": "11f21c7f415ebff28fb762170afa5f45c7410946c21f3a059a9de8beeab1802c"
   },
-  "scope_limit": "Actual auth APIs, DB controls and session/login-window persistence. No membership API mutations, UI, GraphRAG, real AI ledger, V41/Q20 or complete A06 claim."
+  "scope_limit": "Actual auth APIs, DB controls and session/login-window persistence. No membership API mutations, UI, GraphRAG, real AI ledger, V41/Q20 or complete A06 claim.",
+  "implementation_commit": "03841f761d85a7cb7600038976a06467f1684279"
 }
