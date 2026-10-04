@@ -1,12 +1,12 @@
-# AI 플랫폼 backend — A01~05 인증·조직 관리와 화면 연결
+# AI 플랫폼 backend — A 완료 · B01 대화·원장 저장 기반
 
-전용환경/첫11개업무테이블/RLS·풀과실제로그인·본인세션확인·로그아웃이구현되어있다. 조직/관리API와실제포털화면까지연결했으며전체A통합시험·AI는후속이다. health200은 전체 플랫폼 완료를 뜻하지 않는다.
+A 인증·조직·관리 API/화면·통합 검증을 완료했고 B01에서 추가5개 저장 모델·형식·권한을 구축했다. 업무16개와 infra1개다. 대화/run 업무 API는 B03, 예약·발사·정산 및 실제 AI는 B04 이후다. health200은 전체 플랫폼 완료를 뜻하지 않는다.
 
 ## 환경과 설치
 
 확인 환경: macOS x86_64/Python3.13.2/PostgreSQL15.18(Homebrew). Node22.23.1은 A05에서사용한다. 전역 Node는변경하지않았으며Docker는필요없다.
 
-프로젝트 루트에서 `cd src/backend`한뒤실행한다. `.venv`는이폴더안에두며직접9개/전이포함30개는hash lock으로고정했다. A02/A03/A04의추가의존성은없다.
+프로젝트 루트에서 `cd src/backend`한뒤실행한다. `.venv`는이폴더안에두며직접11개 pin을 hash lock으로 고정했다. 기존9개에 openai3.24.0/tiktoken0.14.0을 추가하고 Python3.13용 설치/import/pip check를 확인했다. 현재 가상환경48개 배포판은 pip/pip-tools 등 설치 도구를 포함한 수이며, lock의 실행 의존성 수와 구분한다.
 
 ```bash
 /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -m venv .venv
@@ -38,7 +38,7 @@
 .venv/bin/python -m scripts.seed --fixture A-auth
 ```
 
-migrate는`ai_portal_mvp_test_<UUID>`의새시험DB/comment marker를생성한다. 000~004 SQL과SHA256 기록을단일transaction으로적용하고완료전에runtime접속을개방하지않는다. 반복CLI는기존설정을감지해거부한다. 재seed/비fixture/외부DB/변경된적용SQL도거부하며reset/drop CLI는제공하지않는다. 적용된migration은수정하지말고005이후새파일로추가한다. 시험용real예산행은실원장의reset허가가아니다.
+migrate는`ai_portal_mvp_test_<UUID>`의새시험DB/comment marker를생성한다. 000~005 SQL과SHA256 기록을단일transaction으로적용하고완료전에runtime접속을개방하지않는다. 반복CLI는기존설정을감지해거부한다. 재seed/비fixture/외부DB/변경된적용SQL도거부하며reset/drop CLI는제공하지않는다. 적용된migration은수정하지말고006이후새파일로추가한다. 시험용real예산행은실원장의reset허가가아니다.
 
 A03에서는003,A04에서는004만기존active fixture에추가적용했고계정/세션/창이나web DSN/HMAC은reset하지않았다. 이후pending migration도private active fixture의소유를검증한뒤같은runner로적용한다. 기존데이터가있는DB에는seed를다시호출하지않는다.
 
@@ -55,7 +55,7 @@ PYCODE
 
 DB는먼저start 상태여야한다. 직접migration runner는private active fixture의`FixtureDatabase`만사용한다. 기존파일의checksum은동일해야하며pending파일만원자적용된다. 테스트의새DB는suite실행중각시험별로만생성/검증/정리한다.
 
-업무11개: security의accounts/tenants/memberships/platform_access/managed_tenants/sessions/login_windows,portal의agent_configs/conversations,ops의project_budget/audit_events. infra.schema_migrations는별도도구테이블1개다. 전체31개/문서·Graph 모델은후속이다.
+업무11개: security의accounts/tenants/memberships/platform_access/managed_tenants/sessions/login_windows,portal의agent_configs/conversations,ops의project_budget/audit_events. infra.schema_migrations는별도도구테이블1개다. B01에서 portal.messages/runs와 ops.tenant_budgets/call_attempts/usage_events를 추가해 업무16개다. 전체31개/문서·Graph 모델은 후속이다.
 
 ## 자격과 현재 경계
 
@@ -150,4 +150,25 @@ A05에서는새시험전용scripts/portal_test_server.py/control.py로별도mark
 
 최종176pass/경고1,frontend build/실제브라우저20pass. 인증된GET /api/v1/me/tenants20회p95 5.766ms(목표300ms)/idle불변. 현재A승인계획pool대기5초·startupwait5초/statement5초/lock2초, 공통pool2초·idletransaction5초정합은B01에서다룬다. 실AI/검색성능으로이국소측정을확대하지않는다.
 
-정제증거는Obsidain260.테스트/evidence/A-auth의summary.json/test-results.json/db-boundaries.json/README.md,다음B01계획은250.구현/03 일반 대화와 중앙 AI 구현 계획.md다. 일반대화/중앙AI/사용량원장·GraphRAG는미착수이며A통과로전체V41/Q20완료를표시하지않는다. 원본로그/JUnit/비밀은.runtime안의private로만보관한다.
+정제증거는Obsidain260.테스트/evidence/A-auth의summary.json/test-results.json/db-boundaries.json/README.md,다음B01계획은250.구현/03 일반 대화와 중앙 AI 구현 계획.md다. 이 절은 A06 당시 검증 이력이다. B01 현재 상태는 다음 절을 따른다. A/B01 통과로 전체V41/Q20 완료를 표시하지 않는다. 원본로그/JUnit/비밀은.runtime안의private로만보관한다.
+
+## B01 대화·원장 저장 기반과 오프라인 토큰 준비
+
+005만 기존 active fixture에 추가 적용하며 기존11개 업무행/private app.env·HMAC·000~004 checksum을 보존한다. 새5개 테이블은 아직 비어 있고 primary에 대화/run이나 비용을 임의 생성하지 않는다. Agent는 기존 disabled를 유지한다.
+
+- 새5개는 ai_owner 소유/ENABLE+FORCE RLS/PUBLIC 권한 제거. web SELECT는 본인·현재 조직의 메시지와 최소 run 열만 허용하며 request_hash/config_snapshot을 직접 읽을 수 없다. 관리자의 개인 본문 예외가 없다.
+- pending assistant는 공개하지 않고 completed/answer만 읽는다. 본문 분류·owner/Agent·대상 run/모드·origin session 소유 복합FK와 불변 trigger를 사용한다. B는 general만이며 Job·RAG 본문/임베딩 call은 DB에서도 차단한다. C의 새 migration에서 확장한다.
+- 사용량 event UPDATE/DELETE를 trigger로 거부하고 token 정수/합계·필드 allowlist, 가격 snapshot·logical step·settle/release 상호배타 키를 적용한다. 실제 reserve/dispatch/settle CAS는 B04의008에서 구현할 예정이다. 현재 runtime의 원장 직접 읽기·쓰기는 거부한다.
+- web 최대4/meter 최대2의 별도 자격 pool을 configure/checkout마다 검증한다. 둘 다 borrower 대기2초/startup wait5초/statement5초/lock2초/idle-in-transaction5초다. meter는 본문·세션 고정함수·web/owner 역할 전환이 불가하다. 설정의 meter_dsn은 SecretStr/repr 제외이며 B04 연결 전 기본 앱에서 meter pool을 자동 열지 않는다.
+
+필요한 공개 인코딩 파일을 최초1회 준비한다. 키나 유료 AI 호출은 필요 없다.
+
+```bash
+.venv/bin/python -m scripts.prepare_tokenizers
+```
+
+프로젝트 `.runtime/tokenizer-cache`(0700)에 o200k_base/cl100k_base BPE 파일(0600)을 고정 SHA256로 검증해 저장한다. 런타임은 이를 읽기만 하고 누락·변조·symlink면 TOKENIZER_NOT_READY로 차단하며 자동 다운로드하지 않는다. 일반 입력은 질문4000 codepoint/UTF-8 16KiB·지침2000자·최근 완전 메시지6개·6000토큰을 검사한다. 초과 이력은 오래된 메시지 단위로 제외하고 지침/현재 질문은 자르지 않는다. Chat framing+32 여유 토큰은 보수 추정이며 실제 usage와 동일함을 보장하지 않는다. HTTP JSON32KiB 제한은 B03에서 연결한다.
+
+Decimal 고정 price-20261004-v1: 생성 예약3.64원, 질의/문서 임베딩 예약각0.20원. 환율2000원/USD·보호계수1.2·0.01원 올림의 내부 추정이며 실제 청구 환율/금액이 아니다. 토큰/model/tier 불일치는 비용0으로 변환하지 않고 거부한다. SDK 설치는 호출 성공 검증과 구분하며 제공자 어댑터/재시도0은 B04 이후 연결한다.
+
+최종 B01 시험 결과는 Obsidain250.구현/04 일반 대화와 중앙 AI 구현 결과.md와260.테스트/evidence/B-chat/B01-*.json에서 관리한다. A06의176회 기록·A-auth 증거는 당시 결과로 보존하고 현재 suite에 중복 합산하지 않는다.

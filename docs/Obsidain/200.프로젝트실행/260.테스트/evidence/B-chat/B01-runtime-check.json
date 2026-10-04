@@ -1,0 +1,86 @@
+{
+  "task": "I250-B01",
+  "recorded_date": "2026-10-05",
+  "recorded_at_utc": "2026-10-04T23:52:46.993062+00:00",
+  "baseline_commit": "7fe73e208c8eaf4e09c80f6967f41c70146889dc",
+  "tested_source_commit": null,
+  "tested_source_digest": "c6c5dcc431fac29d927b4767003eccf358fa72cea3db34b59f63a3b9b787aacc",
+  "dependencies": {
+    "openai": "3.24.0",
+    "tiktoken": "0.14.0",
+    "direct_pins": 11,
+    "hash_locked_packages": 42,
+    "installed_distributions_including_tools": 48,
+    "python": "3.13.2",
+    "requires_python": {
+      "openai": ">=3.10",
+      "tiktoken": ">=3.9"
+    },
+    "tiktoken_cp313_macos_x86_64_wheel": true,
+    "pip_check": "pass",
+    "imports": "pass",
+    "sdk_transport": "httpx2.AsyncClient",
+    "sdk_transport_locked_version": "2.13.1",
+    "sdk_mock_transport_available": true,
+    "existing_httpx_pin": "0.28.1",
+    "registry_sources": [
+      "https://pypi.org/pypi/openai/3.24.0/json",
+      "https://pypi.org/pypi/tiktoken/0.14.0/json"
+    ]
+  },
+  "installation_seconds": 62.69,
+  "tokenizers": {
+    "status": "ready",
+    "tiktoken": "0.14.0",
+    "encodings": [
+      {
+        "encoding": "o200k_base",
+        "sha256": "446a9538cb6c348e3516120d7c08b09f57c36495e2acfffe59a5bf8b0cfb1a2d",
+        "vocabulary": 200019,
+        "status": "ready"
+      },
+      {
+        "encoding": "cl100k_base",
+        "sha256": "223921b76ee99bde995b7ff738513eef100fb51d18c93597a113bcffe865b2a7",
+        "vocabulary": 100277,
+        "status": "ready"
+      }
+    ],
+    "paid_ai_calls": 0
+  },
+  "tokenizer_runtime_network_auto_download": false,
+  "tokenizer_missing_corrupt_symlink_rejected": true,
+  "general_input_limits": {
+    "prompt_codepoints": 4000,
+    "prompt_utf8_bytes": 16384,
+    "instructions_codepoints": 2000,
+    "recent_whole_messages": 6,
+    "estimated_input_tokens": 6000,
+    "chat_framing_margin_tokens": 32
+  },
+  "provider_calls": 0,
+  "native_cluster_state_after": "stopped",
+  "local_listeners_after": {
+    "8000": {
+      "listening": false
+    },
+    "5173": {
+      "listening": false
+    },
+    "55432": {
+      "listening": false
+    }
+  },
+  "browser_cleanup": {
+    "kind": "A05-runtime-cleanup",
+    "api_pool_connections": 0,
+    "fixture_removed": true,
+    "private_credentials_removed": true,
+    "database_state_after": "stopped"
+  },
+  "historical_login_images_preserved": true,
+  "remaining_runtime_connections": 0,
+  "remaining_disposable_databases": 0,
+  "migration_apply": "005 only; checksum repeat returns empty list",
+  "verification_note": "First private catalog cleanup query used an unescaped SQL percent with bound parameters. Fixed the verification query; 005 already committed correctly, repeat applied zero migrations and confirmed preservation."
+}

@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     db_port: int = Field(default=55432, ge=1, le=65535)
     bind_host: Literal["127.0.0.1"] = "127.0.0.1"
     web_dsn: SecretStr | None = Field(default=None, repr=False)
+    meter_dsn: SecretStr | None = Field(default=None, repr=False)
     login_hmac_secret: SecretStr | None = Field(default=None, repr=False)
 
     @model_validator(mode="after")

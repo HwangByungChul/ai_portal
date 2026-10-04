@@ -54,12 +54,12 @@ class FixtureState:
 
     def verify_catalog(self):
         with self.db.admin_connection() as conn:
-            assert conn.execute("SELECT count(*) FROM pg_tables WHERE schemaname IN ('security','portal','ops')").fetchone()[0]==11
-            assert conn.execute("SELECT count(*) FROM infra.schema_migrations").fetchone()[0]==5
+            assert conn.execute("SELECT count(*) FROM pg_tables WHERE schemaname IN ('security','portal','ops')").fetchone()[0]==16
+            assert conn.execute("SELECT count(*) FROM infra.schema_migrations").fetchone()[0]==6
             rows=conn.execute("SELECT n.nspname,c.relname,c.relrowsecurity,c.relforcerowsecurity,r.rolname "
                 "FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace JOIN pg_roles r ON r.oid=c.relowner "
-                "WHERE n.nspname IN ('portal','ops') AND c.relname IN ('conversations','agent_configs','audit_events')").fetchall()
-            assert len(rows)==3 and all(r[2] and r[3] and r[4]=='ai_owner' for r in rows)
+                "WHERE n.nspname IN ('portal','ops') AND c.relname IN ('conversations','agent_configs','audit_events','messages','runs','tenant_budgets','call_attempts','usage_events')").fetchall()
+            assert len(rows)==8 and all(r[2] and r[3] and r[4]=='ai_owner' for r in rows)
             assert not conn.execute("SELECT has_table_privilege('ai_policy_executor','portal.conversations','SELECT')").fetchone()[0]
             assert not conn.execute("SELECT has_column_privilege('ai_policy_executor','ops.project_budget','accounted_krw','SELECT')").fetchone()[0]
             funcs=conn.execute("SELECT p.prosecdef,p.proconfig,r.rolname, "

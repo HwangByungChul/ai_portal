@@ -1,0 +1,215 @@
+{
+  "task": "I250-B01",
+  "recorded_date": "2026-10-05",
+  "recorded_at_utc": "2026-10-04T23:52:46.993062+00:00",
+  "baseline_commit": "7fe73e208c8eaf4e09c80f6967f41c70146889dc",
+  "tested_source_commit": null,
+  "tested_source_digest": "c6c5dcc431fac29d927b4767003eccf358fa72cea3db34b59f63a3b9b787aacc",
+  "pending_migrations_applied": [
+    "005_conversation_ledger.sql"
+  ],
+  "repeat_apply_result": [],
+  "business_tables": 16,
+  "infra_tables": 1,
+  "migration_count": 6,
+  "primary_original_11_rows_unchanged": true,
+  "new_five_empty": true,
+  "new_content_rls": [
+    {
+      "table": "ops.call_attempts",
+      "enabled": true,
+      "forced": true,
+      "owner": "ai_owner"
+    },
+    {
+      "table": "ops.tenant_budgets",
+      "enabled": true,
+      "forced": true,
+      "owner": "ai_owner"
+    },
+    {
+      "table": "ops.usage_events",
+      "enabled": true,
+      "forced": true,
+      "owner": "ai_owner"
+    },
+    {
+      "table": "portal.messages",
+      "enabled": true,
+      "forced": true,
+      "owner": "ai_owner"
+    },
+    {
+      "table": "portal.runs",
+      "enabled": true,
+      "forced": true,
+      "owner": "ai_owner"
+    }
+  ],
+  "invoker_guard_functions": 5,
+  "public_execute_guard_functions": false,
+  "raw_mutations": {
+    "ai_web": {
+      "portal.messages": {
+        "insert": false,
+        "update": false,
+        "delete": false
+      },
+      "portal.runs": {
+        "insert": false,
+        "update": false,
+        "delete": false
+      },
+      "ops.tenant_budgets": {
+        "insert": false,
+        "update": false,
+        "delete": false
+      },
+      "ops.call_attempts": {
+        "insert": false,
+        "update": false,
+        "delete": false
+      },
+      "ops.usage_events": {
+        "insert": false,
+        "update": false,
+        "delete": false
+      }
+    },
+    "ai_meter": {
+      "portal.messages": {
+        "insert": false,
+        "update": false,
+        "delete": false
+      },
+      "portal.runs": {
+        "insert": false,
+        "update": false,
+        "delete": false
+      },
+      "ops.tenant_budgets": {
+        "insert": false,
+        "update": false,
+        "delete": false
+      },
+      "ops.call_attempts": {
+        "insert": false,
+        "update": false,
+        "delete": false
+      },
+      "ops.usage_events": {
+        "insert": false,
+        "update": false,
+        "delete": false
+      }
+    },
+    "ai_index": {
+      "portal.messages": {
+        "insert": false,
+        "update": false,
+        "delete": false
+      },
+      "portal.runs": {
+        "insert": false,
+        "update": false,
+        "delete": false
+      },
+      "ops.tenant_budgets": {
+        "insert": false,
+        "update": false,
+        "delete": false
+      },
+      "ops.call_attempts": {
+        "insert": false,
+        "update": false,
+        "delete": false
+      },
+      "ops.usage_events": {
+        "insert": false,
+        "update": false,
+        "delete": false
+      }
+    }
+  },
+  "runtime_pools": {
+    "web": {
+      "actual_role": {
+        "session_user": "ai_web",
+        "current_user": "ai_web",
+        "statement": "5s",
+        "lock": "2s",
+        "idle": "5s",
+        "rolsuper": false,
+        "rolbypassrls": false,
+        "rolinherit": false,
+        "rolcreatedb": false,
+        "rolcreaterole": false,
+        "rolreplication": false
+      },
+      "borrower_wait_seconds": 2,
+      "max_size": 4,
+      "startup_wait_seconds": 5,
+      "closed": true
+    },
+    "meter": {
+      "actual_role": {
+        "session_user": "ai_meter",
+        "current_user": "ai_meter",
+        "statement": "5s",
+        "lock": "2s",
+        "idle": "5s",
+        "rolsuper": false,
+        "rolbypassrls": false,
+        "rolinherit": false,
+        "rolcreatedb": false,
+        "rolcreaterole": false,
+        "rolreplication": false
+      },
+      "borrower_wait_seconds": 2,
+      "max_size": 2,
+      "startup_wait_seconds": 5,
+      "closed": true
+    }
+  },
+  "remaining_runtime_connections": 0,
+  "remaining_disposable_databases": 0,
+  "observations": [
+    {
+      "case": "missing or malformed current context",
+      "expected": "messages/runs 0",
+      "observed": "0",
+      "status": "pass"
+    },
+    {
+      "case": "current owner/tenant and admin private content",
+      "expected": "owner 2 messages/1 run; admins 0",
+      "observed": "owner 2/1; admins 0",
+      "status": "pass"
+    },
+    {
+      "case": "current revocation",
+      "expected": "next SQL messages/runs 0",
+      "observed": "0 for 7 mutations",
+      "status": "pass"
+    },
+    {
+      "case": "wrong parent owner/session/Agent/mode/job and raw writes",
+      "expected": "FK/check/privilege rejection",
+      "observed": "rejected",
+      "status": "pass"
+    },
+    {
+      "case": "usage events",
+      "expected": "append-only/exact typed count fields/terminal event uniqueness",
+      "observed": "rejected invalid modification or payload/second terminal event",
+      "status": "pass"
+    },
+    {
+      "case": "actual exhausted HTTP pool",
+      "expected": "borrower waits 2s then safe503",
+      "observed": "HTTP503 after 1.8–3.5s; no-store",
+      "status": "pass"
+    }
+  ],
+  "atomic_reservation_dispatch_settlement_status": "not_implemented_B04"
+}

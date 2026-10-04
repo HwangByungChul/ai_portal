@@ -1,4 +1,4 @@
-"""Web-only database pool and transaction-scoped, server-derived identity."""
+"""Dedicated web/meter pools and transaction-scoped server-derived identity."""
 from contextlib import asynccontextmanager
 import hashlib
 from pathlib import Path
@@ -21,31 +21,51 @@ class DatabaseBoundaryError(RuntimeError):
 
 
 def make_web_pool(dsn: str, size: int = 4) -> AsyncConnectionPool:
+    return _make_runtime_pool(dsn, 'ai_web', size)
+
+
+def make_meter_pool(dsn: str, size: int = 2) -> AsyncConnectionPool:
+    return _make_runtime_pool(dsn, 'ai_meter', size)
+
+
+def _make_runtime_pool(dsn: str, role: str, size: int) -> AsyncConnectionPool:
+    prefix = 'WEB' if role == 'ai_web' else 'METER'
+    if type(size) is not int or not 1 <= size <= (4 if role == 'ai_web' else 2):
+        raise DatabaseBoundaryError(prefix + '_CONFIGURATION_REJECTED')
     # Never inherit host/user/database from another project's PG environment.
     try:
         options = conninfo_to_dict(dsn)
     except psycopg.Error:
-        raise DatabaseBoundaryError('WEB_CONFIGURATION_REJECTED') from None
+        raise DatabaseBoundaryError(prefix + '_CONFIGURATION_REJECTED') from None
     if (options.get('host') != '127.0.0.1' or options.get('port') != '55432'
-            or options.get('user') != 'ai_web' or options.get('hostaddr') not in (None, '127.0.0.1')
+            or options.get('user') != role or options.get('hostaddr') not in (None, '127.0.0.1')
             or not re.fullmatch(FIXTURE_PREFIX + r'[0-9a-f]{32}', options.get('dbname', ''))):
-        raise DatabaseBoundaryError('WEB_CONFIGURATION_REJECTED')
-    return AsyncConnectionPool(dsn, min_size=1, max_size=size, timeout=5, open=False,
+        raise DatabaseBoundaryError(prefix + '_CONFIGURATION_REJECTED')
+    return AsyncConnectionPool(dsn, min_size=1, max_size=size, timeout=2, open=False,
         kwargs={'autocommit': True, 'row_factory': dict_row,
-                'options': '-c timezone=UTC -c statement_timeout=5000 -c lock_timeout=2000'},
-        configure=verify_web_connection, check=verify_web_connection)
+                'options': '-c timezone=UTC -c statement_timeout=5000 -c lock_timeout=2000 -c idle_in_transaction_session_timeout=5000'},
+        configure=verify_web_connection if role == 'ai_web' else verify_meter_connection,
+        check=verify_web_connection if role == 'ai_web' else verify_meter_connection)
 
 
 async def verify_web_connection(conn):
+    await _verify_and_close(conn, 'ai_web')
+
+
+async def verify_meter_connection(conn):
+    await _verify_and_close(conn, 'ai_meter')
+
+
+async def _verify_and_close(conn, role):
     try:
-        await _verify_web_connection(conn)
+        await _verify_runtime_connection(conn, role)
     except BaseException:
         # Pool configure callbacks do not close rejected connections in this pinned version.
         await conn.close()
         raise
 
 
-async def _verify_web_connection(conn):
+async def _verify_runtime_connection(conn, role):
     row = await (await conn.execute(
         "SELECT session_user,current_user,current_database() AS database, "
         "current_setting('port') AS port,rolsuper,rolbypassrls,rolinherit,rolcreatedb,rolcreaterole,rolreplication, "
@@ -56,10 +76,10 @@ async def _verify_web_connection(conn):
         "WHERE c.relowner=r.oid AND n.nspname IN ('security','portal','ops')) AS owns_content "
         "FROM pg_roles r JOIN pg_database d ON d.datname=current_database() WHERE r.rolname=session_user"
     )).fetchone()
-    if (not row or row['session_user'] != 'ai_web' or row['current_user'] != 'ai_web'
+    if (not row or row['session_user'] != role or row['current_user'] != role
             or row['marker'] != DB_MARKER or row['port'] != '55432'
             or any(row[k] for k in ('rolsuper','rolbypassrls','rolinherit','rolcreatedb','rolcreaterole','rolreplication','inherited','owns_content','owns_database'))):
-        raise DatabaseBoundaryError('WEB_DATABASE_REJECTED')
+        raise DatabaseBoundaryError(('WEB' if role == 'ai_web' else 'METER') + '_DATABASE_REJECTED')
 
 
 @asynccontextmanager
@@ -71,6 +91,20 @@ async def open_web_pool(dsn: str, size: int = 4):
             await pool.wait(timeout=5)
         except (psycopg.Error, DatabaseBoundaryError):
             raise DatabaseBoundaryError('WEB_DATABASE_UNAVAILABLE') from None
+        yield pool
+    finally:
+        await pool.close()
+
+
+@asynccontextmanager
+async def open_meter_pool(dsn: str, size: int = 2):
+    pool = make_meter_pool(dsn, size)
+    try:
+        try:
+            await pool.open()
+            await pool.wait(timeout=5)
+        except (psycopg.Error, DatabaseBoundaryError):
+            raise DatabaseBoundaryError('METER_DATABASE_UNAVAILABLE') from None
         yield pool
     finally:
         await pool.close()
