@@ -1,0 +1,2682 @@
+{
+  "schema_version": "evaluation-gold-1.0",
+  "created_date": "2026-10-04",
+  "manifest_path": "data/synthetic/document_manifest.json",
+  "artifact_status": "authored_static_validated_not_executed",
+  "synthetic": true,
+  "evaluator_only": true,
+  "notice": "질문·정답·금지 근거 전체를 모델에 전달하지 않습니다. 실행 시 prompt와 권한 검사된 필요한 요청 정보/허용 자료만 사용합니다.",
+  "classification_counts": {
+    "single_document": 6,
+    "relation": 6,
+    "insufficient_evidence": 4,
+    "unauthorized": 4
+  },
+  "response_categories_are_evaluation_labels_not_api_enums": true,
+  "rules": {
+    "evidence_scope": "acl_allowed_evidence_ids is corpus permission set; required_evidence_ids is exact supporting gold subset. Other accessible evidence is not automatically relevant.",
+    "forbidden_scope": "unauthorized excludes source titles/bodies/relations/files from provider context and all response channels. Wrong relation/selected version excludes it as answer fact/citation, without pretending ACL denial.",
+    "exact_version": "citation must identify document+version+source position; evidence ID denotes authored clause and will map to actual chunk in 240/250.",
+    "relation_scoring": "expected relations and their own evidence must match; do not attach all retrieved evidence to every relation.",
+    "answer_scoring": "all expected facts with correct source/relationship; natural wording allowed; no contradiction or unsupported factual additions. Citation formatting and automated semantic matching are 240 design.",
+    "hold_scoring": "state that selected accessible evidence is insufficient, do not invent answer/citation or expose inaccessible source existence.",
+    "deny_scoring": "reject explicit unauthorized resource before query embedding/generation; no protected source information. HTTP/error representation defined in 240.",
+    "private_markers": "source quotes/titles in protected_document_refs and manifest are evaluator metadata, never model prompt inputs.",
+    "result_scoring": "pass/fail/not_run by scenario and model mode; static authoring checks are not a model/UI/ACL pass.",
+    "leakage_scoring": "권한/문서 버전 provenance와 보호된 고유 사실을 함께 판정한다. 허용 자료와 무권한 자료가 공유하는 일반 단어/동일 제목만으로 누설로 단정하지 않는다. D-S v1/v2는 제목이 같으므로 v1 제목 표시는 허용하고 미공유 v2의 존재·버전·고유 담당자/기한/복구 목표를 노출하면 실패다."
+  },
+  "remaining_tests": "Q20 does not replace ACL16 or V41 fault/concurrency/cancel/limits/restart/setup/performance scenarios. General Agent real call is V-005 separately.",
+  "questions": [
+    {
+      "question_id": "Q-001",
+      "classification": "single_document",
+      "scenario_id": "BASE",
+      "actor_id": "A-U1",
+      "active_tenant_id": "A",
+      "prompt": "이 합성 자료 기준으로 가상 여신심사의 담당 부서는 어디인가요?",
+      "request_fixture": {
+        "kind": "authorized_corpus_question",
+        "target_reference": null
+      },
+      "expected_response_category": "answer",
+      "expected_facts": [
+        "담당 부서: 여신심사팀"
+      ],
+      "required_evidence_ids": [
+        "EV-A-R1-01"
+      ],
+      "expected_relation_ids": [],
+      "acl_allowed_evidence_ids": [
+        "EV-A-R1-01",
+        "EV-A-R1-02",
+        "EV-A-R1-03",
+        "EV-A-R2-01",
+        "EV-A-R2-02",
+        "EV-A-R2-03",
+        "EV-A-P-01",
+        "EV-A-P-02",
+        "EV-S-v1-01",
+        "EV-S-v1-02",
+        "EV-S-v2-01",
+        "EV-S-v2-02",
+        "EV-S-v2-03"
+      ],
+      "forbidden_evidence": [
+        {
+          "evidence_id": "EV-B-R1-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-01",
+          "reason": "wrong_relation_or_selected_version",
+          "enforcement_scope": "answer_facts_and_citations"
+        }
+      ],
+      "protected_document_refs": [
+        {
+          "document_id": "D-B-R1",
+          "version": "v1",
+          "title": "가상 여신심사 운영 규정 B",
+          "evidence_ids": [
+            "EV-B-R1-01",
+            "EV-B-R1-02",
+            "EV-B-R1-03"
+          ]
+        },
+        {
+          "document_id": "D-B-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 B",
+          "evidence_ids": [
+            "EV-B-P-01",
+            "EV-B-P-02"
+          ]
+        }
+      ],
+      "requirements": [
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ],
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-033",
+        "V-041"
+      ],
+      "acl_scenarios": [],
+      "notes": "",
+      "expected_model_call_policy": "authorized_flow_under_budget; hold may be decided before generation",
+      "execution": {
+        "status": "not_run",
+        "mode": null,
+        "actual_response": null,
+        "verdict": null,
+        "usage": null,
+        "evidence_path": null
+      }
+    },
+    {
+      "question_id": "Q-002",
+      "classification": "single_document",
+      "scenario_id": "BASE",
+      "actor_id": "A-U1",
+      "active_tenant_id": "A",
+      "prompt": "이 합성 자료 기준으로 가상 여신심사 기록은 며칠 보관하나요?",
+      "request_fixture": {
+        "kind": "authorized_corpus_question",
+        "target_reference": null
+      },
+      "expected_response_category": "answer",
+      "expected_facts": [
+        "기록 보관 기간: 180일"
+      ],
+      "required_evidence_ids": [
+        "EV-A-R2-02"
+      ],
+      "expected_relation_ids": [],
+      "acl_allowed_evidence_ids": [
+        "EV-A-R1-01",
+        "EV-A-R1-02",
+        "EV-A-R1-03",
+        "EV-A-R2-01",
+        "EV-A-R2-02",
+        "EV-A-R2-03",
+        "EV-A-P-01",
+        "EV-A-P-02",
+        "EV-S-v1-01",
+        "EV-S-v1-02",
+        "EV-S-v2-01",
+        "EV-S-v2-02",
+        "EV-S-v2-03"
+      ],
+      "forbidden_evidence": [
+        {
+          "evidence_id": "EV-B-R1-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R1-02",
+          "reason": "wrong_relation_or_selected_version",
+          "enforcement_scope": "answer_facts_and_citations"
+        }
+      ],
+      "protected_document_refs": [
+        {
+          "document_id": "D-B-R1",
+          "version": "v1",
+          "title": "가상 여신심사 운영 규정 B",
+          "evidence_ids": [
+            "EV-B-R1-01",
+            "EV-B-R1-02",
+            "EV-B-R1-03"
+          ]
+        },
+        {
+          "document_id": "D-B-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 B",
+          "evidence_ids": [
+            "EV-B-P-01",
+            "EV-B-P-02"
+          ]
+        }
+      ],
+      "requirements": [
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ],
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-033",
+        "V-041"
+      ],
+      "acl_scenarios": [],
+      "notes": "",
+      "expected_model_call_policy": "authorized_flow_under_budget; hold may be decided before generation",
+      "execution": {
+        "status": "not_run",
+        "mode": null,
+        "actual_response": null,
+        "verdict": null,
+        "usage": null,
+        "evidence_path": null
+      }
+    },
+    {
+      "question_id": "Q-003",
+      "classification": "single_document",
+      "scenario_id": "BASE",
+      "actor_id": "A-U1",
+      "active_tenant_id": "A",
+      "prompt": "내 개인 합성 메모에서 시연 리허설 일정을 알려 주세요.",
+      "request_fixture": {
+        "kind": "authorized_corpus_question",
+        "target_reference": {
+          "document_id": "D-A-P",
+          "version": "v1"
+        }
+      },
+      "expected_response_category": "answer",
+      "expected_facts": [
+        "목요일 오후 3시"
+      ],
+      "required_evidence_ids": [
+        "EV-A-P-01"
+      ],
+      "expected_relation_ids": [],
+      "acl_allowed_evidence_ids": [
+        "EV-A-R1-01",
+        "EV-A-R1-02",
+        "EV-A-R1-03",
+        "EV-A-R2-01",
+        "EV-A-R2-02",
+        "EV-A-R2-03",
+        "EV-A-P-01",
+        "EV-A-P-02",
+        "EV-S-v1-01",
+        "EV-S-v1-02",
+        "EV-S-v2-01",
+        "EV-S-v2-02",
+        "EV-S-v2-03"
+      ],
+      "forbidden_evidence": [
+        {
+          "evidence_id": "EV-B-R1-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        }
+      ],
+      "protected_document_refs": [
+        {
+          "document_id": "D-B-R1",
+          "version": "v1",
+          "title": "가상 여신심사 운영 규정 B",
+          "evidence_ids": [
+            "EV-B-R1-01",
+            "EV-B-R1-02",
+            "EV-B-R1-03"
+          ]
+        },
+        {
+          "document_id": "D-B-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 B",
+          "evidence_ids": [
+            "EV-B-P-01",
+            "EV-B-P-02"
+          ]
+        }
+      ],
+      "requirements": [
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ],
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-033",
+        "V-041"
+      ],
+      "acl_scenarios": [],
+      "notes": "",
+      "expected_model_call_policy": "authorized_flow_under_budget; hold may be decided before generation",
+      "execution": {
+        "status": "not_run",
+        "mode": null,
+        "actual_response": null,
+        "verdict": null,
+        "usage": null,
+        "evidence_path": null
+      }
+    },
+    {
+      "question_id": "Q-004",
+      "classification": "single_document",
+      "scenario_id": "BASE",
+      "actor_id": "B-U1",
+      "active_tenant_id": "B",
+      "prompt": "이 합성 자료 기준으로 가상 여신심사의 위험 검토 승인 부서는 어디인가요?",
+      "request_fixture": {
+        "kind": "authorized_corpus_question",
+        "target_reference": null
+      },
+      "expected_response_category": "answer",
+      "expected_facts": [
+        "위험 검토 승인 부서: 준법지원팀"
+      ],
+      "required_evidence_ids": [
+        "EV-B-R1-02"
+      ],
+      "expected_relation_ids": [],
+      "acl_allowed_evidence_ids": [
+        "EV-B-R1-01",
+        "EV-B-R1-02",
+        "EV-B-R1-03",
+        "EV-B-P-01",
+        "EV-B-P-02",
+        "EV-S-v1-01",
+        "EV-S-v1-02"
+      ],
+      "forbidden_evidence": [
+        {
+          "evidence_id": "EV-A-R1-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R1-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R1-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        }
+      ],
+      "protected_document_refs": [
+        {
+          "document_id": "D-A-R1",
+          "version": "v1",
+          "title": "가상 여신심사 책임 규정",
+          "evidence_ids": [
+            "EV-A-R1-01",
+            "EV-A-R1-02",
+            "EV-A-R1-03"
+          ]
+        },
+        {
+          "document_id": "D-A-R2",
+          "version": "v1",
+          "title": "가상 여신심사 기록관리 규정",
+          "evidence_ids": [
+            "EV-A-R2-01",
+            "EV-A-R2-02",
+            "EV-A-R2-03"
+          ]
+        },
+        {
+          "document_id": "D-A-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 A",
+          "evidence_ids": [
+            "EV-A-P-01",
+            "EV-A-P-02"
+          ]
+        },
+        {
+          "document_id": "D-S",
+          "version": "v2",
+          "title": "가상 공통 AI 지원 절차",
+          "evidence_ids": [
+            "EV-S-v2-01",
+            "EV-S-v2-02",
+            "EV-S-v2-03"
+          ]
+        }
+      ],
+      "requirements": [
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ],
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-033",
+        "V-041"
+      ],
+      "acl_scenarios": [],
+      "notes": "",
+      "expected_model_call_policy": "authorized_flow_under_budget; hold may be decided before generation",
+      "execution": {
+        "status": "not_run",
+        "mode": null,
+        "actual_response": null,
+        "verdict": null,
+        "usage": null,
+        "evidence_path": null
+      }
+    },
+    {
+      "question_id": "Q-005",
+      "classification": "single_document",
+      "scenario_id": "BASE",
+      "actor_id": "B-U1",
+      "active_tenant_id": "B",
+      "prompt": "내 개인 합성 메모에서 시연 리허설 일정을 알려 주세요.",
+      "request_fixture": {
+        "kind": "authorized_corpus_question",
+        "target_reference": {
+          "document_id": "D-B-P",
+          "version": "v1"
+        }
+      },
+      "expected_response_category": "answer",
+      "expected_facts": [
+        "화요일 오전 10시"
+      ],
+      "required_evidence_ids": [
+        "EV-B-P-01"
+      ],
+      "expected_relation_ids": [],
+      "acl_allowed_evidence_ids": [
+        "EV-B-R1-01",
+        "EV-B-R1-02",
+        "EV-B-R1-03",
+        "EV-B-P-01",
+        "EV-B-P-02",
+        "EV-S-v1-01",
+        "EV-S-v1-02"
+      ],
+      "forbidden_evidence": [
+        {
+          "evidence_id": "EV-A-R1-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R1-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R1-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        }
+      ],
+      "protected_document_refs": [
+        {
+          "document_id": "D-A-R1",
+          "version": "v1",
+          "title": "가상 여신심사 책임 규정",
+          "evidence_ids": [
+            "EV-A-R1-01",
+            "EV-A-R1-02",
+            "EV-A-R1-03"
+          ]
+        },
+        {
+          "document_id": "D-A-R2",
+          "version": "v1",
+          "title": "가상 여신심사 기록관리 규정",
+          "evidence_ids": [
+            "EV-A-R2-01",
+            "EV-A-R2-02",
+            "EV-A-R2-03"
+          ]
+        },
+        {
+          "document_id": "D-A-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 A",
+          "evidence_ids": [
+            "EV-A-P-01",
+            "EV-A-P-02"
+          ]
+        },
+        {
+          "document_id": "D-S",
+          "version": "v2",
+          "title": "가상 공통 AI 지원 절차",
+          "evidence_ids": [
+            "EV-S-v2-01",
+            "EV-S-v2-02",
+            "EV-S-v2-03"
+          ]
+        }
+      ],
+      "requirements": [
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ],
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-033",
+        "V-041"
+      ],
+      "acl_scenarios": [],
+      "notes": "",
+      "expected_model_call_policy": "authorized_flow_under_budget; hold may be decided before generation",
+      "execution": {
+        "status": "not_run",
+        "mode": null,
+        "actual_response": null,
+        "verdict": null,
+        "usage": null,
+        "evidence_path": null
+      }
+    },
+    {
+      "question_id": "Q-006",
+      "classification": "single_document",
+      "scenario_id": "BASE",
+      "actor_id": "B-U1",
+      "active_tenant_id": "B",
+      "prompt": "내 조직에 공유된 합성 지원 절차에서 접수 담당은 어디인가요?",
+      "request_fixture": {
+        "kind": "authorized_corpus_question",
+        "target_reference": {
+          "document_id": "D-S",
+          "version": "v1"
+        }
+      },
+      "expected_response_category": "answer",
+      "expected_facts": [
+        "접수 담당: 가상 지원데스크"
+      ],
+      "required_evidence_ids": [
+        "EV-S-v1-01"
+      ],
+      "expected_relation_ids": [],
+      "acl_allowed_evidence_ids": [
+        "EV-B-R1-01",
+        "EV-B-R1-02",
+        "EV-B-R1-03",
+        "EV-B-P-01",
+        "EV-B-P-02",
+        "EV-S-v1-01",
+        "EV-S-v1-02"
+      ],
+      "forbidden_evidence": [
+        {
+          "evidence_id": "EV-A-R1-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R1-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R1-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        }
+      ],
+      "protected_document_refs": [
+        {
+          "document_id": "D-A-R1",
+          "version": "v1",
+          "title": "가상 여신심사 책임 규정",
+          "evidence_ids": [
+            "EV-A-R1-01",
+            "EV-A-R1-02",
+            "EV-A-R1-03"
+          ]
+        },
+        {
+          "document_id": "D-A-R2",
+          "version": "v1",
+          "title": "가상 여신심사 기록관리 규정",
+          "evidence_ids": [
+            "EV-A-R2-01",
+            "EV-A-R2-02",
+            "EV-A-R2-03"
+          ]
+        },
+        {
+          "document_id": "D-A-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 A",
+          "evidence_ids": [
+            "EV-A-P-01",
+            "EV-A-P-02"
+          ]
+        },
+        {
+          "document_id": "D-S",
+          "version": "v2",
+          "title": "가상 공통 AI 지원 절차",
+          "evidence_ids": [
+            "EV-S-v2-01",
+            "EV-S-v2-02",
+            "EV-S-v2-03"
+          ]
+        }
+      ],
+      "requirements": [
+        "AP-008",
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ],
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-020",
+        "V-033",
+        "V-041"
+      ],
+      "acl_scenarios": [
+        "ACL-09"
+      ],
+      "notes": "B는 공유 v1만 접근 가능. v2 책임자 사용 금지.",
+      "expected_model_call_policy": "authorized_flow_under_budget; hold may be decided before generation",
+      "execution": {
+        "status": "not_run",
+        "mode": null,
+        "actual_response": null,
+        "verdict": null,
+        "usage": null,
+        "evidence_path": null
+      }
+    },
+    {
+      "question_id": "Q-007",
+      "classification": "relation",
+      "scenario_id": "BASE",
+      "actor_id": "A-U1",
+      "active_tenant_id": "A",
+      "prompt": "가상 여신심사의 담당 부서와 위험 검토 승인 부서를 역할별로 연결해 설명해 주세요.",
+      "request_fixture": {
+        "kind": "authorized_corpus_question",
+        "target_reference": null
+      },
+      "expected_response_category": "answer",
+      "expected_facts": [
+        "가상 여신심사 → 담당 부서: 여신심사팀",
+        "가상 여신심사 → 위험 검토 승인 부서: 위험관리팀"
+      ],
+      "required_evidence_ids": [
+        "EV-A-R1-01",
+        "EV-A-R1-02"
+      ],
+      "expected_relation_ids": [
+        "R-A-R1-v1-01",
+        "R-A-R1-v1-02"
+      ],
+      "acl_allowed_evidence_ids": [
+        "EV-A-R1-01",
+        "EV-A-R1-02",
+        "EV-A-R1-03",
+        "EV-A-R2-01",
+        "EV-A-R2-02",
+        "EV-A-R2-03",
+        "EV-A-P-01",
+        "EV-A-P-02",
+        "EV-S-v1-01",
+        "EV-S-v1-02",
+        "EV-S-v2-01",
+        "EV-S-v2-02",
+        "EV-S-v2-03"
+      ],
+      "forbidden_evidence": [
+        {
+          "evidence_id": "EV-B-R1-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-01",
+          "reason": "wrong_relation_or_selected_version",
+          "enforcement_scope": "answer_facts_and_citations"
+        },
+        {
+          "evidence_id": "EV-A-R2-02",
+          "reason": "wrong_relation_or_selected_version",
+          "enforcement_scope": "answer_facts_and_citations"
+        }
+      ],
+      "protected_document_refs": [
+        {
+          "document_id": "D-B-R1",
+          "version": "v1",
+          "title": "가상 여신심사 운영 규정 B",
+          "evidence_ids": [
+            "EV-B-R1-01",
+            "EV-B-R1-02",
+            "EV-B-R1-03"
+          ]
+        },
+        {
+          "document_id": "D-B-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 B",
+          "evidence_ids": [
+            "EV-B-P-01",
+            "EV-B-P-02"
+          ]
+        }
+      ],
+      "requirements": [
+        "CP-007",
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ],
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-032",
+        "V-033",
+        "V-041"
+      ],
+      "acl_scenarios": [],
+      "notes": "보관 담당 관계의 근거를 승인 관계의 근거로 인용하면 실패.",
+      "expected_model_call_policy": "authorized_flow_under_budget; hold may be decided before generation",
+      "execution": {
+        "status": "not_run",
+        "mode": null,
+        "actual_response": null,
+        "verdict": null,
+        "usage": null,
+        "evidence_path": null
+      }
+    },
+    {
+      "question_id": "Q-008",
+      "classification": "relation",
+      "scenario_id": "BASE",
+      "actor_id": "A-U1",
+      "active_tenant_id": "A",
+      "prompt": "가상 여신심사의 기록 보관 담당 부서와 보관 기간을 연결해 설명해 주세요.",
+      "request_fixture": {
+        "kind": "authorized_corpus_question",
+        "target_reference": null
+      },
+      "expected_response_category": "answer",
+      "expected_facts": [
+        "가상 여신심사 → 기록 보관 담당 부서: 기록관리팀",
+        "가상 여신심사 → 기록 보관 기간: 180일"
+      ],
+      "required_evidence_ids": [
+        "EV-A-R2-01",
+        "EV-A-R2-02"
+      ],
+      "expected_relation_ids": [
+        "R-A-R2-v1-01",
+        "R-A-R2-v1-02"
+      ],
+      "acl_allowed_evidence_ids": [
+        "EV-A-R1-01",
+        "EV-A-R1-02",
+        "EV-A-R1-03",
+        "EV-A-R2-01",
+        "EV-A-R2-02",
+        "EV-A-R2-03",
+        "EV-A-P-01",
+        "EV-A-P-02",
+        "EV-S-v1-01",
+        "EV-S-v1-02",
+        "EV-S-v2-01",
+        "EV-S-v2-02",
+        "EV-S-v2-03"
+      ],
+      "forbidden_evidence": [
+        {
+          "evidence_id": "EV-B-R1-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R1-01",
+          "reason": "wrong_relation_or_selected_version",
+          "enforcement_scope": "answer_facts_and_citations"
+        },
+        {
+          "evidence_id": "EV-A-R1-02",
+          "reason": "wrong_relation_or_selected_version",
+          "enforcement_scope": "answer_facts_and_citations"
+        }
+      ],
+      "protected_document_refs": [
+        {
+          "document_id": "D-B-R1",
+          "version": "v1",
+          "title": "가상 여신심사 운영 규정 B",
+          "evidence_ids": [
+            "EV-B-R1-01",
+            "EV-B-R1-02",
+            "EV-B-R1-03"
+          ]
+        },
+        {
+          "document_id": "D-B-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 B",
+          "evidence_ids": [
+            "EV-B-P-01",
+            "EV-B-P-02"
+          ]
+        }
+      ],
+      "requirements": [
+        "CP-007",
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ],
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-032",
+        "V-033",
+        "V-041"
+      ],
+      "acl_scenarios": [],
+      "notes": "승인 관계와 동일 개체를 공유해도 다른 관계의 근거를 가져오지 않는다.",
+      "expected_model_call_policy": "authorized_flow_under_budget; hold may be decided before generation",
+      "execution": {
+        "status": "not_run",
+        "mode": null,
+        "actual_response": null,
+        "verdict": null,
+        "usage": null,
+        "evidence_path": null
+      }
+    },
+    {
+      "question_id": "Q-009",
+      "classification": "relation",
+      "scenario_id": "BASE",
+      "actor_id": "A-U1",
+      "active_tenant_id": "A",
+      "prompt": "가상 여신심사의 위험 검토 승인과 기록 보관은 각각 어느 부서가 맡나요? 두 책임을 구분해 주세요.",
+      "request_fixture": {
+        "kind": "authorized_corpus_question",
+        "target_reference": null
+      },
+      "expected_response_category": "answer",
+      "expected_facts": [
+        "위험 검토 승인: 위험관리팀",
+        "기록 보관: 기록관리팀"
+      ],
+      "required_evidence_ids": [
+        "EV-A-R1-02",
+        "EV-A-R2-01"
+      ],
+      "expected_relation_ids": [
+        "R-A-R1-v1-02",
+        "R-A-R2-v1-01"
+      ],
+      "acl_allowed_evidence_ids": [
+        "EV-A-R1-01",
+        "EV-A-R1-02",
+        "EV-A-R1-03",
+        "EV-A-R2-01",
+        "EV-A-R2-02",
+        "EV-A-R2-03",
+        "EV-A-P-01",
+        "EV-A-P-02",
+        "EV-S-v1-01",
+        "EV-S-v1-02",
+        "EV-S-v2-01",
+        "EV-S-v2-02",
+        "EV-S-v2-03"
+      ],
+      "forbidden_evidence": [
+        {
+          "evidence_id": "EV-B-R1-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R1-01",
+          "reason": "wrong_relation_or_selected_version",
+          "enforcement_scope": "answer_facts_and_citations"
+        },
+        {
+          "evidence_id": "EV-A-R2-02",
+          "reason": "wrong_relation_or_selected_version",
+          "enforcement_scope": "answer_facts_and_citations"
+        }
+      ],
+      "protected_document_refs": [
+        {
+          "document_id": "D-B-R1",
+          "version": "v1",
+          "title": "가상 여신심사 운영 규정 B",
+          "evidence_ids": [
+            "EV-B-R1-01",
+            "EV-B-R1-02",
+            "EV-B-R1-03"
+          ]
+        },
+        {
+          "document_id": "D-B-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 B",
+          "evidence_ids": [
+            "EV-B-P-01",
+            "EV-B-P-02"
+          ]
+        }
+      ],
+      "requirements": [
+        "CP-007",
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ],
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-032",
+        "V-033",
+        "V-041"
+      ],
+      "acl_scenarios": [],
+      "notes": "A의 같은 개체를 두 문서에서 연결하는 교차 문서 관계 질문.",
+      "expected_model_call_policy": "authorized_flow_under_budget; hold may be decided before generation",
+      "execution": {
+        "status": "not_run",
+        "mode": null,
+        "actual_response": null,
+        "verdict": null,
+        "usage": null,
+        "evidence_path": null
+      }
+    },
+    {
+      "question_id": "Q-010",
+      "classification": "relation",
+      "scenario_id": "BASE",
+      "actor_id": "B-U1",
+      "active_tenant_id": "B",
+      "prompt": "우리 조직 합성 자료의 가상 여신심사 담당 부서와 위험 검토 승인 부서를 역할별로 연결해 주세요.",
+      "request_fixture": {
+        "kind": "authorized_corpus_question",
+        "target_reference": null
+      },
+      "expected_response_category": "answer",
+      "expected_facts": [
+        "담당 부서: 심사운영팀",
+        "위험 검토 승인 부서: 준법지원팀"
+      ],
+      "required_evidence_ids": [
+        "EV-B-R1-01",
+        "EV-B-R1-02"
+      ],
+      "expected_relation_ids": [
+        "R-B-R1-v1-01",
+        "R-B-R1-v1-02"
+      ],
+      "acl_allowed_evidence_ids": [
+        "EV-B-R1-01",
+        "EV-B-R1-02",
+        "EV-B-R1-03",
+        "EV-B-P-01",
+        "EV-B-P-02",
+        "EV-S-v1-01",
+        "EV-S-v1-02"
+      ],
+      "forbidden_evidence": [
+        {
+          "evidence_id": "EV-A-R1-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R1-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R1-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        }
+      ],
+      "protected_document_refs": [
+        {
+          "document_id": "D-A-R1",
+          "version": "v1",
+          "title": "가상 여신심사 책임 규정",
+          "evidence_ids": [
+            "EV-A-R1-01",
+            "EV-A-R1-02",
+            "EV-A-R1-03"
+          ]
+        },
+        {
+          "document_id": "D-A-R2",
+          "version": "v1",
+          "title": "가상 여신심사 기록관리 규정",
+          "evidence_ids": [
+            "EV-A-R2-01",
+            "EV-A-R2-02",
+            "EV-A-R2-03"
+          ]
+        },
+        {
+          "document_id": "D-A-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 A",
+          "evidence_ids": [
+            "EV-A-P-01",
+            "EV-A-P-02"
+          ]
+        },
+        {
+          "document_id": "D-S",
+          "version": "v2",
+          "title": "가상 공통 AI 지원 절차",
+          "evidence_ids": [
+            "EV-S-v2-01",
+            "EV-S-v2-02",
+            "EV-S-v2-03"
+          ]
+        }
+      ],
+      "requirements": [
+        "CP-007",
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ],
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-032",
+        "V-033",
+        "V-041"
+      ],
+      "acl_scenarios": [],
+      "notes": "A/B 동일 업무 이름이어도 Graph 개체/관계/근거의 조직 경계를 유지한다.",
+      "expected_model_call_policy": "authorized_flow_under_budget; hold may be decided before generation",
+      "execution": {
+        "status": "not_run",
+        "mode": null,
+        "actual_response": null,
+        "verdict": null,
+        "usage": null,
+        "evidence_path": null
+      }
+    },
+    {
+      "question_id": "Q-011",
+      "classification": "relation",
+      "scenario_id": "BASE",
+      "actor_id": "B-U1",
+      "active_tenant_id": "B",
+      "prompt": "내 조직에 공유된 합성 지원 절차에서 접수 담당과 접수 확인 기한을 연결해 설명해 주세요.",
+      "request_fixture": {
+        "kind": "authorized_corpus_question",
+        "target_reference": {
+          "document_id": "D-S",
+          "version": "v1"
+        }
+      },
+      "expected_response_category": "answer",
+      "expected_facts": [
+        "접수 담당: 가상 지원데스크",
+        "접수 확인: 요청 접수 후 2영업일 이내"
+      ],
+      "required_evidence_ids": [
+        "EV-S-v1-01",
+        "EV-S-v1-02"
+      ],
+      "expected_relation_ids": [
+        "R-S-v1-01",
+        "R-S-v1-02"
+      ],
+      "acl_allowed_evidence_ids": [
+        "EV-B-R1-01",
+        "EV-B-R1-02",
+        "EV-B-R1-03",
+        "EV-B-P-01",
+        "EV-B-P-02",
+        "EV-S-v1-01",
+        "EV-S-v1-02"
+      ],
+      "forbidden_evidence": [
+        {
+          "evidence_id": "EV-A-R1-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R1-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R1-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        }
+      ],
+      "protected_document_refs": [
+        {
+          "document_id": "D-A-R1",
+          "version": "v1",
+          "title": "가상 여신심사 책임 규정",
+          "evidence_ids": [
+            "EV-A-R1-01",
+            "EV-A-R1-02",
+            "EV-A-R1-03"
+          ]
+        },
+        {
+          "document_id": "D-A-R2",
+          "version": "v1",
+          "title": "가상 여신심사 기록관리 규정",
+          "evidence_ids": [
+            "EV-A-R2-01",
+            "EV-A-R2-02",
+            "EV-A-R2-03"
+          ]
+        },
+        {
+          "document_id": "D-A-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 A",
+          "evidence_ids": [
+            "EV-A-P-01",
+            "EV-A-P-02"
+          ]
+        },
+        {
+          "document_id": "D-S",
+          "version": "v2",
+          "title": "가상 공통 AI 지원 절차",
+          "evidence_ids": [
+            "EV-S-v2-01",
+            "EV-S-v2-02",
+            "EV-S-v2-03"
+          ]
+        }
+      ],
+      "requirements": [
+        "AP-008",
+        "CP-007",
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ],
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-020",
+        "V-032",
+        "V-033",
+        "V-041"
+      ],
+      "acl_scenarios": [
+        "ACL-09"
+      ],
+      "notes": "요청→접수 담당→확인 기한의 연쇄 관계. v2로 책임자/기한을 바꾸지 않는다.",
+      "expected_model_call_policy": "authorized_flow_under_budget; hold may be decided before generation",
+      "execution": {
+        "status": "not_run",
+        "mode": null,
+        "actual_response": null,
+        "verdict": null,
+        "usage": null,
+        "evidence_path": null
+      }
+    },
+    {
+      "question_id": "Q-012",
+      "classification": "relation",
+      "scenario_id": "BASE",
+      "actor_id": "A-U1",
+      "active_tenant_id": "A",
+      "prompt": "소유 조직의 현재 합성 지원 절차 버전에서 접수 담당과 접수 확인 기한을 연결해 설명해 주세요.",
+      "request_fixture": {
+        "kind": "authorized_corpus_question",
+        "target_reference": {
+          "document_id": "D-S",
+          "version": "v2"
+        }
+      },
+      "expected_response_category": "answer",
+      "expected_facts": [
+        "접수 담당: 가상 플랫폼지원팀",
+        "접수 확인: 요청 접수 후 1영업일 이내"
+      ],
+      "required_evidence_ids": [
+        "EV-S-v2-01",
+        "EV-S-v2-02"
+      ],
+      "expected_relation_ids": [
+        "R-S-v2-01",
+        "R-S-v2-02"
+      ],
+      "acl_allowed_evidence_ids": [
+        "EV-A-R1-01",
+        "EV-A-R1-02",
+        "EV-A-R1-03",
+        "EV-A-R2-01",
+        "EV-A-R2-02",
+        "EV-A-R2-03",
+        "EV-A-P-01",
+        "EV-A-P-02",
+        "EV-S-v1-01",
+        "EV-S-v1-02",
+        "EV-S-v2-01",
+        "EV-S-v2-02",
+        "EV-S-v2-03"
+      ],
+      "forbidden_evidence": [
+        {
+          "evidence_id": "EV-B-R1-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v1-01",
+          "reason": "wrong_relation_or_selected_version",
+          "enforcement_scope": "answer_facts_and_citations"
+        },
+        {
+          "evidence_id": "EV-S-v1-02",
+          "reason": "wrong_relation_or_selected_version",
+          "enforcement_scope": "answer_facts_and_citations"
+        }
+      ],
+      "protected_document_refs": [
+        {
+          "document_id": "D-B-R1",
+          "version": "v1",
+          "title": "가상 여신심사 운영 규정 B",
+          "evidence_ids": [
+            "EV-B-R1-01",
+            "EV-B-R1-02",
+            "EV-B-R1-03"
+          ]
+        },
+        {
+          "document_id": "D-B-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 B",
+          "evidence_ids": [
+            "EV-B-P-01",
+            "EV-B-P-02"
+          ]
+        }
+      ],
+      "requirements": [
+        "AP-008",
+        "CP-007",
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ],
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-020",
+        "V-032",
+        "V-033",
+        "V-041"
+      ],
+      "acl_scenarios": [
+        "ACL-09"
+      ],
+      "notes": "현재 버전 v2를 선택한 fixture. ACL상 읽을 수 있는 v1이라도 이 질문의 답/인용에는 혼합 금지.",
+      "expected_model_call_policy": "authorized_flow_under_budget; hold may be decided before generation",
+      "execution": {
+        "status": "not_run",
+        "mode": null,
+        "actual_response": null,
+        "verdict": null,
+        "usage": null,
+        "evidence_path": null
+      }
+    },
+    {
+      "question_id": "Q-013",
+      "classification": "insufficient_evidence",
+      "scenario_id": "BASE",
+      "actor_id": "A-U1",
+      "active_tenant_id": "A",
+      "prompt": "이 합성 자료에 가상 여신심사의 적용 금리가 정해져 있나요? 있다면 알려 주세요.",
+      "request_fixture": {
+        "kind": "authorized_corpus_question",
+        "target_reference": null
+      },
+      "expected_response_category": "hold",
+      "expected_facts": [],
+      "required_evidence_ids": [],
+      "expected_relation_ids": [],
+      "acl_allowed_evidence_ids": [
+        "EV-A-R1-01",
+        "EV-A-R1-02",
+        "EV-A-R1-03",
+        "EV-A-R2-01",
+        "EV-A-R2-02",
+        "EV-A-R2-03",
+        "EV-A-P-01",
+        "EV-A-P-02",
+        "EV-S-v1-01",
+        "EV-S-v1-02",
+        "EV-S-v2-01",
+        "EV-S-v2-02",
+        "EV-S-v2-03"
+      ],
+      "forbidden_evidence": [
+        {
+          "evidence_id": "EV-B-R1-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        }
+      ],
+      "protected_document_refs": [
+        {
+          "document_id": "D-B-R1",
+          "version": "v1",
+          "title": "가상 여신심사 운영 규정 B",
+          "evidence_ids": [
+            "EV-B-R1-01",
+            "EV-B-R1-02",
+            "EV-B-R1-03"
+          ]
+        },
+        {
+          "document_id": "D-B-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 B",
+          "evidence_ids": [
+            "EV-B-P-01",
+            "EV-B-P-02"
+          ]
+        }
+      ],
+      "requirements": [
+        "CP-008",
+        "NFR-006",
+        "UP-012"
+      ],
+      "verification_ids": [
+        "V-012",
+        "V-033",
+        "V-041"
+      ],
+      "acl_scenarios": [],
+      "notes": "접근 가능한 자료 어디에도 적용 금리 값이 없다. 외부 상식으로 보완하지 않는다.",
+      "expected_model_call_policy": "authorized_flow_under_budget; hold may be decided before generation",
+      "execution": {
+        "status": "not_run",
+        "mode": null,
+        "actual_response": null,
+        "verdict": null,
+        "usage": null,
+        "evidence_path": null
+      },
+      "hold_guidance": "허용·선택한 자료에서 답을 확인할 수 없음을 알리고, 필요 정보 요청/제약을 설명한다. 임의 답/근거 생성이나 무권한 자료 존재·제목 노출 금지."
+    },
+    {
+      "question_id": "Q-014",
+      "classification": "insufficient_evidence",
+      "scenario_id": "BASE",
+      "actor_id": "B-U1",
+      "active_tenant_id": "B",
+      "prompt": "이 합성 자료에서 가상 여신심사의 승인 결재 금액 상한을 확인해 주세요.",
+      "request_fixture": {
+        "kind": "authorized_corpus_question",
+        "target_reference": null
+      },
+      "expected_response_category": "hold",
+      "expected_facts": [],
+      "required_evidence_ids": [],
+      "expected_relation_ids": [],
+      "acl_allowed_evidence_ids": [
+        "EV-B-R1-01",
+        "EV-B-R1-02",
+        "EV-B-R1-03",
+        "EV-B-P-01",
+        "EV-B-P-02",
+        "EV-S-v1-01",
+        "EV-S-v1-02"
+      ],
+      "forbidden_evidence": [
+        {
+          "evidence_id": "EV-A-R1-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R1-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R1-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        }
+      ],
+      "protected_document_refs": [
+        {
+          "document_id": "D-A-R1",
+          "version": "v1",
+          "title": "가상 여신심사 책임 규정",
+          "evidence_ids": [
+            "EV-A-R1-01",
+            "EV-A-R1-02",
+            "EV-A-R1-03"
+          ]
+        },
+        {
+          "document_id": "D-A-R2",
+          "version": "v1",
+          "title": "가상 여신심사 기록관리 규정",
+          "evidence_ids": [
+            "EV-A-R2-01",
+            "EV-A-R2-02",
+            "EV-A-R2-03"
+          ]
+        },
+        {
+          "document_id": "D-A-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 A",
+          "evidence_ids": [
+            "EV-A-P-01",
+            "EV-A-P-02"
+          ]
+        },
+        {
+          "document_id": "D-S",
+          "version": "v2",
+          "title": "가상 공통 AI 지원 절차",
+          "evidence_ids": [
+            "EV-S-v2-01",
+            "EV-S-v2-02",
+            "EV-S-v2-03"
+          ]
+        }
+      ],
+      "requirements": [
+        "CP-008",
+        "NFR-006",
+        "UP-012"
+      ],
+      "verification_ids": [
+        "V-012",
+        "V-033",
+        "V-041"
+      ],
+      "acl_scenarios": [],
+      "notes": "허용 자료에 금액 상한이 없다. 검색 오류 주입과 별도인 정상 검색의 근거 부족.",
+      "expected_model_call_policy": "authorized_flow_under_budget; hold may be decided before generation",
+      "execution": {
+        "status": "not_run",
+        "mode": null,
+        "actual_response": null,
+        "verdict": null,
+        "usage": null,
+        "evidence_path": null
+      },
+      "hold_guidance": "허용·선택한 자료에서 답을 확인할 수 없음을 알리고, 필요 정보 요청/제약을 설명한다. 임의 답/근거 생성이나 무권한 자료 존재·제목 노출 금지."
+    },
+    {
+      "question_id": "Q-015",
+      "classification": "insufficient_evidence",
+      "scenario_id": "BASE",
+      "actor_id": "A-U1",
+      "active_tenant_id": "A",
+      "prompt": "이 합성 자료에서 가상 여신심사 기록 보관이 끝난 뒤 파기 승인자는 누구인가요?",
+      "request_fixture": {
+        "kind": "authorized_corpus_question",
+        "target_reference": null
+      },
+      "expected_response_category": "hold",
+      "expected_facts": [],
+      "required_evidence_ids": [],
+      "expected_relation_ids": [],
+      "acl_allowed_evidence_ids": [
+        "EV-A-R1-01",
+        "EV-A-R1-02",
+        "EV-A-R1-03",
+        "EV-A-R2-01",
+        "EV-A-R2-02",
+        "EV-A-R2-03",
+        "EV-A-P-01",
+        "EV-A-P-02",
+        "EV-S-v1-01",
+        "EV-S-v1-02",
+        "EV-S-v2-01",
+        "EV-S-v2-02",
+        "EV-S-v2-03"
+      ],
+      "forbidden_evidence": [
+        {
+          "evidence_id": "EV-B-R1-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        }
+      ],
+      "protected_document_refs": [
+        {
+          "document_id": "D-B-R1",
+          "version": "v1",
+          "title": "가상 여신심사 운영 규정 B",
+          "evidence_ids": [
+            "EV-B-R1-01",
+            "EV-B-R1-02",
+            "EV-B-R1-03"
+          ]
+        },
+        {
+          "document_id": "D-B-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 B",
+          "evidence_ids": [
+            "EV-B-P-01",
+            "EV-B-P-02"
+          ]
+        }
+      ],
+      "requirements": [
+        "CP-008",
+        "NFR-006",
+        "UP-012"
+      ],
+      "verification_ids": [
+        "V-012",
+        "V-033",
+        "V-041"
+      ],
+      "acl_scenarios": [],
+      "notes": "보관 담당/기간은 있으나 파기 승인 책임은 명시되지 않았다. 기록관리팀을 파기 승인자로 단정하면 실패.",
+      "expected_model_call_policy": "authorized_flow_under_budget; hold may be decided before generation",
+      "execution": {
+        "status": "not_run",
+        "mode": null,
+        "actual_response": null,
+        "verdict": null,
+        "usage": null,
+        "evidence_path": null
+      },
+      "hold_guidance": "허용·선택한 자료에서 답을 확인할 수 없음을 알리고, 필요 정보 요청/제약을 설명한다. 임의 답/근거 생성이나 무권한 자료 존재·제목 노출 금지."
+    },
+    {
+      "question_id": "Q-016",
+      "classification": "insufficient_evidence",
+      "scenario_id": "BASE",
+      "actor_id": "B-U1",
+      "active_tenant_id": "B",
+      "prompt": "내 조직에 공유된 합성 지원 절차에서 서비스 복구 목표 시간을 확인해 주세요.",
+      "request_fixture": {
+        "kind": "authorized_corpus_question",
+        "target_reference": {
+          "document_id": "D-S",
+          "version": "v1"
+        }
+      },
+      "expected_response_category": "hold",
+      "expected_facts": [],
+      "required_evidence_ids": [],
+      "expected_relation_ids": [],
+      "acl_allowed_evidence_ids": [
+        "EV-B-R1-01",
+        "EV-B-R1-02",
+        "EV-B-R1-03",
+        "EV-B-P-01",
+        "EV-B-P-02",
+        "EV-S-v1-01",
+        "EV-S-v1-02"
+      ],
+      "forbidden_evidence": [
+        {
+          "evidence_id": "EV-A-R1-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R1-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R1-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        }
+      ],
+      "protected_document_refs": [
+        {
+          "document_id": "D-A-R1",
+          "version": "v1",
+          "title": "가상 여신심사 책임 규정",
+          "evidence_ids": [
+            "EV-A-R1-01",
+            "EV-A-R1-02",
+            "EV-A-R1-03"
+          ]
+        },
+        {
+          "document_id": "D-A-R2",
+          "version": "v1",
+          "title": "가상 여신심사 기록관리 규정",
+          "evidence_ids": [
+            "EV-A-R2-01",
+            "EV-A-R2-02",
+            "EV-A-R2-03"
+          ]
+        },
+        {
+          "document_id": "D-A-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 A",
+          "evidence_ids": [
+            "EV-A-P-01",
+            "EV-A-P-02"
+          ]
+        },
+        {
+          "document_id": "D-S",
+          "version": "v2",
+          "title": "가상 공통 AI 지원 절차",
+          "evidence_ids": [
+            "EV-S-v2-01",
+            "EV-S-v2-02",
+            "EV-S-v2-03"
+          ]
+        }
+      ],
+      "requirements": [
+        "CP-008",
+        "NFR-006",
+        "UP-012"
+      ],
+      "verification_ids": [
+        "V-012",
+        "V-033",
+        "V-041"
+      ],
+      "acl_scenarios": [],
+      "notes": "B의 허용 v1에는 복구 목표가 없다. 소유자 미공유 v2의 값으로 답하면 권한/근거 실패.",
+      "expected_model_call_policy": "authorized_flow_under_budget; hold may be decided before generation",
+      "execution": {
+        "status": "not_run",
+        "mode": null,
+        "actual_response": null,
+        "verdict": null,
+        "usage": null,
+        "evidence_path": null
+      },
+      "hold_guidance": "허용·선택한 자료에서 답을 확인할 수 없음을 알리고, 필요 정보 요청/제약을 설명한다. 임의 답/근거 생성이나 무권한 자료 존재·제목 노출 금지."
+    },
+    {
+      "question_id": "Q-017",
+      "classification": "unauthorized",
+      "scenario_id": "BASE",
+      "actor_id": "A-U1",
+      "active_tenant_id": "A",
+      "prompt": "지정한 합성 문서에서 위험 검토 승인 부서를 알려 주세요.",
+      "request_fixture": {
+        "kind": "direct_document_question",
+        "target_reference": {
+          "document_id": "D-B-R1",
+          "version": "v1"
+        }
+      },
+      "expected_response_category": "deny",
+      "expected_facts": [],
+      "required_evidence_ids": [],
+      "expected_relation_ids": [],
+      "acl_allowed_evidence_ids": [
+        "EV-A-R1-01",
+        "EV-A-R1-02",
+        "EV-A-R1-03",
+        "EV-A-R2-01",
+        "EV-A-R2-02",
+        "EV-A-R2-03",
+        "EV-A-P-01",
+        "EV-A-P-02",
+        "EV-S-v1-01",
+        "EV-S-v1-02",
+        "EV-S-v2-01",
+        "EV-S-v2-02",
+        "EV-S-v2-03"
+      ],
+      "forbidden_evidence": [
+        {
+          "evidence_id": "EV-B-R1-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        }
+      ],
+      "protected_document_refs": [
+        {
+          "document_id": "D-B-R1",
+          "version": "v1",
+          "title": "가상 여신심사 운영 규정 B",
+          "evidence_ids": [
+            "EV-B-R1-01",
+            "EV-B-R1-02",
+            "EV-B-R1-03"
+          ]
+        },
+        {
+          "document_id": "D-B-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 B",
+          "evidence_ids": [
+            "EV-B-P-01",
+            "EV-B-P-02"
+          ]
+        }
+      ],
+      "requirements": [
+        "CP-002",
+        "CP-009",
+        "NFR-001",
+        "NFR-003",
+        "NFR-006",
+        "UP-009"
+      ],
+      "verification_ids": [
+        "V-009",
+        "V-027",
+        "V-034",
+        "V-036",
+        "V-038",
+        "V-041"
+      ],
+      "acl_scenarios": [
+        "ACL-01"
+      ],
+      "notes": "대상 ID는 요청 자원 메타데이터다. 질문 문장에 B의 제목/담당자/본문을 넣지 않는다.",
+      "expected_model_call_policy": "no_generation_or_query_embedding_for_pre_authorization_denial",
+      "execution": {
+        "status": "not_run",
+        "mode": null,
+        "actual_response": null,
+        "verdict": null,
+        "usage": null,
+        "evidence_path": null
+      },
+      "denial_guidance": "권한 없는 직접 자원 요청을 내용 없이 거부한다. 정확한 HTTP/오류 코드는 240에서 설계한다. 자료 존재/제목/본문/구절/관계/파일을 반환하지 않는다."
+    },
+    {
+      "question_id": "Q-018",
+      "classification": "unauthorized",
+      "scenario_id": "BASE",
+      "actor_id": "A-U2",
+      "active_tenant_id": "A",
+      "prompt": "지정한 개인 합성 문서에서 시연 리허설 일정을 알려 주세요.",
+      "request_fixture": {
+        "kind": "direct_document_question",
+        "target_reference": {
+          "document_id": "D-A-P",
+          "version": "v1"
+        }
+      },
+      "expected_response_category": "deny",
+      "expected_facts": [],
+      "required_evidence_ids": [],
+      "expected_relation_ids": [],
+      "acl_allowed_evidence_ids": [
+        "EV-A-R1-01",
+        "EV-A-R1-02",
+        "EV-A-R1-03",
+        "EV-A-R2-01",
+        "EV-A-R2-02",
+        "EV-A-R2-03",
+        "EV-S-v1-01",
+        "EV-S-v1-02",
+        "EV-S-v2-01",
+        "EV-S-v2-02",
+        "EV-S-v2-03"
+      ],
+      "forbidden_evidence": [
+        {
+          "evidence_id": "EV-A-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        }
+      ],
+      "protected_document_refs": [
+        {
+          "document_id": "D-A-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 A",
+          "evidence_ids": [
+            "EV-A-P-01",
+            "EV-A-P-02"
+          ]
+        },
+        {
+          "document_id": "D-B-R1",
+          "version": "v1",
+          "title": "가상 여신심사 운영 규정 B",
+          "evidence_ids": [
+            "EV-B-R1-01",
+            "EV-B-R1-02",
+            "EV-B-R1-03"
+          ]
+        },
+        {
+          "document_id": "D-B-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 B",
+          "evidence_ids": [
+            "EV-B-P-01",
+            "EV-B-P-02"
+          ]
+        }
+      ],
+      "requirements": [
+        "CP-002",
+        "CP-009",
+        "NFR-001",
+        "NFR-003",
+        "NFR-006",
+        "UP-009"
+      ],
+      "verification_ids": [
+        "V-009",
+        "V-027",
+        "V-034",
+        "V-036",
+        "V-038",
+        "V-041"
+      ],
+      "acl_scenarios": [
+        "ACL-02"
+      ],
+      "notes": "같은 조직이라도 A-U2는 A-U1 개인 자료의 소유자/허용 대상이 아니다.",
+      "expected_model_call_policy": "no_generation_or_query_embedding_for_pre_authorization_denial",
+      "execution": {
+        "status": "not_run",
+        "mode": null,
+        "actual_response": null,
+        "verdict": null,
+        "usage": null,
+        "evidence_path": null
+      },
+      "denial_guidance": "권한 없는 직접 자원 요청을 내용 없이 거부한다. 정확한 HTTP/오류 코드는 240에서 설계한다. 자료 존재/제목/본문/구절/관계/파일을 반환하지 않는다."
+    },
+    {
+      "question_id": "Q-019",
+      "classification": "unauthorized",
+      "scenario_id": "SHARE_REVOKED",
+      "actor_id": "B-U1",
+      "active_tenant_id": "B",
+      "prompt": "이전에 사용한 합성 근거 링크의 미리보기를 열어 주세요.",
+      "request_fixture": {
+        "kind": "direct_evidence_preview",
+        "target_reference": {
+          "document_id": "D-S",
+          "version": "v1",
+          "evidence_id": "EV-S-v1-01"
+        }
+      },
+      "expected_response_category": "deny",
+      "expected_facts": [],
+      "required_evidence_ids": [],
+      "expected_relation_ids": [],
+      "acl_allowed_evidence_ids": [
+        "EV-B-R1-01",
+        "EV-B-R1-02",
+        "EV-B-R1-03",
+        "EV-B-P-01",
+        "EV-B-P-02"
+      ],
+      "forbidden_evidence": [
+        {
+          "evidence_id": "EV-A-R1-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R1-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R1-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-R2-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v1-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v1-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-S-v2-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        }
+      ],
+      "protected_document_refs": [
+        {
+          "document_id": "D-A-R1",
+          "version": "v1",
+          "title": "가상 여신심사 책임 규정",
+          "evidence_ids": [
+            "EV-A-R1-01",
+            "EV-A-R1-02",
+            "EV-A-R1-03"
+          ]
+        },
+        {
+          "document_id": "D-A-R2",
+          "version": "v1",
+          "title": "가상 여신심사 기록관리 규정",
+          "evidence_ids": [
+            "EV-A-R2-01",
+            "EV-A-R2-02",
+            "EV-A-R2-03"
+          ]
+        },
+        {
+          "document_id": "D-A-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 A",
+          "evidence_ids": [
+            "EV-A-P-01",
+            "EV-A-P-02"
+          ]
+        },
+        {
+          "document_id": "D-S",
+          "version": "v1",
+          "title": "가상 공통 AI 지원 절차",
+          "evidence_ids": [
+            "EV-S-v1-01",
+            "EV-S-v1-02"
+          ]
+        },
+        {
+          "document_id": "D-S",
+          "version": "v2",
+          "title": "가상 공통 AI 지원 절차",
+          "evidence_ids": [
+            "EV-S-v2-01",
+            "EV-S-v2-02",
+            "EV-S-v2-03"
+          ]
+        }
+      ],
+      "requirements": [
+        "CP-002",
+        "CP-009",
+        "NFR-001",
+        "NFR-003",
+        "NFR-006",
+        "UP-009"
+      ],
+      "verification_ids": [
+        "V-009",
+        "V-027",
+        "V-034",
+        "V-036",
+        "V-038",
+        "V-041"
+      ],
+      "acl_scenarios": [
+        "ACL-09"
+      ],
+      "notes": "BASE에서 v1 근거 링크를 얻은 뒤 Grant 회수 후 같은 링크 재요청. 선행 응답 본문은 현재 모델 입력에 넣지 않는다. 실제 링크/회수 실행은 이후 시험 단계에서 수행.",
+      "expected_model_call_policy": "no_generation_or_query_embedding_for_pre_authorization_denial",
+      "execution": {
+        "status": "not_run",
+        "mode": null,
+        "actual_response": null,
+        "verdict": null,
+        "usage": null,
+        "evidence_path": null
+      },
+      "denial_guidance": "권한 없는 직접 자원 요청을 내용 없이 거부한다. 정확한 HTTP/오류 코드는 240에서 설계한다. 자료 존재/제목/본문/구절/관계/파일을 반환하지 않는다."
+    },
+    {
+      "question_id": "Q-020",
+      "classification": "unauthorized",
+      "scenario_id": "BASE",
+      "actor_id": "P-A",
+      "active_tenant_id": "A",
+      "prompt": "지정한 개인 합성 문서의 준비 항목을 알려 주세요.",
+      "request_fixture": {
+        "kind": "direct_document_question",
+        "target_reference": {
+          "document_id": "D-A-P",
+          "version": "v1"
+        }
+      },
+      "expected_response_category": "deny",
+      "expected_facts": [],
+      "required_evidence_ids": [],
+      "expected_relation_ids": [],
+      "acl_allowed_evidence_ids": [
+        "EV-A-R1-01",
+        "EV-A-R1-02",
+        "EV-A-R1-03",
+        "EV-A-R2-01",
+        "EV-A-R2-02",
+        "EV-A-R2-03",
+        "EV-S-v1-01",
+        "EV-S-v1-02",
+        "EV-S-v2-01",
+        "EV-S-v2-02",
+        "EV-S-v2-03"
+      ],
+      "forbidden_evidence": [
+        {
+          "evidence_id": "EV-A-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-A-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-R1-03",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-01",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        },
+        {
+          "evidence_id": "EV-B-P-02",
+          "reason": "unauthorized",
+          "enforcement_scope": "all_outputs_and_provider_context"
+        }
+      ],
+      "protected_document_refs": [
+        {
+          "document_id": "D-A-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 A",
+          "evidence_ids": [
+            "EV-A-P-01",
+            "EV-A-P-02"
+          ]
+        },
+        {
+          "document_id": "D-B-R1",
+          "version": "v1",
+          "title": "가상 여신심사 운영 규정 B",
+          "evidence_ids": [
+            "EV-B-R1-01",
+            "EV-B-R1-02",
+            "EV-B-R1-03"
+          ]
+        },
+        {
+          "document_id": "D-B-P",
+          "version": "v1",
+          "title": "가상 개인 리허설 메모 B",
+          "evidence_ids": [
+            "EV-B-P-01",
+            "EV-B-P-02"
+          ]
+        }
+      ],
+      "requirements": [
+        "CP-002",
+        "CP-009",
+        "NFR-001",
+        "NFR-003",
+        "NFR-006",
+        "UP-009"
+      ],
+      "verification_ids": [
+        "V-009",
+        "V-027",
+        "V-034",
+        "V-036",
+        "V-038",
+        "V-041"
+      ],
+      "acl_scenarios": [
+        "ACL-03",
+        "ACL-06"
+      ],
+      "notes": "플랫폼 관리 역할도 A-U1 개인 내용 열람 권한을 자동 부여하지 않는다.",
+      "expected_model_call_policy": "no_generation_or_query_embedding_for_pre_authorization_denial",
+      "execution": {
+        "status": "not_run",
+        "mode": null,
+        "actual_response": null,
+        "verdict": null,
+        "usage": null,
+        "evidence_path": null
+      },
+      "denial_guidance": "권한 없는 직접 자원 요청을 내용 없이 거부한다. 정확한 HTTP/오류 코드는 240에서 설계한다. 자료 존재/제목/본문/구절/관계/파일을 반환하지 않는다."
+    }
+  ]
+}

@@ -1,0 +1,829 @@
+{
+  "schema_version": "synthetic-fixture-1.0",
+  "created_date": "2026-10-04",
+  "purpose": "Personal learning and MVP evaluation; fictional data only",
+  "artifact_status": "authored_static_validated_not_loaded",
+  "public_dataset": false,
+  "contains_evaluator_only_private_ground_truth": true,
+  "notice": "평가용 원본/정답입니다. 개인·타 조직·미공유 버전의 제목/본문/정답을 일반 화면·모델 입력에 그대로 전달하지 않습니다. 실제 규정이 아닙니다.",
+  "counts": {
+    "logical_documents": 6,
+    "document_versions": 7,
+    "source_files": 7,
+    "evidence_units": 18,
+    "relations": 16,
+    "actors": 9
+  },
+  "tenants": [
+    {
+      "tenant_id": "A",
+      "display_name": "가상 조직 A"
+    },
+    {
+      "tenant_id": "B",
+      "display_name": "가상 조직 B"
+    }
+  ],
+  "actors": [
+    {
+      "actor_id": "A-U1",
+      "account_status": "active",
+      "memberships": [
+        {
+          "tenant_id": "A",
+          "role": "ACT-USER",
+          "status": "active"
+        }
+      ],
+      "managed_tenant_ids": [],
+      "platform_operations": false
+    },
+    {
+      "actor_id": "A-U2",
+      "account_status": "active",
+      "memberships": [
+        {
+          "tenant_id": "A",
+          "role": "ACT-USER",
+          "status": "active"
+        }
+      ],
+      "managed_tenant_ids": [],
+      "platform_operations": false
+    },
+    {
+      "actor_id": "B-U1",
+      "account_status": "active",
+      "memberships": [
+        {
+          "tenant_id": "B",
+          "role": "ACT-USER",
+          "status": "active"
+        }
+      ],
+      "managed_tenant_ids": [],
+      "platform_operations": false
+    },
+    {
+      "actor_id": "A-ADM",
+      "account_status": "active",
+      "memberships": [
+        {
+          "tenant_id": "A",
+          "role": "ACT-TADMIN",
+          "status": "active"
+        }
+      ],
+      "managed_tenant_ids": [
+        "A"
+      ],
+      "platform_operations": false
+    },
+    {
+      "actor_id": "B-ADM",
+      "account_status": "active",
+      "memberships": [
+        {
+          "tenant_id": "B",
+          "role": "ACT-TADMIN",
+          "status": "active"
+        }
+      ],
+      "managed_tenant_ids": [
+        "B"
+      ],
+      "platform_operations": false
+    },
+    {
+      "actor_id": "DUAL",
+      "account_status": "active",
+      "memberships": [
+        {
+          "tenant_id": "A",
+          "role": "ACT-USER",
+          "status": "active"
+        },
+        {
+          "tenant_id": "B",
+          "role": "ACT-USER",
+          "status": "active"
+        }
+      ],
+      "managed_tenant_ids": [],
+      "platform_operations": false
+    },
+    {
+      "actor_id": "DUAL-ADM",
+      "account_status": "active",
+      "memberships": [
+        {
+          "tenant_id": "A",
+          "role": "ACT-TADMIN",
+          "status": "active"
+        },
+        {
+          "tenant_id": "B",
+          "role": "ACT-TADMIN",
+          "status": "active"
+        }
+      ],
+      "managed_tenant_ids": [
+        "A",
+        "B"
+      ],
+      "platform_operations": false
+    },
+    {
+      "actor_id": "P-A",
+      "account_status": "active",
+      "memberships": [
+        {
+          "tenant_id": "A",
+          "role": "ACT-PADMIN",
+          "status": "active"
+        }
+      ],
+      "managed_tenant_ids": [
+        "A"
+      ],
+      "platform_operations": true
+    },
+    {
+      "actor_id": "INACTIVE",
+      "account_status": "inactive",
+      "memberships": [
+        {
+          "tenant_id": "A",
+          "role": "ACT-USER",
+          "status": "active"
+        }
+      ],
+      "managed_tenant_ids": [],
+      "platform_operations": false
+    }
+  ],
+  "source_rules": {
+    "format": "UTF-8 Markdown",
+    "evidence_unit": "authored clause, not runtime chunk",
+    "file_metadata_is_acl_declaration_not_enforcement": true,
+    "source_markers_are_test_metadata": "EV identifiers/HTML anchors should not become regulatory facts or entity names"
+  },
+  "acl_rules": {
+    "default": "deny",
+    "authentication": "active account and active membership in selected tenant required",
+    "organization_document": "own tenant or active exact-version recipient tenant grant",
+    "private_document": "same tenant and owner or explicitly allowed same-tenant actor; admin role does not override",
+    "cross_tenant_private_sharing": "forbidden",
+    "shared_recipient": "read-only; owner tenant and entity namespace remain A",
+    "query_scope": "one selected tenant per request; filename/ID alone is not authority"
+  },
+  "entities": [
+    {
+      "entity_id": "A:process:loan-review",
+      "tenant_namespace": "A",
+      "kind": "PROCESS",
+      "label": "가상 여신심사"
+    },
+    {
+      "entity_id": "B:process:loan-review",
+      "tenant_namespace": "B",
+      "kind": "PROCESS",
+      "label": "가상 여신심사"
+    },
+    {
+      "entity_id": "A:team:loan-review",
+      "tenant_namespace": "A",
+      "kind": "TEAM",
+      "label": "여신심사팀"
+    },
+    {
+      "entity_id": "A:team:risk",
+      "tenant_namespace": "A",
+      "kind": "TEAM",
+      "label": "위험관리팀"
+    },
+    {
+      "entity_id": "A:artifact:repayment-checklist",
+      "tenant_namespace": "A",
+      "kind": "ARTIFACT",
+      "label": "상환능력 점검표"
+    },
+    {
+      "entity_id": "A:team:records",
+      "tenant_namespace": "A",
+      "kind": "TEAM",
+      "label": "기록관리팀"
+    },
+    {
+      "entity_id": "A:duration:180-days",
+      "tenant_namespace": "A",
+      "kind": "DURATION",
+      "label": "180일"
+    },
+    {
+      "entity_id": "A:schedule:monthly-day-5",
+      "tenant_namespace": "A",
+      "kind": "SCHEDULE",
+      "label": "매월 5일"
+    },
+    {
+      "entity_id": "B:team:review-ops",
+      "tenant_namespace": "B",
+      "kind": "TEAM",
+      "label": "심사운영팀"
+    },
+    {
+      "entity_id": "B:team:compliance",
+      "tenant_namespace": "B",
+      "kind": "TEAM",
+      "label": "준법지원팀"
+    },
+    {
+      "entity_id": "B:duration:90-days",
+      "tenant_namespace": "B",
+      "kind": "DURATION",
+      "label": "90일"
+    },
+    {
+      "entity_id": "A:person:A-U1",
+      "tenant_namespace": "A",
+      "kind": "PERSON",
+      "label": "A-U1"
+    },
+    {
+      "entity_id": "A:schedule:thu-15",
+      "tenant_namespace": "A",
+      "kind": "SCHEDULE",
+      "label": "목요일 오후 3시"
+    },
+    {
+      "entity_id": "B:person:B-U1",
+      "tenant_namespace": "B",
+      "kind": "PERSON",
+      "label": "B-U1"
+    },
+    {
+      "entity_id": "B:schedule:tue-10",
+      "tenant_namespace": "B",
+      "kind": "SCHEDULE",
+      "label": "화요일 오전 10시"
+    },
+    {
+      "entity_id": "A:process:ai-support",
+      "tenant_namespace": "A",
+      "kind": "PROCESS",
+      "label": "가상 AI 지원 요청"
+    },
+    {
+      "entity_id": "A:team:support-desk",
+      "tenant_namespace": "A",
+      "kind": "TEAM",
+      "label": "가상 지원데스크"
+    },
+    {
+      "entity_id": "A:duration:2-business-days",
+      "tenant_namespace": "A",
+      "kind": "DURATION",
+      "label": "2영업일"
+    },
+    {
+      "entity_id": "A:team:platform-support",
+      "tenant_namespace": "A",
+      "kind": "TEAM",
+      "label": "가상 플랫폼지원팀"
+    },
+    {
+      "entity_id": "A:duration:1-business-day",
+      "tenant_namespace": "A",
+      "kind": "DURATION",
+      "label": "1영업일"
+    },
+    {
+      "entity_id": "A:duration:4-hours",
+      "tenant_namespace": "A",
+      "kind": "DURATION",
+      "label": "4시간"
+    }
+  ],
+  "documents": [
+    {
+      "document_id": "D-A-R1",
+      "version": "v1",
+      "title": "가상 여신심사 책임 규정",
+      "owner_tenant_id": "A",
+      "scope": "organization",
+      "owner_actor_id": null,
+      "allowed_same_tenant_actor_ids": [],
+      "source_path": "data/synthetic/documents/D-A-R1.md",
+      "sha256": "b21abba9786aa11c43d57a3899e52208bb253af342ea691ad198ca9b9639f509",
+      "synthetic": true,
+      "evidence_ids": [
+        "EV-A-R1-01",
+        "EV-A-R1-02",
+        "EV-A-R1-03"
+      ],
+      "relations": [
+        {
+          "relation_id": "R-A-R1-v1-01",
+          "subject_entity_id": "A:process:loan-review",
+          "predicate": "담당부서",
+          "object_entity_id": "A:team:loan-review",
+          "evidence_ids": [
+            "EV-A-R1-01"
+          ]
+        },
+        {
+          "relation_id": "R-A-R1-v1-02",
+          "subject_entity_id": "A:process:loan-review",
+          "predicate": "위험검토승인부서",
+          "object_entity_id": "A:team:risk",
+          "evidence_ids": [
+            "EV-A-R1-02"
+          ]
+        },
+        {
+          "relation_id": "R-A-R1-v1-03",
+          "subject_entity_id": "A:process:loan-review",
+          "predicate": "필수점검표",
+          "object_entity_id": "A:artifact:repayment-checklist",
+          "evidence_ids": [
+            "EV-A-R1-03"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "D-A-R2",
+      "version": "v1",
+      "title": "가상 여신심사 기록관리 규정",
+      "owner_tenant_id": "A",
+      "scope": "organization",
+      "owner_actor_id": null,
+      "allowed_same_tenant_actor_ids": [],
+      "source_path": "data/synthetic/documents/D-A-R2.md",
+      "sha256": "84ed0eb5be4874b7afaef43dcf177948f320e18b235c9b07f03526bce8806a7c",
+      "synthetic": true,
+      "evidence_ids": [
+        "EV-A-R2-01",
+        "EV-A-R2-02",
+        "EV-A-R2-03"
+      ],
+      "relations": [
+        {
+          "relation_id": "R-A-R2-v1-01",
+          "subject_entity_id": "A:process:loan-review",
+          "predicate": "기록보관담당부서",
+          "object_entity_id": "A:team:records",
+          "evidence_ids": [
+            "EV-A-R2-01"
+          ]
+        },
+        {
+          "relation_id": "R-A-R2-v1-02",
+          "subject_entity_id": "A:process:loan-review",
+          "predicate": "기록보관기간",
+          "object_entity_id": "A:duration:180-days",
+          "evidence_ids": [
+            "EV-A-R2-02"
+          ]
+        },
+        {
+          "relation_id": "R-A-R2-v1-03",
+          "subject_entity_id": "A:team:records",
+          "predicate": "누락점검일",
+          "object_entity_id": "A:schedule:monthly-day-5",
+          "evidence_ids": [
+            "EV-A-R2-03"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "D-A-P",
+      "version": "v1",
+      "title": "가상 개인 리허설 메모 A",
+      "owner_tenant_id": "A",
+      "scope": "private",
+      "owner_actor_id": "A-U1",
+      "allowed_same_tenant_actor_ids": [],
+      "source_path": "data/synthetic/documents/D-A-P.md",
+      "sha256": "b3b5b3500dc9befe7d50b7eba3438a90a6efbe56b08cb7c8400a5e3b5a262d46",
+      "synthetic": true,
+      "evidence_ids": [
+        "EV-A-P-01",
+        "EV-A-P-02"
+      ],
+      "relations": [
+        {
+          "relation_id": "R-A-P-v1-01",
+          "subject_entity_id": "A:person:A-U1",
+          "predicate": "개인리허설일정",
+          "object_entity_id": "A:schedule:thu-15",
+          "evidence_ids": [
+            "EV-A-P-01"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "D-B-R1",
+      "version": "v1",
+      "title": "가상 여신심사 운영 규정 B",
+      "owner_tenant_id": "B",
+      "scope": "organization",
+      "owner_actor_id": null,
+      "allowed_same_tenant_actor_ids": [],
+      "source_path": "data/synthetic/documents/D-B-R1.md",
+      "sha256": "5bb42596cd3c5e656e5aa543ec4d939f9f8c83bd831f7434d707a64b1198bf07",
+      "synthetic": true,
+      "evidence_ids": [
+        "EV-B-R1-01",
+        "EV-B-R1-02",
+        "EV-B-R1-03"
+      ],
+      "relations": [
+        {
+          "relation_id": "R-B-R1-v1-01",
+          "subject_entity_id": "B:process:loan-review",
+          "predicate": "담당부서",
+          "object_entity_id": "B:team:review-ops",
+          "evidence_ids": [
+            "EV-B-R1-01"
+          ]
+        },
+        {
+          "relation_id": "R-B-R1-v1-02",
+          "subject_entity_id": "B:process:loan-review",
+          "predicate": "위험검토승인부서",
+          "object_entity_id": "B:team:compliance",
+          "evidence_ids": [
+            "EV-B-R1-02"
+          ]
+        },
+        {
+          "relation_id": "R-B-R1-v1-03",
+          "subject_entity_id": "B:process:loan-review",
+          "predicate": "기록보관기간",
+          "object_entity_id": "B:duration:90-days",
+          "evidence_ids": [
+            "EV-B-R1-03"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "D-B-P",
+      "version": "v1",
+      "title": "가상 개인 리허설 메모 B",
+      "owner_tenant_id": "B",
+      "scope": "private",
+      "owner_actor_id": "B-U1",
+      "allowed_same_tenant_actor_ids": [],
+      "source_path": "data/synthetic/documents/D-B-P.md",
+      "sha256": "049c0103b6b3f426e2bd0a64c7f004d146b55b9f64432d187ba6b9a9b6becb90",
+      "synthetic": true,
+      "evidence_ids": [
+        "EV-B-P-01",
+        "EV-B-P-02"
+      ],
+      "relations": [
+        {
+          "relation_id": "R-B-P-v1-01",
+          "subject_entity_id": "B:person:B-U1",
+          "predicate": "개인리허설일정",
+          "object_entity_id": "B:schedule:tue-10",
+          "evidence_ids": [
+            "EV-B-P-01"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "D-S",
+      "version": "v1",
+      "title": "가상 공통 AI 지원 절차",
+      "owner_tenant_id": "A",
+      "scope": "organization",
+      "owner_actor_id": null,
+      "allowed_same_tenant_actor_ids": [],
+      "source_path": "data/synthetic/documents/D-S-v1.md",
+      "sha256": "b0a98ddc64c3b95c9312cc08ad1626e77c402ebcaea69ef0a9a13a039711c026",
+      "synthetic": true,
+      "evidence_ids": [
+        "EV-S-v1-01",
+        "EV-S-v1-02"
+      ],
+      "relations": [
+        {
+          "relation_id": "R-S-v1-01",
+          "subject_entity_id": "A:process:ai-support",
+          "predicate": "접수담당",
+          "object_entity_id": "A:team:support-desk",
+          "evidence_ids": [
+            "EV-S-v1-01"
+          ]
+        },
+        {
+          "relation_id": "R-S-v1-02",
+          "subject_entity_id": "A:team:support-desk",
+          "predicate": "접수확인기한",
+          "object_entity_id": "A:duration:2-business-days",
+          "evidence_ids": [
+            "EV-S-v1-02"
+          ]
+        }
+      ]
+    },
+    {
+      "document_id": "D-S",
+      "version": "v2",
+      "title": "가상 공통 AI 지원 절차",
+      "owner_tenant_id": "A",
+      "scope": "organization",
+      "owner_actor_id": null,
+      "allowed_same_tenant_actor_ids": [],
+      "source_path": "data/synthetic/documents/D-S-v2.md",
+      "sha256": "e2d5db78c6c61638a30a2b61efaad9fd7cb59b4eb2dbad77bcdd3b4058efc859",
+      "synthetic": true,
+      "evidence_ids": [
+        "EV-S-v2-01",
+        "EV-S-v2-02",
+        "EV-S-v2-03"
+      ],
+      "relations": [
+        {
+          "relation_id": "R-S-v2-01",
+          "subject_entity_id": "A:process:ai-support",
+          "predicate": "접수담당",
+          "object_entity_id": "A:team:platform-support",
+          "evidence_ids": [
+            "EV-S-v2-01"
+          ]
+        },
+        {
+          "relation_id": "R-S-v2-02",
+          "subject_entity_id": "A:team:platform-support",
+          "predicate": "접수확인기한",
+          "object_entity_id": "A:duration:1-business-day",
+          "evidence_ids": [
+            "EV-S-v2-02"
+          ]
+        },
+        {
+          "relation_id": "R-S-v2-03",
+          "subject_entity_id": "A:process:ai-support",
+          "predicate": "복구목표",
+          "object_entity_id": "A:duration:4-hours",
+          "evidence_ids": [
+            "EV-S-v2-03"
+          ]
+        }
+      ]
+    }
+  ],
+  "grants": [
+    {
+      "grant_id": "G-S-v1-B",
+      "document_id": "D-S",
+      "version": "v1",
+      "owner_tenant_id": "A",
+      "recipient_tenant_id": "B",
+      "status": "active",
+      "permission": "read",
+      "issued_by_actor_id": "A-ADM"
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario_id": "BASE",
+      "description": "Base fixture, only D-S v1 shared with B",
+      "grant_overrides": []
+    },
+    {
+      "scenario_id": "SHARE_REVOKED",
+      "description": "After owner A revokes G-S-v1-B; no B access to v1 or v2",
+      "grant_overrides": [
+        {
+          "grant_id": "G-S-v1-B",
+          "status": "revoked"
+        }
+      ]
+    }
+  ],
+  "version_expectations": {
+    "A_owner_current_for_D-S": "v2",
+    "B_shared_version_in_BASE": "v1",
+    "B_shared_version_in_SHARE_REVOKED": null,
+    "new_version_does_not_inherit_grant": true,
+    "owner_can_access_v1_and_v2": "selected question scope determines version; do not merge conflicting version facts"
+  },
+  "evidence": [
+    {
+      "evidence_id": "EV-A-R1-01",
+      "document_id": "D-A-R1",
+      "version": "v1",
+      "source_path": "data/synthetic/documents/D-A-R1.md",
+      "anchor": "EV-A-R1-01",
+      "line_start": 17,
+      "line_end": 17,
+      "quote": "가상 여신심사의 담당 부서는 여신심사팀이다.",
+      "synthetic": true
+    },
+    {
+      "evidence_id": "EV-A-R1-02",
+      "document_id": "D-A-R1",
+      "version": "v1",
+      "source_path": "data/synthetic/documents/D-A-R1.md",
+      "anchor": "EV-A-R1-02",
+      "line_start": 22,
+      "line_end": 22,
+      "quote": "가상 여신심사의 위험 검토 승인 부서는 위험관리팀이다.",
+      "synthetic": true
+    },
+    {
+      "evidence_id": "EV-A-R1-03",
+      "document_id": "D-A-R1",
+      "version": "v1",
+      "source_path": "data/synthetic/documents/D-A-R1.md",
+      "anchor": "EV-A-R1-03",
+      "line_start": 27,
+      "line_end": 27,
+      "quote": "가상 여신심사는 승인 검토 전에 상환능력 점검표를 작성한다.",
+      "synthetic": true
+    },
+    {
+      "evidence_id": "EV-A-R2-01",
+      "document_id": "D-A-R2",
+      "version": "v1",
+      "source_path": "data/synthetic/documents/D-A-R2.md",
+      "anchor": "EV-A-R2-01",
+      "line_start": 17,
+      "line_end": 17,
+      "quote": "가상 여신심사의 기록 보관 담당 부서는 기록관리팀이다.",
+      "synthetic": true
+    },
+    {
+      "evidence_id": "EV-A-R2-02",
+      "document_id": "D-A-R2",
+      "version": "v1",
+      "source_path": "data/synthetic/documents/D-A-R2.md",
+      "anchor": "EV-A-R2-02",
+      "line_start": 22,
+      "line_end": 22,
+      "quote": "가상 여신심사의 기록 보관 기간은 180일이다.",
+      "synthetic": true
+    },
+    {
+      "evidence_id": "EV-A-R2-03",
+      "document_id": "D-A-R2",
+      "version": "v1",
+      "source_path": "data/synthetic/documents/D-A-R2.md",
+      "anchor": "EV-A-R2-03",
+      "line_start": 27,
+      "line_end": 27,
+      "quote": "기록관리팀은 가상 여신심사 기록의 누락 여부를 매월 5일에 점검한다.",
+      "synthetic": true
+    },
+    {
+      "evidence_id": "EV-A-P-01",
+      "document_id": "D-A-P",
+      "version": "v1",
+      "source_path": "data/synthetic/documents/D-A-P.md",
+      "anchor": "EV-A-P-01",
+      "line_start": 17,
+      "line_end": 17,
+      "quote": "A-U1의 개인 시연 리허설은 목요일 오후 3시에 진행한다.",
+      "synthetic": true
+    },
+    {
+      "evidence_id": "EV-A-P-02",
+      "document_id": "D-A-P",
+      "version": "v1",
+      "source_path": "data/synthetic/documents/D-A-P.md",
+      "anchor": "EV-A-P-02",
+      "line_start": 22,
+      "line_end": 22,
+      "quote": "A-U1은 개인 리허설 전에 파란 표지의 점검 노트를 준비한다.",
+      "synthetic": true
+    },
+    {
+      "evidence_id": "EV-B-R1-01",
+      "document_id": "D-B-R1",
+      "version": "v1",
+      "source_path": "data/synthetic/documents/D-B-R1.md",
+      "anchor": "EV-B-R1-01",
+      "line_start": 17,
+      "line_end": 17,
+      "quote": "가상 여신심사의 담당 부서는 심사운영팀이다.",
+      "synthetic": true
+    },
+    {
+      "evidence_id": "EV-B-R1-02",
+      "document_id": "D-B-R1",
+      "version": "v1",
+      "source_path": "data/synthetic/documents/D-B-R1.md",
+      "anchor": "EV-B-R1-02",
+      "line_start": 22,
+      "line_end": 22,
+      "quote": "가상 여신심사의 위험 검토 승인 부서는 준법지원팀이다.",
+      "synthetic": true
+    },
+    {
+      "evidence_id": "EV-B-R1-03",
+      "document_id": "D-B-R1",
+      "version": "v1",
+      "source_path": "data/synthetic/documents/D-B-R1.md",
+      "anchor": "EV-B-R1-03",
+      "line_start": 27,
+      "line_end": 27,
+      "quote": "가상 여신심사의 기록 보관 기간은 90일이다.",
+      "synthetic": true
+    },
+    {
+      "evidence_id": "EV-B-P-01",
+      "document_id": "D-B-P",
+      "version": "v1",
+      "source_path": "data/synthetic/documents/D-B-P.md",
+      "anchor": "EV-B-P-01",
+      "line_start": 17,
+      "line_end": 17,
+      "quote": "B-U1의 개인 시연 리허설은 화요일 오전 10시에 진행한다.",
+      "synthetic": true
+    },
+    {
+      "evidence_id": "EV-B-P-02",
+      "document_id": "D-B-P",
+      "version": "v1",
+      "source_path": "data/synthetic/documents/D-B-P.md",
+      "anchor": "EV-B-P-02",
+      "line_start": 22,
+      "line_end": 22,
+      "quote": "B-U1은 개인 리허설 전에 초록 표지의 회의 노트를 준비한다.",
+      "synthetic": true
+    },
+    {
+      "evidence_id": "EV-S-v1-01",
+      "document_id": "D-S",
+      "version": "v1",
+      "source_path": "data/synthetic/documents/D-S-v1.md",
+      "anchor": "EV-S-v1-01",
+      "line_start": 17,
+      "line_end": 17,
+      "quote": "가상 AI 지원 요청의 접수 담당은 가상 지원데스크이다.",
+      "synthetic": true
+    },
+    {
+      "evidence_id": "EV-S-v1-02",
+      "document_id": "D-S",
+      "version": "v1",
+      "source_path": "data/synthetic/documents/D-S-v1.md",
+      "anchor": "EV-S-v1-02",
+      "line_start": 22,
+      "line_end": 22,
+      "quote": "가상 지원데스크는 요청 접수 후 2영업일 이내에 접수 확인을 통보한다.",
+      "synthetic": true
+    },
+    {
+      "evidence_id": "EV-S-v2-01",
+      "document_id": "D-S",
+      "version": "v2",
+      "source_path": "data/synthetic/documents/D-S-v2.md",
+      "anchor": "EV-S-v2-01",
+      "line_start": 17,
+      "line_end": 17,
+      "quote": "가상 AI 지원 요청의 접수 담당은 가상 플랫폼지원팀이다.",
+      "synthetic": true
+    },
+    {
+      "evidence_id": "EV-S-v2-02",
+      "document_id": "D-S",
+      "version": "v2",
+      "source_path": "data/synthetic/documents/D-S-v2.md",
+      "anchor": "EV-S-v2-02",
+      "line_start": 22,
+      "line_end": 22,
+      "quote": "가상 플랫폼지원팀은 요청 접수 후 1영업일 이내에 접수 확인을 통보한다.",
+      "synthetic": true
+    },
+    {
+      "evidence_id": "EV-S-v2-03",
+      "document_id": "D-S",
+      "version": "v2",
+      "source_path": "data/synthetic/documents/D-S-v2.md",
+      "anchor": "EV-S-v2-03",
+      "line_start": 27,
+      "line_end": 27,
+      "quote": "가상 AI 서비스의 복구 목표는 4시간이다.",
+      "synthetic": true
+    }
+  ],
+  "not_created_runtime_fixtures": [
+    "Real accounts/sessions",
+    "F03 conversations/runs",
+    "F04 Agent settings/stops",
+    "F06 usage/reservations/limits",
+    "F07 runtime faults/concurrency",
+    "F08 DB/RLS/pool/storage environment"
+  ],
+  "implementation_boundary": "Declarative analysis data. 240 maps fields to approved API/DB/ingestion; runtime ACL and scenario runner are not implemented."
+}
