@@ -55,7 +55,7 @@ class FixtureState:
     def verify_catalog(self):
         with self.db.admin_connection() as conn:
             assert conn.execute("SELECT count(*) FROM pg_tables WHERE schemaname IN ('security','portal','ops')").fetchone()[0]==11
-            assert conn.execute("SELECT count(*) FROM infra.schema_migrations").fetchone()[0]==4
+            assert conn.execute("SELECT count(*) FROM infra.schema_migrations").fetchone()[0]==5
             rows=conn.execute("SELECT n.nspname,c.relname,c.relrowsecurity,c.relforcerowsecurity,r.rolname "
                 "FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace JOIN pg_roles r ON r.oid=c.relowner "
                 "WHERE n.nspname IN ('portal','ops') AND c.relname IN ('conversations','agent_configs','audit_events')").fetchall()
@@ -66,7 +66,7 @@ class FixtureState:
                 "EXISTS(SELECT 1 FROM aclexplode(p.proacl) a WHERE a.grantee=0 AND a.privilege_type='EXECUTE') "
                 "FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace JOIN pg_roles r ON r.oid=p.proowner "
                 "WHERE n.nspname='security'").fetchall()
-            assert len(funcs)==13 and all(r[0] and r[1]==['search_path=pg_catalog, security, pg_temp'] and r[2]=='ai_policy_executor' and not r[3] for r in funcs)
+            assert len(funcs)==16 and all(r[0] and r[1]==['search_path=pg_catalog, security, pg_temp'] and r[2]=='ai_policy_executor' and not r[3] for r in funcs)
             assert conn.execute('SELECT count(*) FROM security.managed_tenants').fetchone()[0]==1
 
 

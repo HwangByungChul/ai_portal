@@ -2,6 +2,8 @@ from datetime import datetime, timezone
 from fastapi.responses import JSONResponse
 
 MESSAGES = {
+    'RESOURCE_NOT_FOUND': '대상을 찾을 수 없습니다.',
+    'REVISION_CONFLICT': '변경된 내용을 다시 조회해 주세요.',
     'LOGIN_FAILED': '로그인 정보를 확인해 주세요.',
     'AUTH_REQUIRED': '로그인이 필요합니다.',
     'REQUEST_FORBIDDEN': '허용되지 않은 요청입니다.',
@@ -21,7 +23,7 @@ class AppError(Exception):
 
 def response(request, data=None, error=None, field_paths=None):
     headers = {'Cache-Control': 'no-store', 'X-Request-ID': request.state.request_id}
-    meta = {'request_id': request.state.request_id, 'tenant_id': None,
+    meta = {'request_id': request.state.request_id, 'tenant_id': getattr(request.state,'tenant_id',None),
             'server_time': datetime.now(timezone.utc).isoformat()}
     if error:
         if error.status == 401:

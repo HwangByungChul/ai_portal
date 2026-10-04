@@ -1,0 +1,24 @@
+{
+  "suite_id": "I250-A04-runtime",
+  "utc_time": "2026-10-04T14:17:47.686380+00:00",
+  "mode": "mock",
+  "paid_calls": 0,
+  "checks": {
+    "primary_pending_only": true,
+    "primary_business_rows_unchanged": true,
+    "current_scope_and_admin_authority": true,
+    "membership_revoked_existing_cookie": true,
+    "revision_conflict_and_role_revocation": true,
+    "dual_other_organization_preserved": true,
+    "audit_failure_rolled_back": true,
+    "api_pool_closed": true,
+    "disposable_database_removed": true,
+    "private_app_environment_unchanged": true,
+    "api_log_secret_scan_clear": true
+  },
+  "business_tables": 11,
+  "control_functions": 16,
+  "migrations": 5,
+  "database_state_after": "stopped",
+  "status": "pass"
+}

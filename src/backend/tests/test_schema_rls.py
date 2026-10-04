@@ -106,7 +106,7 @@ def test_raw_permissions_and_rls_catalog(db_fixture):
 @pytest.mark.parametrize('actor,tenant,role,manage', [
     ('A-U1', 'A', 'USER', False), ('A-ADM', 'A', 'TADMIN', True),
     ('P-A', 'A', 'PADMIN', True), ('DUAL-ADM', 'B', 'TADMIN', True),
-    ('P_READ_ONLY', 'A', 'PADMIN', False), ('P_WRITE_ONLY', 'A', 'PADMIN', False),
+    ('P_READ_ONLY', 'A', 'USER', False), ('P_WRITE_ONLY', 'A', 'USER', False),
 ])
 def test_current_membership_not_global_tenant_access(db_fixture, actor, tenant, role, manage):
     async def check():
@@ -177,6 +177,6 @@ def test_platform_and_managed_revoke_recompute_privileges(db_fixture,target):
                 admin.execute(f'UPDATE {table} SET active=false WHERE user_id=%s',(ctx.user_id,))
             row=await (await conn.execute('SELECT * FROM security.current_membership(%s,%s)',(ctx.session_id,ctx.tenant_id))).fetchone()
             assert row['can_manage'] is False
-            assert row['effective_role']==('USER' if target=='platform' else 'PADMIN')
+            assert row['effective_role']=='USER'
             assert not (await (await conn.execute('SELECT security.can_manage_current_tenant(%s) AS allowed',(ctx.tenant_id,))).fetchone())['allowed']
     db_fixture.run(check())

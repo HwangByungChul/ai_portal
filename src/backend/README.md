@@ -1,12 +1,12 @@
-# AI 플랫폼 backend — A01~03 인증 기반
+# AI 플랫폼 backend — A01~04 인증·조직 관리 기반
 
-전용환경/첫11개업무테이블/RLS·풀과실제로그인·본인세션확인·로그아웃이구현되어있다. 조직/관리API·화면·AI는후속이다. health200은 전체 플랫폼 완료를 뜻하지 않는다.
+전용환경/첫11개업무테이블/RLS·풀과실제로그인·본인세션확인·로그아웃이구현되어있다. 조직/관리API까지구현했으며화면·AI는후속이다. health200은 전체 플랫폼 완료를 뜻하지 않는다.
 
 ## 환경과 설치
 
 확인 환경: macOS x86_64/Python3.13.2/PostgreSQL15.18(Homebrew). Node22.23.1은 A05에서사용한다. 전역 Node는변경하지않았으며Docker는필요없다.
 
-프로젝트 루트에서 `cd src/backend`한뒤실행한다. `.venv`는이폴더안에두며직접9개/전이포함30개는hash lock으로고정했다. A02/A03의추가의존성은없다.
+프로젝트 루트에서 `cd src/backend`한뒤실행한다. `.venv`는이폴더안에두며직접9개/전이포함30개는hash lock으로고정했다. A02/A03/A04의추가의존성은없다.
 
 ```bash
 /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -m venv .venv
@@ -38,9 +38,9 @@
 .venv/bin/python -m scripts.seed --fixture A-auth
 ```
 
-migrate는`ai_portal_mvp_test_<UUID>`의새시험DB/comment marker를생성한다. 000~003 SQL과SHA256 기록을단일transaction으로적용하고완료전에runtime접속을개방하지않는다. 반복CLI는기존설정을감지해거부한다. 재seed/비fixture/외부DB/변경된적용SQL도거부하며reset/drop CLI는제공하지않는다. 적용된migration은수정하지말고004이후새파일로추가한다. 시험용real예산행은실원장의reset허가가아니다.
+migrate는`ai_portal_mvp_test_<UUID>`의새시험DB/comment marker를생성한다. 000~004 SQL과SHA256 기록을단일transaction으로적용하고완료전에runtime접속을개방하지않는다. 반복CLI는기존설정을감지해거부한다. 재seed/비fixture/외부DB/변경된적용SQL도거부하며reset/drop CLI는제공하지않는다. 적용된migration은수정하지말고005이후새파일로추가한다. 시험용real예산행은실원장의reset허가가아니다.
 
-이번A03에서는기존active fixture에003만추가적용했고계정/세션/창이나web DSN/HMAC은reset하지않았다. 이후pending migration도private active fixture의소유를검증한뒤같은runner로적용한다. 기존데이터가있는DB에는seed를다시호출하지않는다.
+A03에서는003,A04에서는004만기존active fixture에추가적용했고계정/세션/창이나web DSN/HMAC은reset하지않았다. 이후pending migration도private active fixture의소유를검증한뒤같은runner로적용한다. 기존데이터가있는DB에는seed를다시호출하지않는다.
 
 ```bash
 .venv/bin/python - <<'PYCODE'
@@ -122,8 +122,18 @@ local쿠키는ai_session_dev/HttpOnly/Lax/Path=/,HTTPS profile은__Host-ai_sessi
 .venv/bin/python -m pytest -q
 ```
 
-최종122개(A01~02회귀71+A03신규51)가통과했다. A01 도구스모크는별도55433임시클러스터, A02는소유55432의새접두/marker DB만시험후정리한다. 처음55432가정지였으면종료후정지로되돌린다. 기존설정fixture/실원장/5432는reset하지않는다. 각fixture는자기event loop와pool을함께닫아닫힌loop를재사용하지않는다.
+최종172개(기존회귀122+A04신규50)가통과했다. A01 도구스모크는별도55433임시클러스터, A02는소유55432의새접두/marker DB만시험후정리한다. 처음55432가정지였으면종료후정지로되돌린다. 기존설정fixture/실원장/5432는reset하지않는다. 각fixture는자기event loop와pool을함께닫아닫힌loop를재사용하지않는다.
 
-실제ai_web자체접속에서권한속성/무문맥·잘못된문맥/본인·조직·관리자경계/복합FK·불변binding/현재권한회수/SQL권한·제어함수/풀정상·rollback·취소·동시분리/checksum·초기화원자성/비fixture·재seed거부를검증했다. A03에서는실제인증/CSRF/cookie/만료·회수/횟수·동시제한/DB실패·현재capability·세션발급감사rollback을추가검증했다. 조직관리API·브라우저·문서/Grant/Graph·실AI원장·전체V41/Q20은후속이다.
+실제ai_web자체접속에서권한속성/무문맥·잘못된문맥/본인·조직·관리자경계/복합FK·불변binding/현재권한회수/SQL권한·제어함수/풀정상·rollback·취소·동시분리/checksum·초기화원자성/비fixture·재seed거부를검증했다. A03에서는실제인증/CSRF/cookie/만료·회수/횟수·동시제한/DB실패·현재capability·세션발급감사rollback을추가검증했다. A04의관리API/현재회수/CAS·감사원자성/읽기창/권한잠금재검사도검증했다. 브라우저·문서/Grant/Graph·실AI원장·전체V41/Q20은후속이다.
 
-Starlette1.7.0 TestClient/httpx0.28.1 deprecation경고1개가있다. 경고를숨기거나httpx2를자동추가하지않았으며시험은통과했다. 상세결과는Obsidain `250.구현/02 인증과 테넌트 기반 구현 결과.md`,정제증거는 `260.테스트/evidence/A-auth/A03-*.json`에관리한다. A01/A02증거는이력으로보존한다.
+Starlette1.7.0 TestClient/httpx0.28.1 deprecation경고1개가있다. 경고를숨기거나httpx2를자동추가하지않았으며시험은통과했다. 상세결과는Obsidain `250.구현/02 인증과 테넌트 기반 구현 결과.md`,정제증거는 `260.테스트/evidence/A-auth/A04-*.json`에관리한다. A01/A02/A03증거는이력으로보존한다.
+
+## 실제 조직·관리 API 계약 — A04
+
+GET /api/v1/me/tenants는현재쿠키의본인활성조직만items에반환한다. PADMIN표시는활성platform_access+명시active managed_tenants인조직만이며전역capability와독립이다. 조직0개도인증은유지된다.
+
+GET /api/v1/admin/memberships는X-Tenant-ID UUID헤더하나가필수다. 허용조직의TADMIN/담당PADMIN만조회하며cursor UUID/limit 기본20·최대50을받는다. items는user_id/display_name/role/active/revision만,다음페이지는next_cursor다. active는조직소속의상태이며전역계정active를변경하지않는다. 사용자/조직별1분120회·다음429/Retry-After이며재로그인으로초기화되지않는다. GET은idle을연장하지않는다.
+
+PATCH /api/v1/admin/memberships/{user_id}는JSON active(strict bool)/expected_revision(양의정수)를받는다. PUT .../{user_id}/role은role USER 또는TADMIN/expected_revision을받는다. Origin/X-Requested-With/CSRF/현재조직헤더는필수이며추가body필드는422다. TADMIN은다른일반USER의소속활성만,담당PADMIN은다른USER↔TADMIN역할/활성변경을허용한다. 자기·플랫폼관리자대상(비활성/미담당포함)·PADMIN부여는차단한다.
+
+행잠금뒤현재권한을재검사하고변경/revision+1/audit/성공세션touch를한transaction에서처리한다. 권한확인뒤없는조직대상404,stale revision409,감사실패·잠금시간초과503이며실패변경은rollback한다. 메타데이터tenant_id는허용된현재문맥만반환한다. 쿠키/CSRF·비밀번호를curl명령이나공유로그에복사하지않는다. 화면연결과브라우저검증은A05다.
