@@ -1,12 +1,12 @@
-# AI 플랫폼 backend — A01 실행 기반
+# AI 플랫폼 backend — A01~02 실행 기반
 
-현재 기능은 `/api/v1/health` 생존 확인 API와 프로젝트 전용 PostgreSQL 실행 도구다. 로그인/조직/관리/AI API는 아직 없다. A02에서 업무 DB·runtime 역할/RLS를, A03에서 실제 인증을 구현한다.
+전용 PostgreSQL 환경, 첫11개 업무테이블, 현재 세션·소속 기반 조직/개인 RLS, 웹 전용 연결 풀과 `/api/v1/health`가 구현되어 있다. HTTP 로그인·관리API·화면·AI는 후속이다. health200은 전체 플랫폼 완료를 뜻하지 않는다.
 
 ## 환경과 설치
 
-확인한 환경: macOS x86_64, Python3.13.2, PostgreSQL15.18(Homebrew). 이미 설치된 Node22.23.1은 A05의 화면 환경에서 사용한다. 전역 기본 Node는 변경하지 않았다. Docker는 필요하지 않다.
+확인 환경: macOS x86_64/Python3.13.2/PostgreSQL15.18(Homebrew). Node22.23.1은 A05에서사용한다. 전역 Node는변경하지않았으며Docker는필요없다.
 
-아래 명령은 프로젝트 루트에서 `cd src/backend`한 뒤 실행한다. `.venv`는 이 폴더 안에 생성하고 정확한 직접9개/전이 의존성30개는 requirements 파일로 고정한다. pip-tools는 lock 생성용 도구이며 앱 실행 의존성과 구분한다.
+프로젝트 루트에서 `cd src/backend`한뒤실행한다. `.venv`는이폴더안에두며직접9개/전이포함30개는hash lock으로고정했다. A02의추가의존성은없다.
 
 ```bash
 /Library/Frameworks/Python.framework/Versions/3.13/bin/python3 -m venv .venv
@@ -14,56 +14,91 @@
 .venv/bin/python -m pip check
 ```
 
-의존성을 변경할 때만 다음 명령으로 lock을 다시 만들고 실제 시험을 수행한다.
+의존성을변경할때만lock을재생성하고실제시험한다.
 
 ```bash
 .venv/bin/python -m pip install pip-tools==7.6.1
 .venv/bin/python -m piptools compile --generate-hashes --no-emit-index-url --no-emit-trusted-host --output-file requirements.lock requirements.in
 ```
 
-## 상태 확인 API
+## 전용 PostgreSQL과 초기화
 
-기본 설정은 loopback127.0.0.1/mock이며 health는 DB 자격 없이 동작한다. `.env.example`은 설정 이름 예시다. 자동으로 `.env`나 관리자 자격 파일을 읽지 않는다. 잘못된 local origin/외부 bind는 설정 검증에서 거부한다.
-
-```bash
-.venv/bin/python -m uvicorn app.main:create_app --factory --host 127.0.0.1 --port 8000
-```
-
-다른 터미널에서 다음을 확인한다.
-
-```bash
-curl -i http://127.0.0.1:8000/api/v1/health
-```
-
-200, data.status=ok, Cache-Control=no-store, X-Request-ID를 반환한다. meta에는 서버 request_id/tenant_id=null/UTC server_time만 포함한다. 이 응답은 DB 준비나 인증·전체 플랫폼 완료를 의미하지 않는다. API 프로세스는 해당 실행 터미널에서 Ctrl-C로 종료한다.
-
-## 전용 PostgreSQL
-
-기존5432 서버와 별도로55432를 사용한다. `mvp_bootstrap`은 이 전용 클러스터의 초기 관리자다. 웹앱에 이 자격을 연결하지 않는다. A02에서 별도 업무 DB와 web/index/meter 역할을 분리한다.
+기존5432와별도로127.0.0.1:55432를사용한다. `mvp_bootstrap`은전용클러스터의초기관리만수행하며앱에주입하지않는다. 소유marker/PG_VERSION/PID/data_directory/port를확인한다. 포트충돌은기존서버를종료하지않고거부한다.
 
 ```bash
 .venv/bin/python -m scripts.devdb prepare
 .venv/bin/python -m scripts.devdb start
 .venv/bin/python -m scripts.devdb status
+```
+
+아직새fixture설정이없을때만다음을실행한다. 이번A02에서는이미실행했으므로,기존`.runtime/active-fixture.json`과`app.env`를유지하고start부터재사용한다.
+
+```bash
+.venv/bin/python -m scripts.migrate --fixture A-auth
+.venv/bin/python -m scripts.seed --fixture A-auth
+```
+
+migrate는`ai_portal_mvp_test_<UUID>`의새시험DB/comment marker를생성한다. 000/001/002 SQL과SHA256 기록을단일transaction으로적용하고완료전에runtime접속을개방하지않는다. 반복CLI는기존설정을감지해거부한다. 재seed/비fixture/외부DB/변경된적용SQL도거부하며reset/drop CLI는제공하지않는다. 적용된migration은수정하지말고003이후새파일로추가한다. 시험용real예산행은실원장의reset허가가아니다.
+
+직접migration runner가필요한후속작업은private active fixture를읽은`FixtureDatabase`에`apply_migrations`를호출한다. 기존파일의checksum은동일해야하며pending파일만원자적용된다. 테스트의새DB는suite실행중각시험별로만생성/검증/정리한다.
+
+업무11개: security의accounts/tenants/memberships/platform_access/managed_tenants/sessions/login_windows,portal의agent_configs/conversations,ops의project_budget/audit_events. infra.schema_migrations는별도도구테이블1개다. 전체31개/문서·Graph 모델은후속이다.
+
+## 자격과 현재 경계
+
+- `ai_owner`/`ai_policy_executor`는NOLOGIN. ai_web/index/meter는별도LOGIN이며superuser/BYPASSRLS/상속/DB·역할생성/replication없음.
+- ai_web은security원시테이블·전역비용원장직접조회·owner/index/meter역할전환이불가하다. 현재세션/소속의고정제어함수와개인대화RLS만사용한다.
+- 대화/Agent/audit는ENABLE+FORCE RLS. 조직관리자/PADMIN도타인의개인대화우회없음. owner/tenant/Agent 수정권한없고updated_at만수정한다.
+- 본인세션/소속문맥은서버검증후transaction-local로설정한다. 기본READ COMMITTED에서매SQL현재권한을확인하고정상/rollback/취소후문맥이남지않는다. effective_role을클라이언트권한증표로사용하지않는다.
+- pool은lifespan에서open/wait/close하며접속과checkout에서web역할/DB marker/소유·권한을검사한다. 거부된연결도즉시닫는다.
+
+`.runtime`은0700/Git제외,비밀·도구로그는0600이다. bootstrap.password/pgpass/admin.env/runtime-roles.json은초기화용,app.env는web DSN/HMAC만,fixture-secrets는합성비밀번호만저장한다. 앱은자동으로이파일들을읽지않으며관리환경을source하지않는다. 원문비밀번호/쿠키/CSRF/DB자격을명령인수·화면·로그·Git에복사하지않는다.
+
+합성manifest9액터와시험용추가4액터를난수비밀번호/Argon2id로초기화한다. TADMIN은membership역할이고PADMIN은별도platform_access와명시관리소속이다. 두Agent는disabled,대화행은DB경계시험의메타데이터만있다. seed세션은HTTP로그인성공증거가아니다.
+
+Unix통신폴더는한글경로길이때문에 `/private/tmp/ai-portal-pg-<uid>-<소유지문>`의0700/marker를검사해사용한다. 데이터는프로젝트안에유지한다. stop은자기datadir만대상이며다른PG프로세스를종료하지않는다. 소유오류는자동삭제/초기화하지않는다.
+
+## 실행과 종료
+
+DB자격이없는health전용모드:
+
+```bash
+.venv/bin/python -m uvicorn app.main:create_app --factory --host 127.0.0.1 --port 8000
+```
+
+A02의웹전용DB pool까지확인하는모드는별도터미널에서private앱설정만주입한다. 다음블록은괄호의자식셸에서실행해다른터미널환경으로자격을남기지않는다. shell tracing은켜지않는다.
+
+```bash
+(
+set -a
+source .runtime/app.env
+set +a
+.venv/bin/python -m uvicorn app.main:create_app --factory --host 127.0.0.1 --port 8000
+)
+```
+
+다른터미널에서확인한다.
+
+```bash
+curl -i http://127.0.0.1:8000/api/v1/health
+```
+
+200/data.status=ok/no-store/X-Request-ID/UTC meta를반환한다. HTTP인증경로는아직404다. API는실행터미널에서Ctrl-C로종료하며pool도닫힌다. 전용DB는다음명령으로종료한다.
+
+```bash
 .venv/bin/python -m scripts.devdb stop
 ```
 
-prepare는 처음만 initdb를 실행하며 기존 소유 클러스터에서는 비밀번호를 바꾸지 않는다. start/status/stop은 소유 marker/PG_VERSION/PID 파일/접속 서버의 실제 data_directory와 port를 검증한다. 실행 중인 타 서비스의 포트를 빼앗지 않는다. DB 삭제/reset이나 임의 datadir 입력 옵션은 없다.
+A03에서는인증앱의web DSN/HMAC 누락을시작거부로전환한다. 지금DSN이설정된앱의잘못된role/marker는시작거부이며DSN없는모드는health만이다.
 
-`src/backend/.runtime`에는 데이터/소유 marker/관리 전용 passfile·admin.env/로그를 저장한다. 디렉토리는0700, 비밀/도구 로그는0600이고 Git에서 제외한다. 비밀번호는 명령 인수/표준출력/응답 JSON에 넣지 않는다. admin.env에는 비밀번호 대신 private passfile 위치가 있다. 계정·키·DB 자격 파일을 문서나 Git에 복사하지 않는다.
-
-한글 프로젝트 경로의 길이 때문에 Unix 통신 폴더는 `/private/tmp/ai-portal-pg-<uid>-<소유경로지문>`에 둔다. 이 폴더도0700/소유 marker를 검사한다. DB 데이터는 프로젝트 안에 남는다. 프로그램은 다른 프로젝트의 통신 폴더를 재사용하지 않는다.
-
-실행 중인 포트 충돌은 PORT_IN_USE다. 종료된 연결의 TIME_WAIT만 남은 경우는 재시작을 허용한다. UNOWNED_RUNTIME/UNOWNED_SOCKET_DIRECTORY/UNOWNED_PID/PG_VERSION_MISMATCH/PREPARATION_INCOMPLETE는 자동 삭제·초기화하지 않고 정제된 오류만 반환한다.
-
-## 검증
+## 검증과 증거
 
 ```bash
 .venv/bin/python -m pytest -q
 ```
 
-A01에서19개 시험을 확인했다. DB 시험은55433의 자체 임시 클러스터만 사용하고 종료·정리한다. 개발55432나 기존5432를 reset하지 않는다. health/설정·쿠키와 무관한 미구현API404/소유 경로·symlink·소유 marker·PID·실제 초기화/중지/재시작·포트 충돌/TIME_WAIT/비밀·로그 권한을 검증한다.
+최종71개(A01회귀19+A02신규52)가통과했다. A01 도구스모크는별도55433임시클러스터, A02는소유55432의새접두/marker DB만시험후정리한다. 처음55432가정지였으면종료후정지로되돌린다. 기존설정fixture/실원장/5432는reset하지않는다. 각fixture는자기event loop와pool을함께닫아닫힌loop를재사용하지않는다.
 
-현재 설치된 Starlette1.7.0은 TestClient의 httpx0.28.1 경로에 deprecation warning1개를 낸다.19개 시험은 정상 통과했으며 경고를 숨기지 않았다. 자동으로 httpx2를 추가하거나 버전을 변경하지 않았고, 다음 호환성 변경 시 별도로 검증한다.
+실제ai_web자체접속에서권한속성/무문맥·잘못된문맥/본인·조직·관리자경계/복합FK·불변binding/현재권한회수/SQL권한·제어함수/풀정상·rollback·취소·동시분리/checksum·초기화원자성/비fixture·재seed거부를검증했다. HTTP인증·브라우저·문서/Grant/Graph·실AI원장·전체V41/Q20은후속이다.
 
-상세 결과는 Obsidain의 `250.구현/02 인증과 테넌트 기반 구현 결과.md`, 증거는 `260.테스트/evidence/A-auth/A01-*.json`에 관리한다. 현재 로그인·소속/권한·RLS·화면·AI·전체V41/Q20 시험은 아직 미수행이다.
+Starlette1.7.0 TestClient/httpx0.28.1 deprecation경고1개가있다. 경고를숨기거나httpx2를자동추가하지않았으며시험은통과했다. 상세결과는Obsidain `250.구현/02 인증과 테넌트 기반 구현 결과.md`,정제증거는 `260.테스트/evidence/A-auth/A02-*.json`에관리한다. A01증거는이력으로보존한다.

@@ -1,0 +1,138 @@
+{
+  "task": "I250-A02",
+  "paid_api_calls": 0,
+  "initial_cluster_state": "stopped",
+  "migration": {
+    "database": "ai_portal_mvp_test_b9a06099c0954eccb570ccbd37c92343",
+    "applied": [
+      "000_roles.sql",
+      "001_auth_portal.sql",
+      "002_context_control.sql"
+    ],
+    "fixture": "A-auth"
+  },
+  "seed": {
+    "fixture": "A-auth",
+    "accounts": 13,
+    "conversations": 5
+  },
+  "repeated_initializer": {
+    "rejected": true,
+    "fixture_database_count_unchanged": true
+  },
+  "catalog": {
+    "business_tables": 11,
+    "infra_tables": 1,
+    "accounts": 13,
+    "memberships": 14,
+    "managed_tenants": 1,
+    "conversations": 5,
+    "agent_configs": 4,
+    "project_budget_rows": 2,
+    "rls": [
+      {
+        "table": "ops.audit_events",
+        "enabled": true,
+        "forced": true,
+        "owner": "ai_owner"
+      },
+      {
+        "table": "portal.agent_configs",
+        "enabled": true,
+        "forced": true,
+        "owner": "ai_owner"
+      },
+      {
+        "table": "portal.conversations",
+        "enabled": true,
+        "forced": true,
+        "owner": "ai_owner"
+      }
+    ],
+    "roles": [
+      {
+        "role": "ai_index",
+        "login": true,
+        "superuser": false,
+        "bypass_rls": false,
+        "inherit": false,
+        "create_database": false,
+        "create_role": false
+      },
+      {
+        "role": "ai_meter",
+        "login": true,
+        "superuser": false,
+        "bypass_rls": false,
+        "inherit": false,
+        "create_database": false,
+        "create_role": false
+      },
+      {
+        "role": "ai_owner",
+        "login": false,
+        "superuser": false,
+        "bypass_rls": false,
+        "inherit": false,
+        "create_database": false,
+        "create_role": false
+      },
+      {
+        "role": "ai_policy_executor",
+        "login": false,
+        "superuser": false,
+        "bypass_rls": false,
+        "inherit": false,
+        "create_database": false,
+        "create_role": false
+      },
+      {
+        "role": "ai_web",
+        "login": true,
+        "superuser": false,
+        "bypass_rls": false,
+        "inherit": false,
+        "create_database": false,
+        "create_role": false
+      }
+    ],
+    "migration_versions": [
+      "000_roles.sql",
+      "001_auth_portal.sql",
+      "002_context_control.sql"
+    ]
+  },
+  "web_environment": {
+    "web_only": true,
+    "permissions": "0600",
+    "admin_credentials_injected": false
+  },
+  "http": {
+    "status": 200,
+    "no_store": true,
+    "request_id_valid": true
+  },
+  "pool_connections_after_api_stop": 0,
+  "raw_secrets_in_runtime_logs": false,
+  "final_cluster_state": "stopped",
+  "preserved_synthetic_evaluation_inputs": 9,
+  "unimplemented": [
+    "HTTP authentication",
+    "membership mutation API",
+    "frontend",
+    "GraphRAG",
+    "real AI ledger",
+    "V41",
+    "Q20"
+  ],
+  "log_secret_scan_categories": [
+    "synthetic passwords",
+    "database passwords",
+    "CSRF",
+    "HMAC",
+    "DSN",
+    "password hashes",
+    "token hash digests"
+  ],
+  "private_runtime_file_permissions_verified": "0600"
+}
