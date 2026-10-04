@@ -1,0 +1,176 @@
+{
+  "suite_id": "A-auth",
+  "utc_time": "2026-10-04T23:16:41.696902+00:00",
+  "commit": "87ab9f842e4736d74d26aa148f39a4d4cf472a89",
+  "commit_role": "pre-test baseline; tested source revision recorded after local commit",
+  "tested_source_commit": null,
+  "versions": {
+    "node": "22.23.1",
+    "npm": "10.9.8",
+    "direct_packages": {
+      "react": "19.3.0",
+      "react-dom": "19.3.0",
+      "vite": "8.3.2",
+      "@vitejs/plugin-react": "6.1.1",
+      "typescript": "7.0.2",
+      "@types/react": "19.3.0",
+      "@types/react-dom": "19.3.0",
+      "@types/node": "22.20.5",
+      "@playwright/test": "1.63.0"
+    },
+    "lockfile_version": 3,
+    "locked_packages_including_other_platform_optional": 73,
+    "installed_packages_reported_by_npm_ci": 30,
+    "react_compiler_installed": false,
+    "python": "3.13.2",
+    "postgresql": "15.18",
+    "backend_packages": {
+      "fastapi": "0.142.2",
+      "uvicorn": "0.54.0",
+      "pydantic": "2.13.5",
+      "pydantic-settings": "2.15.0",
+      "psycopg": "3.3.6",
+      "psycopg-pool": "3.3.3",
+      "argon2-cffi": "25.1.0",
+      "pytest": "9.1.1",
+      "httpx": "0.28.1"
+    }
+  },
+  "mode": "mock",
+  "fixture_id": "A06-fresh-catalog",
+  "session": {
+    "session_user": "ai_web",
+    "current_user": "ai_web",
+    "rolsuper": false,
+    "rolbypassrls": false,
+    "rolinherit": false,
+    "rolcreatedb": false,
+    "rolcreaterole": false,
+    "rolreplication": false
+  },
+  "options": {
+    "statement_timeout": "5s",
+    "lock_timeout": "2s",
+    "idle_in_transaction_session_timeout": "0"
+  },
+  "pool_wait_seconds": 5,
+  "owns_content": false,
+  "grants": {
+    "web_raw_accounts_select": false,
+    "web_raw_memberships_update": false,
+    "policy_conversations_select": false,
+    "policy_budget_cost_select": false
+  },
+  "rls": [
+    {
+      "schema": "ops",
+      "table": "audit_events",
+      "rls": true,
+      "force_rls": true,
+      "owner": "ai_owner"
+    },
+    {
+      "schema": "portal",
+      "table": "agent_configs",
+      "rls": true,
+      "force_rls": true,
+      "owner": "ai_owner"
+    },
+    {
+      "schema": "portal",
+      "table": "conversations",
+      "rls": true,
+      "force_rls": true,
+      "owner": "ai_owner"
+    }
+  ],
+  "business_tables": [
+    {
+      "schema": "ops",
+      "table": "audit_events",
+      "rows": 4
+    },
+    {
+      "schema": "ops",
+      "table": "project_budget",
+      "rows": 2
+    },
+    {
+      "schema": "portal",
+      "table": "agent_configs",
+      "rows": 4
+    },
+    {
+      "schema": "portal",
+      "table": "conversations",
+      "rows": 5
+    },
+    {
+      "schema": "security",
+      "table": "accounts",
+      "rows": 13
+    },
+    {
+      "schema": "security",
+      "table": "login_windows",
+      "rows": 0
+    },
+    {
+      "schema": "security",
+      "table": "managed_tenants",
+      "rows": 1
+    },
+    {
+      "schema": "security",
+      "table": "memberships",
+      "rows": 14
+    },
+    {
+      "schema": "security",
+      "table": "platform_access",
+      "rows": 4
+    },
+    {
+      "schema": "security",
+      "table": "sessions",
+      "rows": 13
+    },
+    {
+      "schema": "security",
+      "table": "tenants",
+      "rows": 2
+    }
+  ],
+  "business_table_count": 11,
+  "migration_count": 5,
+  "fixed_functions": {
+    "count": 16,
+    "definer_owner_search_path_valid": true,
+    "public_execute": false
+  },
+  "unscoped_conversation_rows": 0,
+  "closed_pool_connections": 0,
+  "fixture_removed": true,
+  "private_credentials_removed": true,
+  "no_other_disposable_databases_before_capture": true,
+  "status": "pass",
+  "expected": "ai_web cannot bypass RLS, own content or directly mutate authentication control data; all pools close",
+  "observed": "Fresh actual runtime/catalog assertions passed",
+  "safe_error_code": null,
+  "duration_ms": null,
+  "preservation": {
+    "primary_business_tables": 11,
+    "primary_business_tables_unchanged": true,
+    "private_web_environment_unchanged": true,
+    "applied_migrations_unchanged": 5,
+    "synthetic_evaluation_inputs_unchanged": 9,
+    "Q20_original_status": "not_run",
+    "paid_calls": 0,
+    "paid_krw": 0,
+    "database_state_after": "stopped",
+    "source_graph_rag_modified": false,
+    "unrelated_5432_targeted": false
+  },
+  "rollback_and_reuse_evidence": "test_pool_context/test_schema_rls/test_memberships in current 176-pass suite",
+  "historical_A01_A05_evidence": "preserved, not counted again"
+}
