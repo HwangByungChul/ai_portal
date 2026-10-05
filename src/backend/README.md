@@ -1,6 +1,6 @@
-# AI 플랫폼 backend — A 및 B01~04 완료
+# AI 플랫폼 backend — A 및 B01~05 완료
 
-A 인증·조직·관리 API/화면·통합 검증과 B01 저장 기반, B02 운영 API, B03 본인 대화·접수, B04 모의 AI 실행·원자 예약/단일발사/정산·SSE를 완료했다. 현재27 API/16업무·infra1/9 migration·46고정security함수다. backend467 pass/실패0/경고0, build 성공/기존A browser20 pass를 확인했다. 새 B 사용자·운영 화면은 B05, GraphRAG는 C, 실제 OpenAI 대표호출은 B06이다. 유료 AI0건/0원이며 실제 OpenAI 연결 성공으로 해석하지 않는다. health200은 전체 플랫폼 완료를 뜻하지 않는다.
+A 인증·조직·권한과 B01~05 저장·운영·대화·중앙 AI·실제 사용자/관리자 화면을 완료했다. 현재27 API/16업무·infra1/9 migration·46고정security함수다. backend477 pass/실패0/경고0/466.24초, build 성공/기존A20+새B31=browser51 pass/runner0/117.06초다. 기본 합성 A/B의 모의 시연 준비와 재실행 변경0을 확인했다. 등록된 키/기존 인증·대화·real 예산은 보존했다. 유료 AI0건/0원이며 실제 OpenAI 연결 성공은 B06 검증 대상이다. GraphRAG는 C다.
 
 ## 환경과 설치
 
@@ -238,7 +238,9 @@ B03 시험·결과는 Obsidain250.구현/04 일반 대화와 중앙 AI 구현 �
 B03 현재 검증: backend 399 pass/경고 0/477.85초, build 성공/기존 A browser 20 pass/runner error 0/34.64초. 검증 소스 로컬 commit `40a28621652d91b04ee7eb613955db5b0bb813f5`; 정확 소스 지문은 B-chat/B03-test-summary.json에 기록했다. 새 B 운영 화면과 실제 AI 호출은 후속 단계다.
 
 
-## B04 실행 활성화와 경계
+## B04 실행 활성화와 경계 — 당시 이력
+
+> 현재 기본환경 준비 결과는 아래 B05 절을 따른다. 이 절의 미준비 서술은 B04 당시 상태다.
 
 기본값 `AI_EXECUTION_ENABLED=false`는 기존 접수 점검 환경을 보존한다. 실행 시 비공개 서버 설정에서 `AI_EXECUTION_ENABLED=true`, `AI_MODE=mock`, 별도 `AI_METER_DSN`을 공급한다. web은 ai_web, meter는 ai_meter 역할과 기존 전용 DB/55432/소유 표식을 확인한다. 공개 .env.example에는 DSN·키를 넣지 않는다. 현재 기본 DB는 Agent가 중지되어 있고 조직 예산이 미설정이다. 이번 단계에서는 기존 app.env나 예산을 변경·초기화하지 않았다. 새 시연 준비는 기존 사용·예약을 보존하는 방식으로 B05에 인계한다.
 
@@ -251,3 +253,24 @@ SSE `GET /api/v1/runs/{run_id}/events`는 현재 세션·X-Tenant-ID·Accept:tex
 실행 시험: `.venv/bin/python -m pytest tests/test_ai_ledger.py tests/test_ai_provider.py tests/test_execution.py tests/test_b_restart.py tests/test_b_http.py -q`. 원장 직접 쓰기·meter 본문 읽기·다른 사용자의 대화 접근은 계속 거부한다. 공개 증거는 B-chat/B04-*.json이다.
 
 B04 현재 검증: backend 467 pass/경고 0/497.0초, build 성공/기존 A browser 20 pass/runner error 0/30.62초. 검증 소스 로컬 commit `4a2c925b257d00b63f2784b757df7768462cf3fc`; 정확 소스 지문은 B-chat/B04-test-summary.json에 기록했다. B05 대화·운영 화면과 B06 실제 AI 호출은 후속 단계다.
+
+
+## B05 모의 시연 준비와 실행
+
+`prepare_mock`는 기존 active fixture의 소유 marker/고정 합성 A/B UUID/프로젝트 lock을 검증한다. 누락한 mock budget만 A/B 각 최대12,500원으로 최초 생성하고 총 배정은 기존 운영상한 안에서 제한한다. 기존 배정·accounted/reserved/원장은 변경하지 않으며 real rows는 만들거나 초기화하지 않는다. 최초 예산은 운영 API의 INSERT 권한을 넓히지 않는 준비 도구에서만 만들고 감사 기록을 남긴다. 이후 한도 변경은 관리 API로 수행한다. 편집·중지된 기존 Agent를 되살리지 않으며 기본 설정 version1의 일반 Agent만 해당 A/B 관리자 API로 최초 활성화한다. rules_rag는 중지 유지다.
+
+비공개 app.env에는 AI_MODE=mock, AI_EXECUTION_ENABLED=true, 별도 AI_METER_DSN을 원자적으로 추가했다. 기존 API 키·web DSN·HMAC 줄을 그대로 보존했다. 0600/부모0700/Git 제외이며 공개 README에 값을 복사하지 않는다. 두 번째 prepare 실행의 DB/환경 변경0을 확인했다.
+
+backend 폴더에서 실행한다. 이미 준비된 DB를 다시 seed하지 않는다.
+
+```bash
+.venv/bin/python -m scripts.devdb start
+.venv/bin/python -m scripts.prepare_mock
+.venv/bin/python -m uvicorn app.main:create_app --factory --env-file .runtime/app.env --host 127.0.0.1 --port 8000 --no-proxy-headers --no-access-log
+```
+
+별도 터미널의 frontend 폴더에서 `npm run dev`를 실행하고 http://127.0.0.1:5173 을 연다. frontend 터미널에는 backend 환경 파일을 불러오지 않는다. 개발 서버를 종료한 뒤 backend에서 `.venv/bin/python -m scripts.devdb stop`으로 해당 전용 DB를 정지할 수 있다. 로그인 ID는 a-u1/a-adm/p-a/b-u1/b-adm 등 기존 합성 계정이며 비밀번호는 소유 active fixture의 비공개 파일에서 확인한다. 공유 문서나 웹 번들에 비밀번호/DSN/키를 넣지 않는다.
+
+B05 실제 화면 검증의 portal_test_server/control/app은 별도 marker/PID/primary 배제를 검증하는 폐기용 DB 전용 도구다. API 자식에 모의 실행·별도 meter만 공급하고 기존 비공개 환경에서 HMAC만 가져오며 등록된 키를 전달하지 않는다. 시나리오별 ledger TRUNCATE는 이 검증된 폐기용 DB에만 적용된다. 실제/기존 DB를 reset하는 제품 endpoint는 없다.
+
+B05 결과와 소스 지문은 B-chat/B05-*.json, 상세 계획은250.07이다. B06의 실제3회 일반 호출과 지연 측정은 아직 수행하지 않았다.

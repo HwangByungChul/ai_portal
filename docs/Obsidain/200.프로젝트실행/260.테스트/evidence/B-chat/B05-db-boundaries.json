@@ -1,0 +1,102 @@
+{
+  "task": "I250-B05",
+  "tested_source_commit": null,
+  "scope_controls": [
+    "session generation, user, tenant, local component lifetime",
+    "request tenant metadata match",
+    "SSE run/tenant/sequence/epoch and bounded full-draft replacement",
+    "canonical current-authority GET before saved answer",
+    "monotonic persisted revision prevents stale status rollback",
+    "USER admin URL/API rejection",
+    "PADMIN allocation only current explicitly managed organization",
+    "independent global read/write capabilities",
+    "no personal body drilldown in usage"
+  ],
+  "storage": [
+    "localStorage empty",
+    "sessionStorage empty",
+    "question and CSRF not in URL",
+    "private key backend only; never forwarded to browser harness"
+  ],
+  "usage_unknown": "reservation retained; not free or final zero",
+  "raw_ledger_permissions": "existing append-only and runtime write restrictions preserved; disposable reset is private test tooling only",
+  "primary": {
+    "kind": "B05-owned-mock-preparation",
+    "budget_rows_created": 2,
+    "agents_enabled": 2,
+    "private_execution_configuration_changed": true,
+    "execution_mode": "mock",
+    "existing_usage_reset": false,
+    "real_calls": 0,
+    "repeat_preparation_mutations": 0,
+    "business_tables": 16,
+    "unchanged_business_tables": 11,
+    "intentionally_changed_tables": [
+      "ops.audit_events",
+      "ops.tenant_budgets",
+      "portal.agent_configs",
+      "security.login_windows",
+      "security.sessions"
+    ],
+    "existing_credentials_literal_lines_preserved": 3,
+    "registered_key_preserved": true,
+    "private_file_permissions": "0600",
+    "private_directory_permissions": "0700",
+    "migrations": 9,
+    "checksum_repeat_apply": [],
+    "api_operations": 27,
+    "new_mock_budget_rows": 2,
+    "new_mock_allocated_total_krw": "25000",
+    "general_agents_ready": 2,
+    "rules_rag_still_disabled": 2,
+    "real_project_budget_preserved": true,
+    "original_conversations_preserved": true,
+    "primary_call_and_usage_rows": {
+      "portal.runs": 0,
+      "portal.messages": 0,
+      "ops.call_attempts": 0,
+      "ops.usage_events": 0
+    },
+    "runtime_connections_after": 0,
+    "disposable_databases_after": 0,
+    "protected_nonprivate_files_identical": 18,
+    "cluster_state_after": "stopped",
+    "dev_listeners_after": 0,
+    "primary_runtime_readiness_HTTP": [
+      {
+        "synthetic_tenant": "A",
+        "general_available": true,
+        "rules_rag_available": false,
+        "returned_scope_matches": true
+      },
+      {
+        "synthetic_tenant": "B",
+        "general_available": true,
+        "rules_rag_available": false,
+        "returned_scope_matches": true
+      }
+    ],
+    "readiness_actual_provider_calls": 0
+  },
+  "preservation": {
+    "protected_nonprivate_files": 18,
+    "existing_private_credential_literal_lines": 3,
+    "private_execution_settings_added_or_changed": [
+      "AI_MODE=mock",
+      "AI_EXECUTION_ENABLED=true",
+      "AI_METER_DSN=<private owned ai_meter DSN>"
+    ],
+    "primary_original_conversations_preserved": true,
+    "primary_real_budget_preserved": true,
+    "primary_unchanged_business_tables": 11,
+    "primary_changed_business_tables": [
+      "ops.audit_events",
+      "ops.tenant_budgets",
+      "portal.agent_configs",
+      "security.login_windows",
+      "security.sessions"
+    ],
+    "historical_JSON_and_PNG_preserved": true,
+    "unrelated_untracked_files_preserved": 72
+  }
+}

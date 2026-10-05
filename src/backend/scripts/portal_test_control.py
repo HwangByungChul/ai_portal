@@ -2,7 +2,7 @@
 from pathlib import Path
 import json,os,sys
 from uuid import UUID,uuid5
-from scripts.devdb import DevCluster,_read_private
+from scripts.devdb import DevCluster,_read_private,_write_private
 from scripts.migrate import FixtureDatabase
 from app.db import DB_MARKER
 BACKEND=Path(__file__).resolve().parents[1]
@@ -31,9 +31,28 @@ def main():
                 conn.execute('UPDATE security.sessions SET revoked_at=clock_timestamp()')
                 conn.execute('UPDATE security.platform_access SET active=true')
                 conn.execute('UPDATE security.managed_tenants SET active=true')
+                # Only this marked disposable browser DB is reset; primary is rejected above.
+                conn.execute('TRUNCATE ops.usage_events,ops.call_attempts,portal.messages,portal.runs')
+                conn.execute('DELETE FROM portal.conversations WHERE NOT(conversation_id=ANY(%s))',([UUID(v) for v in config['conversations']],))
+                conn.execute('UPDATE ops.project_budget SET stopped=false,stop_latch=false,revision=1,accounted_krw=0,reserved_krw=0,active_slot=0')
+                conn.execute('UPDATE ops.tenant_budgets SET allocated_cap_krw=12500,local_cap_krw=12500,accounted_krw=0,reserved_krw=0,active_slot=0,stopped=false,revision=1')
+                conn.execute("UPDATE portal.agent_configs SET settings='{}'::jsonb,enabled=(agent_key='general'),config_version=1")
+                for name in ['B05-provider-control.json','B05-provider-count.txt']:(BACKEND/'.runtime'/name).unlink(missing_ok=True)
+                _write_private(BACKEND/'.runtime/B05-provider-control.json',json.dumps({'behavior':'normal'}))
                 for row in config['members']:
                     conn.execute('UPDATE security.memberships SET role=%s,active=%s,revision=%s WHERE tenant_id=%s AND user_id=%s',
                         (row['role'],row['active'],row['revision'],row['tenant'],row['user']))
+        elif action in ('slow-provider','release-provider','unknown-provider'):
+            path=BACKEND/'.runtime/B05-provider-control.json';path.unlink()
+            _write_private(path,json.dumps({'behavior':{'slow-provider':'slow','release-provider':'normal','unknown-provider':'unknown'}[action]}))
+        elif action=='b05-counts':
+            count_path=BACKEND/'.runtime/B05-provider-count.txt'
+            print(json.dumps({'provider_calls':len(_read_private(count_path).splitlines()) if count_path.exists() else 0,
+                'runs':conn.execute('SELECT count(*) FROM portal.runs').fetchone()[0],
+                'active':conn.execute("SELECT count(*) FROM portal.runs WHERE state IN ('queued','running','cancel_requested')").fetchone()[0],
+                'messages':conn.execute('SELECT count(*) FROM portal.messages').fetchone()[0],
+                'unknown':conn.execute("SELECT count(*) FROM ops.call_attempts WHERE state='usage_unknown'").fetchone()[0]}));return 0
+        elif action=='revoke-platform':conn.execute('UPDATE security.platform_access SET active=false WHERE user_id=%s',(user,))
         elif action=='demote':
             conn.execute("UPDATE security.memberships SET role='USER',revision=revision+1 WHERE tenant_id=%s AND user_id=%s",(org,user))
         elif action=='revoke':

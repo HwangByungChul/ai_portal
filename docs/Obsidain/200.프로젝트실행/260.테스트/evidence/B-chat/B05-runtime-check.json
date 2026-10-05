@@ -1,0 +1,86 @@
+{
+  "task": "I250-B05",
+  "tested_source_commit": null,
+  "runtime": {
+    "kind": "B05-owned-mock-preparation",
+    "budget_rows_created": 2,
+    "agents_enabled": 2,
+    "private_execution_configuration_changed": true,
+    "execution_mode": "mock",
+    "existing_usage_reset": false,
+    "real_calls": 0,
+    "repeat_preparation_mutations": 0,
+    "business_tables": 16,
+    "unchanged_business_tables": 11,
+    "intentionally_changed_tables": [
+      "ops.audit_events",
+      "ops.tenant_budgets",
+      "portal.agent_configs",
+      "security.login_windows",
+      "security.sessions"
+    ],
+    "existing_credentials_literal_lines_preserved": 3,
+    "registered_key_preserved": true,
+    "private_file_permissions": "0600",
+    "private_directory_permissions": "0700",
+    "migrations": 9,
+    "checksum_repeat_apply": [],
+    "api_operations": 27,
+    "new_mock_budget_rows": 2,
+    "new_mock_allocated_total_krw": "25000",
+    "general_agents_ready": 2,
+    "rules_rag_still_disabled": 2,
+    "real_project_budget_preserved": true,
+    "original_conversations_preserved": true,
+    "primary_call_and_usage_rows": {
+      "portal.runs": 0,
+      "portal.messages": 0,
+      "ops.call_attempts": 0,
+      "ops.usage_events": 0
+    },
+    "runtime_connections_after": 0,
+    "disposable_databases_after": 0,
+    "protected_nonprivate_files_identical": 18,
+    "cluster_state_after": "stopped",
+    "dev_listeners_after": 0,
+    "primary_runtime_readiness_HTTP": [
+      {
+        "synthetic_tenant": "A",
+        "general_available": true,
+        "rules_rag_available": false,
+        "returned_scope_matches": true
+      },
+      {
+        "synthetic_tenant": "B",
+        "general_available": true,
+        "rules_rag_available": false,
+        "returned_scope_matches": true
+      }
+    ],
+    "readiness_actual_provider_calls": 0
+  },
+  "browser_cleanup": {
+    "kind": "A05-runtime-cleanup",
+    "api_pool_connections": 0,
+    "fixture_removed": true,
+    "private_credentials_removed": true,
+    "database_state_after": "stopped"
+  },
+  "test_provider": "fixed local mock; controlled delay/missing receipt for marked disposable fixture",
+  "actual_openai_calls": 0,
+  "key_registration": "already configured privately; literal key line preserved; no real-call claim",
+  "runtime_roles": "ai_web / ai_meter; no admin credential in app",
+  "project_state_after": "stopped; start local servers to view portal",
+  "next_task": "B06 recovery and budget-gated fixed three real general requests",
+  "limits": [
+    "real OpenAI compatibility and latency unverified",
+    "GraphRAG/documents/index/share/Q20 unimplemented",
+    "formal accessibility/performance certification not performed"
+  ],
+  "visual_qa": {
+    "scope": "blank synthetic chat only; no question/answer/draft",
+    "desktop": "reviewed",
+    "mobile": "reviewed with collapsible history",
+    "images": "private .runtime, 0600; excluded from Git"
+  }
+}

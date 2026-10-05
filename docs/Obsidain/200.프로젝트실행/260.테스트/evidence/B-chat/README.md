@@ -1,5 +1,10 @@
 # 일반 대화·중앙 AI의 단계별 구현 증거
 
+현재 I250-B01~05 완료/B 전체 진행 중·다음 B06이다. backend477 pass/실패0/경고0/466.24초, build 성공·기존A20+새B31=browser51 pass/runner0/117.06초·유료AI0회/0원이다. 사용자/관리자 화면과 기본 A/B 모의 시연 준비까지 확인했다. 기존 키/인증·대화·real 예산을 보존했고 준비 재실행 변경0이다. 실제 모델/Graph/Q20은 후속이다. B05-test-summary/results/db-boundaries/runtime-check.json이 현재 증거이며 아래 B01~04 서술은 각 단계 당시 이력이다.
+
+## B01 당시 증거
+
+
 2026-10-05 I250-B01 완료. B 전체는 진행중이고 다음은 B02다. 유료AI0회/0원. 백엔드238pass(기존176+신규62)/실패0/경고0/208.77초, 기존A 포털build/Chromium20pass/runner error0/28.21초다. 신규 대화/관리 화면이나 실제 AI를 검증한 결과가 아니다.
 
 - B01-test-summary.json: 범위·현재버전·전체통과·정확소스SHA256·보존·미완료.
@@ -45,3 +50,13 @@ B03 검증 소스 로컬 commit: `40a28621652d91b04ee7eb613955db5b0bb813f5`. 검
 B04-test-summary.json은 정확 소스 지문·검증 요약, B04-test-results.json은 개별 test ID/결과, B04-db-boundaries.json은 DB권한/원장 경계, B04-runtime-check.json은 008만 적용/보존/정리 결과다. 이전 A/B01~03 JSON은 그대로 보존했다. 비공개 로그·계정/DSN/claim/본문은 공개 증거에 포함하지 않는다. 로컬 검증 소스 commit은 다음 문서 commit에서 지문 대조 후 연결한다.
 
 B04 검증 소스 로컬 commit: `4a2c925b257d00b63f2784b757df7768462cf3fc`. 검증 소스의 SHA256을 대조한 후 후속 문서 commit에서 연결했다.
+
+
+## B05 현재 증거
+
+- B05-test-summary.json: 현재 범위·477/51 통과·실호출0·소스 지문·미완료.
+- B05-test-results.json: 정제 backend477/browser51 ID·상태·시간, 선행 실패/수정 구분. 재시험을 합계에 더하지 않는다.
+- B05-db-boundaries.json: 조직/세대/현재권한/해제·canonical·revision·독립 전역 capability·unknown 예약·기본 DB 준비 변경과 보존.
+- B05-runtime-check.json: 기본 A/B 실제 HTTP 준비 상태, 비공개 key/인증 줄 보존·준비 재실행0·web/meter 종료/임시DB·포트0.
+
+재현: backend `pytest tests -q`, frontend `npm run build`와 `npm run test:e2e -- tests/auth-tenants.spec.ts tests/chat-operations.spec.ts`. 기본 시연 준비/서버 시작은 backend README B05 절을 따른다. 임시 브라우저 fixture에는 등록된 실제 key를 전달하지 않는다. 과거 JSON/PNG는 보존하며 본 README는 현재 단계의 증거 색인으로 갱신한다.

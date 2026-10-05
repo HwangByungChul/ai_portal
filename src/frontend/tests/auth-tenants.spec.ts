@@ -9,11 +9,11 @@ test.beforeEach(({context},info)=>{
 test.afterEach(({},info)=>{expect(pageErrors.get(info.title)??0).toBe(0);});
 
 test('A05_01_user_login_restore_and_direct_denial',async({page})=>{
- await login(page,'A-U1');await expect(page.getByText('대화 기능 준비중')).toBeVisible();
+ await login(page,'A-U1');await expect(page.getByRole('heading',{name:'AI 업무',exact:true})).toBeVisible();
  await expect(page.getByRole('button',{name:'사용자 관리',exact:true})).toHaveCount(0);
  const reply=await page.request.get('/api/v1/admin/memberships',{headers:{'X-Tenant-ID':fixture().tenants.A}});
  expect(reply.status()).toBe(403);await page.reload();await expect(page.getByRole('button',{name:'로그아웃',exact:true})).toBeVisible();
- await page.goto('/admin/members');await expect(page.getByText('대화 기능 준비중')).toBeVisible();await expect(page.locator('tbody tr')).toHaveCount(0);
+ await page.goto('/admin/members');await expect(page.getByRole('heading',{name:'AI 업무',exact:true})).toBeVisible();await expect(page.locator('tbody tr')).toHaveCount(0);
  const empty=await page.evaluate(()=>localStorage.length===0&&sessionStorage.length===0);expect(empty).toBe(true);
 });
 
@@ -125,7 +125,7 @@ test('A05_14_logout_network_failure_hidden_until_retry',async({page})=>{
 test('A05_15_logout_broadcast_clears_other_tab',async({page,context})=>{
  await login(page,'A-U1');const second=await context.newPage();await second.goto('/');await expect(second.getByRole('button',{name:'로그아웃',exact:true})).toBeVisible();
  await page.getByRole('button',{name:'로그아웃',exact:true}).click();await expect(second.getByLabel('로그인 ID',{exact:true})).toBeVisible();
- await expect(second.getByText('대화 기능 준비중')).toHaveCount(0);
+ await expect(second.getByRole('heading',{name:'AI 업무',exact:true})).toHaveCount(0);
 });
 
 test('A05_16_read_storage_failure_and_retry',async({page})=>{
