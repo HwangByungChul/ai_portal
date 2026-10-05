@@ -26,3 +26,5 @@ B01 JSON은당시기록으로보존한다. B02-test-summary/results/db-boundarie
 현재web의Agent settings 직접SELECT는없으며관리API만지침을반환한다. policy executor는허용scope의비용metadata/설정만읽고message.body/run.config_snapshot/call.claim은읽지못한다. 원장raw쓰기없음,사용량불명은예약·unknown분리다. 실제reserve/dispatch/settle·provider·SSE와새대화/운영화면은후속이다.
 
 재현: `.venv/bin/python -m pytest tests/test_operations.py -q` 및전체tests, Node22.23.1 frontendbuild/기존auth-tenants.spec.ts. 모든시험은자기marked DB와private자격을정리하며primary를reset하지않는다. 다음B03 API07~13 계획은250.구현/04문서11절이다.
+
+B02 검증 소스 로컬 commit: `aae2ace8cab56b3393bb9fafd89adde4caf1faf6`. 검증 소스의 SHA256을 대조한 후 후속 문서 commit에서 연결했다.

@@ -200,3 +200,5 @@ web의agent_configs.settings 직접SELECT를제거하고안전열만유지했다
 시험용 A/B각12,500원·mock/real4개 조직예산과general/rules_rag 활성설정은새일회용Bfixture에만준비했다. 기존active fixture에는006만적용하며개인계정·세션·원장·app.env를보존한다. 미배정된조직예산은usage/budget503,Agent목록은BUDGET_NOT_READY(또는AGENT_DISABLED)로차단한다. real의기존accounted/reserved를새0으로덮어쓰거나bootstrap seed를반복하지않는다. 실제사용준비/초기배정은권한있는운영준비단계에서별도확인할사항이다.
 
 B02결과·84신규시험(실제HTTP11경로/재시작1포함)·전체회귀는Obsidain250.구현/04 일반 대화와 중앙 AI 구현 결과.md와260.테스트/evidence/B-chat/B02-*.json에관리한다. 실제운영화면은B05,대화/run접수B03/AI예약·발사·정산/SSE는B04이며유료AI0원이다.
+
+B02 현재 검증: backend 322 pass/경고 0/300.79초, build 성공/기존 A browser 20 pass/runner error 0/28.78초. 검증 소스 로컬 commit `aae2ace8cab56b3393bb9fafd89adde4caf1faf6`; 정확 소스 지문은 B-chat/B02-test-summary.json에 기록했다. 새 B 운영 화면과 실제 AI 호출은 후속 단계다.

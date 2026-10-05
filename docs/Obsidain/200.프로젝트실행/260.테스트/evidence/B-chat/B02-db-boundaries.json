@@ -3,7 +3,7 @@
   "recorded_date": "2026-10-05",
   "recorded_at_utc": "2026-10-05T00:36:03.060797+00:00",
   "baseline_commit": "981a933e229fd9723b1365fa0439653881b5d79b",
-  "tested_source_commit": null,
+  "tested_source_commit": "aae2ace8cab56b3393bb9fafd89adde4caf1faf6",
   "tested_source_digest": "6cafaa0b94e316598cb96ed6eb2fe10240df70b83a52d27269b80aa019d1424a",
   "pending_migrations_applied": [
     "006_operations_control.sql"
