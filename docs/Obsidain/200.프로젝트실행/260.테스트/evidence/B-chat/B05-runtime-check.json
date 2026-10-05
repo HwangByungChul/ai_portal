@@ -1,6 +1,6 @@
 {
   "task": "I250-B05",
-  "tested_source_commit": null,
+  "tested_source_commit": "3d1cbeff72dced1d4625badcd0668f0c6c14769b",
   "runtime": {
     "kind": "B05-owned-mock-preparation",
     "budget_rows_created": 2,
@@ -82,5 +82,19 @@
     "desktop": "reviewed",
     "mobile": "reviewed with collapsible history",
     "images": "private .runtime, 0600; excluded from Git"
+  },
+  "final_artifact_audit": {
+    "exact_manifest_files": 31,
+    "tested_source_fingerprints_match": 18,
+    "protected_nonprivate_files_identical": 18,
+    "private_configuration_unchanged_after_preparation": true,
+    "credential_original_lines_preserved": 3,
+    "private_values_in_changed_public_files": 0,
+    "historical_json_png_unchanged": true,
+    "unrelated_untracked_preserved": 72,
+    "staged_files_before": 0,
+    "unrelated_tracked_changes": 0,
+    "development_listeners": 0,
+    "primary_unchanged_after_preparation_and_readiness": true
   }
 }

@@ -60,3 +60,5 @@ B04 검증 소스 로컬 commit: `4a2c925b257d00b63f2784b757df7768462cf3fc`. 검
 - B05-runtime-check.json: 기본 A/B 실제 HTTP 준비 상태, 비공개 key/인증 줄 보존·준비 재실행0·web/meter 종료/임시DB·포트0.
 
 재현: backend `pytest tests -q`, frontend `npm run build`와 `npm run test:e2e -- tests/auth-tenants.spec.ts tests/chat-operations.spec.ts`. 기본 시연 준비/서버 시작은 backend README B05 절을 따른다. 임시 브라우저 fixture에는 등록된 실제 key를 전달하지 않는다. 과거 JSON/PNG는 보존하며 본 README는 현재 단계의 증거 색인으로 갱신한다.
+
+B05 검증 소스 local commit: `3d1cbeff72dced1d4625badcd0668f0c6c14769b`. 정확 소스18파일 SHA256을 대조한 후 증거와 연결했다.

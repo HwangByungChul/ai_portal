@@ -4,7 +4,7 @@
   "scope": "private chat and scoped operations portal; owned mock demo preparation",
   "date": "2026-10-05",
   "baseline_commit": "81decde0ef1ea84904637708c6b56a260fb923b5",
-  "tested_source_commit": null,
+  "tested_source_commit": "3d1cbeff72dced1d4625badcd0668f0c6c14769b",
   "tested_source_fingerprints": {
     "src/frontend/src/App.tsx": "6df872d8982c65f7c2688af0d219752ca3fd6c049a286a8d8815d0e40becd5ad",
     "src/frontend/src/api.ts": "f515659b2ad6c3b104fe0e93047455df55ad90bbd7e0a15b144320ce31ca0577",

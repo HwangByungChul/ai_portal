@@ -1,6 +1,6 @@
 {
   "task": "I250-B05",
-  "tested_source_commit": null,
+  "tested_source_commit": "3d1cbeff72dced1d4625badcd0668f0c6c14769b",
   "backend_tests": [
     {
       "test_id": "tests.test_ai_ledger.test_reservation_usage_and_remote_end_are_independent[None-observed-expected0]",

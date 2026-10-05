@@ -274,3 +274,5 @@ backend 폴더에서 실행한다. 이미 준비된 DB를 다시 seed하지 않�
 B05 실제 화면 검증의 portal_test_server/control/app은 별도 marker/PID/primary 배제를 검증하는 폐기용 DB 전용 도구다. API 자식에 모의 실행·별도 meter만 공급하고 기존 비공개 환경에서 HMAC만 가져오며 등록된 키를 전달하지 않는다. 시나리오별 ledger TRUNCATE는 이 검증된 폐기용 DB에만 적용된다. 실제/기존 DB를 reset하는 제품 endpoint는 없다.
 
 B05 결과와 소스 지문은 B-chat/B05-*.json, 상세 계획은250.07이다. B06의 실제3회 일반 호출과 지연 측정은 아직 수행하지 않았다.
+
+B05 검증 소스 local commit `3d1cbeff72dced1d4625badcd0668f0c6c14769b`; backend477/browser51/실호출0, 정확 소스 SHA256은 B-chat/B05-test-summary.json이다.
