@@ -1,6 +1,6 @@
-# AI 플랫폼 backend — A 완료 · B01~03 저장·운영·대화 접수
+# AI 플랫폼 backend — A 및 B01~04 완료
 
-A 인증·조직·관리 API/화면·통합 검증을 완료했고 B01에서 추가5개 저장 모델·형식·권한, B02에서11개운영API를구축했다. 업무16개와 infra1개다. B03에서 본인 대화·질문 접수·조회·취소 API 7개를 추가했다. 예약·발사·정산과 AI 응답은 B04 이후다. health200은 전체 플랫폼 완료를 뜻하지 않는다.
+A 인증·조직·관리 API/화면·통합 검증과 B01 저장 기반, B02 운영 API, B03 본인 대화·접수, B04 모의 AI 실행·원자 예약/단일발사/정산·SSE를 완료했다. 현재27 API/16업무·infra1/9 migration·46고정security함수다. backend467 pass/실패0/경고0, build 성공/기존A browser20 pass를 확인했다. 새 B 사용자·운영 화면은 B05, GraphRAG는 C, 실제 OpenAI 대표호출은 B06이다. 유료 AI0건/0원이며 실제 OpenAI 연결 성공으로 해석하지 않는다. health200은 전체 플랫폼 완료를 뜻하지 않는다.
 
 ## 환경과 설치
 
@@ -38,7 +38,7 @@ A 인증·조직·관리 API/화면·통합 검증을 완료했고 B01에서 추
 .venv/bin/python -m scripts.seed --fixture A-auth
 ```
 
-migrate는`ai_portal_mvp_test_<UUID>`의새시험DB/comment marker를생성한다. 000~007 SQL과SHA256 기록을단일transaction으로적용하고완료전에runtime접속을개방하지않는다. 반복CLI는기존설정을감지해거부한다. 재seed/비fixture/외부DB/변경된적용SQL도거부하며reset/drop CLI는제공하지않는다. 적용된migration은수정하지말고007이후새파일로추가한다. 시험용real예산행은실원장의reset허가가아니다.
+migrate는`ai_portal_mvp_test_<UUID>`의새시험DB/comment marker를생성한다. 000~008 SQL과SHA256 기록을단일transaction으로적용하고완료전에runtime접속을개방하지않는다. 반복CLI는기존설정을감지해거부한다. 재seed/비fixture/외부DB/변경된적용SQL도거부하며reset/drop CLI는제공하지않는다. 적용된migration은수정하지말고008이후새파일로추가한다. 시험용real예산행은실원장의reset허가가아니다.
 
 A03에서는003,A04에서는004만기존active fixture에추가적용했고계정/세션/창이나web DSN/HMAC은reset하지않았다. 이후pending migration도private active fixture의소유를검증한뒤같은runner로적용한다. 기존데이터가있는DB에는seed를다시호출하지않는다.
 
@@ -236,3 +236,16 @@ identity→Agent→project→tenant→conversation/run 잠금 아래 현재 권�
 B03 시험·결과는 Obsidain250.구현/04 일반 대화와 중앙 AI 구현 결과.md의 B03 절,05 대화 접수 상세 작업 계획.md,260.테스트/evidence/B-chat/B03-*.json에 연결한다. B04 연결 전에는 accepted 접수·조회·취소 검증만 완료이며 AI 응답·SSE·새 화면·Graph/Q20 완료로 해석하지 않는다.
 
 B03 현재 검증: backend 399 pass/경고 0/477.85초, build 성공/기존 A browser 20 pass/runner error 0/34.64초. 검증 소스 로컬 commit `40a28621652d91b04ee7eb613955db5b0bb813f5`; 정확 소스 지문은 B-chat/B03-test-summary.json에 기록했다. 새 B 운영 화면과 실제 AI 호출은 후속 단계다.
+
+
+## B04 실행 활성화와 경계
+
+기본값 `AI_EXECUTION_ENABLED=false`는 기존 접수 점검 환경을 보존한다. 실행 시 비공개 서버 설정에서 `AI_EXECUTION_ENABLED=true`, `AI_MODE=mock`, 별도 `AI_METER_DSN`을 공급한다. web은 ai_web, meter는 ai_meter 역할과 기존 전용 DB/55432/소유 표식을 확인한다. 공개 .env.example에는 DSN·키를 넣지 않는다. 현재 기본 DB는 Agent가 중지되어 있고 조직 예산이 미설정이다. 이번 단계에서는 기존 app.env나 예산을 변경·초기화하지 않았다. 새 시연 준비는 기존 사용·예약을 보존하는 방식으로 B05에 인계한다.
+
+실행 관리자는 DB 세션 리더 잠금으로 한 프로세스만 허용한다. 기동 시 미종결 작업은 interrupted로 바꾸고 재호출하지 않는다. 종결 실패 run에 남은 호출도 미발사 증거가 있으면 해제하고, 발사됐으면 unknown으로 정리한다. 모의 예산과 실제 예산은 분리한다. TTL·취소·재시작으로 기발생 비용이나 종료 불명 슬롯을 풀지 않는다.
+
+예약 3.64원/전체 슬롯2·조직1/허가10초, 실행 lease60초/heartbeat20초/총180초다. SDK는 실제 고정 endpoint·gpt-4o-mini/default/출력1024/include_usage/storeFalse/자동재시도0을 사용하고 전체 생성60초를 별도 적용한다. B04 시험은 가짜 HTTP만 사용했다. SDK3.24.0의 좁은 응답 검증 hook에서 숫자 자동 변환 전에 strict 검증한다. SDK 업그레이드 시 가짜 전송과 실제 B06 호환 검증을 다시 해야 한다. 실제 모드 키·meter·tokenizer 준비 누락은 차단하며 모의 모드로 자동 전환하지 않는다.
+
+SSE `GET /api/v1/runs/{run_id}/events`는 현재 세션·X-Tenant-ID·Accept:text/event-stream이 필요하다. 조직/본인 조회를 재검사하고 매 본문 이벤트 직전에 권한을 새로 확인한다. snapshot/draft_delta/status/terminal/delivery_error,64KiB 초안/250ms batch/15초 keepalive,run1/user2 구독 제한이다. draft_delta는 bounded full draft의 replace 이벤트이며 sequence와 execution_epoch는 해당 구독/실행 세대에 적용한다. 재연결은 snapshot 조회이고 새로운 AI 호출을 만들지 않는다. 부분 응답이나 SSE 종료 자체는 저장 성공이 아니다.
+
+실행 시험: `.venv/bin/python -m pytest tests/test_ai_ledger.py tests/test_ai_provider.py tests/test_execution.py tests/test_b_restart.py tests/test_b_http.py -q`. 원장 직접 쓰기·meter 본문 읽기·다른 사용자의 대화 접근은 계속 거부한다. 공개 증거는 B-chat/B04-*.json이다.

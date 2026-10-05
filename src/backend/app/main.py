@@ -9,7 +9,12 @@ from app.tenants.routes import router as tenants_router
 from app.operations.routes import router as operations_router
 from app.conversations.routes import router as conversations_router
 from app.config import Settings
-from app.db import open_web_pool
+from app.db import open_web_pool,open_meter_pool
+from app.ai.repository import CallRepository
+from app.ai.providers import MockProvider,OpenAIProvider
+from app.ai.token_limits import validate_general_input
+from app.execution.manager import ExecutionManager
+from app.execution.stream import StreamHub,router as stream_router
 from app.errors import AppError, response
 
 
@@ -17,6 +22,7 @@ def create_app(settings: Settings | None = None, *, health_only: bool = False) -
     settings = settings or Settings()
     if not health_only:
         settings.require_auth_configuration()
+        if settings.execution_enabled:settings.require_execution_configuration()
 
     @asynccontextmanager
     async def lifespan(app):
@@ -28,7 +34,17 @@ def create_app(settings: Settings | None = None, *, health_only: bool = False) -
                 app.state.pool = pool
                 if not health_only:
                     app.state.auth = AuthService(pool, settings)
-                yield
+                app.state.execution=None
+                if not health_only and settings.execution_enabled:
+                    validate_general_input('질문에 답해 주세요.',[],'준비 확인')
+                    async with open_meter_pool(settings.meter_dsn.get_secret_value()) as meter:
+                        provider=OpenAIProvider(settings.openai_api_key.get_secret_value()) if settings.mode=='real' else MockProvider()
+                        manager=ExecutionManager(CallRepository(pool,meter,settings.budget_period),provider,settings.mode,StreamHub())
+                        try:
+                            await manager.start();app.state.execution=manager
+                            yield
+                        finally:await manager.close()
+                else:yield
 
     app = FastAPI(title='AI Platform MVP', version='0.1.0', lifespan=lifespan)
     app.state.settings = settings
@@ -70,6 +86,7 @@ def create_app(settings: Settings | None = None, *, health_only: bool = False) -
         app.include_router(tenants_router)
         app.include_router(operations_router)
         app.include_router(conversations_router)
+        app.include_router(stream_router)
     return app
 
 

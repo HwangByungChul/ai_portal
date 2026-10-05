@@ -1,0 +1,78 @@
+{
+  "phase": "I250-B04",
+  "status": "pass",
+  "execution_mode": "mock and fake HTTP transport only",
+  "paid_ai_calls": 0,
+  "paid_ai_cost_krw": "0",
+  "openai_key_read_or_configured": false,
+  "new_dependencies": 0,
+  "tested_source_commit": null,
+  "pending_migrations_applied": [
+    "008_ai_call_control.sql"
+  ],
+  "checksum_repeat_apply": [],
+  "business_tables": 16,
+  "infra_tables": 1,
+  "migrations": 9,
+  "primary_all_16_table_rows_unchanged": true,
+  "fixed_security_functions": 46,
+  "new_fixed_security_functions": 16,
+  "fixed_functions_owner": "ai_policy_executor",
+  "public_execute": false,
+  "content_forced_rls": 8,
+  "column_select_privileges": {
+    "ai_web": {
+      "portal.messages.body": true,
+      "portal.runs.config_snapshot": false,
+      "portal.runs.worker_claim_hash": false,
+      "ops.call_attempts.dispatch_claim_hash": false
+    },
+    "ai_meter": {
+      "portal.messages.body": false,
+      "portal.runs.config_snapshot": false,
+      "portal.runs.worker_claim_hash": false,
+      "ops.call_attempts.dispatch_claim_hash": false
+    },
+    "ai_index": {
+      "portal.messages.body": false,
+      "portal.runs.config_snapshot": false,
+      "portal.runs.worker_claim_hash": false,
+      "ops.call_attempts.dispatch_claim_hash": false
+    },
+    "ai_policy_executor": {
+      "portal.messages.body": true,
+      "portal.runs.config_snapshot": true,
+      "portal.runs.worker_claim_hash": true,
+      "ops.call_attempts.dispatch_claim_hash": true
+    }
+  },
+  "runtime_roles": {
+    "ai_web": {
+      "session_user": "ai_web",
+      "current_user": "ai_web",
+      "rolsuper": false,
+      "rolbypassrls": false,
+      "rolinherit": false
+    },
+    "ai_meter": {
+      "session_user": "ai_meter",
+      "current_user": "ai_meter",
+      "rolsuper": false,
+      "rolbypassrls": false,
+      "rolinherit": false
+    }
+  },
+  "runtime_connections_after": 0,
+  "disposable_databases_after": 0,
+  "api_operations": 27,
+  "primary_tenant_budget_initialization": "not_performed; existing unconfigured rows stay unconfigured",
+  "primary_execution_configuration": "preserved disabled; Agent/budgets need setup before demo",
+  "protected_files": 18,
+  "database_state_after": "stopped",
+  "dev_listeners_after": 0,
+  "historical_evidence_preserved": true,
+  "source_snapshot_files": 72,
+  "calendar_minutes_so_far": 177.29,
+  "human_active_hours": "not measured; 4~5h plan is not actual effort",
+  "failed_test_fixture_cleanup": 6
+}

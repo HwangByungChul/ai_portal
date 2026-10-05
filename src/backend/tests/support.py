@@ -55,7 +55,7 @@ class FixtureState:
     def verify_catalog(self):
         with self.db.admin_connection() as conn:
             assert conn.execute("SELECT count(*) FROM pg_tables WHERE schemaname IN ('security','portal','ops')").fetchone()[0]==16
-            assert conn.execute("SELECT count(*) FROM infra.schema_migrations").fetchone()[0]==8
+            assert conn.execute("SELECT count(*) FROM infra.schema_migrations").fetchone()[0]==9
             rows=conn.execute("SELECT n.nspname,c.relname,c.relrowsecurity,c.relforcerowsecurity,r.rolname "
                 "FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace JOIN pg_roles r ON r.oid=c.relowner "
                 "WHERE n.nspname IN ('portal','ops') AND c.relname IN ('conversations','agent_configs','audit_events','messages','runs','tenant_budgets','call_attempts','usage_events')").fetchall()
@@ -64,12 +64,12 @@ class FixtureState:
             assert conn.execute("SELECT has_column_privilege('ai_policy_executor','ops.project_budget','accounted_krw','SELECT')").fetchone()[0]
             assert conn.execute("SELECT has_column_privilege('ai_policy_executor','portal.messages','body','SELECT')").fetchone()[0]
             assert conn.execute("SELECT has_column_privilege('ai_policy_executor','portal.runs','config_snapshot','SELECT')").fetchone()[0]
-            assert not conn.execute("SELECT has_column_privilege('ai_policy_executor','ops.call_attempts','dispatch_claim_hash','SELECT')").fetchone()[0]
+            assert conn.execute("SELECT has_column_privilege('ai_policy_executor','ops.call_attempts','dispatch_claim_hash','SELECT')").fetchone()[0]
             funcs=conn.execute("SELECT p.prosecdef,p.proconfig,r.rolname, "
                 "EXISTS(SELECT 1 FROM aclexplode(p.proacl) a WHERE a.grantee=0 AND a.privilege_type='EXECUTE') "
                 "FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace JOIN pg_roles r ON r.oid=p.proowner "
                 "WHERE n.nspname='security'").fetchall()
-            assert len(funcs)==30 and all(r[0] and r[1]==['search_path=pg_catalog, security, pg_temp'] and r[2]=='ai_policy_executor' and not r[3] for r in funcs)
+            assert len(funcs)==46 and all(r[0] and r[1]==['search_path=pg_catalog, security, pg_temp'] and r[2]=='ai_policy_executor' and not r[3] for r in funcs)
             assert conn.execute('SELECT count(*) FROM security.managed_tenants').fetchone()[0]==1
 
 

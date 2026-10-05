@@ -86,6 +86,14 @@ async def read(request,kind,*,agent=None,period=None,cursor=None,limit=20):
     if period.day!=1:raise AppError('REQUEST_INVALID',422)
     digest=window_digest(settings.login_hmac_secret.get_secret_value(),'http_read','principal',str(ctx.user_id)+':'+(str(ctx.tenant_id) if ctx.tenant_id else 'platform'))
     data=await OperationsRepository(request.app.state.pool).read(ctx,kind,period,settings.mode,digest,agent,cursor,limit)
+    manager=getattr(request.app.state,'execution',None)
+    if kind=='agents' and manager is not None:
+        from app.ai.repository import ExecutionError
+        try:readiness=await manager.repository.readiness(ctx,settings.mode)
+        except ExecutionError:raise AppError('STORAGE_UNAVAILABLE',503) from None
+        if manager.gateway.stop_latch:readiness={'available':False,'safe_block_reason':'PROJECT_STOPPED'}
+        for item in data['items']:
+            if item['agent_key']=='general':item.update(readiness)
     return response(request,data)
 
 

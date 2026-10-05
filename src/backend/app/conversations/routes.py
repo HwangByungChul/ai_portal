@@ -81,8 +81,12 @@ async def runs(request:Request,body:RunRequest):
     ctx=await context(request,write=True);validate_query(request,set())
     if 'document_refs' in body.model_fields_set:raise AppError('FEATURE_NOT_READY',409)
     settings=request.app.state.settings
+    manager=getattr(request.app.state,'execution',None)
+    if manager is not None and (manager.closed or manager.gateway.stop_latch):raise AppError('PROJECT_STOPPED',503)
     data=await ConversationRepository(request.app.state.pool).admit(ctx,body.agent_key,body.conversation_id,body.client_send_id,
         body.prompt,settings.budget_period,settings.mode,digest(request,ctx,'run_admission'),UUID(request.state.request_id))
+    manager=getattr(request.app.state,'execution',None)
+    if manager is not None and not data['replayed'] and not data['is_terminal']:manager.notify(ctx,data['run_id'])
     return response(request,data,status_code=200 if data['is_terminal'] else 202)
 
 @router.get('/runs/by-send/{client_send_id}')
@@ -95,4 +99,6 @@ async def run(request:Request,run_id:UUID):return await read(request,'run',run_i
 async def cancel(request:Request,run_id:UUID,body:CancelRequest):
     ctx=await context(request,write=True);validate_query(request,set())
     data=await ConversationRepository(request.app.state.pool).cancel(ctx,run_id,body.expected_revision,UUID(request.state.request_id))
+    manager=getattr(request.app.state,'execution',None)
+    if manager is not None:manager.cancel(ctx,run_id)
     return response(request,data,status_code=200 if data['is_terminal'] else 202)

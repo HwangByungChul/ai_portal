@@ -36,3 +36,10 @@ B03-test-summary는 최종 소스 지문/집계, test-results는 개별 399 back
 원문 본문/지침/DSN/세션/CSRF/키/SQL 오류행/전체 JUnit·log는 .runtime 비공개 자료이며 Git과 공개 증거에 넣지 않는다. 기존 A/B01/B02 증거는 당시 수행 결과로 보존한다. B03이 필요한 owner-scope 콘텐츠 읽기 권한을 추가한 현재 상태는 B03-db-boundaries에 기록하고 B02의 당시 권한 관측을 덮어쓰지 않는다.
 
 B03 검증 소스 로컬 commit: `40a28621652d91b04ee7eb613955db5b0bb813f5`. 검증 소스의 SHA256을 대조한 후 후속 문서 commit에서 연결했다.
+
+
+## B04 실행·정산·SSE 검증
+
+2026-10-05: 전체 backend 467 pass/실패0/경고0/497.0초, 신규B04 68건(실제HTTP/프로세스 강제종료·재시작 포함), 기존A browser20 pass/build 성공/runner0/30.62초. 위 신규 건수를 전체 수에 중복 가산하지 않는다. paid AI0건/0원이고 OpenAI는 SDK 가짜 전송 검증만 수행했다.
+
+B04-test-summary.json은 정확 소스 지문·검증 요약, B04-test-results.json은 개별 test ID/결과, B04-db-boundaries.json은 DB권한/원장 경계, B04-runtime-check.json은 008만 적용/보존/정리 결과다. 이전 A/B01~03 JSON은 그대로 보존했다. 비공개 로그·계정/DSN/claim/본문은 공개 증거에 포함하지 않는다. 로컬 검증 소스 commit은 다음 문서 commit에서 지문 대조 후 연결한다.

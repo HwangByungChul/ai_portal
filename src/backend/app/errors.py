@@ -2,6 +2,9 @@ from datetime import datetime, timezone
 from fastapi.responses import JSONResponse
 
 MESSAGES = {
+    'PROJECT_STOPPED': 'AI 실행이 중지되어 있습니다. 준비 상태를 확인해 주세요.',
+    'STREAM_LIMIT_REACHED': '열려 있는 응답 창을 확인한 뒤 다시 시도해 주세요.',
+    'STREAM_ACCESS_UNAVAILABLE': '응답을 조회할 권한과 연결 상태를 확인해 주세요.',
     'SEND_ID_CONFLICT': '같은 전송 번호의 입력을 확인해 주세요.',
     'CONVERSATION_AGENT_MISMATCH': '대화에 연결된 Agent를 확인해 주세요.',
     'AGENT_STOPPED': '선택한 Agent가 중지되어 있습니다.',

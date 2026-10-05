@@ -1,0 +1,49 @@
+{
+  "phase": "I250-B04",
+  "status": "pass",
+  "execution_mode": "mock and fake HTTP transport only",
+  "paid_ai_calls": 0,
+  "paid_ai_cost_krw": "0",
+  "openai_key_read_or_configured": false,
+  "new_dependencies": 0,
+  "tested_source_commit": null,
+  "business_tables": 16,
+  "forced_rls_tables": 8,
+  "raw_runtime_ledger_writes": "denied ai_web/ai_meter/ai_index",
+  "meter_body_config_claim_select": "denied",
+  "saved_dispatch_proof": "required tenant/call/epoch/hash; no origin reauthorization for already incurred usage",
+  "column_select_privileges": {
+    "ai_web": {
+      "portal.messages.body": true,
+      "portal.runs.config_snapshot": false,
+      "portal.runs.worker_claim_hash": false,
+      "ops.call_attempts.dispatch_claim_hash": false
+    },
+    "ai_meter": {
+      "portal.messages.body": false,
+      "portal.runs.config_snapshot": false,
+      "portal.runs.worker_claim_hash": false,
+      "ops.call_attempts.dispatch_claim_hash": false
+    },
+    "ai_index": {
+      "portal.messages.body": false,
+      "portal.runs.config_snapshot": false,
+      "portal.runs.worker_claim_hash": false,
+      "ops.call_attempts.dispatch_claim_hash": false
+    },
+    "ai_policy_executor": {
+      "portal.messages.body": true,
+      "portal.runs.config_snapshot": true,
+      "portal.runs.worker_claim_hash": true,
+      "ops.call_attempts.dispatch_claim_hash": true
+    }
+  },
+  "append_only_events": true,
+  "exactly_one_terminal_event": true,
+  "receipt_idempotency_and_conflict_stop": true,
+  "remote_end_and_usage_independent": true,
+  "last_balance_concurrent_winner": 1,
+  "unconfirmed_reserve_dispatch_provider_calls": 0,
+  "private_no_login_function_owner": "ai_policy_executor; metadata-scoped policies and fixed functions",
+  "sdk_strict_receipt_before_coercion": true
+}
