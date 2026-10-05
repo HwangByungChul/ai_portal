@@ -1,6 +1,6 @@
-# AI 플랫폼 backend — A 완료 · B01~02 저장 기반과 운영 API
+# AI 플랫폼 backend — A 완료 · B01~03 저장·운영·대화 접수
 
-A 인증·조직·관리 API/화면·통합 검증을 완료했고 B01에서 추가5개 저장 모델·형식·권한, B02에서11개운영API를구축했다. 업무16개와 infra1개다. 대화/run 업무 API는 B03, 예약·발사·정산 및 실제 AI는 B04 이후다. health200은 전체 플랫폼 완료를 뜻하지 않는다.
+A 인증·조직·관리 API/화면·통합 검증을 완료했고 B01에서 추가5개 저장 모델·형식·권한, B02에서11개운영API를구축했다. 업무16개와 infra1개다. B03에서 본인 대화·질문 접수·조회·취소 API 7개를 추가했다. 예약·발사·정산과 AI 응답은 B04 이후다. health200은 전체 플랫폼 완료를 뜻하지 않는다.
 
 ## 환경과 설치
 
@@ -38,7 +38,7 @@ A 인증·조직·관리 API/화면·통합 검증을 완료했고 B01에서 추
 .venv/bin/python -m scripts.seed --fixture A-auth
 ```
 
-migrate는`ai_portal_mvp_test_<UUID>`의새시험DB/comment marker를생성한다. 000~006 SQL과SHA256 기록을단일transaction으로적용하고완료전에runtime접속을개방하지않는다. 반복CLI는기존설정을감지해거부한다. 재seed/비fixture/외부DB/변경된적용SQL도거부하며reset/drop CLI는제공하지않는다. 적용된migration은수정하지말고007이후새파일로추가한다. 시험용real예산행은실원장의reset허가가아니다.
+migrate는`ai_portal_mvp_test_<UUID>`의새시험DB/comment marker를생성한다. 000~007 SQL과SHA256 기록을단일transaction으로적용하고완료전에runtime접속을개방하지않는다. 반복CLI는기존설정을감지해거부한다. 재seed/비fixture/외부DB/변경된적용SQL도거부하며reset/drop CLI는제공하지않는다. 적용된migration은수정하지말고007이후새파일로추가한다. 시험용real예산행은실원장의reset허가가아니다.
 
 A03에서는003,A04에서는004만기존active fixture에추가적용했고계정/세션/창이나web DSN/HMAC은reset하지않았다. 이후pending migration도private active fixture의소유를검증한뒤같은runner로적용한다. 기존데이터가있는DB에는seed를다시호출하지않는다.
 
@@ -167,13 +167,13 @@ A06 당시최종176pass/경고1,frontend build/실제브라우저20pass. 인증�
 .venv/bin/python -m scripts.prepare_tokenizers
 ```
 
-프로젝트 `.runtime/tokenizer-cache`(0700)에 o200k_base/cl100k_base BPE 파일(0600)을 고정 SHA256로 검증해 저장한다. 런타임은 이를 읽기만 하고 누락·변조·symlink면 TOKENIZER_NOT_READY로 차단하며 자동 다운로드하지 않는다. 일반 입력은 질문4000 codepoint/UTF-8 16KiB·지침2000자·최근 완전 메시지6개·6000토큰을 검사한다. 초과 이력은 오래된 메시지 단위로 제외하고 지침/현재 질문은 자르지 않는다. Chat framing+32 여유 토큰은 보수 추정이며 실제 usage와 동일함을 보장하지 않는다. HTTP JSON32KiB 제한은 B03에서 연결한다.
+프로젝트 `.runtime/tokenizer-cache`(0700)에 o200k_base/cl100k_base BPE 파일(0600)을 고정 SHA256로 검증해 저장한다. 런타임은 이를 읽기만 하고 누락·변조·symlink면 TOKENIZER_NOT_READY로 차단하며 자동 다운로드하지 않는다. 일반 입력은 질문4000 codepoint/UTF-8 16KiB·지침2000자·최근 완전 메시지6개·6000토큰을 검사한다. 초과 이력은 오래된 메시지 단위로 제외하고 지침/현재 질문은 자르지 않는다. Chat framing+32 여유 토큰은 보수 추정이며 실제 usage와 동일함을 보장하지 않는다. B03에서 POST 대화/질문/취소의 실제 HTTP body stream을 JSON 해석 전에 32KiB로 제한한다.
 
 Decimal 고정 price-20261004-v1: 생성 예약3.64원, 질의/문서 임베딩 예약각0.20원. 환율2000원/USD·보호계수1.2·0.01원 올림의 내부 추정이며 실제 청구 환율/금액이 아니다. 토큰/model/tier 불일치는 비용0으로 변환하지 않고 거부한다. SDK 설치는 호출 성공 검증과 구분하며 제공자 어댑터/재시도0은 B04 이후 연결한다.
 
 최종 B01 시험 결과는 Obsidain250.구현/04 일반 대화와 중앙 AI 구현 결과.md와260.테스트/evidence/B-chat/B01-*.json에서 관리한다. A06의176회 기록·A-auth 증거는 당시 결과로 보존하고 현재 suite에 중복 합산하지 않는다.
 
-B01 현재검증: backend238pass/경고0/208.77초,build/기존A browser20pass/runner error0/28.21초. 검증소스 로컬commit `189f95a76ca09862903320ab86b03f87caf069cd`;정확소스지문은B-chat/B01-test-summary.json에기록했다.
+B01 당시 검증: backend238pass/경고0/208.77초,build/기존A browser20pass/runner error0/28.21초. 검증소스 로컬commit `189f95a76ca09862903320ab86b03f87caf069cd`;정확소스지문은B-chat/B01-test-summary.json에기록했다.
 
 ## B02 실제 운영 API — 화면 연결과 AI는 후속
 
@@ -201,4 +201,36 @@ web의agent_configs.settings 직접SELECT를제거하고안전열만유지했다
 
 B02결과·84신규시험(실제HTTP11경로/재시작1포함)·전체회귀는Obsidain250.구현/04 일반 대화와 중앙 AI 구현 결과.md와260.테스트/evidence/B-chat/B02-*.json에관리한다. 실제운영화면은B05,대화/run접수B03/AI예약·발사·정산/SSE는B04이며유료AI0원이다.
 
-B02 현재 검증: backend 322 pass/경고 0/300.79초, build 성공/기존 A browser 20 pass/runner error 0/28.78초. 검증 소스 로컬 commit `aae2ace8cab56b3393bb9fafd89adde4caf1faf6`; 정확 소스 지문은 B-chat/B02-test-summary.json에 기록했다. 새 B 운영 화면과 실제 AI 호출은 후속 단계다.
+B02 당시 검증: backend 322 pass/경고 0/300.79초, build 성공/기존 A browser 20 pass/runner error 0/28.78초. 검증 소스 로컬 commit `aae2ace8cab56b3393bb9fafd89adde4caf1faf6`; 정확 소스 지문은 B-chat/B02-test-summary.json에 기록했다. 새 B 운영 화면과 실제 AI 호출은 후속 단계다.
+
+## B03 대화·질문 접수와 취소 — 실행은 B04에서 연결
+
+현재 A8+B02 11+B03 7=26개 API다. B03은 본인 질문과 accepted run을 저장한다. background worker나 모델 호출을 시작하지 않으며 결과·답변을 생성하지 않는다. Agent 목록의 pipeline 준비 상태도 아직 false다. 중간 단계에서 accepted가 지속되는 것은 실행 연결 전 상태이며 사용자가 취소할 수 있다.
+
+| 경로 | 입력·응답 |
+|---|---|
+| POST /api/v1/conversations | agent_key=general, 선택 client_conversation_id UUID. 새 대화 201, 같은 owner/tenant/client ID·Agent 재전송 200. 다른 Agent 409. |
+| GET /api/v1/conversations | 본인 현재 조직 목록, created_at+UUID 순서·recent_state, limit 기본20/최대50·서명 cursor. 타인 제목/본문·전체 count 없음. |
+| GET /api/v1/conversations/{conversation_id}/messages | 현재 조직+본인만 질문/저장 완료된 답변/상태 조회. purged payload와 미완료 assistant는 숨김. 타인/타조직 ID 404. |
+| POST /api/v1/runs | client_send_id UUID/agent_key/general/prompt/conversation_id(UUID 또는 null). 새·미종결 재전송 202, 종결 재전송 200. 다른 payload는 SEND_ID_CONFLICT 409. |
+| GET /api/v1/runs/by-send/{client_send_id} | 응답 유실 시 같은 ID의 접수 여부와 현재 run 조회. 현재 조직+owner의 접수가 없으면 404. |
+| GET /api/v1/runs/{run_id} | 현재 owner의 저장 state/stage/revision/content_status/usage_status/execution_mode/result 조회. snapshot/hash/지침·claim 없음. |
+| POST /api/v1/runs/{run_id}/cancel | 양의 strict expected_revision. accepted/no call→cancelled 200, running→cancel_requested 202. 이미 종결/취소 접수는 저장 상태 유지. |
+
+모든 경로는 기존 세션 쿠키와 단일 X-Tenant-ID가 필요하다. 쓰기는 Origin/X-Requested-With/CSRF를 함께 검사한다. role/user_id/model/API키/mode 입력은 허용하지 않는다. cursor는 HMAC으로 본인·조직·조회 종류·대화 ID에 묶으며 다른 문맥이나 변조는 422다. 재로그인해도 같은 본인·조직의 현재 권한이면 cursor 사용 가능하며 권한을 저장한 토큰으로 쓰지 않는다. cursor와 limit 외 추가·중복 query는 422다.
+
+질문은 원래 공백·Unicode를 보존한다. 공백만/4000 codepoint 초과/잘못된 UTF-8 surrogate/NUL은 422, UTF-8 body는 최대16KiB다. 실제 POST JSON stream이 32KiB를 넘으면 Content-Length 유무와 무관하게 해석 전 413 PAYLOAD_TOO_LARGE로 차단한다. instructions+최근 허용된 완전 메시지 최대6개+질문은 오프라인 tokenizer로 6000token을 확인한다. 오래된 history는 메시지 전체를 제외하며 system/질문을 절단하지 않는다. 필수 입력 초과는 TOKEN_LIMIT_EXCEEDED 422, tokenizer cache 미준비는 SERVICE_UNAVAILABLE 503, 저장·provider 0이다.
+
+RAG run이나 document_refs 필드가 명시된 요청은 FEATURE_NOT_READY 409다. 아직 문서 검색과 ACL이 없어 general로 자동 대체하지 않는다. existing conversation의 Agent가 다르면 CONVERSATION_AGENT_MISMATCH 409가 우선이다.
+
+서버 SHA256 요청 hash는 원래 prompt/Agent/원래 conversation_id(처음 null 포함)/빈 document_refs를 정규 JSON으로 계산하며 session·HTTP request_id는 제외한다. 응답 유실/재전송은 원래 ID와 입력을 그대로 유지한다. 처음 null이었다면 재전송에서도 null을 유지하며 서버가 만든 conversation_id로 요청을 바꾸지 않는다. 같은 문장의 새로운 정상 전송은 새 UUID이고 별도 실행으로 저장되지만 미종결 한도는 검사한다.
+
+identity→Agent→project→tenant→conversation/run 잠금 아래 현재 권한을 재검사한다. 원래 null 대화+accepted run+user message+safe audit+성공 idle touch+접수창은 동일 transaction으로 저장한다. 서로 다른 세션의 경합도 project lock 대기 뒤 기존 전송 ID를 다시 확인한다. 내부 capacity scope는 다른 run의 metadata COUNT만 하고 본문은 반환하지 않는다. 미종결 user1(조직 간 합산)/tenant2/project4는 서버 mode의 상태로 계산하고 신규 성공 접수만 user/tenant당10/min에 기록한다. 같은 ID 재전송은 새 한도·slot을 쓰지 않고, 현재 owner 접근이 유효하면 Agent/한도/공통 중지 후에도 원래 상태를 돌려준다.
+
+접수 시 현재 조직 budget 준비/Agent enable/global stop/latch/local·project 최소 생성 예약액3.64 여유를 검사하지만 실제 예약금을 늘리지 않는다. B04는 dispatch 직전 다시 원자 허가·예약해야 한다. 이미 비용·예약이 있는 원장을 0으로 초기화하지 않는다. 기존 primary는 예산 미배정/Agent disabled를 보존했으며 새 접수는 안전하게 차단된다. A/B 각12500·Agent 활성과 동시성 확인용 임시 C는 일회용 시험 DB에만 존재한다.
+
+취소는 owner 확인 후 CAS이며 accepted에 기존 call이 있으면 REVIEW_REQUIRED 409로 보존한다. 취소나 완료 상태만으로 비용을 0으로 만들지 않는다. run의 call이 reserved/dispatched면 estimated, usage_unknown이면 unknown, settled가 있으면 final, 미발사 해제만이면 none이다. 최종 usage는 실제 provider 토큰 확인을 뜻하며 청구 금액 확정은 아니다. 감사/잠금/DB 실패는 질문·run·대화·접수창·idle을 전체 rollback하고 503, 충돌은 안전한409다. 조회·재전송·반복 취소는 idle을 연장하지 않는다.
+
+007은 고정 security 함수9개(전체30)를 추가한다. NOLOGIN policy executor의 필요한 messages/run snapshot SELECT는 owner-scope 고정 함수에만 적용한다. run_scope/추가 문맥은 transaction-local이며 pool 재사용 시 사라진다. 내부 sequence scope는 purged/미완료 메시지의 sequence_no만 계산해 중복 번호를 막는다. web의 request_hash/config_snapshot 직접 읽기와 messages/runs 직접 쓰기, index/meter의 콘텐츠와 새 함수 EXECUTE, 모든 원장 raw 쓰기는 계속 거부한다. helpers authorize/row_allowed/view는 web EXECUTE를 주지 않았다.
+
+B03 시험·결과는 Obsidain250.구현/04 일반 대화와 중앙 AI 구현 결과.md의 B03 절,05 대화 접수 상세 작업 계획.md,260.테스트/evidence/B-chat/B03-*.json에 연결한다. B04 연결 전에는 accepted 접수·조회·취소 검증만 완료이며 AI 응답·SSE·새 화면·Graph/Q20 완료로 해석하지 않는다.

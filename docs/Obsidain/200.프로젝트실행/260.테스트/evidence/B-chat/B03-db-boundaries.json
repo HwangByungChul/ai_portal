@@ -1,0 +1,103 @@
+{
+  "task": "I250-B03",
+  "recorded_date": "2026-10-05",
+  "recorded_at_utc": "2026-10-05T01:16:19.115453+00:00",
+  "baseline_commit": "2487083ab36e6fbe10f51623cad45a11696d1a3d",
+  "tested_source_commit": null,
+  "tested_source_digest": "4afa052c0148da8077b11ea517a46de0d88f2f35b07f05a21dc61145cbdcd9ee",
+  "primary_runtime": {
+    "pending_migrations_applied": [
+      "007_run_control.sql"
+    ],
+    "checksum_repeat_apply": [],
+    "business_tables": 16,
+    "infra_tables": 1,
+    "migrations": 8,
+    "primary_all_16_table_rows_unchanged": true,
+    "fixed_security_functions": 30,
+    "new_fixed_security_functions": 9,
+    "fixed_functions_owner": "ai_policy_executor",
+    "public_execute": false,
+    "content_forced_rls": 8,
+    "column_select_privileges": {
+      "ai_web": {
+        "portal.agent_configs.settings": false,
+        "portal.messages.body": true,
+        "portal.runs.config_snapshot": false,
+        "ops.call_attempts.dispatch_claim_hash": false,
+        "ops.usage_events.token_counts": false
+      },
+      "ai_meter": {
+        "portal.agent_configs.settings": false,
+        "portal.messages.body": false,
+        "portal.runs.config_snapshot": false,
+        "ops.call_attempts.dispatch_claim_hash": false,
+        "ops.usage_events.token_counts": false
+      },
+      "ai_policy_executor": {
+        "portal.agent_configs.settings": true,
+        "portal.messages.body": true,
+        "portal.runs.config_snapshot": true,
+        "ops.call_attempts.dispatch_claim_hash": false,
+        "ops.usage_events.token_counts": true
+      }
+    },
+    "runtime_roles": {
+      "ai_web": {
+        "session_user": "ai_web",
+        "current_user": "ai_web",
+        "rolsuper": false,
+        "rolbypassrls": false,
+        "rolinherit": false
+      },
+      "ai_meter": {
+        "session_user": "ai_meter",
+        "current_user": "ai_meter",
+        "rolsuper": false,
+        "rolbypassrls": false,
+        "rolinherit": false
+      }
+    },
+    "runtime_connections_after": 0,
+    "disposable_databases_after": 0,
+    "primary_tenant_budget_initialization": "not_performed; existing unconfigured rows stay unconfigured",
+    "paid_ai_calls": 0
+  },
+  "current_scope_rules": {
+    "run_owner_content": "current account/session/active tenant/membership + own rows; no administrator exception",
+    "policy_executor": "NOLOGIN/fixed functions and owner RLS; content SELECT now necessary for intake/context/final read",
+    "web_direct_snapshot_and_request_hash": "denied",
+    "web_direct_run_message_writes": "denied",
+    "index_meter_new_functions_and_content": "denied",
+    "ledger_raw_writes_web_meter_policy": "denied",
+    "internal_capacity": "metadata COUNT only under project lock; does not return foreign rows",
+    "internal_sequence": "own sequence_no only including purged/incomplete rows; no hidden content return",
+    "run_scope": "transaction-local; cleared after normal/rollback pool reuse"
+  },
+  "observed": {
+    "same_send_concurrent_runs": 1,
+    "same_send_concurrent_user_messages": 1,
+    "different_payload": 409,
+    "different_new_send_concurrent": {
+      "accepted": 1,
+      "capacity_rejected": 1
+    },
+    "foreign_owner_or_tenant_resource_ids": 404,
+    "wrong_selected_tenant": 403,
+    "missing_tenant": 422,
+    "concurrent_cancel_revision": 2,
+    "concurrent_cancel_audit_events": 1,
+    "successful_new_admissions_per_window": 10,
+    "next_admission": 429,
+    "relogin_rate_reset": false,
+    "waiting_membership_revocation_blocks_intake": true,
+    "lock_timeout_and_audit_failure_rollback": true,
+    "purged_last_sequence_next": 4,
+    "actual_last_history_ids_count": 6,
+    "mandatory_token_limit": 422,
+    "actual_stream_body_over_32KiB": 413,
+    "rag_or_document_refs": 409,
+    "accepted_with_saved_call_cancel": 409,
+    "released_without_dispatch_usage_status": "none"
+  }
+}

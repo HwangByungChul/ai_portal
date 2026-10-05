@@ -1,0 +1,136 @@
+{
+  "task": "I250-B03",
+  "recorded_date": "2026-10-05",
+  "recorded_at_utc": "2026-10-05T01:16:19.115453+00:00",
+  "baseline_commit": "2487083ab36e6fbe10f51623cad45a11696d1a3d",
+  "tested_source_commit": null,
+  "tested_source_digest": "4afa052c0148da8077b11ea517a46de0d88f2f35b07f05a21dc61145cbdcd9ee",
+  "native_http": {
+    "test_id": "B03-live-conversations",
+    "status": "pass",
+    "utc_time": "2026-10-05T01:10:24.736911+00:00",
+    "duration_ms": 3150.88,
+    "observed": {
+      "native_api_routes_checked": 7,
+      "restart_preserved_accepted": true,
+      "restart_preserved_cancelled_revision": 2,
+      "provider_calls": 0
+    },
+    "safe_error_code": null
+  },
+  "native_cleanup": {
+    "test_id": "test_seven_api_routes_real_http_restart_no_provider",
+    "api_child_stopped": true,
+    "api_pool_remaining_connections": 0,
+    "private_log_secret_hits": 0,
+    "fixture_id": "9204e5693692"
+  },
+  "browser_cleanup": {
+    "kind": "A05-runtime-cleanup",
+    "api_pool_connections": 0,
+    "fixture_removed": true,
+    "private_credentials_removed": true,
+    "database_state_after": "stopped"
+  },
+  "runtime_checks": {
+    "pending_migrations_applied": [
+      "007_run_control.sql"
+    ],
+    "checksum_repeat_apply": [],
+    "business_tables": 16,
+    "infra_tables": 1,
+    "migrations": 8,
+    "primary_all_16_table_rows_unchanged": true,
+    "fixed_security_functions": 30,
+    "new_fixed_security_functions": 9,
+    "fixed_functions_owner": "ai_policy_executor",
+    "public_execute": false,
+    "content_forced_rls": 8,
+    "column_select_privileges": {
+      "ai_web": {
+        "portal.agent_configs.settings": false,
+        "portal.messages.body": true,
+        "portal.runs.config_snapshot": false,
+        "ops.call_attempts.dispatch_claim_hash": false,
+        "ops.usage_events.token_counts": false
+      },
+      "ai_meter": {
+        "portal.agent_configs.settings": false,
+        "portal.messages.body": false,
+        "portal.runs.config_snapshot": false,
+        "ops.call_attempts.dispatch_claim_hash": false,
+        "ops.usage_events.token_counts": false
+      },
+      "ai_policy_executor": {
+        "portal.agent_configs.settings": true,
+        "portal.messages.body": true,
+        "portal.runs.config_snapshot": true,
+        "ops.call_attempts.dispatch_claim_hash": false,
+        "ops.usage_events.token_counts": true
+      }
+    },
+    "runtime_roles": {
+      "ai_web": {
+        "session_user": "ai_web",
+        "current_user": "ai_web",
+        "rolsuper": false,
+        "rolbypassrls": false,
+        "rolinherit": false
+      },
+      "ai_meter": {
+        "session_user": "ai_meter",
+        "current_user": "ai_meter",
+        "rolsuper": false,
+        "rolbypassrls": false,
+        "rolinherit": false
+      }
+    },
+    "runtime_connections_after": 0,
+    "disposable_databases_after": 0,
+    "primary_tenant_budget_initialization": "not_performed; existing unconfigured rows stay unconfigured",
+    "paid_ai_calls": 0
+  },
+  "setup_limitations": [
+    "B03 persists accepted intake/read/cancel only; no execution manager/provider/SSE/new UI",
+    "Existing primary tenant budgets remain unconfigured and Agents disabled; intake is blocked until authorized initial setup",
+    "Budget preflight is not reservation/dispatch/settlement; no ledger cost/slot counters changed",
+    "Temporary A/B budget rows, enabled Agents and C capacity fixture are disposable test databases only",
+    "Whole B/MVP/V41/Q20/GraphRAG not completed"
+  ],
+  "paid_ai_calls": 0,
+  "paid_ai_krw": 0,
+  "new_dependencies": 0,
+  "secret_and_key_policy": {
+    "openai_keys_read_or_configured": false,
+    "raw_logs_junit_and_runtime_credentials": "private .runtime; excluded from Git",
+    "public_evidence": "safe identifiers/status/times/counts only"
+  },
+  "initial_repair_history": [
+    {
+      "phase": "red",
+      "observation": "run route 404 before implementation",
+      "passed": 0,
+      "failed": 1
+    },
+    {
+      "phase": "core",
+      "observation": "safe 503 from missing minimal policy-executor SELECT(run_id) on call_attempts",
+      "failed": 3,
+      "correction": "Added only run_id SELECT in new unapplied 007 before primary migration"
+    },
+    {
+      "phase": "target",
+      "passed": 71,
+      "duration_seconds": 75.53
+    },
+    {
+      "phase": "finaltarget",
+      "passed": 76,
+      "duration_seconds": 89.61
+    },
+    {
+      "phase": "final",
+      "observation": "Added one usage-status case for released_no_dispatch; final whole backend 399/77 B03 includes it"
+    }
+  ]
+}

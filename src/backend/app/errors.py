@@ -2,6 +2,16 @@ from datetime import datetime, timezone
 from fastapi.responses import JSONResponse
 
 MESSAGES = {
+    'SEND_ID_CONFLICT': '같은 전송 번호의 입력을 확인해 주세요.',
+    'CONVERSATION_AGENT_MISMATCH': '대화에 연결된 Agent를 확인해 주세요.',
+    'AGENT_STOPPED': '선택한 Agent가 중지되어 있습니다.',
+    'FEATURE_NOT_READY': '아직 준비되지 않은 기능입니다.',
+    'PLATFORM_STOPPED': 'AI 서비스가 중지되어 있습니다.',
+    'QUOTA_EXCEEDED': '사용 한도를 확인해 주세요.',
+    'EXECUTION_CAPACITY_EXCEEDED': '진행 중인 질문을 확인한 뒤 다시 시도해 주세요.',
+    'TOKEN_LIMIT_EXCEEDED': '질문과 지시문의 길이를 줄여 주세요.',
+    'SERVICE_UNAVAILABLE': '서비스 준비 상태를 확인해 주세요.',
+    'PAYLOAD_TOO_LARGE': '요청 크기를 줄여 주세요.',
     'BUDGET_LIMIT_CONFLICT': '현재 배정과 사용량을 확인해 주세요.',
     'REVIEW_REQUIRED': '미확인 사용량을 확인한 뒤 다시 시도해 주세요.',
     'RESOURCE_NOT_FOUND': '대상을 찾을 수 없습니다.',
@@ -23,7 +33,7 @@ class AppError(Exception):
         self.code, self.status, self.retry_after = code, status, retry_after
 
 
-def response(request, data=None, error=None, field_paths=None):
+def response(request, data=None, error=None, field_paths=None, *, status_code=200):
     headers = {'Cache-Control': 'no-store', 'X-Request-ID': request.state.request_id}
     meta = {'request_id': request.state.request_id, 'tenant_id': getattr(request.state,'tenant_id',None),
             'server_time': datetime.now(timezone.utc).isoformat()}
@@ -35,4 +45,4 @@ def response(request, data=None, error=None, field_paths=None):
         return JSONResponse({'error': {'code': error.code, 'message': MESSAGES[error.code],
             'field_paths': field_paths or [], 'retryable': error.status in (429,503)}, 'meta': meta},
             status_code=error.status, headers=headers)
-    return JSONResponse({'data': data, 'meta': meta}, headers=headers)
+    return JSONResponse({'data': data, 'meta': meta}, headers=headers,status_code=status_code)

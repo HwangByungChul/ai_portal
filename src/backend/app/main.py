@@ -7,6 +7,7 @@ from app.auth.routes import router as auth_router
 from app.auth.service import AuthService
 from app.tenants.routes import router as tenants_router
 from app.operations.routes import router as operations_router
+from app.conversations.routes import router as conversations_router
 from app.config import Settings
 from app.db import open_web_pool
 from app.errors import AppError, response
@@ -35,6 +36,15 @@ def create_app(settings: Settings | None = None, *, health_only: bool = False) -
     @app.middleware('http')
     async def request_id(request: Request, call_next):
         request.state.request_id = str(uuid4())
+        if request.method=='POST' and (request.url.path in ('/api/v1/runs','/api/v1/conversations') or
+                (request.url.path.startswith('/api/v1/runs/') and request.url.path.endswith('/cancel'))):
+            # Bound the actual stream before JSON/Pydantic parsing; Content-Length is not trusted.
+            body=bytearray()
+            async for chunk in request.stream():
+                if len(body)+len(chunk)>32768:
+                    return response(request,error=AppError('PAYLOAD_TOO_LARGE',413))
+                body.extend(chunk)
+            request._body=bytes(body)
         return await call_next(request)
 
     @app.exception_handler(AppError)
@@ -47,7 +57,7 @@ def create_app(settings: Settings | None = None, *, health_only: bool = False) -
 
     @app.exception_handler(RequestValidationError)
     async def validation_error(request, error):
-        allowed = {'login_id', 'password','user_id','active','role','expected_revision','cursor','limit','agent_key','name','description','instructions','enabled','local_cap_krw','allocated_cap_krw','period'}
+        allowed = {'login_id', 'password','user_id','active','role','expected_revision','cursor','limit','agent_key','name','description','instructions','enabled','local_cap_krw','allocated_cap_krw','period','client_send_id','conversation_id','client_conversation_id','prompt','run_id','document_refs','document_id','version_id'}
         fields = sorted({str(item['loc'][-1]) if item['loc'][-1] in allowed else 'body' for item in error.errors()})
         return response(request, error=AppError('REQUEST_INVALID', 422), field_paths=fields)
 
@@ -59,6 +69,7 @@ def create_app(settings: Settings | None = None, *, health_only: bool = False) -
         app.include_router(auth_router)
         app.include_router(tenants_router)
         app.include_router(operations_router)
+        app.include_router(conversations_router)
     return app
 
 
