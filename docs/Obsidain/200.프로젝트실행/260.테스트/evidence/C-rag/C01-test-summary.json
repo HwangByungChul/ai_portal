@@ -3,7 +3,7 @@
   "date": "2026-10-05",
   "status": "pass",
   "baseline_commit": "f7ad6575ea84d48715f1494913048bfbc85372d3",
-  "source_commit": null,
+  "source_commit": "e3ad8dfeebe4506cffa1129d671042a7153c8682",
   "backend_full": {
     "passed": 599,
     "failed": 0,
@@ -174,5 +174,23 @@
     "primary_guard_unchanged": true,
     "public_reset_route_added": false,
     "validation": "final frontend 51 cases"
+  },
+  "local_commit_files": 23,
+  "final_audit": {
+    "manifest_files": 23,
+    "tested_sources_identical": 115,
+    "protected_files_identical": 24,
+    "historical_files_identical": 42,
+    "unrelated_untracked_preserved": 72,
+    "public_secrets_detected": 0,
+    "private_config_bytes_identical": true,
+    "original_graphrag_selected_sources_identical": 9,
+    "primary_final_fingerprints_match": true,
+    "development_listeners": 0,
+    "runtime_connections": 0,
+    "temporary_databases": 0,
+    "paid_dispatches_this_stage": 0,
+    "remote_push": false,
+    "deployment": false
   }
 }
