@@ -73,3 +73,5 @@ B05 검증 소스 local commit: `3d1cbeff72dced1d4625badcd0668f0c6c14769b`. 정�
 - B06-latency.json: GET20 nearest-rank p95와real3 median/max·목표대조. 부하/SLA주장없음.
 
 실3회completed/final/각1call·1settle,내부추정합계0.19원(청구아님)/예약·slot0이다. 서버·DB정지/connection0. GraphRAG·C/Q20/V41 및real browser는후속이며다음250.09 C01 계획을따른다. 이전JSON/PNG파일은변경하지않았다.
+
+B06 실제 검증 소스 local commit: `b07deba584b81cfc59d999cf71a4a72870339303`. 정확18파일만기록하고소스83개SHA256대조후B06 JSON5개와연결했다. 원격push/배포없음.

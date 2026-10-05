@@ -1,6 +1,6 @@
 {
   "task": "I250-B06",
-  "tested_source_commit": null,
+  "tested_source_commit": "b07deba584b81cfc59d999cf71a4a72870339303",
   "measurement_environment": "local macOS loopback native PostgreSQL/API; real network OpenAI; no load test",
   "general_get": {
     "samples": 20,

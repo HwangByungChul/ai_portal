@@ -4,7 +4,7 @@
   "scope": "B general chat/central controls; C document GraphRAG not started",
   "date": "2026-10-05",
   "baseline_commit": "2deb4b4a544c6f4376e95dcc65cfaf85f5c9dfab",
-  "tested_source_commit": null,
+  "tested_source_commit": "b07deba584b81cfc59d999cf71a4a72870339303",
   "tested_source_fingerprints": {
     "src/backend/app/db.py": "0a150be0b8019b5e8ad522bca0d97c5dbf56c6cf98d550f9d8076e5165f3bbb1",
     "src/backend/app/config.py": "0e157b85dd7a2f818a1ba4a28356285c66c9b9f4b426f3c780be7de10f0480ee",
