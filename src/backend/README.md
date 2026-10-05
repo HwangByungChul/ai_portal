@@ -234,3 +234,5 @@ identity→Agent→project→tenant→conversation/run 잠금 아래 현재 권�
 007은 고정 security 함수9개(전체30)를 추가한다. NOLOGIN policy executor의 필요한 messages/run snapshot SELECT는 owner-scope 고정 함수에만 적용한다. run_scope/추가 문맥은 transaction-local이며 pool 재사용 시 사라진다. 내부 sequence scope는 purged/미완료 메시지의 sequence_no만 계산해 중복 번호를 막는다. web의 request_hash/config_snapshot 직접 읽기와 messages/runs 직접 쓰기, index/meter의 콘텐츠와 새 함수 EXECUTE, 모든 원장 raw 쓰기는 계속 거부한다. helpers authorize/row_allowed/view는 web EXECUTE를 주지 않았다.
 
 B03 시험·결과는 Obsidain250.구현/04 일반 대화와 중앙 AI 구현 결과.md의 B03 절,05 대화 접수 상세 작업 계획.md,260.테스트/evidence/B-chat/B03-*.json에 연결한다. B04 연결 전에는 accepted 접수·조회·취소 검증만 완료이며 AI 응답·SSE·새 화면·Graph/Q20 완료로 해석하지 않는다.
+
+B03 현재 검증: backend 399 pass/경고 0/477.85초, build 성공/기존 A browser 20 pass/runner error 0/34.64초. 검증 소스 로컬 commit `40a28621652d91b04ee7eb613955db5b0bb813f5`; 정확 소스 지문은 B-chat/B03-test-summary.json에 기록했다. 새 B 운영 화면과 실제 AI 호출은 후속 단계다.

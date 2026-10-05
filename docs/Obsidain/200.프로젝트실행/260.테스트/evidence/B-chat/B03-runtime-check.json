@@ -3,7 +3,7 @@
   "recorded_date": "2026-10-05",
   "recorded_at_utc": "2026-10-05T01:16:19.115453+00:00",
   "baseline_commit": "2487083ab36e6fbe10f51623cad45a11696d1a3d",
-  "tested_source_commit": null,
+  "tested_source_commit": "40a28621652d91b04ee7eb613955db5b0bb813f5",
   "tested_source_digest": "4afa052c0148da8077b11ea517a46de0d88f2f35b07f05a21dc61145cbdcd9ee",
   "native_http": {
     "test_id": "B03-live-conversations",
@@ -132,5 +132,12 @@
       "phase": "final",
       "observation": "Added one usage-status case for released_no_dispatch; final whole backend 399/77 B03 includes it"
     }
-  ]
+  ],
+  "final_artifact_audit": {
+    "exact_source_manifest_files": 21,
+    "protected_hashes_identical": 17,
+    "private_values_in_public_changed_files": 0,
+    "historical_A_B01_B02_evidence_unchanged": true,
+    "dev_listeners": 0
+  }
 }

@@ -34,3 +34,5 @@ B02 검증 소스 로컬 commit: `aae2ace8cab56b3393bb9fafd89adde4caf1faf6`. 검
 B03-test-summary는 최종 소스 지문/집계, test-results는 개별 399 backend(신규77 포함)와 기존 A browser20, db-boundaries는 현재 owner/RLS·동시성과 primary 보존, runtime-check는 실제 HTTP7경로/재시작·정리/제한을 담는다. native HTTP는 77개 안의 1시험이며 7경로를 추가 시험으로 합산하지 않는다. 선행 실패·반복 target 수행을 최종399에 다시 더하지 않는다. 새 B UI/AI 답변·전체 V41/Q20은 후속이다.
 
 원문 본문/지침/DSN/세션/CSRF/키/SQL 오류행/전체 JUnit·log는 .runtime 비공개 자료이며 Git과 공개 증거에 넣지 않는다. 기존 A/B01/B02 증거는 당시 수행 결과로 보존한다. B03이 필요한 owner-scope 콘텐츠 읽기 권한을 추가한 현재 상태는 B03-db-boundaries에 기록하고 B02의 당시 권한 관측을 덮어쓰지 않는다.
+
+B03 검증 소스 로컬 commit: `40a28621652d91b04ee7eb613955db5b0bb813f5`. 검증 소스의 SHA256을 대조한 후 후속 문서 commit에서 연결했다.
