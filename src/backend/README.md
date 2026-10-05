@@ -1,6 +1,6 @@
-# AI 플랫폼 backend — A 및 B01~05 완료
+# AI 플랫폼 backend — A 및 B01~06 일반 범위 완료
 
-A 인증·조직·권한과 B01~05 저장·운영·대화·중앙 AI·실제 사용자/관리자 화면을 완료했다. 현재27 API/16업무·infra1/9 migration·46고정security함수다. backend477 pass/실패0/경고0/466.24초, build 성공/기존A20+새B31=browser51 pass/runner0/117.06초다. 기본 합성 A/B의 모의 시연 준비와 재실행 변경0을 확인했다. 등록된 키/기존 인증·대화·real 예산은 보존했다. 유료 AI0건/0원이며 실제 OpenAI 연결 성공은 B06 검증 대상이다. GraphRAG는 C다.
+현재27 API/16업무·infra1/9migration·46고정security함수다. 전체회귀495+최종관련37(고유498)/fail0/warn0,build/browser51통과,실native일반3회completed/final·정산일치·내부추정0.19원이다. 등록키/인증설정·기존대화/mock예산을보존했다. 기본mode mock/서버·DB정지이며문서·GraphRAG·Job/임베딩은C다. 실제real브라우저시연은후속검증이다.
 
 ## 환경과 설치
 
@@ -276,3 +276,15 @@ B05 실제 화면 검증의 portal_test_server/control/app은 별도 marker/PID/
 B05 결과와 소스 지문은 B-chat/B05-*.json, 상세 계획은250.07이다. B06의 실제3회 일반 호출과 지연 측정은 아직 수행하지 않았다.
 
 B05 검증 소스 local commit `3d1cbeff72dced1d4625badcd0668f0c6c14769b`; backend477/browser51/실호출0, 정확 소스 SHA256은 B-chat/B05-test-summary.json이다.
+
+## B06 대표 실제 검증의 재현/보존 규칙
+
+일반 시연은 위 mock 준비/실행 절차를 사용한다. B06은 등록된private설정을backend자식에서만읽고고정R-GEN3입력을protectedrunAPI로실행한일회검증이다. app.env를real로변경하지않았다.
+
+```bash
+.venv/bin/python -m scripts.real_general_check --count 3 --max-reservation-krw 10.92
+```
+
+기본명령은paid-call-free preflight다. 기존승인된B06 실행에는 `--execute`를붙였으며현재는REAL_BATCH_ALREADY_RECORDED로차단된다. `.runtime/B06-real-batch.json`은0600의발사전journal이므로삭제/초기화하여유료호출을반복하지않는다. `.runtime/B06-real-result.json`/provider-metadata는본문·키없이안전상태/고정parameter/token/원장차분만기록한다. 로그/XML은private에만보관하고공개증거B06 JSON5개를참고한다.
+
+Areal대표500원배정/기발생0.19원·예약0을유지하고C임베딩계획에서합산한다.0.19원은가격snapshot의내부추정이며공급사청구가아니다. 실제3표본지연을SLA로확대하지않는다. 최종시험은전체495뒤관측보완관련37을확인했고고유498이다.

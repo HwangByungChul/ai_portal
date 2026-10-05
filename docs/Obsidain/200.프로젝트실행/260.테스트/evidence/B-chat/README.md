@@ -62,3 +62,14 @@ B04 검증 소스 로컬 commit: `4a2c925b257d00b63f2784b757df7768462cf3fc`. 검
 재현: backend `pytest tests -q`, frontend `npm run build`와 `npm run test:e2e -- tests/auth-tenants.spec.ts tests/chat-operations.spec.ts`. 기본 시연 준비/서버 시작은 backend README B05 절을 따른다. 임시 브라우저 fixture에는 등록된 실제 key를 전달하지 않는다. 과거 JSON/PNG는 보존하며 본 README는 현재 단계의 증거 색인으로 갱신한다.
 
 B05 검증 소스 local commit: `3d1cbeff72dced1d4625badcd0668f0c6c14769b`. 정확 소스18파일 SHA256을 대조한 후 증거와 연결했다.
+
+
+## I250-B06 — 일반 대화·중앙 AI 통합 검증
+
+- B06-test-summary.json: 전체495+최종관련37(고유498)/browser51·실native3회·소스지문/commit·현재범위.
+- B06-test-results.json: 각 시험 메타데이터·중복제외판정·실저장재조회/격리. body/key 없음.
+- B06-runtime-check.json: paid-call-free preflight·고정실3회/parameter·usage·동일batch재진입차단·cleanup. 실제browser는mock51로분리.
+- B06-db-boundaries.json: 기존행·mock예산/키·9SQL/합성평가/원본GraphRAG·무관72보존/합법변경범위.
+- B06-latency.json: GET20 nearest-rank p95와real3 median/max·목표대조. 부하/SLA주장없음.
+
+실3회completed/final/각1call·1settle,내부추정합계0.19원(청구아님)/예약·slot0이다. 서버·DB정지/connection0. GraphRAG·C/Q20/V41 및real browser는후속이며다음250.09 C01 계획을따른다. 이전JSON/PNG파일은변경하지않았다.

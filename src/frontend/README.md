@@ -1,7 +1,7 @@
 # AI 플랫폼 frontend — A05 및 B05 사용자·관리자 화면
 
 
-실제 인증·조직·대화·운영 API에 연결된 로그인, 조직 선택, 본인 일반 대화, 사용자·Agent·사용량·플랫폼 운영 화면이다. 역할과 범위는 서버가 판단한다. 모의 대화는 연결했으며 실제 OpenAI는 B06, 문서·GraphRAG는 C 후속 작업이다.
+실제 인증·조직·대화·운영 API에 연결된 로그인, 조직 선택, 본인 일반 대화, 사용자·Agent·사용량·플랫폼 운영 화면이다. 역할과 범위는 서버가 판단한다. 모의 화면51건과build를검증했고B06에서native실제일반3회/원장을확인했다. 실제모델을사용한브라우저시연자체는후속이며문서·GraphRAG는C작업이다.
 
 ## 설치와 실행
 
@@ -63,4 +63,6 @@ Agent와 한도 변경은 서버 응답 후만 성공 표시한다. 409는 현�
 
 검증: backend477 pass, build pass, 기존A20+새B31=51 browser pass. 전체 화면 재현은 `npm run test:e2e -- tests/auth-tenants.spec.ts tests/chat-operations.spec.ts`. 테스트는 모의 제공자와 소유 확인된 폐기용 DB를 사용한다. 등록된 실제 키를 시험 API에 전달하지 않으며 trace/video/질문·답변 공개 캡처0다. 새 시각 점검 이미지는 합성 계정의 질문/본문/초안을 비운 화면만 private .runtime에0600으로 둔다. 기존 A05 로그인 PNG는 보존한다.
 
-기본 A/B 환경은 B05에서 모의 시연을 준비했으므로 backend README의 시작 절차 후 이 화면을 사용할 수 있다. 현재 개발 서버는 정지 상태다. 실제 OpenAI는 B06, GraphRAG는 C 검증 대상이다.
+기본 A/B 환경은 B05에서 모의 시연을 준비했으므로 backend README의 시작 절차 후 이 화면을 사용할 수 있다. 현재 개발 서버는 정지 상태다. 실제 OpenAI는 B06 native3회를검증했으며real브라우저시연/GraphRAG는후속검증대상이다.
+
+B06 현재전체결과는250.04 24~26절/260 B06 JSON이다. frontend소스는B05이후변경없으며최종build/A20+B31=51통과했다. 기본모의설정을유지한다.

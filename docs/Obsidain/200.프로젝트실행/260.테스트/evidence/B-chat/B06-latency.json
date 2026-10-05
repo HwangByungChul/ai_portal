@@ -1,0 +1,47 @@
+{
+  "task": "I250-B06",
+  "tested_source_commit": null,
+  "measurement_environment": "local macOS loopback native PostgreSQL/API; real network OpenAI; no load test",
+  "general_get": {
+    "samples": 20,
+    "median_ms": 5.55,
+    "p95_ms": 9.62,
+    "max_ms": 42.42,
+    "method": "nearest_rank",
+    "target_p95_ms": 300,
+    "target_met": true
+  },
+  "real_samples": [
+    {
+      "input_id": "B06-G1",
+      "run_id": "e7c0b557-6b9f-4d1e-9949-ddd839e7fa69",
+      "first_body_seconds": 2.254,
+      "terminal_seconds": 2.521,
+      "first_body_target_met": true,
+      "terminal_target_met": true
+    },
+    {
+      "input_id": "B06-G2",
+      "run_id": "9caebb36-3512-4589-b653-0d4c180310fb",
+      "first_body_seconds": 1.61,
+      "terminal_seconds": 1.876,
+      "first_body_target_met": true,
+      "terminal_target_met": true
+    },
+    {
+      "input_id": "B06-G3",
+      "run_id": "b4aedda7-510f-4fc2-ac5c-e7fd1e2426cb",
+      "first_body_seconds": 0.833,
+      "terminal_seconds": 1.102,
+      "first_body_target_met": true,
+      "terminal_target_met": true
+    }
+  ],
+  "first_body_median_seconds": 1.61,
+  "first_body_max_seconds": 2.254,
+  "terminal_median_seconds": 1.876,
+  "terminal_max_seconds": 2.521,
+  "real_percentile": "not_reported_three_samples",
+  "sla_claim": false,
+  "definition": "monotonic from immediately before POST admission to first SSE draft/final body and stored canonical terminal GET; EOF is not completion"
+}

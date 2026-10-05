@@ -1,0 +1,353 @@
+{
+  "task": "I250-B06",
+  "tested_source_commit": null,
+  "preflight": {
+    "kind": "B06-real-general-check",
+    "mode": "real",
+    "status": "real_budget_first_preparation_required",
+    "paid_retry_count": 0,
+    "count_limit": 3,
+    "reservation_limit_krw": "10.92",
+    "requests": [],
+    "budget_before": {
+      "approved_cap_krw": "30000.000000",
+      "operational_cap_krw": "25000.000000",
+      "project_accounted_krw": "0.000000",
+      "project_reserved_krw": "0.000000",
+      "project_slots": 0,
+      "project_stopped": false,
+      "stop_latch": false,
+      "allocated_cap_krw": null,
+      "local_cap_krw": null,
+      "tenant_accounted_krw": null,
+      "tenant_reserved_krw": null,
+      "tenant_slots": null,
+      "tenant_stopped": null
+    },
+    "budget_after": {
+      "approved_cap_krw": "30000.000000",
+      "operational_cap_krw": "25000.000000",
+      "project_accounted_krw": "0.000000",
+      "project_reserved_krw": "0.000000",
+      "project_slots": 0,
+      "project_stopped": false,
+      "stop_latch": false,
+      "allocated_cap_krw": null,
+      "local_cap_krw": null,
+      "tenant_accounted_krw": null,
+      "tenant_reserved_krw": null,
+      "tenant_slots": null,
+      "tenant_stopped": null
+    },
+    "runtime_pool_connections_after": 0,
+    "cluster_state_after": "stopped",
+    "private_mock_configuration_identical": true
+  },
+  "real_general": {
+    "kind": "B06-real-general-check",
+    "mode": "real",
+    "status": "pass",
+    "paid_retry_count": 0,
+    "count_limit": 3,
+    "reservation_limit_krw": "10.92",
+    "requests": [
+      {
+        "input_id": "B06-G1",
+        "client_send_id": "28b8b605-f280-4271-9ba1-5eac0cdc3478",
+        "status": "completed",
+        "run_id": "e7c0b557-6b9f-4d1e-9949-ddd839e7fa69",
+        "execution_mode": "real",
+        "usage_status": "final",
+        "content_status": "final",
+        "error_code": null,
+        "first_body_seconds": 2.254,
+        "terminal_seconds": 2.521,
+        "first_body_target_met": true,
+        "terminal_target_met": true,
+        "call_id": "0747fc17-3a62-467b-a5bc-5e6ed10b154f",
+        "call_state": "settled",
+        "provider_end_status": "observed",
+        "slot_held": false,
+        "settle_count": 1,
+        "estimated_cost_krw": "0.060000",
+        "tokens": {
+          "input_tokens": 40,
+          "output_tokens": 31,
+          "total_tokens": 71
+        },
+        "observed_model": "gpt-4o-mini-2024-07-18",
+        "observed_tier": "default"
+      },
+      {
+        "input_id": "B06-G2",
+        "client_send_id": "70560969-7c1d-4232-9b54-20945396fef4",
+        "status": "completed",
+        "run_id": "9caebb36-3512-4589-b653-0d4c180310fb",
+        "execution_mode": "real",
+        "usage_status": "final",
+        "content_status": "final",
+        "error_code": null,
+        "first_body_seconds": 1.61,
+        "terminal_seconds": 1.876,
+        "first_body_target_met": true,
+        "terminal_target_met": true,
+        "call_id": "67360241-39e7-4d24-8e3d-2e54dee4dfee",
+        "call_state": "settled",
+        "provider_end_status": "observed",
+        "slot_held": false,
+        "settle_count": 1,
+        "estimated_cost_krw": "0.070000",
+        "tokens": {
+          "input_tokens": 40,
+          "output_tokens": 34,
+          "total_tokens": 74
+        },
+        "observed_model": "gpt-4o-mini-2024-07-18",
+        "observed_tier": "default"
+      },
+      {
+        "input_id": "B06-G3",
+        "client_send_id": "54ff4cbb-6acb-4745-9a88-2786d07c7b54",
+        "status": "completed",
+        "run_id": "b4aedda7-510f-4fc2-ac5c-e7fd1e2426cb",
+        "execution_mode": "real",
+        "usage_status": "final",
+        "content_status": "final",
+        "error_code": null,
+        "first_body_seconds": 0.833,
+        "terminal_seconds": 1.102,
+        "first_body_target_met": true,
+        "terminal_target_met": true,
+        "call_id": "766a4222-3f91-4b8d-bd1a-8119f7bacb51",
+        "call_state": "settled",
+        "provider_end_status": "observed",
+        "slot_held": false,
+        "settle_count": 1,
+        "estimated_cost_krw": "0.060000",
+        "tokens": {
+          "input_tokens": 40,
+          "output_tokens": 28,
+          "total_tokens": 68
+        },
+        "observed_model": "gpt-4o-mini-2024-07-18",
+        "observed_tier": "default"
+      }
+    ],
+    "budget_row_created": true,
+    "budget_before": {
+      "approved_cap_krw": "30000.000000",
+      "operational_cap_krw": "25000.000000",
+      "project_accounted_krw": "0.000000",
+      "project_reserved_krw": "0.000000",
+      "project_slots": 0,
+      "project_stopped": false,
+      "stop_latch": false,
+      "allocated_cap_krw": "500.000000",
+      "local_cap_krw": "500.000000",
+      "tenant_accounted_krw": "0.000000",
+      "tenant_reserved_krw": "0.000000",
+      "tenant_slots": 0,
+      "tenant_stopped": false
+    },
+    "get_latency": {
+      "samples": 20,
+      "median_ms": 5.55,
+      "p95_ms": 9.62,
+      "max_ms": 42.42,
+      "method": "nearest_rank",
+      "target_p95_ms": 300,
+      "target_met": true
+    },
+    "provider_transport": {
+      "requests": [
+        {
+          "model": "gpt-4o-mini",
+          "service_tier": "default",
+          "max_completion_tokens": 1024,
+          "stream": true,
+          "stream_options": {
+            "include_usage": true
+          },
+          "n": 1,
+          "store": false,
+          "http_status": 200
+        },
+        {
+          "model": "gpt-4o-mini",
+          "service_tier": "default",
+          "max_completion_tokens": 1024,
+          "stream": true,
+          "stream_options": {
+            "include_usage": true
+          },
+          "n": 1,
+          "store": false,
+          "http_status": 200
+        },
+        {
+          "model": "gpt-4o-mini",
+          "service_tier": "default",
+          "max_completion_tokens": 1024,
+          "stream": true,
+          "stream_options": {
+            "include_usage": true
+          },
+          "n": 1,
+          "store": false,
+          "http_status": 200
+        }
+      ]
+    },
+    "budget_after": {
+      "approved_cap_krw": "30000.000000",
+      "operational_cap_krw": "25000.000000",
+      "project_accounted_krw": "0.190000",
+      "project_reserved_krw": "0.000000",
+      "project_slots": 0,
+      "project_stopped": false,
+      "stop_latch": false,
+      "allocated_cap_krw": "500.000000",
+      "local_cap_krw": "500.000000",
+      "tenant_accounted_krw": "0.190000",
+      "tenant_reserved_krw": "0.000000",
+      "tenant_slots": 0,
+      "tenant_stopped": false
+    },
+    "runtime_pool_connections_after": 0,
+    "cluster_state_after": "stopped",
+    "private_mock_configuration_identical": true
+  },
+  "native_reload": {
+    "kind": "B06-post-real-native-reload",
+    "backend_mode": "mock",
+    "stored_mode": "real",
+    "canonical_reads": [
+      {
+        "run_id": "e7c0b557-6b9f-4d1e-9949-ddd839e7fa69",
+        "state": "completed",
+        "usage_status": "final",
+        "mode": "real",
+        "stored_answer_nonempty": true,
+        "message_count": 2,
+        "same_send_lookup_matches": true
+      },
+      {
+        "run_id": "9caebb36-3512-4589-b653-0d4c180310fb",
+        "state": "completed",
+        "usage_status": "final",
+        "mode": "real",
+        "stored_answer_nonempty": true,
+        "message_count": 2,
+        "same_send_lookup_matches": true
+      },
+      {
+        "run_id": "b4aedda7-510f-4fc2-ac5c-e7fd1e2426cb",
+        "state": "completed",
+        "usage_status": "final",
+        "mode": "real",
+        "stored_answer_nonempty": true,
+        "message_count": 2,
+        "same_send_lookup_matches": true
+      }
+    ],
+    "denials": [
+      {
+        "actor_id": "A-U2",
+        "run_id": "e7c0b557-6b9f-4d1e-9949-ddd839e7fa69",
+        "status": 404
+      },
+      {
+        "actor_id": "A-U2",
+        "run_id": "9caebb36-3512-4589-b653-0d4c180310fb",
+        "status": 404
+      },
+      {
+        "actor_id": "A-U2",
+        "run_id": "b4aedda7-510f-4fc2-ac5c-e7fd1e2426cb",
+        "status": 404
+      },
+      {
+        "actor_id": "A-ADM",
+        "run_id": "e7c0b557-6b9f-4d1e-9949-ddd839e7fa69",
+        "status": 404
+      },
+      {
+        "actor_id": "A-ADM",
+        "run_id": "9caebb36-3512-4589-b653-0d4c180310fb",
+        "status": 404
+      },
+      {
+        "actor_id": "A-ADM",
+        "run_id": "b4aedda7-510f-4fc2-ac5c-e7fd1e2426cb",
+        "status": 404
+      },
+      {
+        "actor_id": "P-A",
+        "run_id": "e7c0b557-6b9f-4d1e-9949-ddd839e7fa69",
+        "status": 404
+      },
+      {
+        "actor_id": "P-A",
+        "run_id": "9caebb36-3512-4589-b653-0d4c180310fb",
+        "status": 404
+      },
+      {
+        "actor_id": "P-A",
+        "run_id": "b4aedda7-510f-4fc2-ac5c-e7fd1e2426cb",
+        "status": 404
+      },
+      {
+        "actor_id": "B-U1",
+        "run_id": "e7c0b557-6b9f-4d1e-9949-ddd839e7fa69",
+        "status": 404
+      },
+      {
+        "actor_id": "B-U1",
+        "run_id": "9caebb36-3512-4589-b653-0d4c180310fb",
+        "status": 404
+      },
+      {
+        "actor_id": "B-U1",
+        "run_id": "b4aedda7-510f-4fc2-ac5c-e7fd1e2426cb",
+        "status": 404
+      }
+    ],
+    "key_supplied_to_provider": false,
+    "call_count_before": 3,
+    "call_count_after": 3,
+    "additional_dispatches": 0
+  },
+  "recorded_batch_reentry": {
+    "blocked": true,
+    "safe_error_code": "REAL_BATCH_ALREADY_RECORDED",
+    "additional_provider_calls": 0
+  },
+  "browser_cleanup": {
+    "kind": "A05-runtime-cleanup",
+    "api_pool_connections": 0,
+    "fixture_removed": true,
+    "private_credentials_removed": true,
+    "database_state_after": "stopped"
+  },
+  "private_key_auth_environment_preserved": true,
+  "public_prompt_response_key_count": 0,
+  "scope_note": "Real calls and reload were native protected HTTP/SSE; browser51 uses native mock provider. Real browser UI itself was not run.",
+  "final_preservation_audit": {
+    "exact_manifest_files": 18,
+    "tested_source_fingerprints_match": 83,
+    "protected_files_unchanged": 21,
+    "private_credential_config_bytes_identical": true,
+    "public_private_values_detected": 0,
+    "historical_json_png_unchanged": true,
+    "unrelated_untracked_preserved": 72,
+    "unrelated_tracked_changes": 0,
+    "staged_files_before": 0,
+    "original_graphrag_selected_sources_unchanged": 9,
+    "primary_unchanged_after_real_validation_and_reload": true,
+    "development_listeners": 0,
+    "real_requests": 3,
+    "real_reservations_krw": "0",
+    "real_active_slots": 0,
+    "runtime_connections": 0
+  }
+}
