@@ -1,0 +1,4526 @@
+{
+  "targeted": {
+    "exit_code": 0,
+    "duration_seconds": 39.53,
+    "passed": 35,
+    "failed": 0,
+    "skipped": 0,
+    "tests": [
+      {
+        "test_id": "tests.test_document_jobs.test_scoped_worker_persists_or_holds_without_redispatch",
+        "status": "pass",
+        "duration_ms": 1628.0,
+        "parameter_sha256": "b1da232cd427f7097a7f2f12f296b1bf94446ecc9c7c6532fe580e80c2e32383"
+      },
+      {
+        "test_id": "tests.test_document_jobs.test_scoped_worker_persists_or_holds_without_redispatch",
+        "status": "pass",
+        "duration_ms": 1295.0,
+        "parameter_sha256": "1625606d1b415051a9afaed848ac68a61124f52e25c624ce60e27bff39285cf1"
+      },
+      {
+        "test_id": "tests.test_document_jobs.test_scoped_worker_persists_or_holds_without_redispatch",
+        "status": "pass",
+        "duration_ms": 1306.0,
+        "parameter_sha256": "484e8aad5d24e6ff7f6e193e3ce54fce96a268157d479ffe277d3b88aec7c3a5"
+      },
+      {
+        "test_id": "tests.test_document_jobs.test_claim_is_exclusive_and_epoch_fences",
+        "status": "pass",
+        "duration_ms": 1259.0
+      },
+      {
+        "test_id": "tests.test_document_jobs.test_known_checkpoint_survives_expired_worker_without_provider_repeat",
+        "status": "pass",
+        "duration_ms": 1440.0
+      },
+      {
+        "test_id": "tests.test_document_jobs.test_publish_revocation_rolls_back_and_keeps_payload_unpublished",
+        "status": "pass",
+        "duration_ms": 1215.0
+      },
+      {
+        "test_id": "tests.test_document_jobs.test_real_job_cannot_be_claimed_by_mock_server",
+        "status": "pass",
+        "duration_ms": 986.0
+      },
+      {
+        "test_id": "tests.test_document_jobs.test_raw_index_read_rechecks_origin_and_agent",
+        "status": "pass",
+        "duration_ms": 1093.0,
+        "parameter_sha256": "1dea12d35c1a0c8f71b927279ab6ae3e116555d3f3bad13997294ed3cbf93f4c"
+      },
+      {
+        "test_id": "tests.test_document_jobs.test_raw_index_read_rechecks_origin_and_agent",
+        "status": "pass",
+        "duration_ms": 1090.0,
+        "parameter_sha256": "744c7405c6262d4a61955790b5de750d630913a6936f3904532ed00430cce433"
+      },
+      {
+        "test_id": "tests.test_document_ingest.test_same_upload_reuses_exact_receipt",
+        "status": "pass",
+        "duration_ms": 1008.0
+      },
+      {
+        "test_id": "tests.test_document_ingest.test_same_id_other_source_rejected",
+        "status": "pass",
+        "duration_ms": 1032.0
+      },
+      {
+        "test_id": "tests.test_document_ingest.test_user_cannot_register_or_write_source",
+        "status": "pass",
+        "duration_ms": 929.0,
+        "parameter_sha256": "9c1b07cb8d8bb618c39daf78be3dff93ab43d3e3a9eb980269bf54da79940b02"
+      },
+      {
+        "test_id": "tests.test_document_ingest.test_user_cannot_register_or_write_source",
+        "status": "pass",
+        "duration_ms": 941.0,
+        "parameter_sha256": "4eb87c9aea0dd6b43253a15ca881d9667c36e8deb42d23faed34fe02fb47a72b"
+      },
+      {
+        "test_id": "tests.test_document_ingest.test_private_management_does_not_grant_content",
+        "status": "pass",
+        "duration_ms": 988.0
+      },
+      {
+        "test_id": "tests.test_document_ingest.test_new_version_cas_and_old_source_preserved",
+        "status": "pass",
+        "duration_ms": 961.0
+      },
+      {
+        "test_id": "tests.test_document_ingest.test_audit_failure_keeps_private_file_recoverable",
+        "status": "pass",
+        "duration_ms": 1040.0
+      },
+      {
+        "test_id": "tests.test_document_ingest.test_current_revoke_blocks_new_job",
+        "status": "pass",
+        "duration_ms": 963.0
+      },
+      {
+        "test_id": "tests.test_document_ingest.test_only_confirmed_old_orphan_is_removed",
+        "status": "pass",
+        "duration_ms": 1121.0
+      },
+      {
+        "test_id": "tests.test_document_ingest.test_document_admission_limit_and_same_id_replay",
+        "status": "pass",
+        "duration_ms": 1125.0
+      },
+      {
+        "test_id": "tests.test_document_api.test_upload_job_query_duplicate_and_delete",
+        "status": "pass",
+        "duration_ms": 1275.0
+      },
+      {
+        "test_id": "tests.test_document_api.test_upload_boundary_failure_without_job",
+        "status": "pass",
+        "duration_ms": 1035.0,
+        "parameter_sha256": "4968bf2b3b17d10a4fb217af434d71cae9bd8711b7ce70950876a3456d2e72dd"
+      },
+      {
+        "test_id": "tests.test_document_api.test_upload_boundary_failure_without_job",
+        "status": "pass",
+        "duration_ms": 1046.0,
+        "parameter_sha256": "260ade4404b06f934bdba95616e4ab5f7e6a6087e4974db38a6af9dd82c059cb"
+      },
+      {
+        "test_id": "tests.test_document_api.test_upload_boundary_failure_without_job",
+        "status": "pass",
+        "duration_ms": 1091.0,
+        "parameter_sha256": "1625606d1b415051a9afaed848ac68a61124f52e25c624ce60e27bff39285cf1"
+      },
+      {
+        "test_id": "tests.test_document_api.test_upload_boundary_failure_without_job",
+        "status": "pass",
+        "duration_ms": 1030.0,
+        "parameter_sha256": "2bc685e47c5cc2b066820e55dc87fee01fbe89caa38c19c9d519ceafdcc18fbe"
+      },
+      {
+        "test_id": "tests.test_document_api.test_upload_boundary_failure_without_job",
+        "status": "pass",
+        "duration_ms": 1058.0,
+        "parameter_sha256": "a54aa568b6cee0da3cef8cca25aea1d95350acd29b4cd6931fa2228504df8f73"
+      },
+      {
+        "test_id": "tests.test_document_api.test_upload_boundary_failure_without_job",
+        "status": "pass",
+        "duration_ms": 1053.0,
+        "parameter_sha256": "aba5c4d119b277246b7fde62c87e9f02bd13ee677f5b0b0ea7af1e4f8ea7dd1a"
+      },
+      {
+        "test_id": "tests.test_document_api.test_foreign_job_and_nonadministrator_are_rejected",
+        "status": "pass",
+        "duration_ms": 1175.0
+      },
+      {
+        "test_id": "tests.test_document_api.test_opaque_cursor_is_bound_to_principal_and_tenant",
+        "status": "pass",
+        "duration_ms": 1119.0
+      },
+      {
+        "test_id": "tests.test_document_restart.test_native_queued_restart_publishes_once_and_cleanup",
+        "status": "pass",
+        "duration_ms": 6127.0
+      },
+      {
+        "test_id": "tests.test_document_embedding.test_pinned_sdk_embedding_contract_without_network",
+        "status": "pass",
+        "duration_ms": 45.0,
+        "parameter_sha256": "5122421abc5c221501d608a2a54248d3129316b8a344a3c3d82d4c211ff28e05"
+      },
+      {
+        "test_id": "tests.test_document_embedding.test_pinned_sdk_embedding_contract_without_network",
+        "status": "pass",
+        "duration_ms": 4.0,
+        "parameter_sha256": "b74d9447e2d94d742c06b9faa9147992a5485de443ab9e08a98d523ded9223e9"
+      },
+      {
+        "test_id": "tests.test_document_embedding.test_pinned_sdk_embedding_contract_without_network",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "8f99e1944e583fe3ea61c2d8342b1942f99576465a78661008f22d54b5a29b27"
+      },
+      {
+        "test_id": "tests.test_document_embedding.test_pinned_sdk_embedding_contract_without_network",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "12965e94f425fa9540d80559da9f918ec72f3e555db66cb05eec3104fd7b8328"
+      },
+      {
+        "test_id": "tests.test_document_embedding.test_pinned_sdk_embedding_contract_without_network",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "74a9c791c1e77cebcc09023fdd0ca723ed0ca0adda3cdc5d1f010bac422abb24"
+      },
+      {
+        "test_id": "tests.test_document_embedding.test_pinned_sdk_embedding_contract_without_network",
+        "status": "pass",
+        "duration_ms": 148.0,
+        "parameter_sha256": "3e1430d17b429b1d8115b7d181caf4702e201f054286c550d0465c4ce46b5e7a"
+      }
+    ]
+  },
+  "full_backend": {
+    "exit_code": 0,
+    "duration_seconds": 649.66,
+    "passed": 706,
+    "failed": 0,
+    "skipped": 0,
+    "tests": [
+      {
+        "test_id": "tests.test_ai_ledger.test_reservation_usage_and_remote_end_are_independent",
+        "status": "pass",
+        "duration_ms": 1663.0,
+        "parameter_sha256": "256d029ba2a954d29d397e007fc6f28c4294e38ed180db3c898f739b5fbd5d5f"
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_reservation_usage_and_remote_end_are_independent",
+        "status": "pass",
+        "duration_ms": 1161.0,
+        "parameter_sha256": "7f0f1d2e2c0c1b7059aab8ebc87fb365826593ea5700f24ab813fee3614ac1d0"
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_reservation_usage_and_remote_end_are_independent",
+        "status": "pass",
+        "duration_ms": 1173.0,
+        "parameter_sha256": "b6c8f3884898d67d5f81b090ef3ec1399afb5a4cbf24f36b966285ca534ab3e1"
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_reservation_usage_and_remote_end_are_independent",
+        "status": "pass",
+        "duration_ms": 1192.0,
+        "parameter_sha256": "b798f39e0740573c9c2f5673d78f7d96d6c3c3de238ee921b89a122149921e9f"
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_same_receipt_noop_conflicting_receipt_latches_stop",
+        "status": "pass",
+        "duration_ms": 1264.0
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_invalid_usage_never_zero_settles_and_stops",
+        "status": "pass",
+        "duration_ms": 1091.0,
+        "parameter_sha256": "3caceccf74ad428debe63a79549d5b1e287039f17cedd1f14031d7f249708220"
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_invalid_usage_never_zero_settles_and_stops",
+        "status": "pass",
+        "duration_ms": 1109.0,
+        "parameter_sha256": "c6b9a84d9d30d3e7db6a760a5de029c8cd72117d4ee043939538553c87f9cea9"
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_invalid_usage_never_zero_settles_and_stops",
+        "status": "pass",
+        "duration_ms": 1109.0,
+        "parameter_sha256": "99232bd28481bc728dcd71772f249e6285577f4d5e2e32ecce7faae250a60aeb"
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_invalid_usage_never_zero_settles_and_stops",
+        "status": "pass",
+        "duration_ms": 1100.0,
+        "parameter_sha256": "482975b4a5ff2c4aca763a10484f9336a49c5a24d492a25579c98eb07446c5dd"
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_actual_overrun_is_recorded_not_rejected",
+        "status": "pass",
+        "duration_ms": 1145.0
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_post_revocation_metering_accepts_only_saved_claim",
+        "status": "pass",
+        "duration_ms": 1211.0,
+        "parameter_sha256": "1dea12d35c1a0c8f71b927279ab6ae3e116555d3f3bad13997294ed3cbf93f4c"
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_post_revocation_metering_accepts_only_saved_claim",
+        "status": "pass",
+        "duration_ms": 1176.0,
+        "parameter_sha256": "5573629fcf87cef82b42ae6ef2b704f499bfe0396e2c32fe54b32dbceb91c29c"
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_post_revocation_metering_accepts_only_saved_claim",
+        "status": "pass",
+        "duration_ms": 1294.0,
+        "parameter_sha256": "0f057c0c306f399c9268f57e098c5b3786182837659fe52579cc719e66ab3b99"
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_post_revocation_metering_accepts_only_saved_claim",
+        "status": "pass",
+        "duration_ms": 1183.0,
+        "parameter_sha256": "9949dd77db402cd356f27fee7f22670ef7d2dc4266fcdb11ec793a52b0d3e561"
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_post_revocation_metering_accepts_only_saved_claim",
+        "status": "pass",
+        "duration_ms": 1202.0,
+        "parameter_sha256": "4e561adefc432e29c477693e049f283f313e9fed4e3655476a49327c3db4e1cf"
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_dispatch_rechecks_and_release_only_unfired",
+        "status": "pass",
+        "duration_ms": 1125.0,
+        "parameter_sha256": "69cc83f82c47544ca90cd32c4375c2cede8fed68fd3cb50a802669c9535b6af9"
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_dispatch_rechecks_and_release_only_unfired",
+        "status": "pass",
+        "duration_ms": 1142.0,
+        "parameter_sha256": "7c933fe45135738c10772c581026a026b2a2647718e1b8992f218dd4f144a38f"
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_dispatch_rechecks_and_release_only_unfired",
+        "status": "pass",
+        "duration_ms": 1185.0,
+        "parameter_sha256": "69a2104d0c03893c72e2cf08416c7eeba995fee7ffcdb6c45a8b4da00a80bff9"
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_dispatch_rechecks_and_release_only_unfired",
+        "status": "pass",
+        "duration_ms": 11288.0,
+        "parameter_sha256": "5695d1c27d8cccda6b4ae7b798df48e938ac92b890d019e1b402c415188a6ee2"
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_dispatch_rechecks_and_release_only_unfired",
+        "status": "pass",
+        "duration_ms": 1118.0,
+        "parameter_sha256": "e6f4d97622b4ae512ce1f9768508cd184cd73fdb267a67368de308e753e982dc"
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_dispatch_rechecks_and_release_only_unfired",
+        "status": "pass",
+        "duration_ms": 1141.0,
+        "parameter_sha256": "ccaa3c890bae68bef723fee24020314601413b0628499c0fb4b187c4ebe97954"
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_last_project_balance_has_one_winner_in_real_concurrent_transactions",
+        "status": "pass",
+        "duration_ms": 1239.0
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_duplicate_permit_dispatches_once_and_never_releases_dispatched",
+        "status": "pass",
+        "duration_ms": 1122.0
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_raw_runtime_cannot_read_claim_or_write_ledger",
+        "status": "pass",
+        "duration_ms": 1034.0
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_provider_request_identifier_ascii_length_boundary",
+        "status": "pass",
+        "duration_ms": 1069.0,
+        "parameter_sha256": "1f491aed3bf0384375e7242bb2662a7509f54db1ccc794218636a3dea007d934"
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_provider_request_identifier_ascii_length_boundary",
+        "status": "pass",
+        "duration_ms": 1068.0,
+        "parameter_sha256": "725f0430949478f4f90ad0e24ce090333f448fded763b678ab362113e4bdcf7f"
+      },
+      {
+        "test_id": "tests.test_ai_ledger.test_provider_request_identifier_ascii_length_boundary",
+        "status": "pass",
+        "duration_ms": 1093.0,
+        "parameter_sha256": "f6044c0d0ebc4df22f4d179a1aaa00b62d8ed3330551fce573d259e168fcbfb5"
+      },
+      {
+        "test_id": "tests.test_ai_provider.test_real_sdk_stream_with_fake_transport_only",
+        "status": "pass",
+        "duration_ms": 93.0,
+        "parameter_sha256": "113065c9750c040e7e2406bd060e517a1167a9f79d379aa90717bf093c082b97"
+      },
+      {
+        "test_id": "tests.test_ai_provider.test_real_sdk_stream_with_fake_transport_only",
+        "status": "pass",
+        "duration_ms": 5.0,
+        "parameter_sha256": "217fb7c556d5479c966ea1b1bfca6e9ee3aba45c7af8abc30d02267262156c4a"
+      },
+      {
+        "test_id": "tests.test_ai_provider.test_real_sdk_stream_with_fake_transport_only",
+        "status": "pass",
+        "duration_ms": 4.0,
+        "parameter_sha256": "6d03a9f0472a2ff66c78528331da0f19f3d101b226376980d5dc5301c37dcab6"
+      },
+      {
+        "test_id": "tests.test_ai_provider.test_real_sdk_stream_with_fake_transport_only",
+        "status": "pass",
+        "duration_ms": 4.0,
+        "parameter_sha256": "9c6f345e21bb286819cef9a36b54014eb5105f73ebf52ac28fe0cd409e13c8d5"
+      },
+      {
+        "test_id": "tests.test_ai_provider.test_real_sdk_stream_with_fake_transport_only",
+        "status": "pass",
+        "duration_ms": 4.0,
+        "parameter_sha256": "9d01032d7aebf5fe5cc1ebea2c5c1ebcfeda8df410a246c3ac0a2ef39566cb85"
+      },
+      {
+        "test_id": "tests.test_ai_provider.test_real_sdk_stream_with_fake_transport_only",
+        "status": "pass",
+        "duration_ms": 4.0,
+        "parameter_sha256": "97c3fe7ce68ef859ed10362ff51a720efa42f9f1863bfa62972abdb9ac2a70ac"
+      },
+      {
+        "test_id": "tests.test_ai_provider.test_real_sdk_stream_with_fake_transport_only",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "19604bd7f77d630839144c3e51c0a36c8a339a00b21fea913b8aaf3fa8e24bde"
+      },
+      {
+        "test_id": "tests.test_ai_provider.test_real_sdk_stream_with_fake_transport_only",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "1b4d0c33e1376150167f9944b7ec7d19f8fe046ee082aa547615e9de33b0f0d0"
+      },
+      {
+        "test_id": "tests.test_ai_provider.test_real_sdk_stream_with_fake_transport_only",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "f18fa1ed10726d96b3725965fe2c82140c7b1f56e6d2a202cc025183a27ba453"
+      },
+      {
+        "test_id": "tests.test_ai_provider.test_real_sdk_stream_with_fake_transport_only",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "019c1c2ac5490fc3212b56519899a76bf5ebe8587b5856f6dba77c68e54425d8"
+      },
+      {
+        "test_id": "tests.test_ai_provider.test_real_sdk_stream_with_fake_transport_only",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "1d4eeec6780707fecbe6ac7baea91237f3b88b5a97347682ad740fa25ab0d03f"
+      },
+      {
+        "test_id": "tests.test_ai_provider.test_real_sdk_stream_with_fake_transport_only",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "22b14035f0849fe7d7382606bda708eaee0f060e97fb1679cb6200ef92bd4069"
+      },
+      {
+        "test_id": "tests.test_ai_provider.test_real_sdk_stream_with_fake_transport_only",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "20dfbe6fc5171ea6df3144692c115393ed08b6dac40983fb6e1453bb89ddb01b"
+      },
+      {
+        "test_id": "tests.test_ai_provider.test_real_sdk_stream_with_fake_transport_only",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "c6c37fe443ff590efcfbc32dc877c2de850e2e93ed85da526d67c9d241087b84"
+      },
+      {
+        "test_id": "tests.test_ai_provider.test_real_sdk_stream_with_fake_transport_only",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "a8c3f53fe8ac82068643abfd8191e5fa8bc061e465f72cb14e8183a2b025ee19"
+      },
+      {
+        "test_id": "tests.test_ai_provider.test_total_stream_deadline_is_not_only_per_read_timeout",
+        "status": "pass",
+        "duration_ms": 33.0
+      },
+      {
+        "test_id": "tests.test_auth.test_login_and_confirmed_logout",
+        "status": "pass",
+        "duration_ms": 985.0
+      },
+      {
+        "test_id": "tests.test_auth.test_failed_credentials_have_same_response",
+        "status": "pass",
+        "duration_ms": 977.0,
+        "parameter_sha256": "36b20fb18af371e721c811e729e1a5a08196fdbf582cf0690b1125533c4f3d0b"
+      },
+      {
+        "test_id": "tests.test_auth.test_failed_credentials_have_same_response",
+        "status": "pass",
+        "duration_ms": 982.0,
+        "parameter_sha256": "65693589b7a3b13303c498dcd6d23102ba7d7b25c4c2744f2294e16144a185ad"
+      },
+      {
+        "test_id": "tests.test_auth.test_failed_credentials_have_same_response",
+        "status": "pass",
+        "duration_ms": 949.0,
+        "parameter_sha256": "b282dc5768cfbc285570b57532fabb454d7324065ee6727a35b1dced63c45c8b"
+      },
+      {
+        "test_id": "tests.test_auth.test_failed_credentials_have_same_response",
+        "status": "pass",
+        "duration_ms": 954.0,
+        "parameter_sha256": "020d02bd281bc4c2ce215ac50bf6fb106ec25340e97a263cd09d1a996bf6a834"
+      },
+      {
+        "test_id": "tests.test_auth.test_capabilities_are_current_and_independent",
+        "status": "pass",
+        "duration_ms": 1009.0,
+        "parameter_sha256": "211fee074f6fd57594ee40a42f8509735f08e9167c9953f866718cbc3d953762"
+      },
+      {
+        "test_id": "tests.test_auth.test_capabilities_are_current_and_independent",
+        "status": "pass",
+        "duration_ms": 1025.0,
+        "parameter_sha256": "5d157248e30f8d1f69576fd91a36a4d2b4c0d0fc5fc6b94fa02f5f4d2ba42430"
+      },
+      {
+        "test_id": "tests.test_auth.test_capabilities_are_current_and_independent",
+        "status": "pass",
+        "duration_ms": 1006.0,
+        "parameter_sha256": "8d8102653ced2a16622a9c49147b88245eb991cc990a024f9dc0d5b9de57c4f3"
+      },
+      {
+        "test_id": "tests.test_auth.test_capabilities_are_current_and_independent",
+        "status": "pass",
+        "duration_ms": 1083.0,
+        "parameter_sha256": "b7acdc98deadb64beb7fec8ef80b6f5f6fa9102c60be43cc027e534766ba068d"
+      },
+      {
+        "test_id": "tests.test_auth.test_capabilities_are_current_and_independent",
+        "status": "pass",
+        "duration_ms": 1018.0,
+        "parameter_sha256": "51b38dfb9ae4a8ddcf19338a3a69e48400a5111efe406d2ee781e6e5b61f492d"
+      },
+      {
+        "test_id": "tests.test_auth.test_actual_budget_status_and_missing_row",
+        "status": "pass",
+        "duration_ms": 1124.0
+      },
+      {
+        "test_id": "tests.test_auth.test_no_members_account_can_login_but_has_no_tenant",
+        "status": "pass",
+        "duration_ms": 1050.0
+      },
+      {
+        "test_id": "tests.test_auth.test_current_session_expiry_and_revocation",
+        "status": "pass",
+        "duration_ms": 1040.0,
+        "parameter_sha256": "561d04dcb566d35f2233a5a8aa2cc2279ad4a8281b55c67090d4ce3bd31acbf6"
+      },
+      {
+        "test_id": "tests.test_auth.test_current_session_expiry_and_revocation",
+        "status": "pass",
+        "duration_ms": 1048.0,
+        "parameter_sha256": "0f057c0c306f399c9268f57e098c5b3786182837659fe52579cc719e66ab3b99"
+      },
+      {
+        "test_id": "tests.test_auth.test_current_session_expiry_and_revocation",
+        "status": "pass",
+        "duration_ms": 1060.0,
+        "parameter_sha256": "1dea12d35c1a0c8f71b927279ab6ae3e116555d3f3bad13997294ed3cbf93f4c"
+      },
+      {
+        "test_id": "tests.test_auth.test_current_session_expiry_and_revocation",
+        "status": "pass",
+        "duration_ms": 1039.0,
+        "parameter_sha256": "db3be6ea1a8b2422b2bac2f8965d8f25b47c004278f891750faa0d8dbb7c26ee"
+      },
+      {
+        "test_id": "tests.test_auth.test_current_session_expiry_and_revocation",
+        "status": "pass",
+        "duration_ms": 1055.0,
+        "parameter_sha256": "29512fbfe1fa69785908cc0fe7d39c26cb762c019275cde70d986ada86db5241"
+      },
+      {
+        "test_id": "tests.test_auth.test_polling_does_not_extend_idle_and_relogin_revokes_old",
+        "status": "pass",
+        "duration_ms": 1154.0
+      },
+      {
+        "test_id": "tests.test_auth.test_login_origin_and_required_header",
+        "status": "pass",
+        "duration_ms": 930.0,
+        "parameter_sha256": "11f9bdf33af83bd0cc929fcafd520cccb0bdd46d3e6ed50e5b2ec5f3ef43e710"
+      },
+      {
+        "test_id": "tests.test_auth.test_login_origin_and_required_header",
+        "status": "pass",
+        "duration_ms": 904.0,
+        "parameter_sha256": "46568f380f7803dffb646e20786ce69dcc3905c504cbb338330fee69c7c509c5"
+      },
+      {
+        "test_id": "tests.test_auth.test_login_origin_and_required_header",
+        "status": "pass",
+        "duration_ms": 999.0,
+        "parameter_sha256": "79ef7663e4553cd7e6e98c3d1f1711fc5188aad9937a076e94ac9d2634d7af21"
+      },
+      {
+        "test_id": "tests.test_auth.test_login_origin_and_required_header",
+        "status": "pass",
+        "duration_ms": 901.0,
+        "parameter_sha256": "e19f019e21e225d952f7a8927f1184fa2f42de32ba0eb16bb4858a56903a817e"
+      },
+      {
+        "test_id": "tests.test_auth.test_valid_logout_requires_csrf",
+        "status": "pass",
+        "duration_ms": 1080.0,
+        "parameter_sha256": "c1d4d6ed2e3bc4c34a4dee7428bcaaf6855d1419b21c827b3b8ee19d32b9e41c"
+      },
+      {
+        "test_id": "tests.test_auth.test_valid_logout_requires_csrf",
+        "status": "pass",
+        "duration_ms": 1054.0,
+        "parameter_sha256": "a4accad2af0b7bf3031b702ad0a8ab23b957d399cd13bff8519fbd586a720cf6"
+      },
+      {
+        "test_id": "tests.test_auth.test_valid_logout_requires_csrf",
+        "status": "pass",
+        "duration_ms": 1072.0,
+        "parameter_sha256": "0d0fc1b58c4e7c5aba8f9366888ccd62e046407d84e9c4761f52aa97fdffb185"
+      },
+      {
+        "test_id": "tests.test_auth.test_valid_logout_requires_csrf",
+        "status": "pass",
+        "duration_ms": 1139.0,
+        "parameter_sha256": "d3b08e5b54d8d7587c3a907021d5eff546706fef90aa7ff244351c6a60d92653"
+      },
+      {
+        "test_id": "tests.test_auth.test_invalid_repeat_logout_still_requires_origin",
+        "status": "pass",
+        "duration_ms": 937.0
+      },
+      {
+        "test_id": "tests.test_auth.test_invalid_cookie_is_safe_401",
+        "status": "pass",
+        "duration_ms": 913.0,
+        "parameter_sha256": "771a0ed30617d42ddde208da1095377a3bf2c6cf29f0e4ac2bb072b0946a6fff"
+      },
+      {
+        "test_id": "tests.test_auth.test_invalid_cookie_is_safe_401",
+        "status": "pass",
+        "duration_ms": 940.0,
+        "parameter_sha256": "de392e05d3ca6c90ce002e31d9853cf638b01d4c595ef1900e09ebf7db36c868"
+      },
+      {
+        "test_id": "tests.test_auth.test_invalid_cookie_is_safe_401",
+        "status": "pass",
+        "duration_ms": 913.0,
+        "parameter_sha256": "4a1e4288ade2c6722d1359e8c8abd351bf1d522bed3b3b1cb2fae8fde7391733"
+      },
+      {
+        "test_id": "tests.test_auth.test_invalid_cookie_is_safe_401",
+        "status": "pass",
+        "duration_ms": 893.0,
+        "parameter_sha256": "1d4539c6fe50efe8f8eaa200ced7e9110ab4e40b361866a32e0bc22d912ea29e"
+      },
+      {
+        "test_id": "tests.test_auth.test_invalid_cookie_is_safe_401",
+        "status": "pass",
+        "duration_ms": 901.0,
+        "parameter_sha256": "709c4a6715bedd4143c387ed46c10986f4c9607c7bc243f8d8d0d90105ae5db0"
+      },
+      {
+        "test_id": "tests.test_auth.test_input_errors_never_echo_values",
+        "status": "pass",
+        "duration_ms": 930.0,
+        "parameter_sha256": "5868060bf54e9e73e61935f80c854bb475fc036735ccbcb7b6f0430ed9a775fc"
+      },
+      {
+        "test_id": "tests.test_auth.test_input_errors_never_echo_values",
+        "status": "pass",
+        "duration_ms": 929.0,
+        "parameter_sha256": "4a3cddd8eb1f40f5af1006b8133be38f05a01d64f012e446b0ad40814dcb9dcb"
+      },
+      {
+        "test_id": "tests.test_auth.test_input_errors_never_echo_values",
+        "status": "pass",
+        "duration_ms": 942.0,
+        "parameter_sha256": "d764abb6fa441a3e25e6738dec708c9f851967cda4ecc478caf9fc0e9b687e9b"
+      },
+      {
+        "test_id": "tests.test_auth.test_form_json_failure_and_duplicate_csrf",
+        "status": "pass",
+        "duration_ms": 966.0
+      },
+      {
+        "test_id": "tests.test_auth.test_input_window_failures_commit_and_success_reset",
+        "status": "pass",
+        "duration_ms": 1316.0
+      },
+      {
+        "test_id": "tests.test_auth.test_ip_window_success_does_not_reset_and_forwarding_is_ignored",
+        "status": "pass",
+        "duration_ms": 1927.0
+      },
+      {
+        "test_id": "tests.test_auth.test_concurrent_input_failures_stop_at_five",
+        "status": "pass",
+        "duration_ms": 1141.0
+      },
+      {
+        "test_id": "tests.test_auth.test_logout_storage_failure_is_unconfirmed_and_retryable",
+        "status": "pass",
+        "duration_ms": 1118.0
+      },
+      {
+        "test_id": "tests.test_auth.test_login_audit_failure_rolls_back_new_and_previous_session",
+        "status": "pass",
+        "duration_ms": 1093.0
+      },
+      {
+        "test_id": "tests.test_auth.test_normalized_login_and_private_token_storage",
+        "status": "pass",
+        "duration_ms": 1021.0
+      },
+      {
+        "test_id": "tests.test_auth.test_https_cookie_and_profile_confusion",
+        "status": "pass",
+        "duration_ms": 992.0
+      },
+      {
+        "test_id": "tests.test_auth.test_startup_needs_auth_credentials",
+        "status": "pass",
+        "duration_ms": 5.0
+      },
+      {
+        "test_id": "tests.test_auth.test_concurrent_ip_window_has_fixed_limit",
+        "status": "pass",
+        "duration_ms": 1089.0
+      },
+      {
+        "test_id": "tests.test_auth.test_account_revision_change_during_verification_cannot_issue",
+        "status": "pass",
+        "duration_ms": 1083.0
+      },
+      {
+        "test_id": "tests.test_auth.test_control_window_cannot_raise_limits_and_touch_requires_context",
+        "status": "pass",
+        "duration_ms": 1005.0
+      },
+      {
+        "test_id": "tests.test_auth.test_invalid_unicode_is_safe_login_failure",
+        "status": "pass",
+        "duration_ms": 924.0,
+        "parameter_sha256": "8540ae5e80d6958bd44fd87895e7255ffcc8578ae34ced3b6ed8556d740e19b2"
+      },
+      {
+        "test_id": "tests.test_auth.test_invalid_unicode_is_safe_login_failure",
+        "status": "pass",
+        "duration_ms": 923.0,
+        "parameter_sha256": "f0355e1ad4acd7d49a0c70d9b18b553f9722eb9b97051e12b6c477eecf64089f"
+      },
+      {
+        "test_id": "tests.test_auth.test_connection_loss_is_503_and_never_confirms_logout",
+        "status": "pass",
+        "duration_ms": 970.0
+      },
+      {
+        "test_id": "tests.test_auth.test_cookie_derived_tenant_context_checks_current_membership",
+        "status": "pass",
+        "duration_ms": 1060.0
+      },
+      {
+        "test_id": "tests.test_auth_restart.test_session_revocation_and_rls_survive_real_api_restart",
+        "status": "pass",
+        "duration_ms": 4478.0
+      },
+      {
+        "test_id": "tests.test_auth_restart.test_absolute_idle_expiry_and_logout_survive_api_restart",
+        "status": "pass",
+        "duration_ms": 4285.0
+      },
+      {
+        "test_id": "tests.test_auth_restart.test_real_database_outage_safe_503_then_explicit_recovery",
+        "status": "pass",
+        "duration_ms": 16864.0
+      },
+      {
+        "test_id": "tests.test_auth_restart.test_authenticated_get_p95_and_idle_not_extended",
+        "status": "pass",
+        "duration_ms": 2701.0
+      },
+      {
+        "test_id": "tests.test_b_http.test_enabled_http_intake_stream_terminal_usage_and_owner_isolation",
+        "status": "pass",
+        "duration_ms": 1542.0
+      },
+      {
+        "test_id": "tests.test_b_http.test_native_process_crash_recovery_never_repeats_dispatch",
+        "status": "pass",
+        "duration_ms": 4567.0
+      },
+      {
+        "test_id": "tests.test_b_http.test_real_execution_requires_explicit_meter_and_key_before_startup",
+        "status": "pass",
+        "duration_ms": 982.0
+      },
+      {
+        "test_id": "tests.test_b_restart.test_recovery_uses_metadata_only_and_never_replays_provider",
+        "status": "pass",
+        "duration_ms": 1158.0,
+        "parameter_sha256": "c3e46fd3ac8efee459084cee2c727249a48562b8262bd27f1faa436b791d3b0b"
+      },
+      {
+        "test_id": "tests.test_b_restart.test_recovery_uses_metadata_only_and_never_replays_provider",
+        "status": "pass",
+        "duration_ms": 1199.0,
+        "parameter_sha256": "db0cc8cb6946d15f6838f825814e1a292d76bd0eb404d3fa72a6a33370643276"
+      },
+      {
+        "test_id": "tests.test_b_restart.test_recovery_uses_metadata_only_and_never_replays_provider",
+        "status": "pass",
+        "duration_ms": 1264.0,
+        "parameter_sha256": "0e1fdf37d885413d8408cdcf5ce8560cd3ab0f6a75592aa41da18df85645af36"
+      },
+      {
+        "test_id": "tests.test_b_restart.test_recovery_uses_metadata_only_and_never_replays_provider",
+        "status": "pass",
+        "duration_ms": 1264.0,
+        "parameter_sha256": "4fa888188c1034c2360f4b00225b4ceab88f2373d0a35d7eaf05ffa6481fc5ba"
+      },
+      {
+        "test_id": "tests.test_b_restart.test_recovery_uses_metadata_only_and_never_replays_provider",
+        "status": "pass",
+        "duration_ms": 1197.0,
+        "parameter_sha256": "8a975280d19378742ed2ebada9c3d616aa17ead02d13d5d8cf5716deff29e059"
+      },
+      {
+        "test_id": "tests.test_b_restart.test_recovery_uses_metadata_only_and_never_replays_provider",
+        "status": "pass",
+        "duration_ms": 1258.0,
+        "parameter_sha256": "3303ce81816385736fbff5c38d112ddca98fd78b76cd1159f9eb30480a800dac"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_owner_reads_without_tenant_where",
+        "status": "pass",
+        "duration_ms": 999.0,
+        "parameter_sha256": "df9565eee13bf930b839bddc4f784e6eecb32a4c6ddafdce9f4eeea16c5c68cb"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_owner_reads_without_tenant_where",
+        "status": "pass",
+        "duration_ms": 983.0,
+        "parameter_sha256": "2e488abdc847a14a483efa6d61126650b7790f865ad65e9370597f322d35e4f5"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_owner_reads_without_tenant_where",
+        "status": "pass",
+        "duration_ms": 1021.0,
+        "parameter_sha256": "aa389cc0df9e8aff079b1a8386690432b86972e38841c2721388ed01c4e5c1ce"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_owner_reads_without_tenant_where",
+        "status": "pass",
+        "duration_ms": 973.0,
+        "parameter_sha256": "7fb9dd0b77da53fc34e8cbb910e502e3bcc2a6bff5e5da71881115fde3be977b"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_owner_reads_without_tenant_where",
+        "status": "pass",
+        "duration_ms": 1029.0,
+        "parameter_sha256": "bb48b812c6e8158378d51591e323724a51eea38705241a230dc8df61de58deb3"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_owner_reads_without_tenant_where",
+        "status": "pass",
+        "duration_ms": 1060.0,
+        "parameter_sha256": "76cb53d288be3726911a27f8b779def41d39d6f52cc412f094bf7b010f324242"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_owner_reads_without_tenant_where",
+        "status": "pass",
+        "duration_ms": 1006.0,
+        "parameter_sha256": "5572fd5b0520da75544be3ab1a9facc23803a2e057df5dbe10f3121b6dc960d9"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_missing_context_and_raw_writes_denied",
+        "status": "pass",
+        "duration_ms": 972.0
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_current_revocation_same_transaction",
+        "status": "pass",
+        "duration_ms": 1035.0,
+        "parameter_sha256": "9949dd77db402cd356f27fee7f22670ef7d2dc4266fcdb11ec793a52b0d3e561"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_current_revocation_same_transaction",
+        "status": "pass",
+        "duration_ms": 1028.0,
+        "parameter_sha256": "4e561adefc432e29c477693e049f283f313e9fed4e3655476a49327c3db4e1cf"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_current_revocation_same_transaction",
+        "status": "pass",
+        "duration_ms": 1020.0,
+        "parameter_sha256": "5573629fcf87cef82b42ae6ef2b704f499bfe0396e2c32fe54b32dbceb91c29c"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_current_revocation_same_transaction",
+        "status": "pass",
+        "duration_ms": 1060.0,
+        "parameter_sha256": "0f057c0c306f399c9268f57e098c5b3786182837659fe52579cc719e66ab3b99"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_current_revocation_same_transaction",
+        "status": "pass",
+        "duration_ms": 1040.0,
+        "parameter_sha256": "1dea12d35c1a0c8f71b927279ab6ae3e116555d3f3bad13997294ed3cbf93f4c"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_current_revocation_same_transaction",
+        "status": "pass",
+        "duration_ms": 1006.0,
+        "parameter_sha256": "5695d1c27d8cccda6b4ae7b798df48e938ac92b890d019e1b402c415188a6ee2"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_current_revocation_same_transaction",
+        "status": "pass",
+        "duration_ms": 1021.0,
+        "parameter_sha256": "29512fbfe1fa69785908cc0fe7d39c26cb762c019275cde70d986ada86db5241"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_rollback_reuse_and_uncommitted_assistant_hidden",
+        "status": "pass",
+        "duration_ms": 1045.0
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_foreign_parent_owner_session_agent_rejected",
+        "status": "pass",
+        "duration_ms": 957.0,
+        "parameter_sha256": "b90038c058c42db73c1c8d46f9f3ec522f3d7540eeb71950722b8ad0bcd36692"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_foreign_parent_owner_session_agent_rejected",
+        "status": "pass",
+        "duration_ms": 950.0,
+        "parameter_sha256": "4e6bef5798ac035f87496ce4598e79717092cf5075ba3fc207ccb79bd9175200"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_foreign_parent_owner_session_agent_rejected",
+        "status": "pass",
+        "duration_ms": 967.0,
+        "parameter_sha256": "8aa307e77cd2aec1c2749c5b7697197214f09b8b06f7485c61e581d32c43e183"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_foreign_parent_owner_session_agent_rejected",
+        "status": "pass",
+        "duration_ms": 951.0,
+        "parameter_sha256": "826f4449eb8c74ca7fb73a5bb666e5cb6652cd33b7b4bcba2697f27dc1dc488a"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_messages_cannot_forge_rag_classification_or_other_run",
+        "status": "pass",
+        "duration_ms": 1047.0
+      },
+      {
+        "test_id": "tests.test_b_schema.test_call_binding_mode_job_rejected",
+        "status": "pass",
+        "duration_ms": 1020.0,
+        "parameter_sha256": "b90038c058c42db73c1c8d46f9f3ec522f3d7540eeb71950722b8ad0bcd36692"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_call_binding_mode_job_rejected",
+        "status": "pass",
+        "duration_ms": 1000.0,
+        "parameter_sha256": "4e6bef5798ac035f87496ce4598e79717092cf5075ba3fc207ccb79bd9175200"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_call_binding_mode_job_rejected",
+        "status": "pass",
+        "duration_ms": 1002.0,
+        "parameter_sha256": "8aa307e77cd2aec1c2749c5b7697197214f09b8b06f7485c61e581d32c43e183"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_call_binding_mode_job_rejected",
+        "status": "pass",
+        "duration_ms": 1113.0,
+        "parameter_sha256": "826f4449eb8c74ca7fb73a5bb666e5cb6652cd33b7b4bcba2697f27dc1dc488a"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_call_binding_mode_job_rejected",
+        "status": "pass",
+        "duration_ms": 1026.0,
+        "parameter_sha256": "e35daa8255d6ce840b79021e43ed7a388be478bbea7a5725011d70a51f3ad0ff"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_call_and_event_keys_snapshots_append_only",
+        "status": "pass",
+        "duration_ms": 1113.0
+      },
+      {
+        "test_id": "tests.test_b_schema.test_non_finite_negative_budget_rejected",
+        "status": "pass",
+        "duration_ms": 963.0,
+        "parameter_sha256": "970f58e53249bc950ab8ad3ad6ddb2007dcda29b5213fc17b602fcbb2366e0bd"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_non_finite_negative_budget_rejected",
+        "status": "pass",
+        "duration_ms": 924.0,
+        "parameter_sha256": "c6061a73243ca2606debfb4cc07dfeabdd63e8905256d2f338035d3f8c59b00d"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_meter_pool_exact_role_options_no_content_and_closed",
+        "status": "pass",
+        "duration_ms": 953.0
+      },
+      {
+        "test_id": "tests.test_b_schema.test_pool_wrong_role_and_marker_rejected",
+        "status": "pass",
+        "duration_ms": 6019.0
+      },
+      {
+        "test_id": "tests.test_b_schema.test_web_pool_timeout_2_seconds_idle_5_seconds",
+        "status": "pass",
+        "duration_ms": 2946.0
+      },
+      {
+        "test_id": "tests.test_b_schema.test_exact_decimal_reservations_cost_and_frozen_snapshot",
+        "status": "pass",
+        "duration_ms": 1.0
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_malformed_context_denies",
+        "status": "pass",
+        "duration_ms": 1014.0,
+        "parameter_sha256": "fd7b2e88d8f3465e3789a593e851a9587329bfa68658a0503f50f0b7222f4c81"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_malformed_context_denies",
+        "status": "pass",
+        "duration_ms": 980.0,
+        "parameter_sha256": "87a2d38938f3fa7ca95c9a4d25c160df996b59df90fb024f3b651c2445c10c34"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_malformed_context_denies",
+        "status": "pass",
+        "duration_ms": 980.0,
+        "parameter_sha256": "a900c1c7a77292007b97be49aeff5b5d777f35b34277b5249b337842162976a8"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_malformed_context_denies",
+        "status": "pass",
+        "duration_ms": 960.0,
+        "parameter_sha256": "d1faa1b92a4c83dbf38723ab7a972f32301e03c64f154655dc0bcac177359640"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_malformed_context_denies",
+        "status": "pass",
+        "duration_ms": 991.0,
+        "parameter_sha256": "fdc67e629a5b1e11647dc50fb1bc2b8632c35d6fbf87321de918955515eea3bd"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_b_malformed_context_denies",
+        "status": "pass",
+        "duration_ms": 965.0,
+        "parameter_sha256": "af066591c61a7bc7a4b128376e72600c4b3243521e4beaa8a8c5e8ca3f3eba9c"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_exhausted_live_http_pool_returns_safe_503",
+        "status": "pass",
+        "duration_ms": 3021.0
+      },
+      {
+        "test_id": "tests.test_b_schema.test_usage_event_rejects_untyped_or_extra_payload",
+        "status": "pass",
+        "duration_ms": 1041.0,
+        "parameter_sha256": "5603b42e811ca413115a8bd1303c742a7445faecea1f0b6b77dff6e69c012cc3"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_usage_event_rejects_untyped_or_extra_payload",
+        "status": "pass",
+        "duration_ms": 1025.0,
+        "parameter_sha256": "1d14476f0d444d8ef3fa1db66c486912ac7a61165d4b117befa0f089e700acff"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_usage_event_rejects_untyped_or_extra_payload",
+        "status": "pass",
+        "duration_ms": 1032.0,
+        "parameter_sha256": "f8aa5ad89b64fd2d9c3bc386890cd58c5aff7218abd701c92ed8495e1575930c"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_usage_event_rejects_untyped_or_extra_payload",
+        "status": "pass",
+        "duration_ms": 1048.0,
+        "parameter_sha256": "12a3de1c8f5842a6560f7e0d3daa32fac40ed89fae20c3ea39102030f1fd7726"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_usage_event_rejects_untyped_or_extra_payload",
+        "status": "pass",
+        "duration_ms": 1034.0,
+        "parameter_sha256": "37de5c2e730a41f82774fda0ceb4c1ec59895ed23167eac1da5da8e6a8dc1308"
+      },
+      {
+        "test_id": "tests.test_b_schema.test_settle_release_mutually_exclusive_storage_key",
+        "status": "pass",
+        "duration_ms": 1021.0
+      },
+      {
+        "test_id": "tests.test_b_tokens.test_actual_model_encodings_and_offline_missing_corrupt_cache",
+        "status": "pass",
+        "duration_ms": 295.0
+      },
+      {
+        "test_id": "tests.test_b_tokens.test_whole_history_selection_without_mutation_or_cutting_prompt",
+        "status": "pass",
+        "duration_ms": 113.0
+      },
+      {
+        "test_id": "tests.test_b_tokens.test_invalid_general_inputs_fail_safely",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "f9681afcfdea77b5e2eb1586b4de9cbdd7f9c9c544dd0c5dc4e340b05c54a045"
+      },
+      {
+        "test_id": "tests.test_b_tokens.test_invalid_general_inputs_fail_safely",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "c0b0e7d9f49931d03800f5ce3c513707673f14f2a54fc9b420c1e0abb16d6662"
+      },
+      {
+        "test_id": "tests.test_b_tokens.test_invalid_general_inputs_fail_safely",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "cb48184b037d7bfb4ee1283a2810ce6d3ec1e82b9ab8d5680ed9e4ef9c765537"
+      },
+      {
+        "test_id": "tests.test_b_tokens.test_invalid_general_inputs_fail_safely",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "4f93a9f12ed738de0a40a5e869a52f3c47c4357b8d172f833f896f6e0b35e10a"
+      },
+      {
+        "test_id": "tests.test_b_tokens.test_invalid_general_inputs_fail_safely",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "3bc4a89e1c70e2db5871f7e145883cbb3f5764ce3554b579571248b3964509ca"
+      },
+      {
+        "test_id": "tests.test_b_tokens.test_invalid_general_inputs_fail_safely",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "b520858405526cfa041790a84f8ced502ca3ec007b83e7f96d4f7d274e901557"
+      },
+      {
+        "test_id": "tests.test_b_tokens.test_invalid_general_inputs_fail_safely",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "0bfc54d4e118253ff01e20aecba6557ccdcf0a955cfe1d81e6807826e217b21a"
+      },
+      {
+        "test_id": "tests.test_b_tokens.test_invalid_general_inputs_fail_safely",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "b66e924138837e4dc4bd9b97c4a52150846a6df9ae70b09a6021f00b9661a6e5"
+      },
+      {
+        "test_id": "tests.test_b_tokens.test_special_token_text_is_plain_input_and_mandatory_overflow_rejected",
+        "status": "pass",
+        "duration_ms": 25.0
+      },
+      {
+        "test_id": "tests.test_b_tokens.test_invalid_receipt_never_becomes_zero_cost",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "171c57efd2297eeae6506c58bf89ae72435dbbadc8b093493ef0be7b1a80c36a"
+      },
+      {
+        "test_id": "tests.test_b_tokens.test_invalid_receipt_never_becomes_zero_cost",
+        "status": "pass",
+        "duration_ms": 0.0,
+        "parameter_sha256": "ea45665a1ed665badfa99a0f56c989fcc82e2a5f0bbfd7f190897e085f340812"
+      },
+      {
+        "test_id": "tests.test_b_tokens.test_invalid_receipt_never_becomes_zero_cost",
+        "status": "pass",
+        "duration_ms": 0.0,
+        "parameter_sha256": "0f88118222ead3eb7acb16d59cd7426dd2cc6c984a7da1030857b4b3e4e82981"
+      },
+      {
+        "test_id": "tests.test_b_tokens.test_invalid_receipt_never_becomes_zero_cost",
+        "status": "pass",
+        "duration_ms": 0.0,
+        "parameter_sha256": "7ad595eb1e3a31396faedb03dfb37c039fa5be29f6ae0bccb2412cfe039cb9eb"
+      },
+      {
+        "test_id": "tests.test_b_tokens.test_invalid_receipt_never_becomes_zero_cost",
+        "status": "pass",
+        "duration_ms": 0.0,
+        "parameter_sha256": "111a21c73e51493075cfbd1a242e2d1667fbcab4f097d62be1905e79c9174655"
+      },
+      {
+        "test_id": "tests.test_c_schema.test_full_catalog_and_new_privilege_boundary",
+        "status": "pass",
+        "duration_ms": 1057.0
+      },
+      {
+        "test_id": "tests.test_c_schema.test_vector_rejects_dimension_and_nonfinite",
+        "status": "pass",
+        "duration_ms": 1103.0,
+        "parameter_sha256": "32dd0b73c157444ef4f29f95c42fefd3d8d95781ab647efebe7d52ea4dddee51"
+      },
+      {
+        "test_id": "tests.test_c_schema.test_vector_rejects_dimension_and_nonfinite",
+        "status": "pass",
+        "duration_ms": 988.0,
+        "parameter_sha256": "20e8fd959ee67d510e057f96b7bc2817e186048cd7d96dd63d908a9e9e1ec19a"
+      },
+      {
+        "test_id": "tests.test_c_schema.test_vector_rejects_dimension_and_nonfinite",
+        "status": "pass",
+        "duration_ms": 1012.0,
+        "parameter_sha256": "9fae7cadff0d79a0493e8d374d8e09f63233e2c2774e81ec813b253f050cd2ff"
+      },
+      {
+        "test_id": "tests.test_c_schema.test_exact_cosine_search_and_transaction_rollback",
+        "status": "pass",
+        "duration_ms": 1067.0
+      },
+      {
+        "test_id": "tests.test_c_schema.test_source_and_index_identity_are_immutable",
+        "status": "pass",
+        "duration_ms": 1014.0,
+        "parameter_sha256": "bb418a6c8aa8fa13366d84c1fde367db98af30215bb8bd92c67b7a440eefe49d"
+      },
+      {
+        "test_id": "tests.test_c_schema.test_source_and_index_identity_are_immutable",
+        "status": "pass",
+        "duration_ms": 983.0,
+        "parameter_sha256": "342df2efdfb0419305763ac5e21d062f99f059d11520fae58dee9ac8cee5ae56"
+      },
+      {
+        "test_id": "tests.test_c_schema.test_source_and_index_identity_are_immutable",
+        "status": "pass",
+        "duration_ms": 984.0,
+        "parameter_sha256": "d4a3f0307c25fa492e3af48942903b86a5b595c8782a358526cb740204fa2610"
+      },
+      {
+        "test_id": "tests.test_c_schema.test_source_and_index_identity_are_immutable",
+        "status": "pass",
+        "duration_ms": 993.0,
+        "parameter_sha256": "0b6797596f1891019e61774a129bd2dcdc2642f148ff1c88628d1aa2e88a025e"
+      },
+      {
+        "test_id": "tests.test_c_schema.test_source_and_index_identity_are_immutable",
+        "status": "pass",
+        "duration_ms": 1038.0,
+        "parameter_sha256": "07a773a41a6bfa35a83ebdf90d02b0cd07ef6b2868532d911ebfde1a14596f6d"
+      },
+      {
+        "test_id": "tests.test_c_schema.test_control_constraints",
+        "status": "pass",
+        "duration_ms": 1027.0,
+        "parameter_sha256": "2c0bd9451465821b2284a4812a8a88955873948ad87a542fc74a1075632e8cfe"
+      },
+      {
+        "test_id": "tests.test_c_schema.test_control_constraints",
+        "status": "pass",
+        "duration_ms": 1084.0,
+        "parameter_sha256": "65127e674c057ed5d67a10e2a9fb1b1f167715c3c611ca99b5765c1442ba426a"
+      },
+      {
+        "test_id": "tests.test_c_schema.test_control_constraints",
+        "status": "pass",
+        "duration_ms": 991.0,
+        "parameter_sha256": "da6778705ff102d4ab163e01bcd759842a9a2f5382dd05ec047b17becfa9d812"
+      },
+      {
+        "test_id": "tests.test_c_schema.test_control_constraints",
+        "status": "pass",
+        "duration_ms": 1007.0,
+        "parameter_sha256": "2a5b641c8a91848c6d17662ebf155a8661cfa1b428d05ef9faa73bff48b0d8d5"
+      },
+      {
+        "test_id": "tests.test_c_schema.test_control_constraints",
+        "status": "pass",
+        "duration_ms": 1071.0,
+        "parameter_sha256": "42701cc3cab169842ac7521b6d03b1a550eed24e499fd735aaf479a034552f18"
+      },
+      {
+        "test_id": "tests.test_c_schema.test_control_constraints",
+        "status": "pass",
+        "duration_ms": 1220.0,
+        "parameter_sha256": "33edb29ce41df1a906970f11f23f98ffe6e4c09a1cc3a73dc63c006b76a80781"
+      },
+      {
+        "test_id": "tests.test_c_schema.test_chunk_composite_foreign_keys",
+        "status": "pass",
+        "duration_ms": 1040.0,
+        "parameter_sha256": "4e561adefc432e29c477693e049f283f313e9fed4e3655476a49327c3db4e1cf"
+      },
+      {
+        "test_id": "tests.test_c_schema.test_chunk_composite_foreign_keys",
+        "status": "pass",
+        "duration_ms": 996.0,
+        "parameter_sha256": "ac1f32f63c8d5d7f868931613d1312a720ceb4da1a734e706b947e6c6381dce2"
+      },
+      {
+        "test_id": "tests.test_c_schema.test_chunk_composite_foreign_keys",
+        "status": "pass",
+        "duration_ms": 1011.0,
+        "parameter_sha256": "61867447612390aef2b5433d064af7b4cb9350a4ff4ba69024a9e118038fa5e6"
+      },
+      {
+        "test_id": "tests.test_c_schema.test_graph_endpoints_and_evidence_cannot_cross_indexes",
+        "status": "pass",
+        "duration_ms": 1003.0
+      },
+      {
+        "test_id": "tests.test_c_schema.test_inactive_private_grant_is_also_rejected",
+        "status": "pass",
+        "duration_ms": 1013.0
+      },
+      {
+        "test_id": "tests.test_c_schema.test_grant_identity_cannot_be_repointed",
+        "status": "pass",
+        "duration_ms": 985.0
+      },
+      {
+        "test_id": "tests.test_config.test_default_is_loopback_and_mock",
+        "status": "pass",
+        "duration_ms": 2.0
+      },
+      {
+        "test_id": "tests.test_config.test_local_origin_is_exact",
+        "status": "pass",
+        "duration_ms": 2.0,
+        "parameter_sha256": "62f8040b657331cc0b067d4ee3f0f4baaa4686596f975a43c1002d648a50dea0"
+      },
+      {
+        "test_id": "tests.test_config.test_local_origin_is_exact",
+        "status": "pass",
+        "duration_ms": 2.0,
+        "parameter_sha256": "afb8ad6458a1fa79a787f74d36a0e03521ea8fd4dc12c0d1759dfd86174e1156"
+      },
+      {
+        "test_id": "tests.test_config.test_local_origin_is_exact",
+        "status": "pass",
+        "duration_ms": 2.0,
+        "parameter_sha256": "95f407a883d46d09f3b7d96809a409bad510c6d8894b7e57a72eb5ce213574d4"
+      },
+      {
+        "test_id": "tests.test_config.test_local_origin_is_exact",
+        "status": "pass",
+        "duration_ms": 2.0,
+        "parameter_sha256": "d98739284b82963337a64a0ddc7c71dbbe5eee8887ead468768ee64a53a7a08d"
+      },
+      {
+        "test_id": "tests.test_config.test_local_origin_is_exact",
+        "status": "pass",
+        "duration_ms": 2.0,
+        "parameter_sha256": "39118a379277e987d66bbd504ed068df25a7c4f5f9ebc51d3f1444bd7c07c935"
+      },
+      {
+        "test_id": "tests.test_config.test_wildcard_binding_is_rejected",
+        "status": "pass",
+        "duration_ms": 1.0
+      },
+      {
+        "test_id": "tests.test_config.test_secrets_are_not_printed_in_settings",
+        "status": "pass",
+        "duration_ms": 2.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_atomic_admission_replay_and_conflict",
+        "status": "pass",
+        "duration_ms": 1163.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_concurrent_same_send_one_run",
+        "status": "pass",
+        "duration_ms": 1148.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_cancel_and_new_send",
+        "status": "pass",
+        "duration_ms": 1134.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_conversation_create_idempotent_agent_binding_and_owner_scope",
+        "status": "pass",
+        "duration_ms": 1200.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_foreign_conversation_run_send_hidden_from_current_actor",
+        "status": "pass",
+        "duration_ms": 1176.0,
+        "parameter_sha256": "17452acdcff12bd580a0b550518d8d0fb781efe908fe5e6cb8fa3e5bac2b5cbf"
+      },
+      {
+        "test_id": "tests.test_conversations.test_foreign_conversation_run_send_hidden_from_current_actor",
+        "status": "pass",
+        "duration_ms": 1166.0,
+        "parameter_sha256": "847551e17d0b68bd1bfe5ed05be5bbe4e08f014b7ab949eb948ea31e73a1b9f2"
+      },
+      {
+        "test_id": "tests.test_conversations.test_foreign_conversation_run_send_hidden_from_current_actor",
+        "status": "pass",
+        "duration_ms": 1171.0,
+        "parameter_sha256": "b8d2e5df0006b50df93fdccc7db8a92aae6a8da255aa6d7c3fa31a0ee9b86991"
+      },
+      {
+        "test_id": "tests.test_conversations.test_foreign_conversation_run_send_hidden_from_current_actor",
+        "status": "pass",
+        "duration_ms": 1184.0,
+        "parameter_sha256": "4eb87c9aea0dd6b43253a15ca881d9667c36e8deb42d23faed34fe02fb47a72b"
+      },
+      {
+        "test_id": "tests.test_conversations.test_header_claims_do_not_grant_owner_or_tenant",
+        "status": "pass",
+        "duration_ms": 1104.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_strict_run_request_rejected_without_storage",
+        "status": "pass",
+        "duration_ms": 1076.0,
+        "parameter_sha256": "dae0acf45186d3830303ecb585c69706ab5eee3410a58615103821b550654306"
+      },
+      {
+        "test_id": "tests.test_conversations.test_strict_run_request_rejected_without_storage",
+        "status": "pass",
+        "duration_ms": 1234.0,
+        "parameter_sha256": "7a386b6c3563f643defe91136d40e5ce9f6af9e5ba75ef12b886a0aae3487f09"
+      },
+      {
+        "test_id": "tests.test_conversations.test_strict_run_request_rejected_without_storage",
+        "status": "pass",
+        "duration_ms": 1106.0,
+        "parameter_sha256": "1c5361ad9b9ffa28b32c337a361dbebaf1a0aca80ddb3272debfb7a7b0064fbb"
+      },
+      {
+        "test_id": "tests.test_conversations.test_strict_run_request_rejected_without_storage",
+        "status": "pass",
+        "duration_ms": 1083.0,
+        "parameter_sha256": "64e4b9fe9a10773d6e16ad0d3a54df264768f8d78a4584cef1ad0464b8aafee4"
+      },
+      {
+        "test_id": "tests.test_conversations.test_strict_run_request_rejected_without_storage",
+        "status": "pass",
+        "duration_ms": 1095.0,
+        "parameter_sha256": "c8d611dddb86de9565ad231b8ada47c2417aade85b3f58ecf6352782a6d6ba91"
+      },
+      {
+        "test_id": "tests.test_conversations.test_strict_run_request_rejected_without_storage",
+        "status": "pass",
+        "duration_ms": 1139.0,
+        "parameter_sha256": "bfe1c14fd4c3ec1643dbee27674dc2548883e684e8b925618f807b712506d997"
+      },
+      {
+        "test_id": "tests.test_conversations.test_strict_run_request_rejected_without_storage",
+        "status": "pass",
+        "duration_ms": 1115.0,
+        "parameter_sha256": "ccfeac89fc60191d1f694b13d5974a75d2bc0e8952b37ef037aba4430ad863b2"
+      },
+      {
+        "test_id": "tests.test_conversations.test_strict_run_request_rejected_without_storage",
+        "status": "pass",
+        "duration_ms": 1111.0,
+        "parameter_sha256": "1c5cf518d8f4bed178a7356c0683f47f30f772f174567c80fd66f0a58285a772"
+      },
+      {
+        "test_id": "tests.test_conversations.test_strict_run_request_rejected_without_storage",
+        "status": "pass",
+        "duration_ms": 1107.0,
+        "parameter_sha256": "cdd08262b2bdf3df1ab5f68109d7b2b56ddbc559881f6626b366f4f15a6b58c7"
+      },
+      {
+        "test_id": "tests.test_conversations.test_strict_run_request_rejected_without_storage",
+        "status": "pass",
+        "duration_ms": 1104.0,
+        "parameter_sha256": "b881d71e45322752f3af0dc16b48a3b6d7fbb75de74d11bf6f25488c29c08ac6"
+      },
+      {
+        "test_id": "tests.test_conversations.test_strict_run_request_rejected_without_storage",
+        "status": "pass",
+        "duration_ms": 1093.0,
+        "parameter_sha256": "5ed4540c64a50ccfb7c90ebc435e157880f414548eaa11dd180715ba5c6d7b83"
+      },
+      {
+        "test_id": "tests.test_conversations.test_strict_run_request_rejected_without_storage",
+        "status": "pass",
+        "duration_ms": 1098.0,
+        "parameter_sha256": "9895d1d6e09a080c17dc4fe079e2eeae88f13cfe0825948816706a63ea78ccda"
+      },
+      {
+        "test_id": "tests.test_conversations.test_strict_run_request_rejected_without_storage",
+        "status": "pass",
+        "duration_ms": 1109.0,
+        "parameter_sha256": "92beac2a104c56b17295ef185a7bbeaf84e65190e6b827b02a182f056bed4017"
+      },
+      {
+        "test_id": "tests.test_conversations.test_strict_run_request_rejected_without_storage",
+        "status": "pass",
+        "duration_ms": 1197.0,
+        "parameter_sha256": "35e83a59d9b6a2d13928ab2560cfd83fd030db06fe5ab4d0d796825096c7789b"
+      },
+      {
+        "test_id": "tests.test_conversations.test_strict_run_request_rejected_without_storage",
+        "status": "pass",
+        "duration_ms": 1137.0,
+        "parameter_sha256": "f313161499c3dfc90bdbb8d1b981d2f1c0e9cd6e31b54aad4e302de6a009a593"
+      },
+      {
+        "test_id": "tests.test_conversations.test_strict_run_request_rejected_without_storage",
+        "status": "pass",
+        "duration_ms": 1096.0,
+        "parameter_sha256": "ec4699c201ba7549d5ab76f357b92317eff265f2087ce291673b0b3693b90541"
+      },
+      {
+        "test_id": "tests.test_conversations.test_strict_run_request_rejected_without_storage",
+        "status": "pass",
+        "duration_ms": 1109.0,
+        "parameter_sha256": "f77e6912c85c4c5d6746568f6910a9ad0d85fa7e5f8a2a7c9b634c805dc2e573"
+      },
+      {
+        "test_id": "tests.test_conversations.test_rag_and_refs_unready_no_provider_or_storage",
+        "status": "pass",
+        "duration_ms": 1116.0,
+        "parameter_sha256": "dae0acf45186d3830303ecb585c69706ab5eee3410a58615103821b550654306"
+      },
+      {
+        "test_id": "tests.test_conversations.test_rag_and_refs_unready_no_provider_or_storage",
+        "status": "pass",
+        "duration_ms": 1104.0,
+        "parameter_sha256": "7a386b6c3563f643defe91136d40e5ce9f6af9e5ba75ef12b886a0aae3487f09"
+      },
+      {
+        "test_id": "tests.test_conversations.test_rag_and_refs_unready_no_provider_or_storage",
+        "status": "pass",
+        "duration_ms": 1112.0,
+        "parameter_sha256": "1c5361ad9b9ffa28b32c337a361dbebaf1a0aca80ddb3272debfb7a7b0064fbb"
+      },
+      {
+        "test_id": "tests.test_conversations.test_rag_and_refs_unready_no_provider_or_storage",
+        "status": "pass",
+        "duration_ms": 1076.0,
+        "parameter_sha256": "64e4b9fe9a10773d6e16ad0d3a54df264768f8d78a4584cef1ad0464b8aafee4"
+      },
+      {
+        "test_id": "tests.test_conversations.test_payload_limit_before_json_parser_including_stream_without_length",
+        "status": "pass",
+        "duration_ms": 1086.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_input_codepoint_utf8_boundary_and_original_whitespace",
+        "status": "pass",
+        "duration_ms": 1095.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_offline_mandatory_token_limit_rolls_back",
+        "status": "pass",
+        "duration_ms": 1165.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_tokenizer_not_ready_is_safe_503",
+        "status": "pass",
+        "duration_ms": 1100.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_current_policy_gate_prevents_new_admission",
+        "status": "pass",
+        "duration_ms": 1141.0,
+        "parameter_sha256": "ee18bb05c7ca36353804834dc050bcad7010044486cef21ba8b943f66bee7074"
+      },
+      {
+        "test_id": "tests.test_conversations.test_current_policy_gate_prevents_new_admission",
+        "status": "pass",
+        "duration_ms": 1137.0,
+        "parameter_sha256": "58194c0e5a70622148b47f7525aa6076c4096a5be89b5c2f1ea3b65473229b19"
+      },
+      {
+        "test_id": "tests.test_conversations.test_current_policy_gate_prevents_new_admission",
+        "status": "pass",
+        "duration_ms": 1154.0,
+        "parameter_sha256": "79ce21565c9432b78eb04ff3081e8eea3345a7a2171047a0cc9f7163794c2c07"
+      },
+      {
+        "test_id": "tests.test_conversations.test_current_policy_gate_prevents_new_admission",
+        "status": "pass",
+        "duration_ms": 1145.0,
+        "parameter_sha256": "81b6b4ec06d487e5c167736dc22940e146f8d5ff0b39f51419804187bfe71eb2"
+      },
+      {
+        "test_id": "tests.test_conversations.test_current_policy_gate_prevents_new_admission",
+        "status": "pass",
+        "duration_ms": 1144.0,
+        "parameter_sha256": "73cb48ac76254fbbd83cb4ee5e8f8bff6d85196f12a95da3cb56c8429b5bac43"
+      },
+      {
+        "test_id": "tests.test_conversations.test_current_policy_gate_prevents_new_admission",
+        "status": "pass",
+        "duration_ms": 1159.0,
+        "parameter_sha256": "211c9a7c3f283effe4c2a660f66ca3e56822c19cd0adf4c010d7e9921607dc5a"
+      },
+      {
+        "test_id": "tests.test_conversations.test_current_policy_gate_prevents_new_admission",
+        "status": "pass",
+        "duration_ms": 1154.0,
+        "parameter_sha256": "b21602d369da0c4fee5832fc18cdd2220d06863b5743a2d94a1055878ddf9464"
+      },
+      {
+        "test_id": "tests.test_conversations.test_same_request_replays_after_agent_config_budget_and_global_stop",
+        "status": "pass",
+        "duration_ms": 1251.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_conversation_agent_mismatch_no_admission",
+        "status": "pass",
+        "duration_ms": 1115.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_user_tenant_and_project_capacity_and_mode_separation",
+        "status": "pass",
+        "duration_ms": 1476.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_dual_actor_user_capacity_spans_tenants_but_client_ids_scoped",
+        "status": "pass",
+        "duration_ms": 1172.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_successful_admission_window_ten_replay_and_relogin_no_reset",
+        "status": "pass",
+        "duration_ms": 1693.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_cancel_preserves_terminal_and_pending_states",
+        "status": "pass",
+        "duration_ms": 1161.0,
+        "parameter_sha256": "083b7130609c038eefee18fc718861f6e4470a41fa1baff22932566d49e0ec27"
+      },
+      {
+        "test_id": "tests.test_conversations.test_cancel_preserves_terminal_and_pending_states",
+        "status": "pass",
+        "duration_ms": 1157.0,
+        "parameter_sha256": "d607e7d420762c8055accd040f94d6cc2d6edeb6ed0c2399f89c0399ecc03d39"
+      },
+      {
+        "test_id": "tests.test_conversations.test_cancel_preserves_terminal_and_pending_states",
+        "status": "pass",
+        "duration_ms": 1158.0,
+        "parameter_sha256": "710962e51ab162a4c53497024c921565a597eb1f631e49f05b13986525239218"
+      },
+      {
+        "test_id": "tests.test_conversations.test_cancel_preserves_terminal_and_pending_states",
+        "status": "pass",
+        "duration_ms": 1163.0,
+        "parameter_sha256": "5cb9424e2d4a83389c626b934b84cb4b5d436c2d018e576a6bdf83db9b17db0e"
+      },
+      {
+        "test_id": "tests.test_conversations.test_cancel_preserves_terminal_and_pending_states",
+        "status": "pass",
+        "duration_ms": 1143.0,
+        "parameter_sha256": "b7a4f24014f5e0ec4121cb5b7531e8a5229d6168ea18a50c5e21975118384b1c"
+      },
+      {
+        "test_id": "tests.test_conversations.test_cancel_preserves_terminal_and_pending_states",
+        "status": "pass",
+        "duration_ms": 1158.0,
+        "parameter_sha256": "3e0dac31f8508c4a697dee8c5e2104465726ee4abb670520bd007ec71df51300"
+      },
+      {
+        "test_id": "tests.test_conversations.test_cancel_preserves_terminal_and_pending_states",
+        "status": "pass",
+        "duration_ms": 1176.0,
+        "parameter_sha256": "b69b8ba2df5e4ec65097094f8b4f054a153f46d0e93f9316ca576b4535eddc73"
+      },
+      {
+        "test_id": "tests.test_conversations.test_cancel_revision_conflict_and_simultaneous_single_audit",
+        "status": "pass",
+        "duration_ms": 1182.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_accepted_with_existing_call_requires_review_and_preserves_cost",
+        "status": "pass",
+        "duration_ms": 1210.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_audit_failure_rolls_back_admission_conversation_window_and_idle",
+        "status": "pass",
+        "duration_ms": 1249.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_cancel_audit_failure_rolls_back_state_revision",
+        "status": "pass",
+        "duration_ms": 1247.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_owner_read_window_is_shared_and_get_does_not_touch_idle",
+        "status": "pass",
+        "duration_ms": 1905.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_repository_rechecks_current_authority_before_mutation",
+        "status": "pass",
+        "duration_ms": 1043.0,
+        "parameter_sha256": "9949dd77db402cd356f27fee7f22670ef7d2dc4266fcdb11ec793a52b0d3e561"
+      },
+      {
+        "test_id": "tests.test_conversations.test_repository_rechecks_current_authority_before_mutation",
+        "status": "pass",
+        "duration_ms": 1028.0,
+        "parameter_sha256": "4e561adefc432e29c477693e049f283f313e9fed4e3655476a49327c3db4e1cf"
+      },
+      {
+        "test_id": "tests.test_conversations.test_repository_rechecks_current_authority_before_mutation",
+        "status": "pass",
+        "duration_ms": 1055.0,
+        "parameter_sha256": "5573629fcf87cef82b42ae6ef2b704f499bfe0396e2c32fe54b32dbceb91c29c"
+      },
+      {
+        "test_id": "tests.test_conversations.test_repository_rechecks_current_authority_before_mutation",
+        "status": "pass",
+        "duration_ms": 1026.0,
+        "parameter_sha256": "0f057c0c306f399c9268f57e098c5b3786182837659fe52579cc719e66ab3b99"
+      },
+      {
+        "test_id": "tests.test_conversations.test_repository_rechecks_current_authority_before_mutation",
+        "status": "pass",
+        "duration_ms": 1050.0,
+        "parameter_sha256": "1dea12d35c1a0c8f71b927279ab6ae3e116555d3f3bad13997294ed3cbf93f4c"
+      },
+      {
+        "test_id": "tests.test_conversations.test_repository_rechecks_current_authority_before_mutation",
+        "status": "pass",
+        "duration_ms": 1042.0,
+        "parameter_sha256": "5695d1c27d8cccda6b4ae7b798df48e938ac92b890d019e1b402c415188a6ee2"
+      },
+      {
+        "test_id": "tests.test_conversations.test_repository_rechecks_current_authority_before_mutation",
+        "status": "pass",
+        "duration_ms": 1035.0,
+        "parameter_sha256": "29512fbfe1fa69785908cc0fe7d39c26cb762c019275cde70d986ada86db5241"
+      },
+      {
+        "test_id": "tests.test_conversations.test_csrf_query_and_revision_inputs_are_strict",
+        "status": "pass",
+        "duration_ms": 1101.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_pagination_signatures_context_binding_and_empty_private_fields",
+        "status": "pass",
+        "duration_ms": 1148.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_message_pages_hidden_drafts_and_purged_sequence_no_collision",
+        "status": "pass",
+        "duration_ms": 1312.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_actual_last_six_history_selected_and_snapshot_private",
+        "status": "pass",
+        "duration_ms": 1221.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_fixed_functions_nonowner_roles_and_pool_scope_cleanup",
+        "status": "pass",
+        "duration_ms": 1035.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_seven_api_routes_real_http_restart_no_provider",
+        "status": "pass",
+        "duration_ms": 5703.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_same_actor_concurrent_new_ids_only_one_admitted",
+        "status": "pass",
+        "duration_ms": 1186.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_missing_optional_settings_snapshot_keeps_server_default",
+        "status": "pass",
+        "duration_ms": 1220.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_admission_lock_timeout_has_no_partial_storage",
+        "status": "pass",
+        "duration_ms": 3219.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_waiting_admission_observes_membership_revocation_commit",
+        "status": "pass",
+        "duration_ms": 1198.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_rollback_context_and_next_tenant_reuse_on_same_connection",
+        "status": "pass",
+        "duration_ms": 1055.0
+      },
+      {
+        "test_id": "tests.test_conversations.test_released_without_dispatch_has_no_confirmed_usage",
+        "status": "pass",
+        "duration_ms": 1143.0
+      },
+      {
+        "test_id": "tests.test_devdb.test_arbitrary_runtime_is_rejected",
+        "status": "pass",
+        "duration_ms": 2.0
+      },
+      {
+        "test_id": "tests.test_devdb.test_foreign_existing_files_are_preserved",
+        "status": "pass",
+        "duration_ms": 2.0
+      },
+      {
+        "test_id": "tests.test_devdb.test_socket_directory_fits_unix_path_limit",
+        "status": "pass",
+        "duration_ms": 1.0
+      },
+      {
+        "test_id": "tests.test_devdb.test_native_cluster_lifecycle_and_private_files",
+        "status": "pass",
+        "duration_ms": 1775.0
+      },
+      {
+        "test_id": "tests.test_devdb.test_occupied_port_is_not_replaced",
+        "status": "pass",
+        "duration_ms": 988.0
+      },
+      {
+        "test_id": "tests.test_devdb.test_tampered_owner_and_pid_are_rejected",
+        "status": "pass",
+        "duration_ms": 986.0
+      },
+      {
+        "test_id": "tests.test_devdb.test_symlink_runtime_is_rejected",
+        "status": "pass",
+        "duration_ms": 2.0
+      },
+      {
+        "test_id": "tests.test_devdb.test_foreign_socket_directory_is_preserved",
+        "status": "pass",
+        "duration_ms": 998.0
+      },
+      {
+        "test_id": "tests.test_devdb.test_closed_tcp_connection_does_not_block_restart",
+        "status": "pass",
+        "duration_ms": 1360.0
+      },
+      {
+        "test_id": "tests.test_document_api.test_upload_job_query_duplicate_and_delete",
+        "status": "pass",
+        "duration_ms": 1160.0
+      },
+      {
+        "test_id": "tests.test_document_api.test_upload_boundary_failure_without_job",
+        "status": "pass",
+        "duration_ms": 1053.0,
+        "parameter_sha256": "4968bf2b3b17d10a4fb217af434d71cae9bd8711b7ce70950876a3456d2e72dd"
+      },
+      {
+        "test_id": "tests.test_document_api.test_upload_boundary_failure_without_job",
+        "status": "pass",
+        "duration_ms": 1067.0,
+        "parameter_sha256": "260ade4404b06f934bdba95616e4ab5f7e6a6087e4974db38a6af9dd82c059cb"
+      },
+      {
+        "test_id": "tests.test_document_api.test_upload_boundary_failure_without_job",
+        "status": "pass",
+        "duration_ms": 1089.0,
+        "parameter_sha256": "1625606d1b415051a9afaed848ac68a61124f52e25c624ce60e27bff39285cf1"
+      },
+      {
+        "test_id": "tests.test_document_api.test_upload_boundary_failure_without_job",
+        "status": "pass",
+        "duration_ms": 1082.0,
+        "parameter_sha256": "2bc685e47c5cc2b066820e55dc87fee01fbe89caa38c19c9d519ceafdcc18fbe"
+      },
+      {
+        "test_id": "tests.test_document_api.test_upload_boundary_failure_without_job",
+        "status": "pass",
+        "duration_ms": 1091.0,
+        "parameter_sha256": "a54aa568b6cee0da3cef8cca25aea1d95350acd29b4cd6931fa2228504df8f73"
+      },
+      {
+        "test_id": "tests.test_document_api.test_upload_boundary_failure_without_job",
+        "status": "pass",
+        "duration_ms": 1094.0,
+        "parameter_sha256": "aba5c4d119b277246b7fde62c87e9f02bd13ee677f5b0b0ea7af1e4f8ea7dd1a"
+      },
+      {
+        "test_id": "tests.test_document_api.test_foreign_job_and_nonadministrator_are_rejected",
+        "status": "pass",
+        "duration_ms": 1116.0
+      },
+      {
+        "test_id": "tests.test_document_api.test_opaque_cursor_is_bound_to_principal_and_tenant",
+        "status": "pass",
+        "duration_ms": 1100.0
+      },
+      {
+        "test_id": "tests.test_document_corpus.test_actual_raw_document_outputs_match_evaluator_after_processing",
+        "status": "pass",
+        "duration_ms": 44.0,
+        "parameter_sha256": "7e3d0590d11d6cd753ad45f543f50eeb2852034f906591e28ff920fee107d96e"
+      },
+      {
+        "test_id": "tests.test_document_corpus.test_actual_raw_document_outputs_match_evaluator_after_processing",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "1f57f1b1d3d374db60d756e59744797e435b1e8f1e3f398307c41ba9079fa847"
+      },
+      {
+        "test_id": "tests.test_document_corpus.test_actual_raw_document_outputs_match_evaluator_after_processing",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "153c878acc55e0e00ab2f496b2f24dd7ba3eb15139e63984fd07326697ed74c3"
+      },
+      {
+        "test_id": "tests.test_document_corpus.test_actual_raw_document_outputs_match_evaluator_after_processing",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "495bdd481753fed4f4a56e63743975e830244ca935dfc624d25b92c334b16b21"
+      },
+      {
+        "test_id": "tests.test_document_corpus.test_actual_raw_document_outputs_match_evaluator_after_processing",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "908e560c3a3b6f699351e809421a6ea9874f84bd47217f2896f64bda61ffc50c"
+      },
+      {
+        "test_id": "tests.test_document_corpus.test_actual_raw_document_outputs_match_evaluator_after_processing",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "477fb6e246bd55d66423dcc1a2df5d5fbca25c919ae8a03a66975cdba09e2bd0"
+      },
+      {
+        "test_id": "tests.test_document_corpus.test_actual_raw_document_outputs_match_evaluator_after_processing",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "4e2d185623f18928b0884c546cf8fc4f9ca30f3bdae0ccd9c2047477a69bd29f"
+      },
+      {
+        "test_id": "tests.test_document_corpus.test_core_has_no_authority_provider_file_or_evaluator_dependency",
+        "status": "pass",
+        "duration_ms": 18.0
+      },
+      {
+        "test_id": "tests.test_document_embedding.test_pinned_sdk_embedding_contract_without_network",
+        "status": "pass",
+        "duration_ms": 10.0,
+        "parameter_sha256": "5122421abc5c221501d608a2a54248d3129316b8a344a3c3d82d4c211ff28e05"
+      },
+      {
+        "test_id": "tests.test_document_embedding.test_pinned_sdk_embedding_contract_without_network",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "b74d9447e2d94d742c06b9faa9147992a5485de443ab9e08a98d523ded9223e9"
+      },
+      {
+        "test_id": "tests.test_document_embedding.test_pinned_sdk_embedding_contract_without_network",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "8f99e1944e583fe3ea61c2d8342b1942f99576465a78661008f22d54b5a29b27"
+      },
+      {
+        "test_id": "tests.test_document_embedding.test_pinned_sdk_embedding_contract_without_network",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "12965e94f425fa9540d80559da9f918ec72f3e555db66cb05eec3104fd7b8328"
+      },
+      {
+        "test_id": "tests.test_document_embedding.test_pinned_sdk_embedding_contract_without_network",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "74a9c791c1e77cebcc09023fdd0ca723ed0ca0adda3cdc5d1f010bac422abb24"
+      },
+      {
+        "test_id": "tests.test_document_embedding.test_pinned_sdk_embedding_contract_without_network",
+        "status": "pass",
+        "duration_ms": 2.0,
+        "parameter_sha256": "3e1430d17b429b1d8115b7d181caf4702e201f054286c550d0465c4ce46b5e7a"
+      },
+      {
+        "test_id": "tests.test_document_ingest.test_same_upload_reuses_exact_receipt",
+        "status": "pass",
+        "duration_ms": 1036.0
+      },
+      {
+        "test_id": "tests.test_document_ingest.test_same_id_other_source_rejected",
+        "status": "pass",
+        "duration_ms": 971.0
+      },
+      {
+        "test_id": "tests.test_document_ingest.test_user_cannot_register_or_write_source",
+        "status": "pass",
+        "duration_ms": 943.0,
+        "parameter_sha256": "9c1b07cb8d8bb618c39daf78be3dff93ab43d3e3a9eb980269bf54da79940b02"
+      },
+      {
+        "test_id": "tests.test_document_ingest.test_user_cannot_register_or_write_source",
+        "status": "pass",
+        "duration_ms": 936.0,
+        "parameter_sha256": "4eb87c9aea0dd6b43253a15ca881d9667c36e8deb42d23faed34fe02fb47a72b"
+      },
+      {
+        "test_id": "tests.test_document_ingest.test_private_management_does_not_grant_content",
+        "status": "pass",
+        "duration_ms": 992.0
+      },
+      {
+        "test_id": "tests.test_document_ingest.test_new_version_cas_and_old_source_preserved",
+        "status": "pass",
+        "duration_ms": 985.0
+      },
+      {
+        "test_id": "tests.test_document_ingest.test_audit_failure_keeps_private_file_recoverable",
+        "status": "pass",
+        "duration_ms": 1069.0
+      },
+      {
+        "test_id": "tests.test_document_ingest.test_current_revoke_blocks_new_job",
+        "status": "pass",
+        "duration_ms": 981.0
+      },
+      {
+        "test_id": "tests.test_document_ingest.test_only_confirmed_old_orphan_is_removed",
+        "status": "pass",
+        "duration_ms": 996.0
+      },
+      {
+        "test_id": "tests.test_document_ingest.test_document_admission_limit_and_same_id_replay",
+        "status": "pass",
+        "duration_ms": 1085.0
+      },
+      {
+        "test_id": "tests.test_document_jobs.test_scoped_worker_persists_or_holds_without_redispatch",
+        "status": "pass",
+        "duration_ms": 1223.0,
+        "parameter_sha256": "b1da232cd427f7097a7f2f12f296b1bf94446ecc9c7c6532fe580e80c2e32383"
+      },
+      {
+        "test_id": "tests.test_document_jobs.test_scoped_worker_persists_or_holds_without_redispatch",
+        "status": "pass",
+        "duration_ms": 1233.0,
+        "parameter_sha256": "1625606d1b415051a9afaed848ac68a61124f52e25c624ce60e27bff39285cf1"
+      },
+      {
+        "test_id": "tests.test_document_jobs.test_scoped_worker_persists_or_holds_without_redispatch",
+        "status": "pass",
+        "duration_ms": 1216.0,
+        "parameter_sha256": "484e8aad5d24e6ff7f6e193e3ce54fce96a268157d479ffe277d3b88aec7c3a5"
+      },
+      {
+        "test_id": "tests.test_document_jobs.test_claim_is_exclusive_and_epoch_fences",
+        "status": "pass",
+        "duration_ms": 1037.0
+      },
+      {
+        "test_id": "tests.test_document_jobs.test_known_checkpoint_survives_expired_worker_without_provider_repeat",
+        "status": "pass",
+        "duration_ms": 1260.0
+      },
+      {
+        "test_id": "tests.test_document_jobs.test_publish_revocation_rolls_back_and_keeps_payload_unpublished",
+        "status": "pass",
+        "duration_ms": 1231.0
+      },
+      {
+        "test_id": "tests.test_document_jobs.test_real_job_cannot_be_claimed_by_mock_server",
+        "status": "pass",
+        "duration_ms": 1006.0
+      },
+      {
+        "test_id": "tests.test_document_jobs.test_raw_index_read_rechecks_origin_and_agent",
+        "status": "pass",
+        "duration_ms": 1079.0,
+        "parameter_sha256": "1dea12d35c1a0c8f71b927279ab6ae3e116555d3f3bad13997294ed3cbf93f4c"
+      },
+      {
+        "test_id": "tests.test_document_jobs.test_raw_index_read_rechecks_origin_and_agent",
+        "status": "pass",
+        "duration_ms": 1066.0,
+        "parameter_sha256": "744c7405c6262d4a61955790b5de750d630913a6936f3904532ed00430cce433"
+      },
+      {
+        "test_id": "tests.test_document_mapping.test_original_unicode_position_is_preserved",
+        "status": "pass",
+        "duration_ms": 2.0,
+        "parameter_sha256": "f1d022a8c3baa0ec0015254d8f912a6ac717db06dab592a4e7b5959093a9ff1a"
+      },
+      {
+        "test_id": "tests.test_document_mapping.test_original_unicode_position_is_preserved",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "0798b93f3a42e6390d9b08c027418642cf3434a1967bb7a8e437bfa79de21685"
+      },
+      {
+        "test_id": "tests.test_document_mapping.test_original_unicode_position_is_preserved",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "d6eb666082d60dc244a7a81e57e231a2e9a71303f9d4568e9c969683adedd6f9"
+      },
+      {
+        "test_id": "tests.test_document_mapping.test_markers_metadata_notice_removed_but_heading_text_kept",
+        "status": "pass",
+        "duration_ms": 1.0
+      },
+      {
+        "test_id": "tests.test_document_mapping.test_discontinuous_formatting_is_not_one_quote_or_relation",
+        "status": "pass",
+        "duration_ms": 1.0
+      },
+      {
+        "test_id": "tests.test_document_mapping.test_invalid_input_rejected",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "4ccbc56e53699a097143f1257d11039fe60c1d11cf40240a589361ebc68056d3"
+      },
+      {
+        "test_id": "tests.test_document_mapping.test_invalid_input_rejected",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "1428108a654127687d9bdbb589029bb5cb5e21637f88f871ad1f74c4acd038b8"
+      },
+      {
+        "test_id": "tests.test_document_mapping.test_invalid_input_rejected",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "41d0a1eefa6c6f53549a1e367b7270db2b14422d85af0554ba7662a49d02c972"
+      },
+      {
+        "test_id": "tests.test_document_mapping.test_invalid_input_rejected",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "b8f44e2a361a388db2586f6c2e343bfddc8950a37eaae4391a8f3f9318720400"
+      },
+      {
+        "test_id": "tests.test_document_mapping.test_invalid_input_rejected",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "f308f4268785728985748bfa96f49f440f7bb595a26bf1fd5a023394942c31d1"
+      },
+      {
+        "test_id": "tests.test_document_mapping.test_invalid_input_rejected",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "427b61d2b0518027e5b1fc1c7b86a1cdf110bef4f787732ddf2993811ab86f87"
+      },
+      {
+        "test_id": "tests.test_document_mapping.test_invalid_input_rejected",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "a28d42f9ec5ded52ad50dfbf943eca98ba209e6ed64b4c5c860833ef3fedc425"
+      },
+      {
+        "test_id": "tests.test_document_mapping.test_invalid_input_rejected",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "03f4dddf176c40485271650971ab4c98d11821b2fc565fae28a99db9298ebd00"
+      },
+      {
+        "test_id": "tests.test_document_mapping.test_bad_mapping_and_raw_text_digest_are_rejected",
+        "status": "pass",
+        "duration_ms": 1.0
+      },
+      {
+        "test_id": "tests.test_document_mapping.test_code_fence_text_does_not_become_regulatory_relation",
+        "status": "pass",
+        "duration_ms": 1.0
+      },
+      {
+        "test_id": "tests.test_document_plan.test_token_chunks_batches_and_determinism",
+        "status": "pass",
+        "duration_ms": 85.0
+      },
+      {
+        "test_id": "tests.test_document_plan.test_long_sentence_splits_unicode_without_confirming_partial_claims",
+        "status": "pass",
+        "duration_ms": 2.0
+      },
+      {
+        "test_id": "tests.test_document_plan.test_preflight_limit_never_silently_truncates",
+        "status": "pass",
+        "duration_ms": 4.0
+      },
+      {
+        "test_id": "tests.test_document_plan.test_invalid_token_counter",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "eb418162ef523bcfa443d8302b88a2f0c932b0ce6100a5e58254d436db6ed991"
+      },
+      {
+        "test_id": "tests.test_document_plan.test_invalid_token_counter",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "0fb1f2d7dee57da3b51821b8c8a811ace27113a400277d65d0a0c790b8c49783"
+      },
+      {
+        "test_id": "tests.test_document_plan.test_invalid_token_counter",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "193396c81ed8324a2610212320f93e7f27a5d29b64acdc25493b1d5fc6be2b9c"
+      },
+      {
+        "test_id": "tests.test_document_plan.test_invalid_token_counter",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "62c202a6bd437143c351f8cdf82ec1990ff6d9c9e1b8dbcc12f8bc7f2b42c657"
+      },
+      {
+        "test_id": "tests.test_document_plan.test_metadata_contract",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "fe92499a0327f2dcf7b93c5786e4cb54bbfc481bbd0c4f142ce0b46e1b97ac64"
+      },
+      {
+        "test_id": "tests.test_document_plan.test_metadata_contract",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "0b6797596f1891019e61774a129bd2dcdc2642f148ff1c88628d1aa2e88a025e"
+      },
+      {
+        "test_id": "tests.test_document_plan.test_metadata_contract",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "b9c354f905580f26e21bf37fdbf72208775065500a1786f93f541fac8c884a04"
+      },
+      {
+        "test_id": "tests.test_document_plan.test_metadata_contract",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "465e272f126b6ab245c6da252aaec42f9d816915f33ed332f88d0b2c90d89b49"
+      },
+      {
+        "test_id": "tests.test_document_plan.test_metadata_contract",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "d03ed804005b0a329d2da8ed423ad0ac5fced41f83a629511668cbae47ef0b53"
+      },
+      {
+        "test_id": "tests.test_document_plan.test_metadata_contract",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "ddbc30e0a0ffb74e97d7fc1573ce006099f059299178ed83abb63a35dadb084a"
+      },
+      {
+        "test_id": "tests.test_document_plan.test_plan_rejects_tampered_batch_and_source_hash",
+        "status": "pass",
+        "duration_ms": 1.0
+      },
+      {
+        "test_id": "tests.test_document_plan.test_backend_offline_adapter_no_network",
+        "status": "pass",
+        "duration_ms": 5.0
+      },
+      {
+        "test_id": "tests.test_document_policy.test_latest_allowed_version",
+        "status": "pass",
+        "duration_ms": 985.0,
+        "parameter_sha256": "e3ece6859eb4dbcb7be1f69c71db16cc49626ea7d4fb8b58699ff32736206229"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_latest_allowed_version",
+        "status": "pass",
+        "duration_ms": 981.0,
+        "parameter_sha256": "58c50e4a6d8f6a7c2a7a1256119fd33457e4d873bfe6b4bab30c4777ca12bb75"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_latest_allowed_version",
+        "status": "pass",
+        "duration_ms": 985.0,
+        "parameter_sha256": "bf81e86da856d6278aabd78d753b0cf9fe32901c305ac45bb6ec942ac83dd666"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_latest_allowed_version",
+        "status": "pass",
+        "duration_ms": 979.0,
+        "parameter_sha256": "9f2cdb8693a46d5247d22fffdc23c975cf815c4c2a834e36518314fcf183344b"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_latest_allowed_version",
+        "status": "pass",
+        "duration_ms": 1002.0,
+        "parameter_sha256": "5806d63218918cbecda1424d8830f0d13f08fc9cb20899de450625516ea7cafe"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_latest_allowed_version",
+        "status": "pass",
+        "duration_ms": 967.0,
+        "parameter_sha256": "40aff64a228952b9da7acc1053f701721a5a14f1ef3361539927692c6d85cff7"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_latest_allowed_version",
+        "status": "pass",
+        "duration_ms": 1016.0,
+        "parameter_sha256": "760d0e3030c91e87e25eccac69206c9c24e98a6af64be175cf6e2c8a34cb0d6b"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_latest_allowed_version",
+        "status": "pass",
+        "duration_ms": 983.0,
+        "parameter_sha256": "daa44eb78bb665bf0ca0fb0014adedf0d3525c0141406198ab46659d76904a7a"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_private_reader_is_not_administrator",
+        "status": "pass",
+        "duration_ms": 990.0,
+        "parameter_sha256": "99209f0f8eb7b03b24430185ae2dbbf899191d58841c6bfd100ef00be65efcdf"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_private_reader_is_not_administrator",
+        "status": "pass",
+        "duration_ms": 990.0,
+        "parameter_sha256": "d6066094a6a97079aa5412c4f370834a6cde0c52149e5b4db147f98f5cf3debc"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_private_reader_is_not_administrator",
+        "status": "pass",
+        "duration_ms": 968.0,
+        "parameter_sha256": "75eb010687aad87dcbb95a9add6ea732d0c476d2c2ce8365b1ad4ab8a32fbb06"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_private_reader_is_not_administrator",
+        "status": "pass",
+        "duration_ms": 960.0,
+        "parameter_sha256": "cc9ac51f6b9719639d34c50bf6f0eec9928a9eb19b319301f8fa2e1f3de01b1c"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_private_reader_is_not_administrator",
+        "status": "pass",
+        "duration_ms": 983.0,
+        "parameter_sha256": "6d7b7835fa895dab46c5226453cafc7101a9c8713150653b41571563fb3b3fc0"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_private_reader_is_not_administrator",
+        "status": "pass",
+        "duration_ms": 975.0,
+        "parameter_sha256": "a6587dbe0f837525bc5fd04fc50845be41a210cfa93a7d8f68482e4099899df9"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_private_reader_is_not_administrator",
+        "status": "pass",
+        "duration_ms": 971.0,
+        "parameter_sha256": "ba960076c63b7a5b287e731747888ee55e4d81b4ab83d36137f1534e981b2fc9"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_unavailable_objects_have_same_outcome",
+        "status": "pass",
+        "duration_ms": 1072.0,
+        "parameter_sha256": "957e323b03017eaab59bf7ec30c0d417f6d509bc5047243f2cddf5c34fe1028f"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_unavailable_objects_have_same_outcome",
+        "status": "pass",
+        "duration_ms": 979.0,
+        "parameter_sha256": "794f2ceef3e9fe5d6f65800703933d846b8346764ea535c2a24a9448563952ad"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_unavailable_objects_have_same_outcome",
+        "status": "pass",
+        "duration_ms": 975.0,
+        "parameter_sha256": "59a99acf668ea3255fcda9c328fe8b11b0baff22e6b4896b3a192a0700703f3e"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_current_source_revocation",
+        "status": "pass",
+        "duration_ms": 1027.0,
+        "parameter_sha256": "496539b6bb46aa750cae11b03d83fb9deb18b443a49623ce7087730f12319162"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_current_source_revocation",
+        "status": "pass",
+        "duration_ms": 1028.0,
+        "parameter_sha256": "05175e8a8d0b39f4879f8a6a77e7cfddeca285c7f64d7a59ef5b6f295bb164ba"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_current_source_revocation",
+        "status": "pass",
+        "duration_ms": 1042.0,
+        "parameter_sha256": "835dfc39d821c1ec11980f92fbe819d210a4d192dd68b787b3e1b1900aff9c3a"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_current_source_revocation",
+        "status": "pass",
+        "duration_ms": 1029.0,
+        "parameter_sha256": "856e393a978070be1c6f2cb0292162e1ec1b8a39930311f7e6021dd66e502dac"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_stored_context_revalidates",
+        "status": "pass",
+        "duration_ms": 1013.0,
+        "parameter_sha256": "9949dd77db402cd356f27fee7f22670ef7d2dc4266fcdb11ec793a52b0d3e561"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_stored_context_revalidates",
+        "status": "pass",
+        "duration_ms": 1026.0,
+        "parameter_sha256": "4e561adefc432e29c477693e049f283f313e9fed4e3655476a49327c3db4e1cf"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_stored_context_revalidates",
+        "status": "pass",
+        "duration_ms": 1017.0,
+        "parameter_sha256": "5573629fcf87cef82b42ae6ef2b704f499bfe0396e2c32fe54b32dbceb91c29c"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_stored_context_revalidates",
+        "status": "pass",
+        "duration_ms": 1011.0,
+        "parameter_sha256": "0f057c0c306f399c9268f57e098c5b3786182837659fe52579cc719e66ab3b99"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_stored_context_revalidates",
+        "status": "pass",
+        "duration_ms": 1007.0,
+        "parameter_sha256": "1dea12d35c1a0c8f71b927279ab6ae3e116555d3f3bad13997294ed3cbf93f4c"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_stored_context_revalidates",
+        "status": "pass",
+        "duration_ms": 1045.0,
+        "parameter_sha256": "5695d1c27d8cccda6b4ae7b798df48e938ac92b890d019e1b402c415188a6ee2"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_stored_context_revalidates",
+        "status": "pass",
+        "duration_ms": 1022.0,
+        "parameter_sha256": "29512fbfe1fa69785908cc0fe7d39c26cb762c019275cde70d986ada86db5241"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_forged_context_and_role_fields_do_not_authorize",
+        "status": "pass",
+        "duration_ms": 962.0
+      },
+      {
+        "test_id": "tests.test_document_policy.test_raw_web_rls_and_context_cleanup",
+        "status": "pass",
+        "duration_ms": 965.0
+      },
+      {
+        "test_id": "tests.test_document_policy.test_index_lease_cannot_be_forged",
+        "status": "pass",
+        "duration_ms": 1002.0,
+        "parameter_sha256": "adc9cc2a150c687d4a0ed84275f89fe5016ed05c3b56dba1822d707808b0337c"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_index_lease_cannot_be_forged",
+        "status": "pass",
+        "duration_ms": 971.0,
+        "parameter_sha256": "6fd2158939e4af1b703ee683190acd64bb845a2fc7879d74a980665af6e09ce4"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_index_lease_cannot_be_forged",
+        "status": "pass",
+        "duration_ms": 1006.0,
+        "parameter_sha256": "a99c025252f84817a6be713ee867e7e7321b15e54de0a9b567b48a857db0e736"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_index_lease_cannot_be_forged",
+        "status": "pass",
+        "duration_ms": 1006.0,
+        "parameter_sha256": "0feef60f9451bfa3608c6451cb8a534ae85334fa76072d457fc24a811f5c77aa"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_index_lease_cannot_be_forged",
+        "status": "pass",
+        "duration_ms": 1030.0,
+        "parameter_sha256": "8be6a01c8c72edcabd02170c5eed16973d51e4986b3235d79681eba00a8cddb5"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_index_lease_cannot_be_forged",
+        "status": "pass",
+        "duration_ms": 1019.0,
+        "parameter_sha256": "42dea77f80ea697822d49a429dc2e86e14710dc6f371e4bb07daeff738dbf14e"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_index_lease_revocation_and_cleanup_no_read",
+        "status": "pass",
+        "duration_ms": 1109.0,
+        "parameter_sha256": "5695d1c27d8cccda6b4ae7b798df48e938ac92b890d019e1b402c415188a6ee2"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_index_lease_revocation_and_cleanup_no_read",
+        "status": "pass",
+        "duration_ms": 1099.0,
+        "parameter_sha256": "1dea12d35c1a0c8f71b927279ab6ae3e116555d3f3bad13997294ed3cbf93f4c"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_index_lease_revocation_and_cleanup_no_read",
+        "status": "pass",
+        "duration_ms": 1108.0,
+        "parameter_sha256": "42a334acb59a13e222ab58a537c0edb751211aaf10fcdf28387c3f93741b737f"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_index_lease_revocation_and_cleanup_no_read",
+        "status": "pass",
+        "duration_ms": 1118.0,
+        "parameter_sha256": "5622b6fb8b3f20859ab6fb212fbdc1c63ed0b015817b2173898fea4323aa7fc2"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_index_lease_revocation_and_cleanup_no_read",
+        "status": "pass",
+        "duration_ms": 1116.0,
+        "parameter_sha256": "f563f8467ccda3c8c5f7815bd4a20617699bfbbe714dfb9cc469b922aafeb3ed"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_index_lease_revocation_and_cleanup_no_read",
+        "status": "pass",
+        "duration_ms": 1104.0,
+        "parameter_sha256": "9d6caec1fcf90747a18ab932fe988fafd5149e66de5c09851ab6b873ac63e199"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_index_lease_revocation_and_cleanup_no_read",
+        "status": "pass",
+        "duration_ms": 1130.0,
+        "parameter_sha256": "835dfc39d821c1ec11980f92fbe819d210a4d192dd68b787b3e1b1900aff9c3a"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_index_lease_revocation_and_cleanup_no_read",
+        "status": "pass",
+        "duration_ms": 1149.0,
+        "parameter_sha256": "4138a4a81f0478f09535b5e67e3444df3631807cd1f62e800f2c7134526833bb"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_index_write_exact_staging_target",
+        "status": "pass",
+        "duration_ms": 1072.0
+      },
+      {
+        "test_id": "tests.test_document_policy.test_runtime_roles_cannot_mutate_control_or_become_owner",
+        "status": "pass",
+        "duration_ms": 1000.0,
+        "parameter_sha256": "ce949dddc500dd4ea5ef4fbcbe6b6cefa8c4b6c4ff21ea994d46e86f0b6bdc38"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_runtime_roles_cannot_mutate_control_or_become_owner",
+        "status": "pass",
+        "duration_ms": 1000.0,
+        "parameter_sha256": "e900555be622d9a48e30adb7cdacd74b92315f78031152cc2761e5507bbe787f"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_runtime_roles_cannot_mutate_control_or_become_owner",
+        "status": "pass",
+        "duration_ms": 984.0,
+        "parameter_sha256": "3eb628fb2047f298a055fb9723fbfa1c338148b21e6788aedf399b3cac47c344"
+      },
+      {
+        "test_id": "tests.test_document_policy.test_index_pool_verifies_identity_and_owns_no_content",
+        "status": "pass",
+        "duration_ms": 996.0
+      },
+      {
+        "test_id": "tests.test_document_policy.test_index_initiator_downgrade_blocks_payload",
+        "status": "pass",
+        "duration_ms": 1151.0
+      },
+      {
+        "test_id": "tests.test_document_policy.test_publication_replacement_does_not_expose_old_index",
+        "status": "pass",
+        "duration_ms": 1201.0
+      },
+      {
+        "test_id": "tests.test_document_restart.test_native_queued_restart_publishes_once_and_cleanup",
+        "status": "pass",
+        "duration_ms": 6302.0
+      },
+      {
+        "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths",
+        "status": "pass",
+        "duration_ms": 1302.0,
+        "parameter_sha256": "b1da232cd427f7097a7f2f12f296b1bf94446ecc9c7c6532fe580e80c2e32383"
+      },
+      {
+        "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths",
+        "status": "pass",
+        "duration_ms": 1274.0,
+        "parameter_sha256": "12af0aea2e58da22be829af1fc07efa3f87d70b20e7efd77432c35ad8fd5986b"
+      },
+      {
+        "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths",
+        "status": "pass",
+        "duration_ms": 1305.0,
+        "parameter_sha256": "dc62b7d82df51dbd229597bba062c1144f7b94a9fd3d22981ddc35cf7a9ac8ac"
+      },
+      {
+        "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths",
+        "status": "pass",
+        "duration_ms": 1274.0,
+        "parameter_sha256": "81cc411f9a59bb08171f8d7d4dfe0acef3596d5bb6d13cf43ece5df92aeb4f9c"
+      },
+      {
+        "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths",
+        "status": "pass",
+        "duration_ms": 1274.0,
+        "parameter_sha256": "69a2104d0c03893c72e2cf08416c7eeba995fee7ffcdb6c45a8b4da00a80bff9"
+      },
+      {
+        "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths",
+        "status": "pass",
+        "duration_ms": 1285.0,
+        "parameter_sha256": "e68e5f5aa2ef32cd83d8ba69a7bc39faea84686437bb4ef7498f5a822ea0d8dd"
+      },
+      {
+        "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths",
+        "status": "pass",
+        "duration_ms": 1280.0,
+        "parameter_sha256": "297e157e59e00a0822cdc9f7285c236da913a659268491c7aa6c88eb115ec583"
+      },
+      {
+        "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths",
+        "status": "pass",
+        "duration_ms": 1221.0,
+        "parameter_sha256": "85abefebb3137510cb7542f00a5adfede3c8380b56fbf10df80226059f07ed38"
+      },
+      {
+        "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths",
+        "status": "pass",
+        "duration_ms": 1157.0,
+        "parameter_sha256": "1625606d1b415051a9afaed848ac68a61124f52e25c624ce60e27bff39285cf1"
+      },
+      {
+        "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths",
+        "status": "pass",
+        "duration_ms": 1174.0,
+        "parameter_sha256": "0c605c47fd88c3b6fd78729a3357effe6b5f83f04f2515863fb4532201dc12ef"
+      },
+      {
+        "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths",
+        "status": "pass",
+        "duration_ms": 1170.0,
+        "parameter_sha256": "802a1ed844df838c9ec170702cd620548235d1c085b09a0366535ebb1a69dcc1"
+      },
+      {
+        "test_id": "tests.test_execution.test_unconfirmed_commit_never_calls_provider",
+        "status": "pass",
+        "duration_ms": 1152.0,
+        "parameter_sha256": "d94e8ed4c869ef8c7648c076db88a7e221d3c06b43fa9d064bbb9dfe31cf1124"
+      },
+      {
+        "test_id": "tests.test_execution.test_unconfirmed_commit_never_calls_provider",
+        "status": "pass",
+        "duration_ms": 1143.0,
+        "parameter_sha256": "9c833a8d55bdf2daf2f362e1d89326f990d1ee602fde133f1cf9970d44a528ff"
+      },
+      {
+        "test_id": "tests.test_execution.test_stream_rechecks_before_each_body_and_bounds_subscriptions",
+        "status": "pass",
+        "duration_ms": 2.0
+      },
+      {
+        "test_id": "tests.test_execution.test_stream_snapshot_reconnect_and_post_commit_terminal_do_not_start_provider",
+        "status": "pass",
+        "duration_ms": 1116.0
+      },
+      {
+        "test_id": "tests.test_execution.test_single_execution_leader_shutdown_cleans_claims_and_pool",
+        "status": "pass",
+        "duration_ms": 1026.0
+      },
+      {
+        "test_id": "tests.test_graph_evidence.test_exact_relation_evidence_validation",
+        "status": "pass",
+        "duration_ms": 2.0,
+        "parameter_sha256": "c35fcbae5e39698feb646927f1c3ce912a28cff8acc30377e8fc02bd6021eb03"
+      },
+      {
+        "test_id": "tests.test_graph_evidence.test_exact_relation_evidence_validation",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "6c106e385df1ede0b0f5c3d929cb753c03a62673301893eb9a4e4f84e3122a92"
+      },
+      {
+        "test_id": "tests.test_graph_evidence.test_exact_relation_evidence_validation",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "0fba2259f74b36b2bd65036b56f320219e970dc555c9727ae21ebdce9b4c6c44"
+      },
+      {
+        "test_id": "tests.test_graph_evidence.test_exact_relation_evidence_validation",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "7ba3a747c5024ca704113e7e5c172929bfc97cc72092ac2600f0b8b2c238f9c8"
+      },
+      {
+        "test_id": "tests.test_graph_evidence.test_exact_relation_evidence_validation",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "b34c5d3d67a0f8383307fd640701d384c3fc2670934e2b4f3c8cef8a1601b97b"
+      },
+      {
+        "test_id": "tests.test_graph_evidence.test_exact_relation_evidence_validation",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "f1194e34e94b139c0883eaf7719fa1f4872b2513758ee829e04bde1b4989f7c4"
+      },
+      {
+        "test_id": "tests.test_graph_evidence.test_exact_relation_evidence_validation",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "b1da232cd427f7097a7f2f12f296b1bf94446ecc9c7c6532fe580e80c2e32383"
+      },
+      {
+        "test_id": "tests.test_graph_evidence.test_graph_limits_fail_instead_of_truncate",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "72e20dfc53683e6a38891ccd84d5b82d21c896b93843f0611beef9bf814eb586"
+      },
+      {
+        "test_id": "tests.test_graph_evidence.test_graph_limits_fail_instead_of_truncate",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "3bf784c0c538fdab4f7cc2a1acfb955a217faf207383e92df9989e8f7f4fd709"
+      },
+      {
+        "test_id": "tests.test_graph_evidence.test_graph_limits_fail_instead_of_truncate",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "2b90beeebadc22075d1134b4cafe0a84f1bb5f3d676e7f84b3cdf4ad637931e3"
+      },
+      {
+        "test_id": "tests.test_graph_evidence.test_graph_limits_fail_instead_of_truncate",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "0754d67bbb509bc4b8797fb7cf08d48d702c7db2d3609999dafce837a280e284"
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_positive_rules",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "8d7e53025f3d887fba3e20f3fc8bda1baeed1a51388a956ee6d668d07f710861"
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_positive_rules",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "f82ac836aefe1c060754e785df67424f23bc87a786bbf796c7b901b805581253"
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_positive_rules",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "0aff1a3750a30a9d557823904528e072f79391939e9b0d7449cb004d3efaea56"
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_positive_rules",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "8a1ef8f2f6eead6dab4259c3cd904dd6d7c36dad91237ce490fd0ddd10b60131"
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_positive_rules",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "1059f84045428e536e5c53375a4eac492f92399f947c745b5fb124caa29cef3a"
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_positive_rules",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "8cfa7e83192f8847678fd4be7d3f75a97ea431aa9edc8b409aa19ad42ced96dd"
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_positive_rules",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "8db46a68d7cb4a077f41e87c315cf7d99806a2c993b6b19b285f0394ab97b397"
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_positive_rules",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "8456e11f60e8775d24fd2757ba8b915c8c7c65a3e3d07205bda43198a6a2c618"
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_positive_rules",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "483d6551468959e24248108f3e0c33daf5759cc7371041b58db9a99fb17a16f6"
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_positive_rules",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "438843591b50bc55659375d8880d8f66a82a8bb445e152657431aee98e50c801"
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_unsupported_and_uncertain_claims",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "0fb1f2d7dee57da3b51821b8c8a811ace27113a400277d65d0a0c790b8c49783"
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_unsupported_and_uncertain_claims",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "8e9d65945595eaf56bdcc96f587196c9e697cef0256d6edd6e77c5b0116963c3"
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_unsupported_and_uncertain_claims",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "92eea933599fe93772700349139c71c47000aa51de0a243e341bc69137b8973f"
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_unsupported_and_uncertain_claims",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "f126e2e3719e8ebf93a55d4ccc17e95245d12da1c92372d8bb2c49c342f5392d"
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_unsupported_and_uncertain_claims",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "a130241b2f185781d443ba704c4fb38a4d7f1117b4088fdf69c9d064b2ca6ed0"
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_unsupported_and_uncertain_claims",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "f80d55b57dd2e7ce9a81497978b7b9308a351364a8bf38cc1147a67f8f7fc075"
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_conflicting_values_withhold_both",
+        "status": "pass",
+        "duration_ms": 1.0
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_same_relation_only_links_its_actual_evidence",
+        "status": "pass",
+        "duration_ms": 1.0
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_alias_and_semantic_key_are_tenant_scoped",
+        "status": "pass",
+        "duration_ms": 1.0
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_missing_or_conflicting_responsibility_does_not_infer_schedule",
+        "status": "pass",
+        "duration_ms": 1.0
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_relative_time_and_conditions_preserved",
+        "status": "pass",
+        "duration_ms": 1.0
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_condition_cannot_become_artifact_label",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "8249756158172bd600475d1a71795985a46e266da75477377cf5455b4fed0f8f"
+      },
+      {
+        "test_id": "tests.test_graph_extraction.test_condition_cannot_become_artifact_label",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "f3a45029b5ac95ab20f2aaf2f74b09938e2f3732a812d6e7461cb7549cfe8323"
+      },
+      {
+        "test_id": "tests.test_health.test_health_has_only_safe_status",
+        "status": "pass",
+        "duration_ms": 8.0
+      },
+      {
+        "test_id": "tests.test_health.test_health_needs_no_database_and_does_not_publish_login",
+        "status": "pass",
+        "duration_ms": 7.0
+      },
+      {
+        "test_id": "tests.test_memberships.test_own_tenants",
+        "status": "pass",
+        "duration_ms": 983.0,
+        "parameter_sha256": "f5d2c16829b1222650b0c050a910dccdbcee110dc0728d1907c7fa026ed88b8d"
+      },
+      {
+        "test_id": "tests.test_memberships.test_own_tenants",
+        "status": "pass",
+        "duration_ms": 983.0,
+        "parameter_sha256": "138d8e306eb478011d0aa4fdf45cf64b585ab59c082c56787e71fd073e422961"
+      },
+      {
+        "test_id": "tests.test_memberships.test_own_tenants",
+        "status": "pass",
+        "duration_ms": 971.0,
+        "parameter_sha256": "10773486c9876ddee71dca6cef31c0bcf531fccb19bdb0c49cba51322e29fc05"
+      },
+      {
+        "test_id": "tests.test_memberships.test_roles_are_current_tenant_scoped",
+        "status": "pass",
+        "duration_ms": 1057.0,
+        "parameter_sha256": "3caed41aae2e6bf5eb26b0426c4a63ed4a6f69419f2cf297298aa91ddfc47e84"
+      },
+      {
+        "test_id": "tests.test_memberships.test_roles_are_current_tenant_scoped",
+        "status": "pass",
+        "duration_ms": 1026.0,
+        "parameter_sha256": "19403ab62bdffbc22ad5d14c79183fc678ef81898229dddc354a8f274c995ac0"
+      },
+      {
+        "test_id": "tests.test_memberships.test_roles_are_current_tenant_scoped",
+        "status": "pass",
+        "duration_ms": 987.0,
+        "parameter_sha256": "9a029766d5192166fc8290ef3456c9c806e842cc71da05ae6be7a8814a8fcdb8"
+      },
+      {
+        "test_id": "tests.test_memberships.test_roles_are_current_tenant_scoped",
+        "status": "pass",
+        "duration_ms": 977.0,
+        "parameter_sha256": "890d6c5b861e72ebeecd411737df858b58a45d0d46e6677f4e63c82db15a13b7"
+      },
+      {
+        "test_id": "tests.test_memberships.test_roles_are_current_tenant_scoped",
+        "status": "pass",
+        "duration_ms": 994.0,
+        "parameter_sha256": "9a8af8e86b71774b8dc21d7b0e5343c6b1ebd2f0bd2a4a369793ba999257c8dc"
+      },
+      {
+        "test_id": "tests.test_memberships.test_user_cannot_administer",
+        "status": "pass",
+        "duration_ms": 1016.0,
+        "parameter_sha256": "018b20e1ab5e9b68ca593f86fe3aedf5bfad4af13737a9a16cfd5d39380b678c"
+      },
+      {
+        "test_id": "tests.test_memberships.test_user_cannot_administer",
+        "status": "pass",
+        "duration_ms": 1022.0,
+        "parameter_sha256": "d1d42c30d5bb46fa8bdfef75198b3fd7abb69c9cd76d10af673a3477811967bf"
+      },
+      {
+        "test_id": "tests.test_memberships.test_user_cannot_administer",
+        "status": "pass",
+        "duration_ms": 1004.0,
+        "parameter_sha256": "b266a401a52ad1356881de0c330344d8366a2dda1ffbc2e248635d7c8c903626"
+      },
+      {
+        "test_id": "tests.test_memberships.test_tadmin_can_toggle_only_ordinary_users",
+        "status": "pass",
+        "duration_ms": 1097.0
+      },
+      {
+        "test_id": "tests.test_memberships.test_padmin_changes_role_and_demoted_cookie_loses_management",
+        "status": "pass",
+        "duration_ms": 1096.0
+      },
+      {
+        "test_id": "tests.test_memberships.test_self_and_platform_targets_protected_even_inactive",
+        "status": "pass",
+        "duration_ms": 1054.0,
+        "parameter_sha256": "0bf629d9573d7cf95f94a490bc7124c3ae698c19a4199596737272951f4c5690"
+      },
+      {
+        "test_id": "tests.test_memberships.test_self_and_platform_targets_protected_even_inactive",
+        "status": "pass",
+        "duration_ms": 1043.0,
+        "parameter_sha256": "cbbb8ad559a83869dd1557e084bd800d2dfa2c8ff378b33dfc70c1e24f2344a4"
+      },
+      {
+        "test_id": "tests.test_memberships.test_revoked_membership_removes_only_that_organization",
+        "status": "pass",
+        "duration_ms": 1094.0
+      },
+      {
+        "test_id": "tests.test_memberships.test_tenant_header_no_fallback",
+        "status": "pass",
+        "duration_ms": 1019.0,
+        "parameter_sha256": "b90038c058c42db73c1c8d46f9f3ec522f3d7540eeb71950722b8ad0bcd36692"
+      },
+      {
+        "test_id": "tests.test_memberships.test_tenant_header_no_fallback",
+        "status": "pass",
+        "duration_ms": 1004.0,
+        "parameter_sha256": "4e6bef5798ac035f87496ce4598e79717092cf5075ba3fc207ccb79bd9175200"
+      },
+      {
+        "test_id": "tests.test_memberships.test_tenant_header_no_fallback",
+        "status": "pass",
+        "duration_ms": 997.0,
+        "parameter_sha256": "8aa307e77cd2aec1c2749c5b7697197214f09b8b06f7485c61e581d32c43e183"
+      },
+      {
+        "test_id": "tests.test_memberships.test_query_validation",
+        "status": "pass",
+        "duration_ms": 1004.0,
+        "parameter_sha256": "6d40cae80b0c090e2fbdd52c281abe3a9e7844a88babb6d6fd2c9b9e845392d7"
+      },
+      {
+        "test_id": "tests.test_memberships.test_query_validation",
+        "status": "pass",
+        "duration_ms": 1026.0,
+        "parameter_sha256": "370a367a9236d220a248c68ed98543ee6eb55d9e024b2dd899a63f630e3f3822"
+      },
+      {
+        "test_id": "tests.test_memberships.test_query_validation",
+        "status": "pass",
+        "duration_ms": 978.0,
+        "parameter_sha256": "38fd26569fd0e00ff08d93a643073c1c339e5a8559a5b7033bd49dc6f1774ec7"
+      },
+      {
+        "test_id": "tests.test_memberships.test_query_validation",
+        "status": "pass",
+        "duration_ms": 978.0,
+        "parameter_sha256": "3c5eaf563ce7092dcbca2340c22df83b4ebde56e2c6eec5e826ab6daa9f8b519"
+      },
+      {
+        "test_id": "tests.test_memberships.test_query_validation",
+        "status": "pass",
+        "duration_ms": 1002.0,
+        "parameter_sha256": "a83332043c40c35fb946ab8f3e3bd43854061d69d9095a41889a9eb2f245e219"
+      },
+      {
+        "test_id": "tests.test_memberships.test_query_validation",
+        "status": "pass",
+        "duration_ms": 988.0,
+        "parameter_sha256": "cb5f6d547e254cfbc0908f0349931f02789e12218520bb62485de42394a39bf8"
+      },
+      {
+        "test_id": "tests.test_memberships.test_mutation_input_strict_and_redacted",
+        "status": "pass",
+        "duration_ms": 1027.0,
+        "parameter_sha256": "5868060bf54e9e73e61935f80c854bb475fc036735ccbcb7b6f0430ed9a775fc"
+      },
+      {
+        "test_id": "tests.test_memberships.test_mutation_input_strict_and_redacted",
+        "status": "pass",
+        "duration_ms": 1033.0,
+        "parameter_sha256": "4a3cddd8eb1f40f5af1006b8133be38f05a01d64f012e446b0ad40814dcb9dcb"
+      },
+      {
+        "test_id": "tests.test_memberships.test_mutation_input_strict_and_redacted",
+        "status": "pass",
+        "duration_ms": 1049.0,
+        "parameter_sha256": "d764abb6fa441a3e25e6738dec708c9f851967cda4ecc478caf9fc0e9b687e9b"
+      },
+      {
+        "test_id": "tests.test_memberships.test_mutation_input_strict_and_redacted",
+        "status": "pass",
+        "duration_ms": 1041.0,
+        "parameter_sha256": "3d54dac616f130284b2fc7f140fbb3678cbd66d9f311b61ae68fce6204193d46"
+      },
+      {
+        "test_id": "tests.test_memberships.test_mutation_input_strict_and_redacted",
+        "status": "pass",
+        "duration_ms": 1036.0,
+        "parameter_sha256": "1dc9e454e78f5a7eeac9d9bc7373d7dfef271a4554a57bec0f90c9c2fb661a32"
+      },
+      {
+        "test_id": "tests.test_memberships.test_mutation_input_strict_and_redacted",
+        "status": "pass",
+        "duration_ms": 1140.0,
+        "parameter_sha256": "b3434768fa0ad65431ac17d27c934d72d4d32503e374055d422789c3df051b07"
+      },
+      {
+        "test_id": "tests.test_memberships.test_mutation_input_strict_and_redacted",
+        "status": "pass",
+        "duration_ms": 1053.0,
+        "parameter_sha256": "53ca9b5e592671f5caa980ee109b311cda5e494ccd24a5f600e884f7a2d4e180"
+      },
+      {
+        "test_id": "tests.test_memberships.test_no_platform_role_assignment",
+        "status": "pass",
+        "duration_ms": 1027.0
+      },
+      {
+        "test_id": "tests.test_memberships.test_write_guards",
+        "status": "pass",
+        "duration_ms": 1206.0,
+        "parameter_sha256": "ba27beaa999a4884e67f28c47c2dd85a10a3c512fbb5dc3a9c700a55384fa2dc"
+      },
+      {
+        "test_id": "tests.test_memberships.test_write_guards",
+        "status": "pass",
+        "duration_ms": 1096.0,
+        "parameter_sha256": "148288add4fff1ae5145f9e58522aa415bac4175b70552ce92dbd50ab8bc24e3"
+      },
+      {
+        "test_id": "tests.test_memberships.test_write_guards",
+        "status": "pass",
+        "duration_ms": 1046.0,
+        "parameter_sha256": "0da2627081155933fe4896b9c446543457c411080d1cf52e34854d7fc89f1bfe"
+      },
+      {
+        "test_id": "tests.test_memberships.test_list_pagination_minimal_current_scope",
+        "status": "pass",
+        "duration_ms": 1135.0
+      },
+      {
+        "test_id": "tests.test_memberships.test_revision_and_missing_target_after_authorization",
+        "status": "pass",
+        "duration_ms": 1088.0
+      },
+      {
+        "test_id": "tests.test_memberships.test_concurrent_same_revision_has_one_commit_and_audit",
+        "status": "pass",
+        "duration_ms": 1136.0
+      },
+      {
+        "test_id": "tests.test_memberships.test_audit_failure_rolls_back_membership_revision_and_idle",
+        "status": "pass",
+        "duration_ms": 1115.0
+      },
+      {
+        "test_id": "tests.test_memberships.test_get_does_not_touch_idle_but_successful_change_does",
+        "status": "pass",
+        "duration_ms": 1172.0
+      },
+      {
+        "test_id": "tests.test_memberships.test_waiting_mutation_rechecks_committed_demotion",
+        "status": "pass",
+        "duration_ms": 1131.0
+      },
+      {
+        "test_id": "tests.test_memberships.test_quota_120_then_429_relogin_does_not_reset_and_tenants_independent",
+        "status": "pass",
+        "duration_ms": 1834.0
+      },
+      {
+        "test_id": "tests.test_memberships.test_read_quota_concurrent_boundary",
+        "status": "pass",
+        "duration_ms": 1105.0
+      },
+      {
+        "test_id": "tests.test_memberships.test_concurrent_a_b_member_lists_do_not_mix",
+        "status": "pass",
+        "duration_ms": 1037.0
+      },
+      {
+        "test_id": "tests.test_memberships.test_managed_tenant_revocation_removes_admin_not_global_capabilities",
+        "status": "pass",
+        "duration_ms": 1077.0
+      },
+      {
+        "test_id": "tests.test_memberships.test_inactive_session_no_tenants",
+        "status": "pass",
+        "duration_ms": 1042.0
+      },
+      {
+        "test_id": "tests.test_memberships.test_untrusted_authority_headers_cannot_promote_user",
+        "status": "pass",
+        "duration_ms": 1018.0
+      },
+      {
+        "test_id": "tests.test_memberships.test_lock_timeout_is_retryable_and_does_not_modify",
+        "status": "pass",
+        "duration_ms": 3115.0
+      },
+      {
+        "test_id": "tests.test_memberships.test_control_functions_deny_index_meter_and_missing_context",
+        "status": "pass",
+        "duration_ms": 996.0
+      },
+      {
+        "test_id": "tests.test_migrations.test_migration_rerun_and_checksum_reject",
+        "status": "pass",
+        "duration_ms": 1135.0
+      },
+      {
+        "test_id": "tests.test_migrations.test_pending_failure_rolls_back_schema_and_checksum",
+        "status": "pass",
+        "duration_ms": 1026.0
+      },
+      {
+        "test_id": "tests.test_migrations.test_seed_rejects_existing_and_nonfixture",
+        "status": "pass",
+        "duration_ms": 1656.0
+      },
+      {
+        "test_id": "tests.test_migrations.test_wrong_fixture_marker_and_privileged_role_reject",
+        "status": "pass",
+        "duration_ms": 1512.0
+      },
+      {
+        "test_id": "tests.test_migrations.test_fixture_credentials_are_argon2_private_and_hidden",
+        "status": "pass",
+        "duration_ms": 1348.0
+      },
+      {
+        "test_id": "tests.test_migrations.test_first_migration_batch_failure_has_no_partial_schema",
+        "status": "pass",
+        "duration_ms": 377.0
+      },
+      {
+        "test_id": "tests.test_mock_preparation.test_missing_mock_budgets_only_and_repeat_preserves_rows",
+        "status": "pass",
+        "duration_ms": 1198.0
+      },
+      {
+        "test_id": "tests.test_mock_preparation.test_existing_allocated_accounted_reserved_never_reset",
+        "status": "pass",
+        "duration_ms": 1066.0,
+        "parameter_sha256": "93b2dfca9b0140235493b0c628f997fd31a6a99ac50fb314452e089d66e57ee7"
+      },
+      {
+        "test_id": "tests.test_mock_preparation.test_existing_allocated_accounted_reserved_never_reset",
+        "status": "pass",
+        "duration_ms": 1053.0,
+        "parameter_sha256": "0e909704acd066808e9b291e8125cc407f6be42baefe80e6fffbacd6f5225bc6"
+      },
+      {
+        "test_id": "tests.test_mock_preparation.test_existing_allocated_accounted_reserved_never_reset",
+        "status": "pass",
+        "duration_ms": 1066.0,
+        "parameter_sha256": "7637a0cbae094e36171e2fdd32703035e600dc8483e6d30c49f38b537db90071"
+      },
+      {
+        "test_id": "tests.test_mock_preparation.test_unowned_database_rejected_without_mutation",
+        "status": "pass",
+        "duration_ms": 1.0
+      },
+      {
+        "test_id": "tests.test_mock_preparation.test_private_key_auth_lines_permissions_and_repeat_preserved",
+        "status": "pass",
+        "duration_ms": 4.0
+      },
+      {
+        "test_id": "tests.test_mock_preparation.test_existing_private_configuration_conflict_preserved",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "b6bfe348278bd8a2ba4769602d5c491f9730674972d9da3a8feef671d567c899"
+      },
+      {
+        "test_id": "tests.test_mock_preparation.test_existing_private_configuration_conflict_preserved",
+        "status": "pass",
+        "duration_ms": 2.0,
+        "parameter_sha256": "701371b66b2e09295f9fda30c61aaa5fec6a81afa45595b8a8e0d5c793af5bfe"
+      },
+      {
+        "test_id": "tests.test_mock_preparation.test_existing_private_configuration_conflict_preserved",
+        "status": "pass",
+        "duration_ms": 2.0,
+        "parameter_sha256": "dc58810f27bdb111854d6581e6f2d286d016f0d159d43b0ae4bd500bd893d571"
+      },
+      {
+        "test_id": "tests.test_mock_preparation.test_private_environment_unsafe_permissions_rejected",
+        "status": "pass",
+        "duration_ms": 2.0
+      },
+      {
+        "test_id": "tests.test_operations.test_admin_scope_read",
+        "status": "pass",
+        "duration_ms": 1070.0,
+        "parameter_sha256": "f3d1ff49befc2ed2fe2a694d84220fa826f22bc073a34e645f58d00a76429f9f"
+      },
+      {
+        "test_id": "tests.test_operations.test_admin_scope_read",
+        "status": "pass",
+        "duration_ms": 1176.0,
+        "parameter_sha256": "946b476a59d831efd74c9c702960fabe297c1b6dbc0c07b2931d6bf7e3c4b4b8"
+      },
+      {
+        "test_id": "tests.test_operations.test_admin_scope_read",
+        "status": "pass",
+        "duration_ms": 1061.0,
+        "parameter_sha256": "3597cffc89c3f781baf0485df08a358ff6ad7719f4c6c0d85bd0712ec36b6120"
+      },
+      {
+        "test_id": "tests.test_operations.test_admin_scope_read",
+        "status": "pass",
+        "duration_ms": 1101.0,
+        "parameter_sha256": "2ec78e1a416deca2293d8583e68e8d398162b3d47641bd6e15c48c46aad153fc"
+      },
+      {
+        "test_id": "tests.test_operations.test_admin_scope_read",
+        "status": "pass",
+        "duration_ms": 1098.0,
+        "parameter_sha256": "3fc2ebe3d37f1ed106e226403639d5955eea827b3b511545b210f3721df3ca8b"
+      },
+      {
+        "test_id": "tests.test_operations.test_admin_scope_read",
+        "status": "pass",
+        "duration_ms": 1070.0,
+        "parameter_sha256": "851e877393a613df1ccaf9606cd9e029e04ba97a7a6ecee3400e8a2a2c38e120"
+      },
+      {
+        "test_id": "tests.test_operations.test_admin_scope_read",
+        "status": "pass",
+        "duration_ms": 1111.0,
+        "parameter_sha256": "d6935d56f846fe0cb4bb18e2700d738ec95bfa9f7d7a8947350bdb68281a4ace"
+      },
+      {
+        "test_id": "tests.test_operations.test_admin_scope_read",
+        "status": "pass",
+        "duration_ms": 1078.0,
+        "parameter_sha256": "f927a4a2af8a3eabadf3c19824954ff66e9a1979534af65e38a610902b81f24d"
+      },
+      {
+        "test_id": "tests.test_operations.test_admin_scope_read",
+        "status": "pass",
+        "duration_ms": 1152.0,
+        "parameter_sha256": "a93cea93da820fc716004e6f0e5633c6a980354f14ffaddf58108bc1d5fb1bce"
+      },
+      {
+        "test_id": "tests.test_operations.test_admin_scope_read",
+        "status": "pass",
+        "duration_ms": 1142.0,
+        "parameter_sha256": "0d8236ec2ad1deb4cae23daab31d830ce9aface8e31643e735b86fb1c027b475"
+      },
+      {
+        "test_id": "tests.test_operations.test_admin_scope_read",
+        "status": "pass",
+        "duration_ms": 1102.0,
+        "parameter_sha256": "751c3a9c3044e2d4eb49fa593a8056df7638b889ebe32d2420f48c7c7eda78a9"
+      },
+      {
+        "test_id": "tests.test_operations.test_admin_scope_read",
+        "status": "pass",
+        "duration_ms": 1089.0,
+        "parameter_sha256": "872e66b5123e3571c99a9c711405a3e41d47c3626595cf74631830fb77f20a10"
+      },
+      {
+        "test_id": "tests.test_operations.test_admin_scope_read",
+        "status": "pass",
+        "duration_ms": 1073.0,
+        "parameter_sha256": "16300c7f636b04b959b0551db09e7c952d9e1030289d8cf1104850190926809d"
+      },
+      {
+        "test_id": "tests.test_operations.test_admin_scope_read",
+        "status": "pass",
+        "duration_ms": 1058.0,
+        "parameter_sha256": "3e5e7625a80545ec663df49c33443ba4e027ca5a34f671a5e37febb6aac13dc3"
+      },
+      {
+        "test_id": "tests.test_operations.test_admin_scope_read",
+        "status": "pass",
+        "duration_ms": 1071.0,
+        "parameter_sha256": "3132e2cceeb5f2986a7e5c32325ba0cb4f4c93dce95378178a8b90ebc8547c33"
+      },
+      {
+        "test_id": "tests.test_operations.test_admin_scope_read",
+        "status": "pass",
+        "duration_ms": 1052.0,
+        "parameter_sha256": "5698e419eec49b30a17a9ae6b794cd968f2ed4d2756204967b94e129ccebdf4e"
+      },
+      {
+        "test_id": "tests.test_operations.test_admin_scope_read",
+        "status": "pass",
+        "duration_ms": 1055.0,
+        "parameter_sha256": "1fc626d0217664bc90f0d62e0b2ff6b9dcfc0235f807d4543453885e8a0562ba"
+      },
+      {
+        "test_id": "tests.test_operations.test_admin_scope_read",
+        "status": "pass",
+        "duration_ms": 1075.0,
+        "parameter_sha256": "08384c669052a63dd1d34a35609f22c531572cbff1764f0610bc25e909dc20ea"
+      },
+      {
+        "test_id": "tests.test_operations.test_independent_global_capabilities",
+        "status": "pass",
+        "duration_ms": 1079.0,
+        "parameter_sha256": "d787eb4e6491ab647c11e6ef5bc8377c53feca3ece25efbc8b4c18f9bca024f0"
+      },
+      {
+        "test_id": "tests.test_operations.test_independent_global_capabilities",
+        "status": "pass",
+        "duration_ms": 1074.0,
+        "parameter_sha256": "42113b9c083a6489b206daeec2aa74691776331b67a336f42a60ae46cf0ef1b9"
+      },
+      {
+        "test_id": "tests.test_operations.test_independent_global_capabilities",
+        "status": "pass",
+        "duration_ms": 1193.0,
+        "parameter_sha256": "2217dbf4ea14a50ca3bd5913e65f34907d14251dd97bdd0ca188348e439b886e"
+      },
+      {
+        "test_id": "tests.test_operations.test_independent_global_capabilities",
+        "status": "pass",
+        "duration_ms": 1120.0,
+        "parameter_sha256": "bb5c5745b8c50013704a9d9a685db7a2e36b29aad11d5722edfbf88628327304"
+      },
+      {
+        "test_id": "tests.test_operations.test_independent_global_capabilities",
+        "status": "pass",
+        "duration_ms": 1078.0,
+        "parameter_sha256": "c8d2c5b41b9eb3923e2b35ffaafea05412ea1017533c54676970a3c7ea9604d4"
+      },
+      {
+        "test_id": "tests.test_operations.test_independent_global_capabilities",
+        "status": "pass",
+        "duration_ms": 1068.0,
+        "parameter_sha256": "3b4bf91e3f5e4c2b0b6c29a90c1609f19223c449ce591f7fec6aedbaf4c56001"
+      },
+      {
+        "test_id": "tests.test_operations.test_agent_public_no_instructions_and_pipeline_not_ready",
+        "status": "pass",
+        "duration_ms": 1197.0
+      },
+      {
+        "test_id": "tests.test_operations.test_agent_changes_cas_audit_and_idle",
+        "status": "pass",
+        "duration_ms": 1411.0
+      },
+      {
+        "test_id": "tests.test_operations.test_agent_strict_input_safe_errors",
+        "status": "pass",
+        "duration_ms": 1101.0,
+        "parameter_sha256": "354531efb4c1defac0ff52063b30e2350dd8102e213caa5140ab6021ea8492cc"
+      },
+      {
+        "test_id": "tests.test_operations.test_agent_strict_input_safe_errors",
+        "status": "pass",
+        "duration_ms": 1112.0,
+        "parameter_sha256": "363be00656e78af00079c8c30f05aef6a1e77db3d2054593bd474bd1947648a7"
+      },
+      {
+        "test_id": "tests.test_operations.test_agent_strict_input_safe_errors",
+        "status": "pass",
+        "duration_ms": 1095.0,
+        "parameter_sha256": "6ddf779e4aed642a1cb2e67e6204f4336ea43191f90ea0e17e50abfc29bba701"
+      },
+      {
+        "test_id": "tests.test_operations.test_agent_strict_input_safe_errors",
+        "status": "pass",
+        "duration_ms": 1080.0,
+        "parameter_sha256": "f7db19dd8614ed1967edbcef1d7d3eb3add10efa18d2d2bcff1c8e5bfd29602c"
+      },
+      {
+        "test_id": "tests.test_operations.test_agent_strict_input_safe_errors",
+        "status": "pass",
+        "duration_ms": 1083.0,
+        "parameter_sha256": "7917bc721f6fe7eba35a24b5299bff535a2569609b5986a52b2132ba956ec379"
+      },
+      {
+        "test_id": "tests.test_operations.test_agent_strict_input_safe_errors",
+        "status": "pass",
+        "duration_ms": 1089.0,
+        "parameter_sha256": "5d59fe510d0aae77a0271e35d72f97499726b06c9d1778c0b3b85c02ea916651"
+      },
+      {
+        "test_id": "tests.test_operations.test_agent_strict_input_safe_errors",
+        "status": "pass",
+        "duration_ms": 1077.0,
+        "parameter_sha256": "e8bade7946e988096f5c73be07ee6578cfb387c66d1598a4f5ff63e0c719db4f"
+      },
+      {
+        "test_id": "tests.test_operations.test_agent_strict_input_safe_errors",
+        "status": "pass",
+        "duration_ms": 1056.0,
+        "parameter_sha256": "5bfdfefa3d23ef30e7dfd8eeff38568ac9502e49731cd0792b14388fd5d20f49"
+      },
+      {
+        "test_id": "tests.test_operations.test_agent_strict_input_safe_errors",
+        "status": "pass",
+        "duration_ms": 1061.0,
+        "parameter_sha256": "5ba00e1591d7cb70f6a0b6ddbea7d45514bec515a43a00a45fdc18656e329c0e"
+      },
+      {
+        "test_id": "tests.test_operations.test_agent_strict_input_safe_errors",
+        "status": "pass",
+        "duration_ms": 1096.0,
+        "parameter_sha256": "6cfb90575a81fc00290168d21b6a5d6fe8b49e36aa1235f55ce7d52414acecf7"
+      },
+      {
+        "test_id": "tests.test_operations.test_agent_strict_input_safe_errors",
+        "status": "pass",
+        "duration_ms": 1082.0,
+        "parameter_sha256": "5dac5bdf3ace594895665117b6d0c036190b6143877e807e861ca6f4425cd7d0"
+      },
+      {
+        "test_id": "tests.test_operations.test_agent_strict_input_safe_errors",
+        "status": "pass",
+        "duration_ms": 1076.0,
+        "parameter_sha256": "8c435f1a9d61ba8f13c2a0fc564e562e7da849aa58ed6d13d4c486f53b2df52a"
+      },
+      {
+        "test_id": "tests.test_operations.test_agent_strict_input_safe_errors",
+        "status": "pass",
+        "duration_ms": 1175.0,
+        "parameter_sha256": "34dd8c55be856e971f558500bc9ac42740ba3aa70ae612eb5d8f524dbf49e6a3"
+      },
+      {
+        "test_id": "tests.test_operations.test_agent_strict_input_safe_errors",
+        "status": "pass",
+        "duration_ms": 1117.0,
+        "parameter_sha256": "f24b0ef99950fb3be4ea3198b08e69054cbc5b29a24e16c09882b3b97e81e5cc"
+      },
+      {
+        "test_id": "tests.test_operations.test_availability_strict_input",
+        "status": "pass",
+        "duration_ms": 1024.0,
+        "parameter_sha256": "5868060bf54e9e73e61935f80c854bb475fc036735ccbcb7b6f0430ed9a775fc"
+      },
+      {
+        "test_id": "tests.test_operations.test_availability_strict_input",
+        "status": "pass",
+        "duration_ms": 1040.0,
+        "parameter_sha256": "4a3cddd8eb1f40f5af1006b8133be38f05a01d64f012e446b0ad40814dcb9dcb"
+      },
+      {
+        "test_id": "tests.test_operations.test_availability_strict_input",
+        "status": "pass",
+        "duration_ms": 1023.0,
+        "parameter_sha256": "d764abb6fa441a3e25e6738dec708c9f851967cda4ecc478caf9fc0e9b687e9b"
+      },
+      {
+        "test_id": "tests.test_operations.test_csrf_and_forged_authority_denied",
+        "status": "pass",
+        "duration_ms": 1087.0
+      },
+      {
+        "test_id": "tests.test_operations.test_money_strict_decimal_string",
+        "status": "pass",
+        "duration_ms": 1089.0,
+        "parameter_sha256": "4d9ff8204d12e4cec2d6ff9e70d20e57b0e7f9c9f361970968e06bb4e02b0b42"
+      },
+      {
+        "test_id": "tests.test_operations.test_money_strict_decimal_string",
+        "status": "pass",
+        "duration_ms": 1063.0,
+        "parameter_sha256": "804ebf5e907c4f4379baa3765ccc684e791ff792a5ca262b872d07a1f548cf3e"
+      },
+      {
+        "test_id": "tests.test_operations.test_money_strict_decimal_string",
+        "status": "pass",
+        "duration_ms": 1074.0,
+        "parameter_sha256": "d64c64fb1a7ca9ca2907feaabdc97edf5d37442e3417b390f2e0e3f1324fb225"
+      },
+      {
+        "test_id": "tests.test_operations.test_money_strict_decimal_string",
+        "status": "pass",
+        "duration_ms": 1087.0,
+        "parameter_sha256": "5c1a068f0a70f103d597d6a3ce88608563a4616d36302f7d07848e7092a00caf"
+      },
+      {
+        "test_id": "tests.test_operations.test_money_strict_decimal_string",
+        "status": "pass",
+        "duration_ms": 1066.0,
+        "parameter_sha256": "c6061a73243ca2606debfb4cc07dfeabdd63e8905256d2f338035d3f8c59b00d"
+      },
+      {
+        "test_id": "tests.test_operations.test_money_strict_decimal_string",
+        "status": "pass",
+        "duration_ms": 1052.0,
+        "parameter_sha256": "633904ca3f16e4bb88e3a01b653200d3d33218421c21328611196f4a50b06c63"
+      },
+      {
+        "test_id": "tests.test_operations.test_money_strict_decimal_string",
+        "status": "pass",
+        "duration_ms": 1095.0,
+        "parameter_sha256": "ec3bd8e7cee3acc3ad10704fd75b6e716a163fbf7dce2187b34961ad8120f287"
+      },
+      {
+        "test_id": "tests.test_operations.test_money_strict_decimal_string",
+        "status": "pass",
+        "duration_ms": 1070.0,
+        "parameter_sha256": "ce39702242adeda2bd7414af66ea46f71e30c0b99d9d79db9fc89bf3866ebe14"
+      },
+      {
+        "test_id": "tests.test_operations.test_money_strict_decimal_string",
+        "status": "pass",
+        "duration_ms": 1088.0,
+        "parameter_sha256": "742118edcedb9bf6f50306b94f758e0e0fd9d9787d4221665128ae6bb6a7f205"
+      },
+      {
+        "test_id": "tests.test_operations.test_money_strict_decimal_string",
+        "status": "pass",
+        "duration_ms": 1068.0,
+        "parameter_sha256": "870632681c90f04033ec13f2163fec2385f9df60153d7af7521bb5bf66411173"
+      },
+      {
+        "test_id": "tests.test_operations.test_money_strict_decimal_string",
+        "status": "pass",
+        "duration_ms": 1060.0,
+        "parameter_sha256": "cb44e46c7385a54e732b79afc49ffa0867c738550ce17aa9973186986e8c5914"
+      },
+      {
+        "test_id": "tests.test_operations.test_local_reduction_preserves_committed_cost_and_mode",
+        "status": "pass",
+        "duration_ms": 1215.0
+      },
+      {
+        "test_id": "tests.test_operations.test_allocation_scope_total_and_clamp",
+        "status": "pass",
+        "duration_ms": 1168.0
+      },
+      {
+        "test_id": "tests.test_operations.test_zero_usage_is_actual_empty_db_and_no_body",
+        "status": "pass",
+        "duration_ms": 1099.0
+      },
+      {
+        "test_id": "tests.test_operations.test_current_authority_recomputed",
+        "status": "pass",
+        "duration_ms": 1139.0,
+        "parameter_sha256": "9949dd77db402cd356f27fee7f22670ef7d2dc4266fcdb11ec793a52b0d3e561"
+      },
+      {
+        "test_id": "tests.test_operations.test_current_authority_recomputed",
+        "status": "pass",
+        "duration_ms": 1155.0,
+        "parameter_sha256": "4e561adefc432e29c477693e049f283f313e9fed4e3655476a49327c3db4e1cf"
+      },
+      {
+        "test_id": "tests.test_operations.test_current_authority_recomputed",
+        "status": "pass",
+        "duration_ms": 1156.0,
+        "parameter_sha256": "5573629fcf87cef82b42ae6ef2b704f499bfe0396e2c32fe54b32dbceb91c29c"
+      },
+      {
+        "test_id": "tests.test_operations.test_current_authority_recomputed",
+        "status": "pass",
+        "duration_ms": 1149.0,
+        "parameter_sha256": "0f057c0c306f399c9268f57e098c5b3786182837659fe52579cc719e66ab3b99"
+      },
+      {
+        "test_id": "tests.test_operations.test_current_authority_recomputed",
+        "status": "pass",
+        "duration_ms": 1139.0,
+        "parameter_sha256": "1dea12d35c1a0c8f71b927279ab6ae3e116555d3f3bad13997294ed3cbf93f4c"
+      },
+      {
+        "test_id": "tests.test_operations.test_current_authority_recomputed",
+        "status": "pass",
+        "duration_ms": 1193.0,
+        "parameter_sha256": "5695d1c27d8cccda6b4ae7b798df48e938ac92b890d019e1b402c415188a6ee2"
+      },
+      {
+        "test_id": "tests.test_operations.test_current_authority_recomputed",
+        "status": "pass",
+        "duration_ms": 1196.0,
+        "parameter_sha256": "29512fbfe1fa69785908cc0fe7d39c26cb762c019275cde70d986ada86db5241"
+      },
+      {
+        "test_id": "tests.test_operations.test_current_authority_recomputed",
+        "status": "pass",
+        "duration_ms": 1256.0,
+        "parameter_sha256": "e99e76b9e901282604b236279c53709f1509525c9dd1958e59f12e40b21a10ad"
+      },
+      {
+        "test_id": "tests.test_operations.test_current_authority_recomputed",
+        "status": "pass",
+        "duration_ms": 1169.0,
+        "parameter_sha256": "8521749777099404b303e9073d874a2c5c031015490a1a0ab3e82178bd80a141"
+      },
+      {
+        "test_id": "tests.test_operations.test_current_authority_recomputed",
+        "status": "pass",
+        "duration_ms": 1187.0,
+        "parameter_sha256": "a57ecf9d1ac9917b45e037aa903f0b2c30cb0851b1402259d767ffbc86ae6de0"
+      },
+      {
+        "test_id": "tests.test_operations.test_audit_failure_rolls_back_setting_budget_and_session",
+        "status": "pass",
+        "duration_ms": 1273.0
+      },
+      {
+        "test_id": "tests.test_operations.test_agent_unknown_and_duplicate_query_denied",
+        "status": "pass",
+        "duration_ms": 1068.0
+      },
+      {
+        "test_id": "tests.test_operations.test_usage_real_rows_owner_tenant_unknown_pagination_and_global",
+        "status": "pass",
+        "duration_ms": 1266.0
+      },
+      {
+        "test_id": "tests.test_operations.test_global_stop_resume_latch_and_no_run_reexecution",
+        "status": "pass",
+        "duration_ms": 1233.0
+      },
+      {
+        "test_id": "tests.test_operations.test_allocation_cannot_reassign_encumbered_funds",
+        "status": "pass",
+        "duration_ms": 1150.0
+      },
+      {
+        "test_id": "tests.test_operations.test_two_tenant_concurrent_allocation_last_capacity_one_success",
+        "status": "pass",
+        "duration_ms": 1237.0
+      },
+      {
+        "test_id": "tests.test_operations.test_simultaneous_same_revision_agent_update_one_success",
+        "status": "pass",
+        "duration_ms": 1160.0
+      },
+      {
+        "test_id": "tests.test_operations.test_waiting_agent_change_rechecks_committed_demotion",
+        "status": "pass",
+        "duration_ms": 1237.0
+      },
+      {
+        "test_id": "tests.test_operations.test_shared_120_read_window_relogin_and_tenant_independence",
+        "status": "pass",
+        "duration_ms": 1923.0
+      },
+      {
+        "test_id": "tests.test_operations.test_read_idle_unchanged_write_touched",
+        "status": "pass",
+        "duration_ms": 1244.0
+      },
+      {
+        "test_id": "tests.test_operations.test_fixed_functions_and_content_permissions_no_escalation",
+        "status": "pass",
+        "duration_ms": 1040.0
+      },
+      {
+        "test_id": "tests.test_operations.test_unconfigured_tenant_budget_does_not_fabricate_usage",
+        "status": "pass",
+        "duration_ms": 1065.0
+      },
+      {
+        "test_id": "tests.test_operations.test_managed_padmin_without_global_capabilities_can_allocate_only_own",
+        "status": "pass",
+        "duration_ms": 1220.0
+      },
+      {
+        "test_id": "tests.test_operations.test_agent_partial_settings_and_explicit_rag_enable_remain_unavailable",
+        "status": "pass",
+        "duration_ms": 1288.0
+      },
+      {
+        "test_id": "tests.test_operations.test_operations_lock_timeout_leaves_no_partial_save",
+        "status": "pass",
+        "duration_ms": 3174.0
+      },
+      {
+        "test_id": "tests.test_operations.test_all_operations_over_real_http_and_restart",
+        "status": "pass",
+        "duration_ms": 5031.0
+      },
+      {
+        "test_id": "tests.test_pool_context.test_same_connection_cleanup",
+        "status": "pass",
+        "duration_ms": 933.0,
+        "parameter_sha256": "0c2dffd5635b373261ff80cac78a40851e4e6b94d04bb5def5df7cc7322c871b"
+      },
+      {
+        "test_id": "tests.test_pool_context.test_same_connection_cleanup",
+        "status": "pass",
+        "duration_ms": 1007.0,
+        "parameter_sha256": "3d5e770b647365da000f4f714cf41f2f4f0f8eb801e35048bef679ba96d71559"
+      },
+      {
+        "test_id": "tests.test_pool_context.test_same_connection_cleanup",
+        "status": "pass",
+        "duration_ms": 934.0,
+        "parameter_sha256": "69a2104d0c03893c72e2cf08416c7eeba995fee7ffcdb6c45a8b4da00a80bff9"
+      },
+      {
+        "test_id": "tests.test_pool_context.test_concurrent_tenants_do_not_mix",
+        "status": "pass",
+        "duration_ms": 940.0
+      },
+      {
+        "test_id": "tests.test_pool_context.test_internal_context_mismatch_and_missing_tenant_fail",
+        "status": "pass",
+        "duration_ms": 902.0
+      },
+      {
+        "test_id": "tests.test_pool_context.test_app_lifespan_uses_web_pool_and_closes",
+        "status": "pass",
+        "duration_ms": 916.0
+      },
+      {
+        "test_id": "tests.test_pool_context.test_startup_rejects_admin_dsn",
+        "status": "pass",
+        "duration_ms": 881.0
+      },
+      {
+        "test_id": "tests.test_pool_context.test_startup_rejects_foreign_marker",
+        "status": "pass",
+        "duration_ms": 6077.0
+      },
+      {
+        "test_id": "tests.test_real_general_check.test_unapproved_or_nonfinite_batch_limit_rejected",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "aba6ed9704799f1ca06aa5024eb6efcb05c27125fbbb781f8d047843dd1db85c"
+      },
+      {
+        "test_id": "tests.test_real_general_check.test_unapproved_or_nonfinite_batch_limit_rejected",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "77803bac50937b11fddde6c8a387d824e38978754a2799c0bbbb1266663eb29a"
+      },
+      {
+        "test_id": "tests.test_real_general_check.test_unapproved_or_nonfinite_batch_limit_rejected",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "63b820f51b00345e17d5305c30cb9fe17b0b1e297b11184d0155754b9ab8ec92"
+      },
+      {
+        "test_id": "tests.test_real_general_check.test_unapproved_or_nonfinite_batch_limit_rejected",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "3ecb2775f60eef0bc1d6af3160634543571c447297d68d325d6a6d65905ba4a5"
+      },
+      {
+        "test_id": "tests.test_real_general_check.test_unapproved_or_nonfinite_batch_limit_rejected",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "13bbd0ad6b5b0e688e1977ea251e49125784593993cb1de4ed95536a1e191c7d"
+      },
+      {
+        "test_id": "tests.test_real_general_check.test_unapproved_or_nonfinite_batch_limit_rejected",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "cf1d18c2c5eea7c1c956b8f57902018e9fde61a43765fb8a283feada0da3e8b4"
+      },
+      {
+        "test_id": "tests.test_real_general_check.test_unapproved_or_nonfinite_batch_limit_rejected",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "65acb810b76620b616ff145a63dc90b86372d351589b927bf70d0dff80f6d22e"
+      },
+      {
+        "test_id": "tests.test_real_general_check.test_unapproved_or_nonfinite_batch_limit_rejected",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "ef8d0933bca642d2e0b1c632027bdc3b98b482804d45ea6b980d461c557b8a54"
+      },
+      {
+        "test_id": "tests.test_real_general_check.test_unapproved_or_nonfinite_batch_limit_rejected",
+        "status": "pass",
+        "duration_ms": 1.0,
+        "parameter_sha256": "38d4755e5e8d1de80f3a644d4768a309d40279ae7aa524df11bf265043131e27"
+      },
+      {
+        "test_id": "tests.test_real_general_check.test_exact_approved_three_request_bound",
+        "status": "pass",
+        "duration_ms": 0.0
+      },
+      {
+        "test_id": "tests.test_real_general_check.test_real_representative_budget_only_missing_managed_a_and_repeat_preserves_ledger",
+        "status": "pass",
+        "duration_ms": 1419.0
+      },
+      {
+        "test_id": "tests.test_real_general_check.test_bootstrap_rejects_lost_authority_stop_or_exhausted_allocation",
+        "status": "pass",
+        "duration_ms": 1081.0,
+        "parameter_sha256": "336ecc1b4535d5d40effc448d8f11baacbab79bfee84f89de3b65231b2a5e2fd"
+      },
+      {
+        "test_id": "tests.test_real_general_check.test_bootstrap_rejects_lost_authority_stop_or_exhausted_allocation",
+        "status": "pass",
+        "duration_ms": 1067.0,
+        "parameter_sha256": "d34c4035ac6a5183f1ba1ee09f8528feae0fc24a83147f060dd410920c742dca"
+      },
+      {
+        "test_id": "tests.test_real_general_check.test_bootstrap_rejects_lost_authority_stop_or_exhausted_allocation",
+        "status": "pass",
+        "duration_ms": 1057.0,
+        "parameter_sha256": "0f43a616d57fbbd02f7e877f671dca7c745de59a4fe7b1da8b07983f068db1e3"
+      },
+      {
+        "test_id": "tests.test_real_general_check.test_bootstrap_rejects_lost_authority_stop_or_exhausted_allocation",
+        "status": "pass",
+        "duration_ms": 1077.0,
+        "parameter_sha256": "6d41d3e434af0a6464f9284e85b20168528d2df5aaedd17a29a0025bac1f598c"
+      },
+      {
+        "test_id": "tests.test_real_general_check.test_existing_spend_and_reservation_count_toward_representative_limit",
+        "status": "pass",
+        "duration_ms": 1072.0
+      },
+      {
+        "test_id": "tests.test_real_general_check.test_durable_started_or_unknown_journal_blocks_all_new_paid_batches",
+        "status": "pass",
+        "duration_ms": 4.0
+      },
+      {
+        "test_id": "tests.test_real_general_check.test_latency_twenty_nearest_rank_and_target_not_manufactured",
+        "status": "pass",
+        "duration_ms": 0.0
+      },
+      {
+        "test_id": "tests.test_real_general_check.test_provider_observations_do_not_capture_body_credentials_headers_or_error_message",
+        "status": "pass",
+        "duration_ms": 9.0,
+        "parameter_sha256": "ee5a3a966341ada2828986591ab194974b875170f7ca837f08324342d7a72ba5"
+      },
+      {
+        "test_id": "tests.test_real_general_check.test_provider_observations_do_not_capture_body_credentials_headers_or_error_message",
+        "status": "pass",
+        "duration_ms": 7.0,
+        "parameter_sha256": "22709d333858e76b65f5b1ab3fb12146cc8195a6b945eb5ec4498ff06879f647"
+      },
+      {
+        "test_id": "tests.test_real_general_check.test_provider_observations_do_not_capture_body_credentials_headers_or_error_message",
+        "status": "pass",
+        "duration_ms": 7.0,
+        "parameter_sha256": "a0e05046b1b8cd222bc5fcc41b1d7191f88ef809b4a0bbc53ff44f79e33e5d29"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_web_has_no_context_and_no_role_escalation",
+        "status": "pass",
+        "duration_ms": 896.0
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_owner_isolation_without_tenant_where",
+        "status": "pass",
+        "duration_ms": 905.0,
+        "parameter_sha256": "24023f61c4e6eb499f8a063807682cf48b05bc2d7f82a963f7d02c529cf79686"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_owner_isolation_without_tenant_where",
+        "status": "pass",
+        "duration_ms": 930.0,
+        "parameter_sha256": "4b83a599045a1bae42a7bf5886ace1ba48936ed55a6df0d3031ec9e3a8e0aaa0"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_owner_isolation_without_tenant_where",
+        "status": "pass",
+        "duration_ms": 922.0,
+        "parameter_sha256": "5806d63218918cbecda1424d8830f0d13f08fc9cb20899de450625516ea7cafe"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_owner_isolation_without_tenant_where",
+        "status": "pass",
+        "duration_ms": 899.0,
+        "parameter_sha256": "af84c5d1b5b551f2ac9e4b316b76bea4549ca23c2eec737d53361682f789b780"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_owner_isolation_without_tenant_where",
+        "status": "pass",
+        "duration_ms": 905.0,
+        "parameter_sha256": "68def768a14e32d08c880a668f56e6182e21493dc0b5386b712b54d780534c9f"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_owner_isolation_without_tenant_where",
+        "status": "pass",
+        "duration_ms": 905.0,
+        "parameter_sha256": "1a639b7f208c09ec54bc9eb44008ae50d3880e5c46f916fc8aa771f6de2f5c86"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_owner_isolation_without_tenant_where",
+        "status": "pass",
+        "duration_ms": 921.0,
+        "parameter_sha256": "daa44eb78bb665bf0ca0fb0014adedf0d3525c0141406198ab46659d76904a7a"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_bad_context_denies",
+        "status": "pass",
+        "duration_ms": 907.0,
+        "parameter_sha256": "fd7b2e88d8f3465e3789a593e851a9587329bfa68658a0503f50f0b7222f4c81"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_bad_context_denies",
+        "status": "pass",
+        "duration_ms": 924.0,
+        "parameter_sha256": "87a2d38938f3fa7ca95c9a4d25c160df996b59df90fb024f3b651c2445c10c34"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_bad_context_denies",
+        "status": "pass",
+        "duration_ms": 940.0,
+        "parameter_sha256": "a900c1c7a77292007b97be49aeff5b5d777f35b34277b5249b337842162976a8"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_bad_context_denies",
+        "status": "pass",
+        "duration_ms": 935.0,
+        "parameter_sha256": "d1faa1b92a4c83dbf38723ab7a972f32301e03c64f154655dc0bcac177359640"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_bad_context_denies",
+        "status": "pass",
+        "duration_ms": 953.0,
+        "parameter_sha256": "fdc67e629a5b1e11647dc50fb1bc2b8632c35d6fbf87321de918955515eea3bd"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_bad_context_denies",
+        "status": "pass",
+        "duration_ms": 907.0,
+        "parameter_sha256": "af066591c61a7bc7a4b128376e72600c4b3243521e4beaa8a8c5e8ca3f3eba9c"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_write_policy_and_immutable_binding",
+        "status": "pass",
+        "duration_ms": 934.0
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_current_state_revocation_in_same_transaction",
+        "status": "pass",
+        "duration_ms": 946.0,
+        "parameter_sha256": "9949dd77db402cd356f27fee7f22670ef7d2dc4266fcdb11ec793a52b0d3e561"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_current_state_revocation_in_same_transaction",
+        "status": "pass",
+        "duration_ms": 945.0,
+        "parameter_sha256": "4e561adefc432e29c477693e049f283f313e9fed4e3655476a49327c3db4e1cf"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_current_state_revocation_in_same_transaction",
+        "status": "pass",
+        "duration_ms": 938.0,
+        "parameter_sha256": "5573629fcf87cef82b42ae6ef2b704f499bfe0396e2c32fe54b32dbceb91c29c"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_current_state_revocation_in_same_transaction",
+        "status": "pass",
+        "duration_ms": 954.0,
+        "parameter_sha256": "0f057c0c306f399c9268f57e098c5b3786182837659fe52579cc719e66ab3b99"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_current_state_revocation_in_same_transaction",
+        "status": "pass",
+        "duration_ms": 950.0,
+        "parameter_sha256": "1dea12d35c1a0c8f71b927279ab6ae3e116555d3f3bad13997294ed3cbf93f4c"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_current_state_revocation_in_same_transaction",
+        "status": "pass",
+        "duration_ms": 977.0,
+        "parameter_sha256": "5695d1c27d8cccda6b4ae7b798df48e938ac92b890d019e1b402c415188a6ee2"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_current_state_revocation_in_same_transaction",
+        "status": "pass",
+        "duration_ms": 938.0,
+        "parameter_sha256": "29512fbfe1fa69785908cc0fe7d39c26cb762c019275cde70d986ada86db5241"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_raw_permissions_and_rls_catalog",
+        "status": "pass",
+        "duration_ms": 975.0
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_current_membership_not_global_tenant_access",
+        "status": "pass",
+        "duration_ms": 911.0,
+        "parameter_sha256": "9be7c976d10292a03359ef451616fe94a6d69ed71780e190e0ea4766d3bdab8d"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_current_membership_not_global_tenant_access",
+        "status": "pass",
+        "duration_ms": 920.0,
+        "parameter_sha256": "67f53eb2b069f5f3e911fec0543d244458461b9ce3b055962037ba5930818d20"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_current_membership_not_global_tenant_access",
+        "status": "pass",
+        "duration_ms": 900.0,
+        "parameter_sha256": "39fcead3c5ea8aa08db7d5a76fa850c42aeb02450e737833ffb19eaac1e53f96"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_current_membership_not_global_tenant_access",
+        "status": "pass",
+        "duration_ms": 910.0,
+        "parameter_sha256": "eae0712c4ea15ccb86a09fc8a060566ac2d9f4e6adbfc440326acd241580408d"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_current_membership_not_global_tenant_access",
+        "status": "pass",
+        "duration_ms": 900.0,
+        "parameter_sha256": "660917124eca9894366096ebbc1d06ed031a0724a87ace52f23901296ccfaa7f"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_current_membership_not_global_tenant_access",
+        "status": "pass",
+        "duration_ms": 919.0,
+        "parameter_sha256": "4b0af337e851ddc1aa0a5320835733aefeca2b2249710e7d6958443381754d4c"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_inactive_session_and_no_membership_denied",
+        "status": "pass",
+        "duration_ms": 924.0
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_no_context_insert_and_allowed_own_insert",
+        "status": "pass",
+        "duration_ms": 949.0
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_composite_membership_fk_rejects_foreign_owner",
+        "status": "pass",
+        "duration_ms": 951.0
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_audit_reads_only_current_managed_tenant",
+        "status": "pass",
+        "duration_ms": 958.0,
+        "parameter_sha256": "b362f1185c7d5c436f1af0131f59a313c12775ce3415c4ffe4a0b1a78553dc0b"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_audit_reads_only_current_managed_tenant",
+        "status": "pass",
+        "duration_ms": 940.0,
+        "parameter_sha256": "a6c9702615f63e5d772b19ed51343f30471e141c8406110b5ffd3b4d951eb1c0"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_audit_reads_only_current_managed_tenant",
+        "status": "pass",
+        "duration_ms": 947.0,
+        "parameter_sha256": "40aff64a228952b9da7acc1053f701721a5a14f1ef3361539927692c6d85cff7"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_audit_reads_only_current_managed_tenant",
+        "status": "pass",
+        "duration_ms": 934.0,
+        "parameter_sha256": "5aa899135ed759de66558cfd2b085f047966ec5bacb33f94afa94c72080f1bae"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_platform_and_managed_revoke_recompute_privileges",
+        "status": "pass",
+        "duration_ms": 972.0,
+        "parameter_sha256": "4a594ffa5a0492d1cc8ee79718995a9c39f1173e4fb9eba25993b9bceb84d575"
+      },
+      {
+        "test_id": "tests.test_schema_rls.test_platform_and_managed_revoke_recompute_privileges",
+        "status": "pass",
+        "duration_ms": 988.0,
+        "parameter_sha256": "8521749777099404b303e9073d874a2c5c031015490a1a0ab3e82178bd80a141"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_roundtrip_private_permissions_and_literal_text",
+        "status": "pass",
+        "duration_ms": 8.0,
+        "parameter_sha256": "418ca0217d8a68fc1f7249afdb1692f36cbce874a36bbcebe98134fdbf4372ff"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_roundtrip_private_permissions_and_literal_text",
+        "status": "pass",
+        "duration_ms": 5.0,
+        "parameter_sha256": "04d9464e644b0c39958389dc0d451e1e63877811b607aaec5216ff75e7264d97"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_reject_invalid_before_any_files",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "de4b89209f94ce78ae5c65f1110322c88b3f53092ab43b49c01970e5fe94aa43"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_reject_invalid_before_any_files",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "e9b07775b6f753ccc40c71894ced6ff91e440b8979ccf1574f7ec470f56b10fb"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_reject_invalid_before_any_files",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "af377b841d1dd7003911ed9ba8afc275591b444a81e3c60fd9dd53ba37cb75c6"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_reject_invalid_before_any_files",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "cb3933bdc01d490838229be5bb3377bf56ef17ce5e1204c175ca14b19ae434f5"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_reject_invalid_before_any_files",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "e16244a247a8380112e50e87f720a3a21a5ebfad68963a90c100798d44c2b629"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_reject_invalid_before_any_files",
+        "status": "pass",
+        "duration_ms": 40.0,
+        "parameter_sha256": "ea052fb8f71b3276b7708ee4f333cee56329b2f6135fefe48db5d317a853919f"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_reject_invalid_before_any_files",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "cdf4f0a9fc8ed157bcf6ec2bab5f1f5c4d998559930392324b88d84fd25fd382"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_reject_invalid_before_any_files",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "2c863eac4309a2f0dade6681d39bc6146454e06276e2e6b183282875f1ce7049"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_reject_invalid_before_any_files",
+        "status": "pass",
+        "duration_ms": 2.0,
+        "parameter_sha256": "8e110a49d5c89abbde7b04c80e62d8b5f36a9a9c0bfbf79841022637f7f00c68"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_reject_invalid_before_any_files",
+        "status": "pass",
+        "duration_ms": 3.0,
+        "parameter_sha256": "735f4d121260415b702a4eec03838afc9c26691077925e377c72ffce3829b6d1"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_valid_size_and_character_boundaries",
+        "status": "pass",
+        "duration_ms": 19.0,
+        "parameter_sha256": "dad405001f6290bb6e08b40bb16fcc2721bd00defc1f8888af8de31d239e6d8f"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_valid_size_and_character_boundaries",
+        "status": "pass",
+        "duration_ms": 17.0,
+        "parameter_sha256": "1a56ea515a888b66d5d51f75723a5b83cb02cfa228202edd184389717a9bb6df"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_valid_size_and_character_boundaries",
+        "status": "pass",
+        "duration_ms": 6.0,
+        "parameter_sha256": "e787faf4a6b766126b82134f9ac8450d8dc4a18e16daa9bba980ec94cb1514cf"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_overwrite_and_concurrent_write_leave_no_temp",
+        "status": "pass",
+        "duration_ms": 7.0
+      },
+      {
+        "test_id": "tests.test_source_storage.test_noncanonical_paths_rejected",
+        "status": "pass",
+        "duration_ms": 4.0,
+        "parameter_sha256": "95f2191dcd33e940289a9e7154a5435e945e039c0470af47ffed174e3efcbf80"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_noncanonical_paths_rejected",
+        "status": "pass",
+        "duration_ms": 4.0,
+        "parameter_sha256": "5e2715a1d38e8d3074ca79a30a9014dadab997c04747251341cb2ff69d8f3c45"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_noncanonical_paths_rejected",
+        "status": "pass",
+        "duration_ms": 4.0,
+        "parameter_sha256": "2bcc11595cfff92454127b4aa4010c0161badbd8759d0229a1fb47e1be9ee378"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_noncanonical_paths_rejected",
+        "status": "pass",
+        "duration_ms": 4.0,
+        "parameter_sha256": "e41d75f86785648b807b8d16ce2b32446b00337a36497d36d68e0ef8a0256918"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_filesystem_bypass_and_integrity",
+        "status": "pass",
+        "duration_ms": 5.0,
+        "parameter_sha256": "8382566298792c3c0efdda188e225d1eef28903ecdea09f476b403ea3c0912f2"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_filesystem_bypass_and_integrity",
+        "status": "pass",
+        "duration_ms": 5.0,
+        "parameter_sha256": "45bd78d0912032271453fdf643248ed99cb92f3725ebd4e7d655f9ef58a10088"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_filesystem_bypass_and_integrity",
+        "status": "pass",
+        "duration_ms": 5.0,
+        "parameter_sha256": "7b6e97df44f862e8611bdaceca224ef4769460a97b8ebf83c2cebdab030d8793"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_filesystem_bypass_and_integrity",
+        "status": "pass",
+        "duration_ms": 5.0,
+        "parameter_sha256": "a6b422db79d454d1c2973b51e1f2a583cae17227531a6d61f997c6f2001dbfeb"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_filesystem_bypass_and_integrity",
+        "status": "pass",
+        "duration_ms": 5.0,
+        "parameter_sha256": "f73334ad684d300c023d4426ef51dd0c838c354c2a25a41223d4d23d17c70e5b"
+      },
+      {
+        "test_id": "tests.test_source_storage.test_storage_root_symlink_and_untrusted_permissions_rejected",
+        "status": "pass",
+        "duration_ms": 2.0
+      },
+      {
+        "test_id": "tests.test_source_storage.test_private_orphan_has_no_publication_side_effect",
+        "status": "pass",
+        "duration_ms": 156.0
+      }
+    ]
+  },
+  "counts_not_additive": true,
+  "frontend": {
+    "status": "passed",
+    "duration_ms": 119668.961,
+    "runner_errors": 0,
+    "tests": [
+      {
+        "test_id": "A05_01_user_login_restore_and_direct_denial",
+        "status": "passed",
+        "duration_ms": 1300
+      },
+      {
+        "test_id": "A05_02_generic_login_failure_and_password_clear",
+        "status": "passed",
+        "duration_ms": 1013
+      },
+      {
+        "test_id": "A05_03_tadmin_active_changes_and_protected_rows",
+        "status": "passed",
+        "duration_ms": 1699
+      },
+      {
+        "test_id": "A05_04_padmin_role_changes",
+        "status": "passed",
+        "duration_ms": 1431
+      },
+      {
+        "test_id": "A05_05_no_members_has_no_organization",
+        "status": "passed",
+        "duration_ms": 912
+      },
+      {
+        "test_id": "A05_06_global_permission_does_not_enable_tenant_admin",
+        "status": "passed",
+        "duration_ms": 842
+      },
+      {
+        "test_id": "A05_07_two_tabs_independent_tenants",
+        "status": "passed",
+        "duration_ms": 1408
+      },
+      {
+        "test_id": "A05_08_late_actual_A_response_discarded",
+        "status": "passed",
+        "duration_ms": 1064
+      },
+      {
+        "test_id": "A05_09_membership_revoked_A_keeps_B_and_session",
+        "status": "passed",
+        "duration_ms": 1392
+      },
+      {
+        "test_id": "A05_10_demoted_admin_menu_and_rows_removed",
+        "status": "passed",
+        "duration_ms": 1283
+      },
+      {
+        "test_id": "A05_11_expired_session_clears_content",
+        "status": "passed",
+        "duration_ms": 1310
+      },
+      {
+        "test_id": "A05_12_conflict_refresh_without_auto_mutation",
+        "status": "passed",
+        "duration_ms": 1676
+      },
+      {
+        "test_id": "A05_13_logout_DB_failure_hidden_until_retry_confirmed",
+        "status": "passed",
+        "duration_ms": 1654
+      },
+      {
+        "test_id": "A05_14_logout_network_failure_hidden_until_retry",
+        "status": "passed",
+        "duration_ms": 1084
+      },
+      {
+        "test_id": "A05_15_logout_broadcast_clears_other_tab",
+        "status": "passed",
+        "duration_ms": 1205
+      },
+      {
+        "test_id": "A05_16_read_storage_failure_and_retry",
+        "status": "passed",
+        "duration_ms": 1700
+      },
+      {
+        "test_id": "A05_17_mobile_layout_real_management",
+        "status": "passed",
+        "duration_ms": 1075
+      },
+      {
+        "test_id": "A05_18_password_fill_failure_redacted",
+        "status": "passed",
+        "duration_ms": 746
+      },
+      {
+        "test_id": "A05_19_server_cursor_pagination",
+        "status": "passed",
+        "duration_ms": 1329
+      },
+      {
+        "test_id": "A05_20_blank_login_visuals_no_credentials",
+        "status": "passed",
+        "duration_ms": 757
+      },
+      {
+        "test_id": "B05_01_chat_surface",
+        "status": "passed",
+        "duration_ms": 1832
+      },
+      {
+        "test_id": "B05_02_save_reload_history",
+        "status": "passed",
+        "duration_ms": 3211
+      },
+      {
+        "test_id": "B05_03_lost_acceptance_one_provider_call",
+        "status": "passed",
+        "duration_ms": 2971
+      },
+      {
+        "test_id": "B05_04_missing_acceptance_replays_identical_payload_once",
+        "status": "passed",
+        "duration_ms": 2684
+      },
+      {
+        "test_id": "B05_05_double_click_one_admission",
+        "status": "passed",
+        "duration_ms": 2793
+      },
+      {
+        "test_id": "B05_06_stream_eof_queries_saved_state",
+        "status": "passed",
+        "duration_ms": 4324
+      },
+      {
+        "test_id": "B05_07_actual_stream_draft_and_cancel",
+        "status": "passed",
+        "duration_ms": 2576
+      },
+      {
+        "test_id": "B05_08_two_tabs_independent_conversation_scopes",
+        "status": "passed",
+        "duration_ms": 3977
+      },
+      {
+        "test_id": "B05_09_late_A_stream_discarded_after_switch",
+        "status": "passed",
+        "duration_ms": 2647
+      },
+      {
+        "test_id": "B05_10_user_admin_routes_and_APIs_denied",
+        "status": "passed",
+        "duration_ms": 1627
+      },
+      {
+        "test_id": "B05_11_agent_conflict_no_automatic_overwrite",
+        "status": "passed",
+        "duration_ms": 1742
+      },
+      {
+        "test_id": "B05_12_agent_stop_blocks_new_provider_calls",
+        "status": "passed",
+        "duration_ms": 2139
+      },
+      {
+        "test_id": "B05_13_platform_writer_only_no_usage_read",
+        "status": "passed",
+        "duration_ms": 1952
+      },
+      {
+        "test_id": "B05_14_platform_reader_only_no_write",
+        "status": "passed",
+        "duration_ms": 1567
+      },
+      {
+        "test_id": "B05_15_tadmin_local_cap_and_no_allocation",
+        "status": "passed",
+        "duration_ms": 1574
+      },
+      {
+        "test_id": "B05_16_padmin_current_managed_allocation_only",
+        "status": "passed",
+        "duration_ms": 1637
+      },
+      {
+        "test_id": "B05_17_unknown_usage_reservation_preserved",
+        "status": "passed",
+        "duration_ms": 2773
+      },
+      {
+        "test_id": "B05_18_expired_session_removes_stream_body",
+        "status": "passed",
+        "duration_ms": 2612
+      },
+      {
+        "test_id": "B05_19_platform_permission_revoked_clears_summary",
+        "status": "passed",
+        "duration_ms": 2082
+      },
+      {
+        "test_id": "B05_20_mobile_chat_no_page_overflow",
+        "status": "passed",
+        "duration_ms": 2617
+      },
+      {
+        "test_id": "B05_21_conversation_cursor_uses_real_server_pages",
+        "status": "passed",
+        "duration_ms": 2107
+      },
+      {
+        "test_id": "B05_22_GET_retry_bounded_no_new_generation",
+        "status": "passed",
+        "duration_ms": 6186
+      },
+      {
+        "test_id": "B05_23_invalid_stream_gap_canonical_recovery",
+        "status": "passed",
+        "duration_ms": 4410
+      },
+      {
+        "test_id": "B05_24_invalid_stream_epoch_canonical_recovery",
+        "status": "passed",
+        "duration_ms": 4453
+      },
+      {
+        "test_id": "B05_25_invalid_stream_org_canonical_recovery",
+        "status": "passed",
+        "duration_ms": 4443
+      },
+      {
+        "test_id": "B05_26_invalid_stream_size_canonical_recovery",
+        "status": "passed",
+        "duration_ms": 4347
+      },
+      {
+        "test_id": "B05_27_unresolved_admission_blocks_new_requests",
+        "status": "passed",
+        "duration_ms": 1749
+      },
+      {
+        "test_id": "B05_28_chat_logout_clears_other_tab_draft",
+        "status": "passed",
+        "duration_ms": 2465
+      },
+      {
+        "test_id": "B05_29_hidden_state_stops_poll_without_cancelling_run",
+        "status": "passed",
+        "duration_ms": 5515
+      },
+      {
+        "test_id": "A05_unregistered_test",
+        "status": "passed",
+        "duration_ms": 1806
+      },
+      {
+        "test_id": "B05_31_saved_prompt_rendered_as_text_without_storage",
+        "status": "passed",
+        "duration_ms": 2533
+      }
+    ]
+  },
+  "frontend_cleanup": {
+    "kind": "A05-runtime-cleanup",
+    "api_pool_connections": 0,
+    "fixture_removed": true,
+    "private_credentials_removed": true,
+    "database_state_after": "stopped"
+  },
+  "initial_failures": {
+    "collection": "invalid test bytes literal; corrected UTF-8 encode",
+    "database": "missing scoped grants/RLS policies; corrected before primary application",
+    "fixture": "native test used nonexistent stop method; corrected and disposed only marked nonprimary fixture"
+  },
+  "application_checks": {
+    "private_config": "exclusive-create helper rejected existing config without mutation; resumed by preserving prefix and atomic replacement",
+    "native_shutdown": "Uvicorn SIGTERM return -15 accepted only with no runtime connections/listeners and identical legacy table hashes"
+  },
+  "provider_transport": "mock or fixed fake HTTP; no actual provider request"
+}

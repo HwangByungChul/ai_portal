@@ -2,7 +2,7 @@
 title: 문서 등록과 인덱싱 Job 상세 작업 계획
 created: 2026-10-05
 updated: 2026-10-05
-status: planned
+status: completed
 stage: 250.구현
 tags: [implementation-plan, C03, indexing, tenant-isolation]
 ---
@@ -80,9 +80,15 @@ C02 계획을 검증하고 청크 최대 512토큰·overlap 0, 배치 최대 8�
 
 산출물: `250.구현/14 문서 등록과 인덱싱 Job 구현 결과.md`, `260.테스트/evidence/C-rag/C03-*.json`, 대장/WBS 및 다음 C04 상세 계획. 각 구현 단계는 현재 채팅에서 순차 진행한다.
 
-- [ ] 입력/권한·추가 migration
-- [ ] 등록 receipt/원문 보상/API
-- [ ] Job lease/epoch/현재 권한
-- [ ] 중앙 임베딩/비용/checkpoint
-- [ ] 검증·게시/삭제 cleanup
-- [ ] 회귀·보존 증거/다음 C04 계획
+- [x] 입력/권한·추가 migration
+- [x] 등록 receipt/원문 보상/API
+- [x] Job lease/epoch/현재 권한
+- [x] 중앙 임베딩/비용/checkpoint
+- [x] 검증·게시/삭제 cleanup
+- [x] 회귀·보존 증거/다음 C04 계획
+
+## 실행 계약 보완
+
+현재 채팅에서 순차 실행한다. multipart는 파일1개+metadata JSON1개만 허용하고 실제 request stream을 제한한다. 공통 코어 입력에는 평가 manifest를 사용하지 않는다. 실제 유료 임베딩은 수행하지 않고 mock/고정 가짜전송으로 중앙 원장·Job 재시작을 우선 검증한다.
+
+완료 결과: [[14 문서 등록과 인덱싱 Job 구현 결과]]. 실제 유료 발사0이며 C04 검색/RAG 상세 계획은 [[15 ACL 검색과 RAG 답변 상세 작업 계획]]이다.

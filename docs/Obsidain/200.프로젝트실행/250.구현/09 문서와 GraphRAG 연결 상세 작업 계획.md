@@ -17,7 +17,7 @@ tags: [implementation-plan, graphrag, C, tenant-isolation]
 
 **Tech Stack:** 기존 Python/FastAPI/PostgreSQL15·React/TypeScript. pgvector(1536) 준비 상태는 C01에서 실제 확인한다. 생성 gpt-4o-mini/임베딩 text-embedding-3-small을 유지한다.
 
-**Spec:** [[200.프로젝트실행/240.설계/03 데이터 모델과 RLS 설계]], [[200.프로젝트실행/240.설계/04 API와 실행 상태 설계]], [[200.프로젝트실행/240.설계/05 AI 호출과 사용량 원장 설계]], [[200.프로젝트실행/240.설계/06 문서와 GraphRAG 설계]], [[200.프로젝트실행/240.설계/08 검증과 재현 설계]], [[200.프로젝트실행/230.분석/03 GraphRAG와 백엔드 재사용 분석]]. C01 기반 구현·시험은 완료했으며 결과는 [[10 문서와 GraphRAG 저장 기반 구현 결과]]에 기록했다. C02 순수 코어·문서 처리도 완료했으며 C03~C06은 계획이다.
+**Spec:** [[200.프로젝트실행/240.설계/03 데이터 모델과 RLS 설계]], [[200.프로젝트실행/240.설계/04 API와 실행 상태 설계]], [[200.프로젝트실행/240.설계/05 AI 호출과 사용량 원장 설계]], [[200.프로젝트실행/240.설계/06 문서와 GraphRAG 설계]], [[200.프로젝트실행/240.설계/08 검증과 재현 설계]], [[200.프로젝트실행/230.분석/03 GraphRAG와 백엔드 재사용 분석]]. C01 기반 구현·시험은 완료했으며 결과는 [[10 문서와 GraphRAG 저장 기반 구현 결과]]에 기록했다. C02 순수 코어·문서 처리와 C03 등록/Job/중앙 임베딩·게시도 완료했으며 C04~C06은 계획이다.
 
 ## Global Constraints
 
@@ -43,7 +43,7 @@ tags: [implementation-plan, graphrag, C, tenant-isolation]
 | C05 문서·Job·공유·출처 화면 |3h|실 API 문서관리/처리단계·버전공유/규정Agent·인용보기|A/B 전환·권한/상태·같은ID 복구. 등록202를완료로표시하지않음 |
 | C06 합성7버전·Q20·통합 인계 |3h|실제 등록/색인/검색평가·현재ACL/재시작 증거·260 인계|모의/실제·목표/관측/완료·차단을 구분. 전체V41 판정은260/280 |
 
-C01·C02는 완료했다. 다음 작업은 [[13 문서 등록과 인덱싱 Job 상세 작업 계획|C03 등록·Job·중앙 임베딩]]이며 이후도 결과와 다음 계획으로 순차 진행한다.
+C01~C03는 완료했다. 다음 작업은 [[15 ACL 검색과 RAG 답변 상세 작업 계획|C04 ACL 검색·RAG 답변]]이며 이후도 결과와 다음 계획으로 순차 진행한다.
 
 ## C01 — 다음에 수행할 상세 작업
 
@@ -74,11 +74,11 @@ Files planned: `src/common_core/ai_pipeline/document/{schemas,parser,chunker,map
 
 Files planned: documents/jobs routes·repository·runner, ai gateway/provider 확장, index/Job 제한 함수와 tests.
 
-- [ ] upload receipt/client_upload_id·same payload reuse/다른payload409, publication≠processing 상태, 내부원문 위임·CAS/lease60s·epoch fence.
-- [ ] validate_source→parse_plan→embed_batches→validate_index→publish 순서. 청크8개/4096token 이하 배치·1536유한벡터·usage·checkpoint/hash/mode 일치 후 batch commit.
-- [ ] central embed_document permit/dispatch/settle 단일 경로. 벡터+checkpoint는같은DB transaction, 외부호출·정산은별개다. unknown은needs_review, 자동재호출0; 확정정산+지속벡터배치만 새Job에서재사용.
-- [ ] publish 직전 현재권한·lease·삭제/Agent/규모/근거를 재검사해 pointer+Jobcompleted+감사를 commit. 실패하면기존publicpointer보존.
-- [ ] 삭제 접근차단commit 후 purge-only cleanup 위임으로원문/파생payload를정리하고 기존비용·ID/원장보존.
+- [x] upload receipt/client_upload_id·same payload reuse/다른payload409, publication≠processing 상태, 내부원문 위임·CAS/lease60s·epoch fence.
+- [x] validate_source→parse_plan→embed_batches→validate_index→publish 순서. 청크8개/4096token 이하 배치·1536유한벡터·usage·checkpoint/hash/mode 일치 후 batch commit.
+- [x] central embed_document permit/dispatch/settle 단일 경로. 벡터+checkpoint는같은DB transaction, 외부호출·정산은별개다. unknown은needs_review, 자동재호출0; 확정정산+지속벡터배치만 만료lease의새epoch에서재사용.
+- [x] publish 직전 현재권한·lease·삭제/Agent/규모/근거를 재검사해 pointer+Jobcompleted+감사를 commit. 실패하면기존publicpointer보존.
+- [x] 삭제 접근차단commit 후 현재관리권한 고정purge-only cleanup 함수으로원문/파생payload를정리하고 기존비용·ID/원장보존.
 
 ## C04~C06 — 검색부터 평가까지
 
@@ -130,3 +130,5 @@ Files planned: documents/jobs routes·repository·runner, ai gateway/provider �
 ## C02 완료 기록
 
 순수 코어/원문 mapping·512토큰 청킹/GR01~10·관계별 exact 근거·배치 계획과 분리 evaluator 검증을 완료했다. 결과는 [[12 GraphRAG 순수 코어와 문서 처리 구현 결과]]. 실제 임베딩·DB 인덱싱·검색·Q20는 후속 작업이다. 다음 [[13 문서 등록과 인덱싱 Job 상세 작업 계획]].
+
+C03 결과: [[14 문서 등록과 인덱싱 Job 구현 결과]]. 현재34 API/14 migration/66 security 함수이며 다음7 API 및 검색/RAG는 C04다.

@@ -1,0 +1,62 @@
+{
+  "stage": "I250-C03",
+  "status": "pass",
+  "date": "2026-10-05",
+  "targeted": {
+    "exit_code": 0,
+    "duration_seconds": 39.53,
+    "passed": 35,
+    "failed": 0,
+    "skipped": 0
+  },
+  "full_backend": {
+    "exit_code": 0,
+    "duration_seconds": 649.66,
+    "passed": 706,
+    "failed": 0,
+    "skipped": 0
+  },
+  "targeted_included_in_full": true,
+  "full_backend_warnings": 0,
+  "frontend": {
+    "build": "pass",
+    "tests": 51,
+    "status": "passed",
+    "runner_errors": 0,
+    "duration_seconds": 121.93
+  },
+  "native_primary": {
+    "native_primary_health": "pass",
+    "openapi_routes": 34,
+    "configured_mode": "mock",
+    "index_enabled": true,
+    "execution_enabled": true,
+    "legacy_tables_identical": 31,
+    "paid_dispatches": 0,
+    "runtime_connections_after": 0,
+    "temporary_databases_after": 0,
+    "owned_child_shutdown": "pass",
+    "shutdown_returncode": -15,
+    "cluster_state_after": "stopped",
+    "development_listeners": 0
+  },
+  "catalog": {
+    "business_tables": 31,
+    "migrations": 14,
+    "security_functions": 66,
+    "force_rls_tables": 17,
+    "extension": "0.8.6"
+  },
+  "paid_dispatches_this_stage": 0,
+  "new_cost_krw": "0",
+  "prior_B06_internal_estimate_krw": "0.19",
+  "runtime_mode": "mock",
+  "index_enabled": true,
+  "rag_enabled": false,
+  "primary_corpus_loaded": false,
+  "q20_status": "not_run",
+  "new_dependencies": 0,
+  "estimated_personal_hours": 4,
+  "actual_personal_hours": "unmeasured",
+  "next_stage": "C04 ACL search and RAG answer"
+}

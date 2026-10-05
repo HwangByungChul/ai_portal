@@ -1,0 +1,557 @@
+{
+  "primary": {
+    "result": {
+      "applied": [
+        "011_document_ingest_control.sql",
+        "012_document_embedding_control.sql",
+        "013_document_lifecycle_control.sql"
+      ],
+      "reapplied": [],
+      "legacy_columns_unchanged": 31,
+      "new_call_columns_null_for_prior_general_calls": true,
+      "catalog": {
+        "business_tables": 31,
+        "migrations": 14,
+        "security_functions": 66,
+        "force_rls_tables": 17,
+        "extension": "0.8.6"
+      },
+      "primary_documents_and_indexes_loaded": false,
+      "paid_dispatches": 0,
+      "new_cost_krw": "0",
+      "prior_real_internal_estimate_krw": "0.19",
+      "rag_agent_enabled": false,
+      "private_environment_original_prefix_identical": true
+    },
+    "legacy_tables": {
+      "ops.audit_events": {
+        "rows": 32,
+        "sha256": "e2147e38cd2f6793a719e7cd28e9b9f7e11b5a7feeaf8ab1658906c6b742f166",
+        "columns": [
+          "event_id",
+          "scope_kind",
+          "tenant_id",
+          "actor_id",
+          "action",
+          "opaque_target_id",
+          "result",
+          "safe_reason",
+          "revisions",
+          "created_at"
+        ]
+      },
+      "ops.call_attempts": {
+        "rows": 3,
+        "sha256": "6931bd0f62824302af4000da6bf0fda50a421c5e65042617ec91a787d31b70d6",
+        "columns": [
+          "tenant_id",
+          "call_id",
+          "run_id",
+          "job_id",
+          "initiator_user_id",
+          "operation",
+          "budget_id",
+          "mode",
+          "agent_key",
+          "config_revision",
+          "step_key",
+          "attempt_no",
+          "input_fingerprint",
+          "permit_revision",
+          "permit_expires_at",
+          "execution_epoch",
+          "dispatch_claim_hash",
+          "dispatched_at",
+          "provider_request_id",
+          "provider_end_status",
+          "reserved_krw",
+          "state",
+          "slot_held",
+          "cost_overrun",
+          "usage_snapshot",
+          "price_snapshot",
+          "created_at"
+        ]
+      },
+      "ops.project_budget": {
+        "rows": 2,
+        "sha256": "4a80f84536beae8ef4236aa980d1d8a92b098b586d910589a8a3f877af0739b3",
+        "columns": [
+          "budget_id",
+          "period",
+          "mode",
+          "approved_cap_krw",
+          "operational_cap_krw",
+          "reserved_krw",
+          "accounted_krw",
+          "active_slot",
+          "stopped",
+          "stop_latch",
+          "revision"
+        ]
+      },
+      "ops.tenant_budgets": {
+        "rows": 3,
+        "sha256": "4234853b470e82a1057c5f89d93b8d5a91368b750d0bfc3345252d14ede767e1",
+        "columns": [
+          "tenant_id",
+          "budget_id",
+          "allocated_cap_krw",
+          "local_cap_krw",
+          "reserved_krw",
+          "accounted_krw",
+          "active_slot",
+          "stopped",
+          "revision"
+        ]
+      },
+      "ops.usage_events": {
+        "rows": 6,
+        "sha256": "5ce9dea9bc631d8d6d1479a2ee048fc7216ea37f710d12eb8153fe547c7d065f",
+        "columns": [
+          "tenant_id",
+          "event_id",
+          "call_id",
+          "event_kind",
+          "delta_reserved_krw",
+          "delta_accounted_krw",
+          "token_counts",
+          "price_snapshot",
+          "created_at"
+        ]
+      },
+      "portal.agent_configs": {
+        "rows": 4,
+        "sha256": "ddc9b7e7c736d646096c0ab8b63678d1e755b8b2d0ed78cfcc9f27309216b7fe",
+        "columns": [
+          "tenant_id",
+          "agent_key",
+          "config_version",
+          "enabled",
+          "settings",
+          "updated_by",
+          "updated_at"
+        ]
+      },
+      "portal.answer_evidence": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "tenant_id",
+          "run_id",
+          "ordinal",
+          "source_tenant_id",
+          "document_id",
+          "version_id",
+          "index_id",
+          "evidence_id",
+          "source_sha256",
+          "location_snapshot",
+          "quote_snapshot",
+          "payload_purged"
+        ]
+      },
+      "portal.conversations": {
+        "rows": 8,
+        "sha256": "798c68b77969e6fbb79f7e89a793f64c892cb1a7f6c48095696619079c09ea83",
+        "columns": [
+          "tenant_id",
+          "conversation_id",
+          "owner_user_id",
+          "agent_key",
+          "client_conversation_id",
+          "created_at",
+          "updated_at"
+        ]
+      },
+      "portal.messages": {
+        "rows": 6,
+        "sha256": "9b21ddc25893d9f2b6193bfd40dcdcb4a0dda6d52a866cdf9b73f0b05335f71e",
+        "columns": [
+          "tenant_id",
+          "message_id",
+          "conversation_id",
+          "owner_user_id",
+          "agent_key",
+          "sequence_no",
+          "role",
+          "body",
+          "run_id",
+          "payload_kind",
+          "payload_purged",
+          "created_at"
+        ]
+      },
+      "portal.runs": {
+        "rows": 3,
+        "sha256": "be627894a4f3d65f4c82b839e694e41003c96cdeff119b5a6bde2fb7fb23085c",
+        "columns": [
+          "tenant_id",
+          "run_id",
+          "conversation_id",
+          "owner_user_id",
+          "client_send_id",
+          "request_hash",
+          "agent_key",
+          "config_snapshot",
+          "origin_session_id",
+          "execution_mode",
+          "state",
+          "stage",
+          "revision",
+          "execution_epoch",
+          "heartbeat_at",
+          "lease_expires_at",
+          "started_at",
+          "ended_at",
+          "cancel_requested_at",
+          "safe_error_code",
+          "answer_kind",
+          "source_count",
+          "provenance_sealed",
+          "created_at",
+          "worker_claim_hash",
+          "execution_budget_id"
+        ]
+      },
+      "rag.chunks": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "tenant_id",
+          "document_id",
+          "version_id",
+          "index_id",
+          "chunk_id",
+          "ordinal",
+          "text",
+          "location",
+          "embedding",
+          "source_sha256",
+          "batch_ordinal",
+          "call_id",
+          "payload_purged"
+        ]
+      },
+      "rag.document_versions": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "tenant_id",
+          "document_id",
+          "version_id",
+          "version_no",
+          "title",
+          "source_object_key",
+          "source_sha256",
+          "media_type",
+          "byte_length",
+          "character_length",
+          "ingest_hmac",
+          "parser_revision",
+          "source_mapping",
+          "payload_purged",
+          "created_at"
+        ]
+      },
+      "rag.entities": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "tenant_id",
+          "document_id",
+          "version_id",
+          "index_id",
+          "entity_id",
+          "semantic_key",
+          "entity_type",
+          "label",
+          "properties",
+          "payload_purged"
+        ]
+      },
+      "rag.evidence": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "tenant_id",
+          "document_id",
+          "version_id",
+          "index_id",
+          "evidence_id",
+          "chunk_id",
+          "start_offset",
+          "end_offset",
+          "line_start",
+          "line_end",
+          "exact_quote",
+          "source_sha256",
+          "payload_purged"
+        ]
+      },
+      "rag.index_builds": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "tenant_id",
+          "document_id",
+          "version_id",
+          "index_id",
+          "execution_mode",
+          "pipeline_revision",
+          "source_fingerprint",
+          "embedding_model",
+          "embedding_dimensions",
+          "schema_revision",
+          "state",
+          "revision",
+          "expected_batches",
+          "completed_batches",
+          "checkpoint_summary",
+          "coverage",
+          "payload_purged",
+          "created_at"
+        ]
+      },
+      "rag.jobs": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "tenant_id",
+          "job_id",
+          "document_id",
+          "version_id",
+          "index_id",
+          "initiator_user_id",
+          "job_kind",
+          "execution_mode",
+          "state",
+          "stage",
+          "revision",
+          "retry_of",
+          "attempt",
+          "safe_error_code",
+          "heartbeat_at",
+          "lease_epoch",
+          "lease_expires_at",
+          "created_at",
+          "ended_at"
+        ]
+      },
+      "rag.relation_evidence": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "tenant_id",
+          "index_id",
+          "relation_id",
+          "evidence_id"
+        ]
+      },
+      "rag.relations": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "tenant_id",
+          "document_id",
+          "version_id",
+          "index_id",
+          "relation_id",
+          "from_entity_id",
+          "to_entity_id",
+          "relation_type",
+          "properties",
+          "payload_purged"
+        ]
+      },
+      "security.accounts": {
+        "rows": 13,
+        "sha256": "6f194e42d5172361bc9cc3552569ac885d8c801d9756958e3e42fc5addff10af",
+        "columns": [
+          "user_id",
+          "login_id",
+          "display_name",
+          "password_hash",
+          "active",
+          "auth_revision",
+          "created_at"
+        ]
+      },
+      "security.document_access": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "tenant_id",
+          "document_id",
+          "owner_user_id",
+          "visibility",
+          "acl_revision",
+          "deleted_at",
+          "created_at"
+        ]
+      },
+      "security.document_publications": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "tenant_id",
+          "document_id",
+          "version_id",
+          "published_index_id",
+          "active",
+          "revision"
+        ]
+      },
+      "security.job_authorizations": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "tenant_id",
+          "job_id",
+          "document_id",
+          "version_id",
+          "index_id",
+          "initiator_user_id",
+          "action",
+          "deletion_revision",
+          "lease_hash",
+          "lease_epoch",
+          "expires_at",
+          "revoked_at"
+        ]
+      },
+      "security.login_windows": {
+        "rows": 10,
+        "sha256": "952488ad40fc1a255ac79bd928b7b9d9ff285c7aea46c44b6a7a830b558dd299",
+        "columns": [
+          "purpose",
+          "key_kind",
+          "key_digest",
+          "window_started_at",
+          "count"
+        ]
+      },
+      "security.managed_tenants": {
+        "rows": 1,
+        "sha256": "34a9be3ae7f88b23d41bd6155bedd81231cf0081f49f317cfeb8dbc587a30b64",
+        "columns": [
+          "tenant_id",
+          "user_id",
+          "active",
+          "revision"
+        ]
+      },
+      "security.memberships": {
+        "rows": 14,
+        "sha256": "f45cc888528e05d2a0cb56c115de03a8986d63c35ab2b9b8982df91d3963ae30",
+        "columns": [
+          "tenant_id",
+          "user_id",
+          "membership_id",
+          "role",
+          "active",
+          "revision"
+        ]
+      },
+      "security.operation_receipts": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "tenant_id",
+          "initiator_user_id",
+          "operation_kind",
+          "client_operation_id",
+          "request_hash",
+          "document_id",
+          "version_id",
+          "index_id",
+          "job_id",
+          "created_at"
+        ]
+      },
+      "security.platform_access": {
+        "rows": 4,
+        "sha256": "232cafb85d568f4e126ea76465fe3887c20141bccd93a890a90e9ad17517f4d4",
+        "columns": [
+          "user_id",
+          "is_padmin",
+          "permissions",
+          "active",
+          "revision"
+        ]
+      },
+      "security.private_readers": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "tenant_id",
+          "document_id",
+          "user_id"
+        ]
+      },
+      "security.sessions": {
+        "rows": 23,
+        "sha256": "5caa8e79ad4e3d66383e5530dd1b3e0694fb704519ca0c68fdefabbb8172c563",
+        "columns": [
+          "session_id",
+          "token_hash",
+          "user_id",
+          "auth_revision",
+          "csrf_secret",
+          "issued_at",
+          "last_activity_at",
+          "expires_at",
+          "revoked_at"
+        ]
+      },
+      "security.share_grants": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+        "columns": [
+          "grant_id",
+          "owner_tenant_id",
+          "document_id",
+          "version_id",
+          "recipient_tenant_id",
+          "active",
+          "revision",
+          "issued_by",
+          "issued_at",
+          "revoked_at"
+        ]
+      },
+      "security.tenants": {
+        "rows": 2,
+        "sha256": "9e2b5f88da396b676a25278b5d37154c72e8a3523bc66db53c1707e7455fcde0",
+        "columns": [
+          "tenant_id",
+          "fixture_label",
+          "display_name",
+          "active",
+          "revision"
+        ]
+      }
+    }
+  },
+  "native_smoke": {
+    "native_primary_health": "pass",
+    "openapi_routes": 34,
+    "configured_mode": "mock",
+    "index_enabled": true,
+    "execution_enabled": true,
+    "legacy_tables_identical": 31,
+    "paid_dispatches": 0,
+    "runtime_connections_after": 0,
+    "temporary_databases_after": 0,
+    "owned_child_shutdown": "pass",
+    "shutdown_returncode": -15,
+    "cluster_state_after": "stopped",
+    "development_listeners": 0
+  },
+  "scope": "native PostgreSQL disposable fixtures and configured primary startup",
+  "known_checkpoint_recovery": "stored batch and lease expiration/new epoch; one provider dispatch",
+  "native_restart": "queued startup recovery and completed job reload; one mock dispatch; deletion cleanup",
+  "unknown_handling": "needs_review; reserved accounting preserved until known outcome; no automatic provider repeat",
+  "cleanup": "current admin fixed purge-only function and metadata-only private file removal; tombstone/queued cleanup committed before purge",
+  "all_source_gate": "C04 planned; no RAG output this stage"
+}

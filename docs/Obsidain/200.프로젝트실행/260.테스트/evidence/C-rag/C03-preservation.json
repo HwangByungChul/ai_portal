@@ -1,0 +1,29 @@
+{
+  "tested_sources_identical": 143,
+  "protected_files_identical": 25,
+  "private_environment_original_prefix_identical": true,
+  "private_environment_authorized_append": [
+    "AI_INDEX_DSN",
+    "AI_INDEX_ENABLED"
+  ],
+  "private_environment_mode": "0600",
+  "runtime_directory_mode": "0700",
+  "private_environment_git_ignored": true,
+  "historical_files_identical": 53,
+  "unrelated_untracked_preserved": 73,
+  "original_graphrag_selected_sources_identical": 9,
+  "original_graphrag_head_identical": true,
+  "primary_legacy_table_projections_identical": 31,
+  "new_primary_document_payloads": 0,
+  "new_paid_dispatches": 0,
+  "prior_real_internal_estimate_krw": "0.19",
+  "active_reserved_krw": "0",
+  "active_slots": 0,
+  "q20_status": "not_run",
+  "development_listeners": 0,
+  "runtime_connections": 0,
+  "temporary_databases": 0,
+  "cluster_state": "stopped",
+  "remote_push": false,
+  "deployment": false
+}
