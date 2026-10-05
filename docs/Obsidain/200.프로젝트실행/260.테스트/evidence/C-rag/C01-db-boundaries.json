@@ -1,0 +1,195 @@
+{
+  "stage": "C01",
+  "applied": [
+    "009_document_graph_schema.sql",
+    "010_document_policy_control.sql"
+  ],
+  "reapplied": [],
+  "existing_business_tables_identical": 16,
+  "new_tables_empty": 15,
+  "tables": {
+    "ops.audit_events": {
+      "rows": 32,
+      "sha256": "e2147e38cd2f6793a719e7cd28e9b9f7e11b5a7feeaf8ab1658906c6b742f166"
+    },
+    "ops.call_attempts": {
+      "rows": 3,
+      "sha256": "6931bd0f62824302af4000da6bf0fda50a421c5e65042617ec91a787d31b70d6"
+    },
+    "ops.project_budget": {
+      "rows": 2,
+      "sha256": "4a80f84536beae8ef4236aa980d1d8a92b098b586d910589a8a3f877af0739b3"
+    },
+    "ops.tenant_budgets": {
+      "rows": 3,
+      "sha256": "4234853b470e82a1057c5f89d93b8d5a91368b750d0bfc3345252d14ede767e1"
+    },
+    "ops.usage_events": {
+      "rows": 6,
+      "sha256": "5ce9dea9bc631d8d6d1479a2ee048fc7216ea37f710d12eb8153fe547c7d065f"
+    },
+    "portal.agent_configs": {
+      "rows": 4,
+      "sha256": "ddc9b7e7c736d646096c0ab8b63678d1e755b8b2d0ed78cfcc9f27309216b7fe"
+    },
+    "portal.answer_evidence": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "portal.conversations": {
+      "rows": 8,
+      "sha256": "798c68b77969e6fbb79f7e89a793f64c892cb1a7f6c48095696619079c09ea83"
+    },
+    "portal.messages": {
+      "rows": 6,
+      "sha256": "9b21ddc25893d9f2b6193bfd40dcdcb4a0dda6d52a866cdf9b73f0b05335f71e"
+    },
+    "portal.runs": {
+      "rows": 3,
+      "sha256": "be627894a4f3d65f4c82b839e694e41003c96cdeff119b5a6bde2fb7fb23085c"
+    },
+    "rag.chunks": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "rag.document_versions": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "rag.entities": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "rag.evidence": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "rag.index_builds": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "rag.jobs": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "rag.relation_evidence": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "rag.relations": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "security.accounts": {
+      "rows": 13,
+      "sha256": "6f194e42d5172361bc9cc3552569ac885d8c801d9756958e3e42fc5addff10af"
+    },
+    "security.document_access": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "security.document_publications": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "security.job_authorizations": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "security.login_windows": {
+      "rows": 10,
+      "sha256": "952488ad40fc1a255ac79bd928b7b9d9ff285c7aea46c44b6a7a830b558dd299"
+    },
+    "security.managed_tenants": {
+      "rows": 1,
+      "sha256": "34a9be3ae7f88b23d41bd6155bedd81231cf0081f49f317cfeb8dbc587a30b64"
+    },
+    "security.memberships": {
+      "rows": 14,
+      "sha256": "f45cc888528e05d2a0cb56c115de03a8986d63c35ab2b9b8982df91d3963ae30"
+    },
+    "security.operation_receipts": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "security.platform_access": {
+      "rows": 4,
+      "sha256": "232cafb85d568f4e126ea76465fe3887c20141bccd93a890a90e9ad17517f4d4"
+    },
+    "security.private_readers": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "security.sessions": {
+      "rows": 23,
+      "sha256": "5caa8e79ad4e3d66383e5530dd1b3e0694fb704519ca0c68fdefabbb8172c563"
+    },
+    "security.share_grants": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "security.tenants": {
+      "rows": 2,
+      "sha256": "9e2b5f88da396b676a25278b5d37154c72e8a3523bc66db53c1707e7455fcde0"
+    }
+  },
+  "catalog": {
+    "business_tables": 31,
+    "schema_migrations": 11,
+    "security_functions": 49,
+    "force_rls_tables": 17,
+    "runtime_connections": 0,
+    "other_disposable_databases": 0,
+    "extension_version": "0.8.6"
+  },
+  "paid_dispatch_count": 0,
+  "real_accounted_krw": "0.19",
+  "real_reserved_krw": "0",
+  "real_slots": 0,
+  "rag_agent_enabled": false,
+  "environment_bytes_identical": true,
+  "existing_b06_real_history_unchanged": true,
+  "original_sql_checksums_identical": 9,
+  "protected_files_identical": 24,
+  "historical_evidence_files_identical": 42,
+  "unrelated_untracked_preserved": 72,
+  "original_graph_project_read_only": true,
+  "file_storage": {
+    "directories_mode": "0700",
+    "files_mode": "0600",
+    "symlink_following": false,
+    "overwrite": false,
+    "atomic_add": "hard link add-if-absent, temporary file unlink, directory fsync",
+    "max_bytes": 131072,
+    "max_characters": 40000,
+    "max_title_characters": 200,
+    "types": [
+      "UTF-8 text/plain",
+      "UTF-8 text/markdown"
+    ],
+    "tests_passed": 27,
+    "authorization": "backend current permission resolution required before read; no public route at C01",
+    "database_file_atomicity": "separate commits; unregistered files remain private",
+    "automatic_orphan_cleanup": "planned C03"
+  },
+  "access": {
+    "latest_owner_version": 2,
+    "shared_recipient_version": 1,
+    "private_administrator_read": false,
+    "current_share_revocation_tested": true,
+    "current_membership_session_tested": true,
+    "staging_web_read": false,
+    "exact_job_lease_epoch_target_tested": true,
+    "cleanup_content_read": false,
+    "new_rag_executor_payload_select": false,
+    "meter_content_select": false,
+    "old_general_chat_executor_scoped_select_preserved": true
+  },
+  "cleanup": {
+    "kind": "A05-runtime-cleanup",
+    "api_pool_connections": 0,
+    "fixture_removed": true,
+    "private_credentials_removed": true,
+    "database_state_after": "stopped"
+  }
+}

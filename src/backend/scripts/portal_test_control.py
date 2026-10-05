@@ -32,7 +32,7 @@ def main():
                 conn.execute('UPDATE security.platform_access SET active=true')
                 conn.execute('UPDATE security.managed_tenants SET active=true')
                 # Only this marked disposable browser DB is reset; primary is rejected above.
-                conn.execute('TRUNCATE ops.usage_events,ops.call_attempts,portal.messages,portal.runs')
+                conn.execute('TRUNCATE portal.answer_evidence,rag.relation_evidence,rag.evidence,rag.relations,rag.entities,rag.chunks,ops.usage_events,ops.call_attempts,portal.messages,portal.runs')
                 conn.execute('DELETE FROM portal.conversations WHERE NOT(conversation_id=ANY(%s))',([UUID(v) for v in config['conversations']],))
                 conn.execute('UPDATE ops.project_budget SET stopped=false,stop_latch=false,revision=1,accounted_krw=0,reserved_krw=0,active_slot=0')
                 conn.execute('UPDATE ops.tenant_budgets SET allocated_cap_krw=12500,local_cap_krw=12500,accounted_krw=0,reserved_krw=0,active_slot=0,stopped=false,revision=1')

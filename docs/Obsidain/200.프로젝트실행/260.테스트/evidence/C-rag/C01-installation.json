@@ -1,0 +1,36 @@
+{
+  "version": "0.8.6",
+  "tag": "v0.8.6",
+  "commit": "8ee86c96f0fd72390f890aa8a336fda6d3ab4c6c",
+  "pg_version": "PostgreSQL 15.18 (Homebrew)",
+  "files": [
+    {
+      "path": "/usr/local/opt/postgresql@15/lib/postgresql/vector.so",
+      "sha256": "7542cf752771d52a32dd874a43834342e78ff5ffcdd111d5ccd6d81f8c4dcfee"
+    },
+    {
+      "path": "/usr/local/opt/postgresql@15/share/postgresql@15/extension/vector.control",
+      "sha256": "f1e1717c0c1da9c200ff3a53acf1d14eba5e3f70da928a723b247b0b1059417d"
+    },
+    {
+      "path": "/usr/local/opt/postgresql@15/share/postgresql@15/extension/vector--0.8.6.sql",
+      "sha256": "7fb5bb279ef83bf9204bfac7405bb5c9a05e49f5ac7d64d1eb4464d103b80f32"
+    }
+  ],
+  "source": "https://github.com/pgvector/pgvector/tree/v0.8.6",
+  "activation": "owned fixture databases only",
+  "initial_available": false,
+  "global_files_added": 3,
+  "existing_files_overwritten": 0,
+  "postgresql_upgraded": false,
+  "sdk_override": "/Library/Developer/CommandLineTools/SDKs/MacOSX.sdk",
+  "build_options": [
+    "PG_CONFIG=/usr/local/opt/postgresql@15/bin/pg_config",
+    "with_llvm=no",
+    "OPTFLAGS="
+  ],
+  "database_schema": "rag",
+  "indexes": "exact cosine; no HNSW/IVFFlat",
+  "python_packages_added": 0,
+  "official_documentation": "https://github.com/pgvector/pgvector/blob/v0.8.6/README.md"
+}

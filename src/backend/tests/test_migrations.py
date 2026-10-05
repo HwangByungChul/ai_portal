@@ -16,7 +16,7 @@ def test_migration_rerun_and_checksum_reject(db_fixture,tmp_path):
     with pytest.raises(MigrationError,match='MIGRATION_CHECKSUM_CHANGED'):
         apply_migrations(db_fixture.db,changed)
     with db_fixture.db.admin_connection() as conn:
-        assert conn.execute('SELECT count(*) FROM infra.schema_migrations').fetchone()[0]==9
+        assert conn.execute('SELECT count(*) FROM infra.schema_migrations').fetchone()[0]==11
 
 
 def test_pending_failure_rolls_back_schema_and_checksum(db_fixture,tmp_path):
@@ -25,7 +25,7 @@ def test_pending_failure_rolls_back_schema_and_checksum(db_fixture,tmp_path):
     with pytest.raises(psycopg.errors.DivisionByZero): apply_migrations(db_fixture.db,changed)
     with db_fixture.db.admin_connection() as conn:
         assert conn.execute("SELECT to_regclass('infra.atomic_probe')").fetchone()[0] is None
-        assert conn.execute('SELECT count(*) FROM infra.schema_migrations').fetchone()[0]==9
+        assert conn.execute('SELECT count(*) FROM infra.schema_migrations').fetchone()[0]==11
 
 
 def test_seed_rejects_existing_and_nonfixture(db_fixture):
