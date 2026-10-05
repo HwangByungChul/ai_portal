@@ -2,6 +2,13 @@ from datetime import datetime, timezone
 from fastapi.responses import JSONResponse
 
 MESSAGES = {
+    'SOURCE_INVALID': '지원하는 문서 형식과 크기를 확인해 주세요.',
+    'SOURCE_CONFLICT': '같은 등록 번호의 파일을 확인해 주세요.',
+    'DOCUMENT_UNAVAILABLE': '문서를 조회할 수 없습니다.',
+    'MANAGEMENT_DENIED': '관리 권한을 확인해 주세요.',
+    'EXECUTION_FENCED': '작업 권한이 변경되었습니다.',
+    'AGENT_DISABLED': 'Agent가 중지되어 있습니다.',
+    'INDEX_NEEDS_REVIEW': '처리 결과를 확인한 뒤 다시 진행해 주세요.',
     'PROJECT_STOPPED': 'AI 실행이 중지되어 있습니다. 준비 상태를 확인해 주세요.',
     'STREAM_LIMIT_REACHED': '열려 있는 응답 창을 확인한 뒤 다시 시도해 주세요.',
     'STREAM_ACCESS_UNAVAILABLE': '응답을 조회할 권한과 연결 상태를 확인해 주세요.',

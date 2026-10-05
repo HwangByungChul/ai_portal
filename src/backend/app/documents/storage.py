@@ -8,6 +8,7 @@ import hashlib
 import os
 from pathlib import Path
 import stat
+import time
 from uuid import UUID, uuid4
 
 MAX_BYTES = 128 * 1024
@@ -168,3 +169,49 @@ class SourceStorage:
             return content
         finally:
             os.close(directory)
+
+    def remove(self, key: str, *, minimum_age_seconds: int = 0) -> int:
+        """Only call after current deletion/confirmed orphan authorization; never read content."""
+        directory=self._version_directory(key,False)
+        try:
+            try:
+                fd=os.open('source',os.O_RDONLY|os.O_NOFOLLOW,dir_fd=directory)
+            except FileNotFoundError:return 0
+            try:
+                self._check(fd,False)
+                if time.time()-os.fstat(fd).st_mtime<minimum_age_seconds:return 0
+            finally:os.close(fd)
+            try:os.unlink('source',dir_fd=directory)
+            except FileNotFoundError:return 0
+            os.fsync(directory);return 1
+        except OSError:raise SourceStorageError('SOURCE_REMOVE_FAILED') from None
+        finally:os.close(directory)
+
+    def source_keys(self, tenant_id: UUID):
+        """Metadata-only inventory, no symlinks or source bytes. Caller must authorize tenant."""
+        if type(tenant_id) is not UUID:raise SourceStorageError('SOURCE_PATH_REJECTED')
+        root=self._open_directory(self.root);opened=[root]
+        try:
+            for part in ('tenants',str(tenant_id),'documents'):
+                try:fd=self._open_directory(part,dir_fd=opened[-1])
+                except SourceStorageError:
+                    if part not in os.listdir(opened[-1]):return ()
+                    raise
+                opened.append(fd)
+            result=[]
+            for doc in sorted(os.listdir(opened[-1])):
+                try:
+                    if str(UUID(doc))!=doc:continue
+                except ValueError:continue
+                doc_fd=self._open_directory(doc,dir_fd=opened[-1])
+                try:
+                    for version in sorted(os.listdir(doc_fd)):
+                        try:
+                            if str(UUID(version))!=version:continue
+                        except ValueError:continue
+                        key=source_key(tenant_id,UUID(doc),UUID(version))
+                        result.append(key)
+                finally:os.close(doc_fd)
+            return tuple(result)
+        finally:
+            for fd in reversed(opened):os.close(fd)

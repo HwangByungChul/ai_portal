@@ -119,6 +119,20 @@ async def open_meter_pool(dsn: str, size: int = 2):
 
 
 @asynccontextmanager
+async def open_index_pool(dsn: str, size: int = 2):
+    pool = make_index_pool(dsn, size)
+    try:
+        try:
+            await pool.open()
+            await pool.wait(timeout=5)
+        except (psycopg.Error, DatabaseBoundaryError):
+            raise DatabaseBoundaryError('INDEX_DATABASE_UNAVAILABLE') from None
+        yield pool
+    finally:
+        await pool.close()
+
+
+@asynccontextmanager
 async def tenant_transaction(pool: AsyncConnectionPool, ctx: AuthContext):
     if ctx.tenant_id is None:
         raise ValueError('TENANT_CONTEXT_REQUIRED')

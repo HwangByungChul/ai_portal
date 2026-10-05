@@ -1,4 +1,5 @@
 from datetime import date
+from pathlib import Path
 from typing import Literal
 from urllib.parse import urlsplit
 
@@ -14,6 +15,9 @@ class Settings(BaseSettings):
     mode: Literal["mock", "real"] = "mock"
     budget_period: date = date(2026, 10, 1)
     execution_enabled: bool = False
+    index_enabled: bool = False
+    index_dsn: SecretStr | None = Field(default=None, repr=False)
+    source_root: Path = Field(default_factory=lambda: Path(__file__).resolve().parents[1]/".runtime"/"source-store", repr=False)
     openai_api_key: SecretStr | None = Field(default=None, repr=False)
     db_port: int = Field(default=55432, ge=1, le=65535)
     bind_host: Literal["127.0.0.1"] = "127.0.0.1"
@@ -46,3 +50,7 @@ class Settings(BaseSettings):
             raise ValueError('METER_CONFIGURATION_REQUIRED')
         if self.mode=='real' and (self.openai_api_key is None or not self.openai_api_key.get_secret_value().strip()):
             raise ValueError('PROVIDER_CONFIGURATION_REQUIRED')
+
+    def require_index_configuration(self):
+        if self.index_dsn is None or self.meter_dsn is None:raise ValueError('INDEX_CONFIGURATION_REQUIRED')
+        if self.mode=='real' and (self.openai_api_key is None or not self.openai_api_key.get_secret_value().strip()):raise ValueError('PROVIDER_CONFIGURATION_REQUIRED')

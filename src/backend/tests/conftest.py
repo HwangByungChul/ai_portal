@@ -34,11 +34,11 @@ def db_fixture(owned_cluster):
 def fixture_state(db_fixture): return db_fixture
 
 @pytest.fixture
-def auth_settings(db_fixture):
+def auth_settings(db_fixture,tmp_path):
     from pydantic import SecretStr
     from app.config import Settings
     from app.auth.crypto import new_secret
-    return Settings(web_dsn=SecretStr(db_fixture.db.runtime_dsn()),login_hmac_secret=SecretStr(new_secret()))
+    return Settings(web_dsn=SecretStr(db_fixture.db.runtime_dsn()),login_hmac_secret=SecretStr(new_secret()),source_root=tmp_path/'api-sources')
 
 @pytest.fixture
 def client(auth_settings):
