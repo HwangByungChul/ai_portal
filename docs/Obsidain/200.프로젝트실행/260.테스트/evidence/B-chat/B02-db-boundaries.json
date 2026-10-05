@@ -1,0 +1,116 @@
+{
+  "task": "I250-B02",
+  "recorded_date": "2026-10-05",
+  "recorded_at_utc": "2026-10-05T00:36:03.060797+00:00",
+  "baseline_commit": "981a933e229fd9723b1365fa0439653881b5d79b",
+  "tested_source_commit": null,
+  "tested_source_digest": "6cafaa0b94e316598cb96ed6eb2fe10240df70b83a52d27269b80aa019d1424a",
+  "pending_migrations_applied": [
+    "006_operations_control.sql"
+  ],
+  "checksum_repeat_apply": [],
+  "business_tables": 16,
+  "infra_tables": 1,
+  "migrations": 7,
+  "primary_all_16_table_rows_unchanged": true,
+  "fixed_security_functions": 21,
+  "new_fixed_security_functions": 5,
+  "fixed_functions_owner": "ai_policy_executor",
+  "public_execute": false,
+  "content_forced_rls": 8,
+  "column_select_privileges": {
+    "ai_web": {
+      "portal.agent_configs.settings": false,
+      "portal.messages.body": true,
+      "portal.runs.config_snapshot": false,
+      "ops.call_attempts.dispatch_claim_hash": false,
+      "ops.usage_events.token_counts": false
+    },
+    "ai_meter": {
+      "portal.agent_configs.settings": false,
+      "portal.messages.body": false,
+      "portal.runs.config_snapshot": false,
+      "ops.call_attempts.dispatch_claim_hash": false,
+      "ops.usage_events.token_counts": false
+    },
+    "ai_policy_executor": {
+      "portal.agent_configs.settings": true,
+      "portal.messages.body": false,
+      "portal.runs.config_snapshot": false,
+      "ops.call_attempts.dispatch_claim_hash": false,
+      "ops.usage_events.token_counts": true
+    }
+  },
+  "runtime_roles": {
+    "ai_web": {
+      "session_user": "ai_web",
+      "current_user": "ai_web",
+      "rolsuper": false,
+      "rolbypassrls": false,
+      "rolinherit": false
+    },
+    "ai_meter": {
+      "session_user": "ai_meter",
+      "current_user": "ai_meter",
+      "rolsuper": false,
+      "rolbypassrls": false,
+      "rolinherit": false
+    }
+  },
+  "runtime_connections_after": 0,
+  "disposable_databases_after": 0,
+  "primary_tenant_budget_initialization": "not_performed; existing unconfigured rows stay unconfigured",
+  "paid_ai_calls": 0,
+  "tested_expected_observed": [
+    {
+      "case": "organization administration",
+      "expected": "USER denied; TADMIN/explicit managed PADMIN allowed; unmanaged denied",
+      "observed": "403/200/403",
+      "status": "pass"
+    },
+    {
+      "case": "global capabilities",
+      "expected": "read and stop-write independent of managed organization",
+      "observed": "read-only/write-only/both/none verified; unmanaged management still denied",
+      "status": "pass"
+    },
+    {
+      "case": "own/admin usage from synthetic ledger rows",
+      "expected": "owner1,tenant A2,no foreign B; unknown stays separate",
+      "observed": "owner1/A2/global unknown2; reserved retained; no body/claim/provider identity",
+      "status": "pass"
+    },
+    {
+      "case": "simultaneous last allocation capacity",
+      "expected": "only one organization succeeds; total <=25000",
+      "observed": "200/409, total25000,audit1",
+      "status": "pass"
+    },
+    {
+      "case": "concurrent same revision setting",
+      "expected": "one commit, one conflict",
+      "observed": "200/409,revision2,audit1",
+      "status": "pass"
+    },
+    {
+      "case": "revocation committed before save",
+      "expected": "current authority rejects waiting write",
+      "observed": "403,setting unchanged",
+      "status": "pass"
+    },
+    {
+      "case": "audit or lock failure",
+      "expected": "safe503 and whole change/session touch rolled back",
+      "observed": "503,setting/budget/revision/idle unchanged",
+      "status": "pass"
+    },
+    {
+      "case": "reduction and restart",
+      "expected": "incurred costs preserved; no prior run replay",
+      "observed": "costs/reservations/run state unchanged; native restart preserves settings/budget/global stop",
+      "status": "pass"
+    }
+  ],
+  "raw_ledger_insert_update_delete": "denied to web,meter,policy executor in B02",
+  "actual_reserve_dispatch_settle": "not_implemented_B04"
+}

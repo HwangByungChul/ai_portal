@@ -1,6 +1,6 @@
-# AI 플랫폼 backend — A 완료 · B01 대화·원장 저장 기반
+# AI 플랫폼 backend — A 완료 · B01~02 저장 기반과 운영 API
 
-A 인증·조직·관리 API/화면·통합 검증을 완료했고 B01에서 추가5개 저장 모델·형식·권한을 구축했다. 업무16개와 infra1개다. 대화/run 업무 API는 B03, 예약·발사·정산 및 실제 AI는 B04 이후다. health200은 전체 플랫폼 완료를 뜻하지 않는다.
+A 인증·조직·관리 API/화면·통합 검증을 완료했고 B01에서 추가5개 저장 모델·형식·권한, B02에서11개운영API를구축했다. 업무16개와 infra1개다. 대화/run 업무 API는 B03, 예약·발사·정산 및 실제 AI는 B04 이후다. health200은 전체 플랫폼 완료를 뜻하지 않는다.
 
 ## 환경과 설치
 
@@ -38,7 +38,7 @@ A 인증·조직·관리 API/화면·통합 검증을 완료했고 B01에서 추
 .venv/bin/python -m scripts.seed --fixture A-auth
 ```
 
-migrate는`ai_portal_mvp_test_<UUID>`의새시험DB/comment marker를생성한다. 000~005 SQL과SHA256 기록을단일transaction으로적용하고완료전에runtime접속을개방하지않는다. 반복CLI는기존설정을감지해거부한다. 재seed/비fixture/외부DB/변경된적용SQL도거부하며reset/drop CLI는제공하지않는다. 적용된migration은수정하지말고006이후새파일로추가한다. 시험용real예산행은실원장의reset허가가아니다.
+migrate는`ai_portal_mvp_test_<UUID>`의새시험DB/comment marker를생성한다. 000~006 SQL과SHA256 기록을단일transaction으로적용하고완료전에runtime접속을개방하지않는다. 반복CLI는기존설정을감지해거부한다. 재seed/비fixture/외부DB/변경된적용SQL도거부하며reset/drop CLI는제공하지않는다. 적용된migration은수정하지말고007이후새파일로추가한다. 시험용real예산행은실원장의reset허가가아니다.
 
 A03에서는003,A04에서는004만기존active fixture에추가적용했고계정/세션/창이나web DSN/HMAC은reset하지않았다. 이후pending migration도private active fixture의소유를검증한뒤같은runner로적용한다. 기존데이터가있는DB에는seed를다시호출하지않는다.
 
@@ -174,3 +174,29 @@ Decimal 고정 price-20261004-v1: 생성 예약3.64원, 질의/문서 임베딩 
 최종 B01 시험 결과는 Obsidain250.구현/04 일반 대화와 중앙 AI 구현 결과.md와260.테스트/evidence/B-chat/B01-*.json에서 관리한다. A06의176회 기록·A-auth 증거는 당시 결과로 보존하고 현재 suite에 중복 합산하지 않는다.
 
 B01 현재검증: backend238pass/경고0/208.77초,build/기존A browser20pass/runner error0/28.21초. 검증소스 로컬commit `189f95a76ca09862903320ab86b03f87caf069cd`;정확소스지문은B-chat/B01-test-summary.json에기록했다.
+
+## B02 실제 운영 API — 화면 연결과 AI는 후속
+
+기본 API는 기존A8개(health포함)+B02운영11개=19개다. 006의SECURITY DEFINER 함수5개를추가해전체21개이며owner는NOLOGIN ai_policy_executor/고정search_path/PUBLIC execute없음이다. operations_authorize/operations_row_allowed 2개는web에EXECUTE를주지않은내부함수,read_window/read/mutate만web이호출한다. parameter-bound 고정SQL만사용한다.
+
+| 경로 | 현재 계약 |
+|---|---|
+| GET /api/v1/agents | 현재조직멤버의general/rules_rag 최소목록. 지침/모델/키/settings없음. enabled와실행준비를구분하며B02에서는두pipeline미연결로available=false/FEATURE_NOT_READY다. disabled/미준비budget/중지·한도차단은우선사유로반환한다. |
+| GET·PATCH /api/v1/admin/agents/{agent_key} | 담당TADMIN/PADMIN만허용. PATCH는name≤80/description≤500/instructions≤2000 중1개이상+expected_revision. null/빈name·지침/추가model/key/tool/URL/권한field거부. GET만권한있는관리자에게지침을반환한다. |
+| PUT /api/v1/admin/agents/{agent_key}/availability | strict enabled bool/양의expected_revision. rules_rag 설정을활성화해도실제RAG준비가되지는않는다. |
+| GET /api/v1/usage/me | 본인+현재조직/period 기본10월. operation별실DBcall count,known_tokens/추정비용·예약/unknown분리. 타인/조직전체잔여·개인본문없음. |
+| GET /api/v1/admin/usage | 담당조직만/cursor UUID/limit기본20·최대50/period. 최소call metadata/상태·추정비용·예약·known token/unknown. 개인질문/대화/initiator·provider ID/claim없음. |
+| GET·PUT /api/v1/admin/budget | 담당조직배정/local cap·기발생비용·예약·blocked/revision. PUT는local_cap_krw 문자열/expected_revision만. local≤allocated/≤25000. 기존비용아래로local을낮춰도비용을지우지않고차단상태로남긴다. |
+| GET /api/v1/platform/summary | active PADMIN+global_usage_read. current tenant불필요/metadata tenant=null. 프로젝트합산배정·승인30,000/운영25,000·추정/예약/unknown·enabled/revision만. |
+| PUT /api/v1/platform/availability | active PADMIN+global_stop_write 독립권한. strict enabled/expected_revision. stop_latch가남은재개는409 REVIEW_REQUIRED,중지·재개는과거run재실행/비용삭제없음. |
+| PUT /api/v1/platform/tenant-budgets/{tenant_id} | active PADMIN+명시관리소속/X-Tenant-ID=path. allocated_cap_krw 문자열/expected_revision. 합산≤프로젝트운영상한/예약·발생비용재배정금지. 배정축소는local cap도min으로낮춘다. global_usage_read/stop_write가조직배정권한을대체하지않는다. |
+
+금액 입력은 `"12500"` 또는 `"12500.00"` 형식의양의또는0 decimal 문자열이다. JSON number/bool·음수/NaN/Infinity/지수표기/소수3자리/추가권한field는422다. 응답금액도문자열이며실제청구액이아닌내부추정이다. period는월첫날date, execution_mode는서버설정고정이며HTTP body/query로변경할수없다. 중복/미허용query도422,모든응답no-store다.
+
+쓰기에는기존Origin/X-Requested-With/CSRF가필수다. actor·현재권한을잠금후재검사하고변경/revision/audit/성공session touch를한transaction에저장한다. stale revision409/범위를넘는배정409 BUDGET_LIMIT_CONFLICT,잠금/감사실패503·전체rollback. GET은idle을연장하지않는다. 조직read는A관리조회와동일HMAC user:tenant의DB120/min창을공유하고공통read는별도user:platform창이다. 재로그인으로초기화하지않는다.
+
+web의agent_configs.settings 직접SELECT를제거하고안전열만유지했다. policy executor의추가권한은관리설정/비용metadata/허용열변경뿐이며message.body/run.config_snapshot/call.dispatch_claim_hash나원장직접INSERT/UPDATE/DELETE는없다. 조직예산·call·usage의executor RLS는고정함수가검증한현재scope만허용한다. 배정합계검사때만프로젝트행잠금아래다른조직의비콘텐츠예산을계산하며출력에넣지않는다.
+
+시험용 A/B각12,500원·mock/real4개 조직예산과general/rules_rag 활성설정은새일회용Bfixture에만준비했다. 기존active fixture에는006만적용하며개인계정·세션·원장·app.env를보존한다. 미배정된조직예산은usage/budget503,Agent목록은BUDGET_NOT_READY(또는AGENT_DISABLED)로차단한다. real의기존accounted/reserved를새0으로덮어쓰거나bootstrap seed를반복하지않는다. 실제사용준비/초기배정은권한있는운영준비단계에서별도확인할사항이다.
+
+B02결과·84신규시험(실제HTTP11경로/재시작1포함)·전체회귀는Obsidain250.구현/04 일반 대화와 중앙 AI 구현 결과.md와260.테스트/evidence/B-chat/B02-*.json에관리한다. 실제운영화면은B05,대화/run접수B03/AI예약·발사·정산/SSE는B04이며유료AI0원이다.

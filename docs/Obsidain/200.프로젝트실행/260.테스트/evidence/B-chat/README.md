@@ -1,4 +1,4 @@
-# 일반 대화·중앙 AI의 B01 저장 기반 증거
+# 일반 대화·중앙 AI의 단계별 구현 증거
 
 2026-10-05 I250-B01 완료. B 전체는 진행중이고 다음은 B02다. 유료AI0회/0원. 백엔드238pass(기존176+신규62)/실패0/경고0/208.77초, 기존A 포털build/Chromium20pass/runner error0/28.21초다. 신규 대화/관리 화면이나 실제 AI를 검증한 결과가 아니다.
 
@@ -16,3 +16,13 @@ A-auth 증거는 A06 당시 결과로 보존한다. B01의 가격/토큰수는 �
 baseline_commit은 검증전 이력, tested_source_commit은 정확소스의 로컬commit이다. 소스지문을 대조하고 커밋 생성 후 후속 문서commit에서 SHA를 채운다. private 원본로그/JUnit/자격·토큰캐시는 Git에 넣지 않는다. 달력경과는 개인학습 실투입/잔여80h와 구분한다.
 
 검증소스 로컬commit: `189f95a76ca09862903320ab86b03f87caf069cd`. 소스지문 대조 후 후속 문서commit에서 기록했다.
+
+## B02 운영 API 검증 — 2026-10-05
+
+B01 JSON은당시기록으로보존한다. B02-test-summary/results/db-boundaries/runtime-check 4개에11개운영API/5추가SECDEF함수/현재권한·고정scope·한도·usage·CAS/audit·실동시경합을기록했다. 전체322pass(기존238+신규84)/실패0/경고0/300.79초,build/기존A브라우저20pass/runner error0/28.78초다. NativeHTTP11경로·재시작은84안의1개시험이며추가11시험으로합산하지않는다.
+
+기존primary16업무행·app.env/이전000~005/합성9파일을보존하고006만추가/반복checksum적용[]·21fixedsecurity함수·8FORCE RLS/연결·임시DB0/서버정지다. 조직예산의초기12,500원/Agent활성화는새합성시험DB에서만수행했다. 미배정primaryusage/budget503은준비불가를숨기지않는계약이다. 예산초기화/실원장삭제나실AI호출은없다.
+
+현재web의Agent settings 직접SELECT는없으며관리API만지침을반환한다. policy executor는허용scope의비용metadata/설정만읽고message.body/run.config_snapshot/call.claim은읽지못한다. 원장raw쓰기없음,사용량불명은예약·unknown분리다. 실제reserve/dispatch/settle·provider·SSE와새대화/운영화면은후속이다.
+
+재현: `.venv/bin/python -m pytest tests/test_operations.py -q` 및전체tests, Node22.23.1 frontendbuild/기존auth-tenants.spec.ts. 모든시험은자기marked DB와private자격을정리하며primary를reset하지않는다. 다음B03 API07~13 계획은250.구현/04문서11절이다.

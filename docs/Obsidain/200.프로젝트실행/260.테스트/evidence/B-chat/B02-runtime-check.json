@@ -1,0 +1,55 @@
+{
+  "task": "I250-B02",
+  "recorded_date": "2026-10-05",
+  "recorded_at_utc": "2026-10-05T00:36:03.060797+00:00",
+  "baseline_commit": "981a933e229fd9723b1365fa0439653881b5d79b",
+  "tested_source_commit": null,
+  "tested_source_digest": "6cafaa0b94e316598cb96ed6eb2fe10240df70b83a52d27269b80aa019d1424a",
+  "native_api": {
+    "test_id": "B02-live-operations",
+    "status": "pass",
+    "utc_time": "2026-10-05T00:27:52.311870+00:00",
+    "duration_ms": 1135.02,
+    "observed": {
+      "native_api_routes_checked": 11,
+      "user_admin_denied": true,
+      "restart_preserved_agent_revision": 3,
+      "restart_preserved_budget_revision": 3,
+      "restart_preserved_global_stop": true,
+      "provider_calls": 0
+    },
+    "safe_error_code": null
+  },
+  "native_api_role": "ai_web",
+  "native_cluster_state_after": "stopped",
+  "local_listeners_after": {
+    "8000": {
+      "listening": false
+    },
+    "5173": {
+      "listening": false
+    },
+    "55432": {
+      "listening": false
+    }
+  },
+  "browser_cleanup": {
+    "kind": "A05-runtime-cleanup",
+    "api_pool_connections": 0,
+    "fixture_removed": true,
+    "private_credentials_removed": true,
+    "database_state_after": "stopped"
+  },
+  "historical_blank_login_images_preserved": true,
+  "remaining_runtime_connections": 0,
+  "remaining_disposable_databases": 0,
+  "paid_ai_calls": 0,
+  "dependency_changes": 0,
+  "primary_setup": "006 applied only; no tenant budget or Agent activation seeded into primary",
+  "query_money_input": "strict decimal string; no JSON floats/bools/exponents; <=25000 and <=2 decimals",
+  "pipeline_ready": {
+    "general": false,
+    "rules_rag": false
+  },
+  "initial_failure": "Unimplemented admin route404; first new006 fixture batch70setup errors from unparenthesized CASE in PL/pgSQL condition; repaired before persistent application, then80+3+1 passed and full322 passed."
+}

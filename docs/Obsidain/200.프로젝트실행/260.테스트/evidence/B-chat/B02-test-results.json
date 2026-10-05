@@ -1,0 +1,1738 @@
+{
+  "task": "I250-B02",
+  "recorded_date": "2026-10-05",
+  "recorded_at_utc": "2026-10-05T00:36:03.060797+00:00",
+  "baseline_commit": "981a933e229fd9723b1365fa0439653881b5d79b",
+  "tested_source_commit": null,
+  "tested_source_digest": "6cafaa0b94e316598cb96ed6eb2fe10240df70b83a52d27269b80aa019d1424a",
+  "backend_tests": [
+    {
+      "test_id": "tests.test_auth.test_login_and_confirmed_logout",
+      "status": "pass",
+      "duration_ms": 1013.0
+    },
+    {
+      "test_id": "tests.test_auth.test_failed_credentials_have_same_response[A-U1-True]",
+      "status": "pass",
+      "duration_ms": 771.0
+    },
+    {
+      "test_id": "tests.test_auth.test_failed_credentials_have_same_response[A-U2-True]",
+      "status": "pass",
+      "duration_ms": 774.0
+    },
+    {
+      "test_id": "tests.test_auth.test_failed_credentials_have_same_response[missing-False]",
+      "status": "pass",
+      "duration_ms": 770.0
+    },
+    {
+      "test_id": "tests.test_auth.test_failed_credentials_have_same_response[INACTIVE-True]",
+      "status": "pass",
+      "duration_ms": 766.0
+    },
+    {
+      "test_id": "tests.test_auth.test_capabilities_are_current_and_independent[A-U1-False-False]",
+      "status": "pass",
+      "duration_ms": 835.0
+    },
+    {
+      "test_id": "tests.test_auth.test_capabilities_are_current_and_independent[P-A-True-True]",
+      "status": "pass",
+      "duration_ms": 830.0
+    },
+    {
+      "test_id": "tests.test_auth.test_capabilities_are_current_and_independent[P_READ_ONLY-True-False]",
+      "status": "pass",
+      "duration_ms": 805.0
+    },
+    {
+      "test_id": "tests.test_auth.test_capabilities_are_current_and_independent[P_WRITE_ONLY-False-True]",
+      "status": "pass",
+      "duration_ms": 828.0
+    },
+    {
+      "test_id": "tests.test_auth.test_capabilities_are_current_and_independent[P_NONE-False-False]",
+      "status": "pass",
+      "duration_ms": 817.0
+    },
+    {
+      "test_id": "tests.test_auth.test_actual_budget_status_and_missing_row",
+      "status": "pass",
+      "duration_ms": 893.0
+    },
+    {
+      "test_id": "tests.test_auth.test_no_members_account_can_login_but_has_no_tenant",
+      "status": "pass",
+      "duration_ms": 791.0
+    },
+    {
+      "test_id": "tests.test_auth.test_current_session_expiry_and_revocation[inactive]",
+      "status": "pass",
+      "duration_ms": 849.0
+    },
+    {
+      "test_id": "tests.test_auth.test_current_session_expiry_and_revocation[revision]",
+      "status": "pass",
+      "duration_ms": 837.0
+    },
+    {
+      "test_id": "tests.test_auth.test_current_session_expiry_and_revocation[revoked]",
+      "status": "pass",
+      "duration_ms": 836.0
+    },
+    {
+      "test_id": "tests.test_auth.test_current_session_expiry_and_revocation[absolute]",
+      "status": "pass",
+      "duration_ms": 844.0
+    },
+    {
+      "test_id": "tests.test_auth.test_current_session_expiry_and_revocation[idle]",
+      "status": "pass",
+      "duration_ms": 837.0
+    },
+    {
+      "test_id": "tests.test_auth.test_polling_does_not_extend_idle_and_relogin_revokes_old",
+      "status": "pass",
+      "duration_ms": 934.0
+    },
+    {
+      "test_id": "tests.test_auth.test_login_origin_and_required_header[headers0]",
+      "status": "pass",
+      "duration_ms": 757.0
+    },
+    {
+      "test_id": "tests.test_auth.test_login_origin_and_required_header[headers1]",
+      "status": "pass",
+      "duration_ms": 792.0
+    },
+    {
+      "test_id": "tests.test_auth.test_login_origin_and_required_header[headers2]",
+      "status": "pass",
+      "duration_ms": 763.0
+    },
+    {
+      "test_id": "tests.test_auth.test_login_origin_and_required_header[headers3]",
+      "status": "pass",
+      "duration_ms": 741.0
+    },
+    {
+      "test_id": "tests.test_auth.test_valid_logout_requires_csrf[None]",
+      "status": "pass",
+      "duration_ms": 856.0
+    },
+    {
+      "test_id": "tests.test_auth.test_valid_logout_requires_csrf[wrong]",
+      "status": "pass",
+      "duration_ms": 779.0
+    },
+    {
+      "test_id": "tests.test_auth.test_valid_logout_requires_csrf[\\ud55c\\uae00]",
+      "status": "pass",
+      "duration_ms": 781.0
+    },
+    {
+      "test_id": "tests.test_auth.test_valid_logout_requires_csrf[xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx]",
+      "status": "pass",
+      "duration_ms": 778.0
+    },
+    {
+      "test_id": "tests.test_auth.test_invalid_repeat_logout_still_requires_origin",
+      "status": "pass",
+      "duration_ms": 743.0
+    },
+    {
+      "test_id": "tests.test_auth.test_invalid_cookie_is_safe_401[ai_session_dev=bad]",
+      "status": "pass",
+      "duration_ms": 725.0
+    },
+    {
+      "test_id": "tests.test_auth.test_invalid_cookie_is_safe_401[ai_session_dev=\\xff]",
+      "status": "pass",
+      "duration_ms": 723.0
+    },
+    {
+      "test_id": "tests.test_auth.test_invalid_cookie_is_safe_401[ai_session_dev=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx]",
+      "status": "pass",
+      "duration_ms": 726.0
+    },
+    {
+      "test_id": "tests.test_auth.test_invalid_cookie_is_safe_401[ai_session_dev=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx; ai_session_dev=yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy]",
+      "status": "pass",
+      "duration_ms": 749.0
+    },
+    {
+      "test_id": "tests.test_auth.test_invalid_cookie_is_safe_401[__Host-ai_session=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx]",
+      "status": "pass",
+      "duration_ms": 733.0
+    },
+    {
+      "test_id": "tests.test_auth.test_input_errors_never_echo_values[body0]",
+      "status": "pass",
+      "duration_ms": 732.0
+    },
+    {
+      "test_id": "tests.test_auth.test_input_errors_never_echo_values[body1]",
+      "status": "pass",
+      "duration_ms": 721.0
+    },
+    {
+      "test_id": "tests.test_auth.test_input_errors_never_echo_values[body2]",
+      "status": "pass",
+      "duration_ms": 749.0
+    },
+    {
+      "test_id": "tests.test_auth.test_form_json_failure_and_duplicate_csrf",
+      "status": "pass",
+      "duration_ms": 779.0
+    },
+    {
+      "test_id": "tests.test_auth.test_input_window_failures_commit_and_success_reset",
+      "status": "pass",
+      "duration_ms": 1120.0
+    },
+    {
+      "test_id": "tests.test_auth.test_ip_window_success_does_not_reset_and_forwarding_is_ignored",
+      "status": "pass",
+      "duration_ms": 1697.0
+    },
+    {
+      "test_id": "tests.test_auth.test_concurrent_input_failures_stop_at_five",
+      "status": "pass",
+      "duration_ms": 931.0
+    },
+    {
+      "test_id": "tests.test_auth.test_logout_storage_failure_is_unconfirmed_and_retryable",
+      "status": "pass",
+      "duration_ms": 873.0
+    },
+    {
+      "test_id": "tests.test_auth.test_login_audit_failure_rolls_back_new_and_previous_session",
+      "status": "pass",
+      "duration_ms": 891.0
+    },
+    {
+      "test_id": "tests.test_auth.test_normalized_login_and_private_token_storage",
+      "status": "pass",
+      "duration_ms": 858.0
+    },
+    {
+      "test_id": "tests.test_auth.test_https_cookie_and_profile_confusion",
+      "status": "pass",
+      "duration_ms": 935.0
+    },
+    {
+      "test_id": "tests.test_auth.test_startup_needs_auth_credentials",
+      "status": "pass",
+      "duration_ms": 3.0
+    },
+    {
+      "test_id": "tests.test_auth.test_concurrent_ip_window_has_fixed_limit",
+      "status": "pass",
+      "duration_ms": 884.0
+    },
+    {
+      "test_id": "tests.test_auth.test_account_revision_change_during_verification_cannot_issue",
+      "status": "pass",
+      "duration_ms": 878.0
+    },
+    {
+      "test_id": "tests.test_auth.test_control_window_cannot_raise_limits_and_touch_requires_context",
+      "status": "pass",
+      "duration_ms": 835.0
+    },
+    {
+      "test_id": "tests.test_auth.test_invalid_unicode_is_safe_login_failure[login_id]",
+      "status": "pass",
+      "duration_ms": 749.0
+    },
+    {
+      "test_id": "tests.test_auth.test_invalid_unicode_is_safe_login_failure[password]",
+      "status": "pass",
+      "duration_ms": 772.0
+    },
+    {
+      "test_id": "tests.test_auth.test_connection_loss_is_503_and_never_confirms_logout",
+      "status": "pass",
+      "duration_ms": 797.0
+    },
+    {
+      "test_id": "tests.test_auth.test_cookie_derived_tenant_context_checks_current_membership",
+      "status": "pass",
+      "duration_ms": 846.0
+    },
+    {
+      "test_id": "tests.test_auth_restart.test_session_revocation_and_rls_survive_real_api_restart",
+      "status": "pass",
+      "duration_ms": 3277.0
+    },
+    {
+      "test_id": "tests.test_auth_restart.test_absolute_idle_expiry_and_logout_survive_api_restart",
+      "status": "pass",
+      "duration_ms": 3053.0
+    },
+    {
+      "test_id": "tests.test_auth_restart.test_real_database_outage_safe_503_then_explicit_recovery",
+      "status": "pass",
+      "duration_ms": 17927.0
+    },
+    {
+      "test_id": "tests.test_auth_restart.test_authenticated_get_p95_and_idle_not_extended",
+      "status": "pass",
+      "duration_ms": 2319.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_owner_reads_without_tenant_where[A-U1-A-2-1]",
+      "status": "pass",
+      "duration_ms": 1011.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_owner_reads_without_tenant_where[A-U2-A-2-1]",
+      "status": "pass",
+      "duration_ms": 961.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_owner_reads_without_tenant_where[B-U1-B-2-1]",
+      "status": "pass",
+      "duration_ms": 1001.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_owner_reads_without_tenant_where[A-ADM-A-0-0]",
+      "status": "pass",
+      "duration_ms": 959.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_owner_reads_without_tenant_where[P-A-A-0-0]",
+      "status": "pass",
+      "duration_ms": 859.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_owner_reads_without_tenant_where[DUAL-A-2-1]",
+      "status": "pass",
+      "duration_ms": 777.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_owner_reads_without_tenant_where[DUAL-B-2-1]",
+      "status": "pass",
+      "duration_ms": 778.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_missing_context_and_raw_writes_denied",
+      "status": "pass",
+      "duration_ms": 772.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_current_revocation_same_transaction[account]",
+      "status": "pass",
+      "duration_ms": 824.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_current_revocation_same_transaction[tenant]",
+      "status": "pass",
+      "duration_ms": 829.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_current_revocation_same_transaction[membership]",
+      "status": "pass",
+      "duration_ms": 838.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_current_revocation_same_transaction[revision]",
+      "status": "pass",
+      "duration_ms": 840.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_current_revocation_same_transaction[revoked]",
+      "status": "pass",
+      "duration_ms": 819.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_current_revocation_same_transaction[expired]",
+      "status": "pass",
+      "duration_ms": 818.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_current_revocation_same_transaction[idle]",
+      "status": "pass",
+      "duration_ms": 819.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_rollback_reuse_and_uncommitted_assistant_hidden",
+      "status": "pass",
+      "duration_ms": 820.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_foreign_parent_owner_session_agent_rejected[values0]",
+      "status": "pass",
+      "duration_ms": 751.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_foreign_parent_owner_session_agent_rejected[values1]",
+      "status": "pass",
+      "duration_ms": 760.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_foreign_parent_owner_session_agent_rejected[values2]",
+      "status": "pass",
+      "duration_ms": 750.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_foreign_parent_owner_session_agent_rejected[values3]",
+      "status": "pass",
+      "duration_ms": 754.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_messages_cannot_forge_rag_classification_or_other_run",
+      "status": "pass",
+      "duration_ms": 844.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_call_binding_mode_job_rejected[values0]",
+      "status": "pass",
+      "duration_ms": 756.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_call_binding_mode_job_rejected[values1]",
+      "status": "pass",
+      "duration_ms": 816.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_call_binding_mode_job_rejected[values2]",
+      "status": "pass",
+      "duration_ms": 820.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_call_binding_mode_job_rejected[values3]",
+      "status": "pass",
+      "duration_ms": 793.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_call_binding_mode_job_rejected[values4]",
+      "status": "pass",
+      "duration_ms": 798.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_call_and_event_keys_snapshots_append_only",
+      "status": "pass",
+      "duration_ms": 909.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_non_finite_negative_budget_rejected[-1]",
+      "status": "pass",
+      "duration_ms": 746.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_non_finite_negative_budget_rejected[NaN]",
+      "status": "pass",
+      "duration_ms": 746.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_meter_pool_exact_role_options_no_content_and_closed",
+      "status": "pass",
+      "duration_ms": 758.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_pool_wrong_role_and_marker_rejected",
+      "status": "pass",
+      "duration_ms": 5889.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_web_pool_timeout_2_seconds_idle_5_seconds",
+      "status": "pass",
+      "duration_ms": 2744.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_exact_decimal_reservations_cost_and_frozen_snapshot",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_malformed_context_denies[-app.user_id]",
+      "status": "pass",
+      "duration_ms": 786.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_malformed_context_denies[-app.tenant_id]",
+      "status": "pass",
+      "duration_ms": 792.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_malformed_context_denies[-app.session_id]",
+      "status": "pass",
+      "duration_ms": 778.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_malformed_context_denies[malformed-app.user_id]",
+      "status": "pass",
+      "duration_ms": 784.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_malformed_context_denies[malformed-app.tenant_id]",
+      "status": "pass",
+      "duration_ms": 775.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_b_malformed_context_denies[malformed-app.session_id]",
+      "status": "pass",
+      "duration_ms": 776.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_exhausted_live_http_pool_returns_safe_503",
+      "status": "pass",
+      "duration_ms": 2824.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_usage_event_rejects_untyped_or_extra_payload[counts0]",
+      "status": "pass",
+      "duration_ms": 862.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_usage_event_rejects_untyped_or_extra_payload[counts1]",
+      "status": "pass",
+      "duration_ms": 854.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_usage_event_rejects_untyped_or_extra_payload[counts2]",
+      "status": "pass",
+      "duration_ms": 869.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_usage_event_rejects_untyped_or_extra_payload[counts3]",
+      "status": "pass",
+      "duration_ms": 1044.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_usage_event_rejects_untyped_or_extra_payload[counts4]",
+      "status": "pass",
+      "duration_ms": 921.0
+    },
+    {
+      "test_id": "tests.test_b_schema.test_settle_release_mutually_exclusive_storage_key",
+      "status": "pass",
+      "duration_ms": 846.0
+    },
+    {
+      "test_id": "tests.test_b_tokens.test_actual_model_encodings_and_offline_missing_corrupt_cache",
+      "status": "pass",
+      "duration_ms": 744.0
+    },
+    {
+      "test_id": "tests.test_b_tokens.test_whole_history_selection_without_mutation_or_cutting_prompt",
+      "status": "pass",
+      "duration_ms": 101.0
+    },
+    {
+      "test_id": "tests.test_b_tokens.test_invalid_general_inputs_fail_safely[ok-history0- ]",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_b_tokens.test_invalid_general_inputs_fail_safely[ok-history1-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa]",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_b_tokens.test_invalid_general_inputs_fail_safely[iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii-history2-ok]",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_b_tokens.test_invalid_general_inputs_fail_safely[ok-history3-\\ud800]",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_b_tokens.test_invalid_general_inputs_fail_safely[ok-history4-ok]",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_b_tokens.test_invalid_general_inputs_fail_safely[ok-history5-ok]",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_b_tokens.test_invalid_general_inputs_fail_safely[ok-None-ok]",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_b_tokens.test_invalid_general_inputs_fail_safely[-history7-ok]",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_b_tokens.test_special_token_text_is_plain_input_and_mandatory_overflow_rejected",
+      "status": "pass",
+      "duration_ms": 24.0
+    },
+    {
+      "test_id": "tests.test_b_tokens.test_invalid_receipt_never_becomes_zero_cost[receipt0]",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_b_tokens.test_invalid_receipt_never_becomes_zero_cost[receipt1]",
+      "status": "pass",
+      "duration_ms": 0.0
+    },
+    {
+      "test_id": "tests.test_b_tokens.test_invalid_receipt_never_becomes_zero_cost[receipt2]",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_b_tokens.test_invalid_receipt_never_becomes_zero_cost[receipt3]",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_b_tokens.test_invalid_receipt_never_becomes_zero_cost[receipt4]",
+      "status": "pass",
+      "duration_ms": 0.0
+    },
+    {
+      "test_id": "tests.test_config.test_default_is_loopback_and_mock",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_config.test_local_origin_is_exact[http://example.com:5173]",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_config.test_local_origin_is_exact[http://localhost:5173]",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_config.test_local_origin_is_exact[http://127.0.0.1:5173/]",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_config.test_local_origin_is_exact[http://127.0.0.1:5173?x=1]",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_config.test_local_origin_is_exact[http://someone@127.0.0.1:5173]",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_config.test_wildcard_binding_is_rejected",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_config.test_secrets_are_not_printed_in_settings",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_devdb.test_arbitrary_runtime_is_rejected",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_devdb.test_foreign_existing_files_are_preserved",
+      "status": "pass",
+      "duration_ms": 2.0
+    },
+    {
+      "test_id": "tests.test_devdb.test_socket_directory_fits_unix_path_limit",
+      "status": "pass",
+      "duration_ms": 1.0
+    },
+    {
+      "test_id": "tests.test_devdb.test_native_cluster_lifecycle_and_private_files",
+      "status": "pass",
+      "duration_ms": 1683.0
+    },
+    {
+      "test_id": "tests.test_devdb.test_occupied_port_is_not_replaced",
+      "status": "pass",
+      "duration_ms": 991.0
+    },
+    {
+      "test_id": "tests.test_devdb.test_tampered_owner_and_pid_are_rejected",
+      "status": "pass",
+      "duration_ms": 948.0
+    },
+    {
+      "test_id": "tests.test_devdb.test_symlink_runtime_is_rejected",
+      "status": "pass",
+      "duration_ms": 2.0
+    },
+    {
+      "test_id": "tests.test_devdb.test_foreign_socket_directory_is_preserved",
+      "status": "pass",
+      "duration_ms": 940.0
+    },
+    {
+      "test_id": "tests.test_devdb.test_closed_tcp_connection_does_not_block_restart",
+      "status": "pass",
+      "duration_ms": 1326.0
+    },
+    {
+      "test_id": "tests.test_health.test_health_has_only_safe_status",
+      "status": "pass",
+      "duration_ms": 7.0
+    },
+    {
+      "test_id": "tests.test_health.test_health_needs_no_database_and_does_not_publish_login",
+      "status": "pass",
+      "duration_ms": 5.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_own_tenants[DUAL-expected0]",
+      "status": "pass",
+      "duration_ms": 805.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_own_tenants[A-U1-expected1]",
+      "status": "pass",
+      "duration_ms": 804.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_own_tenants[NO_MEMBERS-expected2]",
+      "status": "pass",
+      "duration_ms": 840.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_roles_are_current_tenant_scoped[A-ADM-TADMIN-True]",
+      "status": "pass",
+      "duration_ms": 811.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_roles_are_current_tenant_scoped[P-A-PADMIN-True]",
+      "status": "pass",
+      "duration_ms": 812.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_roles_are_current_tenant_scoped[P_READ_ONLY-USER-False]",
+      "status": "pass",
+      "duration_ms": 796.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_roles_are_current_tenant_scoped[P_WRITE_ONLY-USER-False]",
+      "status": "pass",
+      "duration_ms": 801.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_roles_are_current_tenant_scoped[P_NONE-USER-False]",
+      "status": "pass",
+      "duration_ms": 790.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_user_cannot_administer[A-U1]",
+      "status": "pass",
+      "duration_ms": 832.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_user_cannot_administer[DUAL]",
+      "status": "pass",
+      "duration_ms": 820.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_user_cannot_administer[NO_MEMBERS]",
+      "status": "pass",
+      "duration_ms": 807.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_tadmin_can_toggle_only_ordinary_users",
+      "status": "pass",
+      "duration_ms": 899.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_padmin_changes_role_and_demoted_cookie_loses_management",
+      "status": "pass",
+      "duration_ms": 916.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_self_and_platform_targets_protected_even_inactive[P-A]",
+      "status": "pass",
+      "duration_ms": 871.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_self_and_platform_targets_protected_even_inactive[A-ADM]",
+      "status": "pass",
+      "duration_ms": 880.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_revoked_membership_removes_only_that_organization",
+      "status": "pass",
+      "duration_ms": 887.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_tenant_header_no_fallback[values0]",
+      "status": "pass",
+      "duration_ms": 797.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_tenant_header_no_fallback[values1]",
+      "status": "pass",
+      "duration_ms": 795.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_tenant_header_no_fallback[values2]",
+      "status": "pass",
+      "duration_ms": 798.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_query_validation[?limit=0]",
+      "status": "pass",
+      "duration_ms": 877.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_query_validation[?limit=51]",
+      "status": "pass",
+      "duration_ms": 794.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_query_validation[?limit=x]",
+      "status": "pass",
+      "duration_ms": 785.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_query_validation[?cursor=x]",
+      "status": "pass",
+      "duration_ms": 790.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_query_validation[?limit=1&limit=2]",
+      "status": "pass",
+      "duration_ms": 796.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_query_validation[?cursor=10000000-0000-4000-8000-00000000000a&cursor=10000000-0000-4000-8000-00000000000b]",
+      "status": "pass",
+      "duration_ms": 798.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_mutation_input_strict_and_redacted[body0]",
+      "status": "pass",
+      "duration_ms": 825.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_mutation_input_strict_and_redacted[body1]",
+      "status": "pass",
+      "duration_ms": 825.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_mutation_input_strict_and_redacted[body2]",
+      "status": "pass",
+      "duration_ms": 827.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_mutation_input_strict_and_redacted[body3]",
+      "status": "pass",
+      "duration_ms": 820.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_mutation_input_strict_and_redacted[body4]",
+      "status": "pass",
+      "duration_ms": 1228.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_mutation_input_strict_and_redacted[body5]",
+      "status": "pass",
+      "duration_ms": 867.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_mutation_input_strict_and_redacted[body6]",
+      "status": "pass",
+      "duration_ms": 846.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_no_platform_role_assignment",
+      "status": "pass",
+      "duration_ms": 806.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_write_guards[Origin]",
+      "status": "pass",
+      "duration_ms": 826.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_write_guards[X-Requested-With]",
+      "status": "pass",
+      "duration_ms": 838.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_write_guards[X-CSRF-Token]",
+      "status": "pass",
+      "duration_ms": 827.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_list_pagination_minimal_current_scope",
+      "status": "pass",
+      "duration_ms": 855.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_revision_and_missing_target_after_authorization",
+      "status": "pass",
+      "duration_ms": 850.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_concurrent_same_revision_has_one_commit_and_audit",
+      "status": "pass",
+      "duration_ms": 895.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_audit_failure_rolls_back_membership_revision_and_idle",
+      "status": "pass",
+      "duration_ms": 911.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_get_does_not_touch_idle_but_successful_change_does",
+      "status": "pass",
+      "duration_ms": 1103.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_waiting_mutation_rechecks_committed_demotion",
+      "status": "pass",
+      "duration_ms": 914.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_quota_120_then_429_relogin_does_not_reset_and_tenants_independent",
+      "status": "pass",
+      "duration_ms": 1571.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_read_quota_concurrent_boundary",
+      "status": "pass",
+      "duration_ms": 855.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_concurrent_a_b_member_lists_do_not_mix",
+      "status": "pass",
+      "duration_ms": 831.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_managed_tenant_revocation_removes_admin_not_global_capabilities",
+      "status": "pass",
+      "duration_ms": 845.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_inactive_session_no_tenants",
+      "status": "pass",
+      "duration_ms": 830.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_untrusted_authority_headers_cannot_promote_user",
+      "status": "pass",
+      "duration_ms": 913.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_lock_timeout_is_retryable_and_does_not_modify",
+      "status": "pass",
+      "duration_ms": 2897.0
+    },
+    {
+      "test_id": "tests.test_memberships.test_control_functions_deny_index_meter_and_missing_context",
+      "status": "pass",
+      "duration_ms": 761.0
+    },
+    {
+      "test_id": "tests.test_migrations.test_migration_rerun_and_checksum_reject",
+      "status": "pass",
+      "duration_ms": 1032.0
+    },
+    {
+      "test_id": "tests.test_migrations.test_pending_failure_rolls_back_schema_and_checksum",
+      "status": "pass",
+      "duration_ms": 838.0
+    },
+    {
+      "test_id": "tests.test_migrations.test_seed_rejects_existing_and_nonfixture",
+      "status": "pass",
+      "duration_ms": 1500.0
+    },
+    {
+      "test_id": "tests.test_migrations.test_wrong_fixture_marker_and_privileged_role_reject",
+      "status": "pass",
+      "duration_ms": 1291.0
+    },
+    {
+      "test_id": "tests.test_migrations.test_fixture_credentials_are_argon2_private_and_hidden",
+      "status": "pass",
+      "duration_ms": 1095.0
+    },
+    {
+      "test_id": "tests.test_migrations.test_first_migration_batch_failure_has_no_partial_schema",
+      "status": "pass",
+      "duration_ms": 328.0
+    },
+    {
+      "test_id": "tests.test_operations.test_admin_scope_read[A-U1-A-403-/admin/agents/general]",
+      "status": "pass",
+      "duration_ms": 863.0
+    },
+    {
+      "test_id": "tests.test_operations.test_admin_scope_read[A-U1-A-403-/admin/usage]",
+      "status": "pass",
+      "duration_ms": 897.0
+    },
+    {
+      "test_id": "tests.test_operations.test_admin_scope_read[A-U1-A-403-/admin/budget]",
+      "status": "pass",
+      "duration_ms": 854.0
+    },
+    {
+      "test_id": "tests.test_operations.test_admin_scope_read[A-ADM-A-200-/admin/agents/general]",
+      "status": "pass",
+      "duration_ms": 856.0
+    },
+    {
+      "test_id": "tests.test_operations.test_admin_scope_read[A-ADM-A-200-/admin/usage]",
+      "status": "pass",
+      "duration_ms": 870.0
+    },
+    {
+      "test_id": "tests.test_operations.test_admin_scope_read[A-ADM-A-200-/admin/budget]",
+      "status": "pass",
+      "duration_ms": 1031.0
+    },
+    {
+      "test_id": "tests.test_operations.test_admin_scope_read[P-A-A-200-/admin/agents/general]",
+      "status": "pass",
+      "duration_ms": 858.0
+    },
+    {
+      "test_id": "tests.test_operations.test_admin_scope_read[P-A-A-200-/admin/usage]",
+      "status": "pass",
+      "duration_ms": 858.0
+    },
+    {
+      "test_id": "tests.test_operations.test_admin_scope_read[P-A-A-200-/admin/budget]",
+      "status": "pass",
+      "duration_ms": 888.0
+    },
+    {
+      "test_id": "tests.test_operations.test_admin_scope_read[DUAL-ADM-B-200-/admin/agents/general]",
+      "status": "pass",
+      "duration_ms": 855.0
+    },
+    {
+      "test_id": "tests.test_operations.test_admin_scope_read[DUAL-ADM-B-200-/admin/usage]",
+      "status": "pass",
+      "duration_ms": 861.0
+    },
+    {
+      "test_id": "tests.test_operations.test_admin_scope_read[DUAL-ADM-B-200-/admin/budget]",
+      "status": "pass",
+      "duration_ms": 864.0
+    },
+    {
+      "test_id": "tests.test_operations.test_admin_scope_read[P_READ_ONLY-A-403-/admin/agents/general]",
+      "status": "pass",
+      "duration_ms": 848.0
+    },
+    {
+      "test_id": "tests.test_operations.test_admin_scope_read[P_READ_ONLY-A-403-/admin/usage]",
+      "status": "pass",
+      "duration_ms": 847.0
+    },
+    {
+      "test_id": "tests.test_operations.test_admin_scope_read[P_READ_ONLY-A-403-/admin/budget]",
+      "status": "pass",
+      "duration_ms": 869.0
+    },
+    {
+      "test_id": "tests.test_operations.test_admin_scope_read[P-A-B-403-/admin/agents/general]",
+      "status": "pass",
+      "duration_ms": 865.0
+    },
+    {
+      "test_id": "tests.test_operations.test_admin_scope_read[P-A-B-403-/admin/usage]",
+      "status": "pass",
+      "duration_ms": 843.0
+    },
+    {
+      "test_id": "tests.test_operations.test_admin_scope_read[P-A-B-403-/admin/budget]",
+      "status": "pass",
+      "duration_ms": 847.0
+    },
+    {
+      "test_id": "tests.test_operations.test_independent_global_capabilities[A-U1-403-403]",
+      "status": "pass",
+      "duration_ms": 854.0
+    },
+    {
+      "test_id": "tests.test_operations.test_independent_global_capabilities[A-ADM-403-403]",
+      "status": "pass",
+      "duration_ms": 861.0
+    },
+    {
+      "test_id": "tests.test_operations.test_independent_global_capabilities[P-A-200-200]",
+      "status": "pass",
+      "duration_ms": 865.0
+    },
+    {
+      "test_id": "tests.test_operations.test_independent_global_capabilities[P_READ_ONLY-200-403]",
+      "status": "pass",
+      "duration_ms": 865.0
+    },
+    {
+      "test_id": "tests.test_operations.test_independent_global_capabilities[P_WRITE_ONLY-403-200]",
+      "status": "pass",
+      "duration_ms": 859.0
+    },
+    {
+      "test_id": "tests.test_operations.test_independent_global_capabilities[P_NONE-403-403]",
+      "status": "pass",
+      "duration_ms": 861.0
+    },
+    {
+      "test_id": "tests.test_operations.test_agent_public_no_instructions_and_pipeline_not_ready",
+      "status": "pass",
+      "duration_ms": 849.0
+    },
+    {
+      "test_id": "tests.test_operations.test_agent_changes_cas_audit_and_idle",
+      "status": "pass",
+      "duration_ms": 1029.0
+    },
+    {
+      "test_id": "tests.test_operations.test_agent_strict_input_safe_errors[kwargs0]",
+      "status": "pass",
+      "duration_ms": 880.0
+    },
+    {
+      "test_id": "tests.test_operations.test_agent_strict_input_safe_errors[kwargs1]",
+      "status": "pass",
+      "duration_ms": 880.0
+    },
+    {
+      "test_id": "tests.test_operations.test_agent_strict_input_safe_errors[kwargs2]",
+      "status": "pass",
+      "duration_ms": 883.0
+    },
+    {
+      "test_id": "tests.test_operations.test_agent_strict_input_safe_errors[kwargs3]",
+      "status": "pass",
+      "duration_ms": 878.0
+    },
+    {
+      "test_id": "tests.test_operations.test_agent_strict_input_safe_errors[kwargs4]",
+      "status": "pass",
+      "duration_ms": 875.0
+    },
+    {
+      "test_id": "tests.test_operations.test_agent_strict_input_safe_errors[kwargs5]",
+      "status": "pass",
+      "duration_ms": 887.0
+    },
+    {
+      "test_id": "tests.test_operations.test_agent_strict_input_safe_errors[kwargs6]",
+      "status": "pass",
+      "duration_ms": 876.0
+    },
+    {
+      "test_id": "tests.test_operations.test_agent_strict_input_safe_errors[kwargs7]",
+      "status": "pass",
+      "duration_ms": 882.0
+    },
+    {
+      "test_id": "tests.test_operations.test_agent_strict_input_safe_errors[kwargs8]",
+      "status": "pass",
+      "duration_ms": 1024.0
+    },
+    {
+      "test_id": "tests.test_operations.test_agent_strict_input_safe_errors[kwargs9]",
+      "status": "pass",
+      "duration_ms": 1121.0
+    },
+    {
+      "test_id": "tests.test_operations.test_agent_strict_input_safe_errors[kwargs10]",
+      "status": "pass",
+      "duration_ms": 1287.0
+    },
+    {
+      "test_id": "tests.test_operations.test_agent_strict_input_safe_errors[kwargs11]",
+      "status": "pass",
+      "duration_ms": 1626.0
+    },
+    {
+      "test_id": "tests.test_operations.test_agent_strict_input_safe_errors[kwargs12]",
+      "status": "pass",
+      "duration_ms": 1264.0
+    },
+    {
+      "test_id": "tests.test_operations.test_agent_strict_input_safe_errors[kwargs13]",
+      "status": "pass",
+      "duration_ms": 1082.0
+    },
+    {
+      "test_id": "tests.test_operations.test_availability_strict_input[body0]",
+      "status": "pass",
+      "duration_ms": 1034.0
+    },
+    {
+      "test_id": "tests.test_operations.test_availability_strict_input[body1]",
+      "status": "pass",
+      "duration_ms": 1016.0
+    },
+    {
+      "test_id": "tests.test_operations.test_availability_strict_input[body2]",
+      "status": "pass",
+      "duration_ms": 1035.0
+    },
+    {
+      "test_id": "tests.test_operations.test_csrf_and_forged_authority_denied",
+      "status": "pass",
+      "duration_ms": 1001.0
+    },
+    {
+      "test_id": "tests.test_operations.test_money_strict_decimal_string[-1_0]",
+      "status": "pass",
+      "duration_ms": 877.0
+    },
+    {
+      "test_id": "tests.test_operations.test_money_strict_decimal_string[True]",
+      "status": "pass",
+      "duration_ms": 887.0
+    },
+    {
+      "test_id": "tests.test_operations.test_money_strict_decimal_string[123]",
+      "status": "pass",
+      "duration_ms": 890.0
+    },
+    {
+      "test_id": "tests.test_operations.test_money_strict_decimal_string[-1_1]",
+      "status": "pass",
+      "duration_ms": 882.0
+    },
+    {
+      "test_id": "tests.test_operations.test_money_strict_decimal_string[NaN]",
+      "status": "pass",
+      "duration_ms": 875.0
+    },
+    {
+      "test_id": "tests.test_operations.test_money_strict_decimal_string[Infinity]",
+      "status": "pass",
+      "duration_ms": 871.0
+    },
+    {
+      "test_id": "tests.test_operations.test_money_strict_decimal_string[1e3]",
+      "status": "pass",
+      "duration_ms": 874.0
+    },
+    {
+      "test_id": "tests.test_operations.test_money_strict_decimal_string[1.234]",
+      "status": "pass",
+      "duration_ms": 883.0
+    },
+    {
+      "test_id": "tests.test_operations.test_money_strict_decimal_string[25001]",
+      "status": "pass",
+      "duration_ms": 880.0
+    },
+    {
+      "test_id": "tests.test_operations.test_money_strict_decimal_string[ 100]",
+      "status": "pass",
+      "duration_ms": 882.0
+    },
+    {
+      "test_id": "tests.test_operations.test_money_strict_decimal_string[+1]",
+      "status": "pass",
+      "duration_ms": 887.0
+    },
+    {
+      "test_id": "tests.test_operations.test_local_reduction_preserves_committed_cost_and_mode",
+      "status": "pass",
+      "duration_ms": 988.0
+    },
+    {
+      "test_id": "tests.test_operations.test_allocation_scope_total_and_clamp",
+      "status": "pass",
+      "duration_ms": 960.0
+    },
+    {
+      "test_id": "tests.test_operations.test_zero_usage_is_actual_empty_db_and_no_body",
+      "status": "pass",
+      "duration_ms": 912.0
+    },
+    {
+      "test_id": "tests.test_operations.test_current_authority_recomputed[account]",
+      "status": "pass",
+      "duration_ms": 954.0
+    },
+    {
+      "test_id": "tests.test_operations.test_current_authority_recomputed[tenant]",
+      "status": "pass",
+      "duration_ms": 965.0
+    },
+    {
+      "test_id": "tests.test_operations.test_current_authority_recomputed[membership]",
+      "status": "pass",
+      "duration_ms": 964.0
+    },
+    {
+      "test_id": "tests.test_operations.test_current_authority_recomputed[revision]",
+      "status": "pass",
+      "duration_ms": 958.0
+    },
+    {
+      "test_id": "tests.test_operations.test_current_authority_recomputed[revoked]",
+      "status": "pass",
+      "duration_ms": 968.0
+    },
+    {
+      "test_id": "tests.test_operations.test_current_authority_recomputed[expired]",
+      "status": "pass",
+      "duration_ms": 998.0
+    },
+    {
+      "test_id": "tests.test_operations.test_current_authority_recomputed[idle]",
+      "status": "pass",
+      "duration_ms": 1175.0
+    },
+    {
+      "test_id": "tests.test_operations.test_current_authority_recomputed[demote]",
+      "status": "pass",
+      "duration_ms": 1226.0
+    },
+    {
+      "test_id": "tests.test_operations.test_current_authority_recomputed[managed]",
+      "status": "pass",
+      "duration_ms": 1033.0
+    },
+    {
+      "test_id": "tests.test_operations.test_current_authority_recomputed[global]",
+      "status": "pass",
+      "duration_ms": 971.0
+    },
+    {
+      "test_id": "tests.test_operations.test_audit_failure_rolls_back_setting_budget_and_session",
+      "status": "pass",
+      "duration_ms": 1444.0
+    },
+    {
+      "test_id": "tests.test_operations.test_agent_unknown_and_duplicate_query_denied",
+      "status": "pass",
+      "duration_ms": 1203.0
+    },
+    {
+      "test_id": "tests.test_operations.test_usage_real_rows_owner_tenant_unknown_pagination_and_global",
+      "status": "pass",
+      "duration_ms": 1441.0
+    },
+    {
+      "test_id": "tests.test_operations.test_global_stop_resume_latch_and_no_run_reexecution",
+      "status": "pass",
+      "duration_ms": 1301.0
+    },
+    {
+      "test_id": "tests.test_operations.test_allocation_cannot_reassign_encumbered_funds",
+      "status": "pass",
+      "duration_ms": 944.0
+    },
+    {
+      "test_id": "tests.test_operations.test_two_tenant_concurrent_allocation_last_capacity_one_success",
+      "status": "pass",
+      "duration_ms": 1033.0
+    },
+    {
+      "test_id": "tests.test_operations.test_simultaneous_same_revision_agent_update_one_success",
+      "status": "pass",
+      "duration_ms": 945.0
+    },
+    {
+      "test_id": "tests.test_operations.test_waiting_agent_change_rechecks_committed_demotion",
+      "status": "pass",
+      "duration_ms": 989.0
+    },
+    {
+      "test_id": "tests.test_operations.test_shared_120_read_window_relogin_and_tenant_independence",
+      "status": "pass",
+      "duration_ms": 1824.0
+    },
+    {
+      "test_id": "tests.test_operations.test_read_idle_unchanged_write_touched",
+      "status": "pass",
+      "duration_ms": 1023.0
+    },
+    {
+      "test_id": "tests.test_operations.test_fixed_functions_and_content_permissions_no_escalation",
+      "status": "pass",
+      "duration_ms": 845.0
+    },
+    {
+      "test_id": "tests.test_operations.test_unconfigured_tenant_budget_does_not_fabricate_usage",
+      "status": "pass",
+      "duration_ms": 805.0
+    },
+    {
+      "test_id": "tests.test_operations.test_managed_padmin_without_global_capabilities_can_allocate_only_own",
+      "status": "pass",
+      "duration_ms": 904.0
+    },
+    {
+      "test_id": "tests.test_operations.test_agent_partial_settings_and_explicit_rag_enable_remain_unavailable",
+      "status": "pass",
+      "duration_ms": 928.0
+    },
+    {
+      "test_id": "tests.test_operations.test_operations_lock_timeout_leaves_no_partial_save",
+      "status": "pass",
+      "duration_ms": 2963.0
+    },
+    {
+      "test_id": "tests.test_operations.test_all_operations_over_real_http_and_restart",
+      "status": "pass",
+      "duration_ms": 3034.0
+    },
+    {
+      "test_id": "tests.test_pool_context.test_same_connection_cleanup[normal]",
+      "status": "pass",
+      "duration_ms": 743.0
+    },
+    {
+      "test_id": "tests.test_pool_context.test_same_connection_cleanup[rollback]",
+      "status": "pass",
+      "duration_ms": 741.0
+    },
+    {
+      "test_id": "tests.test_pool_context.test_same_connection_cleanup[cancel]",
+      "status": "pass",
+      "duration_ms": 749.0
+    },
+    {
+      "test_id": "tests.test_pool_context.test_concurrent_tenants_do_not_mix",
+      "status": "pass",
+      "duration_ms": 781.0
+    },
+    {
+      "test_id": "tests.test_pool_context.test_internal_context_mismatch_and_missing_tenant_fail",
+      "status": "pass",
+      "duration_ms": 737.0
+    },
+    {
+      "test_id": "tests.test_pool_context.test_app_lifespan_uses_web_pool_and_closes",
+      "status": "pass",
+      "duration_ms": 748.0
+    },
+    {
+      "test_id": "tests.test_pool_context.test_startup_rejects_admin_dsn",
+      "status": "pass",
+      "duration_ms": 726.0
+    },
+    {
+      "test_id": "tests.test_pool_context.test_startup_rejects_foreign_marker",
+      "status": "pass",
+      "duration_ms": 5868.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_web_has_no_context_and_no_role_escalation",
+      "status": "pass",
+      "duration_ms": 752.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_owner_isolation_without_tenant_where[A-U1-A-1]",
+      "status": "pass",
+      "duration_ms": 738.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_owner_isolation_without_tenant_where[A-U2-A-1]",
+      "status": "pass",
+      "duration_ms": 730.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_owner_isolation_without_tenant_where[B-U1-B-1]",
+      "status": "pass",
+      "duration_ms": 730.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_owner_isolation_without_tenant_where[A-ADM-A-0]",
+      "status": "pass",
+      "duration_ms": 723.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_owner_isolation_without_tenant_where[P-A-A-0]",
+      "status": "pass",
+      "duration_ms": 791.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_owner_isolation_without_tenant_where[DUAL-A-1]",
+      "status": "pass",
+      "duration_ms": 740.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_owner_isolation_without_tenant_where[DUAL-B-1]",
+      "status": "pass",
+      "duration_ms": 743.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_bad_context_denies[-app.user_id]",
+      "status": "pass",
+      "duration_ms": 721.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_bad_context_denies[-app.tenant_id]",
+      "status": "pass",
+      "duration_ms": 737.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_bad_context_denies[-app.session_id]",
+      "status": "pass",
+      "duration_ms": 731.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_bad_context_denies[malformed-app.user_id]",
+      "status": "pass",
+      "duration_ms": 725.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_bad_context_denies[malformed-app.tenant_id]",
+      "status": "pass",
+      "duration_ms": 728.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_bad_context_denies[malformed-app.session_id]",
+      "status": "pass",
+      "duration_ms": 729.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_write_policy_and_immutable_binding",
+      "status": "pass",
+      "duration_ms": 855.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_current_state_revocation_in_same_transaction[account]",
+      "status": "pass",
+      "duration_ms": 779.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_current_state_revocation_in_same_transaction[tenant]",
+      "status": "pass",
+      "duration_ms": 770.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_current_state_revocation_in_same_transaction[membership]",
+      "status": "pass",
+      "duration_ms": 773.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_current_state_revocation_in_same_transaction[revision]",
+      "status": "pass",
+      "duration_ms": 776.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_current_state_revocation_in_same_transaction[revoked]",
+      "status": "pass",
+      "duration_ms": 771.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_current_state_revocation_in_same_transaction[expired]",
+      "status": "pass",
+      "duration_ms": 779.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_current_state_revocation_in_same_transaction[idle]",
+      "status": "pass",
+      "duration_ms": 791.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_raw_permissions_and_rls_catalog",
+      "status": "pass",
+      "duration_ms": 791.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_current_membership_not_global_tenant_access[A-U1-A-USER-False]",
+      "status": "pass",
+      "duration_ms": 732.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_current_membership_not_global_tenant_access[A-ADM-A-TADMIN-True]",
+      "status": "pass",
+      "duration_ms": 783.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_current_membership_not_global_tenant_access[P-A-A-PADMIN-True]",
+      "status": "pass",
+      "duration_ms": 894.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_current_membership_not_global_tenant_access[DUAL-ADM-B-TADMIN-True]",
+      "status": "pass",
+      "duration_ms": 906.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_current_membership_not_global_tenant_access[P_READ_ONLY-A-USER-False]",
+      "status": "pass",
+      "duration_ms": 978.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_current_membership_not_global_tenant_access[P_WRITE_ONLY-A-USER-False]",
+      "status": "pass",
+      "duration_ms": 907.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_inactive_session_and_no_membership_denied",
+      "status": "pass",
+      "duration_ms": 903.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_no_context_insert_and_allowed_own_insert",
+      "status": "pass",
+      "duration_ms": 785.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_composite_membership_fk_rejects_foreign_owner",
+      "status": "pass",
+      "duration_ms": 757.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_audit_reads_only_current_managed_tenant[A-U1-A-0]",
+      "status": "pass",
+      "duration_ms": 732.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_audit_reads_only_current_managed_tenant[A-ADM-A-1]",
+      "status": "pass",
+      "duration_ms": 746.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_audit_reads_only_current_managed_tenant[B-ADM-B-1]",
+      "status": "pass",
+      "duration_ms": 732.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_audit_reads_only_current_managed_tenant[P-A-A-1]",
+      "status": "pass",
+      "duration_ms": 756.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_platform_and_managed_revoke_recompute_privileges[platform]",
+      "status": "pass",
+      "duration_ms": 788.0
+    },
+    {
+      "test_id": "tests.test_schema_rls.test_platform_and_managed_revoke_recompute_privileges[managed]",
+      "status": "pass",
+      "duration_ms": 921.0
+    }
+  ],
+  "browser_tests": [
+    {
+      "test_id": "A05_01_user_login_restore_and_direct_denial",
+      "status": "passed",
+      "duration_ms": 1118
+    },
+    {
+      "test_id": "A05_02_generic_login_failure_and_password_clear",
+      "status": "passed",
+      "duration_ms": 872
+    },
+    {
+      "test_id": "A05_03_tadmin_active_changes_and_protected_rows",
+      "status": "passed",
+      "duration_ms": 1588
+    },
+    {
+      "test_id": "A05_04_padmin_role_changes",
+      "status": "passed",
+      "duration_ms": 1290
+    },
+    {
+      "test_id": "A05_05_no_members_has_no_organization",
+      "status": "passed",
+      "duration_ms": 890
+    },
+    {
+      "test_id": "A05_06_global_permission_does_not_enable_tenant_admin",
+      "status": "passed",
+      "duration_ms": 799
+    },
+    {
+      "test_id": "A05_07_two_tabs_independent_tenants",
+      "status": "passed",
+      "duration_ms": 1262
+    },
+    {
+      "test_id": "A05_08_late_actual_A_response_discarded",
+      "status": "passed",
+      "duration_ms": 928
+    },
+    {
+      "test_id": "A05_09_membership_revoked_A_keeps_B_and_session",
+      "status": "passed",
+      "duration_ms": 1228
+    },
+    {
+      "test_id": "A05_10_demoted_admin_menu_and_rows_removed",
+      "status": "passed",
+      "duration_ms": 1221
+    },
+    {
+      "test_id": "A05_11_expired_session_clears_content",
+      "status": "passed",
+      "duration_ms": 1166
+    },
+    {
+      "test_id": "A05_12_conflict_refresh_without_auto_mutation",
+      "status": "passed",
+      "duration_ms": 1504
+    },
+    {
+      "test_id": "A05_13_logout_DB_failure_hidden_until_retry_confirmed",
+      "status": "passed",
+      "duration_ms": 1515
+    },
+    {
+      "test_id": "A05_14_logout_network_failure_hidden_until_retry",
+      "status": "passed",
+      "duration_ms": 981
+    },
+    {
+      "test_id": "A05_15_logout_broadcast_clears_other_tab",
+      "status": "passed",
+      "duration_ms": 1064
+    },
+    {
+      "test_id": "A05_16_read_storage_failure_and_retry",
+      "status": "passed",
+      "duration_ms": 1521
+    },
+    {
+      "test_id": "A05_17_mobile_layout_real_management",
+      "status": "passed",
+      "duration_ms": 928
+    },
+    {
+      "test_id": "A05_18_password_fill_failure_redacted",
+      "status": "passed",
+      "duration_ms": 702
+    },
+    {
+      "test_id": "A05_19_server_cursor_pagination",
+      "status": "passed",
+      "duration_ms": 1624
+    },
+    {
+      "test_id": "A05_20_blank_login_visuals_no_credentials",
+      "status": "passed",
+      "duration_ms": 678
+    }
+  ],
+  "native_http_and_restart": {
+    "test_id": "B02-live-operations",
+    "status": "pass",
+    "utc_time": "2026-10-05T00:27:52.311870+00:00",
+    "duration_ms": 1135.02,
+    "observed": {
+      "native_api_routes_checked": 11,
+      "user_admin_denied": true,
+      "restart_preserved_agent_revision": 3,
+      "restart_preserved_budget_revision": 3,
+      "restart_preserved_global_stop": true,
+      "provider_calls": 0
+    },
+    "safe_error_code": null
+  },
+  "counting_rule": "84 B02 cases (including one native 11-route/restart case) are included in 322 total. Native observed checks are not extra test cases; existing browser20 cover A only."
+}

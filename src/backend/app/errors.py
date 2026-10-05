@@ -2,6 +2,8 @@ from datetime import datetime, timezone
 from fastapi.responses import JSONResponse
 
 MESSAGES = {
+    'BUDGET_LIMIT_CONFLICT': '현재 배정과 사용량을 확인해 주세요.',
+    'REVIEW_REQUIRED': '미확인 사용량을 확인한 뒤 다시 시도해 주세요.',
     'RESOURCE_NOT_FOUND': '대상을 찾을 수 없습니다.',
     'REVISION_CONFLICT': '변경된 내용을 다시 조회해 주세요.',
     'LOGIN_FAILED': '로그인 정보를 확인해 주세요.',

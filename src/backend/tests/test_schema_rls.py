@@ -34,7 +34,7 @@ def test_owner_isolation_without_tenant_where(db_fixture, actor, tenant, expecte
             rows = await (await conn.execute('SELECT * FROM portal.conversations')).fetchall()
             assert len(rows) == expected
             assert all(r['owner_user_id'] == ctx.user_id and r['tenant_id'] == ctx.tenant_id for r in rows)
-            agents = await (await conn.execute('SELECT * FROM portal.agent_configs')).fetchall()
+            agents = await (await conn.execute('SELECT tenant_id,agent_key,config_version,enabled FROM portal.agent_configs')).fetchall()
             assert len(agents) == 2 and all(r['tenant_id'] == ctx.tenant_id for r in agents)
     db_fixture.run(check())
 
