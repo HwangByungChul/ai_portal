@@ -249,3 +249,5 @@ B03 현재 검증: backend 399 pass/경고 0/477.85초, build 성공/기존 A br
 SSE `GET /api/v1/runs/{run_id}/events`는 현재 세션·X-Tenant-ID·Accept:text/event-stream이 필요하다. 조직/본인 조회를 재검사하고 매 본문 이벤트 직전에 권한을 새로 확인한다. snapshot/draft_delta/status/terminal/delivery_error,64KiB 초안/250ms batch/15초 keepalive,run1/user2 구독 제한이다. draft_delta는 bounded full draft의 replace 이벤트이며 sequence와 execution_epoch는 해당 구독/실행 세대에 적용한다. 재연결은 snapshot 조회이고 새로운 AI 호출을 만들지 않는다. 부분 응답이나 SSE 종료 자체는 저장 성공이 아니다.
 
 실행 시험: `.venv/bin/python -m pytest tests/test_ai_ledger.py tests/test_ai_provider.py tests/test_execution.py tests/test_b_restart.py tests/test_b_http.py -q`. 원장 직접 쓰기·meter 본문 읽기·다른 사용자의 대화 접근은 계속 거부한다. 공개 증거는 B-chat/B04-*.json이다.
+
+B04 현재 검증: backend 467 pass/경고 0/497.0초, build 성공/기존 A browser 20 pass/runner error 0/30.62초. 검증 소스 로컬 commit `4a2c925b257d00b63f2784b757df7768462cf3fc`; 정확 소스 지문은 B-chat/B04-test-summary.json에 기록했다. B05 대화·운영 화면과 B06 실제 AI 호출은 후속 단계다.

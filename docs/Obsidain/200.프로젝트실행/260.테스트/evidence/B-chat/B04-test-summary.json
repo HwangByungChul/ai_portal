@@ -6,7 +6,7 @@
   "paid_ai_cost_krw": "0",
   "openai_key_read_or_configured": false,
   "new_dependencies": 0,
-  "tested_source_commit": null,
+  "tested_source_commit": "4a2c925b257d00b63f2784b757df7768462cf3fc",
   "backend": {
     "exit_code": 0,
     "duration_seconds": 497.0,

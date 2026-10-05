@@ -6,7 +6,7 @@
   "paid_ai_cost_krw": "0",
   "openai_key_read_or_configured": false,
   "new_dependencies": 0,
-  "tested_source_commit": null,
+  "tested_source_commit": "4a2c925b257d00b63f2784b757df7768462cf3fc",
   "pending_migrations_applied": [
     "008_ai_call_control.sql"
   ],
@@ -74,5 +74,14 @@
   "source_snapshot_files": 72,
   "calendar_minutes_so_far": 177.29,
   "human_active_hours": "not measured; 4~5h plan is not actual effort",
-  "failed_test_fixture_cleanup": 6
+  "failed_test_fixture_cleanup": 6,
+  "final_artifact_audit": {
+    "exact_source_manifest_files": 32,
+    "protected_hashes_identical": 18,
+    "private_values_in_public_changed_files": 0,
+    "historical_A_B01_B02_B03_evidence_unchanged": true,
+    "dev_listeners": 0,
+    "unrelated_untracked_files_preserved": 72,
+    "preexisting_project_readme_intentionally_recorded": true
+  }
 }
