@@ -1,0 +1,28 @@
+{
+  "original_project": "/Users/jwpios/antigravity/GraphRAG AI Agent",
+  "original_commit": "913f3881b4a4a73b9f764f60575775ecdbba6bdd",
+  "reviewed_sources": {
+    "src/common_core/ai_pipeline/document/document_pipeline.py": "6d2561857bccc112c5ca735ca0c826997c4d814adbe4be5fc50366f09c75e8cd",
+    "src/common_core/ai_pipeline/document/parser_registry.py": "2d8afe4044808a80a65cd5be635189b8ef3980e3bf30b4d543a8dccb37003f84",
+    "src/common_core/ai_pipeline/document/chunker.py": "2f8763f2cf2e8069cb3df537283b62019ec818d5bb795fb638bcc9b0b46fea1f",
+    "src/common_core/ai_pipeline/graphrag/schemas.py": "bc19264c9912fe214d9316dfa90aee26b06e137a59e934f93e3cc049087032af",
+    "src/common_core/ai_pipeline/graphrag/hybrid_retriever.py": "51ba7fda71aabc37e069118e2d49bfa9729053740915cce4c0d745653e3cfb53",
+    "src/common_core/ai_pipeline/graphrag/context_assembler.py": "d21a9a4f93eb72add918f0062646c67b2d9608dddaea3524b935a4403c7541a7",
+    "src/common_core/ai_pipeline/graphrag/relation_extractor.py": "53e8c92a22e1de745221a5418621775a7289a2cf8c441b919e95380197d1b53e",
+    "src/common_core/ai_pipeline/vectorstores/pgvector_adapter.py": "aeb7b335c35754d2636ea0cc811d3386b5d089e1d3345a733b51bbab969ba5b2",
+    "src/common_core/ai_pipeline/graphrag/postgres_graph_store.py": "11da89d2cee8348bff08b037c0c0b65117e5826e3915b837b17ed7bd7d7e731d"
+  },
+  "reuse_kind": "responsibility/interface structure referenced; new implementation for approved provenance/security contracts",
+  "verbatim_source_files_copied": 0,
+  "license_declaration": "No LICENSE/NOTICE or project license declaration found in inspected root/pyproject; no license invented",
+  "original_code_executed": false,
+  "original_modified": false,
+  "corrections": [
+    "raw Unicode mapping instead of find fallback",
+    "token chunks instead of character windows",
+    "stable local ordinals instead of generated IDs",
+    "no source truncation",
+    "whole positive claims and per-relation exact evidence instead of keyword cross-product",
+    "no authority/provider/DB in common core"
+  ]
+}

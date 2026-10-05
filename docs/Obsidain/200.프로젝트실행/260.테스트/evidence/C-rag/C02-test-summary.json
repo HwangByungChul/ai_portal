@@ -1,0 +1,46 @@
+{
+  "stage": "C02",
+  "status": "completed",
+  "date": "2026-10-05",
+  "targeted": {
+    "exit_code": 0,
+    "duration_seconds": 1.17,
+    "passed": 72,
+    "failed": 0,
+    "skipped": 0
+  },
+  "full_backend": {
+    "exit_code": 0,
+    "duration_seconds": 666.48,
+    "passed": 671,
+    "failed": 0,
+    "skipped": 0
+  },
+  "targeted_included_in_full": true,
+  "frontend_rerun": false,
+  "frontend_reason": "No UI/routes/service settings changed; C01 browser51 result is historical only",
+  "corpus_totals": {
+    "chunks": 7,
+    "evidence": 18,
+    "entities": 23,
+    "relations": 16,
+    "batches": 7,
+    "embedding_tokens_planned": 819
+  },
+  "complete_documents": 5,
+  "partial_documents": 2,
+  "persisted_indexes": 0,
+  "paid_dispatches_this_stage": 0,
+  "new_cost_krw": "0",
+  "prior_B06_internal_estimate_krw": "0.19",
+  "q20_status": "not_run",
+  "native_service_import_path": "C03 planned; not changed",
+  "runtime_default_mode": "mock",
+  "rag_enabled": false,
+  "full_backend_warnings": 0,
+  "new_dependencies": 0,
+  "original_source_files_copied": 0,
+  "estimated_personal_hours": 3,
+  "actual_personal_hours": "not_measured",
+  "next_stage": "C03 planned"
+}

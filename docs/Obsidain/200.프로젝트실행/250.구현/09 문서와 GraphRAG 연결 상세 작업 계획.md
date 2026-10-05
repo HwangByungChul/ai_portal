@@ -17,7 +17,7 @@ tags: [implementation-plan, graphrag, C, tenant-isolation]
 
 **Tech Stack:** 기존 Python/FastAPI/PostgreSQL15·React/TypeScript. pgvector(1536) 준비 상태는 C01에서 실제 확인한다. 생성 gpt-4o-mini/임베딩 text-embedding-3-small을 유지한다.
 
-**Spec:** [[200.프로젝트실행/240.설계/03 데이터 모델과 RLS 설계]], [[200.프로젝트실행/240.설계/04 API와 실행 상태 설계]], [[200.프로젝트실행/240.설계/05 AI 호출과 사용량 원장 설계]], [[200.프로젝트실행/240.설계/06 문서와 GraphRAG 설계]], [[200.프로젝트실행/240.설계/08 검증과 재현 설계]], [[200.프로젝트실행/230.분석/03 GraphRAG와 백엔드 재사용 분석]]. C01 기반 구현·시험은 완료했으며 결과는 [[10 문서와 GraphRAG 저장 기반 구현 결과]]에 기록했다. C02~C06은 계획이다.
+**Spec:** [[200.프로젝트실행/240.설계/03 데이터 모델과 RLS 설계]], [[200.프로젝트실행/240.설계/04 API와 실행 상태 설계]], [[200.프로젝트실행/240.설계/05 AI 호출과 사용량 원장 설계]], [[200.프로젝트실행/240.설계/06 문서와 GraphRAG 설계]], [[200.프로젝트실행/240.설계/08 검증과 재현 설계]], [[200.프로젝트실행/230.분석/03 GraphRAG와 백엔드 재사용 분석]]. C01 기반 구현·시험은 완료했으며 결과는 [[10 문서와 GraphRAG 저장 기반 구현 결과]]에 기록했다. C02 순수 코어·문서 처리도 완료했으며 C03~C06은 계획이다.
 
 ## Global Constraints
 
@@ -43,7 +43,7 @@ tags: [implementation-plan, graphrag, C, tenant-isolation]
 | C05 문서·Job·공유·출처 화면 |3h|실 API 문서관리/처리단계·버전공유/규정Agent·인용보기|A/B 전환·권한/상태·같은ID 복구. 등록202를완료로표시하지않음 |
 | C06 합성7버전·Q20·통합 인계 |3h|실제 등록/색인/검색평가·현재ACL/재시작 증거·260 인계|모의/실제·목표/관측/완료·차단을 구분. 전체V41 판정은260/280 |
 
-C01은 완료했다. 다음 작업은 [[11 GraphRAG 순수 코어와 문서 처리 상세 작업 계획|C02 순수 코어·문서 처리]]이며 이후도 결과와 다음 계획으로 순차 진행한다.
+C01·C02는 완료했다. 다음 작업은 [[13 문서 등록과 인덱싱 Job 상세 작업 계획|C03 등록·Job·중앙 임베딩]]이며 이후도 결과와 다음 계획으로 순차 진행한다.
 
 ## C01 — 다음에 수행할 상세 작업
 
@@ -65,10 +65,10 @@ Files planned: `src/backend/migrations/009_document_graph_schema.sql`, `010_docu
 
 Files planned: `src/common_core/ai_pipeline/document/{schemas,parser,chunker,mapping,pipeline}.py`, `graphrag/{schemas,extractor,evidence,context}.py`; backend `app/documents/plan.py` and exact-position tests.
 
-- [ ] 기존 DocumentPipeline/Parser/Chunker/DomainSchema·RelationExtractor 구조를 선택 이관하고 원본 라이선스/commit/파일 지문을 provenance에 남긴다. 원본 truncation·UUID재생성·무권한preview를 그대로 이식하지 않는다.
-- [ ] CRLF/BOM/Markdown 제거 전후 원문Unicode offset·행 mapping 보존, 문장 경계512token/chunk·overlap0·버전128chunk/512evidence/512entity/1024relation/2048edge 상한 사전검사.
-- [ ] GR01~10 긍정 문형/방향·alias를 원문에서 추출하고 관계별exact_quote를 연결한다. 미지원/부정/조건 불명은 coverage partial이며 추정Graph0.
-- [ ] 코어에는 DB/키/HTTP/현재권한 결정이 없다. runtime 계획은원문+등록metadata+고정schema만 입력하고 평가정답은 테스트대조 전용이다.
+- [x] 기존 DocumentPipeline/Parser/Chunker/DomainSchema·RelationExtractor 구조를 선택 이관하고 원본 라이선스/commit/파일 지문을 provenance에 남긴다. 원본 truncation·UUID재생성·무권한preview를 그대로 이식하지 않는다.
+- [x] CRLF/BOM/Markdown 제거 전후 원문Unicode offset·행 mapping 보존, 문장 경계512token/chunk·overlap0·버전128chunk/512evidence/512entity/1024relation/2048edge 상한 사전검사.
+- [x] GR01~10 긍정 문형/방향·alias를 원문에서 추출하고 관계별exact_quote를 연결한다. 미지원/부정/조건 불명은 coverage partial이며 추정Graph0.
+- [x] 코어에는 DB/키/HTTP/현재권한 결정이 없다. runtime 계획은원문+등록metadata+고정schema만 입력하고 평가정답은 테스트대조 전용이다.
 
 ## C03 — Job와 비용 경계
 
@@ -126,3 +126,7 @@ Files planned: documents/jobs routes·repository·runner, ai gateway/provider �
 - [x] 기본 DB에 새 2개 SQL만 적용하고 재적용 0건, 기존 16개 테이블의 내용/비밀 파일/0.19원 내부 집계/대화·사용량 기록이 그대로인지 확인한다.
 - [x] `260.테스트/evidence/C-rag/C01-*.json`, `250.구현/10 문서와 GraphRAG 저장 기반 구현 결과.md`, C02 상세 작업 계획과 진행 대장을 갱신한다.
 - [x] 기본 DB 새 15개 테이블은 빈 상태이며 RAG agent는 아직 비활성이다. 서비스/DB/연결 상태를 작업 전 상태로 복원한다.
+
+## C02 완료 기록
+
+순수 코어/원문 mapping·512토큰 청킹/GR01~10·관계별 exact 근거·배치 계획과 분리 evaluator 검증을 완료했다. 결과는 [[12 GraphRAG 순수 코어와 문서 처리 구현 결과]]. 실제 임베딩·DB 인덱싱·검색·Q20는 후속 작업이다. 다음 [[13 문서 등록과 인덱싱 Job 상세 작업 계획]].

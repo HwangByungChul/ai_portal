@@ -1,0 +1,362 @@
+{
+  "runtime_input": "raw_source_and_registered_metadata_only",
+  "evaluation_only_comparison": true,
+  "documents": [
+    {
+      "document_id": "D-A-R1",
+      "version": "v1",
+      "source_sha256": "b21abba9786aa11c43d57a3899e52208bb253af342ea691ad198ca9b9639f509",
+      "chunks": 1,
+      "evidence": 3,
+      "entities": 4,
+      "relations": 3,
+      "coverage": "complete",
+      "coverage_reasons": [],
+      "embedding_tokens_planned": 136,
+      "batches": 1,
+      "source_fingerprint": "0b3610e8ec71faee2397e082194e8927bf65c02beb29b0c9e7c1357559d20188",
+      "batch_fingerprints": [
+        "d21a0f5024ad7e8702acb67a6a587efcda7e8e47d3705190d88e911af8e8886c"
+      ],
+      "evaluator_mapping": [
+        {
+          "evaluator_id": "EV-A-R1-01",
+          "runtime_evidence_ordinal": 0,
+          "chunk_ordinal": 0,
+          "start_offset": 246,
+          "end_offset": 270,
+          "line_start": 17,
+          "line_end": 17,
+          "quote_sha256": "f3317ce56df5b71ee2500ddf08ac0d1957caa6ede894a9914c68b68870d3667b"
+        },
+        {
+          "evaluator_id": "EV-A-R1-02",
+          "runtime_evidence_ordinal": 1,
+          "chunk_ordinal": 0,
+          "start_offset": 320,
+          "end_offset": 350,
+          "line_start": 22,
+          "line_end": 22,
+          "quote_sha256": "5b84a924519f27fbb3f9efbf67d7e0f32688c45cb02cdc74b991c1577a632088"
+        },
+        {
+          "evaluator_id": "EV-A-R1-03",
+          "runtime_evidence_ordinal": 2,
+          "chunk_ordinal": 0,
+          "start_offset": 397,
+          "end_offset": 430,
+          "line_start": 27,
+          "line_end": 27,
+          "quote_sha256": "5286c498813c1e9a1082462a319877d74de5f27008a05532bebe5d3f31379800"
+        }
+      ],
+      "expected_relations_match": true,
+      "original_intervals_match": true,
+      "paid_calls": 0,
+      "persisted_index": false
+    },
+    {
+      "document_id": "D-A-R2",
+      "version": "v1",
+      "source_sha256": "84ed0eb5be4874b7afaef43dcf177948f320e18b235c9b07f03526bce8806a7c",
+      "chunks": 1,
+      "evidence": 3,
+      "entities": 4,
+      "relations": 3,
+      "coverage": "complete",
+      "coverage_reasons": [],
+      "embedding_tokens_planned": 133,
+      "batches": 1,
+      "source_fingerprint": "354da1dd843bf25b123ec304ba6717d6febab7d54c0ebf5acbb0ec2b20bb255f",
+      "batch_fingerprints": [
+        "75ba383396b560af544c6d976036804d858397a74664e77c240c870b821b3d31"
+      ],
+      "evaluator_mapping": [
+        {
+          "evaluator_id": "EV-A-R2-01",
+          "runtime_evidence_ordinal": 0,
+          "chunk_ordinal": 0,
+          "start_offset": 248,
+          "end_offset": 278,
+          "line_start": 17,
+          "line_end": 17,
+          "quote_sha256": "7a7aa69b363d77ebc93c4105ccd89bf77a06aaa3e5a2176f63cecd4e9459f34a"
+        },
+        {
+          "evaluator_id": "EV-A-R2-02",
+          "runtime_evidence_ordinal": 1,
+          "chunk_ordinal": 0,
+          "start_offset": 325,
+          "end_offset": 351,
+          "line_start": 22,
+          "line_end": 22,
+          "quote_sha256": "15695cb5b286690d47618e96a9ed94bbccc0fb92afa30025259de08c5ddfb0cc"
+        },
+        {
+          "evaluator_id": "EV-A-R2-03",
+          "runtime_evidence_ordinal": 2,
+          "chunk_ordinal": 0,
+          "start_offset": 398,
+          "end_offset": 436,
+          "line_start": 27,
+          "line_end": 27,
+          "quote_sha256": "834507e43d3b10b0b98a1d89a2eb35e2008304b0f4735fb5570461126703c0cd"
+        }
+      ],
+      "expected_relations_match": true,
+      "original_intervals_match": true,
+      "paid_calls": 0,
+      "persisted_index": false
+    },
+    {
+      "document_id": "D-A-P",
+      "version": "v1",
+      "source_sha256": "b3b5b3500dc9befe7d50b7eba3438a90a6efbe56b08cb7c8400a5e3b5a262d46",
+      "chunks": 1,
+      "evidence": 2,
+      "entities": 2,
+      "relations": 1,
+      "coverage": "partial",
+      "coverage_reasons": [
+        "UNSUPPORTED_SENTENCE"
+      ],
+      "embedding_tokens_planned": 100,
+      "batches": 1,
+      "source_fingerprint": "8226640ad9bd6e52e78aaf347ffa3772b3c7453ed3e7d45914b2c944f40ef3fb",
+      "batch_fingerprints": [
+        "00a7f96ac8d46aa13105e7898c163e6bfb58b2c73a77fd1df06eda579d291879"
+      ],
+      "evaluator_mapping": [
+        {
+          "evaluator_id": "EV-A-P-01",
+          "runtime_evidence_ordinal": 0,
+          "chunk_ordinal": 0,
+          "start_offset": 239,
+          "end_offset": 272,
+          "line_start": 17,
+          "line_end": 17,
+          "quote_sha256": "3511006a06f4c5ac297c2a8d4ac93486595f88c724ba02e3e3e008763eb4a91e"
+        },
+        {
+          "evaluator_id": "EV-A-P-02",
+          "runtime_evidence_ordinal": 1,
+          "chunk_ordinal": 0,
+          "start_offset": 320,
+          "end_offset": 355,
+          "line_start": 22,
+          "line_end": 22,
+          "quote_sha256": "6731874283b862e44b55f1466e66eff41054d918c28ce133f7f2da47fca79108"
+        }
+      ],
+      "expected_relations_match": true,
+      "original_intervals_match": true,
+      "paid_calls": 0,
+      "persisted_index": false
+    },
+    {
+      "document_id": "D-B-R1",
+      "version": "v1",
+      "source_sha256": "5bb42596cd3c5e656e5aa543ec4d939f9f8c83bd831f7434d707a64b1198bf07",
+      "chunks": 1,
+      "evidence": 3,
+      "entities": 4,
+      "relations": 3,
+      "coverage": "complete",
+      "coverage_reasons": [],
+      "embedding_tokens_planned": 126,
+      "batches": 1,
+      "source_fingerprint": "54599fede001125e49ac781f7f921e79d36459dfe4643e7b9cb31dad80b3aaf8",
+      "batch_fingerprints": [
+        "4587f4544660008d41227a6a1caf03752154a4b83a30eb2e8770300f426f02dd"
+      ],
+      "evaluator_mapping": [
+        {
+          "evaluator_id": "EV-B-R1-01",
+          "runtime_evidence_ordinal": 0,
+          "chunk_ordinal": 0,
+          "start_offset": 248,
+          "end_offset": 272,
+          "line_start": 17,
+          "line_end": 17,
+          "quote_sha256": "30cd0acec739013153bda6645f250c4514f91a2950257eae4638a7df5d524af5"
+        },
+        {
+          "evaluator_id": "EV-B-R1-02",
+          "runtime_evidence_ordinal": 1,
+          "chunk_ordinal": 0,
+          "start_offset": 322,
+          "end_offset": 352,
+          "line_start": 22,
+          "line_end": 22,
+          "quote_sha256": "0a031c16e228a42da5c90e050d66a11e79a0448a65d1dda62db46ba1c87da0e1"
+        },
+        {
+          "evaluator_id": "EV-B-R1-03",
+          "runtime_evidence_ordinal": 2,
+          "chunk_ordinal": 0,
+          "start_offset": 399,
+          "end_offset": 424,
+          "line_start": 27,
+          "line_end": 27,
+          "quote_sha256": "24bc62e1ca87a1564a597e0ec2268ed9d378927b2a7df17f815ec4a8adcf1cba"
+        }
+      ],
+      "expected_relations_match": true,
+      "original_intervals_match": true,
+      "paid_calls": 0,
+      "persisted_index": false
+    },
+    {
+      "document_id": "D-B-P",
+      "version": "v1",
+      "source_sha256": "049c0103b6b3f426e2bd0a64c7f004d146b55b9f64432d187ba6b9a9b6becb90",
+      "chunks": 1,
+      "evidence": 2,
+      "entities": 2,
+      "relations": 1,
+      "coverage": "partial",
+      "coverage_reasons": [
+        "UNSUPPORTED_SENTENCE"
+      ],
+      "embedding_tokens_planned": 96,
+      "batches": 1,
+      "source_fingerprint": "46715d4e7185d3dcd01270100aafde050b5182c439eccb6ad1268f04997ab479",
+      "batch_fingerprints": [
+        "69d895da0c5e1492a150f7a9996a214c8e57dde4e84b5b93572cfe78e37ec742"
+      ],
+      "evaluator_mapping": [
+        {
+          "evaluator_id": "EV-B-P-01",
+          "runtime_evidence_ordinal": 0,
+          "chunk_ordinal": 0,
+          "start_offset": 239,
+          "end_offset": 273,
+          "line_start": 17,
+          "line_end": 17,
+          "quote_sha256": "66d91dc4a82979813ee42445a57ec81c927bb4383c518f43dd8f7d23badaebf7"
+        },
+        {
+          "evaluator_id": "EV-B-P-02",
+          "runtime_evidence_ordinal": 1,
+          "chunk_ordinal": 0,
+          "start_offset": 321,
+          "end_offset": 356,
+          "line_start": 22,
+          "line_end": 22,
+          "quote_sha256": "6dc36bcb172eb240506818582e0885322a27a752dbf08b9dd1d016d8dd379378"
+        }
+      ],
+      "expected_relations_match": true,
+      "original_intervals_match": true,
+      "paid_calls": 0,
+      "persisted_index": false
+    },
+    {
+      "document_id": "D-S",
+      "version": "v1",
+      "source_sha256": "b0a98ddc64c3b95c9312cc08ad1626e77c402ebcaea69ef0a9a13a039711c026",
+      "chunks": 1,
+      "evidence": 2,
+      "entities": 3,
+      "relations": 2,
+      "coverage": "complete",
+      "coverage_reasons": [],
+      "embedding_tokens_planned": 93,
+      "batches": 1,
+      "source_fingerprint": "5c6f47c0bea84990a2ffff27e11f77027ee3d31de87fd6a7dbdbfa178f9f412b",
+      "batch_fingerprints": [
+        "e9a8224ee0440e4a5e468718679b11614307e10490915a61235ca0bed80e8543"
+      ],
+      "evaluator_mapping": [
+        {
+          "evaluator_id": "EV-S-v1-01",
+          "runtime_evidence_ordinal": 0,
+          "chunk_ordinal": 0,
+          "start_offset": 244,
+          "end_offset": 275,
+          "line_start": 17,
+          "line_end": 17,
+          "quote_sha256": "f9fb1fcfaedf56deab240d25df28720b1c5f84866b05575abc817b7b68f2c57f"
+        },
+        {
+          "evaluator_id": "EV-S-v1-02",
+          "runtime_evidence_ordinal": 1,
+          "chunk_ordinal": 0,
+          "start_offset": 325,
+          "end_offset": 364,
+          "line_start": 22,
+          "line_end": 22,
+          "quote_sha256": "dac3d745d6e8b2e6ea347a1d00d4500047a7e2868d05aecc647bd0a60e47fc67"
+        }
+      ],
+      "expected_relations_match": true,
+      "original_intervals_match": true,
+      "paid_calls": 0,
+      "persisted_index": false
+    },
+    {
+      "document_id": "D-S",
+      "version": "v2",
+      "source_sha256": "e2d5db78c6c61638a30a2b61efaad9fd7cb59b4eb2dbad77bcdd3b4058efc859",
+      "chunks": 1,
+      "evidence": 3,
+      "entities": 4,
+      "relations": 3,
+      "coverage": "complete",
+      "coverage_reasons": [],
+      "embedding_tokens_planned": 135,
+      "batches": 1,
+      "source_fingerprint": "3d2b933dd28459f2218b1fbbf1c9a0cd004cf712b938b42cdd690aff46eacf19",
+      "batch_fingerprints": [
+        "3b13f31fa66e12ffb2f99c3eed71f0e0cf85d887f0321a43ae1b1579a8624bbe"
+      ],
+      "evaluator_mapping": [
+        {
+          "evaluator_id": "EV-S-v2-01",
+          "runtime_evidence_ordinal": 0,
+          "chunk_ordinal": 0,
+          "start_offset": 244,
+          "end_offset": 276,
+          "line_start": 17,
+          "line_end": 17,
+          "quote_sha256": "061115ad228b116ae9c8b5403a25cf609ee9c61f945e358eccb6fff4e1adf1f1"
+        },
+        {
+          "evaluator_id": "EV-S-v2-02",
+          "runtime_evidence_ordinal": 1,
+          "chunk_ordinal": 0,
+          "start_offset": 326,
+          "end_offset": 366,
+          "line_start": 22,
+          "line_end": 22,
+          "quote_sha256": "4639eb760803cb4de8b0fccbc0961e7f9478fe3df7645e1f536ae8bba03722a2"
+        },
+        {
+          "evaluator_id": "EV-S-v2-03",
+          "runtime_evidence_ordinal": 2,
+          "chunk_ordinal": 0,
+          "start_offset": 413,
+          "end_offset": 437,
+          "line_start": 27,
+          "line_end": 27,
+          "quote_sha256": "23a00fd542f5e9f9c8c93d26aa644cc03ce0195ab368998b2a7407b60e2dea3e"
+        }
+      ],
+      "expected_relations_match": true,
+      "original_intervals_match": true,
+      "paid_calls": 0,
+      "persisted_index": false
+    }
+  ],
+  "totals": {
+    "chunks": 7,
+    "evidence": 18,
+    "entities": 23,
+    "relations": 16,
+    "batches": 7,
+    "embedding_tokens_planned": 819
+  },
+  "paid_calls": 0,
+  "persisted_indexes": 0,
+  "q20_status": "not_run"
+}

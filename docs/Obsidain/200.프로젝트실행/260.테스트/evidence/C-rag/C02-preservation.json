@@ -1,0 +1,18 @@
+{
+  "manifest_files": 36,
+  "tested_sources_identical": 83,
+  "protected_files_identical": 26,
+  "historical_files_identical": 47,
+  "unrelated_untracked_preserved": 73,
+  "public_secrets_detected": 0,
+  "private_config_bytes_identical": true,
+  "original_graphrag_selected_sources_identical": 9,
+  "primary_final_fingerprints_match": 31,
+  "development_listeners": 0,
+  "runtime_connections": 0,
+  "temporary_databases": 0,
+  "cluster_state": "stopped",
+  "paid_dispatches_this_stage": 0,
+  "remote_push": false,
+  "deployment": false
+}
