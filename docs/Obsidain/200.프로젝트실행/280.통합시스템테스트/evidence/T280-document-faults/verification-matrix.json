@@ -1584,8 +1584,7 @@
             },
             {
               "evidence_file": "fault-repetitions.json",
-              "rounds": 3,
-              "native_fault": "version-directory permission guard failure during cleanup; restored before same-DB app restart"
+              "rounds": 3
             }
           ],
           "verdict": "pass",
@@ -1597,7 +1596,15 @@
           "tenants": [
             "A"
           ],
-          "observed": "actual assertion details in final cases and source; Graph DB failures become Job needs_review/index failed; API failed-state setup uses existing scoped worker capability; cleanup failure retains tombstone and settled cost"
+          "observed": {
+            "job_state": "needs_review",
+            "index_state": "failed",
+            "new_publication_count": 0,
+            "old_publication_preserved": true,
+            "settled_embedding_calls": 2,
+            "checkpoint_chunks": 1,
+            "partial_graph_rows": 0
+          }
         },
         {
           "case_id": "V-017b",
@@ -1714,20 +1721,28 @@
             },
             {
               "evidence_file": "fault-repetitions.json",
-              "rounds": 3,
-              "native_fault": "version-directory permission guard failure during cleanup; restored before same-DB app restart"
+              "rounds": 3
             }
           ],
           "verdict": "pass",
           "reason": "해당 하위 조건의 실제 DB/HTTP·native 보완 증거 대조; 다른 입력 조합이나 실제 모델 통과를 뜻하지 않음",
           "actors": [
-            "A-ADM",
-            "A-U1"
+            "A-ADM"
           ],
           "tenants": [
             "A"
           ],
-          "observed": "actual assertion details in final cases and source; Graph DB failures become Job needs_review/index failed; API failed-state setup uses existing scoped worker capability; cleanup failure retains tombstone and settled cost"
+          "observed": {
+            "controlled_failure_setup": "existing scoped claim/fail capability",
+            "parent_state": "failed",
+            "child_state": "completed",
+            "concurrent_same_retry_id_requests": 2,
+            "child_jobs": 1,
+            "retry_receipts": 1,
+            "index_builds": 1,
+            "provider_calls": 1,
+            "conflicting_input_status": 409
+          }
         },
         {
           "case_id": "V-018c",
@@ -1785,8 +1800,7 @@
             },
             {
               "evidence_file": "fault-repetitions.json",
-              "rounds": 3,
-              "native_fault": "version-directory permission guard failure during cleanup; restored before same-DB app restart"
+              "rounds": 3
             }
           ],
           "verdict": "pass",
@@ -1799,7 +1813,12 @@
           "tenants": [
             "A"
           ],
-          "observed": "actual assertion details in final cases and source; Graph DB failures become Job needs_review/index failed; API failed-state setup uses existing scoped worker capability; cleanup failure retains tombstone and settled cost"
+          "observed": {
+            "failed_parent_history_preserved": true,
+            "settled_cost_preserved": true,
+            "known_checkpoint_preserved": true,
+            "review_rerun_additional_dispatch": 0
+          }
         }
       ],
       "verdict": "not_run"
@@ -1837,8 +1856,7 @@
             },
             {
               "evidence_file": "fault-repetitions.json",
-              "rounds": 3,
-              "native_fault": "version-directory permission guard failure during cleanup; restored before same-DB app restart"
+              "rounds": 3
             }
           ],
           "verdict": "pass",
@@ -1851,7 +1869,13 @@
           "tenants": [
             "A"
           ],
-          "observed": "actual assertion details in final cases and source; Graph DB failures become Job needs_review/index failed; API failed-state setup uses existing scoped worker capability; cleanup failure retains tombstone and settled cost"
+          "observed": {
+            "default_allowed_search_excludes_deleted": true,
+            "past_owner_result": null,
+            "source_status": 404,
+            "new_explicit_ref_status": 404,
+            "additional_call_after_delete": 0
+          }
         },
         {
           "case_id": "V-019b",
@@ -1898,20 +1922,26 @@
             },
             {
               "evidence_file": "fault-repetitions.json",
-              "rounds": 3,
-              "native_fault": "version-directory permission guard failure during cleanup; restored before same-DB app restart"
+              "rounds": 3
             }
           ],
           "verdict": "pass",
           "reason": "해당 하위 조건의 실제 DB/HTTP·native 보완 증거 대조; 다른 입력 조합이나 실제 모델 통과를 뜻하지 않음",
           "actors": [
-            "A-ADM",
-            "A-U1"
+            "A-ADM"
           ],
           "tenants": [
             "A"
           ],
-          "observed": "actual assertion details in final cases and source; Graph DB failures become Job needs_review/index failed; API failed-state setup uses existing scoped worker capability; cleanup failure retains tombstone and settled cost"
+          "observed": {
+            "fault": "owned version directory mode0500 rejected by storage guard",
+            "before_restart_cleanup_state": "queued",
+            "source_retained": true,
+            "after_permission_restore_and_same_DB_app_restart": "completed",
+            "additional_provider_calls": 0,
+            "ledger_unchanged": true,
+            "other_document_relations": 1
+          }
         },
         {
           "case_id": "V-019d",
