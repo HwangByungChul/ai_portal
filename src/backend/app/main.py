@@ -18,6 +18,7 @@ from app.execution.manager import ExecutionManager
 from app.execution.stream import StreamHub,router as stream_router
 from app.errors import AppError, response
 from app.documents.routes import router as documents_router
+from app.documents.user_routes import router as user_documents_router
 from app.documents.share_routes import router as share_router
 from app.documents.evidence_routes import router as evidence_router
 from app.execution.rag import RagExecutor
@@ -77,7 +78,7 @@ def create_app(settings: Settings | None = None, *, health_only: bool = False) -
                     return response(request,error=AppError('PAYLOAD_TOO_LARGE',413))
                 body.extend(chunk)
             request._body=bytes(body)
-        if request.method=='POST' and (request.url.path=='/api/v1/admin/documents' or (request.url.path.startswith('/api/v1/admin/documents/') and request.url.path.endswith('/versions'))):
+        if request.method=='POST' and (request.url.path in ('/api/v1/admin/documents','/api/v1/documents') or (request.url.path.startswith('/api/v1/admin/documents/') and request.url.path.endswith('/versions'))):
             body=bytearray()
             async for chunk in request.stream():
                 if len(body)+len(chunk)>147456:return response(request,error=AppError('PAYLOAD_TOO_LARGE',413))
@@ -111,6 +112,7 @@ def create_app(settings: Settings | None = None, *, health_only: bool = False) -
         app.include_router(feedback_router)
         app.include_router(stream_router)
         app.include_router(documents_router)
+        app.include_router(user_documents_router)
         app.include_router(share_router)
         app.include_router(evidence_router)
     return app

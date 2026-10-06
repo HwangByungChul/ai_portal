@@ -44,7 +44,11 @@ class DocumentRepository:
         if isinstance(e,ValueError):return AppError('AUTH_REQUIRED',401)
         return AppError(*{'A0404':('DOCUMENT_UNAVAILABLE',404),'A0409':('REVISION_CONFLICT',409),'A0403':('MANAGEMENT_DENIED',403),'A0401':('AUTH_REQUIRED',401),'A0422':('REQUEST_INVALID',422),'B0401':('EXECUTION_FENCED',409),'B0402':('AGENT_DISABLED',409)}.get(getattr(e,'sqlstate',None),('STORAGE_UNAVAILABLE',503)))
 
-    async def register(self,ctx,metadata,content,document_id=None,request_id=None):
+    async def register(self,ctx,metadata,content,document_id=None,request_id=None,*,personal=False):
+        prefix="user_" if personal else ""
+        if personal:
+            if document_id is not None or set(metadata)-{"client_upload_id","title","media_type"}:raise AppError("REQUEST_INVALID",422)
+            metadata={**metadata,"visibility":"private","owner_user_id":ctx.user_id,"reader_ids":[]}
         try:text=validate_source(content,metadata['title'],metadata['media_type'])
         except SourceStorageError:raise AppError('SOURCE_INVALID',422) from None
         client=metadata['client_upload_id'];doc=document_id or scoped_id(self.secret,ctx,client,'document')
@@ -60,10 +64,10 @@ class DocumentRepository:
         mapping={'revision':source.parser_revision,'offset_unit':'unicode_codepoint','mapping':source.mapping,'lines':[{'start':x.start,'end':x.end,'kind':x.kind} for x in source.lines]}
         try:
             async with tenant_transaction(self.pool,ctx) as conn:
-                replayed=(await (await conn.execute('SELECT security.document_upload_preflight(%s,%s,%s,%s,%s,%s) AS replayed',(ctx.session_id,ctx.tenant_id,client,digest,document_id,expected))).fetchone())['replayed']
+                replayed=(await (await conn.execute('SELECT security.'+prefix+'document_upload_preflight(%s,%s,%s,%s,%s,%s) AS replayed',(ctx.session_id,ctx.tenant_id,client,digest,document_id,expected))).fetchone())['replayed']
                 if not replayed:
                     window=window_digest(self.secret,'document_admission','principal',str(ctx.user_id)+':'+str(ctx.tenant_id))
-                    admission=await (await conn.execute('SELECT * FROM security.document_admission_window(%s,%s,%s)',(ctx.session_id,ctx.tenant_id,window))).fetchone()
+                    admission=await (await conn.execute('SELECT * FROM security.'+prefix+'document_admission_window(%s,%s,%s)',(ctx.session_id,ctx.tenant_id,window))).fetchone()
                     if not admission['allowed']:raise AppError('RATE_LIMITED',429,admission['retry_after'])
                 await conn.execute('SELECT pg_advisory_xact_lock(hashtextextended(%s,0))',(str(ctx.tenant_id)+str(ctx.user_id)+str(client),))
                 await conn.execute('SELECT pg_advisory_xact_lock(hashtextextended(%s,0))',(f'tenants/{ctx.tenant_id}/documents/{doc}/{version}/source',))
@@ -73,10 +77,10 @@ class DocumentRepository:
                     if str(e)!='SOURCE_ALREADY_EXISTS':raise
                     self.storage.read(StoredSource(f'tenants/{ctx.tenant_id}/documents/{doc}/{version}/source',source_sha,len(content),len(text),metadata['title'],metadata['media_type']))
                 args=(ctx.session_id,ctx.tenant_id,client,digest,doc,version,index,job,document_id is not None,expected,owner,visibility,readers,metadata['title'],metadata['media_type'],source_sha,len(content),len(text),bytes.fromhex(plan.source_fingerprint),self.mode,Jsonb(mapping))
-                row=await (await conn.execute('SELECT security.document_register('+','.join(['%s']*len(args))+') AS data',args)).fetchone()
+                row=await (await conn.execute('SELECT security.'+prefix+'document_register('+','.join(['%s']*len(args))+') AS data',args)).fetchone()
                 result=row['data']
                 if request_id is not None:
-                    await conn.execute('SELECT security.document_request_trace(%s,%s,%s,%s,%s)',(ctx.session_id,ctx.tenant_id,request_id,UUID(result['document_id']),UUID(result['job_id'])))
+                    await conn.execute('SELECT security.'+prefix+'document_request_trace(%s,%s,%s,%s,%s)',(ctx.session_id,ctx.tenant_id,request_id,UUID(result['document_id']),UUID(result['job_id'])))
             return result
         except SourceStorageError:raise AppError('SOURCE_CONFLICT',409) from None
         except (psycopg.Error,ValueError) as e:raise self.error(e) from None
@@ -86,17 +90,26 @@ class DocumentRepository:
         await self.read_window(ctx)
         return await self.rpc(ctx,'document_admin_list',(ctx.session_id,ctx.tenant_id,kind,cursor,limit))
 
+    async def personal_listing(self,ctx,kind,cursor,limit):
+        await self.read_window(ctx)
+        return await self.rpc(ctx,'user_document_list',(ctx.session_id,ctx.tenant_id,kind,cursor,limit))
+
+    async def personal_job(self,ctx,job_id):
+        await self.read_window(ctx)
+        return await self.rpc(ctx,'user_document_job_view',(ctx.session_id,ctx.tenant_id,job_id))
+
     async def job(self,ctx,job_id,action='view',epoch=None,claim=None,data=None):
         if action=='view':await self.read_window(ctx)
         if action=='claim':data={**(data or {}),'mode':self.mode}
         return await self.rpc(ctx,'document_job_control',(ctx.session_id,ctx.tenant_id,job_id,action,epoch,claim,Jsonb(data or {})))
 
-    async def delete(self,ctx,document_id,revision,request_id=None):
+    async def delete(self,ctx,document_id,revision,request_id=None,*,personal=False):
+        prefix="user_" if personal else ""
         try:
             async with tenant_transaction(self.pool,ctx) as conn:
-                result=(await (await conn.execute('SELECT security.document_delete(%s,%s,%s,%s) AS data',(ctx.session_id,ctx.tenant_id,document_id,revision))).fetchone())['data']
+                result=(await (await conn.execute('SELECT security.'+prefix+'document_delete(%s,%s,%s,%s) AS data',(ctx.session_id,ctx.tenant_id,document_id,revision))).fetchone())['data']
                 if request_id is not None:
-                    await conn.execute('SELECT security.document_request_trace(%s,%s,%s,%s,%s)',(ctx.session_id,ctx.tenant_id,request_id,document_id,None))
+                    await conn.execute('SELECT security.'+prefix+'document_request_trace(%s,%s,%s,%s,%s)',(ctx.session_id,ctx.tenant_id,request_id,document_id,None))
             return result
         except (psycopg.Error,ValueError) as e:raise self.error(e) from None
 

@@ -288,3 +288,11 @@ B05 검증 소스 local commit `3d1cbeff72dced1d4625badcd0668f0c6c14769b`; backe
 기본명령은paid-call-free preflight다. 기존승인된B06 실행에는 `--execute`를붙였으며현재는REAL_BATCH_ALREADY_RECORDED로차단된다. `.runtime/B06-real-batch.json`은0600의발사전journal이므로삭제/초기화하여유료호출을반복하지않는다. `.runtime/B06-real-result.json`/provider-metadata는본문·키없이안전상태/고정parameter/token/원장차분만기록한다. 로그/XML은private에만보관하고공개증거B06 JSON5개를참고한다.
 
 Areal대표500원배정/기발생0.19원·예약0을유지하고C임베딩계획에서합산한다.0.19원은가격snapshot의내부추정이며공급사청구가아니다. 실제3표본지연을SLA로확대하지않는다. 최종시험은전체495뒤관측보완관련37을확인했고고유498이다.
+
+## DP-05 개인 문서함
+
+일반 사용자도 내 자료에서 UTF-8 TXT/Markdown을 개인 문서로 등록하고 처리·게시·삭제 정리 상태를 확인할 수 있다. 파일 128KB, 40,000자, 제목 200자와 기존 색인/비용 제한을 적용한다. 게시된 개인 버전은 규정 질의의 읽을 수 있는 자료에서 선택한다. 삭제 후 기존 RAG 답변·근거·원문·피드백은 현재 자료 권한에 따라 숨겨지고 기존 비용/감사 기록은 유지된다.
+
+개인 제어 API는 POST `/api/v1/documents`, GET `/api/v1/documents/mine`, GET `/api/v1/document-jobs` 및 `/{job_id}`, DELETE `/api/v1/documents/{document_id}`다. 기존 GET `/api/v1/documents`는 게시 자료 읽기 목록을 유지한다. 개인 multipart metadata는 client_upload_id/title/media_type만 받으며 소유자·조직·공유 필드는 입력할 수 없다. 개인 목록은 사용자 경로로 직접 등록한 문서만 관리 대상으로 제공하며 관리자 경로의 기존 private 문서는 읽기 자료로만 제공한다.
+
+새 migration023은 user_owned 불변 구분과 사용자 고정 함수를 추가한다. 현재 활성 주체와 대상 소유권을 검사해 기존 작업자·삭제 정리를 재사용하며 기존 관리자 관리 권한을 확대하지 않는다. 개인 문서의 새 버전/재시도/공유와 PDF/Office/OCR은 후속 범위다. 시험은 `tests/test_dp05_acceptance.py`와 frontend `tests/dp05-acceptance.spec.ts`를 사용한다. DB 역할 설정을 공유하는 시험 실행기와 브라우저 실행기는 순차 실행한다.
