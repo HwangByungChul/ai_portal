@@ -1,0 +1,22 @@
+{
+  "paid_dispatches": 0,
+  "new_cost_krw": "0",
+  "default_mode": "mock",
+  "primary_rag_enabled": false,
+  "primary_corpus_loaded": false,
+  "existing_representative_total_krw": "500",
+  "prior_A_internal_estimate_krw": "0.19",
+  "B_real_allocation": "absent",
+  "remaining": [
+    "동일 기존 총액 안의 A/B 배정",
+    "real 색인·자료 저장 분리",
+    "키의 실제 호출 권한",
+    "공식 현재 가격과 사용량 대조"
+  ],
+  "prohibited_shortcuts": [
+    "새 DB로 준비 우회",
+    "새 500원 재배정",
+    "기존 사용액 초기화",
+    "실제 RAG 자동 활성화"
+  ]
+}

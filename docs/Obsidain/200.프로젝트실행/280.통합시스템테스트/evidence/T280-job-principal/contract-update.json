@@ -1,0 +1,34 @@
+{
+  "scope": "문서 색인 Job",
+  "origin_session": "실제 접수 세션 ID를 감사 참조로 보존; HTTP 로그인 지속 여부는 색인 백그라운드 권한 조건에서 분리",
+  "new_function": "security.document_background_control",
+  "executable_by": [
+    "ai_index"
+  ],
+  "current_authority": [
+    "account",
+    "tenant",
+    "membership",
+    "TADMIN or active PADMIN+managed tenant",
+    "document not deleted",
+    "Agent enabled"
+  ],
+  "saved_binding": [
+    "initiator",
+    "tenant",
+    "mode at claim",
+    "job",
+    "lease",
+    "epoch",
+    "claim token",
+    "bounded lifetime"
+  ],
+  "api_authentication": "로그아웃/만료 이후 API 접근 401 유지",
+  "remaining": [
+    "문서 정리 Job은 기존 HTTP 세션 조건을 유지하므로 별도 보완/검증 필요",
+    "실제 두 연결 취소/완료 경합 잔여 입력",
+    "HTTP request-ID→run/Job 첫 연결과 보호 표식의 정확한 입력",
+    "상세60·ACL16 최종 판정",
+    "실제 RAG·새 환경 설치/복원·사용자 직접 피드백"
+  ]
+}

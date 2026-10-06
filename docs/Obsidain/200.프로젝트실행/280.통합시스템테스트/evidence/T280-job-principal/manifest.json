@@ -1,0 +1,22 @@
+{
+  "stage": "T280",
+  "unit": "index Job current-principal contract",
+  "overall_status": "in-progress",
+  "unit_status": "completed",
+  "source_commit": "05f88e17f059ac219fbf98e66a14ba5f3aa7636a",
+  "source_changes": [
+    "src/backend/app/documents/worker.py",
+    "src/backend/migrations/018_document_job_principal_control.sql",
+    "src/backend/tests/support.py",
+    "src/backend/tests/test_migrations.py",
+    "src/backend/tests/document_support.py",
+    "src/backend/tests/test_document_jobs.py",
+    "src/backend/tests/test_t280_job_sessions.py"
+  ],
+  "new_tests": 32,
+  "backend_passed": 856,
+  "browser_cases": 64,
+  "paid_dispatches": 0,
+  "source_inventory_count": 178,
+  "next_plan": "09 통합 검증 잔여 입력과 정리 Job 상세 작업 계획.md"
+}

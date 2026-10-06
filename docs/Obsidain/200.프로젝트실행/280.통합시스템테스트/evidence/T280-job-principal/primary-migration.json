@@ -1,0 +1,14 @@
+{
+  "prior_migrations": 18,
+  "migrations_after": 19,
+  "original_18_migration_records_preserved": true,
+  "new_migration": "018_document_job_principal_control.sql",
+  "project_and_tenant_budgets_identical": true,
+  "new_security_functions": 1,
+  "security_functions_after": 78,
+  "paid_dispatches": 0,
+  "new_cost_krw": "0",
+  "primary_identity_preserved": true,
+  "default_mode": "mock",
+  "primary_rag_enabled": false
+}

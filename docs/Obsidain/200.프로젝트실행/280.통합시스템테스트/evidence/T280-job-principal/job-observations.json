@@ -1,0 +1,52 @@
+{
+  "new_cases": 32,
+  "session_boundaries": {
+    "inputs": [
+      "logout",
+      "expired",
+      "idle"
+    ],
+    "timings": [
+      "before_claim",
+      "after_dispatch",
+      "after_checkpoint"
+    ],
+    "cases": 9,
+    "logout": "실제 로그아웃 API",
+    "expiry_idle": "소유한 합성 fixture 시각 변경",
+    "expected": "API 401, 색인 완료, 호출1, 정산1, 공개1, 중복0"
+  },
+  "current_principal": {
+    "inputs": [
+      "account",
+      "tenant",
+      "membership",
+      "role",
+      "managed",
+      "deleted",
+      "agent"
+    ],
+    "timings": [
+      "before_claim",
+      "after_dispatch"
+    ],
+    "cases": 14,
+    "method": "합성 fixture SQL로 정확한 회수 시점 제어",
+    "expected": "회수 전 호출0 또는 기발사1, 공개0, 기발생 비용 보존, 예약/slot 해제",
+    "limit": "직접 tombstone 입력은 실제 삭제 API 흐름과 다르며 모든 Job의 최종 상태를 판정하지 않는다"
+  },
+  "role_denials": 2,
+  "binding_denials": 4,
+  "native_restart": {
+    "cases": 3,
+    "inputs": [
+      "queued",
+      "usage_unknown",
+      "membership_revoked"
+    ],
+    "method": "실제 HTTP 접수·로그아웃→동일 DB 서버 재시작→두 번째 재시작",
+    "expected": "queued 완료/불명 호출 자동 재발사0/권한 회수 blocked; origin·Job·원장 보존",
+    "limit": "반복 재시작과 독립 반복 시험 횟수를 구분한다"
+  },
+  "paid_dispatches": 0
+}
