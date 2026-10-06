@@ -32,19 +32,29 @@ def main():
                 conn.execute('UPDATE security.platform_access SET active=true')
                 conn.execute('UPDATE security.managed_tenants SET active=true')
                 # Only this marked disposable browser DB is reset; primary is rejected above.
-                conn.execute('TRUNCATE portal.answer_evidence,rag.relation_evidence,rag.evidence,rag.relations,rag.entities,rag.chunks,ops.usage_events,ops.call_attempts,portal.messages,portal.runs')
+                conn.execute('TRUNCATE security.operation_receipts,security.job_authorizations,security.share_grants,security.document_publications,security.private_readers,rag.jobs,rag.index_builds,rag.document_versions,security.document_access,portal.answer_evidence,rag.relation_evidence,rag.evidence,rag.relations,rag.entities,rag.chunks,ops.usage_events,ops.call_attempts,portal.messages,portal.runs')
                 conn.execute('DELETE FROM portal.conversations WHERE NOT(conversation_id=ANY(%s))',([UUID(v) for v in config['conversations']],))
                 conn.execute('UPDATE ops.project_budget SET stopped=false,stop_latch=false,revision=1,accounted_krw=0,reserved_krw=0,active_slot=0')
                 conn.execute('UPDATE ops.tenant_budgets SET allocated_cap_krw=12500,local_cap_krw=12500,accounted_krw=0,reserved_krw=0,active_slot=0,stopped=false,revision=1')
                 conn.execute("UPDATE portal.agent_configs SET settings='{}'::jsonb,enabled=(agent_key='general'),config_version=1")
-                for name in ['B05-provider-control.json','B05-provider-count.txt']:(BACKEND/'.runtime'/name).unlink(missing_ok=True)
+                for name in ['B05-provider-control.json','B05-provider-count.txt','C05-restart-request.json','C05-restart-done.json']:(BACKEND/'.runtime'/name).unlink(missing_ok=True)
                 _write_private(BACKEND/'.runtime/B05-provider-control.json',json.dumps({'behavior':'normal'}))
                 for row in config['members']:
                     conn.execute('UPDATE security.memberships SET role=%s,active=%s,revision=%s WHERE tenant_id=%s AND user_id=%s',
                         (row['role'],row['active'],row['revision'],row['tenant'],row['user']))
-        elif action in ('slow-provider','release-provider','unknown-provider'):
+        elif action=='c05-publication-conflict':conn.execute('UPDATE security.document_publications SET revision=revision+1 WHERE tenant_id=%s AND active',(org,))
+        elif action=='c05-restart-api':
+            pending=BACKEND/'.runtime/C05-restart-request.json'
+            if not pending.exists():_write_private(pending,json.dumps({'kind':'C05-owned-child-restart'}))
+        elif action=='c05-restart-status':
+            proof=BACKEND/'.runtime/C05-restart-done.json'
+            print(_read_private(proof) if proof.exists() else json.dumps({'restarted':False}));return 0
+        elif action=='c05-enable':conn.execute("UPDATE portal.agent_configs SET enabled=true WHERE agent_key='rules_rag'")
+        elif action=='c05-counts':
+            print(json.dumps({'documents':conn.execute('SELECT count(*) FROM security.document_access').fetchone()[0],'active':conn.execute("SELECT (SELECT count(*) FROM portal.runs WHERE state IN ('queued','running','cancel_requested'))+(SELECT count(*) FROM rag.jobs WHERE state IN ('queued','running'))").fetchone()[0],'embed_document':conn.execute("SELECT count(*) FROM ops.call_attempts WHERE operation='embed_document'").fetchone()[0],'embed_query':conn.execute("SELECT count(*) FROM ops.call_attempts WHERE operation='embed_query'").fetchone()[0],'generate_rag':conn.execute("SELECT count(*) FROM ops.call_attempts WHERE operation='generate_rag'").fetchone()[0],'reserved_positive':conn.execute("SELECT coalesce(sum(reserved_krw),0)>0 FROM ops.project_budget").fetchone()[0]}));return 0
+        elif action in ('slow-provider','release-provider','unknown-provider','slow-rag-provider','slow-index-provider','unknown-index-provider'):
             path=BACKEND/'.runtime/B05-provider-control.json';path.unlink()
-            _write_private(path,json.dumps({'behavior':{'slow-provider':'slow','release-provider':'normal','unknown-provider':'unknown'}[action]}))
+            _write_private(path,json.dumps({'behavior':{'slow-provider':'slow','release-provider':'normal','unknown-provider':'unknown','slow-rag-provider':'slow-rag','slow-index-provider':'slow-index','unknown-index-provider':'unknown-index'}[action]}))
         elif action=='b05-counts':
             count_path=BACKEND/'.runtime/B05-provider-count.txt'
             print(json.dumps({'provider_calls':len(_read_private(count_path).splitlines()) if count_path.exists() else 0,

@@ -22,3 +22,12 @@ export interface Usage {period:string;execution_mode:Mode;call_count:number;unkn
 export interface Budget {period:string;execution_mode:Mode;allocated_cap_krw:string;local_cap_krw:string;estimated_accounted_krw:string;reserved_krw:string;blocked:boolean;safe_block_reason:string|null;revision:number}
 export interface PlatformSummary {period:string;execution_mode:Mode;approved_cap_krw:string;operational_cap_krw:string;allocated_total_krw:string;
  estimated_accounted_krw:string;reserved_krw:string;unknown_count:number;enabled:boolean;revision:number;stop_latch:boolean}
+
+export interface DocumentRef {document_id:string;version_id:string}
+export interface ReadableDocument extends DocumentRef {title:string;version_no:number;safe_version_label:string;visibility:'org'|'private'|'shared';execution_mode:Mode}
+export interface ManagedDocument extends DocumentRef {index_id:string;revision:number;visibility:'org'|'private';access_state:string;processing_state:string;publication_state:string;cleanup_state:string;can_read_content:boolean}
+export interface DocumentJob extends DocumentRef {job_id:string;index_id:string;job_kind:string;state:string;stage:string;revision:number;execution_mode:Mode;retry_allowed?:boolean;publication_state?:string;cleanup_state?:string;safe_error_code:string|null}
+export interface UploadReceipt extends DocumentRef {job_id:string;index_id:string}
+export interface Grant {grant_id:string;recipient_tenant_id:string;active:boolean;revision:number}
+export interface GrantPage extends DocumentRef {publication_revision:number;items:Grant[]}
+export interface Evidence {ordinal:number;content_status:'available'|'unavailable';title?:string;version_no?:number;quote?:string;location?:{line_start:number;line_end:number};source_url?:string}

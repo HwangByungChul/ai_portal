@@ -1,27 +1,30 @@
 import {useEffect,useRef,useState} from 'react';
 import {api,ApiError,isAbort} from './api';
 import {blockReason,get,modeLabel,useScope,wait} from './scoped';
+import {ReadableDocuments} from './ReadableDocuments';
+import {RagEvidencePanel} from './RagEvidencePanel';
 import {subscribe} from './stream';
-import type {AgentKey,AgentSummary,Conversation,Message,PageResult,Run,Tenant,User} from './types';
-type Submission={client_send_id:string;agent_key:AgentKey;prompt:string;conversation_id?:string};
+import type {AgentKey,AgentSummary,Conversation,DocumentRef,Message,PageResult,Run,Tenant,User} from './types';
+type Submission={client_send_id:string;agent_key:AgentKey;prompt:string;conversation_id?:string;document_refs?:DocumentRef[]};
 const stateName:Record<string,string>={queued:'접수됨',running:'답변 작성 중',cancel_requested:'취소 요청됨 · 결과 확인 중',completed:'완료 · 저장 확인됨',cancelled:'취소됨',failed:'처리 실패',blocked:'현재 처리할 수 없음',interrupted:'처리가 중단됨'};
 export function ChatPage({tenant,user}:{tenant:Tenant;user:User}){
  const context=useScope();const org=tenant.tenant_id;
  const [agents,setAgents]=useState<AgentSummary[]>([]);const [agent,setAgent]=useState<AgentKey>('general');
  const [conversations,setConversations]=useState<Conversation[]>([]);const [conversationCursor,setConversationCursor]=useState<string|null>(null);
  const [selected,setSelected]=useState<string|null>(null);const [messages,setMessages]=useState<Message[]>([]);const [messageCursor,setMessageCursor]=useState<string|null>(null);
+ const [documentRefs,setDocumentRefs]=useState<DocumentRef[]>([]);
  const [prompt,setPrompt]=useState('');const [run,setRun]=useState<Run|null>(null);const [draft,setDraft]=useState('');
  const [error,setError]=useState<string|null>(null);const [notice,setNotice]=useState<string|null>(null);const [loading,setLoading]=useState(true);
  const [historyOpen,setHistoryOpen]=useState(false);const [sending,setSending]=useState(false);const [unresolved,setUnresolved]=useState(false);const [cancelling,setCancelling]=useState(false);
  const lock=useRef(false);const pending=useRef<Submission|null>(null);const selection=useRef(0);const listQuery=useRef(0);const chosen=useRef<string|null>(null);
- const currentRun=useRef<Run|null>(null);
+ const currentRun=useRef<Run|null>(null);const historyQuery=useRef(0),authorityBusy=useRef(false);
  const active=agents.find(a=>a.agent_key===agent);const busy=!!run&&!run.is_terminal;
  function publishRun(value:Run){
   if(!context.current()||value.tenant_id!==org)return;
   const prior=currentRun.current;if(prior?.run_id===value.run_id&&prior.revision>value.revision)return;
   currentRun.current=value;setRun(value);
  }
- function clear(){setMessages([]);setConversations([]);setAgents([]);currentRun.current=null;setRun(null);setDraft('');setPrompt('');pending.current=null;}
+ function clear(){setMessages([]);setConversations([]);setAgents([]);currentRun.current=null;setRun(null);setDraft('');setPrompt('');setDocumentRefs([]);pending.current=null;}
  async function failed(problem:unknown){const message=await context.fail(problem,clear);if(context.current())setError(message);}
  async function list(next:string|null=null){
   const version=++listQuery.current;
@@ -30,8 +33,9 @@ export function ChatPage({tenant,user}:{tenant:Tenant;user:User}){
   }catch(problem){await failed(problem);}
  }
  async function history(id:string,next:string|null=null,version=selection.current):Promise<Message[]|null>{
+  const query=++historyQuery.current;
   try{const page=await get<PageResult<Message>>('/conversations/'+id+'/messages'+(next?'?cursor='+encodeURIComponent(next):''),{tenantId:org,signal:context.signal});
-   if(!context.current()||version!==selection.current||chosen.current!==id)return null;
+   if(!context.current()||version!==selection.current||chosen.current!==id||query!==historyQuery.current)return null;
    setMessages(old=>next?[...old,...page.items]:page.items);setMessageCursor(page.next_cursor);return page.items;
   }catch(problem){if(context.current()&&version===selection.current){setMessages([]);setMessageCursor(null);await failed(problem);}return null;}
  }
@@ -39,13 +43,22 @@ export function ChatPage({tenant,user}:{tenant:Tenant;user:User}){
   setLoading(true);setError(null);
   try{const value=await get<{items:AgentSummary[]}>('/agents',{tenantId:org,signal:context.signal});if(context.current())setAgents(value.items);}
   catch(problem){await failed(problem);}
-  await list();if(context.current())setLoading(false);
+  await list();await currentAuthority();if(context.current())setLoading(false);
  }
  useEffect(()=>{void initialize();},[]);
- function fresh(){selection.current++;chosen.current=null;setSelected(null);setMessages([]);setMessageCursor(null);currentRun.current=null;setRun(null);setDraft('');setError(null);setNotice(null);setPrompt('');}
+ function hideAnswer(id:string){historyQuery.current++;setMessages(old=>old.filter(m=>m.role!=='assistant'||m.run_id!==id));const value=currentRun.current;if(value?.run_id===id){publishRun({...value,content_status:'unavailable',result:null});}}
+ async function currentAuthority(){
+  if(!context.current()||!chosen.current||authorityBusy.current||currentRun.current&&!currentRun.current.is_terminal)return;authorityBusy.current=true;
+  const id=chosen.current,version=selection.current;
+  try{const current=currentRun.current;if(current){const value=await get<Run>('/runs/'+current.run_id,{tenantId:org,signal:context.signal});if(context.current()&&version===selection.current){publishRun(value);if(value.content_status==='unavailable')hideAnswer(value.run_id);}}
+   await history(id,null,version);
+  }catch(problem){if(context.current()&&version===selection.current){setMessages([]);setDraft('');currentRun.current=null;setRun(null);await failed(problem);}}finally{authorityBusy.current=false;}
+ }
+ useEffect(()=>{if(agent!=='rules_rag')return;const refresh=()=>{if(document.visibilityState==='visible')void currentAuthority();};const timer=setInterval(refresh,5000);window.addEventListener('focus',refresh);document.addEventListener('visibilitychange',refresh);return()=>{clearInterval(timer);window.removeEventListener('focus',refresh);document.removeEventListener('visibilitychange',refresh);};},[agent]);
+ function fresh(){setDocumentRefs([]);selection.current++;chosen.current=null;setSelected(null);setMessages([]);setMessageCursor(null);currentRun.current=null;setRun(null);setDraft('');setError(null);setNotice(null);setPrompt('');}
  async function choose(conversation:Conversation){
   if(lock.current||unresolved)return;
-  const version=++selection.current;chosen.current=conversation.conversation_id;
+  setDocumentRefs([]);const version=++selection.current;chosen.current=conversation.conversation_id;
   setSelected(conversation.conversation_id);setAgent(conversation.agent_key);setMessages([]);currentRun.current=null;setRun(null);setDraft('');setPrompt('');setError(null);setNotice(null);
   const items=await history(conversation.conversation_id,null,version);const last=items?.at(-1);
   if(last&&context.current()&&version===selection.current){
@@ -76,7 +89,7 @@ export function ChatPage({tenant,user}:{tenant:Tenant;user:User}){
   if(lock.current||busy||unresolved||!active?.available||!prompt.trim())return;
   if(prompt.length>4000||new TextEncoder().encode(prompt).byteLength>16384){setError('질문은 4,000자와 16KB 이내로 입력해 주세요.');return;}
   lock.current=true;setSending(true);setError(null);setNotice(null);selection.current++;
-  const payload:Submission={client_send_id:crypto.randomUUID(),agent_key:agent,prompt,...(selected?{conversation_id:selected}:{})};pending.current=payload;
+  const payload:Submission={...(agent==='rules_rag'&&documentRefs.length?{document_refs:documentRefs}:{}),client_send_id:crypto.randomUUID(),agent_key:agent,prompt,...(selected?{conversation_id:selected}:{})};pending.current=payload;
   try{accept(await api.request<Run>('/runs',{method:'POST',tenantId:org,csrf:user.csrf_token,body:payload,signal:context.signal}));}
   catch(problem){
    if(problem instanceof ApiError&&(problem.status===0||problem.status>=500)){await recover(payload,true);}
@@ -138,15 +151,17 @@ export function ChatPage({tenant,user}:{tenant:Tenant;user:User}){
    {conversationCursor&&<button className="secondary small" onClick={()=>void list(conversationCursor)}>대화 더 보기</button>}
    </div></aside><div className="chat-main">
    {error&&<p role="alert" className="error-message">{error}</p>}{notice&&<p role="status" className="notice">{notice}</p>}
-   <div className="card agent-choice"><label htmlFor="agent-choice">Agent</label><select id="agent-choice" value={agent} disabled={sending||busy||unresolved||!!selected} onChange={e=>setAgent(e.target.value as AgentKey)}>{agents.map(a=><option key={a.agent_key} value={a.agent_key}>{a.name}</option>)}</select>
-    <p className="muted">{active?.description||'질문에 대한 답변을 작성합니다.'}</p><p className="scope-note">{agent==='general'?'문서 검색 사용 안 함':'문서 검색과 근거 표시는 후속 단계에서 연결합니다.'}</p>
+   <div className="card agent-choice"><label htmlFor="agent-choice">Agent</label><select id="agent-choice" value={agent} disabled={sending||busy||unresolved||!!selected} onChange={e=>{setAgent(e.target.value as AgentKey);setDocumentRefs([]);}}>{agents.map(a=><option key={a.agent_key} value={a.agent_key}>{a.name}</option>)}</select>
+    <p className="muted">{active?.description||'질문에 대한 답변을 작성합니다.'}</p><p className="scope-note">{agent==='general'?'문서 검색 사용 안 함':'현재 읽을 수 있는 자료만 검색합니다. 각 질문을 독립적으로 처리합니다.'}</p>
     {active&&!active.available&&<p className="blocked-note">{blockReason[active.safe_block_reason??'']??'현재 사용할 수 없습니다.'}</p>}
    </div>
-   <div className="message-list" aria-label="대화 내용">{messages.map(m=><article className={'message '+m.role} key={m.message_id}><strong>{m.role==='user'?'내 질문':'저장된 답변'}</strong><p>{m.text}</p></article>)}
+   {agent==='rules_rag'&&<ReadableDocuments tenantId={org} selected={documentRefs} onChange={setDocumentRefs} disabled={sending||busy||unresolved}/>}
+   <div className="message-list" aria-label="대화 내용">{messages.map(m=><article className={'message '+m.role} key={m.message_id}><strong>{m.role==='user'?'내 질문':'저장된 답변'}</strong><p>{m.text}</p>{m.role==='assistant'&&agent==='rules_rag'&&<RagEvidencePanel tenantId={org} runId={m.run_id} onUnavailable={()=>hideAnswer(m.run_id)}/>}</article>)}
     {messageCursor&&selected&&<button className="secondary small" onClick={()=>void moreMessages()}>메시지 더 보기</button>}
-    {run&&<article className="run-card" aria-label="실행 상태"><p className="mode-tag">{modeLabel(run.execution_mode)}</p><p role="status" className="run-status">{stateName[run.state]??'상태 확인 중'}</p>
+    {run&&<article className="run-card" aria-label="실행 상태"><p className="mode-tag">{modeLabel(run.execution_mode)}</p><p role="status" className="run-status">{stateName[run.state]??'상태 확인 중'}{agent==='rules_rag'&&!run.is_terminal?' · '+({retrieval:'자료 검색',generation:'근거 선택',finalizing:'근거 검증·저장'}[run.stage]??'처리 중'):''}</p>
      {draft&&!run.is_terminal&&<div className="draft"><strong>작성 중 · 저장 미확정</strong><p>{draft}</p></div>}
-     {final&&!messages.some(m=>m.run_id===run.run_id&&m.role==='assistant')&&<div className="message assistant"><strong>저장된 답변</strong><p>{run.result!.text}</p></div>}
+     {final&&!messages.some(m=>m.run_id===run.run_id&&m.role==='assistant')&&<div className="message assistant"><strong>저장된 답변</strong><p>{run.result!.text}</p>{agent==='rules_rag'&&<RagEvidencePanel tenantId={org} runId={run.run_id} onUnavailable={()=>hideAnswer(run.run_id)}/>}</div>}
+     {run.is_terminal&&run.answer_kind==='insufficient_evidence'&&<p className="scope-note">현재 허용 자료에서 필요한 근거를 확인하지 못했습니다.</p>}
      {run.is_terminal&&run.content_status==='unavailable'&&<p className="muted">답변을 표시할 수 없습니다. 실행 결과와 현재 권한을 확인해 주세요.</p>}
      {run.usage_status==='unknown'&&<p className="blocked-note">사용량 확인 필요 · 예약 유지</p>}
      {!run.is_terminal&&<button className="quiet" disabled={cancelling||run.state==='cancel_requested'} onClick={()=>void cancel()}>답변 취소 요청</button>}

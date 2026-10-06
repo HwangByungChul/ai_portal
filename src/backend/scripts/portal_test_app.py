@@ -4,6 +4,8 @@ from pathlib import Path
 from app import main
 from app.ai.providers import MockProvider
 from app.ai.types import ProviderOutcome
+from app.ai.rag_provider import RagMockProvider
+from app.documents.embedding import MockEmbeddingProvider
 from app.config import Settings
 from scripts.devdb import _read_private
 RUNTIME=Path(__file__).resolve().parents[1]/'.runtime'
@@ -18,7 +20,20 @@ class BrowserMock(MockProvider):
             while json.loads(_read_private(RUNTIME/'B05-provider-control.json'))['behavior']=='slow':await asyncio.sleep(.05)
         return await super().generate(claim,messages,on_delta)
 
+class BrowserRag(RagMockProvider):
+    async def generate(self,claim,messages,on_delta):
+        if json.loads(_read_private(RUNTIME/'B05-provider-control.json'))['behavior']=='slow-rag':
+            await on_delta('공개금지 RAG 초안')
+            while json.loads(_read_private(RUNTIME/'B05-provider-control.json'))['behavior']=='slow-rag':await asyncio.sleep(.05)
+        return await super().generate(claim,messages,on_delta)
+class BrowserEmbedding(MockEmbeddingProvider):
+    async def embed(self,claim,texts,tokens):
+        behavior=json.loads(_read_private(RUNTIME/'B05-provider-control.json'))['behavior']
+        if behavior=='unknown-index':raise TimeoutError()
+        while json.loads(_read_private(RUNTIME/'B05-provider-control.json'))['behavior']=='slow-index':await asyncio.sleep(.05)
+        return await super().embed(claim,texts,tokens)
+
 def create_app():
     settings=Settings(openai_api_key=None,mode='mock',execution_enabled=True)
-    main.MockProvider=BrowserMock
+    main.MockProvider=BrowserMock;main.RagMockProvider=BrowserRag;main.MockEmbeddingProvider=BrowserEmbedding
     return main.create_app(settings)
