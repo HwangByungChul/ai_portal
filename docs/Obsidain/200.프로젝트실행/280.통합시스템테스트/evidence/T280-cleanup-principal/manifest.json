@@ -1,0 +1,22 @@
+{
+  "unit": "cleanup Job current-principal contract",
+  "stage": "T280",
+  "unit_status": "completed",
+  "overall_status": "in-progress",
+  "source_commit": "b90e1cba4c4c3388ea023cff5759870c2dee7b2a",
+  "source_changes": [
+    "src/backend/app/documents/manager.py",
+    "src/backend/migrations/019_document_cleanup_principal_control.sql",
+    "src/backend/tests/support.py",
+    "src/backend/tests/test_migrations.py",
+    "src/backend/tests/test_t280_cleanup_sessions.py",
+    "src/backend/tests/test_t280_followup.py"
+  ],
+  "new_tests": 39,
+  "backend_related_passed": 371,
+  "full_backend_suite_rerun": false,
+  "browser_passed": 64,
+  "paid_dispatches": 0,
+  "source_inventory_count": 180,
+  "next_plan": "11 취소 경합과 추적 보호 상세 작업 계획.md"
+}

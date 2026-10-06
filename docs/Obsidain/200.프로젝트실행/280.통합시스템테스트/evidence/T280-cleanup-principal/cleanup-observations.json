@@ -1,0 +1,74 @@
+{
+  "new_cases": 39,
+  "session_boundaries": {
+    "cases": 9,
+    "inputs": [
+      "logout",
+      "expired",
+      "idle"
+    ],
+    "timings": [
+      "before_claim",
+      "after_purge",
+      "before_finish"
+    ],
+    "method": "실제 삭제 API와 로그아웃 API, 만료/유휴는 합성 fixture 시각 변경",
+    "expected": "API 401 유지, 정리 완료, 원문 제거, 새 AI call0"
+  },
+  "current_principal": {
+    "cases": 10,
+    "inputs": [
+      "account",
+      "tenant",
+      "membership",
+      "role",
+      "managed"
+    ],
+    "timings": [
+      "before_claim",
+      "after_purge"
+    ],
+    "method": "합성 fixture SQL로 정확한 회수 시점 제어",
+    "expected": "원문 제거 및 완료 거부, 새 AI call0; 이미 삭제된 본문은 복원하지 않음"
+  },
+  "role_denials": 2,
+  "saved_proof_denials": {
+    "cases": 11,
+    "inputs": [
+      "actor",
+      "tenant",
+      "document",
+      "mode",
+      "index_job",
+      "live_document",
+      "claim",
+      "epoch",
+      "lease",
+      "deletion_revision",
+      "finish_before_purge"
+    ]
+  },
+  "native_restart": {
+    "cases": 6,
+    "inputs": [
+      "logout",
+      "expired",
+      "idle"
+    ],
+    "states": [
+      "queued",
+      "DB purged but source file removal failed"
+    ],
+    "method": "실제 HTTP 접수/삭제, 파일 오류는 소유 fixture의 합성 storage 오류; 동일 DB 재시작 및 두 번째 재시작",
+    "expected": "Job2/cleanup1 유지, 원장 동일, 파일 제거, payload purged, completed, 비공개 로그에 등록된 secret 노출0"
+  },
+  "two_connection_claim": {
+    "cases": 1,
+    "method": "실제 독립 DB 연결+동시 barrier",
+    "expected": "유효 claim1/초기 lease epoch에서 증가1/authorization1/call0",
+    "repetitions": 3,
+    "limit": "취소/완료 경합과 다름"
+  },
+  "gate_limit": "각 DB 작업과 파일 제거 전 현재 권한을 검사한다. DB와 파일 시스템 전체를 하나의 원자적 트랜잭션으로 만든 것은 아니다.",
+  "paid_dispatches": 0
+}

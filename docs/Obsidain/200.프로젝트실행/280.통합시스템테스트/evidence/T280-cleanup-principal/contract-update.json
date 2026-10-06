@@ -1,0 +1,35 @@
+{
+  "scope": "삭제된 문서의 정리 Job",
+  "new_function": "security.document_cleanup_background",
+  "executable_by": [
+    "ai_index"
+  ],
+  "origin_session": "접수 감사 참조 보존, 세션 지속 여부와 백그라운드 정리 권한 분리",
+  "saved_binding": [
+    "initiator",
+    "tenant",
+    "document",
+    "cleanup Job",
+    "mode",
+    "deletion revision",
+    "lease epoch",
+    "claim token",
+    "expiry"
+  ],
+  "current_authority": [
+    "account",
+    "tenant",
+    "membership",
+    "TADMIN or active PADMIN+managed tenant"
+  ],
+  "agent": "정리는 AI를 호출하지 않으므로 Agent 중지에도 삭제 후 정리를 수행한다. 색인 Agent 조건은 변경하지 않는다.",
+  "payload_access": "정리 승인은 본문 조회를 허용하지 않는다. 고정 tenant/document의 payload를 NULL 처리하고 version ID만 반환한다.",
+  "failure": "파일 실패는 lease 증명으로 queued로 해제하고 재복구; crash/만료는 durable lease 만료 뒤 복구. 권한 회수는 pending에서 blocked.",
+  "remaining": [
+    "실제 취소/완료 경합",
+    "timeout·중지·재시도·한도 조합의 부족 입력",
+    "HTTP 추적 첫 연결과 보호 표식",
+    "상세60·ACL16 최종 판정",
+    "실제 RAG·새 환경 설치/복원·사용자 직접 피드백"
+  ]
+}

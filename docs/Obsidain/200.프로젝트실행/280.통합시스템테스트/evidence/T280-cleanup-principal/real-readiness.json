@@ -1,0 +1,17 @@
+{
+  "paid_dispatches": 0,
+  "new_cost_krw": "0",
+  "default_mode": "mock",
+  "primary_rag_enabled": false,
+  "primary_corpus_loaded": false,
+  "existing_total_krw": "500",
+  "prior_A_internal_estimate_krw": "0.19",
+  "B_real_allocation": "absent",
+  "remaining": [
+    "같은 기존 총액의 A/B 배정",
+    "real 색인과 자료 저장 분리",
+    "키 호출 권한",
+    "공식 현재 가격·사용량 대조"
+  ],
+  "budget_reset_or_new_DB_shortcut": false
+}
