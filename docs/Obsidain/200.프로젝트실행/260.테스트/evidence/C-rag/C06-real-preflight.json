@@ -1,0 +1,39 @@
+{
+  "date": "2026-10-06",
+  "key_registered": true,
+  "primary_mode": "mock",
+  "real_budgets": [
+    {
+      "tenant": "A",
+      "operational_cap_krw": "25000.000000",
+      "accounted_internal_krw": "0.190000",
+      "reserved_krw": "0.000000",
+      "active_slots": 0,
+      "stopped": false,
+      "stop_latch": false,
+      "allocated_cap_krw": "500.000000",
+      "local_cap_krw": "500.000000"
+    }
+  ],
+  "real_unknown_calls": 0,
+  "enabled_primary_rag_configs": 0,
+  "real_corpus_indexes": 0,
+  "real_evaluation_status": "blocked",
+  "block_reasons": [
+    "primary_RAG_disabled_and_real_corpus_not_prepared",
+    "approved_C06_keeps_primary_default_mock_and_RAG_disabled",
+    "do_not_create_new_real_budget_or_reset_existing_ledger"
+  ],
+  "paid_dispatches": 0,
+  "new_cost_krw": "0",
+  "existing_model_prices_verified": true,
+  "price_sources": [
+    "https://developers.openai.com/api/docs/models/gpt-4o-mini",
+    "https://developers.openai.com/api/docs/models/text-embedding-3-small"
+  ],
+  "generation_input_usd_per_million": "0.15",
+  "generation_output_usd_per_million": "0.60",
+  "embedding_input_usd_per_million": "0.02",
+  "internal_reservation_example_krw": "78.20",
+  "reservation_example_is_not_bill": true
+}

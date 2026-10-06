@@ -1,0 +1,45 @@
+{
+  "stage": "C06",
+  "date": "2026-10-06",
+  "provider_mode": "mock",
+  "Q20": {
+    "executed": 20,
+    "passed": 20,
+    "failed": 0
+  },
+  "backend_full": {
+    "exit_code": 0,
+    "duration_seconds": 678.29,
+    "passed": 747,
+    "failed": 0,
+    "skipped": 0
+  },
+  "backend_related": {
+    "exit_code": 0,
+    "duration_seconds": 24.1,
+    "passed": 36,
+    "failed": 0,
+    "skipped": 0
+  },
+  "related_tests_included_in_full": true,
+  "frontend_build": "pass",
+  "browser_full_passed": 60,
+  "browser_build_seconds": 172.81,
+  "paid_dispatches": 0,
+  "new_cost_krw": "0",
+  "real_RAG_evaluation": "blocked",
+  "initial_observations": {
+    "gold_Q20_initial_passed": 11,
+    "initial_failed": 9,
+    "runtime_role_or_subject_failures": 7,
+    "condition_wording_scoring_failures": 2,
+    "initial_delete_check_incorrectly_expected_identifier_rows_deleted": true
+  },
+  "final_changes": [
+    "generic finite-ontology question-role coverage",
+    "unique authorized personal source subject resolution",
+    "exact source condition and per-relation proof scoring",
+    "payload purge rather than identifier deletion check",
+    "read-only gold comparison after actual index ingestion"
+  ]
+}

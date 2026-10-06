@@ -1,0 +1,35 @@
+{
+  "protected_count": 32,
+  "historical_count": 71,
+  "original_graphrag_head": "913f3881b4a4a73b9f764f60575775ecdbba6bdd",
+  "original_selected_sources_preserved": 9,
+  "primary_legacy_tables_unchanged": 31,
+  "backend_product_sources_unchanged": 79,
+  "migrations": 17,
+  "primary_rag_enabled": false,
+  "primary_corpus_loaded": false,
+  "private_environment_unchanged": true,
+  "paid_dispatches": 0,
+  "new_cost_krw": "0",
+  "prior_real_internal_estimate_krw": "0.19",
+  "active_reserved_krw": "0",
+  "active_slots": 0,
+  "runtime_connections_after": 0,
+  "temporary_databases_after": 0,
+  "development_listeners": 0,
+  "cluster_state_after": "stopped",
+  "Q20_original": "not_run",
+  "Q20_separate_mock_execution": {
+    "executed": 20,
+    "passed": 20,
+    "failed": 0
+  },
+  "real_RAG_evaluation": "blocked",
+  "changed_product_sources": [
+    "src/backend/app/documents/search.py",
+    "src/common_core/ai_pipeline/graphrag/answer.py"
+  ],
+  "unrelated_untracked_preserved": 74,
+  "tested_sources_preserved": 168,
+  "remote_push": false
+}

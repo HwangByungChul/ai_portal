@@ -1,0 +1,826 @@
+{
+  "stage": "C06",
+  "mode": "mock",
+  "paid_dispatches": 0,
+  "questions": [
+    {
+      "question_id": "Q-001",
+      "classification": "single_document",
+      "scenario_id": "BASE",
+      "actor_id": "A-U1",
+      "tenant": "A",
+      "mode": "mock",
+      "expected_category": "answer",
+      "actual_category": "answer",
+      "run_state": "completed",
+      "http_status": 202,
+      "observed_evidence_ids": [
+        "EV-A-R1-01"
+      ],
+      "missing_evidence_ids": [],
+      "expected_relation_ids": [],
+      "verdict": "pass",
+      "reasons": [],
+      "answer_sha256": "90552527fe840790dbeafa9f2d0d5bfe81e7cf90e9272f4cb1fbdeb7c1fbc2e7",
+      "provider_calls_delta": 2,
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-033",
+        "V-041"
+      ],
+      "requirements": [
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ]
+    },
+    {
+      "question_id": "Q-002",
+      "classification": "single_document",
+      "scenario_id": "BASE",
+      "actor_id": "A-U1",
+      "tenant": "A",
+      "mode": "mock",
+      "expected_category": "answer",
+      "actual_category": "answer",
+      "run_state": "completed",
+      "http_status": 202,
+      "observed_evidence_ids": [
+        "EV-A-R2-02"
+      ],
+      "missing_evidence_ids": [],
+      "expected_relation_ids": [],
+      "verdict": "pass",
+      "reasons": [],
+      "answer_sha256": "d142abbeb2d590245d621e0917df393f805e2bf0d563a2cd5d27d2de29a15848",
+      "provider_calls_delta": 2,
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-033",
+        "V-041"
+      ],
+      "requirements": [
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ]
+    },
+    {
+      "question_id": "Q-003",
+      "classification": "single_document",
+      "scenario_id": "BASE",
+      "actor_id": "A-U1",
+      "tenant": "A",
+      "mode": "mock",
+      "expected_category": "answer",
+      "actual_category": "answer",
+      "run_state": "completed",
+      "http_status": 202,
+      "observed_evidence_ids": [
+        "EV-A-P-01"
+      ],
+      "missing_evidence_ids": [],
+      "expected_relation_ids": [],
+      "verdict": "pass",
+      "reasons": [],
+      "answer_sha256": "bbbfbaf5d5b09616adc2e59afe8663131894d7fa6469553ee590bc65d9880e54",
+      "provider_calls_delta": 2,
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-033",
+        "V-041"
+      ],
+      "requirements": [
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ]
+    },
+    {
+      "question_id": "Q-004",
+      "classification": "single_document",
+      "scenario_id": "BASE",
+      "actor_id": "B-U1",
+      "tenant": "B",
+      "mode": "mock",
+      "expected_category": "answer",
+      "actual_category": "answer",
+      "run_state": "completed",
+      "http_status": 202,
+      "observed_evidence_ids": [
+        "EV-B-R1-02"
+      ],
+      "missing_evidence_ids": [],
+      "expected_relation_ids": [],
+      "verdict": "pass",
+      "reasons": [],
+      "answer_sha256": "7b1657fc945f4903b6535f1dc0bde4c8bcbd5a0fe51a9b7641edff06f1127f2c",
+      "provider_calls_delta": 2,
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-033",
+        "V-041"
+      ],
+      "requirements": [
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ]
+    },
+    {
+      "question_id": "Q-005",
+      "classification": "single_document",
+      "scenario_id": "BASE",
+      "actor_id": "B-U1",
+      "tenant": "B",
+      "mode": "mock",
+      "expected_category": "answer",
+      "actual_category": "answer",
+      "run_state": "completed",
+      "http_status": 202,
+      "observed_evidence_ids": [
+        "EV-B-P-01"
+      ],
+      "missing_evidence_ids": [],
+      "expected_relation_ids": [],
+      "verdict": "pass",
+      "reasons": [],
+      "answer_sha256": "f030a1ad382f349fd09a2c6af91a6f1e6fd451bfeea3ce3aee370f9b573c376b",
+      "provider_calls_delta": 2,
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-033",
+        "V-041"
+      ],
+      "requirements": [
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ]
+    },
+    {
+      "question_id": "Q-006",
+      "classification": "single_document",
+      "scenario_id": "BASE",
+      "actor_id": "B-U1",
+      "tenant": "B",
+      "mode": "mock",
+      "expected_category": "answer",
+      "actual_category": "answer",
+      "run_state": "completed",
+      "http_status": 202,
+      "observed_evidence_ids": [
+        "EV-S-v1-01"
+      ],
+      "missing_evidence_ids": [],
+      "expected_relation_ids": [],
+      "verdict": "pass",
+      "reasons": [],
+      "answer_sha256": "3bb46d2f32b6e21f88cade633d2e797af9f6ff2ca4465ada47a52f4a2246ae38",
+      "provider_calls_delta": 2,
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-020",
+        "V-033",
+        "V-041"
+      ],
+      "requirements": [
+        "AP-008",
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ]
+    },
+    {
+      "question_id": "Q-007",
+      "classification": "relation",
+      "scenario_id": "BASE",
+      "actor_id": "A-U1",
+      "tenant": "A",
+      "mode": "mock",
+      "expected_category": "answer",
+      "actual_category": "answer",
+      "run_state": "completed",
+      "http_status": 202,
+      "observed_evidence_ids": [
+        "EV-A-R1-02",
+        "EV-A-R1-01"
+      ],
+      "missing_evidence_ids": [],
+      "expected_relation_ids": [
+        "R-A-R1-v1-01",
+        "R-A-R1-v1-02"
+      ],
+      "verdict": "pass",
+      "reasons": [],
+      "answer_sha256": "4163862ef0d53f9e90d7f0fd74819a037aac90e18837e57e3aa6204c85acfe61",
+      "provider_calls_delta": 2,
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-032",
+        "V-033",
+        "V-041"
+      ],
+      "requirements": [
+        "CP-007",
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ]
+    },
+    {
+      "question_id": "Q-008",
+      "classification": "relation",
+      "scenario_id": "BASE",
+      "actor_id": "A-U1",
+      "tenant": "A",
+      "mode": "mock",
+      "expected_category": "answer",
+      "actual_category": "answer",
+      "run_state": "completed",
+      "http_status": 202,
+      "observed_evidence_ids": [
+        "EV-A-R2-02",
+        "EV-A-R2-01"
+      ],
+      "missing_evidence_ids": [],
+      "expected_relation_ids": [
+        "R-A-R2-v1-01",
+        "R-A-R2-v1-02"
+      ],
+      "verdict": "pass",
+      "reasons": [],
+      "answer_sha256": "0c5573fcbf03d9b8dac65e98c5d5ce63b51d8faad6b6a65c1900f1c97cc100bf",
+      "provider_calls_delta": 2,
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-032",
+        "V-033",
+        "V-041"
+      ],
+      "requirements": [
+        "CP-007",
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ]
+    },
+    {
+      "question_id": "Q-009",
+      "classification": "relation",
+      "scenario_id": "BASE",
+      "actor_id": "A-U1",
+      "tenant": "A",
+      "mode": "mock",
+      "expected_category": "answer",
+      "actual_category": "answer",
+      "run_state": "completed",
+      "http_status": 202,
+      "observed_evidence_ids": [
+        "EV-A-R1-02",
+        "EV-A-R2-01"
+      ],
+      "missing_evidence_ids": [],
+      "expected_relation_ids": [
+        "R-A-R1-v1-02",
+        "R-A-R2-v1-01"
+      ],
+      "verdict": "pass",
+      "reasons": [],
+      "answer_sha256": "0431c2a46da679281008060259b422451cccfa914512d9e2e89a790b6dd4bb9b",
+      "provider_calls_delta": 2,
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-032",
+        "V-033",
+        "V-041"
+      ],
+      "requirements": [
+        "CP-007",
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ]
+    },
+    {
+      "question_id": "Q-010",
+      "classification": "relation",
+      "scenario_id": "BASE",
+      "actor_id": "B-U1",
+      "tenant": "B",
+      "mode": "mock",
+      "expected_category": "answer",
+      "actual_category": "answer",
+      "run_state": "completed",
+      "http_status": 202,
+      "observed_evidence_ids": [
+        "EV-B-R1-01",
+        "EV-B-R1-02"
+      ],
+      "missing_evidence_ids": [],
+      "expected_relation_ids": [
+        "R-B-R1-v1-01",
+        "R-B-R1-v1-02"
+      ],
+      "verdict": "pass",
+      "reasons": [],
+      "answer_sha256": "95d2e7cc66044425305bb3531fcc47bda70720ed23a9ad1879f0c69b17ecae52",
+      "provider_calls_delta": 2,
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-032",
+        "V-033",
+        "V-041"
+      ],
+      "requirements": [
+        "CP-007",
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ]
+    },
+    {
+      "question_id": "Q-011",
+      "classification": "relation",
+      "scenario_id": "BASE",
+      "actor_id": "B-U1",
+      "tenant": "B",
+      "mode": "mock",
+      "expected_category": "answer",
+      "actual_category": "answer",
+      "run_state": "completed",
+      "http_status": 202,
+      "observed_evidence_ids": [
+        "EV-S-v1-01",
+        "EV-S-v1-02"
+      ],
+      "missing_evidence_ids": [],
+      "expected_relation_ids": [
+        "R-S-v1-01",
+        "R-S-v1-02"
+      ],
+      "verdict": "pass",
+      "reasons": [],
+      "answer_sha256": "0595bbca69da9ff792d638662ddcdd611481d548804a3a9a2ec31080979dfea1",
+      "provider_calls_delta": 2,
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-020",
+        "V-032",
+        "V-033",
+        "V-041"
+      ],
+      "requirements": [
+        "AP-008",
+        "CP-007",
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ]
+    },
+    {
+      "question_id": "Q-012",
+      "classification": "relation",
+      "scenario_id": "BASE",
+      "actor_id": "A-U1",
+      "tenant": "A",
+      "mode": "mock",
+      "expected_category": "answer",
+      "actual_category": "answer",
+      "run_state": "completed",
+      "http_status": 202,
+      "observed_evidence_ids": [
+        "EV-S-v2-01",
+        "EV-S-v2-02"
+      ],
+      "missing_evidence_ids": [],
+      "expected_relation_ids": [
+        "R-S-v2-01",
+        "R-S-v2-02"
+      ],
+      "verdict": "pass",
+      "reasons": [],
+      "answer_sha256": "92a5f918e78d1f37760a33fe1f35de5154f564f60f76e0bef55a4e41bb0256b2",
+      "provider_calls_delta": 2,
+      "verification_ids": [
+        "V-006",
+        "V-009",
+        "V-020",
+        "V-032",
+        "V-033",
+        "V-041"
+      ],
+      "requirements": [
+        "AP-008",
+        "CP-007",
+        "CP-008",
+        "NFR-006",
+        "UP-006",
+        "UP-009"
+      ]
+    },
+    {
+      "question_id": "Q-013",
+      "classification": "insufficient_evidence",
+      "scenario_id": "BASE",
+      "actor_id": "A-U1",
+      "tenant": "A",
+      "mode": "mock",
+      "expected_category": "hold",
+      "actual_category": "hold",
+      "run_state": "completed",
+      "http_status": 202,
+      "observed_evidence_ids": [],
+      "missing_evidence_ids": [],
+      "expected_relation_ids": [],
+      "verdict": "pass",
+      "reasons": [],
+      "answer_sha256": "8cfc85f2669b3ddfa10276d1209a388f75beb7421d92b472510c2f3531e5cf7b",
+      "provider_calls_delta": 1,
+      "verification_ids": [
+        "V-012",
+        "V-033",
+        "V-041"
+      ],
+      "requirements": [
+        "CP-008",
+        "NFR-006",
+        "UP-012"
+      ]
+    },
+    {
+      "question_id": "Q-014",
+      "classification": "insufficient_evidence",
+      "scenario_id": "BASE",
+      "actor_id": "B-U1",
+      "tenant": "B",
+      "mode": "mock",
+      "expected_category": "hold",
+      "actual_category": "hold",
+      "run_state": "completed",
+      "http_status": 202,
+      "observed_evidence_ids": [],
+      "missing_evidence_ids": [],
+      "expected_relation_ids": [],
+      "verdict": "pass",
+      "reasons": [],
+      "answer_sha256": "8cfc85f2669b3ddfa10276d1209a388f75beb7421d92b472510c2f3531e5cf7b",
+      "provider_calls_delta": 1,
+      "verification_ids": [
+        "V-012",
+        "V-033",
+        "V-041"
+      ],
+      "requirements": [
+        "CP-008",
+        "NFR-006",
+        "UP-012"
+      ]
+    },
+    {
+      "question_id": "Q-015",
+      "classification": "insufficient_evidence",
+      "scenario_id": "BASE",
+      "actor_id": "A-U1",
+      "tenant": "A",
+      "mode": "mock",
+      "expected_category": "hold",
+      "actual_category": "hold",
+      "run_state": "completed",
+      "http_status": 202,
+      "observed_evidence_ids": [],
+      "missing_evidence_ids": [],
+      "expected_relation_ids": [],
+      "verdict": "pass",
+      "reasons": [],
+      "answer_sha256": "8cfc85f2669b3ddfa10276d1209a388f75beb7421d92b472510c2f3531e5cf7b",
+      "provider_calls_delta": 1,
+      "verification_ids": [
+        "V-012",
+        "V-033",
+        "V-041"
+      ],
+      "requirements": [
+        "CP-008",
+        "NFR-006",
+        "UP-012"
+      ]
+    },
+    {
+      "question_id": "Q-016",
+      "classification": "insufficient_evidence",
+      "scenario_id": "BASE",
+      "actor_id": "B-U1",
+      "tenant": "B",
+      "mode": "mock",
+      "expected_category": "hold",
+      "actual_category": "hold",
+      "run_state": "completed",
+      "http_status": 202,
+      "observed_evidence_ids": [],
+      "missing_evidence_ids": [],
+      "expected_relation_ids": [],
+      "verdict": "pass",
+      "reasons": [],
+      "answer_sha256": "8cfc85f2669b3ddfa10276d1209a388f75beb7421d92b472510c2f3531e5cf7b",
+      "provider_calls_delta": 1,
+      "verification_ids": [
+        "V-012",
+        "V-033",
+        "V-041"
+      ],
+      "requirements": [
+        "CP-008",
+        "NFR-006",
+        "UP-012"
+      ]
+    },
+    {
+      "question_id": "Q-017",
+      "classification": "unauthorized",
+      "scenario_id": "BASE",
+      "actor_id": "A-U1",
+      "tenant": "A",
+      "mode": "mock",
+      "expected_category": "deny",
+      "actual_category": "deny",
+      "run_state": null,
+      "http_status": 404,
+      "observed_evidence_ids": [],
+      "missing_evidence_ids": [],
+      "expected_relation_ids": [],
+      "verdict": "pass",
+      "reasons": [],
+      "answer_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "provider_calls_delta": 0,
+      "verification_ids": [
+        "V-009",
+        "V-027",
+        "V-034",
+        "V-036",
+        "V-038",
+        "V-041"
+      ],
+      "requirements": [
+        "CP-002",
+        "CP-009",
+        "NFR-001",
+        "NFR-003",
+        "NFR-006",
+        "UP-009"
+      ]
+    },
+    {
+      "question_id": "Q-018",
+      "classification": "unauthorized",
+      "scenario_id": "BASE",
+      "actor_id": "A-U2",
+      "tenant": "A",
+      "mode": "mock",
+      "expected_category": "deny",
+      "actual_category": "deny",
+      "run_state": null,
+      "http_status": 404,
+      "observed_evidence_ids": [],
+      "missing_evidence_ids": [],
+      "expected_relation_ids": [],
+      "verdict": "pass",
+      "reasons": [],
+      "answer_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "provider_calls_delta": 0,
+      "verification_ids": [
+        "V-009",
+        "V-027",
+        "V-034",
+        "V-036",
+        "V-038",
+        "V-041"
+      ],
+      "requirements": [
+        "CP-002",
+        "CP-009",
+        "NFR-001",
+        "NFR-003",
+        "NFR-006",
+        "UP-009"
+      ]
+    },
+    {
+      "question_id": "Q-019",
+      "classification": "unauthorized",
+      "scenario_id": "SHARE_REVOKED",
+      "actor_id": "B-U1",
+      "tenant": "B",
+      "mode": "mock",
+      "expected_category": "deny",
+      "actual_category": "deny",
+      "run_state": null,
+      "http_status": 404,
+      "observed_evidence_ids": [],
+      "missing_evidence_ids": [],
+      "expected_relation_ids": [],
+      "verdict": "pass",
+      "reasons": [],
+      "answer_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "provider_calls_delta": 0,
+      "verification_ids": [
+        "V-009",
+        "V-027",
+        "V-034",
+        "V-036",
+        "V-038",
+        "V-041"
+      ],
+      "requirements": [
+        "CP-002",
+        "CP-009",
+        "NFR-001",
+        "NFR-003",
+        "NFR-006",
+        "UP-009"
+      ]
+    },
+    {
+      "question_id": "Q-020",
+      "classification": "unauthorized",
+      "scenario_id": "BASE",
+      "actor_id": "P-A",
+      "tenant": "A",
+      "mode": "mock",
+      "expected_category": "deny",
+      "actual_category": "deny",
+      "run_state": null,
+      "http_status": 404,
+      "observed_evidence_ids": [],
+      "missing_evidence_ids": [],
+      "expected_relation_ids": [],
+      "verdict": "pass",
+      "reasons": [],
+      "answer_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "provider_calls_delta": 0,
+      "verification_ids": [
+        "V-009",
+        "V-027",
+        "V-034",
+        "V-036",
+        "V-038",
+        "V-041"
+      ],
+      "requirements": [
+        "CP-002",
+        "CP-009",
+        "NFR-001",
+        "NFR-003",
+        "NFR-006",
+        "UP-009"
+      ]
+    }
+  ],
+  "ingestion": {
+    "versions": 7,
+    "jobs_completed": 7,
+    "chunks": 7,
+    "entities": 23,
+    "relations": 16,
+    "evidence": 18,
+    "embedding_calls": 7,
+    "source_sha_verified": 7
+  },
+  "index_verification": {
+    "gold_evidence_matched": 18,
+    "gold_relations_matched": 16,
+    "source_exact_spans_verified": true,
+    "relation_own_evidence_verified": true,
+    "coverage": [
+      {
+        "document_alias": "D-A-R1",
+        "version_alias": "v1",
+        "coverage": {
+          "status": "complete",
+          "reasons": []
+        }
+      },
+      {
+        "document_alias": "D-A-R2",
+        "version_alias": "v1",
+        "coverage": {
+          "status": "complete",
+          "reasons": []
+        }
+      },
+      {
+        "document_alias": "D-A-P",
+        "version_alias": "v1",
+        "coverage": {
+          "status": "partial",
+          "reasons": [
+            "UNSUPPORTED_SENTENCE"
+          ]
+        }
+      },
+      {
+        "document_alias": "D-B-R1",
+        "version_alias": "v1",
+        "coverage": {
+          "status": "complete",
+          "reasons": []
+        }
+      },
+      {
+        "document_alias": "D-B-P",
+        "version_alias": "v1",
+        "coverage": {
+          "status": "partial",
+          "reasons": [
+            "UNSUPPORTED_SENTENCE"
+          ]
+        }
+      },
+      {
+        "document_alias": "D-S",
+        "version_alias": "v1",
+        "coverage": {
+          "status": "complete",
+          "reasons": []
+        }
+      },
+      {
+        "document_alias": "D-S",
+        "version_alias": "v2",
+        "coverage": {
+          "status": "complete",
+          "reasons": []
+        }
+      }
+    ]
+  },
+  "shared_v1_source_sha_verified": true,
+  "restart": {
+    "native": true,
+    "health_ready": true,
+    "pid_changed": true,
+    "completed_result_preserved": true,
+    "same_send_id_same_run": true,
+    "additional_calls": 0
+  },
+  "deletion": {
+    "direct_ref_status": 404,
+    "additional_calls": 0,
+    "derived_chunk_payload_removed": true,
+    "identifier_history_retained": true,
+    "source_file_removed": true
+  },
+  "calls": [
+    {
+      "operation": "embed_document",
+      "state": "settled",
+      "count": 7
+    },
+    {
+      "operation": "embed_query",
+      "state": "settled",
+      "count": 16
+    },
+    {
+      "operation": "generate_rag",
+      "state": "settled",
+      "count": 12
+    }
+  ],
+  "budget": {
+    "accounted_internal_krw": "1.580000",
+    "reserved_krw": "0.000000",
+    "active_slots": "0"
+  },
+  "summary": {
+    "executed": 20,
+    "passed": 20,
+    "failed": 0
+  },
+  "connections_after": 0,
+  "fixture_removed": true,
+  "cluster_after": "stopped",
+  "duration_seconds": 15.14
+}
