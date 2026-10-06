@@ -12,7 +12,7 @@ from psycopg.types.json import Jsonb
 router=APIRouter(prefix='/api/v1')
 async def evidence_rows(request,ctx,run_id,conn):
     r=await (await conn.execute('SELECT agent_key,source_count,state,execution_mode FROM portal.runs WHERE tenant_id=%s AND run_id=%s',(ctx.tenant_id,run_id))).fetchone()
-    if r is None:raise AppError('NOT_FOUND',404)
+    if r is None:raise AppError('RESOURCE_NOT_FOUND',404)
     if r['agent_key']!='rules_rag':return r,[]
     enabled=await (await conn.execute("SELECT enabled FROM portal.agent_configs WHERE tenant_id=%s AND agent_key='rules_rag'",(ctx.tenant_id,))).fetchone()
     if enabled is None or not enabled['enabled']:return r,[]

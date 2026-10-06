@@ -70,9 +70,9 @@ async def events(request:Request,run_id:UUID):
     ctx=await context(request);validate_query(request,set())
     if 'text/event-stream' not in request.headers.get('accept',''):raise AppError('REQUEST_INVALID',422)
     manager=getattr(request.app.state,'execution',None)
-    if manager is None:raise AppError('FEATURE_NOT_READY',409)
     # Charge only subscription admission to the shared HTTP read window.
     await ConversationRepository(request.app.state.pool).read(ctx,'run',run_id,None,20,digest(request,ctx,'http_read'))
+    if manager is None:raise AppError('FEATURE_NOT_READY',409)
     try:await manager.repository.stream_view(ctx,run_id,manager.mode)
     except ExecutionError:raise AppError('STREAM_ACCESS_UNAVAILABLE',403) from None
     hub=manager.hub;key=hub.acquire(ctx,run_id)

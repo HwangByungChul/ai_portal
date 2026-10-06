@@ -7,3 +7,14 @@ textarea{font:inherit;color:inherit;border:1px solid #cbd6df;border-radius:8px;b
 .history-toggle{display:none}@media(max-width:700px){.history-toggle{display:inline-block}.conversation-list:not(.expanded){display:none}.conversation-list.expanded{max-height:320px;overflow-y:auto}.conversation-panel .panel-heading{margin-bottom:0}.conversation-list.expanded{margin-top:16px}}
 
 .document-list{list-style:none;padding:0;display:grid;gap:12px}.document-list label{display:flex;align-items:center;gap:10px;overflow-wrap:anywhere}.document-list input[type=checkbox]{width:auto;flex:none}.document-picker select{width:auto;max-width:100%}.document-upload{display:grid;gap:14px;margin-bottom:20px}.document-upload input,.document-upload select{width:100%;max-width:100%;box-sizing:border-box}.document-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,280px),1fr));gap:16px}.document-card{border:1px solid var(--line,#dce4e5);border-radius:12px;padding:16px;overflow-wrap:anywhere}.document-card button{margin:5px}.document-card select{max-width:100%}.evidence-panel{margin-top:14px}.evidence-panel article{padding:14px 0;border-top:1px solid #dce4e5}.evidence-panel blockquote{margin:10px 0;padding:12px;border-left:3px solid #17877b;white-space:pre-wrap;overflow-wrap:anywhere}.card{min-width:0}.document-upload button{justify-self:start}
+
+/* DP03 owner-only conversation metadata controls. */
+.history-search,.history-editor{display:grid;gap:.65rem;padding:.75rem 0}
+.history-query-row{display:flex;gap:.4rem;min-width:0}
+.history-query-row input,.history-editor input{width:100%;min-width:0}
+.history-filter{display:flex;gap:.5rem;align-items:center;font-size:.85rem}
+.history-filter input{width:auto}
+.history-row{border-bottom:1px solid var(--border,#dbe2ea);padding-bottom:.4rem;min-width:0}
+.history-row .conversation-link{width:100%;overflow-wrap:anywhere}
+.history-actions{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.35rem}
+.history-editor{border:1px solid var(--border,#dbe2ea);padding:.75rem;border-radius:.65rem}

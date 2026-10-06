@@ -1,5 +1,5 @@
 export interface RequestOptions {method?:'GET'|'POST'|'PATCH'|'PUT'|'DELETE';body?:unknown;tenantId?:string;csrf?:string;signal?:AbortSignal}
-const messages:Record<string,string>={DOCUMENT_UNAVAILABLE:'문서를 찾을 수 없거나 현재 읽기 권한이 없습니다.',MANAGEMENT_DENIED:'현재 문서 관리 권한이 없습니다.',SOURCE_INVALID:'UTF-8 TXT/Markdown 파일과 입력 범위를 확인해 주세요.',SOURCE_CONFLICT:'같은 접수의 파일 내용이 다릅니다. 접수 결과를 확인해 주세요.',ANSWER_EVIDENCE_INVALID:'답변 근거를 확인할 수 없습니다.',SEARCH_FAILED:'문서 검색을 처리하지 못했습니다.',LOGIN_FAILED:'로그인 정보를 확인해 주세요.',AUTH_REQUIRED:'로그인이 필요합니다.',
+const messages:Record<string,string>={METADATA_CONFLICT:'다른 변경이 반영되었습니다. 최신 대화 목록에서 다시 시도해 주세요.',CONVERSATION_BUSY:'답변이 진행 중입니다. 취소하거나 완료된 뒤 삭제해 주세요.',CONVERSATION_DELETED:'삭제한 대화를 다시 사용할 수 없습니다. 새 대화를 시작해 주세요.',DOCUMENT_UNAVAILABLE:'문서를 찾을 수 없거나 현재 읽기 권한이 없습니다.',MANAGEMENT_DENIED:'현재 문서 관리 권한이 없습니다.',SOURCE_INVALID:'UTF-8 TXT/Markdown 파일과 입력 범위를 확인해 주세요.',SOURCE_CONFLICT:'같은 접수의 파일 내용이 다릅니다. 접수 결과를 확인해 주세요.',ANSWER_EVIDENCE_INVALID:'답변 근거를 확인할 수 없습니다.',SEARCH_FAILED:'문서 검색을 처리하지 못했습니다.',LOGIN_FAILED:'로그인 정보를 확인해 주세요.',AUTH_REQUIRED:'로그인이 필요합니다.',
  REQUEST_FORBIDDEN:'현재 권한으로 수행할 수 없습니다.',TENANT_FORBIDDEN:'현재 사용할 수 없는 조직입니다.',
  CSRF_FAILED:'요청을 확인할 수 없습니다. 다시 로그인해 주세요.',REQUEST_INVALID:'입력 내용을 확인해 주세요.',
  RESOURCE_NOT_FOUND:'자료를 찾을 수 없거나 접근 권한이 변경되었습니다.',REVISION_CONFLICT:'다른 변경이 먼저 적용되었습니다. 최신 내용을 확인한 뒤 다시 변경해 주세요.',

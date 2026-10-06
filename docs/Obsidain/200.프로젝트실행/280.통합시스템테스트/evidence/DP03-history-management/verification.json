@@ -1,0 +1,193 @@
+{
+  "task": "DP-03",
+  "scope": "title/pin/title search/soft deletion; no feedback/full text search/physical deletion",
+  "status": "verified",
+  "baseline_red": {
+    "test": "test_metadata_owner_revision_replay_and_private_access",
+    "reason": "PATCH not implemented:404"
+  },
+  "full_backend": {
+    "tests": 983,
+    "passed": 983,
+    "failed": 0,
+    "skipped": 0,
+    "junit_sha256": "5d45bd3ac79d9943203a84cf2b313139cb46418eca56beddb6eb4be37eeed174",
+    "note": "Final query fingerprint and late-added test cases are additionally covered by final focused run."
+  },
+  "final_focused_backend": {
+    "passed": 18,
+    "failed": 0
+  },
+  "browser": {
+    "passed": 67,
+    "failed": 0
+  },
+  "frontend": {
+    "typecheck": "pass",
+    "build": "pass"
+  },
+  "primary_migration": {
+    "migration": [
+      "021_conversation_metadata.sql"
+    ],
+    "existing_columns_preserved": true,
+    "tables_checked": 31,
+    "snapshots": {
+      "ops.audit_events": {
+        "rows": 66,
+        "sha256": "d5e997a6e930fc340a2a9ba4cbb7b7e23d13f8aeb0d5cfb3381d48f25a786d95"
+      },
+      "ops.call_attempts": {
+        "rows": 11,
+        "sha256": "afc051f43854f1e2c7e82d8e48cf32298891cb34e73cce34de2dbae17c801ec6"
+      },
+      "ops.project_budget": {
+        "rows": 2,
+        "sha256": "eac1abeaf6a7563a2d41c670fdae5010fa0bc5bb9c3e9f247ab09ea9526ef215"
+      },
+      "ops.tenant_budgets": {
+        "rows": 4,
+        "sha256": "d11cb3a9c6c71c15646beb3540449c5ce6cf0e8a1131f86d70dd5f6495c24e1f"
+      },
+      "ops.usage_events": {
+        "rows": 22,
+        "sha256": "8627d933274ac91b8d571455c7fa5bd057d20209451139b1e893ec7b35c18ee2"
+      },
+      "portal.agent_configs": {
+        "rows": 4,
+        "sha256": "d750f4378532ae0535bf44b5c12dc16ecdc5e2653020b2e22a53b74715a9a564"
+      },
+      "portal.answer_evidence": {
+        "rows": 2,
+        "sha256": "6128a624d25f3d23a17b8e8f236551a9828ed19938cab89152057997b667a0df"
+      },
+      "portal.conversations": {
+        "rows": 12,
+        "sha256": "e94b9cf398d3198f855a8d10d2fb922831f89433fd48a9e970400b80f1de5370"
+      },
+      "portal.messages": {
+        "rows": 14,
+        "sha256": "80cfe8caa65cc0d9e652e75dfee68321c1d1bf24c8db9590bd0cf628f9723b71"
+      },
+      "portal.runs": {
+        "rows": 7,
+        "sha256": "60c5042589b1547f2b0eea82f0fcc7436c355a34d6769c991f6362ba15deaf77"
+      },
+      "rag.chunks": {
+        "rows": 2,
+        "sha256": "10e6750eddd7007e7a2445ef13f9b4984e1cf850b20d8381b91b23ed57d77fb7"
+      },
+      "rag.document_versions": {
+        "rows": 2,
+        "sha256": "7ad413960fedd28e20f65c27ca84e4fea7ec8376e4ee2233246a9c310500f4dd"
+      },
+      "rag.entities": {
+        "rows": 4,
+        "sha256": "b4c0a7aa3ea0225aa60164b0b9f3fac6cb10c584d3a0e383c035b62e80417a31"
+      },
+      "rag.evidence": {
+        "rows": 2,
+        "sha256": "7fe311291662244c07091afcd9fc2a48c0a493ceea0aed7a20f02ee0c42a7477"
+      },
+      "rag.index_builds": {
+        "rows": 2,
+        "sha256": "ed3193f872483fb0409ceca418f41cb484ca19dbe856f8ec134eac3f0ab9ef02"
+      },
+      "rag.jobs": {
+        "rows": 2,
+        "sha256": "3d018ca6f6c2adf1583e7e2707a1e43754182e305cf7ac3ab596240494604fbc"
+      },
+      "rag.relation_evidence": {
+        "rows": 2,
+        "sha256": "8b3142f198e8a4f53965613e511d36fb27dc4dc01387c6ba566d14a4101be598"
+      },
+      "rag.relations": {
+        "rows": 2,
+        "sha256": "3ace993c94dd968f2e286da4e24fc2762e1384110f4d7f53e7396ba1a9f1b91a"
+      },
+      "security.accounts": {
+        "rows": 13,
+        "sha256": "de5fc4df7c5b042c87da7b072882cc5cc171b89b58a731b49876dc9442c9baa2"
+      },
+      "security.document_access": {
+        "rows": 2,
+        "sha256": "7488d6bef3719dc57bc6e38ec47895e99968d0abbac7be73e934f8adc510a4c0"
+      },
+      "security.document_publications": {
+        "rows": 2,
+        "sha256": "4e70244fcf6cf671c6b1f13a780a097706abcb50a84ae61b6fd9916e5cc2bd41"
+      },
+      "security.job_authorizations": {
+        "rows": 2,
+        "sha256": "10f978c13917cbc3b4db0dd139b53f48b2f11886b43a4b2cfe5f36fc8d836121"
+      },
+      "security.login_windows": {
+        "rows": 15,
+        "sha256": "c5a07c51262b38bd294a3b31facd750816607f85f8eec4f467f8a353ae5b7cb0"
+      },
+      "security.managed_tenants": {
+        "rows": 1,
+        "sha256": "c7248bbd067dac99fc1057bef5c702a8ddf614a6fb779f1d753d5ec28d659ce1"
+      },
+      "security.memberships": {
+        "rows": 14,
+        "sha256": "2282b5df3eccc27b8a9beebff337719b87fe48c95c2f5c2947078fdd7297e5fe"
+      },
+      "security.operation_receipts": {
+        "rows": 2,
+        "sha256": "3fc4224af6257e96edffcf5a2ed193c44ff30f023e8945245c12d58c75024669"
+      },
+      "security.platform_access": {
+        "rows": 4,
+        "sha256": "0df7f0418a371484a98204aa981dae497399b40d6f0191d52c835b5b9c329247"
+      },
+      "security.private_readers": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "security.sessions": {
+        "rows": 37,
+        "sha256": "16a2fa200aa3ac08938aa228cfd65c53a387d0e72c4109a2e5bbf40c66be85ff"
+      },
+      "security.share_grants": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "security.tenants": {
+        "rows": 2,
+        "sha256": "872ec7551deb1abb37d26411043faa53c009cb6b4ce28fc4993e222d82924940"
+      }
+    },
+    "no_provider_calls": true
+  },
+  "source_sha256": {
+    "src/backend/migrations/021_conversation_metadata.sql": "a01fd84e4689ebd87662ca501cb801c0899af93f7441c114e6bada0c28152def",
+    "src/backend/app/conversations/routes.py": "28e5211be3a9082cd063973b17b459746baa2e08f3b6d13d88e4c755fbd3aa88",
+    "src/backend/app/conversations/repository.py": "ac61b7c267082b0f23316c5a16824613b0e0e9d6289b64830021a6a93fefe066",
+    "src/backend/app/conversations/pagination.py": "63d62136d7f74249adfd97fb3818f75dcb715819b956f873fa13a8300f275280",
+    "src/backend/app/documents/evidence_routes.py": "a0dbd1a9c9411810b11cd35f86092b56970eeccc751873205f83822ef018caf4",
+    "src/backend/app/execution/stream.py": "8d709e1d7de7575cdcfec714911e7a6f6a6c91828f3893b8576a38a292060465",
+    "src/backend/app/errors.py": "ff0c4f4d36972984d6f7aeb77e725872191d76932383cb0758468ab4e1eeddb5",
+    "src/frontend/src/ConversationHistory.tsx": "4116c2994ac04bff4b5d629d1aee352ea0331f58c0ee0a4d163b41fac0aa922c",
+    "src/frontend/src/ChatPage.tsx": "4af97650f259da59409747265daf742f12397a88e559a5f6ed730819c91f29f2",
+    "src/frontend/src/api.ts": "4fc96950430d70295dc3b51eabb8c0779f6471bbb16c74eea13ba94b70738307",
+    "src/frontend/src/types.ts": "c3c13276dc01a6852a18204b14d3fda2e8d56ab75d8477e9a66fd3a28c1d52b9",
+    "src/frontend/src/styles.css": "b3badbb06db7307dc388263b3cd61eca633fd9caa37a29f6122d845673a0b604"
+  },
+  "actual_provider_calls": 0,
+  "case_statuses": {
+    "AC-H01": "pass",
+    "AC-H02": "pass",
+    "AC-H03": "pass",
+    "AC-H04": "pass",
+    "AC-H05": "pass",
+    "AC-H06": "pass",
+    "AC-H07": "pass",
+    "AC-H08": "not_run/future_task",
+    "AC-H09": "not_run/future_task",
+    "AC-H10": "not_run/future_task",
+    "AC-H11": "not_run/future_task",
+    "AC-H12": "not_run/future_task"
+  },
+  "remaining": "original Q20/full performance/10tenant/clean restore/HA-DR/user acceptance unchanged; next DP04 feedback"
+}

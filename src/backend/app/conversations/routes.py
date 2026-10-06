@@ -1,7 +1,7 @@
-from typing import Literal
+from typing import Literal,Annotated
 from uuid import UUID
 from fastapi import APIRouter,Request,Query
-from pydantic import BaseModel,ConfigDict,Field,StrictStr,model_validator
+from pydantic import BaseModel,ConfigDict,Field,StrictStr,StrictBool,StrictInt,model_validator
 from app.auth.crypto import window_digest
 from app.conversations.pagination import decode_cursor,encode_cursor
 from app.conversations.repository import ConversationRepository
@@ -16,6 +16,35 @@ class ConversationRequest(BaseModel):
     model_config=ConfigDict(extra='forbid')
     agent_key:Literal['general','rules_rag']
     client_conversation_id:UUID|None=None
+
+
+MetadataRevision=Annotated[StrictInt,Field(ge=0,le=9223372036854775807)]
+
+
+class MetadataRequest(BaseModel):
+    model_config=ConfigDict(extra='forbid')
+    expected_revision:MetadataRevision
+    title:StrictStr|None=None
+    pinned:StrictBool|None=None
+
+    @model_validator(mode='after')
+    def validate_metadata(self):
+        fields=self.model_fields_set-{'expected_revision'}
+        if not fields:raise ValueError('METADATA_REQUIRED')
+        if 'title' in fields:
+            if self.title is None:raise ValueError('TITLE_REQUIRED')
+            try:self.title.encode('utf-8')
+            except UnicodeError:raise ValueError('TITLE_INVALID') from None
+            if any(c in self.title for c in ('\x00','\r','\n')):raise ValueError('TITLE_INVALID')
+            self.title=self.title.strip(' ')
+            if not 1<=len(self.title)<=120:raise ValueError('TITLE_INVALID')
+        if 'pinned' in fields and self.pinned is None:raise ValueError('PIN_REQUIRED')
+        return self
+
+
+class DeleteConversationRequest(BaseModel):
+    model_config=ConfigDict(extra='forbid')
+    expected_revision:MetadataRevision
 
 
 class DocumentRef(BaseModel):
@@ -51,14 +80,14 @@ def digest(request,ctx,purpose):
     return window_digest(settings.login_hmac_secret.get_secret_value(),purpose,'principal',str(ctx.user_id)+':'+str(ctx.tenant_id))
 
 
-async def read(request,kind,target=None,cursor=None,limit=20):
-    ctx=await context(request);validate_query(request,{'cursor','limit'} if kind in ('conversations','messages') else set())
+async def read(request,kind,target=None,cursor=None,limit=20,query="",pinned=None):
+    ctx=await context(request);validate_query(request,{'cursor','limit','q','pinned'} if kind=='conversations' else {'cursor','limit'} if kind=='messages' else set())
     secret=request.app.state.settings.login_hmac_secret.get_secret_value()
-    position=decode_cursor(secret,ctx,kind,target,cursor)
-    data=await ConversationRepository(request.app.state.pool).read(ctx,kind,target,position,limit,digest(request,ctx,'http_read'))
+    position=decode_cursor(secret,ctx,kind,target,cursor,query,pinned)
+    data=await ConversationRepository(request.app.state.pool).read(ctx,kind,target,position,limit,digest(request,ctx,'http_read'),query,pinned)
     if kind in ('conversations','messages'):
         rows=data['items'];more=len(rows)>limit;rows=rows[:limit]
-        data={'items':rows,'next_cursor':encode_cursor(secret,ctx,kind,target,rows[-1]) if more else None}
+        data={'items':rows,'next_cursor':encode_cursor(secret,ctx,kind,target,rows[-1],query,pinned) if more else None}
     return response(request,data)
 
 
@@ -69,8 +98,23 @@ async def create_conversation(request:Request,body:ConversationRequest):
     return response(request,data,status_code=200 if data['replayed'] else 201)
 
 @router.get('/conversations')
-async def conversations(request:Request,cursor:str|None=None,limit:int=Query(default=20,ge=1,le=50)):
-    return await read(request,'conversations',cursor=cursor,limit=limit)
+async def conversations(request:Request,cursor:str|None=None,limit:int=Query(default=20,ge=1,le=50),q:str=Query(default='',max_length=120),pinned:bool|None=None):
+    try:q.encode('utf-8')
+    except UnicodeError:raise AppError('REQUEST_INVALID',422) from None
+    if any(c in q for c in ('\x00','\r','\n')):raise AppError('REQUEST_INVALID',422)
+    return await read(request,'conversations',cursor=cursor,limit=limit,query=q.strip(),pinned=pinned)
+
+@router.patch('/conversations/{conversation_id}')
+async def metadata(request:Request,conversation_id:UUID,body:MetadataRequest):
+    ctx=await context(request,write=True);validate_query(request,set())
+    data=await ConversationRepository(request.app.state.pool).mutate(ctx,conversation_id,body.model_dump(exclude_unset=True,exclude={'expected_revision'}),body.expected_revision,False,UUID(request.state.request_id))
+    return response(request,data)
+
+@router.delete('/conversations/{conversation_id}')
+async def delete_conversation(request:Request,conversation_id:UUID,body:DeleteConversationRequest):
+    ctx=await context(request,write=True);validate_query(request,set())
+    data=await ConversationRepository(request.app.state.pool).mutate(ctx,conversation_id,{},body.expected_revision,True,UUID(request.state.request_id))
+    return response(request,data)
 
 @router.get('/conversations/{conversation_id}/messages')
 async def messages(request:Request,conversation_id:UUID,cursor:str|None=None,limit:int=Query(default=20,ge=1,le=50)):

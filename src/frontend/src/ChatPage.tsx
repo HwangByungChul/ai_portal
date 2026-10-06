@@ -4,6 +4,7 @@ import {blockReason,get,modeLabel,useScope,wait} from './scoped';
 import {ReadableDocuments} from './ReadableDocuments';
 import {RagEvidencePanel} from './RagEvidencePanel';
 import {subscribe} from './stream';
+import {ConversationHistory,type HistoryFilter} from './ConversationHistory';
 import type {AgentKey,AgentSummary,Conversation,DocumentRef,Message,PageResult,Run,Tenant,User} from './types';
 type Submission={client_send_id:string;agent_key:AgentKey;prompt:string;conversation_id?:string;document_refs?:DocumentRef[]};
 const stateName:Record<string,string>={queued:'접수됨',running:'답변 작성 중',cancel_requested:'취소 요청됨 · 결과 확인 중',completed:'완료 · 저장 확인됨',cancelled:'취소됨',failed:'처리 실패',blocked:'현재 처리할 수 없음',interrupted:'처리가 중단됨'};
@@ -17,6 +18,7 @@ export function ChatPage({tenant,user}:{tenant:Tenant;user:User}){
  const [error,setError]=useState<string|null>(null);const [notice,setNotice]=useState<string|null>(null);const [loading,setLoading]=useState(true);
  const [historyOpen,setHistoryOpen]=useState(false);const [sending,setSending]=useState(false);const [unresolved,setUnresolved]=useState(false);const [cancelling,setCancelling]=useState(false);
  const lock=useRef(false);const pending=useRef<Submission|null>(null);const selection=useRef(0);const listQuery=useRef(0);const chosen=useRef<string|null>(null);
+ const historyFilter=useRef<HistoryFilter>({q:'',pinned:null});
  const currentRun=useRef<Run|null>(null);const historyQuery=useRef(0),authorityBusy=useRef(false);
  const active=agents.find(a=>a.agent_key===agent);const busy=!!run&&!run.is_terminal;
  function publishRun(value:Run){
@@ -28,7 +30,8 @@ export function ChatPage({tenant,user}:{tenant:Tenant;user:User}){
  async function failed(problem:unknown){const message=await context.fail(problem,clear);if(context.current())setError(message);}
  async function list(next:string|null=null){
   const version=++listQuery.current;
-  try{const page=await get<PageResult<Conversation>>('/conversations'+(next?'?cursor='+encodeURIComponent(next):''),{tenantId:org,signal:context.signal});
+  const params=new URLSearchParams();if(next)params.set('cursor',next);if(historyFilter.current.q)params.set('q',historyFilter.current.q);if(historyFilter.current.pinned!==null)params.set('pinned',String(historyFilter.current.pinned));
+  try{const page=await get<PageResult<Conversation>>('/conversations'+(params.size?'?'+params.toString():''),{tenantId:org,signal:context.signal});
    if(context.current()&&version===listQuery.current){setConversations(old=>next?[...old,...page.items]:page.items);setConversationCursor(page.next_cursor);}
   }catch(problem){await failed(problem);}
  }
@@ -146,9 +149,10 @@ export function ChatPage({tenant,user}:{tenant:Tenant;user:User}){
  return <section className="chat-panel" aria-labelledby="chat-title">
   <div className="page-heading"><div><p className="eyebrow teal">AI WORKSPACE</p><h1 id="chat-title">AI 업무</h1><p className="muted">{tenant.display_name} · 본인의 대화만 표시합니다.</p></div><button className="secondary" disabled={sending||unresolved} onClick={()=>void initialize()}>업무 새로고침</button></div>
   <div className="chat-layout"><aside className="conversation-panel" aria-label="내 대화"><div className="panel-heading"><h2>내 대화</h2><button className="secondary small history-toggle" aria-expanded={historyOpen} aria-controls="conversation-list" onClick={()=>setHistoryOpen(open=>!open)}>{historyOpen?'목록 닫기':'목록 열기'}</button><button className="secondary small" disabled={sending||unresolved||busy} onClick={fresh}>새 대화</button></div>
-   <div id="conversation-list" className={'conversation-list '+(historyOpen?'expanded':'')}>{conversations.map((c,index)=><button className="conversation-link" key={c.conversation_id} aria-pressed={selected===c.conversation_id} disabled={sending||unresolved} onClick={()=>void choose(c)}>대화 {index+1}<span>{c.agent_key==='general'?'일반 대화':'규정 검색'} · {stateName[c.recent_state??'']??'아직 질문 없음'}</span></button>)}
-   {!loading&&!conversations.length&&<p className="muted">저장된 대화가 없습니다.</p>}
-   {conversationCursor&&<button className="secondary small" onClick={()=>void list(conversationCursor)}>대화 더 보기</button>}
+   <div id="conversation-list" className={'conversation-list '+(historyOpen?'expanded':'')}><ConversationHistory items={conversations} selected={selected} disabled={sending||unresolved} loading={loading} cursor={conversationCursor} tenantId={org} csrf={user.csrf_token} stateName={stateName}
+    onChoose={c=>void choose(c)} onMore={()=>void list(conversationCursor)} onFilter={filter=>{historyFilter.current=filter;setConversations([]);setConversationCursor(null);void list();}}
+    onChanged={()=>list()} onDeleted={id=>{if(chosen.current===id)fresh();}} onError={failed}/>
+
    </div></aside><div className="chat-main">
    {error&&<p role="alert" className="error-message">{error}</p>}{notice&&<p role="status" className="notice">{notice}</p>}
    <div className="card agent-choice"><label htmlFor="agent-choice">Agent</label><select id="agent-choice" value={agent} disabled={sending||busy||unresolved||!!selected} onChange={e=>{setAgent(e.target.value as AgentKey);setDocumentRefs([]);}}>{agents.map(a=><option key={a.agent_key} value={a.agent_key}>{a.name}</option>)}</select>

@@ -11,7 +11,7 @@ from app.operations.repository import OperationsRepository
 
 SQL_ERRORS={'B0301':('SEND_ID_CONFLICT',409),'B0302':('CONVERSATION_AGENT_MISMATCH',409),
     'B0303':('AGENT_STOPPED',409),'B0304':('FEATURE_NOT_READY',409),
-    'B0305':('PLATFORM_STOPPED',409),'B0306':('QUOTA_EXCEEDED',409)}
+    'B0305':('PLATFORM_STOPPED',409),'B0306':('QUOTA_EXCEEDED',409),'B0311':('METADATA_CONFLICT',409),'B0312':('CONVERSATION_BUSY',409),'B0313':('CONVERSATION_DELETED',409)}
 
 
 def request_fingerprint(agent,conversation,prompt,refs=None):
@@ -23,14 +23,28 @@ def request_fingerprint(agent,conversation,prompt,refs=None):
 class ConversationRepository:
     def __init__(self,pool):self.pool=pool
 
-    async def read(self,ctx,kind,target,cursor,limit,digest):
+    async def read(self,ctx,kind,target,cursor,limit,digest,query="",pinned=None):
         try:
             async with tenant_transaction(self.pool,ctx) as conn:
                 window=await (await conn.execute('SELECT * FROM security.run_read_window(%s,%s,%s)',
                     (ctx.session_id,ctx.tenant_id,digest))).fetchone()
-                row=await (await conn.execute('SELECT security.run_read(%s,%s,%s,%s,%s,%s) AS data',
-                    (ctx.session_id,ctx.tenant_id,kind,target,Jsonb(cursor) if cursor is not None else None,limit))).fetchone() if window['allowed'] else None
+                row=None
+                if window['allowed']:
+                    if kind=='conversations':
+                        row=await (await conn.execute('SELECT security.conversation_list(%s,%s,%s,%s,%s,%s) AS data',
+                            (ctx.session_id,ctx.tenant_id,query,pinned,Jsonb(cursor) if cursor is not None else None,limit))).fetchone()
+                    else:
+                        row=await (await conn.execute('SELECT security.run_read(%s,%s,%s,%s,%s,%s) AS data',
+                            (ctx.session_id,ctx.tenant_id,kind,target,Jsonb(cursor) if cursor is not None else None,limit))).fetchone()
             if not window['allowed']:raise AppError('RATE_LIMITED',429,window['retry_after'])
+            return row['data']
+        except (psycopg.Error,ValueError) as error:self.translate(error)
+
+    async def mutate(self,ctx,target,delta,revision,delete,request_id):
+        try:
+            async with tenant_transaction(self.pool,ctx) as conn:
+                row=await (await conn.execute('SELECT security.conversation_mutate(%s,%s,%s,%s,%s,%s,%s) AS data',
+                    (ctx.session_id,ctx.tenant_id,target,Jsonb(delta),revision,delete,request_id))).fetchone()
             return row['data']
         except (psycopg.Error,ValueError) as error:self.translate(error)
 

@@ -11,7 +11,7 @@ export type Mode='mock'|'real';
 export interface AgentSummary {agent_key:AgentKey;name:string;description:string;config_version:number;available:boolean;safe_block_reason:string|null}
 export interface AgentAdmin {agent_key:AgentKey;name:string;description:string;instructions:string;enabled:boolean;config_version:number}
 export interface PageResult<T> {items:T[];next_cursor:string|null}
-export interface Conversation {conversation_id:string;tenant_id:string;agent_key:AgentKey;created_at:string;updated_at:string;recent_state:string|null}
+export interface Conversation {conversation_id:string;tenant_id:string;agent_key:AgentKey;created_at:string;updated_at:string;recent_state:string|null;title:string;pinned:boolean;metadata_revision:number}
 export interface Message {message_id:string;run_id:string;sequence_no:number;role:'user'|'assistant';text:string;created_at:string;run_state:string;answer_kind:string|null}
 export interface Run {run_id:string;tenant_id:string;conversation_id:string;agent_key:AgentKey;config_version:number;state:string;stage:string;revision:number;is_terminal:boolean;
  answer_kind:string|null;content_status:'pending'|'final'|'unavailable';execution_mode:Mode;usage_status:'none'|'estimated'|'unknown'|'final';error_code:string|null;
