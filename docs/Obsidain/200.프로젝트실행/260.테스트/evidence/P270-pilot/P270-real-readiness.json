@@ -1,0 +1,49 @@
+{
+  "stage": "P270",
+  "date": "2026-10-06",
+  "source_commit": "3539c84e8623dab0cfcc839cd13c694686eb9a29",
+  "key_registered": true,
+  "primary_mode": "mock",
+  "real_budgets": [
+    {
+      "tenant": "A",
+      "operational_cap_krw": "25000.000000",
+      "accounted_internal_krw": "0.190000",
+      "reserved_krw": "0.000000",
+      "active_slots": 0,
+      "stopped": false,
+      "stop_latch": false,
+      "allocated_cap_krw": "500.000000",
+      "local_cap_krw": "500.000000"
+    }
+  ],
+  "real_unknown_calls": 0,
+  "enabled_primary_rag_configs": 0,
+  "real_corpus_indexes": 0,
+  "real_evaluation_status": "blocked",
+  "block_reasons": [
+    "primary_RAG_disabled_and_real_corpus_not_prepared",
+    "approved_C06_keeps_primary_default_mock_and_RAG_disabled",
+    "do_not_create_new_real_budget_or_reset_existing_ledger"
+  ],
+  "paid_dispatches": 0,
+  "new_cost_krw": "0",
+  "existing_price_snapshot_preserved": true,
+  "price_sources": [
+    "https://developers.openai.com/api/docs/models/gpt-4o-mini",
+    "https://developers.openai.com/api/docs/models/text-embedding-3-small"
+  ],
+  "generation_input_usd_per_million": "0.15",
+  "generation_output_usd_per_million": "0.60",
+  "embedding_input_usd_per_million": "0.02",
+  "reservation_example_is_not_bill": true,
+  "readiness_checked_not_paid_test": true,
+  "representative_rag_generation_calls": 4,
+  "query_embedding_calls": 5,
+  "doc_batches_measured_in_C06": 7,
+  "reservation_for_7_doc_batches_krw": "16.96",
+  "reservation_for_112_doc_batches_krw": "37.96",
+  "price_snapshot": "price-20261004-v1",
+  "price_reverification_before_paid_dispatch_required": true,
+  "real_B_allocation_prepared": false
+}

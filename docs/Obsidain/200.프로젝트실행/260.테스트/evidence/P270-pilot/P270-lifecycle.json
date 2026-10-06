@@ -1,0 +1,26 @@
+{
+  "stage": "P270",
+  "date": "2026-10-06",
+  "source_commit": "3539c84e8623dab0cfcc839cd13c694686eb9a29",
+  "mode": "mock",
+  "paid_dispatches": 0,
+  "ready": true,
+  "documents_published": 2,
+  "embedding_calls_mock": 2,
+  "primary_database_distinct": true,
+  "access_file_mode": "0600",
+  "credentials_public": false,
+  "repeated_start_rejected": true,
+  "running_instance_preserved": true,
+  "cleanup": {
+    "kind": "A05-runtime-cleanup",
+    "api_pool_connections": 0,
+    "fixture_removed": true,
+    "private_credentials_removed": true,
+    "owned_source_store_removed": true,
+    "database_state_after": "stopped"
+  },
+  "pilot_ready_file_removed": true,
+  "access_file_removed": true,
+  "development_listeners_after": 0
+}
