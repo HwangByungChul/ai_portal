@@ -118,6 +118,10 @@ def test_explicit_job_retry_api_same_id_preserves_failure(ops_rows,client,login,
     assert view['retry_allowed'] and all(x.status_code==202 for x in responses)
     child={x.json()['data']['job_id'] for x in responses};assert len(child)==1;child=child.pop();assert child!=str(job)
     assert sorted(x.json()['data']['replayed'] for x in responses)==[False,True]
+    with f.db.admin_connection() as conn:
+        for response in responses:
+            trace=conn.execute('SELECT opaque_target_id,revisions FROM ops.audit_events WHERE event_id=%s',(response.headers['x-request-id'],)).fetchone()
+            assert str(trace[0])==ids['document_id'] and trace[1]=={'job_ids':[child]}
     assert client.post('/api/v1/admin/jobs/'+str(job)+'/retry',headers=h,json={**body,'expected_revision':body['expected_revision']+1}).status_code==409
     async def finish():
         async with open_index_pool(f.db.runtime_dsn('ai_index')) as index,open_meter_pool(f.db.runtime_dsn('ai_meter')) as meter:

@@ -14,12 +14,19 @@ def test_upload_job_query_duplicate_and_delete(client,db_fixture,login):
     meta={'client_upload_id':str(uuid4()),'title':'합성 문서','media_type':'text/markdown'}
     raw='여신심사의 담당 부서는 가상 심사팀이다.'.encode()
     response=client.post('/api/v1/admin/documents',headers=h,files=multipart(meta,raw));assert response.status_code==202
-    ids=response.json()['data'];assert client.post('/api/v1/admin/documents',headers=h,files=multipart(meta,raw)).json()['data']['job_id']==ids['job_id']
+    ids=response.json()['data'];
+    with f.db.admin_connection() as c:
+        trace=c.execute('SELECT opaque_target_id,revisions FROM ops.audit_events WHERE event_id=%s',(response.headers['x-request-id'],)).fetchone()
+        assert str(trace[0])==ids['document_id'] and trace[1]=={'job_ids':[ids['job_id']]}
+    assert client.post('/api/v1/admin/documents',headers=h,files=multipart(meta,raw)).json()['data']['job_id']==ids['job_id']
     view=client.get('/api/v1/admin/jobs/'+ids['job_id'],headers=headers(f));assert view.status_code==200 and view.json()['data']['state']=='queued'
     assert client.get('/api/v1/admin/documents',headers=headers(f)).status_code==200
     assert client.get('/api/v1/admin/jobs',headers=headers(f)).status_code==200
     data=client.request('DELETE','/api/v1/admin/documents/'+ids['document_id'],headers=h,json={'expected_revision':1});assert data.status_code==200
     assert data.json()['data']['access_state']=='deleted'
+    with f.db.admin_connection() as c:
+        trace=c.execute('SELECT revisions FROM ops.audit_events WHERE event_id=%s',(data.headers['x-request-id'],)).fetchone()[0]
+        assert trace['job_ids']==[str(c.execute("SELECT job_id FROM rag.jobs WHERE job_kind='internal_cleanup'").fetchone()[0])]
     with f.db.admin_connection() as c:
         assert c.execute("SELECT count(*) FROM rag.jobs WHERE job_kind='internal_cleanup'").fetchone()[0]==1
         assert c.execute('SELECT count(*) FROM ops.call_attempts').fetchone()[0]==0

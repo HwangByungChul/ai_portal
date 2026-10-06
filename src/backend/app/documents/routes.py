@@ -39,7 +39,7 @@ async def upload(request,document=None):
     ctx=await context(request,True,False)
     if len(request.headers.getlist('content-type'))!=1:raise AppError('REQUEST_INVALID',422)
     meta,raw=parse_upload(await request.body(),request.headers['content-type'],document is not None)
-    data=await repository(request).register(ctx,meta,raw,document)
+    data=await repository(request).register(ctx,meta,raw,document,UUID(request.state.request_id))
     manager=request.app.state.document_manager
     if manager:manager.notify(ctx,UUID(data['job_id']))
     return response(request,data,status_code=202)
@@ -50,7 +50,7 @@ async def new_document(request:Request):return await upload(request)
 async def new_version(request:Request,document_id:UUID):return await upload(request,document_id)
 @router.delete('/documents/{document_id}')
 async def delete_document(request:Request,document_id:UUID,body:RevisionRequest):
-    ctx=await context(request,True);data=await repository(request).delete(ctx,document_id,body.expected_revision)
+    ctx=await context(request,True);data=await repository(request).delete(ctx,document_id,body.expected_revision,UUID(request.state.request_id))
     manager=request.app.state.document_manager
     if manager:
         manager.notify(ctx,document_id,'internal_cleanup',document_id)
@@ -70,7 +70,7 @@ async def retry(request:Request,job_id:UUID,body:RetryRequest):
     ctx=await context(request,True);repo=repository(request)
     digest=request_digest({'job':str(job_id),'client':str(body.client_retry_id),'revision':body.expected_revision})
     new_job=scoped_id(repo.secret,ctx,body.client_retry_id,'retry')
-    data=await repo.rpc(ctx,'document_retry',(ctx.session_id,ctx.tenant_id,job_id,body.client_retry_id,body.expected_revision,digest,new_job,repo.mode))
+    data=await repo.rpc(ctx,'document_retry',(ctx.session_id,ctx.tenant_id,job_id,body.client_retry_id,body.expected_revision,digest,new_job,repo.mode),trace_request=UUID(request.state.request_id))
     manager=request.app.state.document_manager
     if manager:manager.notify(ctx,UUID(data['job_id']))
     return response(request,data,status_code=202)

@@ -24,7 +24,7 @@ function AgentEditor({agentKey,tenant,user}:{agentKey:AgentKey;tenant:Tenant;use
  const data=remote.data;
  return <section className="card agent-editor" aria-label={agentKey==='general'?'일반 대화 설정':'규정 검색 설정'}><div className="panel-heading"><h2>{agentKey==='general'?'일반 대화':'규정 검색'}</h2><button className="secondary small" disabled={busy||remote.loading} onClick={()=>{remote.setError(null);setSuccess(null);void remote.load();}}>설정 새로고침</button></div>
   {remote.error&&<p role="alert" className="error-message">{remote.error}</p>}{success&&<p role="status" className="notice">{success}</p>}
-  {remote.loading?<p role="status">설정 확인 중</p>:data&&<><p className="scope-note">현재 설정 버전 {data.config_version} · {data.enabled?'운영 허용':'운영 중지'}{agentKey==='rules_rag'?' · 문서 검색 실행은 후속 단계에서 연결':''}</p>
+  {remote.loading?<p role="status">설정 확인 중</p>:data&&<><p className="scope-note">현재 설정 버전 {data.config_version} · {data.enabled?'운영 허용':'운영 중지'}{agentKey==='rules_rag'?' · 접근 가능한 문서를 근거로 답변':''}</p>
    <form className="settings-form" onSubmit={e=>{e.preventDefault();void save();}}><label>이름<input value={name} maxLength={80} disabled={busy} onChange={e=>setName(e.target.value)}/></label>
     <label>설명<textarea value={description} maxLength={500} rows={2} disabled={busy} onChange={e=>setDescription(e.target.value)}/></label>
     <label>기본 지시문<textarea value={instructions} maxLength={2000} rows={4} disabled={busy} onChange={e=>setInstructions(e.target.value)}/></label>

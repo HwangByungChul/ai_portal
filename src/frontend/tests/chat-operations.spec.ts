@@ -201,7 +201,7 @@ test('B05_31_saved_prompt_rendered_as_text_without_storage',async({page})=>{
 });
 
 
-test('T280_late_A_admin_settings_do_not_replace_B_form',async({page})=>{
+test('B05_32_late_A_admin_settings_do_not_replace_B_form',async({page})=>{
  await login(page,'DUAL-ADM');await selectTenant(page,'A');
  let ready!:()=>void,release!:()=>void,done!:()=>void;
  const waiting=new Promise<void>(r=>ready=r),gate=new Promise<void>(r=>release=r),delivered=new Promise<void>(r=>done=r);

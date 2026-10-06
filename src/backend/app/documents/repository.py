@@ -27,10 +27,15 @@ class DocumentRepository:
     def __init__(self,pool,storage,secret,mode='mock'):
         self.pool=pool;self.storage=storage;self.secret=secret;self.mode=mode
 
-    async def rpc(self,ctx,name,args):
+    async def rpc(self,ctx,name,args,trace_request=None):
         try:
             async with tenant_transaction(self.pool,ctx) as conn:
-                return (await (await conn.execute('SELECT security.'+name+'('+','.join(['%s']*len(args))+') AS data',args)).fetchone())['data']
+                data=(await (await conn.execute('SELECT security.'+name+'('+','.join(['%s']*len(args))+') AS data',args)).fetchone())['data']
+                if trace_request is not None:
+                    view=(await (await conn.execute('SELECT security.document_job_control(%s,%s,%s,%s,%s,%s,%s) AS data',(ctx.session_id,ctx.tenant_id,UUID(data['job_id']),'view',None,None,Jsonb({})))).fetchone())['data']
+                    doc=UUID(view['document_id'])
+                    await conn.execute('SELECT security.document_request_trace(%s,%s,%s,%s,%s)',(ctx.session_id,ctx.tenant_id,trace_request,doc,UUID(data['job_id'])))
+                return data
         except (psycopg.Error,ValueError) as e:
             raise self.error(e) from None
 
@@ -39,7 +44,7 @@ class DocumentRepository:
         if isinstance(e,ValueError):return AppError('AUTH_REQUIRED',401)
         return AppError(*{'A0404':('DOCUMENT_UNAVAILABLE',404),'A0409':('REVISION_CONFLICT',409),'A0403':('MANAGEMENT_DENIED',403),'A0401':('AUTH_REQUIRED',401),'A0422':('REQUEST_INVALID',422),'B0401':('EXECUTION_FENCED',409),'B0402':('AGENT_DISABLED',409)}.get(getattr(e,'sqlstate',None),('STORAGE_UNAVAILABLE',503)))
 
-    async def register(self,ctx,metadata,content,document_id=None):
+    async def register(self,ctx,metadata,content,document_id=None,request_id=None):
         try:text=validate_source(content,metadata['title'],metadata['media_type'])
         except SourceStorageError:raise AppError('SOURCE_INVALID',422) from None
         client=metadata['client_upload_id'];doc=document_id or scoped_id(self.secret,ctx,client,'document')
@@ -70,6 +75,8 @@ class DocumentRepository:
                 args=(ctx.session_id,ctx.tenant_id,client,digest,doc,version,index,job,document_id is not None,expected,owner,visibility,readers,metadata['title'],metadata['media_type'],source_sha,len(content),len(text),bytes.fromhex(plan.source_fingerprint),self.mode,Jsonb(mapping))
                 row=await (await conn.execute('SELECT security.document_register('+','.join(['%s']*len(args))+') AS data',args)).fetchone()
                 result=row['data']
+                if request_id is not None:
+                    await conn.execute('SELECT security.document_request_trace(%s,%s,%s,%s,%s)',(ctx.session_id,ctx.tenant_id,request_id,UUID(result['document_id']),UUID(result['job_id'])))
             return result
         except SourceStorageError:raise AppError('SOURCE_CONFLICT',409) from None
         except (psycopg.Error,ValueError) as e:raise self.error(e) from None
@@ -84,8 +91,14 @@ class DocumentRepository:
         if action=='claim':data={**(data or {}),'mode':self.mode}
         return await self.rpc(ctx,'document_job_control',(ctx.session_id,ctx.tenant_id,job_id,action,epoch,claim,Jsonb(data or {})))
 
-    async def delete(self,ctx,document_id,revision):
-        return await self.rpc(ctx,'document_delete',(ctx.session_id,ctx.tenant_id,document_id,revision))
+    async def delete(self,ctx,document_id,revision,request_id=None):
+        try:
+            async with tenant_transaction(self.pool,ctx) as conn:
+                result=(await (await conn.execute('SELECT security.document_delete(%s,%s,%s,%s) AS data',(ctx.session_id,ctx.tenant_id,document_id,revision))).fetchone())['data']
+                if request_id is not None:
+                    await conn.execute('SELECT security.document_request_trace(%s,%s,%s,%s,%s)',(ctx.session_id,ctx.tenant_id,request_id,document_id,None))
+            return result
+        except (psycopg.Error,ValueError) as e:raise self.error(e) from None
 
     async def cleanup_orphans(self, ctx):
         # Confirm authorization before inventory. Unknown DB result retains every file.

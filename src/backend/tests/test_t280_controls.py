@@ -22,7 +22,7 @@ from test_document_sharing import publish
 PERIOD=date(2026,10,1)
 
 @pytest.mark.parametrize('operation',['generate_general','embed_document','embed_query','generate_rag'])
-@pytest.mark.parametrize('control',['project','tenant','disabled','config'])
+@pytest.mark.parametrize('control',['project','tenant','disabled','config','cap_project','cap_tenant','resume_project','resume_tenant'])
 @pytest.mark.parametrize('boundary',['before_reserve','after_reserve','after_dispatch'])
 def test_four_operations_current_control_and_saved_meter(ops_rows,tmp_path,operation,control,boundary):
     f=ops_rows
@@ -42,6 +42,12 @@ def test_four_operations_current_control_and_saved_meter(ops_rows,tmp_path,opera
             with f.db.admin_connection() as c:
                 if control=='project':c.execute("UPDATE ops.project_budget SET stopped=true WHERE mode='mock'")
                 elif control=='tenant':c.execute("UPDATE ops.tenant_budgets t SET stopped=true FROM ops.project_budget p WHERE p.budget_id=t.budget_id AND p.mode='mock' AND t.tenant_id=%s",(ctx.tenant_id,))
+                elif control=='cap_project':c.execute("UPDATE ops.project_budget SET operational_cap_krw=accounted_krw WHERE mode='mock'")
+                elif control=='cap_tenant':c.execute("UPDATE ops.tenant_budgets t SET local_cap_krw=t.accounted_krw FROM ops.project_budget p WHERE p.budget_id=t.budget_id AND p.mode='mock' AND t.tenant_id=%s",(ctx.tenant_id,))
+                elif control=='resume_project':
+                    c.execute("UPDATE ops.project_budget SET stopped=true WHERE mode='mock'");c.execute("UPDATE ops.project_budget SET stopped=false WHERE mode='mock'")
+                elif control=='resume_tenant':
+                    c.execute("UPDATE ops.tenant_budgets SET stopped=true WHERE tenant_id=%s",(ctx.tenant_id,));c.execute("UPDATE ops.tenant_budgets SET stopped=false WHERE tenant_id=%s",(ctx.tenant_id,))
                 elif control=='disabled':c.execute('UPDATE portal.agent_configs SET enabled=false WHERE tenant_id=%s AND agent_key=%s',(ctx.tenant_id,agent))
                 else:c.execute('UPDATE portal.agent_configs SET config_version=config_version+1 WHERE tenant_id=%s AND agent_key=%s',(ctx.tenant_id,agent))
         class Embedding(MockEmbeddingProvider):
@@ -88,7 +94,7 @@ def test_four_operations_current_control_and_saved_meter(ops_rows,tmp_path,opera
                         else:await generation(repo,Provider(),ticket,sources,[{'role':'user','content':'합성 제어 시험'}])
                     except Exception:pass
             assert changed
-            fired=boundary=='after_dispatch' or (operation=='embed_document' and control=='config' and boundary=='before_reserve')
+            fired=control.startswith('resume_') or boundary=='after_dispatch' or (operation=='embed_document' and control=='config' and boundary=='before_reserve')
             assert len(provider_calls)==int(fired)
             with f.db.admin_connection() as c:
                 key='job_id' if operation=='embed_document' else 'run_id'
@@ -107,7 +113,7 @@ def test_four_operations_current_control_and_saved_meter(ops_rows,tmp_path,opera
                 assert accounted>previous if fired else accounted==previous
                 if operation=='embed_document':
                     published=c.execute('SELECT count(*) FROM security.document_publications WHERE document_id=%s AND active',(ids['document_id'],)).fetchone()[0]
-                    assert published==int(control=='config' and boundary=='before_reserve')
+                    assert published==int(control.startswith('resume_') or (control=='config' and boundary=='before_reserve'))
     f.run(check())
 
 @pytest.mark.parametrize('proof',['forged','old_epoch','foreign','revoked','dispatched'])
