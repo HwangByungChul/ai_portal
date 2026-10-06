@@ -5,7 +5,7 @@ from app.types import AuthContext
 
 class DocumentManager:
     def __init__(self,worker,mode):
-        self.worker=worker;self.mode=mode;self.tasks={};self.contexts={};self.semaphore=asyncio.Semaphore(2);self.poller=None;self.closing=False
+        self.worker=worker;self.mode=mode;self.tasks={};self.contexts={};self.semaphore=asyncio.Semaphore(2);self.tenant_locks={};self.poller=None;self.closing=False
     async def start(self):
         await self.recover();self.poller=asyncio.create_task(self._poll())
     async def recover(self):
@@ -23,9 +23,13 @@ class DocumentManager:
         task.add_done_callback(lambda done:self.tasks.pop(key,None))
     async def _run(self,ctx,job,kind,document):
         try:
-            async with self.semaphore:
-                if kind=='internal_cleanup':await self.cleanup(ctx,document)
-                else:await self.worker.run(ctx,job)
+            # Wait for the tenant before taking a project slot so one busy
+            # tenant cannot occupy both slots or fail queued work at dispatch.
+            lock=self.tenant_locks.setdefault(ctx.tenant_id,asyncio.Lock())
+            async with lock:
+                async with self.semaphore:
+                    if kind=='internal_cleanup':await self.cleanup(ctx,document)
+                    else:await self.worker.run(ctx,job)
         except asyncio.CancelledError:raise
         except Exception:pass # Safe state is durable; no payload/error logging or remote retry.
     async def cleanup(self,ctx,document):
