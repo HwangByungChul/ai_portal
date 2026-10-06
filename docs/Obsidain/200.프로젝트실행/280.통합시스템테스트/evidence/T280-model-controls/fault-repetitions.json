@@ -1,0 +1,140 @@
+{
+  "rounds": [
+    {
+      "exit_code": 0,
+      "duration_seconds": 11.22,
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-project-embed_document]",
+          "status": "pass",
+          "duration_ms": 1654.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-tenant-embed_document]",
+          "status": "pass",
+          "duration_ms": 1278.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-disabled-embed_document]",
+          "status": "pass",
+          "duration_ms": 1250.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-config-embed_document]",
+          "status": "pass",
+          "duration_ms": 1294.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-project-embed_document]",
+          "status": "pass",
+          "duration_ms": 1324.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-tenant-embed_document]",
+          "status": "pass",
+          "duration_ms": 1303.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-config-embed_document]",
+          "status": "pass",
+          "duration_ms": 1484.0
+        }
+      ]
+    },
+    {
+      "exit_code": 0,
+      "duration_seconds": 11.13,
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-project-embed_document]",
+          "status": "pass",
+          "duration_ms": 1587.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-tenant-embed_document]",
+          "status": "pass",
+          "duration_ms": 1339.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-disabled-embed_document]",
+          "status": "pass",
+          "duration_ms": 1275.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-config-embed_document]",
+          "status": "pass",
+          "duration_ms": 1247.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-project-embed_document]",
+          "status": "pass",
+          "duration_ms": 1340.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-tenant-embed_document]",
+          "status": "pass",
+          "duration_ms": 1306.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-config-embed_document]",
+          "status": "pass",
+          "duration_ms": 1445.0
+        }
+      ]
+    },
+    {
+      "exit_code": 0,
+      "duration_seconds": 11.41,
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-project-embed_document]",
+          "status": "pass",
+          "duration_ms": 1598.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-tenant-embed_document]",
+          "status": "pass",
+          "duration_ms": 1299.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-disabled-embed_document]",
+          "status": "pass",
+          "duration_ms": 1291.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-config-embed_document]",
+          "status": "pass",
+          "duration_ms": 1371.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-project-embed_document]",
+          "status": "pass",
+          "duration_ms": 1317.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-tenant-embed_document]",
+          "status": "pass",
+          "duration_ms": 1324.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-config-embed_document]",
+          "status": "pass",
+          "duration_ms": 1470.0
+        }
+      ]
+    }
+  ],
+  "unique_cases": 7,
+  "executions": 21,
+  "passed": 21,
+  "failed": 0
+}

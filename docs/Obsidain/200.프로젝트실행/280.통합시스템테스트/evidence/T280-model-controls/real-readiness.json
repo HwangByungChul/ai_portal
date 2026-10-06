@@ -1,0 +1,18 @@
+{
+  "mode": "mock",
+  "primary_rag_enabled": false,
+  "primary_corpus_loaded": false,
+  "paid_dispatches": 0,
+  "new_cost_krw": "0",
+  "representative_allocation_krw": "500",
+  "A_prior_internal_estimate_krw": "0.19",
+  "B_real_allocation": "not_configured",
+  "real_RAG": "not_run",
+  "blocking_inputs": [
+    "Job contract mismatch",
+    "remaining exact input adjudication",
+    "existing persistent real profile reconciliation",
+    "current official price/usage/key authorization and period checks immediately before real use"
+  ],
+  "new_db_or_budget_reset": false
+}

@@ -1,0 +1,17 @@
+{
+  "id": "T280-JOB-SESSION",
+  "status": "confirmed_design_sql_mismatch; dedicated behavioral reproduction/fix pending",
+  "design": [
+    "240.설계/02 인증과 테넌트 권한 설계.md:80,98",
+    "240.설계/04 API와 실행 상태 설계.md:204-206,REQ-08",
+    "240.설계/05 AI 호출과 사용량 원장 설계.md:AI-07"
+  ],
+  "expected": "Index Job lifetime independent from HTTP logout; current saved initiator/tenant/document authority remains required. Chat origin session still gates new calls/content.",
+  "current_sql": [
+    "011_document_ingest_control.sql document_job_control/document_worker_guard",
+    "013_document_lifecycle.sql document_pending"
+  ],
+  "observed_static": "Original HTTP session is checked for revocation/expiry/idle; pending recovery may block a logged-out Job.",
+  "security_guards_weakened": false,
+  "real_RAG_before_resolution": false
+}

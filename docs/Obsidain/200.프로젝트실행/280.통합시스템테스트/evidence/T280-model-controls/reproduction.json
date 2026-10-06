@@ -1,0 +1,1275 @@
+{
+  "reservation_before_fix": {
+    "exit_code": 1,
+    "duration_seconds": 7.45,
+    "passed": 0,
+    "failed": 3,
+    "skipped": 0,
+    "tests": [
+      {
+        "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-project-embed_document]",
+        "status": "fail",
+        "duration_ms": 1771.0
+      },
+      {
+        "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-tenant-embed_document]",
+        "status": "fail",
+        "duration_ms": 1410.0
+      },
+      {
+        "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-disabled-embed_document]",
+        "status": "fail",
+        "duration_ms": 1530.0
+      }
+    ]
+  },
+  "publication_before_fix": {
+    "exit_code": 1,
+    "duration_seconds": 8.13,
+    "passed": 0,
+    "failed": 3,
+    "skipped": 0,
+    "tests": [
+      {
+        "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-project-embed_document]",
+        "status": "fail",
+        "duration_ms": 2014.0
+      },
+      {
+        "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-tenant-embed_document]",
+        "status": "fail",
+        "duration_ms": 1455.0
+      },
+      {
+        "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-config-embed_document]",
+        "status": "fail",
+        "duration_ms": 1577.0
+      }
+    ]
+  },
+  "intermediate_patch_regression": {
+    "related": {
+      "exit_code": 1,
+      "duration_seconds": 230.79,
+      "passed": 107,
+      "failed": 53,
+      "skipped": 0,
+      "tests": [
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-project-generate_general]",
+          "status": "pass",
+          "duration_ms": 1748.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-project-embed_document]",
+          "status": "pass",
+          "duration_ms": 1530.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-project-embed_query]",
+          "status": "fail",
+          "duration_ms": 1263.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-project-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1248.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-tenant-generate_general]",
+          "status": "pass",
+          "duration_ms": 1324.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-tenant-embed_document]",
+          "status": "pass",
+          "duration_ms": 2171.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-tenant-embed_query]",
+          "status": "fail",
+          "duration_ms": 1541.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-tenant-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1388.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-disabled-generate_general]",
+          "status": "pass",
+          "duration_ms": 1307.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-disabled-embed_document]",
+          "status": "pass",
+          "duration_ms": 1542.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-disabled-embed_query]",
+          "status": "fail",
+          "duration_ms": 1278.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-disabled-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1257.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-config-generate_general]",
+          "status": "pass",
+          "duration_ms": 1365.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-config-embed_document]",
+          "status": "fail",
+          "duration_ms": 1371.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-config-embed_query]",
+          "status": "fail",
+          "duration_ms": 1223.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-config-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1257.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-project-generate_general]",
+          "status": "pass",
+          "duration_ms": 1290.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-project-embed_document]",
+          "status": "pass",
+          "duration_ms": 1302.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-project-embed_query]",
+          "status": "fail",
+          "duration_ms": 1253.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-project-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1276.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-tenant-generate_general]",
+          "status": "pass",
+          "duration_ms": 1345.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-tenant-embed_document]",
+          "status": "pass",
+          "duration_ms": 1839.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-tenant-embed_query]",
+          "status": "fail",
+          "duration_ms": 1234.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-tenant-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1266.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-disabled-generate_general]",
+          "status": "pass",
+          "duration_ms": 1328.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-disabled-embed_document]",
+          "status": "pass",
+          "duration_ms": 1296.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-disabled-embed_query]",
+          "status": "fail",
+          "duration_ms": 1336.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-disabled-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1259.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-config-generate_general]",
+          "status": "pass",
+          "duration_ms": 1236.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-config-embed_document]",
+          "status": "pass",
+          "duration_ms": 1373.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-config-embed_query]",
+          "status": "fail",
+          "duration_ms": 1387.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-config-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1403.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-project-generate_general]",
+          "status": "pass",
+          "duration_ms": 1366.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-project-embed_document]",
+          "status": "pass",
+          "duration_ms": 1501.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-project-embed_query]",
+          "status": "fail",
+          "duration_ms": 1321.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-project-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1597.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-tenant-generate_general]",
+          "status": "pass",
+          "duration_ms": 1576.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-tenant-embed_document]",
+          "status": "pass",
+          "duration_ms": 1511.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-tenant-embed_query]",
+          "status": "fail",
+          "duration_ms": 1259.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-tenant-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1380.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-disabled-generate_general]",
+          "status": "pass",
+          "duration_ms": 1435.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-disabled-embed_document]",
+          "status": "pass",
+          "duration_ms": 1485.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-disabled-embed_query]",
+          "status": "fail",
+          "duration_ms": 1309.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-disabled-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1281.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-config-generate_general]",
+          "status": "pass",
+          "duration_ms": 1363.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-config-embed_document]",
+          "status": "pass",
+          "duration_ms": 1449.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-config-embed_query]",
+          "status": "fail",
+          "duration_ms": 1307.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-config-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1248.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_embedding_release_is_call_bound_and_never_releases_dispatched[forged]",
+          "status": "pass",
+          "duration_ms": 1259.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_embedding_release_is_call_bound_and_never_releases_dispatched[old_epoch]",
+          "status": "pass",
+          "duration_ms": 1314.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_embedding_release_is_call_bound_and_never_releases_dispatched[foreign]",
+          "status": "pass",
+          "duration_ms": 1280.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_embedding_release_is_call_bound_and_never_releases_dispatched[revoked]",
+          "status": "pass",
+          "duration_ms": 1303.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_embedding_release_is_call_bound_and_never_releases_dispatched[dispatched]",
+          "status": "fail",
+          "duration_ms": 1455.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_protected_markers_stay_out_of_public_errors_and_usage",
+          "status": "pass",
+          "duration_ms": 1783.0
+        },
+        {
+          "test_id": "tests.test_migrations.test_migration_rerun_and_checksum_reject",
+          "status": "pass",
+          "duration_ms": 1333.0
+        },
+        {
+          "test_id": "tests.test_migrations.test_pending_failure_rolls_back_schema_and_checksum",
+          "status": "pass",
+          "duration_ms": 1114.0
+        },
+        {
+          "test_id": "tests.test_migrations.test_seed_rejects_existing_and_nonfixture",
+          "status": "pass",
+          "duration_ms": 1821.0
+        },
+        {
+          "test_id": "tests.test_migrations.test_wrong_fixture_marker_and_privileged_role_reject",
+          "status": "pass",
+          "duration_ms": 1662.0
+        },
+        {
+          "test_id": "tests.test_migrations.test_fixture_credentials_are_argon2_private_and_hidden",
+          "status": "pass",
+          "duration_ms": 1353.0
+        },
+        {
+          "test_id": "tests.test_migrations.test_first_migration_batch_failure_has_no_partial_schema",
+          "status": "pass",
+          "duration_ms": 420.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_delete_publish_order_keeps_other_same_entity_document[delete_before_publish]",
+          "status": "fail",
+          "duration_ms": 1330.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_delete_publish_order_keeps_other_same_entity_document[publish_before_delete]",
+          "status": "fail",
+          "duration_ms": 1303.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_private_reader_membership_revocation_blocks_publish_without_erasing_cost[revoke_before_admission]",
+          "status": "fail",
+          "duration_ms": 1273.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_private_reader_membership_revocation_blocks_publish_without_erasing_cost[revoke_after_generation]",
+          "status": "fail",
+          "duration_ms": 1292.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_document_scheduler_per_tenant_one_and_project_two[A_then_B]",
+          "status": "fail",
+          "duration_ms": 1513.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_document_scheduler_per_tenant_one_and_project_two[B_then_A]",
+          "status": "fail",
+          "duration_ms": 1471.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_terminal_cas_orders_preserve_late_usage_once[cancel_before_complete]",
+          "status": "pass",
+          "duration_ms": 1292.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_terminal_cas_orders_preserve_late_usage_once[complete_before_cancel]",
+          "status": "pass",
+          "duration_ms": 1327.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_delete_cleanup_obeys_tenant_queue_and_duplicate_request[index_before_cleanup]",
+          "status": "fail",
+          "duration_ms": 1597.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_delete_cleanup_obeys_tenant_queue_and_duplicate_request[cleanup_before_index]",
+          "status": "fail",
+          "duration_ms": 1732.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_graph_db_write_failure_preserves_old_publication_and_cost[evidence]",
+          "status": "fail",
+          "duration_ms": 1300.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_graph_db_write_failure_preserves_old_publication_and_cost[relations]",
+          "status": "fail",
+          "duration_ms": 1335.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_explicit_job_retry_api_same_id_preserves_failure[failed]",
+          "status": "fail",
+          "duration_ms": 1568.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_explicit_job_retry_api_same_id_preserves_failure[needs_review]",
+          "status": "pass",
+          "duration_ms": 1375.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_native_cleanup_path_failure_restart_keeps_access_closed",
+          "status": "fail",
+          "duration_ms": 4655.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_reservation_usage_and_remote_end_are_independent[None-observed-expected0]",
+          "status": "pass",
+          "duration_ms": 1831.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_reservation_usage_and_remote_end_are_independent[None-unknown-expected1]",
+          "status": "pass",
+          "duration_ms": 1391.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_reservation_usage_and_remote_end_are_independent[receipt2-observed-expected2]",
+          "status": "pass",
+          "duration_ms": 1319.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_reservation_usage_and_remote_end_are_independent[receipt3-unknown-expected3]",
+          "status": "pass",
+          "duration_ms": 1369.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_same_receipt_noop_conflicting_receipt_latches_stop",
+          "status": "pass",
+          "duration_ms": 1431.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_invalid_usage_never_zero_settles_and_stops[bad0]",
+          "status": "pass",
+          "duration_ms": 1562.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_invalid_usage_never_zero_settles_and_stops[bad1]",
+          "status": "pass",
+          "duration_ms": 1514.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_invalid_usage_never_zero_settles_and_stops[bad2]",
+          "status": "pass",
+          "duration_ms": 1197.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_invalid_usage_never_zero_settles_and_stops[bad3]",
+          "status": "pass",
+          "duration_ms": 1260.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_actual_overrun_is_recorded_not_rejected",
+          "status": "pass",
+          "duration_ms": 1222.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_post_revocation_metering_accepts_only_saved_claim[revoked]",
+          "status": "pass",
+          "duration_ms": 1406.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_post_revocation_metering_accepts_only_saved_claim[membership]",
+          "status": "pass",
+          "duration_ms": 1389.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_post_revocation_metering_accepts_only_saved_claim[revision]",
+          "status": "pass",
+          "duration_ms": 1392.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_post_revocation_metering_accepts_only_saved_claim[account]",
+          "status": "pass",
+          "duration_ms": 1314.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_post_revocation_metering_accepts_only_saved_claim[tenant]",
+          "status": "pass",
+          "duration_ms": 1316.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_dispatch_rechecks_and_release_only_unfired[config]",
+          "status": "pass",
+          "duration_ms": 1792.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_dispatch_rechecks_and_release_only_unfired[disabled]",
+          "status": "pass",
+          "duration_ms": 1246.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_dispatch_rechecks_and_release_only_unfired[cancel]",
+          "status": "pass",
+          "duration_ms": 1208.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_dispatch_rechecks_and_release_only_unfired[expired]",
+          "status": "pass",
+          "duration_ms": 11369.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_dispatch_rechecks_and_release_only_unfired[epoch]",
+          "status": "pass",
+          "duration_ms": 1158.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_dispatch_rechecks_and_release_only_unfired[stop]",
+          "status": "pass",
+          "duration_ms": 1240.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_last_project_balance_has_one_winner_in_real_concurrent_transactions",
+          "status": "pass",
+          "duration_ms": 1343.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_duplicate_permit_dispatches_once_and_never_releases_dispatched",
+          "status": "pass",
+          "duration_ms": 1247.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_raw_runtime_cannot_read_claim_or_write_ledger",
+          "status": "pass",
+          "duration_ms": 1148.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_provider_request_identifier_ascii_length_boundary[255-True]",
+          "status": "pass",
+          "duration_ms": 1208.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_provider_request_identifier_ascii_length_boundary[256-True]",
+          "status": "pass",
+          "duration_ms": 1223.0
+        },
+        {
+          "test_id": "tests.test_ai_ledger.test_provider_request_identifier_ascii_length_boundary[257-False]",
+          "status": "pass",
+          "duration_ms": 1882.0
+        },
+        {
+          "test_id": "tests.test_document_ingest.test_same_upload_reuses_exact_receipt",
+          "status": "pass",
+          "duration_ms": 1134.0
+        },
+        {
+          "test_id": "tests.test_document_ingest.test_same_id_other_source_rejected",
+          "status": "pass",
+          "duration_ms": 1037.0
+        },
+        {
+          "test_id": "tests.test_document_ingest.test_user_cannot_register_or_write_source[A-U1-A]",
+          "status": "pass",
+          "duration_ms": 988.0
+        },
+        {
+          "test_id": "tests.test_document_ingest.test_user_cannot_register_or_write_source[B-U1-B]",
+          "status": "pass",
+          "duration_ms": 1010.0
+        },
+        {
+          "test_id": "tests.test_document_ingest.test_private_management_does_not_grant_content",
+          "status": "pass",
+          "duration_ms": 1055.0
+        },
+        {
+          "test_id": "tests.test_document_ingest.test_new_version_cas_and_old_source_preserved",
+          "status": "pass",
+          "duration_ms": 1008.0
+        },
+        {
+          "test_id": "tests.test_document_ingest.test_audit_failure_keeps_private_file_recoverable",
+          "status": "pass",
+          "duration_ms": 1142.0
+        },
+        {
+          "test_id": "tests.test_document_ingest.test_current_revoke_blocks_new_job",
+          "status": "pass",
+          "duration_ms": 1158.0
+        },
+        {
+          "test_id": "tests.test_document_ingest.test_only_confirmed_old_orphan_is_removed",
+          "status": "pass",
+          "duration_ms": 1056.0
+        },
+        {
+          "test_id": "tests.test_document_ingest.test_document_admission_limit_and_same_id_replay",
+          "status": "pass",
+          "duration_ms": 1178.0
+        },
+        {
+          "test_id": "tests.test_document_jobs.test_scoped_worker_persists_or_holds_without_redispatch[complete]",
+          "status": "fail",
+          "duration_ms": 1268.0
+        },
+        {
+          "test_id": "tests.test_document_jobs.test_scoped_worker_persists_or_holds_without_redispatch[unknown]",
+          "status": "pass",
+          "duration_ms": 1381.0
+        },
+        {
+          "test_id": "tests.test_document_jobs.test_scoped_worker_persists_or_holds_without_redispatch[bad_vector]",
+          "status": "pass",
+          "duration_ms": 1294.0
+        },
+        {
+          "test_id": "tests.test_document_jobs.test_claim_is_exclusive_and_epoch_fences",
+          "status": "pass",
+          "duration_ms": 1151.0
+        },
+        {
+          "test_id": "tests.test_document_jobs.test_known_checkpoint_survives_expired_worker_without_provider_repeat",
+          "status": "fail",
+          "duration_ms": 1726.0
+        },
+        {
+          "test_id": "tests.test_document_jobs.test_publish_revocation_rolls_back_and_keeps_payload_unpublished",
+          "status": "pass",
+          "duration_ms": 1880.0
+        },
+        {
+          "test_id": "tests.test_document_jobs.test_real_job_cannot_be_claimed_by_mock_server",
+          "status": "pass",
+          "duration_ms": 1553.0
+        },
+        {
+          "test_id": "tests.test_document_jobs.test_raw_index_read_rechecks_origin_and_agent[revoked]",
+          "status": "pass",
+          "duration_ms": 1143.0
+        },
+        {
+          "test_id": "tests.test_document_jobs.test_raw_index_read_rechecks_origin_and_agent[agent]",
+          "status": "pass",
+          "duration_ms": 1125.0
+        },
+        {
+          "test_id": "tests.test_document_api.test_upload_job_query_duplicate_and_delete",
+          "status": "pass",
+          "duration_ms": 1208.0
+        },
+        {
+          "test_id": "tests.test_document_api.test_upload_boundary_failure_without_job[csrf]",
+          "status": "pass",
+          "duration_ms": 1147.0
+        },
+        {
+          "test_id": "tests.test_document_api.test_upload_boundary_failure_without_job[origin]",
+          "status": "pass",
+          "duration_ms": 1085.0
+        },
+        {
+          "test_id": "tests.test_document_api.test_upload_boundary_failure_without_job[unknown]",
+          "status": "pass",
+          "duration_ms": 1073.0
+        },
+        {
+          "test_id": "tests.test_document_api.test_upload_boundary_failure_without_job[too_big]",
+          "status": "pass",
+          "duration_ms": 1130.0
+        },
+        {
+          "test_id": "tests.test_document_api.test_upload_boundary_failure_without_job[wrong_media]",
+          "status": "pass",
+          "duration_ms": 1181.0
+        },
+        {
+          "test_id": "tests.test_document_api.test_upload_boundary_failure_without_job[duplicate_metadata]",
+          "status": "pass",
+          "duration_ms": 1070.0
+        },
+        {
+          "test_id": "tests.test_document_api.test_foreign_job_and_nonadministrator_are_rejected",
+          "status": "pass",
+          "duration_ms": 1155.0
+        },
+        {
+          "test_id": "tests.test_document_api.test_opaque_cursor_is_bound_to_principal_and_tenant",
+          "status": "pass",
+          "duration_ms": 1206.0
+        },
+        {
+          "test_id": "tests.test_rag_execution.test_rag_answer_is_sealed_before_read_and_current_revoke_hides_raw_body",
+          "status": "fail",
+          "duration_ms": 1205.0
+        },
+        {
+          "test_id": "tests.test_rag_execution.test_rag_hold_deny_and_typed_failure[no_source]",
+          "status": "pass",
+          "duration_ms": 1130.0
+        },
+        {
+          "test_id": "tests.test_rag_execution.test_rag_hold_deny_and_typed_failure[unsupported]",
+          "status": "fail",
+          "duration_ms": 1358.0
+        },
+        {
+          "test_id": "tests.test_rag_execution.test_rag_hold_deny_and_typed_failure[foreign_ref]",
+          "status": "fail",
+          "duration_ms": 1245.0
+        },
+        {
+          "test_id": "tests.test_rag_execution.test_rag_hold_deny_and_typed_failure[bad_fact]",
+          "status": "fail",
+          "duration_ms": 1197.0
+        },
+        {
+          "test_id": "tests.test_rag_execution.test_rag_hold_deny_and_typed_failure[free_text]",
+          "status": "fail",
+          "duration_ms": 1210.0
+        },
+        {
+          "test_id": "tests.test_rag_execution.test_rag_failure_boundaries_preserve_calls_and_do_not_publish[late_agent]",
+          "status": "fail",
+          "duration_ms": 1248.0
+        },
+        {
+          "test_id": "tests.test_rag_execution.test_rag_failure_boundaries_preserve_calls_and_do_not_publish[late_share]",
+          "status": "fail",
+          "duration_ms": 1230.0
+        },
+        {
+          "test_id": "tests.test_rag_execution.test_rag_failure_boundaries_preserve_calls_and_do_not_publish[bad_quote]",
+          "status": "fail",
+          "duration_ms": 1374.0
+        },
+        {
+          "test_id": "tests.test_rag_execution.test_rag_failure_boundaries_preserve_calls_and_do_not_publish[bad_relation]",
+          "status": "fail",
+          "duration_ms": 1835.0
+        },
+        {
+          "test_id": "tests.test_rag_execution.test_rag_failure_boundaries_preserve_calls_and_do_not_publish[unknown_query]",
+          "status": "fail",
+          "duration_ms": 1286.0
+        },
+        {
+          "test_id": "tests.test_rag_execution.test_rag_failure_boundaries_preserve_calls_and_do_not_publish[search_failure]",
+          "status": "fail",
+          "duration_ms": 1294.0
+        },
+        {
+          "test_id": "tests.test_rag_execution.test_rag_failure_boundaries_preserve_calls_and_do_not_publish[missing_usage]",
+          "status": "fail",
+          "duration_ms": 1283.0
+        },
+        {
+          "test_id": "tests.test_rag_execution.test_two_source_answer_revoke_one_hides_entire_body",
+          "status": "fail",
+          "duration_ms": 1197.0
+        },
+        {
+          "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths[complete]",
+          "status": "pass",
+          "duration_ms": 1265.0
+        },
+        {
+          "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths[save_retry]",
+          "status": "pass",
+          "duration_ms": 1358.0
+        },
+        {
+          "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths[save_commit_loss]",
+          "status": "pass",
+          "duration_ms": 1311.0
+        },
+        {
+          "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths[save_fail]",
+          "status": "pass",
+          "duration_ms": 1284.0
+        },
+        {
+          "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths[cancel]",
+          "status": "pass",
+          "duration_ms": 1344.0
+        },
+        {
+          "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths[revoke]",
+          "status": "pass",
+          "duration_ms": 1331.0
+        },
+        {
+          "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths[disable]",
+          "status": "pass",
+          "duration_ms": 1325.0
+        },
+        {
+          "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths[missing_usage]",
+          "status": "pass",
+          "duration_ms": 1270.0
+        },
+        {
+          "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths[unknown]",
+          "status": "pass",
+          "duration_ms": 1237.0
+        },
+        {
+          "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths[meter_fail]",
+          "status": "pass",
+          "duration_ms": 1239.0
+        },
+        {
+          "test_id": "tests.test_execution.test_execution_manager_terminal_and_failure_paths[truncated]",
+          "status": "pass",
+          "duration_ms": 1261.0
+        },
+        {
+          "test_id": "tests.test_execution.test_unconfirmed_commit_never_calls_provider[reserve]",
+          "status": "pass",
+          "duration_ms": 1262.0
+        },
+        {
+          "test_id": "tests.test_execution.test_unconfirmed_commit_never_calls_provider[dispatch]",
+          "status": "pass",
+          "duration_ms": 1218.0
+        },
+        {
+          "test_id": "tests.test_execution.test_stream_rechecks_before_each_body_and_bounds_subscriptions",
+          "status": "pass",
+          "duration_ms": 2.0
+        },
+        {
+          "test_id": "tests.test_execution.test_stream_snapshot_reconnect_and_post_commit_terminal_do_not_start_provider",
+          "status": "pass",
+          "duration_ms": 1262.0
+        },
+        {
+          "test_id": "tests.test_execution.test_single_execution_leader_shutdown_cleans_claims_and_pool",
+          "status": "pass",
+          "duration_ms": 1305.0
+        }
+      ]
+    },
+    "control": {
+      "exit_code": 1,
+      "duration_seconds": 86.91,
+      "passed": 34,
+      "failed": 26,
+      "skipped": 0,
+      "tests": [
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-project-generate_general]",
+          "status": "pass",
+          "duration_ms": 1935.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-project-embed_document]",
+          "status": "pass",
+          "duration_ms": 1577.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-project-embed_query]",
+          "status": "fail",
+          "duration_ms": 1482.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-project-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1205.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-tenant-generate_general]",
+          "status": "pass",
+          "duration_ms": 1218.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-tenant-embed_document]",
+          "status": "pass",
+          "duration_ms": 1297.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-tenant-embed_query]",
+          "status": "fail",
+          "duration_ms": 1303.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-tenant-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1597.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-disabled-generate_general]",
+          "status": "pass",
+          "duration_ms": 1606.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-disabled-embed_document]",
+          "status": "pass",
+          "duration_ms": 1400.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-disabled-embed_query]",
+          "status": "fail",
+          "duration_ms": 1250.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-disabled-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1363.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-config-generate_general]",
+          "status": "pass",
+          "duration_ms": 1324.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-config-embed_document]",
+          "status": "fail",
+          "duration_ms": 1452.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-config-embed_query]",
+          "status": "fail",
+          "duration_ms": 1300.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-config-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1301.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-project-generate_general]",
+          "status": "pass",
+          "duration_ms": 1756.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-project-embed_document]",
+          "status": "pass",
+          "duration_ms": 1517.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-project-embed_query]",
+          "status": "fail",
+          "duration_ms": 1327.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-project-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1335.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-tenant-generate_general]",
+          "status": "pass",
+          "duration_ms": 1327.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-tenant-embed_document]",
+          "status": "pass",
+          "duration_ms": 1339.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-tenant-embed_query]",
+          "status": "fail",
+          "duration_ms": 1284.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-tenant-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1275.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-disabled-generate_general]",
+          "status": "pass",
+          "duration_ms": 1270.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-disabled-embed_document]",
+          "status": "pass",
+          "duration_ms": 1499.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-disabled-embed_query]",
+          "status": "fail",
+          "duration_ms": 1270.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-disabled-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1254.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-config-generate_general]",
+          "status": "pass",
+          "duration_ms": 1300.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-config-embed_document]",
+          "status": "pass",
+          "duration_ms": 1336.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-config-embed_query]",
+          "status": "fail",
+          "duration_ms": 1296.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-config-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1270.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-project-generate_general]",
+          "status": "pass",
+          "duration_ms": 1310.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-project-embed_document]",
+          "status": "pass",
+          "duration_ms": 1458.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-project-embed_query]",
+          "status": "fail",
+          "duration_ms": 1365.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-project-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1309.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-tenant-generate_general]",
+          "status": "pass",
+          "duration_ms": 1368.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-tenant-embed_document]",
+          "status": "pass",
+          "duration_ms": 1418.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-tenant-embed_query]",
+          "status": "fail",
+          "duration_ms": 1222.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-tenant-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1347.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-disabled-generate_general]",
+          "status": "pass",
+          "duration_ms": 1571.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-disabled-embed_document]",
+          "status": "pass",
+          "duration_ms": 1540.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-disabled-embed_query]",
+          "status": "fail",
+          "duration_ms": 1271.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-disabled-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1290.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-config-generate_general]",
+          "status": "pass",
+          "duration_ms": 1311.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-config-embed_document]",
+          "status": "pass",
+          "duration_ms": 1733.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-config-embed_query]",
+          "status": "fail",
+          "duration_ms": 1320.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-config-generate_rag]",
+          "status": "fail",
+          "duration_ms": 1250.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_embedding_release_is_call_bound_and_never_releases_dispatched[forged]",
+          "status": "pass",
+          "duration_ms": 1317.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_embedding_release_is_call_bound_and_never_releases_dispatched[old_epoch]",
+          "status": "pass",
+          "duration_ms": 1374.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_embedding_release_is_call_bound_and_never_releases_dispatched[foreign]",
+          "status": "pass",
+          "duration_ms": 1297.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_embedding_release_is_call_bound_and_never_releases_dispatched[revoked]",
+          "status": "pass",
+          "duration_ms": 1300.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_embedding_release_is_call_bound_and_never_releases_dispatched[dispatched]",
+          "status": "fail",
+          "duration_ms": 1288.0
+        },
+        {
+          "test_id": "tests.test_t280_controls.test_protected_markers_stay_out_of_public_errors_and_usage",
+          "status": "pass",
+          "duration_ms": 1542.0
+        },
+        {
+          "test_id": "tests.test_migrations.test_migration_rerun_and_checksum_reject",
+          "status": "pass",
+          "duration_ms": 1157.0
+        },
+        {
+          "test_id": "tests.test_migrations.test_pending_failure_rolls_back_schema_and_checksum",
+          "status": "pass",
+          "duration_ms": 1052.0
+        },
+        {
+          "test_id": "tests.test_migrations.test_seed_rejects_existing_and_nonfixture",
+          "status": "pass",
+          "duration_ms": 1719.0
+        },
+        {
+          "test_id": "tests.test_migrations.test_wrong_fixture_marker_and_privileged_role_reject",
+          "status": "pass",
+          "duration_ms": 1562.0
+        },
+        {
+          "test_id": "tests.test_migrations.test_fixture_credentials_are_argon2_private_and_hidden",
+          "status": "pass",
+          "duration_ms": 1505.0
+        },
+        {
+          "test_id": "tests.test_migrations.test_first_migration_batch_failure_has_no_partial_schema",
+          "status": "pass",
+          "duration_ms": 533.0
+        }
+      ]
+    },
+    "reason": "Row-lock SELECT also applies UPDATE USING policies; normal Job config was filtered. Corrected by current authorized Job lock-only UPDATE policy WITH CHECK false."
+  },
+  "final_patch_smoke": {
+    "exit_code": 0,
+    "duration_seconds": 27.28,
+    "passed": 18,
+    "failed": 0,
+    "skipped": 0,
+    "tests": [
+      {
+        "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-config-generate_general]",
+        "status": "pass",
+        "duration_ms": 1788.0
+      },
+      {
+        "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-config-embed_document]",
+        "status": "pass",
+        "duration_ms": 1443.0
+      },
+      {
+        "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-config-embed_query]",
+        "status": "pass",
+        "duration_ms": 1452.0
+      },
+      {
+        "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[before_reserve-config-generate_rag]",
+        "status": "pass",
+        "duration_ms": 1414.0
+      },
+      {
+        "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-config-generate_general]",
+        "status": "pass",
+        "duration_ms": 1226.0
+      },
+      {
+        "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-config-embed_document]",
+        "status": "pass",
+        "duration_ms": 1366.0
+      },
+      {
+        "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-config-embed_query]",
+        "status": "pass",
+        "duration_ms": 1463.0
+      },
+      {
+        "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_reserve-config-generate_rag]",
+        "status": "pass",
+        "duration_ms": 1440.0
+      },
+      {
+        "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-config-generate_general]",
+        "status": "pass",
+        "duration_ms": 1337.0
+      },
+      {
+        "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-config-embed_document]",
+        "status": "pass",
+        "duration_ms": 1316.0
+      },
+      {
+        "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-config-embed_query]",
+        "status": "pass",
+        "duration_ms": 1438.0
+      },
+      {
+        "test_id": "tests.test_t280_controls.test_four_operations_current_control_and_saved_meter[after_dispatch-config-generate_rag]",
+        "status": "pass",
+        "duration_ms": 1470.0
+      },
+      {
+        "test_id": "tests.test_t280_controls.test_embedding_release_is_call_bound_and_never_releases_dispatched[forged]",
+        "status": "pass",
+        "duration_ms": 1235.0
+      },
+      {
+        "test_id": "tests.test_t280_controls.test_embedding_release_is_call_bound_and_never_releases_dispatched[old_epoch]",
+        "status": "pass",
+        "duration_ms": 1211.0
+      },
+      {
+        "test_id": "tests.test_t280_controls.test_embedding_release_is_call_bound_and_never_releases_dispatched[foreign]",
+        "status": "pass",
+        "duration_ms": 1230.0
+      },
+      {
+        "test_id": "tests.test_t280_controls.test_embedding_release_is_call_bound_and_never_releases_dispatched[revoked]",
+        "status": "pass",
+        "duration_ms": 1232.0
+      },
+      {
+        "test_id": "tests.test_t280_controls.test_embedding_release_is_call_bound_and_never_releases_dispatched[dispatched]",
+        "status": "pass",
+        "duration_ms": 1218.0
+      },
+      {
+        "test_id": "tests.test_t280_controls.test_retry_reuses_settled_checkpoint_without_new_call_and_can_publish",
+        "status": "pass",
+        "duration_ms": 1475.0
+      }
+    ]
+  },
+  "fixed_defects": [
+    "unfired embedding reservation/slot retained after policy change",
+    "index publication after project/tenant stop or config revision change"
+  ],
+  "original_migrations_modified": false
+}

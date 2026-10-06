@@ -1,0 +1,47 @@
+{
+  "stage": "T280",
+  "unit": "model_call_control",
+  "date": "2026-10-06",
+  "unit_status": "central control fixes complete; plan05 remaining evidence in progress",
+  "overall_stage_status": "in_progress",
+  "source_commit": "0e7fb9df24748a34563b6d154712eb9fe737811f",
+  "source_files": 6,
+  "source_fingerprint_count": 176,
+  "new_test_cases": 56,
+  "backend_related_passed": 162,
+  "backend_is_full_suite": false,
+  "browser_full_passed": 64,
+  "repeated_executions": 21,
+  "paid_dispatches": 0,
+  "new_cost_krw": "0",
+  "migration_count": 18,
+  "security_function_count": 77,
+  "verification_summary": {
+    "verification_count": 41,
+    "acl_count": 16,
+    "design_input_count": 60,
+    "mapped_subcases": 143,
+    "parent_verdict_final": false,
+    "note": "V별 명시 행동의 관련/재사용 증거와 미수행을 분리. 상세60/ACL16의 최종판정 미완료로 상위전체pass 아님",
+    "subcase_verdicts": {
+      "not_run": 124,
+      "pass": 19
+    },
+    "verification_verdicts": {
+      "pass": 2,
+      "fail": 0,
+      "not_run": 39
+    },
+    "previous_module_refs_are_candidate_proofs": true,
+    "stage_completion": "in_progress",
+    "unresolved_product_defect_from_current_scheduler_reproduction": false,
+    "real_RAG_status": "not_run",
+    "required_next_step": "Complete detailed-60/ACL16 exact input adjudication and missing fault/cancel/UI proofs, then reconcile persistent real profile.",
+    "next_step": "Job logout-independent authority contract; complete HTTP trace/protected payload/CAS inputs, then preserve existing real profile preparation."
+  },
+  "human_feedback": "pending",
+  "M290_new_environment_restore": "not_run",
+  "local_only": true,
+  "remote_push": false,
+  "next_plan": "07 Job 권한 계약과 통합 검증 잔여 상세 작업 계획.md"
+}
