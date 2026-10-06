@@ -1,15 +1,15 @@
 ---
 title: ACL 검색과 RAG 답변 상세 작업 계획
 created: 2026-10-05
-updated: 2026-10-05
-status: planned
+updated: 2026-10-06
+status: completed
 stage: 250.구현
 tags: [implementation-plan, C04, rag, acl, evidence]
 ---
 
 # I250-C04 ACL 검색과 RAG 답변
 
-C03에서 게시한 저장소를 사용해 현재 권한이 허용한 자료만 검색하고, 관계별 원문 근거가 검증된 RAG 답변을 저장·조회한다. 화면 연결은 C05, 합성7버전/Q20의 전체 평가와 통합 인계는 C06이다. 이 문서는 다음 작업의 계획이며 실행 결과가 아니다.
+C03에서 게시한 저장소를 사용해 현재 권한이 허용한 자료만 검색하고, 관계별 원문 근거가 검증된 RAG 답변을 저장·조회한다. 화면 연결은 C05, 합성7버전/Q20의 전체 평가와 통합 인계는 C06이다. 실제 실행 결과는 [[16 ACL 검색과 RAG 답변 구현 결과]]에 기록했다.
 
 참조: [[09 문서와 GraphRAG 연결 상세 작업 계획]], [[14 문서 등록과 인덱싱 Job 구현 결과]], [[../240.설계/06 문서와 GraphRAG 설계]], [[../240.설계/05 AI 호출과 사용량 원장 설계]], [[../240.설계/04 API와 실행 상태 설계]], [[../240.설계/08 검증과 재현 설계]].
 
@@ -51,7 +51,7 @@ API-17 사용자 문서 목록, API-28 수신 후보, API-29/30 exact-version Gr
 
 ## 4. typed RAG·저장·과거 답변 보호
 
-fixed rules_rag Agent가 중앙 `generate_rag` 경로로 answer_kind/text/citation ordinal의 제한 구조를 반환하도록 한다. 모델 결과의 ordinal·quote·source binding을 서버에서 검증하고, 원문에 없는 근거나 허용되지 않은 인용은 게시하지 않는다. insufficient_evidence를 근거 부족으로 구분하고 provider/DB/usage 실패는 failed 상태로 남긴다.
+승인 설계06의 fixed rules_rag Agent는 중앙 `generate_rag` 경로로 answer_kind/selected_fact_ids의 제한 구조를 반환한다. 모델은 허용 fact ID를 선택하고 서버가 같은 관계와 근거 packet에서 사실 행·인용 ordinal을 렌더링한다. 자유 text/citation 계약은 사용하지 않는다. 모델 결과의 ordinal·quote·source binding을 서버에서 검증하고, 원문에 없는 근거나 허용되지 않은 인용은 게시하지 않는다. insufficient_evidence를 근거 부족으로 구분하고 provider/DB/usage 실패는 failed 상태로 남긴다.
 
 검증되지 않은 RAG 자유 생성 draft는 SSE에 전송하지 않는다. 최종 본문·answer_evidence·sealed provenance·run completed를 원자 저장한 뒤 저장 정본을 공개한다. 일반 대화의 기존 streaming 계약은 유지한다. 재시작/응답 유실 후 GET으로 완료·권한을 확인하며 자동 재발사하지 않는다.
 
@@ -69,9 +69,11 @@ API-15 본인 run 근거 목록, API-16 exact-version 원문 다운로드를 구
 
 산출물은 `250.구현/16 ACL 검색과 RAG 답변 구현 결과.md`, `260.테스트/evidence/C-rag/C04-*.json`, 대장/WBS, 다음 C05 문서/Job/Grant/사용자 출처 화면 상세 계획이다. 변경 영향에 맞는 backend 회귀·기존 일반 화면 검증을 완료하고 정확 변경 파일만 로컬 Git에 기록한다.
 
-- [ ] 현재 허용 버전 집합/문서 목록/Grant
-- [ ] 중앙 embed_query/권한 검색
-- [ ] 관계별 근거·제한 문맥/typed 검증
-- [ ] RAG 저장·sealed provenance/현재 all-source gate
-- [ ] 출처 다운로드/동시성·회수·재시작/회귀
-- [ ] 결과/WBS·C05 상세 계획
+- [x] 현재 허용 버전 집합/문서 목록/Grant
+- [x] 중앙 embed_query/권한 검색
+- [x] 관계별 근거·제한 문맥/typed 검증
+- [x] RAG 저장·sealed provenance/현재 all-source gate
+- [x] 출처 다운로드/동시성·회수·재시작/회귀
+- [x] 결과/WBS·C05 상세 계획
+
+최종 검증은 C04 결과/증거 기준이다. 모든 동시 삭제 경합을 망라한 시험을 주장하지 않는다. 다음 C05 화면은 미착수다.

@@ -1,0 +1,33 @@
+{
+  "stage": "C04",
+  "scope_key": [
+    "source_tenant_id",
+    "document_id",
+    "version_id",
+    "index_id"
+  ],
+  "current_acl": "session/membership/tenant/document/publication/exact-version-grant",
+  "top_vector_chunks": 6,
+  "graph_seed_limit": 4,
+  "graph_hops": 2,
+  "graph_relation_limit": 32,
+  "source_limit": 20,
+  "query_tokens": 4000,
+  "context_tokens": 2000,
+  "final_input_tokens": 6000,
+  "strict_response_fields": [
+    "answer_kind",
+    "selected_fact_ids"
+  ],
+  "server_rendered_facts": true,
+  "unsealed_rag_draft_exposed": false,
+  "question_only_rag_history": true,
+  "source_hash": "SHA256",
+  "whole_answer_current_all_source_gate": true,
+  "concurrent_grant_deduplication": "passed",
+  "two_source_revoke_body_gate": "passed",
+  "unknown_query": "no generation or automatic redispatch",
+  "generation_missing_receipt": "observed completion can publish sealed provenance; usage_unknown reservation retained",
+  "quality_evaluation": "not_run",
+  "paid_dispatches": 0
+}

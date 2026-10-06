@@ -1,0 +1,652 @@
+{
+  "stage": "C04",
+  "result": {
+    "applied": [
+      "014_document_sharing.sql",
+      "015_rag_execution.sql",
+      "016_rag_provenance.sql"
+    ],
+    "reapplied": [],
+    "legacy_columns_unchanged": 31,
+    "catalog": {
+      "business_tables": 31,
+      "migrations": 17,
+      "security_functions": 76,
+      "force_rls_tables": 17,
+      "extension": "0.8.6"
+    },
+    "primary_documents_and_indexes_loaded": false,
+    "paid_dispatches": 0,
+    "new_cost_krw": "0",
+    "prior_real_internal_estimate_krw": "0.19",
+    "rag_agent_enabled": false,
+    "private_environment_changed": false
+  },
+  "legacy_tables": {
+    "ops.audit_events": {
+      "rows": 32,
+      "sha256": "e2147e38cd2f6793a719e7cd28e9b9f7e11b5a7feeaf8ab1658906c6b742f166",
+      "columns": [
+        "event_id",
+        "scope_kind",
+        "tenant_id",
+        "actor_id",
+        "action",
+        "opaque_target_id",
+        "result",
+        "safe_reason",
+        "revisions",
+        "created_at"
+      ]
+    },
+    "ops.call_attempts": {
+      "rows": 3,
+      "sha256": "8461b8803d390e33ca9d39e8492244d7eaa97d64de9b84da49e1088d12dd28db",
+      "columns": [
+        "tenant_id",
+        "call_id",
+        "run_id",
+        "job_id",
+        "initiator_user_id",
+        "operation",
+        "budget_id",
+        "mode",
+        "agent_key",
+        "config_revision",
+        "step_key",
+        "attempt_no",
+        "input_fingerprint",
+        "permit_revision",
+        "permit_expires_at",
+        "execution_epoch",
+        "dispatch_claim_hash",
+        "dispatched_at",
+        "provider_request_id",
+        "provider_end_status",
+        "reserved_krw",
+        "state",
+        "slot_held",
+        "cost_overrun",
+        "usage_snapshot",
+        "price_snapshot",
+        "created_at",
+        "index_id",
+        "batch_ordinal"
+      ]
+    },
+    "ops.project_budget": {
+      "rows": 2,
+      "sha256": "4a80f84536beae8ef4236aa980d1d8a92b098b586d910589a8a3f877af0739b3",
+      "columns": [
+        "budget_id",
+        "period",
+        "mode",
+        "approved_cap_krw",
+        "operational_cap_krw",
+        "reserved_krw",
+        "accounted_krw",
+        "active_slot",
+        "stopped",
+        "stop_latch",
+        "revision"
+      ]
+    },
+    "ops.tenant_budgets": {
+      "rows": 3,
+      "sha256": "4234853b470e82a1057c5f89d93b8d5a91368b750d0bfc3345252d14ede767e1",
+      "columns": [
+        "tenant_id",
+        "budget_id",
+        "allocated_cap_krw",
+        "local_cap_krw",
+        "reserved_krw",
+        "accounted_krw",
+        "active_slot",
+        "stopped",
+        "revision"
+      ]
+    },
+    "ops.usage_events": {
+      "rows": 6,
+      "sha256": "5ce9dea9bc631d8d6d1479a2ee048fc7216ea37f710d12eb8153fe547c7d065f",
+      "columns": [
+        "tenant_id",
+        "event_id",
+        "call_id",
+        "event_kind",
+        "delta_reserved_krw",
+        "delta_accounted_krw",
+        "token_counts",
+        "price_snapshot",
+        "created_at"
+      ]
+    },
+    "portal.agent_configs": {
+      "rows": 4,
+      "sha256": "ddc9b7e7c736d646096c0ab8b63678d1e755b8b2d0ed78cfcc9f27309216b7fe",
+      "columns": [
+        "tenant_id",
+        "agent_key",
+        "config_version",
+        "enabled",
+        "settings",
+        "updated_by",
+        "updated_at"
+      ]
+    },
+    "portal.answer_evidence": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "columns": [
+        "tenant_id",
+        "run_id",
+        "ordinal",
+        "source_tenant_id",
+        "document_id",
+        "version_id",
+        "index_id",
+        "evidence_id",
+        "source_sha256",
+        "location_snapshot",
+        "quote_snapshot",
+        "payload_purged"
+      ]
+    },
+    "portal.conversations": {
+      "rows": 8,
+      "sha256": "798c68b77969e6fbb79f7e89a793f64c892cb1a7f6c48095696619079c09ea83",
+      "columns": [
+        "tenant_id",
+        "conversation_id",
+        "owner_user_id",
+        "agent_key",
+        "client_conversation_id",
+        "created_at",
+        "updated_at"
+      ]
+    },
+    "portal.messages": {
+      "rows": 6,
+      "sha256": "9b21ddc25893d9f2b6193bfd40dcdcb4a0dda6d52a866cdf9b73f0b05335f71e",
+      "columns": [
+        "tenant_id",
+        "message_id",
+        "conversation_id",
+        "owner_user_id",
+        "agent_key",
+        "sequence_no",
+        "role",
+        "body",
+        "run_id",
+        "payload_kind",
+        "payload_purged",
+        "created_at"
+      ]
+    },
+    "portal.runs": {
+      "rows": 3,
+      "sha256": "be627894a4f3d65f4c82b839e694e41003c96cdeff119b5a6bde2fb7fb23085c",
+      "columns": [
+        "tenant_id",
+        "run_id",
+        "conversation_id",
+        "owner_user_id",
+        "client_send_id",
+        "request_hash",
+        "agent_key",
+        "config_snapshot",
+        "origin_session_id",
+        "execution_mode",
+        "state",
+        "stage",
+        "revision",
+        "execution_epoch",
+        "heartbeat_at",
+        "lease_expires_at",
+        "started_at",
+        "ended_at",
+        "cancel_requested_at",
+        "safe_error_code",
+        "answer_kind",
+        "source_count",
+        "provenance_sealed",
+        "created_at",
+        "worker_claim_hash",
+        "execution_budget_id"
+      ]
+    },
+    "rag.chunks": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "columns": [
+        "tenant_id",
+        "document_id",
+        "version_id",
+        "index_id",
+        "chunk_id",
+        "ordinal",
+        "text",
+        "location",
+        "embedding",
+        "source_sha256",
+        "batch_ordinal",
+        "call_id",
+        "payload_purged"
+      ]
+    },
+    "rag.document_versions": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "columns": [
+        "tenant_id",
+        "document_id",
+        "version_id",
+        "version_no",
+        "title",
+        "source_object_key",
+        "source_sha256",
+        "media_type",
+        "byte_length",
+        "character_length",
+        "ingest_hmac",
+        "parser_revision",
+        "source_mapping",
+        "payload_purged",
+        "created_at"
+      ]
+    },
+    "rag.entities": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "columns": [
+        "tenant_id",
+        "document_id",
+        "version_id",
+        "index_id",
+        "entity_id",
+        "semantic_key",
+        "entity_type",
+        "label",
+        "properties",
+        "payload_purged"
+      ]
+    },
+    "rag.evidence": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "columns": [
+        "tenant_id",
+        "document_id",
+        "version_id",
+        "index_id",
+        "evidence_id",
+        "chunk_id",
+        "start_offset",
+        "end_offset",
+        "line_start",
+        "line_end",
+        "exact_quote",
+        "source_sha256",
+        "payload_purged"
+      ]
+    },
+    "rag.index_builds": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "columns": [
+        "tenant_id",
+        "document_id",
+        "version_id",
+        "index_id",
+        "execution_mode",
+        "pipeline_revision",
+        "source_fingerprint",
+        "embedding_model",
+        "embedding_dimensions",
+        "schema_revision",
+        "state",
+        "revision",
+        "expected_batches",
+        "completed_batches",
+        "checkpoint_summary",
+        "coverage",
+        "payload_purged",
+        "created_at"
+      ]
+    },
+    "rag.jobs": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "columns": [
+        "tenant_id",
+        "job_id",
+        "document_id",
+        "version_id",
+        "index_id",
+        "initiator_user_id",
+        "job_kind",
+        "execution_mode",
+        "state",
+        "stage",
+        "revision",
+        "retry_of",
+        "attempt",
+        "safe_error_code",
+        "heartbeat_at",
+        "lease_epoch",
+        "lease_expires_at",
+        "created_at",
+        "ended_at",
+        "origin_session_id",
+        "started_at"
+      ]
+    },
+    "rag.relation_evidence": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "columns": [
+        "tenant_id",
+        "index_id",
+        "relation_id",
+        "evidence_id"
+      ]
+    },
+    "rag.relations": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "columns": [
+        "tenant_id",
+        "document_id",
+        "version_id",
+        "index_id",
+        "relation_id",
+        "from_entity_id",
+        "to_entity_id",
+        "relation_type",
+        "properties",
+        "payload_purged"
+      ]
+    },
+    "security.accounts": {
+      "rows": 13,
+      "sha256": "6f194e42d5172361bc9cc3552569ac885d8c801d9756958e3e42fc5addff10af",
+      "columns": [
+        "user_id",
+        "login_id",
+        "display_name",
+        "password_hash",
+        "active",
+        "auth_revision",
+        "created_at"
+      ]
+    },
+    "security.document_access": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "columns": [
+        "tenant_id",
+        "document_id",
+        "owner_user_id",
+        "visibility",
+        "acl_revision",
+        "deleted_at",
+        "created_at"
+      ]
+    },
+    "security.document_publications": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "columns": [
+        "tenant_id",
+        "document_id",
+        "version_id",
+        "published_index_id",
+        "active",
+        "revision"
+      ]
+    },
+    "security.job_authorizations": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "columns": [
+        "tenant_id",
+        "job_id",
+        "document_id",
+        "version_id",
+        "index_id",
+        "initiator_user_id",
+        "action",
+        "deletion_revision",
+        "lease_hash",
+        "lease_epoch",
+        "expires_at",
+        "revoked_at"
+      ]
+    },
+    "security.login_windows": {
+      "rows": 10,
+      "sha256": "952488ad40fc1a255ac79bd928b7b9d9ff285c7aea46c44b6a7a830b558dd299",
+      "columns": [
+        "purpose",
+        "key_kind",
+        "key_digest",
+        "window_started_at",
+        "count"
+      ]
+    },
+    "security.managed_tenants": {
+      "rows": 1,
+      "sha256": "34a9be3ae7f88b23d41bd6155bedd81231cf0081f49f317cfeb8dbc587a30b64",
+      "columns": [
+        "tenant_id",
+        "user_id",
+        "active",
+        "revision"
+      ]
+    },
+    "security.memberships": {
+      "rows": 14,
+      "sha256": "f45cc888528e05d2a0cb56c115de03a8986d63c35ab2b9b8982df91d3963ae30",
+      "columns": [
+        "tenant_id",
+        "user_id",
+        "membership_id",
+        "role",
+        "active",
+        "revision"
+      ]
+    },
+    "security.operation_receipts": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "columns": [
+        "tenant_id",
+        "initiator_user_id",
+        "operation_kind",
+        "client_operation_id",
+        "request_hash",
+        "document_id",
+        "version_id",
+        "index_id",
+        "job_id",
+        "created_at"
+      ]
+    },
+    "security.platform_access": {
+      "rows": 4,
+      "sha256": "232cafb85d568f4e126ea76465fe3887c20141bccd93a890a90e9ad17517f4d4",
+      "columns": [
+        "user_id",
+        "is_padmin",
+        "permissions",
+        "active",
+        "revision"
+      ]
+    },
+    "security.private_readers": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "columns": [
+        "tenant_id",
+        "document_id",
+        "user_id"
+      ]
+    },
+    "security.sessions": {
+      "rows": 23,
+      "sha256": "5caa8e79ad4e3d66383e5530dd1b3e0694fb704519ca0c68fdefabbb8172c563",
+      "columns": [
+        "session_id",
+        "token_hash",
+        "user_id",
+        "auth_revision",
+        "csrf_secret",
+        "issued_at",
+        "last_activity_at",
+        "expires_at",
+        "revoked_at"
+      ]
+    },
+    "security.share_grants": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+      "columns": [
+        "grant_id",
+        "owner_tenant_id",
+        "document_id",
+        "version_id",
+        "recipient_tenant_id",
+        "active",
+        "revision",
+        "issued_by",
+        "issued_at",
+        "revoked_at"
+      ]
+    },
+    "security.tenants": {
+      "rows": 2,
+      "sha256": "9e2b5f88da396b676a25278b5d37154c72e8a3523bc66db53c1707e7455fcde0",
+      "columns": [
+        "tenant_id",
+        "fixture_label",
+        "display_name",
+        "active",
+        "revision"
+      ]
+    }
+  },
+  "smoke": {
+    "native_primary_health": "pass",
+    "openapi_routes": 41,
+    "configured_mode": "mock",
+    "index_enabled": true,
+    "execution_enabled": true,
+    "legacy_tables_identical": 31,
+    "paid_dispatches": 0,
+    "runtime_connections_after": 0,
+    "temporary_databases_after": 0,
+    "owned_child_shutdown": "pass",
+    "shutdown_returncode": -15,
+    "cluster_state_after": "stopped",
+    "development_listeners": 0
+  },
+  "protected_files": {
+    "src/backend/migrations/002_context_control.sql": "06bace1838d4def9e47d7162f3db0276a9fd5722399ac268ee06e4d23d3a3500",
+    "src/backend/migrations/006_operations_control.sql": "605b03dd77ff2453b3b76093d59eb07b82f292bd155c687108a882e691dd8352",
+    "src/backend/migrations/001_auth_portal.sql": "1cea48eca5c80c13bbccb07aeebe38c9380e26fe8e2dfaea909b276b43009b3c",
+    "src/backend/migrations/008_ai_call_control.sql": "e43e89b9d416a2ce10e3daea06d705e554a414eecfde1afdf17728c383b4d374",
+    "src/backend/migrations/009_document_graph_schema.sql": "ec510d5d29272073060794f0675653d294e966c0493804647bb12454ce24aaaa",
+    "src/backend/migrations/007_run_control.sql": "8ccfd9589e90abaf871d277a8318ea8704b75d039eef3ee800f709445df62209",
+    "src/backend/migrations/005_conversation_ledger.sql": "c9742d7ac1690e78f2e1e7517ec16e5adeda1e66a028d56ab18c1c7585d62421",
+    "src/backend/migrations/010_document_policy_control.sql": "49ecd272cd89e650400358270604f2f21328094caf3d0e4906940ccb32d8f5f0",
+    "src/backend/migrations/003_session_control.sql": "9595273cb0bc0d37bd6e9bd1af7bae141cdb6a33e7e03bd5e8747b00e12b3d59",
+    "src/backend/migrations/004_membership_control.sql": "312a448b529c724cd21d3cfb77987ce4e628878058f96e14b52d938f9ce358a3",
+    "src/backend/migrations/013_document_lifecycle_control.sql": "c8b5f22c51660b22ca46328c35a555e2e80efe927f3cab0629e24404f04d8899",
+    "src/backend/migrations/011_document_ingest_control.sql": "49bbbb10db9f898241d4af64b6280fcdadfb3dbcf43ecec8ac3548b8ae2a49e2",
+    "src/backend/migrations/000_roles.sql": "93eb2ed791a0c65e507b5bb84ec94e25d6bbd58da989f854680cee2bb6895047",
+    "src/backend/migrations/012_document_embedding_control.sql": "8c3f224488cd861b08d57cd22247101ae453e38368623c4121cc62913ede0848",
+    "data/synthetic/document_manifest.json": "bfcfaeef880fa1c551dcce5a4bc5061ce4409d781448eca88bd044b803876f6e",
+    "data/evaluation/questions.json": "c36b6e64c4c2db8ceccb3050097e5d592eca0b44cac9768e1176efedda0bdd7e",
+    "data/synthetic/documents/D-S-v1.md": "b0a98ddc64c3b95c9312cc08ad1626e77c402ebcaea69ef0a9a13a039711c026",
+    "data/synthetic/documents/D-A-R2.md": "84ed0eb5be4874b7afaef43dcf177948f320e18b235c9b07f03526bce8806a7c",
+    "data/synthetic/documents/D-B-P.md": "049c0103b6b3f426e2bd0a64c7f004d146b55b9f64432d187ba6b9a9b6becb90",
+    "data/synthetic/documents/D-A-P.md": "b3b5b3500dc9befe7d50b7eba3438a90a6efbe56b08cb7c8400a5e3b5a262d46",
+    "data/synthetic/documents/D-A-R1.md": "b21abba9786aa11c43d57a3899e52208bb253af342ea691ad198ca9b9639f509",
+    "data/synthetic/documents/D-S-v2.md": "e2d5db78c6c61638a30a2b61efaad9fd7cb59b4eb2dbad77bcdd3b4058efc859",
+    "data/synthetic/documents/D-B-R1.md": "5bb42596cd3c5e656e5aa543ec4d939f9f8c83bd831f7434d707a64b1198bf07",
+    "src/backend/.runtime/admin.env": "9fafb777f40577771915ba3c5cb90febc4a98a05f03bd9f13501a1e3a07e123d",
+    "src/backend/.runtime/app.env": "c6aef67144278b6add95e54a174b82c6f82ce86d647f2faf01ac609cb45599aa",
+    "src/backend/.runtime/runtime-roles.json": "442ec7b6fe9936a3cc85a74433b935f0a62fe45351c9bc4a754f581c6f22ef6b",
+    "src/backend/.runtime/active-fixture.json": "5bc7dba158d1bdc7c942ad42b80dc5a6ae54d30564535991035aad405189a66a",
+    "src/backend/.runtime/ai_portal_mvp_test_eb4447aab6e84e93bbdd826e0c94eb91-fixture-secrets.json": "691568d097daa3da7c5f26a94509f54b1bfd1030367f47e273a75c1997c42e6a",
+    "src/backend/.runtime/ai_portal_mvp_test_b9a06099c0954eccb570ccbd37c92343-fixture-secrets.json": "596ccd36bbace9e77f22b267c2176f9fa184b4137601483c09656af9bf166cd5"
+  },
+  "historical_files": {
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/C-rag/C02-test-summary.json": "41fef210362c8c69fa64debf920c9976777dc451d06ab68c002a3205f030eff7",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/C-rag/C03-preservation.json": "13e3932d15e8e986cb978390db2acd911f66d04c0d670c84db583bbfd04d3c57",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/C-rag/C01-test-results.json": "a3260a4d708ed1c3f41e5fa7f58bd178ec38ae5943dc89a6bd52d326544a7f41",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/C-rag/C01-installation.json": "c80033e8dd9ef396a96d6f7d0fe535d588725170e6773101de72479496d52079",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/C-rag/C03-test-summary.json": "ba671f559359e0c7f29a0c77ddc8481b49d5e88f2ce99eaf521cd2611a2feba7",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/C-rag/C02-preservation.json": "30a7c931e17c6cdac2f883cad08f7a493fe50cde9c63af5a3a8ef624b089a183",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/C-rag/C02-test-results.json": "88fac2c8a028df1d508d05d9a6785a3a63d6cc0322efea71c0dc7ff597e81c14",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/C-rag/C01-db-boundaries.json": "a63683fda0dfed715f84db4e1364dfc79b93f9e11f3ebb06b428cfc69705aeaf",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/C-rag/C03-test-results.json": "4f8c507ea1d5fc38c661265f334aa7f5095a5ebafda187e3c8eddf6222238ef3",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/C-rag/C01-test-summary.json": "14f6918f886ebbb8747028a64ba11e1cf8d76857ed41142e53a012e96dcd99c0",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/C-rag/C02-corpus-plan.json": "294386dc9300e638a40773f8d23be0dcfc5044cf5dabadd9a68d48cb17005936",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/C-rag/README.md": "ebf985a506f55205313f1ce767b88ba18e42ad64a8afe4f6d69e50bb629ef238",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/C-rag/C02-README.md": "50070298c61b886828cb7f33cd87aa2567ecdcb8019afd14a7c9300ecba25563",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/C-rag/C03-db-boundaries.json": "96a3494a51f2baafc26627765655e01f41dd559831ec94be8d0a7633d2b0de7f",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/C-rag/C03-source-fingerprints.json": "a81594d8fcd24c75be011a50bc5fd567c6e1eded097ccb8e238ee7b0e32c9fe2",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/C-rag/C03-README.md": "9b52aeff4715c2954e3ae8079590b9c96ce6a7ce882d983f7519790c67d832d8",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/C-rag/C02-source-fingerprints.json": "4277eb5b14753e255914b38fd81682d9cd671a80debd90c6d7b426eca63c331b",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B02-runtime-check.json": "65c96b36cd1c74c923d7e238b3a13e7147cc70c96c686528ede8d05d57e35257",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B01-db-boundaries.json": "e1f1819bc5689dc0714f1235e704826d8a5ee0a81a13d723beba7a731d5ecc56",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B02-test-summary.json": "d21888701a7a97a9e460d7bbbbcacb086020acabc3fabf75cb850047518d1fb5",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B05-test-results.json": "d945bfafe8bbb1d047d69caf490ab802678c44dd81f55c2f5cbeb434ac0111c2",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B01-test-results.json": "899bb8f8de876df498ff9d587abfefe33bfc98c60f7001a8ba641492c17e067c",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B06-test-summary.json": "8c93b8fcb12b51b366c694e81181184f4201cf46dd61080a7984affa39a96111",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B02-db-boundaries.json": "16c706d2b7f693b3b7ddbf1acb1af1a51e2dd09dd6fc0f480776f28f5a935f6a",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B01-runtime-check.json": "728af55f48fc80d734cac2934fbba1ef4535d706e7927f32f7a5a462c642f679",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B03-test-summary.json": "51682a7cb5e75e4ad74f38f4db893afd947792b62f6ca036a28fd962a18d255d",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B04-test-results.json": "5c9ba62f9242f9a63a8098fdbfc5dc7e702d8609b7c1ad0500480433ba2dd4a5",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B02-test-results.json": "f7d08f91d536abdb5fe92bf5cb8a6586ad1ede513efd1d5f62c62dca86ecac09",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B05-test-summary.json": "ceb1485bbf65a9b1e2d2f6b67b4b1e5812acc6e848872c1d1b90a6de2e52afb6",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B04-db-boundaries.json": "2b660538919bf742ea6b53ec5a30455be2ef4f404475f14988b716adb46e829c",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B03-test-results.json": "1ec0b966e472281f37327c0683103e02597fe90caf65eea35102d0addf71a2ad",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B04-test-summary.json": "18e64b261f2e6d62216489cc684564c5de3389e16dc8d0e3be5c4360a47ffa63",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B01-test-summary.json": "bd69a89b2ca0c702ac32f5bfb03b9ddde2e2569a32cf7903c9d3888c8a569728",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B06-test-results.json": "7c515e4d3cd80ccb746ceed42212c88cf4550cd591197bf62e1b2f6da8e6ef88",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B04-runtime-check.json": "80fe64e483862988547fe6ac9e608264aba74d4eae126e2c24504a566070f594",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/README.md": "16aace30f6c80eb6e92252d33a42c1209bbfe172bc8f3ca296be7a0efeb04c15",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B06-db-boundaries.json": "0a42dfbb3e31da35b8a10b7d8936b39127dadc53deff197fe353700ad8ba17a7",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B05-runtime-check.json": "a0b52717e8a3148a08d5524a6e74fd6d466e5ef773fd4b245ab5b0cd49a817cb",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B06-runtime-check.json": "1b75bbda64a77f49645876dde516e884d07fc52abf19a436bd3a720432cd885b",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B05-db-boundaries.json": "5c59a54ff46f1356fcd75604898e8d5a753781f8d1e28ab248552bf15f03a636",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B03-db-boundaries.json": "12156979e98e161749643b3aab70cf92a5dd1fc588c7ca6e37023b912b3f41a5",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B03-runtime-check.json": "cf2fa98bd8c49e524faac3f0457c3b4d424b6a5ac667c0c0256ae43151e5a276",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/B-chat/B06-latency.json": "a75add9ceffbb1e7b675a9ea02e6d89ef32d69e22b30ea7fe0416f90490f98b9",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/A-auth/A02-test-summary.json": "9083375a4045880ed054bfe2d340c0023b29014f7c3c1b2bba38d3f36ab26e39",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/A-auth/summary.json": "7fa9c97bbd0d41217d12e5a59358c20aa1ee2cd099d96cdc389b936f98227fe4",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/A-auth/A03-runtime-check.json": "ad03f9df67a3de1cd93c3d2b38a7108ef70c9a5359ea73b003bb796c245f3a48",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/A-auth/A03-test-summary.json": "af5a5dfc0b0ba491b72104bd61515ab25ba0184d04cbf01e637d572f39d278f8",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/A-auth/test-results.json": "be2c31a15275fccda2f55a54009550c7333a54ddf3d8aac71c8c3f24565149fb",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/A-auth/A05-test-summary.json": "0f85eabbd158f42165a107a316ec88c7c91695fa5ee4191abfd467841ec23a7a",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/A-auth/db-boundaries.json": "b1577d2f0f2b6444c0012ad3125e55a896cd8bb76fb47f5318b30e15db374004",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/A-auth/A01-test-summary.json": "c3cdb5eaa33667ce2c065da0520b37b08a01c588c193aaef748a9dcae8981bd1",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/A-auth/A05-runtime-check.json": "3428039b22ef7c453f223b07bb7f94539027f0d2ad082506c7534edc7b9419ab",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/A-auth/A05-login-mobile.png": "1a13af4b8a007fa40070bda87e063c0f62354c96bf6b585db7ecc3953e94acd7",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/A-auth/A04-test-summary.json": "3084272e17f9fabdf70514666a0b1bc083259724d77061409e6cce93860a48fa",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/A-auth/A05-login-desktop.png": "c54f0cac5c51341e4412ed63fd45375bc270ce7386271be76a5f9277fd7f2385",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/A-auth/README.md": "c1f5f39e04bc2846451ad37740827051fc51aed71e204f336cadb0dfb864d432",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/A-auth/A04-runtime-check.json": "dcc2fde4d55490e7d8171490b5303c33f28bdd5eee31344a4104c865ba12d3e1",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/A-auth/A01-runtime-check.json": "cef713b1109c6bcddb0f01c95ad47415f5c00ac01f4b0e15a107799e7c84a99c",
+    "docs/Obsidain/200.프로젝트실행/260.테스트/evidence/A-auth/A02-db-boundaries.json": "7ce2f7f9e39a8b11eea33f538f85773eafacf8bc78f7a0c0737c8fb5de52bf7c"
+  },
+  "unrelated_untracked_baseline": 74,
+  "original_graphrag_head": "913f3881b4a4a73b9f764f60575775ecdbba6bdd",
+  "original_selected_source_files_preserved": 9,
+  "private_environment_unchanged": true,
+  "paid_dispatches": 0,
+  "Q20_execution": "not_run",
+  "orchestration_recovery_note": "Temporary orchestration files expired between Oct 5 and Oct 6. Verified C03 committed SQL/data, retained C04 private JUnit results and recovered preservation snapshot before any primary migration."
+}

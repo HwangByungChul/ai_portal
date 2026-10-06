@@ -1,7 +1,7 @@
 ---
 title: 문서와 GraphRAG 연결 상세 작업 계획
 created: 2026-10-05
-updated: 2026-10-05
+updated: 2026-10-06
 status: in_progress
 stage: 250.구현
 tags: [implementation-plan, graphrag, C, tenant-isolation]
@@ -17,7 +17,7 @@ tags: [implementation-plan, graphrag, C, tenant-isolation]
 
 **Tech Stack:** 기존 Python/FastAPI/PostgreSQL15·React/TypeScript. pgvector(1536) 준비 상태는 C01에서 실제 확인한다. 생성 gpt-4o-mini/임베딩 text-embedding-3-small을 유지한다.
 
-**Spec:** [[200.프로젝트실행/240.설계/03 데이터 모델과 RLS 설계]], [[200.프로젝트실행/240.설계/04 API와 실행 상태 설계]], [[200.프로젝트실행/240.설계/05 AI 호출과 사용량 원장 설계]], [[200.프로젝트실행/240.설계/06 문서와 GraphRAG 설계]], [[200.프로젝트실행/240.설계/08 검증과 재현 설계]], [[200.프로젝트실행/230.분석/03 GraphRAG와 백엔드 재사용 분석]]. C01 기반 구현·시험은 완료했으며 결과는 [[10 문서와 GraphRAG 저장 기반 구현 결과]]에 기록했다. C02 순수 코어·문서 처리와 C03 등록/Job/중앙 임베딩·게시도 완료했으며 C04~C06은 계획이다.
+**Spec:** [[200.프로젝트실행/240.설계/03 데이터 모델과 RLS 설계]], [[200.프로젝트실행/240.설계/04 API와 실행 상태 설계]], [[200.프로젝트실행/240.설계/05 AI 호출과 사용량 원장 설계]], [[200.프로젝트실행/240.설계/06 문서와 GraphRAG 설계]], [[200.프로젝트실행/240.설계/08 검증과 재현 설계]], [[200.프로젝트실행/230.분석/03 GraphRAG와 백엔드 재사용 분석]]. C01 기반 구현·시험은 완료했으며 결과는 [[10 문서와 GraphRAG 저장 기반 구현 결과]]에 기록했다. C02 순수 코어·문서 처리와 C03 등록/Job/중앙 임베딩·게시도 완료했으며 C04 권한 검색·RAG도 완료했으며 C05~C06은 계획이다.
 
 ## Global Constraints
 
@@ -43,7 +43,7 @@ tags: [implementation-plan, graphrag, C, tenant-isolation]
 | C05 문서·Job·공유·출처 화면 |3h|실 API 문서관리/처리단계·버전공유/규정Agent·인용보기|A/B 전환·권한/상태·같은ID 복구. 등록202를완료로표시하지않음 |
 | C06 합성7버전·Q20·통합 인계 |3h|실제 등록/색인/검색평가·현재ACL/재시작 증거·260 인계|모의/실제·목표/관측/완료·차단을 구분. 전체V41 판정은260/280 |
 
-C01~C03는 완료했다. 다음 작업은 [[15 ACL 검색과 RAG 답변 상세 작업 계획|C04 ACL 검색·RAG 답변]]이며 이후도 결과와 다음 계획으로 순차 진행한다.
+C01~C04는 완료했다. 다음 작업은 [[17 문서·Job·공유·출처 화면 상세 작업 계획|C05 화면 연결]]이며 이후도 결과와 다음 계획으로 순차 진행한다.
 
 ## C01 — 다음에 수행할 상세 작업
 
@@ -82,8 +82,8 @@ Files planned: documents/jobs routes·repository·runner, ai gateway/provider �
 
 ## C04~C06 — 검색부터 평가까지
 
-- [ ] Vector 후보/Graph 확장은 허용version/index집합 안에서만 실행. 공유B v1만허용일때 v2 존재/담당/기한을노출하지않는다. 관계별출처·조건을보존하고 근거부족은hold/insufficient_evidence, DB오류는failed로분리한다.
-- [ ] embed_query와generate_rag는 기존centralgateway, typed출처ordinal/quote검증·sealed provenance·저장정본후SSE공개. 모든본문조회에현재all-source gate 적용.
+- [x] Vector 후보/Graph 확장은 허용version/index집합 안에서만 실행. 공유B v1만허용일때 v2 존재/담당/기한을노출하지않는다. 관계별출처·조건을보존하고 근거부족은hold/insufficient_evidence, DB오류는failed로분리한다.
+- [x] embed_query와generate_rag는 기존centralgateway, typed출처ordinal/quote검증·sealed provenance·저장정본후SSE공개. 모든본문조회에현재all-source gate 적용.
 - [ ] 문서관리/Job 최소정보, 등록·처리·공개·cleanup 상태를분리. private title/원문은현재read권한없으면숨기고 관리자역할만으로본문을보이지않는다.
 - [ ] 합성7버전(D-A-R1/R2/P, D-B-R1/P, D-S v1/v2) 실제등록·색인, 원문SHA/구간으로EV 대조. Q20 각상태/근거/허구·누설·공유회수/재시작을별도평가결과로기록한다.
 - [ ] 후속260/270/280/290/300 단계로 전체요구V41·처음부터끝까지파일럿·시연·이행·종료 자료를 인계한다. B06 또는 C 코어단위시험만으로전체MVP완료를선언하지않는다.
@@ -131,4 +131,8 @@ Files planned: documents/jobs routes·repository·runner, ai gateway/provider �
 
 순수 코어/원문 mapping·512토큰 청킹/GR01~10·관계별 exact 근거·배치 계획과 분리 evaluator 검증을 완료했다. 결과는 [[12 GraphRAG 순수 코어와 문서 처리 구현 결과]]. 실제 임베딩·DB 인덱싱·검색·Q20는 후속 작업이다. 다음 [[13 문서 등록과 인덱싱 Job 상세 작업 계획]].
 
-C03 결과: [[14 문서 등록과 인덱싱 Job 구현 결과]]. 현재34 API/14 migration/66 security 함수이며 다음7 API 및 검색/RAG는 C04다.
+C03 결과: [[14 문서 등록과 인덱싱 Job 구현 결과]]. C03 완료 당시34 API/14 migration/66 security 함수였으며 C04에서7 API와 검색/RAG를 추가했다.
+
+## C04 완료 — 2026-10-06
+
+서버 검색·typed RAG·근거·Grant 구현/모의 검증 완료. 결과 [[16 ACL 검색과 RAG 답변 구현 결과]], 다음 [[17 문서·Job·공유·출처 화면 상세 작업 계획]]. C05/C06·실제 모델/Q20·전체 MVP는 미완료다.
