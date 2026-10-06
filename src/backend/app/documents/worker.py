@@ -17,11 +17,18 @@ class DocumentWorker:
         if repository.mode!=gateway.provider.mode:raise ValueError('INDEX_MODE_MISMATCH')
         self.repository=repository;self.gateway=gateway
 
+    async def _control(self,ctx,job_id,action,epoch=None,claim=None,data=None):
+        # Web APIs keep session checks. Only the dedicated index capability can
+        # control an admitted Job after HTTP logout, using its current principal.
+        if action=='claim':data={**(data or {}),'mode':self.repository.mode}
+        return await self.gateway.rpc('document_background_control',
+            (ctx.user_id,ctx.tenant_id,job_id,action,epoch,claim,Jsonb(data or {})))
+
     async def _guard(self,conn,ticket):
         await conn.execute('SELECT security.document_worker_guard(%s,%s,%s,%s)',(ticket['tenant_id'],ticket['job_id'],ticket['epoch'],ticket['claim']))
 
     async def run(self,ctx,job_id):
-        claim=secrets.token_bytes(32);job=await self.repository.job(ctx,job_id,'claim',claim=claim)
+        claim=secrets.token_bytes(32);job=await self._control(ctx,job_id,'claim',claim=claim)
         if job is None:return
         ticket={'tenant_id':ctx.tenant_id,'job_id':job_id,'epoch':job['epoch'],'claim':claim}
         heartbeat=asyncio.create_task(self._heartbeat(ctx,job_id,ticket))
@@ -38,7 +45,7 @@ class DocumentWorker:
                 meta=DocumentMetadata(ctx.tenant_id,UUID(job['document_id']),UUID(job['version_id']),UUID(job['index_id']),bytes(row['source_sha256']),job['mode'])
                 plan=build_document_plan(content,row['title'],row['media_type'],meta)
                 if plan.source_fingerprint!=job['source_fingerprint']:raise AppError('SOURCE_INVALID',422)
-                await self.repository.job(ctx,job_id,'plan',ticket['epoch'],claim,{'batches':len(plan.batches),'fingerprint':plan.source_fingerprint,'coverage':{'status':plan.graph.coverage,'reasons':[reason for _,reason in plan.graph.reasons]}})
+                await self._control(ctx,job_id,'plan',ticket['epoch'],claim,{'batches':len(plan.batches),'fingerprint':plan.source_fingerprint,'coverage':{'status':plan.graph.coverage,'reasons':[reason for _,reason in plan.graph.reasons]}})
                 for batch in plan.batches:
                     async with self.gateway.index_pool.connection() as conn:
                         async with conn.transaction():
@@ -58,7 +65,7 @@ class DocumentWorker:
                         await conn.execute('SELECT security.document_publish(%s,%s,%s,%s,%s)',(ctx.tenant_id,job_id,ticket['epoch'],claim,Jsonb(counts)))
         except BaseException as error:
             code=error.code if isinstance(error,AppError) else 'INDEX_INTERRUPTED'
-            try:await self.repository.job(ctx,job_id,'review',ticket['epoch'],claim,{'code':code})
+            try:await self._control(ctx,job_id,'review',ticket['epoch'],claim,{'code':code})
             except BaseException:pass
             raise
         finally:
@@ -79,7 +86,7 @@ class DocumentWorker:
     async def _heartbeat(self,ctx,job,ticket):
         while True:
             await asyncio.sleep(20)
-            await self.repository.job(ctx,job,'heartbeat',ticket['epoch'],ticket['claim'])
+            await self._control(ctx,job,'heartbeat',ticket['epoch'],ticket['claim'])
 
     async def _graph(self,conn,m,p):
         scope=(m.tenant_id,m.document_id,m.version_id,m.index_id)

@@ -114,7 +114,7 @@ def test_real_job_cannot_be_claimed_by_mock_server(ops_rows,tmp_path):
     with pytest.raises(ValueError,match='INDEX_MODE_MISMATCH'):DocumentWorker(real,EmbeddingGateway(None,None,MockEmbeddingProvider(),date(2026,10,1)))
 
 @pytest.mark.parametrize('mutation',['revoked','agent'])
-def test_raw_index_read_rechecks_origin_and_agent(ops_rows,tmp_path,mutation):
+def test_raw_index_read_preserves_logout_independence_and_rechecks_agent(ops_rows,tmp_path,mutation):
     f=ops_rows;ctx=f.run(f.context('A-ADM','A'));repo=DocumentRepository(f.pool,SourceStorage(tmp_path/'sources'),'x'*40)
     ids=f.run(repo.register(ctx,metadata(visibility='private',owner_user_id=f.actor_ids['A-U1']),RAW));claim=b'z'*32;job=UUID(ids['job_id']);f.run(repo.job(ctx,job,'claim',claim=claim))
     with f.role_connection('ai_index') as c:
@@ -124,4 +124,4 @@ def test_raw_index_read_rechecks_origin_and_agent(ops_rows,tmp_path,mutation):
             if mutation=='revoked':f.mutate_access(ctx,'revoked')
             else:
                 with f.db.admin_connection() as admin:admin.execute("UPDATE portal.agent_configs SET enabled=false WHERE tenant_id=%s AND agent_key='rules_rag'",(ctx.tenant_id,))
-            assert c.execute('SELECT version_id FROM rag.document_versions').fetchall()==[]
+            assert c.execute('SELECT version_id FROM rag.document_versions').fetchall()==([(UUID(ids['version_id']),)] if mutation=='revoked' else [])

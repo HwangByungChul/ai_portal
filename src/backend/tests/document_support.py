@@ -53,6 +53,7 @@ def add_chunk(conn,tenant,doc,version,index,*,ordinal=0,vector=None):
 
 @pytest.fixture
 def documents(db_fixture):
+    with db_fixture.db.admin_connection() as c:c.execute("UPDATE portal.agent_configs SET enabled=true WHERE agent_key='rules_rag'")
     f=db_fixture;tenant=f.tenant_ids['A'];org,private=uuid4(),uuid4();versions=[];indexes=[];chunks=[];job,grant=uuid4(),uuid4();claim=hashlib.sha256(uuid4().bytes).hexdigest()
     with f.db.admin_connection() as conn:
         with conn.transaction():
