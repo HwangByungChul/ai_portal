@@ -1,0 +1,38 @@
+{
+  "stage": "C05",
+  "date": "2026-10-06",
+  "build": "pass",
+  "browser_full": {
+    "passed": 60,
+    "runner_errors": 0,
+    "build_and_browser_seconds": 192.78
+  },
+  "browser_related": {
+    "passed": 9,
+    "included_in_full": true,
+    "build_and_browser_seconds": 64.36
+  },
+  "backend_related": {
+    "passed": 14,
+    "failed": 0,
+    "skipped": 0,
+    "seconds": 22.27
+  },
+  "backend_full_prior_C04": {
+    "passed": 737,
+    "not_rerun_C05": true
+  },
+  "provider_mode": "mock",
+  "paid_dispatches": 0,
+  "new_cost_krw": "0",
+  "Q20": "not_run",
+  "initial_test_helper_corrections": [
+    "private title locator scoped to document card",
+    "native restart waits for actual health response before browser reload"
+  ],
+  "limits": [
+    "private registration uses current administrator owner and empty reader list; owner/reader editing UI pending",
+    "semantic quality and full synthetic corpus/Q20 not evaluated",
+    "UI checks current RAG access every five seconds and on focus/visibility/manual refresh"
+  ]
+}

@@ -1,0 +1,32 @@
+{
+  "scenarios": [
+    "C05_01_upload_202_is_not_publication",
+    "C05_02_exact_v1_share_rag_source_revoke_and_v2_is_hidden",
+    "C05_03_private_management_does_not_expose_title",
+    "C05_04_lost_upload_confirm_preserves_id_and_one_index_call",
+    "C05_05_unknown_index_preserves_reservation_and_no_auto_retry",
+    "C05_06_rag_stream_is_buffered_until_provenance_is_saved",
+    "C05_07_mobile_document_surface_and_delete",
+    "C05_08_share_revision_conflict_requires_explicit_second_write",
+    "C05_09_late_A_document_response_discarded_after_B_switch"
+  ],
+  "actual_api_with_mock_provider": true,
+  "upload_202_is_receipt_only": true,
+  "upload_recovery_same_id": true,
+  "exact_shared_v1_unshared_v2_hidden": true,
+  "private_management_does_not_reveal_title": true,
+  "unknown_index_no_auto_retry": true,
+  "RAG_draft_hidden_before_saved_provenance": true,
+  "authenticated_same_origin_current_tenant_blob_download": true,
+  "source_url_fixed_run_and_ordinal": true,
+  "current_access_recheck_seconds": 5,
+  "revoked_answer_hidden_in_test_within_seconds": 10,
+  "native_owned_api_restart_health_checked": true,
+  "completed_recovery_additional_generation_calls": 0,
+  "tenant_late_response_discarded": true,
+  "document_data_local_or_session_storage": false,
+  "share_conflict_no_automatic_write": true,
+  "mobile_width": 390,
+  "fixture_database_marker_and_primary_rejection_retained": true,
+  "owned_source_store_cleanup": true
+}
