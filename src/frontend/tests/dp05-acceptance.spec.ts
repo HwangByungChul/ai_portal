@@ -3,7 +3,7 @@ import {control,fixture,login,selectTenant} from './support';
 const raw='여신심사의 담당 부서는 개인심사팀이다.';
 test.beforeEach(()=>{control('case-start');control('c05-enable');});
 test.afterEach(async()=>{control('release-provider');await expect.poll(()=>control('c05-counts').active,{timeout:7000}).toBe(0);});
-async function mine(page:Page,actor='A-U1'){await login(page,actor);await page.getByRole('button',{name:'내 자료',exact:true}).click();await expect(page.getByRole('heading',{name:'개인 문서 등록',exact:true})).toBeVisible();}
+async function mine(page:Page,actor='A-U1'){await login(page,actor);if(actor==='DUAL')await selectTenant(page,'A');await page.getByRole('button',{name:'내 자료',exact:true}).click();await expect(page.getByRole('heading',{name:'개인 문서 등록',exact:true})).toBeVisible();}
 async function upload(page:Page,title='내 개인 규정'){await page.getByLabel('문서 제목',{exact:true}).fill(title);await page.getByLabel('문서 파일',{exact:true}).setInputFiles({name:'private.md',mimeType:'text/markdown',buffer:Buffer.from(raw)});await page.locator('.document-upload').getByRole('button',{name:'문서 접수',exact:true}).click();}
 async function published(page:Page){await expect(page.getByRole('region',{name:'문서 처리 상태'})).toContainText('게시: 게시됨');await expect(page.locator('.document-card').first()).toContainText('게시됨');}
 async function h(page:Page,tenant='A'){const csrf=(await (await page.request.get('/api/v1/auth/me')).json()).data.csrf_token;return {'X-Tenant-ID':fixture().tenants[tenant],Origin:'http://127.0.0.1:5173','X-Requested-With':'ai-portal','X-CSRF-Token':csrf};}
