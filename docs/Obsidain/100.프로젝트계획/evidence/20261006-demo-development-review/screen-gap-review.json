@@ -1,0 +1,317 @@
+[
+  {
+    "id": "00",
+    "screen": "통합 Home",
+    "current_status": "부분",
+    "existing_scope": "로그인·조직선택·역할별 메뉴",
+    "gap": "홈 위젯·허용 서비스 바로가기·공지",
+    "work_packages": "UX-02",
+    "evidence_group": "UI"
+  },
+  {
+    "id": "01",
+    "screen": "AI Chat",
+    "current_status": "부분",
+    "existing_scope": "SSE·취소·저장확인·RAG 근거",
+    "gap": "질문 중 파일첨부·피드백·다중모델 선택",
+    "work_packages": "UX-03/04/05",
+    "evidence_group": "CHAT"
+  },
+  {
+    "id": "02",
+    "screen": "My Agent",
+    "current_status": "미구현",
+    "existing_scope": "고정2개 Agent 선택은 있음",
+    "gap": "개인 목록·즐겨찾기·빠른실행",
+    "work_packages": "UX-06",
+    "evidence_group": "AGENT"
+  },
+  {
+    "id": "03",
+    "screen": "Agent 상세",
+    "current_status": "부분",
+    "existing_scope": "관리자용 이름/설명/지시문 설정",
+    "gap": "사용자 프로필·버전·권한·실행통계",
+    "work_packages": "UX-06",
+    "evidence_group": "FORM"
+  },
+  {
+    "id": "04",
+    "screen": "My Knowledge",
+    "current_status": "부분",
+    "existing_scope": "허용 게시버전 조회·관리자 업로드/공유",
+    "gap": "일반사용자 자기문서 업로드·부서 범위 모델",
+    "work_packages": "UX-04",
+    "evidence_group": "DOC"
+  },
+  {
+    "id": "05",
+    "screen": "대화이력·개인설정",
+    "current_status": "부분",
+    "existing_scope": "본인 이력 조회·커서 페이징",
+    "gap": "검색·삭제·이름변경·핀·테마/알림",
+    "work_packages": "UX-03/07",
+    "evidence_group": "CONV"
+  },
+  {
+    "id": "06",
+    "screen": "Marketplace Home",
+    "current_status": "미구현",
+    "existing_scope": "고정 Agent 설정 테이블만 확인",
+    "gap": "자산 카탈로그·공개범위·카드·랭킹",
+    "work_packages": "UX-06",
+    "evidence_group": "SCHEMA"
+  },
+  {
+    "id": "07",
+    "screen": "통합 카탈로그 검색",
+    "current_status": "미구현",
+    "existing_scope": "권한내 RAG 검색은 별도 기능",
+    "gap": "Agent/Prompt/Tool/Workflow 다면 검색",
+    "work_packages": "UX-06",
+    "evidence_group": "RAG"
+  },
+  {
+    "id": "08",
+    "screen": "Agent 권한신청",
+    "current_status": "미구현",
+    "existing_scope": "현재 소속/역할 검사는 있음",
+    "gap": "신청·심사·승인·회수·상태 이력",
+    "work_packages": "UX-10",
+    "evidence_group": "OPS"
+  },
+  {
+    "id": "09",
+    "screen": "자산 템플릿 복제",
+    "current_status": "미구현",
+    "existing_scope": "신규 자산 생성·fork API 없음",
+    "gap": "원본 버전·복제출처·범위·비밀값 제외",
+    "work_packages": "UX-10",
+    "evidence_group": "SCHEMA"
+  },
+  {
+    "id": "10",
+    "screen": "My Marketplace",
+    "current_status": "미구현",
+    "existing_scope": "호출 사용량 조회만 있음",
+    "gap": "등록자별 자산/버전/배포/통계",
+    "work_packages": "UX-06/10",
+    "evidence_group": "USAGE"
+  },
+  {
+    "id": "11",
+    "screen": "커뮤니티 지식공유",
+    "current_status": "미구현",
+    "existing_scope": "게시판 데이터·API 없음",
+    "gap": "게시물·노출범위·신고·관리",
+    "work_packages": "UX-14",
+    "evidence_group": "UI"
+  },
+  {
+    "id": "12",
+    "screen": "Builder Home",
+    "current_status": "미구현",
+    "existing_scope": "고정 Agent 설정 편집만 있음",
+    "gap": "신규 생성 마법사·프로젝트·초안",
+    "work_packages": "UX-10",
+    "evidence_group": "AGENT"
+  },
+  {
+    "id": "13",
+    "screen": "Agent Prompt 설정",
+    "current_status": "부분",
+    "existing_scope": "이름·설명·기본 지시문",
+    "gap": "Few-shot·변수·파라미터·버전·시험",
+    "work_packages": "UX-10",
+    "evidence_group": "FORM"
+  },
+  {
+    "id": "14",
+    "screen": "Workflow Canvas",
+    "current_status": "미구현",
+    "existing_scope": "현재 실행관리자는 고정경로; LangGraph 확인 안 됨",
+    "gap": "노드 모델·실행엔진·분기/루프·시각편집",
+    "work_packages": "UX-12",
+    "evidence_group": "RAG"
+  },
+  {
+    "id": "15",
+    "screen": "Knowledge/RAG 설정",
+    "current_status": "부분",
+    "existing_scope": "청킹·임베딩·검색·근거 검증 경로",
+    "gap": "사용자 전략선택·모델/검색 튜닝·설정 버전",
+    "work_packages": "UX-05/10",
+    "evidence_group": "RAG"
+  },
+  {
+    "id": "16",
+    "screen": "MCP/Tool 연동",
+    "current_status": "미구현",
+    "existing_scope": "등록·허가·실행 API/스키마 확인 안 됨",
+    "gap": "커넥터·도구 계약·허가·실행 통제",
+    "work_packages": "UX-11",
+    "evidence_group": "OPS"
+  },
+  {
+    "id": "17",
+    "screen": "Test/Trace/Debug",
+    "current_status": "부분",
+    "existing_scope": "request/run/Job/call 추적·검증 도구",
+    "gap": "권한별 추적 조회 API·제품 화면",
+    "work_packages": "UX-09/10",
+    "evidence_group": "AUDIT"
+  },
+  {
+    "id": "18",
+    "screen": "평가·승인·배포",
+    "current_status": "부분",
+    "existing_scope": "검증용 평가셋과 자동 시험 존재",
+    "gap": "제품 평가실행·승인·버전 활성화",
+    "work_packages": "UX-10",
+    "evidence_group": "SCHEMA"
+  },
+  {
+    "id": "19",
+    "screen": "거버넌스 Dashboard",
+    "current_status": "미구현",
+    "existing_scope": "일부 사용량·한도 집계는 있음",
+    "gap": "위험등급/PII/정책 위반의 실제 데이터",
+    "work_packages": "UX-09",
+    "evidence_group": "USAGE"
+  },
+  {
+    "id": "20",
+    "screen": "AI 자산 등록부",
+    "current_status": "부분",
+    "existing_scope": "고정 Agent 설정·호출 기록",
+    "gap": "일반 자산·담당자·위험등급·승인 이력",
+    "work_packages": "UX-06/10/13",
+    "evidence_group": "SCHEMA"
+  },
+  {
+    "id": "21",
+    "screen": "AI 위험평가",
+    "current_status": "미구현",
+    "existing_scope": "위험평가 엔진 없음",
+    "gap": "질문표·근거·판정·검토자·템플릿 버전",
+    "work_packages": "UX-13",
+    "evidence_group": "UI"
+  },
+  {
+    "id": "22",
+    "screen": "정책 가드레일",
+    "current_status": "부분",
+    "existing_scope": "ACL·허가·한도·typed fact 검증",
+    "gap": "PII 탐지/마스킹·유해어/인젝션 정책·위반 이력",
+    "work_packages": "UX-09",
+    "evidence_group": "POLICY"
+  },
+  {
+    "id": "23",
+    "screen": "데이터 Scope/권한",
+    "current_status": "부분",
+    "existing_scope": "tenant/private/reader/버전 Grant/RLS",
+    "gap": "부서 스코프·DRM·전용 정책 편집 화면",
+    "work_packages": "UX-04/09",
+    "evidence_group": "POLICY"
+  },
+  {
+    "id": "24",
+    "screen": "예외 승인 Workflow",
+    "current_status": "미구현",
+    "existing_scope": "현재 역할변경/Grant 발급은 있음",
+    "gap": "정책 예외 신청/승인/만료/철회",
+    "work_packages": "UX-09/10",
+    "evidence_group": "OPS"
+  },
+  {
+    "id": "25",
+    "screen": "모니터링/감사로그",
+    "current_status": "부분",
+    "existing_scope": "ID·행위·대상·revision 감사 기록",
+    "gap": "권한별 감사조회/마스킹·보존정책; 전문 전수감사 별도",
+    "work_packages": "UX-08/09",
+    "evidence_group": "AUDIT"
+  },
+  {
+    "id": "26",
+    "screen": "컴플라이언스 보고서",
+    "current_status": "미구현",
+    "existing_scope": "사용량 집계는 재사용 가능",
+    "gap": "보고 데이터·검토승인·Export 템플릿",
+    "work_packages": "UX-13",
+    "evidence_group": "USAGE"
+  },
+  {
+    "id": "27",
+    "screen": "플랫폼 운영 Dashboard",
+    "current_status": "부분",
+    "existing_scope": "사용량/예약/unknown·공통중지",
+    "gap": "TPS·노드상태·장애알림·SLO 지표",
+    "work_packages": "UX-08/13",
+    "evidence_group": "USAGE"
+  },
+  {
+    "id": "28",
+    "screen": "사용자/역할/권한",
+    "current_status": "부분",
+    "existing_scope": "소속 상태·USER/TADMIN/PADMIN 제어",
+    "gap": "조직도·계정 생성·부서·전체 RBAC 편집",
+    "work_packages": "UX-08/10",
+    "evidence_group": "UI"
+  },
+  {
+    "id": "29",
+    "screen": "AI 서비스 자산 운영",
+    "current_status": "부분",
+    "existing_scope": "고정 Agent 중지·재개와 Job 상태",
+    "gap": "일반 서비스 등록·헬스체크·인스턴스 제어",
+    "work_packages": "UX-08/13",
+    "evidence_group": "OPS"
+  },
+  {
+    "id": "30",
+    "screen": "계열사 AI 과제",
+    "current_status": "미구현",
+    "existing_scope": "tenant별 한도는 있음",
+    "gap": "과제 등록·담당자·과제별 예산·상태",
+    "work_packages": "UX-13",
+    "evidence_group": "SCHEMA"
+  },
+  {
+    "id": "31",
+    "screen": "GPU/CPU Quota",
+    "current_status": "부분",
+    "existing_scope": "입력 token 상한·비용 예약·호출/동시 제한",
+    "gap": "GPU/CPU 할당·모델별 TPM/RPM 편집",
+    "work_packages": "UX-08/13",
+    "evidence_group": "TOKENS"
+  },
+  {
+    "id": "32",
+    "screen": "배포환경/Rollback",
+    "current_status": "미구현",
+    "existing_scope": "로컬 실행·재시작 검증 존재",
+    "gap": "환경별 릴리스·인프라 배포/건강검사/복원",
+    "work_packages": "UX-10/13",
+    "evidence_group": "UI"
+  },
+  {
+    "id": "33",
+    "screen": "미터링/빌링",
+    "current_status": "부분",
+    "existing_scope": "receipt와 내부 비용 추정·예약·모드 분리",
+    "gap": "일/월 추이·단가 화면·Export·청구 확정",
+    "work_packages": "UX-08",
+    "evidence_group": "USAGE"
+  },
+  {
+    "id": "34",
+    "screen": "콘텐츠/사이트/커뮤니티",
+    "current_status": "미구현",
+    "existing_scope": "전용 데이터·API 없음",
+    "gap": "공지/FAQ/배너·게시물 운영",
+    "work_packages": "UX-02/14",
+    "evidence_group": "UI"
+  }
+]

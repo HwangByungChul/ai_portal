@@ -1,0 +1,875 @@
+{
+  "review_date": "2026-10-06",
+  "source_head": "1daf4f7db309b36796527343da6e164710907f11",
+  "input_documents": {
+    "05 시연 화면과 구현 기능 비교 분석 보고서.md": "84524337ee3744566b241c7e822e7294b0d3dbc15db6e681404586ca1ebe1dbe",
+    "06 제안 시연 전체 화면(36종) 대비 기능 비교 분석.md": "25f3bb51f8fa7e0ab0fc40ea8883924b6f84b1418a6c839a9527102e34cc5666"
+  },
+  "source_sha256": {
+    "src/backend/app/__init__.py": "03a54177ba5f9337019f796db79cc8b994a42f9c5aff3188174fde35259d511e",
+    "src/backend/app/ai/__init__.py": "01739a3207004e8a02702075ce002b8553532a151da262d8116315bd725404b7",
+    "src/backend/app/ai/gateway.py": "b6456ca8cee1df37de0512c144baa694e691416909988ab854e5f65f76d6501d",
+    "src/backend/app/ai/pricing.py": "1c1499bb89f6e223ff2caf4c1093584f3fa45bcbc4966107a85f0c65953c0bd6",
+    "src/backend/app/ai/providers.py": "67442cb42acdb87f01e22d07c3056599990bcc5660ade19ac084575303558c74",
+    "src/backend/app/ai/rag_gateway.py": "3ca1623186f11aba6ffd50172ccbb1205b6d6b4c42d7cb1db7c0192e96d9b139",
+    "src/backend/app/ai/rag_provider.py": "95699e11167bd46affbff1d7cf834b35146b96dc5083ac9e4cdc61aeda2439e4",
+    "src/backend/app/ai/repository.py": "8e558eed47f6ef52ee53d95e9e37e24064370176cf69a6a28c1c512dec4aecb5",
+    "src/backend/app/ai/token_limits.py": "03d9bf3b98d8fa384f1e3c9c2b613cc30ee82f3d373f4ddd82fe0fd4217ee31c",
+    "src/backend/app/ai/types.py": "1588c715ef9084aa175cdb0c394ed8ffde4b85109a812dc186ba22279bc1f597",
+    "src/backend/app/auth/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/backend/app/auth/crypto.py": "df0d8314077ffa75183969205b43ef137a8cec5188b69866cbaf03f55a5cf08e",
+    "src/backend/app/auth/guards.py": "6dfe923f2f2bf835677a7b310377cbd6bb447789111fc61ff623432db4799146",
+    "src/backend/app/auth/repository.py": "e5952131a85e7397f7ba25e0911616946c8d17b5687a1086c593fec30f4140c9",
+    "src/backend/app/auth/routes.py": "5833792214d5877bdf4caeb51fac7703c4f9053b14a294f1fcb7448936cfde01",
+    "src/backend/app/auth/service.py": "fbed9213288b7bb831d5efe07d37f79cbf58f6c45253aa9bb3fa5d2a1e1d3d82",
+    "src/backend/app/config.py": "cbad2c5df85e32204c3165de3291ad08427f37b87cac10d6f4ad063ffd4db514",
+    "src/backend/app/conversations/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/backend/app/conversations/pagination.py": "d6a8dbd5913cc787b9e6dcbb74eb75d1ab7323d36c4f49266ae6bde6a29291c6",
+    "src/backend/app/conversations/repository.py": "5876fb55d630f79b8141d9b70c36af6a659dd45e4782f07afc53590d48092a5c",
+    "src/backend/app/conversations/routes.py": "1cc3aa923c467db31f6721b98643078ea3b27f5b148214cbbd1377a0baf679e1",
+    "src/backend/app/db.py": "5563236b352c46de0b8d1668d7efee2d085a7233a8499acaa3d2f5fe81f56f3c",
+    "src/backend/app/documents/__init__.py": "fa92b5c13445795e3f39e192e381532eb2569b4307050c5abba4b349fec1ba60",
+    "src/backend/app/documents/cursor.py": "31d1e72b8d8e93ad81f32080a8fad66775fb77fb353b589c22770d3b0462467b",
+    "src/backend/app/documents/embedding.py": "850746904ee1abc250be13926fb78f3411996662f42d3d00b0614bb44cd8c017",
+    "src/backend/app/documents/evidence_routes.py": "0db0b20c54970aded7b0908aa7b3ccb30e46fd4e93db9c797fa91ac45d6e0eae",
+    "src/backend/app/documents/manager.py": "2a0eb021696f91eebac5e1b1df287748c9fa58fd6a3afc95a88e9241958fcde3",
+    "src/backend/app/documents/plan.py": "38fe0926038c73cc3a8cc3e9f8f02d6997af5cb8c7e5b5284a3ea9c1f3033425",
+    "src/backend/app/documents/policy.py": "b77d2e80b13fbd77edb842336b931d47080c3aa4911f2c9d65f34f8586e17a3f",
+    "src/backend/app/documents/repository.py": "2348da3329441fa80330d70a27d715f2c06c6d7a98ea133efb5d230c9f69bb86",
+    "src/backend/app/documents/routes.py": "8b491907aa8e2a16ddca5c53a487271e788cb619d47bc4a34ec33a7159abcfcb",
+    "src/backend/app/documents/search.py": "19e0f1440d82f07dbd3bbefcdde36d6df0eaa0be3cc8b0ff229b97eb8600f68c",
+    "src/backend/app/documents/share_routes.py": "31c636c40a561d5f1e202ee2c0d331805ed5f9aea466af171f2df8d86acbd7c4",
+    "src/backend/app/documents/sharing.py": "801d5dcecd510a076c7f3bcd217ed6d2d2b9aeb3a01ae4a874e20078131c27a2",
+    "src/backend/app/documents/storage.py": "38de0d63fb53f7af90ed833a83b440e6d8abbb86b6b4afce306f46484b805455",
+    "src/backend/app/documents/upload.py": "85bc391a9dd04d8101fd360bbf4425d88a0e1f496b799dd83f1eec088c03d41e",
+    "src/backend/app/documents/worker.py": "66666fa272fefc9aed23e66a1b37094d3ab677062466d1c750333f02f9081563",
+    "src/backend/app/errors.py": "38f4c8acb2691ba244e8ba6fb25e7f735f388ba35254333ea204732af8b91cc9",
+    "src/backend/app/execution/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/backend/app/execution/manager.py": "1b2dcc7af98fa77de83ba26ca5d41435adff9aaf2af70e3289bb315805f3d83c",
+    "src/backend/app/execution/rag.py": "85928922c291eca01dc8ddf603151c8683e8ff2db5cd34862cb8d458c33610e4",
+    "src/backend/app/execution/stream.py": "609ad4b566891816eddd149d4d391fa4652b62ad239c400cfc78590e46462ca1",
+    "src/backend/app/main.py": "ed22286a313afcbd116184ce9b114185733e97dc5292574e69f69099ab7127e7",
+    "src/backend/app/operations/__init__.py": "e7d14355b4f18998b8a10eb6654e231bdc79183b94388bbb4a280acc5d4715d4",
+    "src/backend/app/operations/repository.py": "52d184e9321a870928a549200472ec614d17458bd755a33f8ea10a706173411d",
+    "src/backend/app/operations/routes.py": "af5a4e3d5a095c32e2d71ec86e3e34a73efa1e2daaed2c539b6cc8fb9ed62598",
+    "src/backend/app/tenants/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/backend/app/tenants/repository.py": "bbf044e117b2c672dee37032323a1ecd2cfc9b4e57c021c28e19dc9fce87689c",
+    "src/backend/app/tenants/routes.py": "24d4fc9de7f7078abe47b9dfa6312d820caa0080165e794f38a70dff7282d396",
+    "src/backend/app/types.py": "8cdbab6de928a1f856a91134f3ad222f3313b5166e141f1128851188b4f464cd",
+    "src/backend/migrations/000_roles.sql": "93eb2ed791a0c65e507b5bb84ec94e25d6bbd58da989f854680cee2bb6895047",
+    "src/backend/migrations/001_auth_portal.sql": "1cea48eca5c80c13bbccb07aeebe38c9380e26fe8e2dfaea909b276b43009b3c",
+    "src/backend/migrations/002_context_control.sql": "06bace1838d4def9e47d7162f3db0276a9fd5722399ac268ee06e4d23d3a3500",
+    "src/backend/migrations/003_session_control.sql": "9595273cb0bc0d37bd6e9bd1af7bae141cdb6a33e7e03bd5e8747b00e12b3d59",
+    "src/backend/migrations/004_membership_control.sql": "312a448b529c724cd21d3cfb77987ce4e628878058f96e14b52d938f9ce358a3",
+    "src/backend/migrations/005_conversation_ledger.sql": "c9742d7ac1690e78f2e1e7517ec16e5adeda1e66a028d56ab18c1c7585d62421",
+    "src/backend/migrations/006_operations_control.sql": "605b03dd77ff2453b3b76093d59eb07b82f292bd155c687108a882e691dd8352",
+    "src/backend/migrations/007_run_control.sql": "8ccfd9589e90abaf871d277a8318ea8704b75d039eef3ee800f709445df62209",
+    "src/backend/migrations/008_ai_call_control.sql": "e43e89b9d416a2ce10e3daea06d705e554a414eecfde1afdf17728c383b4d374",
+    "src/backend/migrations/009_document_graph_schema.sql": "ec510d5d29272073060794f0675653d294e966c0493804647bb12454ce24aaaa",
+    "src/backend/migrations/010_document_policy_control.sql": "49ecd272cd89e650400358270604f2f21328094caf3d0e4906940ccb32d8f5f0",
+    "src/backend/migrations/011_document_ingest_control.sql": "49bbbb10db9f898241d4af64b6280fcdadfb3dbcf43ecec8ac3548b8ae2a49e2",
+    "src/backend/migrations/012_document_embedding_control.sql": "8c3f224488cd861b08d57cd22247101ae453e38368623c4121cc62913ede0848",
+    "src/backend/migrations/013_document_lifecycle_control.sql": "c8b5f22c51660b22ca46328c35a555e2e80efe927f3cab0629e24404f04d8899",
+    "src/backend/migrations/014_document_sharing.sql": "a38d007f11b78acd229a077be25f06219bd609eb1cc7d2a7faf4dff72a48dde6",
+    "src/backend/migrations/015_rag_execution.sql": "18a7583dfd28670e98e7de4d813c9e5e46e9fb121f7814e37ccd732f9ad42068",
+    "src/backend/migrations/016_rag_provenance.sql": "6e1f1617061f1b015300407699a51d2711e643edfd23150720f7c9dade8d3c51",
+    "src/backend/migrations/017_document_call_control.sql": "045d65f3e5a55a6583a484310376040590fa16a9ecac9708d5d409bf639c9b09",
+    "src/backend/migrations/018_document_job_principal_control.sql": "27a21be899326f4339993b080de90607fc4c506590f35ab24ddc8d3a21a4090e",
+    "src/backend/migrations/019_document_cleanup_principal_control.sql": "056f5c269d1767fd353c7558320e326bae94d9f1fbc4bc93d8a1f95cd7746fac",
+    "src/backend/migrations/020_document_request_trace.sql": "f49667b142aa119eedc8c53c3c91ab0dd6b0e53aad118233e15e3a991dcd32b3",
+    "src/frontend/src/AgentSettingsPage.tsx": "ba05ac8070881c63160a94d814eb9ae1a7bc38253db0224ee13fa3333fa56c05",
+    "src/frontend/src/App.tsx": "b7bb72f5bddb6949a48ce0bfb6de07d75d67477d725eddce73c0999bd2e9b8d9",
+    "src/frontend/src/ChatPage.tsx": "d09d3a9026e3f04c7856c1c9d6e1d710435b017a6ccdb106e3dfb95a7f088c17",
+    "src/frontend/src/DocumentJobsPage.tsx": "702c20ce304d1b9b7d9dae8c3ad36a4787cc5e775b5eaa7c06ed7ae6d385da01",
+    "src/frontend/src/DocumentSharingPanel.tsx": "67d863beb2f73426be14ffa95aa90bed28c966b450c5e816a8a716f97d7c9fae",
+    "src/frontend/src/DocumentsPage.tsx": "c6b0c53dd92c5f88b17b67cba8cf1c7544cc0799d0144481acad823b99d319fa",
+    "src/frontend/src/LoginPage.tsx": "f521e41bae95708a25b572fff6ea62efe587653348b936ce249b9fbed424822d",
+    "src/frontend/src/MembersPage.tsx": "1ffbc7c09277dccf04539c73dd061bcfd1f5e09e63df8dce377683ae5dcb2495",
+    "src/frontend/src/PlatformPage.tsx": "9be8f29307aaaf4098b425559275606fb9c2cd0152863ce4dfac1d572d6360fd",
+    "src/frontend/src/RagEvidencePanel.tsx": "3b223460d067db8ffc683c8924ed5cc034b000b73ea7a351c4c2594bc78209a9",
+    "src/frontend/src/ReadableDocuments.tsx": "f005af58f846052da2e0241aa0e3223255bc655c0fa301848309964ea6394222",
+    "src/frontend/src/TenantHeader.tsx": "720c8897fcfcdeab7341e31131f3f3c340ac585330001499394fc48689a3457d",
+    "src/frontend/src/UsagePage.tsx": "7ffe74722b6472c34d2a174987b0d690f11c12349ba0162a2f47d46cac655992",
+    "src/frontend/src/api.ts": "e6efa282d0f3b98372403dd19b61d41b0cfe38dc6509d7d29d1da3bd76308904",
+    "src/frontend/src/main.tsx": "0618b26fb98720701ba546bf5bff7ffe2b0e9c06009d2ff9d9e03ea9eb2be3aa",
+    "src/frontend/src/scoped.ts": "d69ff8036b56983a5999d4a4a353e722eca0b072513b34769eb21adbd098e55f",
+    "src/frontend/src/session.ts": "0812bf82902c83ad045befa3624a0caa3fd2d444686bbabd06380a25da95f185",
+    "src/frontend/src/stream.ts": "20be464d8b6ddbc2c945d86c12c2c9008915a486b7cef5123833a1603b8f3383",
+    "src/frontend/src/styles.css": "53cf4f59ebe260a557d8cf28c5e7e19fe2fd8ad07c47adbc4c812db1b9cfe874",
+    "src/frontend/src/types.ts": "82b558a4de65d33919a2ad25928301218ca645ef7bfbac923aa8cf6cc5e29204",
+    "src/common_core/__init__.py": "b7314d03b43d4834a483543e1c961a91fb513639131e7d5e5aef481466b19e0e",
+    "src/common_core/ai_pipeline/__init__.py": "b7314d03b43d4834a483543e1c961a91fb513639131e7d5e5aef481466b19e0e",
+    "src/common_core/ai_pipeline/document/__init__.py": "b7314d03b43d4834a483543e1c961a91fb513639131e7d5e5aef481466b19e0e",
+    "src/common_core/ai_pipeline/document/chunker.py": "49978622b62ecaea9896cfd86ba37e350152fdab20f5f0bf3e8228ba86654a17",
+    "src/common_core/ai_pipeline/document/mapping.py": "15856135d983045e6663c693ed32155ec9d2ecffb38b4c24cb8576c4a2f6917c",
+    "src/common_core/ai_pipeline/document/parser.py": "490c801b9fb8431a42f17ca5f36d01ab6f9e19b0f984a52d65303d38f1702f84",
+    "src/common_core/ai_pipeline/document/pipeline.py": "86641575d6180bc97ba72a8b7512c4157f69a48b73ff30a0aea3266b10b9dfff",
+    "src/common_core/ai_pipeline/document/schemas.py": "610b8c0603155d82b3b5705a6c2001d2143092f5cd108252cd4b2182d8b84bc5",
+    "src/common_core/ai_pipeline/graphrag/__init__.py": "b7314d03b43d4834a483543e1c961a91fb513639131e7d5e5aef481466b19e0e",
+    "src/common_core/ai_pipeline/graphrag/answer.py": "5c7f89349d9e1769ae721cb7baa408775bb0cd4d47598f14551cb8a027997578",
+    "src/common_core/ai_pipeline/graphrag/context.py": "b7c0b63e88676d8bf87b8ba22ebc6913f658bf43ae61b3d965bc9dcb91f121d7",
+    "src/common_core/ai_pipeline/graphrag/evidence.py": "2263493727de5721b5c84b72f66f32a26f24569b3e57482be6e0faa330521738",
+    "src/common_core/ai_pipeline/graphrag/extractor.py": "cdb767d6092c1d86d7463d1dbb571ace87713d04aef80a550b4ea6b7ec709801",
+    "src/common_core/ai_pipeline/graphrag/schemas.py": "89dfaaba513666746a9abc7d121872de5b740f24ceccd56941eb1e7006de296f",
+    "src/backend/requirements.in": "f43dc6c6d3ceb74091dad55c32636a1811e6c912d3541dfbc9d92e080edf3fcf",
+    "src/backend/requirements.lock": "d8504cbc39ad9e40cadebaeb73143a5ae7361c580d89c9ba519f2b09229ff3b9",
+    "src/frontend/package.json": "1b6be302c5f51766d0af497a5235762faf98ffad54a0387932ad4be0461d8236"
+  },
+  "screen_inventory": {
+    "report_rows": [
+      {
+        "id": "00",
+        "file": "BNK_AI_플랫폼 통합 진입_Home_화면_v1.png",
+        "claim": "부분 구현"
+      },
+      {
+        "id": "01",
+        "file": "4.2-01_AI_Chat_화면.png",
+        "claim": "완료"
+      },
+      {
+        "id": "02",
+        "file": "4.2-02_My_Agent_목록.png",
+        "claim": "완료"
+      },
+      {
+        "id": "03",
+        "file": "4.2-03_Agent_상세.png",
+        "claim": "부분 구현"
+      },
+      {
+        "id": "04",
+        "file": "4.2-04_My_Knowledge.png",
+        "claim": "완료"
+      },
+      {
+        "id": "05",
+        "file": "4.2-05_대화이력_개인설정.png",
+        "claim": "완료"
+      },
+      {
+        "id": "06",
+        "file": "4.3-01_Marketplace_Home.png",
+        "claim": "부분 구현"
+      },
+      {
+        "id": "07",
+        "file": "4.3-02_통합카탈로그_검색.png",
+        "claim": "부분 구현"
+      },
+      {
+        "id": "08",
+        "file": "4.3-03_Agent_상세_권한신청.png",
+        "claim": "부분 구현"
+      },
+      {
+        "id": "09",
+        "file": "4.3-04_AI자산_템플릿_복제.png",
+        "claim": "미구현"
+      },
+      {
+        "id": "10",
+        "file": "4.3-05_My_Marketplace.png",
+        "claim": "부분 구현"
+      },
+      {
+        "id": "11",
+        "file": "4.3-06_커뮤니티_지식공유.png",
+        "claim": "미구현"
+      },
+      {
+        "id": "12",
+        "file": "4.4-01_Builder_Home.png",
+        "claim": "부분 구현"
+      },
+      {
+        "id": "13",
+        "file": "4.4-02_Agent_기본설정_Prompt.png",
+        "claim": "완료"
+      },
+      {
+        "id": "14",
+        "file": "4.4-03_Workflow_Canvas.png",
+        "claim": "부분 구현"
+      },
+      {
+        "id": "15",
+        "file": "4.4-04_Knowledge_RAG_설정.png",
+        "claim": "완료"
+      },
+      {
+        "id": "16",
+        "file": "4.4-05_MCP_Tool_연동.png",
+        "claim": "부분 구현"
+      },
+      {
+        "id": "17",
+        "file": "4.4-06_Test_Trace_Debug.png",
+        "claim": "완료"
+      },
+      {
+        "id": "18",
+        "file": "4.4-07_평가_승인_배포.png",
+        "claim": "부분 구현"
+      },
+      {
+        "id": "19",
+        "file": "5-01_통합_거버넌스_대시보드.png",
+        "claim": "부분 구현"
+      },
+      {
+        "id": "20",
+        "file": "5-02_AI_자산_등록부.png",
+        "claim": "부분 구현"
+      },
+      {
+        "id": "21",
+        "file": "5-03_AI_위험평가.png",
+        "claim": "미구현"
+      },
+      {
+        "id": "22",
+        "file": "5-04_정책_가드레일_관리.png",
+        "claim": "완료"
+      },
+      {
+        "id": "23",
+        "file": "5-05_데이터_Scope_접근권한.png",
+        "claim": "완료"
+      },
+      {
+        "id": "24",
+        "file": "5-06_예외_승인_Workflow.png",
+        "claim": "부분 구현"
+      },
+      {
+        "id": "25",
+        "file": "5-07_모니터링_감사로그.png",
+        "claim": "완료"
+      },
+      {
+        "id": "26",
+        "file": "5-08_컴플라이언스_보고서.png",
+        "claim": "부분 구현"
+      },
+      {
+        "id": "27",
+        "file": "6-01_플랫폼_운영_대시보드.png",
+        "claim": "완료"
+      },
+      {
+        "id": "28",
+        "file": "6-02_사용자_역할_권한.png",
+        "claim": "완료"
+      },
+      {
+        "id": "29",
+        "file": "6-03_AI_서비스_자산_운영.png",
+        "claim": "완료"
+      },
+      {
+        "id": "30",
+        "file": "6-04_계열사_AI_과제_관리.png",
+        "claim": "부분 구현"
+      },
+      {
+        "id": "31",
+        "file": "6-05_GPU_CPU_Quota_자원관리.png",
+        "claim": "완료"
+      },
+      {
+        "id": "32",
+        "file": "6-06_서비스_배포_환경_Rollback.png",
+        "claim": "부분 구현"
+      },
+      {
+        "id": "33",
+        "file": "6-07_모니터링_미터링_빌링.png",
+        "claim": "완료"
+      },
+      {
+        "id": "34",
+        "file": "6-08_콘텐츠_사이트_커뮤니티.png",
+        "claim": "미구현"
+      }
+    ],
+    "source_project": "/Users/jwpios/antigravity/20260824_BNK _그룹 공동 생성형 AI 플랫폼 도입",
+    "images": [
+      {
+        "path": "04.시연/2차/4.2-01_AI_Chat_화면_2차.png",
+        "normalized_name": "4.2-01_AI_Chat_화면_2차.png",
+        "sha256": "88886bd858783c1320ffa73ddbab2eb66ae4b6168b97c6077a6ed0af81daa9f9",
+        "variant": true
+      },
+      {
+        "path": "04.시연/2차/4.2-02_My_Agent_목록_2차.png",
+        "normalized_name": "4.2-02_My_Agent_목록_2차.png",
+        "sha256": "9d6c951d59c208e7ac2ff9daf0034177fe005f0ec552171e6e546639df00844f",
+        "variant": true
+      },
+      {
+        "path": "04.시연/2차/4.2-03_Agent_상세_2차.png",
+        "normalized_name": "4.2-03_Agent_상세_2차.png",
+        "sha256": "11296224dca4aa458e6446b31fe71289c5fd59d13d485a9fda132bce84b655b9",
+        "variant": true
+      },
+      {
+        "path": "04.시연/2차/4.2-04_My_Knowledge_2차.png",
+        "normalized_name": "4.2-04_My_Knowledge_2차.png",
+        "sha256": "19adf62673c091e3e1a03f2a21fdb08ea6125d0e236fa771352c7760f28e1c7e",
+        "variant": true
+      },
+      {
+        "path": "04.시연/2차/4.2-05_대화이력_개인설정_2차.png",
+        "normalized_name": "4.2-05_대화이력_개인설정_2차.png",
+        "sha256": "1ab2e04a748d4a03940078f40c96d7c94e1cb0c069fda34e23317a9783ce36bf",
+        "variant": true
+      },
+      {
+        "path": "04.시연/2차/BNK_AI_플랫폼 통합 진입_Home_화면_v1.png",
+        "normalized_name": "BNK_AI_플랫폼 통합 진입_Home_화면_v1.png",
+        "sha256": "8e70ca00d960367a740b4b2560b83db2169ff682a48b486dfdbfa01c0ed984e0",
+        "variant": true
+      },
+      {
+        "path": "04.시연/4.2-01_AI_Chat_화면.png",
+        "normalized_name": "4.2-01_AI_Chat_화면.png",
+        "sha256": "839e05614e627791cab745f8fa14fde6632a38dbba0f266eeb8d02278417955d",
+        "variant": false
+      },
+      {
+        "path": "04.시연/4.2-02_My_Agent_목록.png",
+        "normalized_name": "4.2-02_My_Agent_목록.png",
+        "sha256": "bfdcd8283fab4933672be08c93563b0a16df808cd0bec1d2d3ab0a20f64b8aac",
+        "variant": false
+      },
+      {
+        "path": "04.시연/4.2-03_Agent_상세.png",
+        "normalized_name": "4.2-03_Agent_상세.png",
+        "sha256": "a8f8c6cc73068492b8a7cc3e184a0245d1f17b1f3ffd7c1876e929de8753b348",
+        "variant": false
+      },
+      {
+        "path": "04.시연/4.2-04_My_Knowledge.png",
+        "normalized_name": "4.2-04_My_Knowledge.png",
+        "sha256": "a2c0cd82f462811d733ce481931a5a4551beafed4cc4275e9f1ba5fcb09bf1bc",
+        "variant": false
+      },
+      {
+        "path": "04.시연/4.2-05_대화이력_개인설정.png",
+        "normalized_name": "4.2-05_대화이력_개인설정.png",
+        "sha256": "12c5338c77f22315b2363dd0dec954a6eba628ba6f38b5c80f29d30c0d44a7de",
+        "variant": false
+      },
+      {
+        "path": "04.시연/4.3-01_Marketplace_Home.png",
+        "normalized_name": "4.3-01_Marketplace_Home.png",
+        "sha256": "181ad17ddd575833bc4026f889fa859eff42e6a0ca75883c481023ab4a83c02d",
+        "variant": false
+      },
+      {
+        "path": "04.시연/4.3-02_통합카탈로그_검색.png",
+        "normalized_name": "4.3-02_통합카탈로그_검색.png",
+        "sha256": "20da3d5e23dc9b7b063f603de699c7e720446db3679a92225661c2efeb65bd06",
+        "variant": false
+      },
+      {
+        "path": "04.시연/4.3-03_Agent_상세_권한신청.png",
+        "normalized_name": "4.3-03_Agent_상세_권한신청.png",
+        "sha256": "580bd449795c2281654f06b472b18fdf54a3c7785ea73052d103ded39af2a1e6",
+        "variant": false
+      },
+      {
+        "path": "04.시연/4.3-04_AI자산_템플릿_복제.png",
+        "normalized_name": "4.3-04_AI자산_템플릿_복제.png",
+        "sha256": "f5f94558b33b0d35986b51f00f6de9f44a23dd041b72a832e6e98d4298f60b39",
+        "variant": false
+      },
+      {
+        "path": "04.시연/4.3-05_My_Marketplace.png",
+        "normalized_name": "4.3-05_My_Marketplace.png",
+        "sha256": "5f78cf5529523d308ea0bb2bb56720ecceb6bcd8d9bd20a9788c7c9c9a4ac7ce",
+        "variant": false
+      },
+      {
+        "path": "04.시연/4.3-06_커뮤니티_지식공유.png",
+        "normalized_name": "4.3-06_커뮤니티_지식공유.png",
+        "sha256": "a1a29de887a315e936996923472aaf9792b6109a7fd363c15db38ea2a85bb741",
+        "variant": false
+      },
+      {
+        "path": "04.시연/4.4-01_Builder_Home.png",
+        "normalized_name": "4.4-01_Builder_Home.png",
+        "sha256": "a19250bcb350e256c02f7a8b20332d6e0f99ead5ddc4c4cac65ebf92939ef3f1",
+        "variant": false
+      },
+      {
+        "path": "04.시연/4.4-02_Agent_기본설정_Prompt.png",
+        "normalized_name": "4.4-02_Agent_기본설정_Prompt.png",
+        "sha256": "2ccc0cbc84d7d9ff1c40f0593489a34bab76b51aa103d66f7e54b559fee0757c",
+        "variant": false
+      },
+      {
+        "path": "04.시연/4.4-03_Workflow_Canvas.png",
+        "normalized_name": "4.4-03_Workflow_Canvas.png",
+        "sha256": "5e8933bb0fdb6d4a5820a26046ffe83ef0cfd1289fc443f269e8af3957f7ca49",
+        "variant": false
+      },
+      {
+        "path": "04.시연/4.4-04_Knowledge_RAG_설정.png",
+        "normalized_name": "4.4-04_Knowledge_RAG_설정.png",
+        "sha256": "e4456c2784074fedca701e5145115937d617b354648a6482ce3ab38e7061758a",
+        "variant": false
+      },
+      {
+        "path": "04.시연/4.4-05_MCP_Tool_연동.png",
+        "normalized_name": "4.4-05_MCP_Tool_연동.png",
+        "sha256": "5473f497c1153e6d833259cc9762c04ab18567886377d047c81bf636ae988419",
+        "variant": false
+      },
+      {
+        "path": "04.시연/4.4-06_Test_Trace_Debug.png",
+        "normalized_name": "4.4-06_Test_Trace_Debug.png",
+        "sha256": "08ae49e9135a08df94cf5660b7b85b1a2d2fab3acac2b57c0441b86ccc1244e1",
+        "variant": false
+      },
+      {
+        "path": "04.시연/4.4-07_평가_승인_배포.png",
+        "normalized_name": "4.4-07_평가_승인_배포.png",
+        "sha256": "93050788a7a42fa31514154abf7758025601857e46df70e09a2af8f4e20e6dd7",
+        "variant": false
+      },
+      {
+        "path": "04.시연/5-01_통합_거버넌스_대시보드.png",
+        "normalized_name": "5-01_통합_거버넌스_대시보드.png",
+        "sha256": "99eb3c35a81ea250d2fb0cf5a0c201b6c41717754a28f2de72d4279c15fbf63c",
+        "variant": false
+      },
+      {
+        "path": "04.시연/5-02_AI_자산_등록부.png",
+        "normalized_name": "5-02_AI_자산_등록부.png",
+        "sha256": "3cf75b8321250983d45758bb1f6be304869dc50d1bc92fd4a9cb648e0f0847ca",
+        "variant": false
+      },
+      {
+        "path": "04.시연/5-03_AI_위험평가.png",
+        "normalized_name": "5-03_AI_위험평가.png",
+        "sha256": "ecf1e13017898bfbc65d7553a550100c87cd499c1ec45423359b9faae99d4616",
+        "variant": false
+      },
+      {
+        "path": "04.시연/5-04_정책_가드레일_관리.png",
+        "normalized_name": "5-04_정책_가드레일_관리.png",
+        "sha256": "1e38322a58a4d69b803781b45bb617ab33bba25fe64af629ebede32fb7335385",
+        "variant": false
+      },
+      {
+        "path": "04.시연/5-05_데이터_Scope_접근권한.png",
+        "normalized_name": "5-05_데이터_Scope_접근권한.png",
+        "sha256": "2861a1183c824a7da7cfdeea2d4d463df07c8475383791d8c7316f41a8208d71",
+        "variant": false
+      },
+      {
+        "path": "04.시연/5-06_예외_승인_Workflow.png",
+        "normalized_name": "5-06_예외_승인_Workflow.png",
+        "sha256": "7de6ab76e9af46ade2241622e2e5fe963f027c1400755440f168a5ace8a98fb3",
+        "variant": false
+      },
+      {
+        "path": "04.시연/5-07_모니터링_감사로그.png",
+        "normalized_name": "5-07_모니터링_감사로그.png",
+        "sha256": "65b5e356ee30f4a117e9f7470fa4a6a3cfd4ad946da0cc1ae2961d1065d83137",
+        "variant": false
+      },
+      {
+        "path": "04.시연/5-08_컴플라이언스_보고서.png",
+        "normalized_name": "5-08_컴플라이언스_보고서.png",
+        "sha256": "4ed13cbc0b793c1054ec2a9fcee1031efd8e11b99c6d8c4e8e736b0f3f51f43a",
+        "variant": false
+      },
+      {
+        "path": "04.시연/6-01_플랫폼_운영_대시보드.png",
+        "normalized_name": "6-01_플랫폼_운영_대시보드.png",
+        "sha256": "c27ff5fcac2fb48944fd0972921cf77f05e3042de233523fb4fe6f84694616eb",
+        "variant": false
+      },
+      {
+        "path": "04.시연/6-02_사용자_역할_권한.png",
+        "normalized_name": "6-02_사용자_역할_권한.png",
+        "sha256": "cd4cea829757f2769ac7f1caec54cec4411186d2640b0a9e9791bd7664fc31b6",
+        "variant": false
+      },
+      {
+        "path": "04.시연/6-03_AI_서비스_자산_운영.png",
+        "normalized_name": "6-03_AI_서비스_자산_운영.png",
+        "sha256": "b48d19d4f3dbe110a16ff23e615f47fba82e0d58690aeceb06672b56a7fafd07",
+        "variant": false
+      },
+      {
+        "path": "04.시연/6-04_계열사_AI_과제_관리.png",
+        "normalized_name": "6-04_계열사_AI_과제_관리.png",
+        "sha256": "9702426da6934d1cd1725dea6e953ab84b5299d5019734f310f99e45db19d3e3",
+        "variant": false
+      },
+      {
+        "path": "04.시연/6-05_GPU_CPU_Quota_자원관리.png",
+        "normalized_name": "6-05_GPU_CPU_Quota_자원관리.png",
+        "sha256": "5a4901f96ea5a75eb983d6f2bfb159062d72d8f322db0d70bc77075a57df4ebf",
+        "variant": false
+      },
+      {
+        "path": "04.시연/6-06_서비스_배포_환경_Rollback.png",
+        "normalized_name": "6-06_서비스_배포_환경_Rollback.png",
+        "sha256": "952843300a242067cbf6a1d446cc4cf0bab83377bb324a91e5b48c92fc944412",
+        "variant": false
+      },
+      {
+        "path": "04.시연/6-07_모니터링_미터링_빌링.png",
+        "normalized_name": "6-07_모니터링_미터링_빌링.png",
+        "sha256": "6e21df14e330c169255772dd2b9668290cdc33f95998b7541b7d0d84bd1cb471",
+        "variant": false
+      },
+      {
+        "path": "04.시연/6-08_콘텐츠_사이트_커뮤니티.png",
+        "normalized_name": "6-08_콘텐츠_사이트_커뮤니티.png",
+        "sha256": "c78cd6d00068b45f0e787719c4b02d9a0fc11b96b79b54eafc02dc1bce0f756f",
+        "variant": false
+      },
+      {
+        "path": "04.시연/BNK_AI_플랫폼_통합진입_Home_화면_v1.png",
+        "normalized_name": "BNK_AI_플랫폼_통합진입_Home_화면_v1.png",
+        "sha256": "4a527df037e3b5130978fb373031bbafb9b047b3d4a96a61c7d2e95b15eafbcb",
+        "variant": false
+      },
+      {
+        "path": "04.시연/BNK_AI_플랫폼 통합 진입_Home_화면_v1.png",
+        "normalized_name": "BNK_AI_플랫폼 통합 진입_Home_화면_v1.png",
+        "sha256": "8e70ca00d960367a740b4b2560b83db2169ff682a48b486dfdbfa01c0ed984e0",
+        "variant": false
+      }
+    ]
+  },
+  "acceptance_baseline": {
+    "verification_count": 41,
+    "acl_count": 16,
+    "design_input_count": 60,
+    "mapped_subcases": 143,
+    "subcase_verdicts": {
+      "pass": 135,
+      "not_run": 8
+    },
+    "verification_verdicts": {
+      "pass": 35,
+      "not_run": 6
+    },
+    "acl_verdicts": {
+      "not_run": 5,
+      "pass": 11
+    },
+    "design_verdicts": {
+      "pass": 44,
+      "not_run": 16
+    },
+    "review_complete": true,
+    "acceptance_complete": false,
+    "stage_completion": "conditional",
+    "real_RAG_status": "representative_normal_pass",
+    "real_Q20_status": "not_run",
+    "note": "not_run은 명시 입력 조합의 증거가 불완전한 상태이며 재현된 제품 실패와 구분. 최종 실행 실패0이어도 미실행을 통과로 바꾸지 않음."
+  },
+  "scope": "Static source/API/schema/dependency review and existing test evidence. PNG file inventory/hash checked; not all PNG pixel-level UX acceptance. No new runtime tests, paid calls, product changes, original-file edits or schedule commitment.",
+  "current_route_inventory": [
+    {
+      "source": "src/backend/app/main.py",
+      "line": 102,
+      "method": "get",
+      "path_without_router_prefix": "/api/v1/health",
+      "function": "health"
+    },
+    {
+      "source": "src/backend/app/auth/routes.py",
+      "line": 16,
+      "method": "post",
+      "path_without_router_prefix": "/login",
+      "function": "login"
+    },
+    {
+      "source": "src/backend/app/auth/routes.py",
+      "line": 30,
+      "method": "get",
+      "path_without_router_prefix": "/me",
+      "function": "me"
+    },
+    {
+      "source": "src/backend/app/auth/routes.py",
+      "line": 38,
+      "method": "post",
+      "path_without_router_prefix": "/logout",
+      "function": "logout"
+    },
+    {
+      "source": "src/backend/app/tenants/routes.py",
+      "line": 48,
+      "method": "get",
+      "path_without_router_prefix": "/me/tenants",
+      "function": "own_tenants"
+    },
+    {
+      "source": "src/backend/app/tenants/routes.py",
+      "line": 57,
+      "method": "get",
+      "path_without_router_prefix": "/admin/memberships",
+      "function": "memberships"
+    },
+    {
+      "source": "src/backend/app/tenants/routes.py",
+      "line": 69,
+      "method": "patch",
+      "path_without_router_prefix": "/admin/memberships/{user_id}",
+      "function": "change_active"
+    },
+    {
+      "source": "src/backend/app/tenants/routes.py",
+      "line": 77,
+      "method": "put",
+      "path_without_router_prefix": "/admin/memberships/{user_id}/role",
+      "function": "change_role"
+    },
+    {
+      "source": "src/backend/app/operations/routes.py",
+      "line": 116,
+      "method": "get",
+      "path_without_router_prefix": "/agents",
+      "function": "agents"
+    },
+    {
+      "source": "src/backend/app/operations/routes.py",
+      "line": 119,
+      "method": "get",
+      "path_without_router_prefix": "/admin/agents/{agent_key}",
+      "function": "agent"
+    },
+    {
+      "source": "src/backend/app/operations/routes.py",
+      "line": 122,
+      "method": "patch",
+      "path_without_router_prefix": "/admin/agents/{agent_key}",
+      "function": "settings"
+    },
+    {
+      "source": "src/backend/app/operations/routes.py",
+      "line": 125,
+      "method": "put",
+      "path_without_router_prefix": "/admin/agents/{agent_key}/availability",
+      "function": "availability"
+    },
+    {
+      "source": "src/backend/app/operations/routes.py",
+      "line": 128,
+      "method": "get",
+      "path_without_router_prefix": "/usage/me",
+      "function": "own_usage"
+    },
+    {
+      "source": "src/backend/app/operations/routes.py",
+      "line": 131,
+      "method": "get",
+      "path_without_router_prefix": "/admin/usage",
+      "function": "admin_usage"
+    },
+    {
+      "source": "src/backend/app/operations/routes.py",
+      "line": 135,
+      "method": "get",
+      "path_without_router_prefix": "/admin/budget",
+      "function": "budget"
+    },
+    {
+      "source": "src/backend/app/operations/routes.py",
+      "line": 138,
+      "method": "put",
+      "path_without_router_prefix": "/admin/budget",
+      "function": "local_budget"
+    },
+    {
+      "source": "src/backend/app/operations/routes.py",
+      "line": 141,
+      "method": "get",
+      "path_without_router_prefix": "/platform/summary",
+      "function": "platform_summary"
+    },
+    {
+      "source": "src/backend/app/operations/routes.py",
+      "line": 144,
+      "method": "put",
+      "path_without_router_prefix": "/platform/availability",
+      "function": "platform_availability"
+    },
+    {
+      "source": "src/backend/app/operations/routes.py",
+      "line": 147,
+      "method": "put",
+      "path_without_router_prefix": "/platform/tenant-budgets/{tenant_id}",
+      "function": "allocation"
+    },
+    {
+      "source": "src/backend/app/conversations/routes.py",
+      "line": 66,
+      "method": "post",
+      "path_without_router_prefix": "/conversations",
+      "function": "create_conversation"
+    },
+    {
+      "source": "src/backend/app/conversations/routes.py",
+      "line": 72,
+      "method": "get",
+      "path_without_router_prefix": "/conversations",
+      "function": "conversations"
+    },
+    {
+      "source": "src/backend/app/conversations/routes.py",
+      "line": 76,
+      "method": "get",
+      "path_without_router_prefix": "/conversations/{conversation_id}/messages",
+      "function": "messages"
+    },
+    {
+      "source": "src/backend/app/conversations/routes.py",
+      "line": 80,
+      "method": "post",
+      "path_without_router_prefix": "/runs",
+      "function": "runs"
+    },
+    {
+      "source": "src/backend/app/conversations/routes.py",
+      "line": 93,
+      "method": "get",
+      "path_without_router_prefix": "/runs/by-send/{client_send_id}",
+      "function": "by_send"
+    },
+    {
+      "source": "src/backend/app/conversations/routes.py",
+      "line": 96,
+      "method": "get",
+      "path_without_router_prefix": "/runs/{run_id}",
+      "function": "run"
+    },
+    {
+      "source": "src/backend/app/conversations/routes.py",
+      "line": 99,
+      "method": "post",
+      "path_without_router_prefix": "/runs/{run_id}/cancel",
+      "function": "cancel"
+    },
+    {
+      "source": "src/backend/app/execution/stream.py",
+      "line": 69,
+      "method": "get",
+      "path_without_router_prefix": "/runs/{run_id}/events",
+      "function": "events"
+    },
+    {
+      "source": "src/backend/app/documents/share_routes.py",
+      "line": 21,
+      "method": "get",
+      "path_without_router_prefix": "/documents",
+      "function": "readable"
+    },
+    {
+      "source": "src/backend/app/documents/share_routes.py",
+      "line": 25,
+      "method": "get",
+      "path_without_router_prefix": "/admin/share-recipients",
+      "function": "targets"
+    },
+    {
+      "source": "src/backend/app/documents/share_routes.py",
+      "line": 28,
+      "method": "get",
+      "path_without_router_prefix": "/admin/documents/{document_id}/versions/{version_id}/grants",
+      "function": "grants"
+    },
+    {
+      "source": "src/backend/app/documents/share_routes.py",
+      "line": 32,
+      "method": "post",
+      "path_without_router_prefix": "/admin/documents/{document_id}/versions/{version_id}/grants",
+      "function": "issue"
+    },
+    {
+      "source": "src/backend/app/documents/share_routes.py",
+      "line": 37,
+      "method": "delete",
+      "path_without_router_prefix": "/admin/grants/{grant_id}",
+      "function": "revoke"
+    },
+    {
+      "source": "src/backend/app/documents/evidence_routes.py",
+      "line": 22,
+      "method": "get",
+      "path_without_router_prefix": "/runs/{run_id}/evidence",
+      "function": "evidence"
+    },
+    {
+      "source": "src/backend/app/documents/evidence_routes.py",
+      "line": 33,
+      "method": "get",
+      "path_without_router_prefix": "/runs/{run_id}/evidence/{ordinal}/source",
+      "function": "source"
+    },
+    {
+      "source": "src/backend/app/documents/routes.py",
+      "line": 31,
+      "method": "get",
+      "path_without_router_prefix": "/documents",
+      "function": "documents"
+    },
+    {
+      "source": "src/backend/app/documents/routes.py",
+      "line": 48,
+      "method": "post",
+      "path_without_router_prefix": "/documents",
+      "function": "new_document"
+    },
+    {
+      "source": "src/backend/app/documents/routes.py",
+      "line": 50,
+      "method": "post",
+      "path_without_router_prefix": "/documents/{document_id}/versions",
+      "function": "new_version"
+    },
+    {
+      "source": "src/backend/app/documents/routes.py",
+      "line": 52,
+      "method": "delete",
+      "path_without_router_prefix": "/documents/{document_id}",
+      "function": "delete_document"
+    },
+    {
+      "source": "src/backend/app/documents/routes.py",
+      "line": 59,
+      "method": "get",
+      "path_without_router_prefix": "/jobs",
+      "function": "jobs"
+    },
+    {
+      "source": "src/backend/app/documents/routes.py",
+      "line": 66,
+      "method": "get",
+      "path_without_router_prefix": "/jobs/{job_id}",
+      "function": "job"
+    },
+    {
+      "source": "src/backend/app/documents/routes.py",
+      "line": 69,
+      "method": "post",
+      "path_without_router_prefix": "/jobs/{job_id}/retry",
+      "function": "retry"
+    }
+  ],
+  "implementation_term_checks": {
+    "app_common_core_migrations_frontend_dependencies_langgraph_langchain_mcp": "no_match",
+    "app_common_core_migrations_frontend_PII_masking_jailbreak_marketplace_feedback_workflow": "no_match",
+    "scope": "case-insensitive whole-word search; combined with API/schema/interface review, not proof against arbitrary differently named implementation"
+  }
+}
