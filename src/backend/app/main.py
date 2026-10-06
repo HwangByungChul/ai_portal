@@ -17,6 +17,10 @@ from app.execution.manager import ExecutionManager
 from app.execution.stream import StreamHub,router as stream_router
 from app.errors import AppError, response
 from app.documents.routes import router as documents_router
+from app.documents.share_routes import router as share_router
+from app.documents.evidence_routes import router as evidence_router
+from app.execution.rag import RagExecutor
+from app.ai.rag_provider import RagMockProvider,RagOpenAIProvider
 from app.documents.repository import DocumentRepository
 from app.documents.storage import SourceStorage
 from app.documents.embedding import EmbeddingGateway,MockEmbeddingProvider,OpenAIEmbeddingProvider
@@ -46,7 +50,9 @@ def create_app(settings: Settings | None = None, *, health_only: bool = False) -
                     if settings.execution_enabled:
                         validate_general_input('질문에 답해 주세요.',[],'준비 확인')
                         provider=OpenAIProvider(settings.openai_api_key.get_secret_value()) if settings.mode=='real' else MockProvider()
-                        manager=ExecutionManager(CallRepository(pool,meter,settings.budget_period),provider,settings.mode,StreamHub())
+                        repository=CallRepository(pool,meter,settings.budget_period)
+                        rag=RagExecutor(repository,app.state.documents,OpenAIEmbeddingProvider(settings.openai_api_key.get_secret_value()) if settings.mode=='real' else MockEmbeddingProvider(),RagOpenAIProvider(settings.openai_api_key.get_secret_value()) if settings.mode=='real' else RagMockProvider())
+                        manager=ExecutionManager(repository,provider,settings.mode,StreamHub(),rag=rag)
                         await manager.start();stack.push_async_callback(manager.close);app.state.execution=manager
                     if settings.index_enabled:
                         index=await stack.enter_async_context(open_index_pool(settings.index_dsn.get_secret_value()))
@@ -103,6 +109,8 @@ def create_app(settings: Settings | None = None, *, health_only: bool = False) -
         app.include_router(conversations_router)
         app.include_router(stream_router)
         app.include_router(documents_router)
+        app.include_router(share_router)
+        app.include_router(evidence_router)
     return app
 
 

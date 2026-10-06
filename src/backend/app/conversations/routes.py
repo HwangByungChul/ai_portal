@@ -79,12 +79,12 @@ async def messages(request:Request,conversation_id:UUID,cursor:str|None=None,lim
 @router.post('/runs')
 async def runs(request:Request,body:RunRequest):
     ctx=await context(request,write=True);validate_query(request,set())
-    if 'document_refs' in body.model_fields_set:raise AppError('FEATURE_NOT_READY',409)
+    if body.agent_key=='general' and 'document_refs' in body.model_fields_set:raise AppError('REQUEST_INVALID',422)
     settings=request.app.state.settings
     manager=getattr(request.app.state,'execution',None)
     if manager is not None and (manager.closed or manager.gateway.stop_latch):raise AppError('PROJECT_STOPPED',503)
     data=await ConversationRepository(request.app.state.pool).admit(ctx,body.agent_key,body.conversation_id,body.client_send_id,
-        body.prompt,settings.budget_period,settings.mode,digest(request,ctx,'run_admission'),UUID(request.state.request_id))
+        body.prompt,settings.budget_period,settings.mode,digest(request,ctx,'run_admission'),UUID(request.state.request_id),refs=[x.model_dump() for x in body.document_refs] if body.document_refs else None,documents=request.app.state.documents)
     manager=getattr(request.app.state,'execution',None)
     if manager is not None and not data['replayed'] and not data['is_terminal']:manager.notify(ctx,data['run_id'])
     return response(request,data,status_code=200 if data['is_terminal'] else 202)

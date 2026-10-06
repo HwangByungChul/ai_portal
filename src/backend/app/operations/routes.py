@@ -94,6 +94,11 @@ async def read(request,kind,*,agent=None,period=None,cursor=None,limit=20):
         if manager.gateway.stop_latch:readiness={'available':False,'safe_block_reason':'PROJECT_STOPPED'}
         for item in data['items']:
             if item['agent_key']=='general':item.update(readiness)
+            elif item['agent_key']=='rules_rag' and getattr(manager,'rag',None) is not None:
+                try:rag_ready=await manager.repository._rpc(manager.repository.web_pool,'rag_readiness',(ctx.session_id,ctx.tenant_id,settings.budget_period,settings.mode),ctx)
+                except ExecutionError:raise AppError('STORAGE_UNAVAILABLE',503) from None
+                if manager.gateway.stop_latch or manager.rag.query.stop_latch:rag_ready={'available':False,'safe_block_reason':'PROJECT_STOPPED'}
+                item.update(rag_ready)
     return response(request,data)
 
 

@@ -17,7 +17,7 @@ def test_enabled_http_intake_stream_terminal_usage_and_owner_isolation(ops_rows,
     with TestClient(create_app(settings),base_url='http://127.0.0.1:8000',client=('127.0.0.1',50000)) as client:
         csrf=login(client,'A-U1')['csrf_token']
         h=headers(f,'A',csrf);agent=client.get('/api/v1/agents',headers=headers(f)).json()['data']['items']
-        assert [x['available'] for x in agent]==[True,False]
+        assert [x['available'] for x in agent]==[True,True]
         send=uuid4();payload={'agent_key':'general','client_send_id':str(send),'prompt':'합성 HTTP 질문'}
         reply=client.post('/api/v1/runs',headers=h,json=payload);assert reply.status_code==202;run=reply.json()['data']['run_id']
         for _ in range(200):

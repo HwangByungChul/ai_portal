@@ -19,7 +19,7 @@ class DispatchUncertain(ExecutionError):
 CODES={'B0401':'EXECUTION_BLOCKED','B0402':'AGENT_DISABLED','B0403':'CONFIG_CHANGED',
  'B0404':'EXECUTION_BLOCKED','B0405':'PROJECT_STOPPED','B0406':'EXECUTION_BLOCKED',
  'B0407':'PERMIT_EXPIRED','B0410':'EXECUTION_BLOCKED','B0411':'EXECUTION_BLOCKED',
- 'B0430':'QUOTA_EXCEEDED','B0431':'CAPACITY_BUSY','A0401':'EXECUTION_BLOCKED','A0403':'EXECUTION_BLOCKED'}
+ 'B0430':'QUOTA_EXCEEDED','B0431':'CAPACITY_BUSY','A0401':'EXECUTION_BLOCKED','A0403':'EXECUTION_BLOCKED','A0404':'EXECUTION_BLOCKED'}
 
 def digest(value):return hashlib.sha256(value.encode('ascii')).digest()
 
@@ -29,6 +29,8 @@ class RunTicket:
     run:VerifiedRun
     worker:str=field(repr=False)
     messages:list=field(repr=False)
+    agent:str="general"
+    document_refs:tuple=()
 
 class CallRepository:
     def __init__(self,web_pool,meter_pool,period):
@@ -53,7 +55,7 @@ class CallRepository:
         if data is None:return None
         v=VerifiedRun(*(UUID(data[k]) for k in ('tenant_id','run_id','owner_user_id','origin_session_id')),
             data['epoch'],data['config_revision'],data['mode'])
-        return RunTicket(ctx,v,worker,data['messages'])
+        return RunTicket(ctx,v,worker,data['messages'],data.get('agent_key','general'),tuple(data.get('document_refs') or ()))
 
     def worker_args(self,ticket):
         v=ticket.run;return (v.origin_session_id,v.tenant_id,v.run_id,v.epoch,digest(ticket.worker))

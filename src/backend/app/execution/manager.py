@@ -5,8 +5,8 @@ from app.ai.repository import ExecutionError
 from app.ai.gateway import AiGateway
 
 class ExecutionManager:
-    def __init__(self,repository,provider,mode,hub):
-        self.repository=repository;self.gateway=AiGateway(repository,provider);self.mode=mode;self.hub=hub
+    def __init__(self,repository,provider,mode,hub,rag=None):
+        self.rag=rag;self.repository=repository;self.gateway=AiGateway(repository,provider);self.mode=mode;self.hub=hub
         self.tasks={};self.closed=False;self.recovery=None;self.leader=None
 
     async def start(self):
@@ -41,6 +41,12 @@ class ExecutionManager:
         try:
             ticket=await self.repository.claim(ctx,run_id,self.mode)
             if ticket is None:return
+            if ticket.agent=='rules_rag':
+                if self.rag is None:raise ExecutionError('FEATURE_NOT_READY')
+                work=asyncio.create_task(self.rag.execute(ticket));heartbeat=asyncio.create_task(self._heartbeat(ticket,work))
+                result=await asyncio.wait_for(work,timeout=180)
+                if not await self.rag.finish(ticket,result):raise ExecutionError('RESULT_SAVE_FAILED')
+                return
             self.hub.begin(ticket.run)
             async def delta(text):
                 if not await self.repository.heartbeat(ticket):raise ExecutionError('EXECUTION_BLOCKED')
@@ -65,7 +71,7 @@ class ExecutionManager:
             else:await self.repository.fail(ticket,outcome.safe_error_code or 'EXECUTION_BLOCKED')
         except (ExecutionError,asyncio.CancelledError) as error:
             if ticket is not None:
-                try:await self.repository.fail(ticket,'EXECUTION_INTERRUPTED')
+                try:await self.repository.fail(ticket,getattr(error,'code','EXECUTION_INTERRUPTED'))
                 except ExecutionError:self.gateway.stop_latch=True
             else:
                 try:await self.repository.reject(ctx,run_id,self.mode,getattr(error,'code','EXECUTION_BLOCKED'))
@@ -85,6 +91,7 @@ class ExecutionManager:
         for task in list(self.tasks.values()):task.cancel()
         await asyncio.gather(*list(self.tasks.values()),return_exceptions=True)
         self.hub.close();await self.gateway.provider.close()
+        if self.rag is not None:await self.rag.close()
         if self.leader is not None:
             try:await self.leader.execute('SELECT pg_advisory_unlock(202610,4)')
             finally:await self.repository.web_pool.putconn(self.leader);self.leader=None

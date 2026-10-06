@@ -115,11 +115,11 @@ def test_strict_run_request_rejected_without_storage(client,login,ops_rows,delta
     assert_empty(f)
 
 
-@pytest.mark.parametrize('delta',[{'agent_key':'rules_rag'},{'document_refs':[]},{'document_refs':None},
+@pytest.mark.parametrize('delta',[{'document_refs':[]},{'document_refs':None},
     {'document_refs':[{'document_id':str(uuid4()),'version_id':str(uuid4())}]}])
-def test_rag_and_refs_unready_no_provider_or_storage(client,login,ops_rows,delta):
+def test_general_document_refs_rejected_no_provider_or_storage(client,login,ops_rows,delta):
     f=ops_rows;csrf=login(client,'A-U1')['csrf_token'];reply=submit(client,f,csrf,**delta)
-    assert reply.status_code==409 and reply.json()['error']['code']=='FEATURE_NOT_READY'
+    assert reply.status_code==422 and reply.json()['error']['code']=='REQUEST_INVALID'
     assert_empty(f)
 
 

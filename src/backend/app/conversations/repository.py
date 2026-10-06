@@ -14,9 +14,9 @@ SQL_ERRORS={'B0301':('SEND_ID_CONFLICT',409),'B0302':('CONVERSATION_AGENT_MISMAT
     'B0305':('PLATFORM_STOPPED',409),'B0306':('QUOTA_EXCEEDED',409)}
 
 
-def request_fingerprint(agent,conversation,prompt):
+def request_fingerprint(agent,conversation,prompt,refs=None):
     # Original prompt and original nullable conversation stay unchanged across retries.
-    data={'agent_key':agent,'conversation_id':str(conversation) if conversation else None,'prompt':prompt,'document_refs':[]}
+    data={'agent_key':agent,'conversation_id':str(conversation) if conversation else None,'prompt':prompt,'document_refs':[{k:str(v) for k,v in x.items()} for x in (refs or [])]}
     return hashlib.sha256(json.dumps(data,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode('utf-8')).digest()
 
 
@@ -42,17 +42,25 @@ class ConversationRepository:
             return row['data']
         except (psycopg.Error,ValueError) as error:self.translate(error)
 
-    async def admit(self,ctx,agent,conversation,send,prompt,period,mode,digest,request_id):
-        fingerprint=request_fingerprint(agent,conversation,prompt)
+    async def admit(self,ctx,agent,conversation,send,prompt,period,mode,digest,request_id,refs=None,documents=None):
+        fingerprint=request_fingerprint(agent,conversation,prompt,refs)
         try:
             async with tenant_transaction(self.pool,ctx) as conn:
+                if agent=='rules_rag':
+                    if documents is None:raise AppError('FEATURE_NOT_READY',409)
+                    from app.documents.search import SearchRepository
+                    await conn.execute("SELECT set_config('app.rag_refs',%s,true)",(json.dumps([{k:str(v) for k,v in x.items()} for x in (refs or [])]),))
                 ready=(await (await conn.execute('SELECT security.run_prepare(%s,%s,%s,%s,%s,%s,%s,%s) AS data',
                     (ctx.session_id,ctx.tenant_id,agent,conversation,send,fingerprint,period,mode))).fetchone())['data']
                 if 'replay' in ready:return ready['replay']
-                history=[{'role':m['role'],'content':m['content']} for m in ready['history']]
+                if agent=='rules_rag':
+                    sources=await SearchRepository(documents).allowed(ctx,refs,mode,conn)
+                    await conn.execute('SELECT security.rag_sources_guard(%s,%s,%s,%s)',(ctx.session_id,ctx.tenant_id,mode,Jsonb(list(sources))))
+                history=[{'role':m['role'],'content':m['content']} for m in ready['history']] if agent=='general' else []
                 try:
                     selected=validate_general_input(ready['instructions'],history,prompt)
                     token_count=general_token_count(selected)
+                    if agent=='rules_rag' and token_count>4000:raise ValueError('INPUT_TOKEN_LIMIT')
                 except TokenizerNotReady:raise AppError('SERVICE_UNAVAILABLE',503) from None
                 except ValueError:raise AppError('TOKEN_LIMIT_EXCEEDED',422) from None
                 count=len(selected)-2
