@@ -1,0 +1,166 @@
+{
+  "primary_identity_preserved": true,
+  "migrations": 21,
+  "security_functions": 80,
+  "paid_calls_before": 3,
+  "paid_calls_added": 8,
+  "prior_real_calls_unchanged": true,
+  "prior_internal_estimate_krw": "0.19",
+  "new_internal_estimate_krw": "0.35",
+  "total_internal_estimate_krw": "0.54",
+  "representative_cap_krw": "500",
+  "allocation_A_krw": "300",
+  "allocation_B_krw": "200",
+  "reservation_bound_krw": "15.36",
+  "paid_retries": 0,
+  "source_proofs": [
+    {
+      "tenant": "A",
+      "exact_source_hash_and_unicode_quote": true,
+      "evidence_count": 1,
+      "foreign_run_status": 404,
+      "real_usage_display_source_verified": true
+    },
+    {
+      "tenant": "B",
+      "exact_source_hash_and_unicode_quote": true,
+      "evidence_count": 1,
+      "foreign_run_status": 404,
+      "real_usage_display_source_verified": true
+    }
+  ],
+  "same_database_restart_tables_identical": 31,
+  "restart_table_fingerprints": {
+    "ops.audit_events": {
+      "rows": 66,
+      "sha256": "c344867cd9cdb102c1c2e9122c3d7de7f22ed6d0a59a98cc371992ecc5c53ed2"
+    },
+    "ops.call_attempts": {
+      "rows": 11,
+      "sha256": "e6d58ba3b6db5e35271a078e1a7c82d7bbda497db2b4e759bcc2a3d9411ea5d2"
+    },
+    "ops.project_budget": {
+      "rows": 2,
+      "sha256": "c0de92530dc4f5e8448883e43f5e4ec97eabe8529e34031b5c5f39ce793f87de"
+    },
+    "ops.tenant_budgets": {
+      "rows": 4,
+      "sha256": "527af1e7edb240d22b21e3ba563a69dd734c5df633d4c9a125077570e223b5c8"
+    },
+    "ops.usage_events": {
+      "rows": 22,
+      "sha256": "a08fbb5ce7453d64d31070a0d027e6a1349e29c015bc49f2306816ac3d595e7f"
+    },
+    "portal.agent_configs": {
+      "rows": 4,
+      "sha256": "554138823a8f34ee2c0ef62f1d2bb97bf4fd6a8072af7c3d0c27225ef1da2314"
+    },
+    "portal.answer_evidence": {
+      "rows": 2,
+      "sha256": "07d54129bd66172c6c22661d3335d21920c4c1c63e77daf5464ceb9183312aa1"
+    },
+    "portal.conversations": {
+      "rows": 12,
+      "sha256": "6815006ea6ea006176f413cb94f2440f09f36fea30d478bf91a09d5b1a3533af"
+    },
+    "portal.messages": {
+      "rows": 14,
+      "sha256": "6578a966f83db53829f87291c7ed9b49953fb97f9f86491a9ed0ed1878a9cd63"
+    },
+    "portal.runs": {
+      "rows": 7,
+      "sha256": "aeba679a9f7424cf19b5b732491e358f0f6cf9c7ccc6ca3999917d448854f17c"
+    },
+    "rag.chunks": {
+      "rows": 2,
+      "sha256": "b64dbe034a081ea469fbddb27cdf8c78886d0f1df0844b94ad04883cdd487d76"
+    },
+    "rag.document_versions": {
+      "rows": 2,
+      "sha256": "8a391e964293d7e8ecae7cd007e9111fd0471411e57f1808b74cbc8576ce05fe"
+    },
+    "rag.entities": {
+      "rows": 4,
+      "sha256": "f27f4a078e2fe999ac8a281848ebb8cce9ac59e3c1eb0e18513db20f868431e9"
+    },
+    "rag.evidence": {
+      "rows": 2,
+      "sha256": "497d4fb9026c595c939f1e15eff3f467223faaf2eeb157aa2bf38a8830baf6f7"
+    },
+    "rag.index_builds": {
+      "rows": 2,
+      "sha256": "5b3caa9088cd8b530f7bcba097628a11481b02984e72caaeee97379ce376471c"
+    },
+    "rag.jobs": {
+      "rows": 2,
+      "sha256": "faac2ae56f3bc340c6080f4469eea213d6c692f252cef6b82f87d0e2c1ed491c"
+    },
+    "rag.relation_evidence": {
+      "rows": 2,
+      "sha256": "d8f96d20c6f6cd74d9d774a3503385f24a84c9a6a6981391b18f26230c507c8a"
+    },
+    "rag.relations": {
+      "rows": 2,
+      "sha256": "39b1003ca179c2d659c324ddb1371fb32ac0643a765643575cdcfac965fd6479"
+    },
+    "security.accounts": {
+      "rows": 13,
+      "sha256": "6f194e42d5172361bc9cc3552569ac885d8c801d9756958e3e42fc5addff10af"
+    },
+    "security.document_access": {
+      "rows": 2,
+      "sha256": "382413b5561838f98a221bd96024c6d72474254309ea7e51223dec1cc5e1163f"
+    },
+    "security.document_publications": {
+      "rows": 2,
+      "sha256": "df6503fdbf8c1750842d34aa4e8447014f0c08336b7339e875b6c1d78749ab87"
+    },
+    "security.job_authorizations": {
+      "rows": 2,
+      "sha256": "ebca0016f38e68978fce191ef109445d6a72a83db1ef5f631e3fdc7ec372700c"
+    },
+    "security.login_windows": {
+      "rows": 15,
+      "sha256": "8ebef605de22ddb0a35a73ef913ecf7949c98f8d881aa80e6dcf10b8ed475943"
+    },
+    "security.managed_tenants": {
+      "rows": 1,
+      "sha256": "34a9be3ae7f88b23d41bd6155bedd81231cf0081f49f317cfeb8dbc587a30b64"
+    },
+    "security.memberships": {
+      "rows": 14,
+      "sha256": "f45cc888528e05d2a0cb56c115de03a8986d63c35ab2b9b8982df91d3963ae30"
+    },
+    "security.operation_receipts": {
+      "rows": 2,
+      "sha256": "a958dbd88485e398d4672f480df947ee00122acdd0c63ae2f23328f1b2f27616"
+    },
+    "security.platform_access": {
+      "rows": 4,
+      "sha256": "232cafb85d568f4e126ea76465fe3887c20141bccd93a890a90e9ad17517f4d4"
+    },
+    "security.private_readers": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "security.sessions": {
+      "rows": 37,
+      "sha256": "4e040d201b44d21c791c4aec163028321f3f5d2fc8331e15f83878c84679dfab"
+    },
+    "security.share_grants": {
+      "rows": 0,
+      "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "security.tenants": {
+      "rows": 2,
+      "sha256": "9e2b5f88da396b676a25278b5d37154c72e8a3523bc66db53c1707e7455fcde0"
+    }
+  },
+  "real_records_retained": true,
+  "default_mode": "mock",
+  "default_environment_unchanged": true,
+  "rag_enabled_after": false,
+  "real_source_files_private": true,
+  "scope_note": "31 table equality applies only across this restart; intentional new real rows and allocation changes are retained.",
+  "cluster_state_after": "stopped"
+}

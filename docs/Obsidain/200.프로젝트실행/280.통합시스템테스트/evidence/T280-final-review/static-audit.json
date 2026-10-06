@@ -1,0 +1,25 @@
+{
+  "central_sdk_import_audit": [
+    {
+      "source_file": "src/backend/app/ai/providers.py",
+      "imports": [
+        "openai",
+        "openai.types.chat"
+      ],
+      "sha256": "67442cb42acdb87f01e22d07c3056599990bcc5660ade19ac084575303558c74"
+    },
+    {
+      "source_file": "src/backend/app/documents/embedding.py",
+      "imports": [
+        "openai",
+        "openai.types.create_embedding_response"
+      ],
+      "sha256": "850746904ee1abc250be13926fb78f3411996662f42d3d00b0614bb44cd8c017"
+    }
+  ],
+  "direct_sdk_imports_outside_provider_adapters": 0,
+  "real_source_count": 2,
+  "source_files_private": true,
+  "real_source_root_distinct": true,
+  "scope": "static SDK import and filesystem boundaries; runtime permit evidence separate"
+}

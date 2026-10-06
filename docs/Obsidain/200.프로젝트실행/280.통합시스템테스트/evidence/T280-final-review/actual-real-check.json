@@ -1,0 +1,183 @@
+{
+  "status": "pass",
+  "model_access": {
+    "gpt-4o-mini": 200,
+    "text-embedding-3-small": 200
+  },
+  "paid_calls_added": 8,
+  "operations": {
+    "generate_general": 5,
+    "embed_query": 2,
+    "generate_rag": 2,
+    "embed_document": 2
+  },
+  "before_call_count": 3,
+  "after_call_count": 11,
+  "new_call_operations": {
+    "generate_general": 2,
+    "embed_document": 2,
+    "embed_query": 2,
+    "generate_rag": 2
+  },
+  "settled_all": true,
+  "paid_retries": 0,
+  "cap_krw": 500,
+  "allocation_A_krw": 300,
+  "allocation_B_krw": 200,
+  "reservation_bound_krw": "15.36",
+  "new_internal_estimate_krw": "0.35",
+  "total_internal_estimate_krw": "0.54",
+  "prior_internal_estimate_krw": "0.19",
+  "default_configuration_unchanged": true,
+  "rag_availability_restored": true,
+  "receipts": [
+    {
+      "operation": "generate_general",
+      "mode": "real",
+      "state": "settled",
+      "slot_held": false,
+      "receipt": {
+        "input_tokens": 40,
+        "total_tokens": 71,
+        "observed_tier": "default",
+        "output_tokens": 31,
+        "observed_model": "gpt-4o-mini-2024-07-18"
+      }
+    },
+    {
+      "operation": "embed_query",
+      "mode": "real",
+      "state": "settled",
+      "slot_held": false,
+      "receipt": {
+        "input_tokens": 12,
+        "total_tokens": 12,
+        "observed_tier": "default",
+        "output_tokens": 0,
+        "observed_model": "text-embedding-3-small"
+      }
+    },
+    {
+      "operation": "generate_rag",
+      "mode": "real",
+      "state": "settled",
+      "slot_held": false,
+      "receipt": {
+        "input_tokens": 173,
+        "total_tokens": 187,
+        "observed_tier": "default",
+        "output_tokens": 14,
+        "observed_model": "gpt-4o-mini-2024-07-18"
+      }
+    },
+    {
+      "operation": "generate_general",
+      "mode": "real",
+      "state": "settled",
+      "slot_held": false,
+      "receipt": {
+        "input_tokens": 40,
+        "total_tokens": 74,
+        "observed_tier": "default",
+        "output_tokens": 34,
+        "observed_model": "gpt-4o-mini-2024-07-18"
+      }
+    },
+    {
+      "operation": "generate_general",
+      "mode": "real",
+      "state": "settled",
+      "slot_held": false,
+      "receipt": {
+        "input_tokens": 40,
+        "total_tokens": 68,
+        "observed_tier": "default",
+        "output_tokens": 28,
+        "observed_model": "gpt-4o-mini-2024-07-18"
+      }
+    },
+    {
+      "operation": "generate_general",
+      "mode": "real",
+      "state": "settled",
+      "slot_held": false,
+      "receipt": {
+        "input_tokens": 38,
+        "total_tokens": 74,
+        "observed_tier": "default",
+        "output_tokens": 36,
+        "observed_model": "gpt-4o-mini-2024-07-18"
+      }
+    },
+    {
+      "operation": "generate_general",
+      "mode": "real",
+      "state": "settled",
+      "slot_held": false,
+      "receipt": {
+        "input_tokens": 38,
+        "total_tokens": 70,
+        "observed_tier": "default",
+        "output_tokens": 32,
+        "observed_model": "gpt-4o-mini-2024-07-18"
+      }
+    },
+    {
+      "operation": "generate_rag",
+      "mode": "real",
+      "state": "settled",
+      "slot_held": false,
+      "receipt": {
+        "input_tokens": 173,
+        "total_tokens": 187,
+        "observed_tier": "default",
+        "output_tokens": 14,
+        "observed_model": "gpt-4o-mini-2024-07-18"
+      }
+    },
+    {
+      "operation": "embed_query",
+      "mode": "real",
+      "state": "settled",
+      "slot_held": false,
+      "receipt": {
+        "input_tokens": 12,
+        "total_tokens": 12,
+        "observed_tier": "default",
+        "output_tokens": 0,
+        "observed_model": "text-embedding-3-small"
+      }
+    },
+    {
+      "operation": "embed_document",
+      "mode": "real",
+      "state": "settled",
+      "slot_held": false,
+      "receipt": {
+        "input_tokens": 21,
+        "total_tokens": 21,
+        "observed_tier": "default",
+        "output_tokens": 0,
+        "observed_model": "text-embedding-3-small"
+      }
+    },
+    {
+      "operation": "embed_document",
+      "mode": "real",
+      "state": "settled",
+      "slot_held": false,
+      "receipt": {
+        "input_tokens": 21,
+        "total_tokens": 21,
+        "observed_tier": "default",
+        "output_tokens": 0,
+        "observed_model": "text-embedding-3-small"
+      }
+    }
+  ],
+  "pricing_sources": [
+    "https://developers.openai.com/api/docs/models/gpt-4o-mini",
+    "https://developers.openai.com/api/docs/models/text-embedding-3-small"
+  ],
+  "scope": "동일 기존 primary DB/2026-10 기간. 기존 3회/.19 유지. 고정 합성 fixture의 대표500 배정 A300/B200 준비; 일반 관리자에게 배정 권한을 추가하지 않음. A/B 정상RAG 각1개. Q20 실제 전체, 실제 장애/성능 시험 아님. 내부 추정은 청구액 아님."
+}

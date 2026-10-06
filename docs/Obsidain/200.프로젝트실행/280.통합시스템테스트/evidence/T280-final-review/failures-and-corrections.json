@@ -1,0 +1,36 @@
+{
+  "scope": "최종 성공만으로 이전 실패/중단을 삭제하지 않음",
+  "runs": [
+    {
+      "phase": "초기CAS",
+      "pass": 107,
+      "fail": 3,
+      "reason": "시험 transaction 문맥 누락 CONTEXT_DENIED",
+      "correction": "실제문맥 GUC 설정; 3건 재확인 및 전체949 통과"
+    },
+    {
+      "phase": "초기통제확장",
+      "pass": 102,
+      "fail": 2,
+      "reason": "한도와 실제비용이 같은 시험입력으로 초과 차단 기대 오류",
+      "correction": "한도를 기발생액까지 낮춤; 관련24건 및 전체949 통과"
+    },
+    {
+      "phase": "초기전체",
+      "status": "interrupted",
+      "reason": "사용자 입력 중단; migration 기대20→21 수정. 완료 XML 없음; 통과 집계 제외"
+    },
+    {
+      "phase": "초기retry추적",
+      "pass": 25,
+      "fail": 2,
+      "reason": "web 역할의 raw Job 조회 권한 거부",
+      "correction": "기존 보호된 Job view 사용, grant 확대 없음; 최종27 통과"
+    },
+    {
+      "phase": "화면캡처",
+      "status": "helper_failed_then_passed",
+      "reason": "캡처 도구의 메뉴명 오류; 조직 사용량으로 수정, 6장 완료"
+    }
+  ]
+}

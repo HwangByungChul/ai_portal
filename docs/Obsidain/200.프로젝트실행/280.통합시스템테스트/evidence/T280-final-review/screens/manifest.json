@@ -1,0 +1,49 @@
+{
+  "date": "2026-10-06",
+  "scope": "actual local Mock portal screenshots; not real model screenshots or user acceptance",
+  "paid_dispatches": 0,
+  "screens": [
+    {
+      "file": "01-user-rag.png",
+      "screen": "사용자 규정 답변과 원문 근거",
+      "mode": "mock",
+      "sha256": "a5e306191f9343eac50a35cac3e27f9e2a1abeb15f3355076e2e06c952496f84",
+      "page_overflow": false
+    },
+    {
+      "file": "06-mobile-rag.png",
+      "screen": "모바일 규정 답변과 근거",
+      "mode": "mock",
+      "sha256": "46b5eb1e41ecfd5a8be3c024915db45e768602198fc4be7b7bdf0cbcd258a4b7",
+      "page_overflow": false
+    },
+    {
+      "file": "02-admin-documents.png",
+      "screen": "문서 게시와 개인 제목 가림",
+      "mode": "mock",
+      "sha256": "7c85c24c5bd45d2f6714d1d810c08023733854d18859080547367aeb4672a706",
+      "page_overflow": false
+    },
+    {
+      "file": "03-admin-users.png",
+      "screen": "조직 사용자 관리",
+      "mode": "mock",
+      "sha256": "43a13cca763d41cbd5e747fa3a42a1324d44726e68833a593e84294332ba136c",
+      "page_overflow": false
+    },
+    {
+      "file": "04-admin-agents.png",
+      "screen": "Agent 운영 설정",
+      "mode": "mock",
+      "sha256": "833590d5a91668869c636c4518ba8fd60bf2d1e0f9f427b1d7ea50bb93ac4fda",
+      "page_overflow": false
+    },
+    {
+      "file": "05-admin-usage.png",
+      "screen": "모의 사용량과 한도",
+      "mode": "mock",
+      "sha256": "09934039473019b7da67ea705d7873e4061c86ab6557f16847ecd8b4eb050919",
+      "page_overflow": false
+    }
+  ]
+}

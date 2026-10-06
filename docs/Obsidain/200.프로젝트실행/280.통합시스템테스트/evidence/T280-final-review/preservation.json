@@ -1,0 +1,10 @@
+{
+  "graph_original_head": "913f3881b4a4a73b9f764f60575775ecdbba6bdd",
+  "graph_selected_source_sha_unchanged": 9,
+  "tracked_historical_documents_unchanged_except_authorized_WBS_and_ledger": true,
+  "preserved_unrelated_untracked_count": 87,
+  "old_screen_count": 5,
+  "old_screen_sha_unchanged": true,
+  "primary_proof": "primary-postcheck.json",
+  "scope": "GraphRAG9 selected SHA and HEAD, git diff historical tracked docs, retained current existing untracked (initial scratch inventory unavailable). Lost initial scratch baseline not used to claim broader SHA inventory."
+}

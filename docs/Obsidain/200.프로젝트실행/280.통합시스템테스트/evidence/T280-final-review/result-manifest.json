@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-06",
+  "final_source_commit": "ff825a9f8e3a09f5852a66f16eda7be8bf278d10",
+  "files": {
+    "README.md": "6b28a4d98b8224fa8755b5ff98cc34fe8348d6ac78dcaf51f06dca0d2f84656a",
+    "actual-real-check.json": "3b3b246cb9cb3f9390702c7dfc292b5019c62a84b8c5cf75f8f7a7729807ef92",
+    "browser-cases.json": "6f5a9471f549c5fa88d5f73c9659ad9c2d80c66fd0f92e35a8b7a8c07030354d",
+    "failures-and-corrections.json": "cacc0659493ae13547cfaca0634dd66487f5f2bf8fea97e20129adb1c01d5c18",
+    "preservation.json": "a99877928b0c53895aee78c56b242f2b68a1c1df437ed955622cfa476dc2df18",
+    "primary-postcheck.json": "28f0e1a5155483159878d614a1906fdb1c304e633cbc5c770824d26793c0e5a5",
+    "public-secret-scan.json": "b9d72d45bfe8ad6a4dcb37a6e9071fac43b0694b0901bb59ec7c9ee8c0f72e79",
+    "regression-cases.json": "49db3ba01b26ac5e61044494b78ecb139d2b8c3622e27c6bacec23bf34f6a2e1",
+    "screens/01-user-rag.png": "a5e306191f9343eac50a35cac3e27f9e2a1abeb15f3355076e2e06c952496f84",
+    "screens/02-admin-documents.png": "7c85c24c5bd45d2f6714d1d810c08023733854d18859080547367aeb4672a706",
+    "screens/03-admin-users.png": "43a13cca763d41cbd5e747fa3a42a1324d44726e68833a593e84294332ba136c",
+    "screens/04-admin-agents.png": "833590d5a91668869c636c4518ba8fd60bf2d1e0f9f427b1d7ea50bb93ac4fda",
+    "screens/05-admin-usage.png": "09934039473019b7da67ea705d7873e4061c86ab6557f16847ecd8b4eb050919",
+    "screens/06-mobile-rag.png": "46b5eb1e41ecfd5a8be3c024915db45e768602198fc4be7b7bdf0cbcd258a4b7",
+    "screens/README.md": "d4d03d0ca354249c10f24a1bb4afa02fba674ba7d75e04692377667bc80ad6f1",
+    "screens/manifest.json": "91edc1a7fd36ee0919e9e3b435b457c762f3aa1b261d313a3b2f2b4bea243ae0",
+    "source-fingerprints.json": "5cff95a1c3053d33fd1a518602fadabc03170dc6d7c4ba097c222906d9f3f5fb",
+    "static-audit.json": "92c42ef2e408bd70f536f2224782ec427e11472fd2a7b98c720d503ce852c81c",
+    "verification-matrix.json": "379bf012e612838b146c56c6d87ccdc1af070485712a3fc2769ce75fe18c37d7",
+    "verification-review.md": "c3b35582d29f89d12273d8478fc32ac50121973e1734211f62eddcc0a485283f"
+  },
+  "scope": "self hash excluded; docs commit recorded separately in private runtime; six Mock screenshots, direct feedback pending"
+}

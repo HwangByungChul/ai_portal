@@ -1,0 +1,439 @@
+{
+  "scope": "전체64건 및 최종 서버 수정 후 문서 화면9건 재확인; 직접 사용자 검토 별도",
+  "full": {
+    "status": "passed",
+    "duration_ms": 210818.611,
+    "runner_errors": 0,
+    "tests": [
+      {
+        "test_id": "A05_01_user_login_restore_and_direct_denial",
+        "status": "passed",
+        "duration_ms": 1411
+      },
+      {
+        "test_id": "A05_02_generic_login_failure_and_password_clear",
+        "status": "passed",
+        "duration_ms": 1064
+      },
+      {
+        "test_id": "A05_03_tadmin_active_changes_and_protected_rows",
+        "status": "passed",
+        "duration_ms": 1744
+      },
+      {
+        "test_id": "A05_04_padmin_role_changes",
+        "status": "passed",
+        "duration_ms": 1575
+      },
+      {
+        "test_id": "A05_05_no_members_has_no_organization",
+        "status": "passed",
+        "duration_ms": 942
+      },
+      {
+        "test_id": "A05_06_global_permission_does_not_enable_tenant_admin",
+        "status": "passed",
+        "duration_ms": 986
+      },
+      {
+        "test_id": "A05_07_two_tabs_independent_tenants",
+        "status": "passed",
+        "duration_ms": 1467
+      },
+      {
+        "test_id": "A05_08_late_actual_A_response_discarded",
+        "status": "passed",
+        "duration_ms": 1104
+      },
+      {
+        "test_id": "A05_09_membership_revoked_A_keeps_B_and_session",
+        "status": "passed",
+        "duration_ms": 1447
+      },
+      {
+        "test_id": "A05_10_demoted_admin_menu_and_rows_removed",
+        "status": "passed",
+        "duration_ms": 1420
+      },
+      {
+        "test_id": "A05_11_expired_session_clears_content",
+        "status": "passed",
+        "duration_ms": 1400
+      },
+      {
+        "test_id": "A05_12_conflict_refresh_without_auto_mutation",
+        "status": "passed",
+        "duration_ms": 1865
+      },
+      {
+        "test_id": "A05_13_logout_DB_failure_hidden_until_retry_confirmed",
+        "status": "passed",
+        "duration_ms": 1762
+      },
+      {
+        "test_id": "A05_14_logout_network_failure_hidden_until_retry",
+        "status": "passed",
+        "duration_ms": 1168
+      },
+      {
+        "test_id": "A05_15_logout_broadcast_clears_other_tab",
+        "status": "passed",
+        "duration_ms": 1307
+      },
+      {
+        "test_id": "A05_16_read_storage_failure_and_retry",
+        "status": "passed",
+        "duration_ms": 1780
+      },
+      {
+        "test_id": "A05_17_mobile_layout_real_management",
+        "status": "passed",
+        "duration_ms": 1096
+      },
+      {
+        "test_id": "A05_18_password_fill_failure_redacted",
+        "status": "passed",
+        "duration_ms": 871
+      },
+      {
+        "test_id": "A05_19_server_cursor_pagination",
+        "status": "passed",
+        "duration_ms": 1902
+      },
+      {
+        "test_id": "A05_20_blank_login_visuals_no_credentials",
+        "status": "passed",
+        "duration_ms": 959
+      },
+      {
+        "test_id": "B05_01_chat_surface",
+        "status": "passed",
+        "duration_ms": 2179
+      },
+      {
+        "test_id": "B05_02_save_reload_history",
+        "status": "passed",
+        "duration_ms": 3403
+      },
+      {
+        "test_id": "B05_03_lost_acceptance_one_provider_call",
+        "status": "passed",
+        "duration_ms": 3229
+      },
+      {
+        "test_id": "B05_04_missing_acceptance_replays_identical_payload_once",
+        "status": "passed",
+        "duration_ms": 2919
+      },
+      {
+        "test_id": "B05_05_double_click_one_admission",
+        "status": "passed",
+        "duration_ms": 3185
+      },
+      {
+        "test_id": "B05_06_stream_eof_queries_saved_state",
+        "status": "passed",
+        "duration_ms": 4647
+      },
+      {
+        "test_id": "B05_07_actual_stream_draft_and_cancel",
+        "status": "passed",
+        "duration_ms": 2849
+      },
+      {
+        "test_id": "B05_08_two_tabs_independent_conversation_scopes",
+        "status": "passed",
+        "duration_ms": 4291
+      },
+      {
+        "test_id": "B05_09_late_A_stream_discarded_after_switch",
+        "status": "passed",
+        "duration_ms": 2869
+      },
+      {
+        "test_id": "B05_10_user_admin_routes_and_APIs_denied",
+        "status": "passed",
+        "duration_ms": 1798
+      },
+      {
+        "test_id": "B05_11_agent_conflict_no_automatic_overwrite",
+        "status": "passed",
+        "duration_ms": 1839
+      },
+      {
+        "test_id": "B05_12_agent_stop_blocks_new_provider_calls",
+        "status": "passed",
+        "duration_ms": 2365
+      },
+      {
+        "test_id": "B05_13_platform_writer_only_no_usage_read",
+        "status": "passed",
+        "duration_ms": 2221
+      },
+      {
+        "test_id": "B05_14_platform_reader_only_no_write",
+        "status": "passed",
+        "duration_ms": 1686
+      },
+      {
+        "test_id": "B05_15_tadmin_local_cap_and_no_allocation",
+        "status": "passed",
+        "duration_ms": 1802
+      },
+      {
+        "test_id": "B05_16_padmin_current_managed_allocation_only",
+        "status": "passed",
+        "duration_ms": 2022
+      },
+      {
+        "test_id": "B05_17_unknown_usage_reservation_preserved",
+        "status": "passed",
+        "duration_ms": 3606
+      },
+      {
+        "test_id": "B05_18_expired_session_removes_stream_body",
+        "status": "passed",
+        "duration_ms": 2515
+      },
+      {
+        "test_id": "B05_19_platform_permission_revoked_clears_summary",
+        "status": "passed",
+        "duration_ms": 1997
+      },
+      {
+        "test_id": "B05_20_mobile_chat_no_page_overflow",
+        "status": "passed",
+        "duration_ms": 2601
+      },
+      {
+        "test_id": "B05_21_conversation_cursor_uses_real_server_pages",
+        "status": "passed",
+        "duration_ms": 2261
+      },
+      {
+        "test_id": "B05_22_GET_retry_bounded_no_new_generation",
+        "status": "passed",
+        "duration_ms": 6264
+      },
+      {
+        "test_id": "B05_23_invalid_stream_gap_canonical_recovery",
+        "status": "passed",
+        "duration_ms": 4572
+      },
+      {
+        "test_id": "B05_24_invalid_stream_epoch_canonical_recovery",
+        "status": "passed",
+        "duration_ms": 4502
+      },
+      {
+        "test_id": "B05_25_invalid_stream_org_canonical_recovery",
+        "status": "passed",
+        "duration_ms": 4469
+      },
+      {
+        "test_id": "B05_26_invalid_stream_size_canonical_recovery",
+        "status": "passed",
+        "duration_ms": 4469
+      },
+      {
+        "test_id": "B05_27_unresolved_admission_blocks_new_requests",
+        "status": "passed",
+        "duration_ms": 2111
+      },
+      {
+        "test_id": "B05_28_chat_logout_clears_other_tab_draft",
+        "status": "passed",
+        "duration_ms": 2532
+      },
+      {
+        "test_id": "B05_29_hidden_state_stops_poll_without_cancelling_run",
+        "status": "passed",
+        "duration_ms": 5691
+      },
+      {
+        "test_id": "B05_30_fragmented_UTF8_CRLF_stream_parser",
+        "status": "passed",
+        "duration_ms": 1866
+      },
+      {
+        "test_id": "B05_31_saved_prompt_rendered_as_text_without_storage",
+        "status": "passed",
+        "duration_ms": 2600
+      },
+      {
+        "test_id": "B05_32_late_A_admin_settings_do_not_replace_B_form",
+        "status": "passed",
+        "duration_ms": 1736
+      },
+      {
+        "test_id": "C05_01_upload_202_is_not_publication",
+        "status": "passed",
+        "duration_ms": 5377
+      },
+      {
+        "test_id": "C05_02_exact_v1_share_rag_source_revoke_and_v2_is_hidden",
+        "status": "passed",
+        "duration_ms": 13511
+      },
+      {
+        "test_id": "C05_03_private_management_does_not_expose_title",
+        "status": "passed",
+        "duration_ms": 2781
+      },
+      {
+        "test_id": "C05_04_lost_upload_confirm_preserves_id_and_one_index_call",
+        "status": "passed",
+        "duration_ms": 2755
+      },
+      {
+        "test_id": "C05_05_unknown_index_preserves_reservation_and_no_auto_retry",
+        "status": "passed",
+        "duration_ms": 5717
+      },
+      {
+        "test_id": "C05_06_rag_stream_is_buffered_until_provenance_is_saved",
+        "status": "passed",
+        "duration_ms": 9950
+      },
+      {
+        "test_id": "C05_07_mobile_document_surface_and_delete",
+        "status": "passed",
+        "duration_ms": 4561
+      },
+      {
+        "test_id": "C05_08_share_revision_conflict_requires_explicit_second_write",
+        "status": "passed",
+        "duration_ms": 4926
+      },
+      {
+        "test_id": "C05_09_late_A_document_response_discarded_after_B_switch",
+        "status": "passed",
+        "duration_ms": 4918
+      },
+      {
+        "test_id": "P270_01_admin_user_saved_rag_journey",
+        "status": "passed",
+        "duration_ms": 8017
+      },
+      {
+        "test_id": "P270_02_mobile_shared_version_revoke_journey",
+        "status": "passed",
+        "duration_ms": 11278
+      },
+      {
+        "test_id": "P270_03_private_owner_and_stop_journey",
+        "status": "passed",
+        "duration_ms": 4437
+      }
+    ],
+    "steps": [
+      {
+        "test_id": "P270_01_admin_user_saved_rag_journey",
+        "step_id": "P270_STEP_01_admin_publish",
+        "status": "passed",
+        "duration_ms": 2815
+      },
+      {
+        "test_id": "P270_01_admin_user_saved_rag_journey",
+        "step_id": "P270_STEP_02_general_usage_history",
+        "status": "passed",
+        "duration_ms": 1608
+      },
+      {
+        "test_id": "P270_01_admin_user_saved_rag_journey",
+        "step_id": "P270_STEP_03_rag_source_download",
+        "status": "passed",
+        "duration_ms": 2104
+      },
+      {
+        "test_id": "P270_02_mobile_shared_version_revoke_journey",
+        "step_id": "P270_STEP_04_share_version_and_update",
+        "status": "passed",
+        "duration_ms": 3112
+      },
+      {
+        "test_id": "P270_02_mobile_shared_version_revoke_journey",
+        "step_id": "P270_STEP_05_mobile_v1_evidence",
+        "status": "passed",
+        "duration_ms": 1467
+      },
+      {
+        "test_id": "P270_02_mobile_shared_version_revoke_journey",
+        "step_id": "P270_STEP_06_revoke_prior_result_and_source",
+        "status": "passed",
+        "duration_ms": 5159
+      },
+      {
+        "test_id": "P270_03_private_owner_and_stop_journey",
+        "step_id": "P270_STEP_07_private_owner_API_and_admin_redaction",
+        "status": "passed",
+        "duration_ms": 249
+      },
+      {
+        "test_id": "P270_03_private_owner_and_stop_journey",
+        "step_id": "P270_STEP_08_owner_personal_evidence",
+        "status": "passed",
+        "duration_ms": 1349
+      },
+      {
+        "test_id": "P270_03_private_owner_and_stop_journey",
+        "step_id": "P270_STEP_09_stop_prevents_admission",
+        "status": "passed",
+        "duration_ms": 846
+      }
+    ]
+  },
+  "final_document_scope": {
+    "status": "passed",
+    "duration_ms": 58096.834,
+    "runner_errors": 0,
+    "tests": [
+      {
+        "test_id": "C05_01_upload_202_is_not_publication",
+        "status": "passed",
+        "duration_ms": 5065
+      },
+      {
+        "test_id": "C05_02_exact_v1_share_rag_source_revoke_and_v2_is_hidden",
+        "status": "passed",
+        "duration_ms": 13432
+      },
+      {
+        "test_id": "C05_03_private_management_does_not_expose_title",
+        "status": "passed",
+        "duration_ms": 2681
+      },
+      {
+        "test_id": "C05_04_lost_upload_confirm_preserves_id_and_one_index_call",
+        "status": "passed",
+        "duration_ms": 2793
+      },
+      {
+        "test_id": "C05_05_unknown_index_preserves_reservation_and_no_auto_retry",
+        "status": "passed",
+        "duration_ms": 5440
+      },
+      {
+        "test_id": "C05_06_rag_stream_is_buffered_until_provenance_is_saved",
+        "status": "passed",
+        "duration_ms": 9910
+      },
+      {
+        "test_id": "C05_07_mobile_document_surface_and_delete",
+        "status": "passed",
+        "duration_ms": 4442
+      },
+      {
+        "test_id": "C05_08_share_revision_conflict_requires_explicit_second_write",
+        "status": "passed",
+        "duration_ms": 4715
+      },
+      {
+        "test_id": "C05_09_late_A_document_response_discarded_after_B_switch",
+        "status": "passed",
+        "duration_ms": 4885
+      }
+    ],
+    "steps": []
+  }
+}
