@@ -16,7 +16,16 @@ class FactPacket:
 
 PREDICATES=(('위험 검토 승인','위험검토승인부서'),('기록 보관 담당','기록보관담당부서'),('기록 보관 기간','기록보관기간'),('점검표','필수점검표'),('누락','누락점검일'),('리허설','개인리허설일정'),('접수 확인','접수확인기한'),('접수 담당','접수담당'),('복구 목표','복구목표'))
 def required_predicates(prompt):
-    text=''.join(prompt.split());needed=[p for phrase,p in PREDICATES if ''.join(phrase.split()) in text]
+    text=''.join(prompt.split())
+    # Requests outside the fixed ontology cannot be answered from a nearby relation.
+    if any(word in text for word in ('금리','금액상한','파기승인','파기승인자')):return ()
+    needed=[p for phrase,p in PREDICATES if ''.join(phrase.split()) in text]
+    if '보관' in text and any(word in text for word in ('며칠','기간')):needed.append('기록보관기간')
+    if '기록보관' in text and ('부서' in text or '맡' in text) and '기간' not in text:needed.append('기록보관담당부서')
+    # An explicitly separate default department is required even beside another role.
+    if '담당부서' in text:
+        without_roles=text.replace('기록보관담당부서','').replace('위험검토승인부서','')
+        if '담당부서' in without_roles:needed.append('담당부서')
     if '누락점검일' in needed:needed.append('기록보관담당부서')
     if '접수확인기한' in needed:needed.append('접수담당')
     if not needed and '담당' in text:needed=['담당부서']
@@ -25,7 +34,9 @@ def required_predicates(prompt):
 def select_relevant(prompt,packets,limited=False):
     required=required_predicates(prompt)
     if not required or limited:return (),required
-    root=tuple(p for p in packets if p.predicate in required and p.predicate not in ('누락점검일','접수확인기한') and p.subject in prompt)
+    personal=tuple(p for p in packets if p.predicate=='개인리허설일정')
+    personal_reference='내' in prompt and '개인' in prompt and '리허설' in prompt and len(personal)==1
+    root=tuple(p for p in packets if p.predicate in required and p.predicate not in ('누락점검일','접수확인기한') and (p.subject in prompt or (personal_reference and p.predicate=='개인리허설일정')))
     selected=root+tuple(p for p in packets if p.predicate in required and p.predicate in ('누락점검일','접수확인기한') and (p.subject in prompt or any(a.namespace==p.namespace and a.value==p.subject for a in root)))
     if set(required)-{p.predicate for p in selected}:return (),required
     groups={}

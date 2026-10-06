@@ -45,7 +45,8 @@ class SearchRepository:
             await conn.execute('SELECT security.rag_sources_guard(%s,%s,%s,%s)',(ctx.session_id,ctx.tenant_id,mode,Jsonb(list(sources))))
             chunks=await (await conn.execute('SELECT tenant_id,index_id,chunk_id FROM rag.chunks c WHERE '+allowed('c')+' ORDER BY embedding OPERATOR(rag.<=>) %s::rag.vector,index_id,ordinal LIMIT 6',(scope,'['+','.join(str(x) for x in vector)+']'))).fetchall()
             # Seed only question-matched authorized entities; vector rank is not a sufficiency claim.
-            seeds=await (await conn.execute('SELECT tenant_id,index_id,entity_id,semantic_key FROM rag.entities e WHERE '+allowed('e')+' AND strpos(%s,label)>0 ORDER BY char_length(label) DESC,entity_id LIMIT 4',(scope,question))).fetchall()
+            personal_reference=len(sources)==1 and '내' in question and '개인' in question and '리허설' in question
+            seeds=await (await conn.execute("SELECT tenant_id,index_id,entity_id,semantic_key FROM rag.entities e WHERE "+allowed('e')+" AND (strpos(%s,label)>0 OR (%s AND entity_type='PERSON')) ORDER BY char_length(label) DESC,entity_id LIMIT 4",(scope,question,personal_reference))).fetchall()
             keys={x['semantic_key'] for x in seeds};relations={};limited=False
             for hop in range(2):
                 if not keys:break
