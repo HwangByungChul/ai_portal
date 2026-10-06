@@ -1,0 +1,60 @@
+{
+  "stage": "T280",
+  "unit": "document_fault_followup",
+  "date": "2026-10-06",
+  "unit_status": "complete",
+  "overall_stage_status": "in_progress",
+  "source_commit": "5c175aae6f873e7206c34c9db9aaf2924c3d3e8d",
+  "source_files": 3,
+  "source_fingerprint_count": 174,
+  "new_cases": 7,
+  "new_repeated_executions": 21,
+  "backend_related_passed": 60,
+  "backend_is_full_suite": false,
+  "browser_full_passed": 63,
+  "paid_dispatches": 0,
+  "new_cost_krw": "0",
+  "all_V41_passed": false,
+  "verification_summary": {
+    "verification_count": 41,
+    "acl_count": 16,
+    "design_input_count": 60,
+    "mapped_subcases": 143,
+    "parent_verdict_final": false,
+    "note": "V별 명시 행동의 관련/재사용 증거와 미수행을 분리. 상세60/ACL16의 최종판정 미완료로 상위전체pass 아님",
+    "subcase_verdicts": {
+      "pass": 16,
+      "fail": 0,
+      "not_run": 127
+    },
+    "verification_verdicts": {
+      "pass": 2,
+      "fail": 0,
+      "not_run": 39
+    },
+    "previous_module_refs_are_candidate_proofs": true,
+    "stage_completion": "in_progress",
+    "unresolved_product_defect_from_current_scheduler_reproduction": false,
+    "real_RAG_status": "not_run",
+    "required_next_step": "Complete detailed-60/ACL16 exact input adjudication and missing fault/cancel/UI proofs, then reconcile persistent real profile.",
+    "next_step": "four operations stop/trace, protected markers and exact detailed-input adjudication; persistent real profile readiness"
+  },
+  "real_RAG": "not_run",
+  "human_feedback": "pending",
+  "M290_new_environment_restore": "not_run",
+  "preservation_historical_count": 98,
+  "protected_count": 32,
+  "local_only": true,
+  "remote_push": false,
+  "evidence_files": [
+    "verification-matrix.json",
+    "regression-cases.json",
+    "fault-repetitions.json",
+    "reproduction.json",
+    "source-fingerprints.json",
+    "real-readiness.json",
+    "preservation.json",
+    "README.md"
+  ],
+  "next_plan": "05 모델 호출 제어와 잔여 증거 대조 상세 작업 계획.md"
+}

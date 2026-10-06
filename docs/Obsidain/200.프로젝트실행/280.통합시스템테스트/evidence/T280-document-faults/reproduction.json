@@ -1,0 +1,33 @@
+{
+  "before_fix": {
+    "exit_code": 1,
+    "duration_seconds": 6.94,
+    "passed": 0,
+    "failed": 2,
+    "skipped": 0,
+    "tests": [
+      {
+        "test_id": "tests.test_t280_followup.test_delete_cleanup_obeys_tenant_queue_and_duplicate_request[index_before_cleanup]",
+        "status": "fail",
+        "duration_ms": 2376.0
+      },
+      {
+        "test_id": "tests.test_t280_followup.test_delete_cleanup_obeys_tenant_queue_and_duplicate_request[cleanup_before_index]",
+        "status": "fail",
+        "duration_ms": 1691.0
+      }
+    ]
+  },
+  "failure_observations": {
+    "index_before_cleanup": "cleanup started while tenant index was blocked",
+    "cleanup_before_index": "new index completed instead of queued; repeated delete can start another cleanup"
+  },
+  "fix": "DELETE uses bounded notify; cleanup deduplicated by document across versions, recovery and repeated requests",
+  "changed_product_sources": [
+    "src/backend/app/documents/manager.py",
+    "src/backend/app/documents/routes.py"
+  ],
+  "postfix_status": "pass",
+  "workers": 1,
+  "distributed_scheduler_proof": false
+}

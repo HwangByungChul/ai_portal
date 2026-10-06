@@ -1,0 +1,139 @@
+{
+  "rounds": 3,
+  "unique_cases": 7,
+  "executions": 21,
+  "results": [
+    {
+      "exit_code": 0,
+      "duration_seconds": 17.02,
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "test_id": "tests.test_t280_followup.test_delete_cleanup_obeys_tenant_queue_and_duplicate_request[index_before_cleanup]",
+          "status": "pass",
+          "duration_ms": 1984.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_delete_cleanup_obeys_tenant_queue_and_duplicate_request[cleanup_before_index]",
+          "status": "pass",
+          "duration_ms": 1569.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_graph_db_write_failure_preserves_old_publication_and_cost[evidence]",
+          "status": "pass",
+          "duration_ms": 1517.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_graph_db_write_failure_preserves_old_publication_and_cost[relations]",
+          "status": "pass",
+          "duration_ms": 1557.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_explicit_job_retry_api_same_id_preserves_failure[failed]",
+          "status": "pass",
+          "duration_ms": 1454.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_explicit_job_retry_api_same_id_preserves_failure[needs_review]",
+          "status": "pass",
+          "duration_ms": 1273.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_native_cleanup_path_failure_restart_keeps_access_closed",
+          "status": "pass",
+          "duration_ms": 5877.0
+        }
+      ]
+    },
+    {
+      "exit_code": 0,
+      "duration_seconds": 16.62,
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "test_id": "tests.test_t280_followup.test_delete_cleanup_obeys_tenant_queue_and_duplicate_request[index_before_cleanup]",
+          "status": "pass",
+          "duration_ms": 2004.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_delete_cleanup_obeys_tenant_queue_and_duplicate_request[cleanup_before_index]",
+          "status": "pass",
+          "duration_ms": 1539.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_graph_db_write_failure_preserves_old_publication_and_cost[evidence]",
+          "status": "pass",
+          "duration_ms": 1538.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_graph_db_write_failure_preserves_old_publication_and_cost[relations]",
+          "status": "pass",
+          "duration_ms": 1525.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_explicit_job_retry_api_same_id_preserves_failure[failed]",
+          "status": "pass",
+          "duration_ms": 1447.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_explicit_job_retry_api_same_id_preserves_failure[needs_review]",
+          "status": "pass",
+          "duration_ms": 1298.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_native_cleanup_path_failure_restart_keeps_access_closed",
+          "status": "pass",
+          "duration_ms": 5704.0
+        }
+      ]
+    },
+    {
+      "exit_code": 0,
+      "duration_seconds": 16.74,
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "test_id": "tests.test_t280_followup.test_delete_cleanup_obeys_tenant_queue_and_duplicate_request[index_before_cleanup]",
+          "status": "pass",
+          "duration_ms": 1974.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_delete_cleanup_obeys_tenant_queue_and_duplicate_request[cleanup_before_index]",
+          "status": "pass",
+          "duration_ms": 1574.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_graph_db_write_failure_preserves_old_publication_and_cost[evidence]",
+          "status": "pass",
+          "duration_ms": 1575.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_graph_db_write_failure_preserves_old_publication_and_cost[relations]",
+          "status": "pass",
+          "duration_ms": 1493.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_explicit_job_retry_api_same_id_preserves_failure[failed]",
+          "status": "pass",
+          "duration_ms": 1479.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_explicit_job_retry_api_same_id_preserves_failure[needs_review]",
+          "status": "pass",
+          "duration_ms": 1268.0
+        },
+        {
+          "test_id": "tests.test_t280_followup.test_native_cleanup_path_failure_restart_keeps_access_closed",
+          "status": "pass",
+          "duration_ms": 5764.0
+        }
+      ]
+    }
+  ]
+}
