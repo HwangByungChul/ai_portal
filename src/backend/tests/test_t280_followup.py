@@ -34,11 +34,11 @@ def test_delete_cleanup_obeys_tenant_queue_and_duplicate_request(ops_rows,auth_s
         app=main.create_app(settings)
         async with app.router.lifespan_context(app):
             manager=app.state.document_manager;provider=manager.worker.gateway.provider;cleanup_entered=asyncio.Event();cleanup_release=asyncio.Event();cleanup_calls=0;original=manager.cleanup
-            async def tracked(ctx,doc):
+            async def tracked(ctx,doc,job=None):
                 nonlocal cleanup_calls
                 cleanup_calls+=1;cleanup_entered.set()
                 if order=='cleanup_before_index':await cleanup_release.wait()
-                await original(ctx,doc)
+                await original(ctx,doc,job)
             manager.cleanup=tracked
             try:
                 async with httpx.AsyncClient(transport=httpx.ASGITransport(app=app,client=('127.0.0.1',50000)),base_url='http://127.0.0.1:8000') as client:

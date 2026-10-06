@@ -1,5 +1,6 @@
 """Bounded local Job scheduler; durable DB state controls restart and exact leases."""
 import asyncio
+import secrets
 from uuid import UUID
 from app.types import AuthContext
 
@@ -30,16 +31,27 @@ class DocumentManager:
             lock=self.tenant_locks.setdefault(ctx.tenant_id,asyncio.Lock())
             async with lock:
                 async with self.semaphore:
-                    if kind=='internal_cleanup':await self.cleanup(ctx,document)
+                    if kind=='internal_cleanup':await self.cleanup(ctx,document,None if job==document else job)
                     else:await self.worker.run(ctx,job)
         except asyncio.CancelledError:raise
         except Exception:pass # Safe state is durable; no payload/error logging or remote retry.
-    async def cleanup(self,ctx,document):
-        repo=self.worker.repository
-        info=await repo.rpc(ctx,'document_cleanup',(ctx.session_id,ctx.tenant_id,document,'purge'))
-        for version in info['version_ids']:
-            repo.storage.remove(f'tenants/{ctx.tenant_id}/documents/{document}/{UUID(version)}/source')
-        await repo.rpc(ctx,'document_cleanup',(ctx.session_id,ctx.tenant_id,document,'finish'))
+    async def cleanup(self,ctx,document,job=None):
+        repo=self.worker.repository;gateway=self.worker.gateway;claim=secrets.token_bytes(32)
+        async def control(action,epoch=None):
+            return await gateway.rpc('document_cleanup_background',(ctx.user_id,ctx.tenant_id,document,job,action,self.mode,epoch,claim))
+        owned=await control('claim')
+        if not owned:return
+        job=UUID(owned['job_id']);epoch=owned['epoch']
+        try:
+            info=await control('purge',epoch)
+            for version in info['version_ids']:
+                await control('heartbeat',epoch)
+                repo.storage.remove(f'tenants/{ctx.tenant_id}/documents/{document}/{UUID(version)}/source')
+            await control('finish',epoch)
+        except BaseException:
+            try:await control('release',epoch)
+            except Exception:pass # Crash/expired lease remains durable for bounded recovery.
+            raise
     async def _poll(self):
         while True:
             await asyncio.sleep(10)
