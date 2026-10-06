@@ -5,6 +5,7 @@ import {ReadableDocuments} from './ReadableDocuments';
 import {RagEvidencePanel} from './RagEvidencePanel';
 import {subscribe} from './stream';
 import {ConversationHistory,type HistoryFilter} from './ConversationHistory';
+import {ResponseFeedback} from './ResponseFeedback';
 import type {AgentKey,AgentSummary,Conversation,DocumentRef,Message,PageResult,Run,Tenant,User} from './types';
 type Submission={client_send_id:string;agent_key:AgentKey;prompt:string;conversation_id?:string;document_refs?:DocumentRef[]};
 const stateName:Record<string,string>={queued:'접수됨',running:'답변 작성 중',cancel_requested:'취소 요청됨 · 결과 확인 중',completed:'완료 · 저장 확인됨',cancelled:'취소됨',failed:'처리 실패',blocked:'현재 처리할 수 없음',interrupted:'처리가 중단됨'};
@@ -160,11 +161,11 @@ export function ChatPage({tenant,user}:{tenant:Tenant;user:User}){
     {active&&!active.available&&<p className="blocked-note">{blockReason[active.safe_block_reason??'']??'현재 사용할 수 없습니다.'}</p>}
    </div>
    {agent==='rules_rag'&&<ReadableDocuments tenantId={org} selected={documentRefs} onChange={setDocumentRefs} disabled={sending||busy||unresolved}/>}
-   <div className="message-list" aria-label="대화 내용">{messages.map(m=><article className={'message '+m.role} key={m.message_id}><strong>{m.role==='user'?'내 질문':'저장된 답변'}</strong><p>{m.text}</p>{m.role==='assistant'&&agent==='rules_rag'&&<RagEvidencePanel tenantId={org} runId={m.run_id} onUnavailable={()=>hideAnswer(m.run_id)}/>}</article>)}
+   <div className="message-list" aria-label="대화 내용">{messages.map(m=><article className={'message '+m.role} key={m.message_id}><strong>{m.role==='user'?'내 질문':'저장된 답변'}</strong><p>{m.text}</p>{m.role==='assistant'&&agent==='rules_rag'&&<RagEvidencePanel tenantId={org} runId={m.run_id} onUnavailable={()=>hideAnswer(m.run_id)}/>}{m.role==='assistant'&&m.run_state==='completed'&&m.answer_kind==='answer'&&<ResponseFeedback key={org+':'+m.run_id} tenantId={org} runId={m.run_id} csrf={user.csrf_token} onUnavailable={()=>hideAnswer(m.run_id)}/>}</article>)}
     {messageCursor&&selected&&<button className="secondary small" onClick={()=>void moreMessages()}>메시지 더 보기</button>}
     {run&&<article className="run-card" aria-label="실행 상태"><p className="mode-tag">{modeLabel(run.execution_mode)}</p><p role="status" className="run-status">{stateName[run.state]??'상태 확인 중'}{agent==='rules_rag'&&!run.is_terminal?' · '+({retrieval:'자료 검색',generation:'근거 선택',finalizing:'근거 검증·저장'}[run.stage]??'처리 중'):''}</p>
      {draft&&!run.is_terminal&&<div className="draft"><strong>작성 중 · 저장 미확정</strong><p>{draft}</p></div>}
-     {final&&!messages.some(m=>m.run_id===run.run_id&&m.role==='assistant')&&<div className="message assistant"><strong>저장된 답변</strong><p>{run.result!.text}</p>{agent==='rules_rag'&&<RagEvidencePanel tenantId={org} runId={run.run_id} onUnavailable={()=>hideAnswer(run.run_id)}/>}</div>}
+     {final&&!messages.some(m=>m.run_id===run.run_id&&m.role==='assistant')&&<div className="message assistant"><strong>저장된 답변</strong><p>{run.result!.text}</p>{agent==='rules_rag'&&<RagEvidencePanel tenantId={org} runId={run.run_id} onUnavailable={()=>hideAnswer(run.run_id)}/>}{run.answer_kind==='answer'&&<ResponseFeedback key={org+':'+run.run_id} tenantId={org} runId={run.run_id} csrf={user.csrf_token} onUnavailable={()=>hideAnswer(run.run_id)}/>}</div>}
      {run.is_terminal&&run.answer_kind==='insufficient_evidence'&&<p className="scope-note">현재 허용 자료에서 필요한 근거를 확인하지 못했습니다.</p>}
      {run.is_terminal&&run.content_status==='unavailable'&&<p className="muted">답변을 표시할 수 없습니다. 실행 결과와 현재 권한을 확인해 주세요.</p>}
      {run.usage_status==='unknown'&&<p className="blocked-note">사용량 확인 필요 · 예약 유지</p>}

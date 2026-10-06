@@ -2,6 +2,8 @@ from datetime import datetime, timezone
 from fastapi.responses import JSONResponse
 
 MESSAGES = {
+    "FEEDBACK_CONFLICT":"평가가 변경되었습니다. 최신 평가를 확인한 뒤 다시 저장해 주세요.",
+    "FEEDBACK_NOT_READY":"현재 조회 가능한 완료 답변만 평가할 수 있습니다.",
     "METADATA_CONFLICT":"다른 변경이 반영되었습니다. 최신 대화 목록에서 다시 시도해 주세요.",
     "CONVERSATION_BUSY":"답변이 진행 중입니다. 취소하거나 완료된 뒤 삭제해 주세요.",
     "CONVERSATION_DELETED":"삭제한 대화를 다시 사용할 수 없습니다. 새 대화를 시작해 주세요.",

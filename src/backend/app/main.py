@@ -8,6 +8,7 @@ from app.auth.service import AuthService
 from app.tenants.routes import router as tenants_router
 from app.operations.routes import router as operations_router
 from app.conversations.routes import router as conversations_router
+from app.feedback.routes import router as feedback_router
 from app.config import Settings
 from app.db import open_web_pool,open_meter_pool
 from app.ai.repository import CallRepository
@@ -107,6 +108,7 @@ def create_app(settings: Settings | None = None, *, health_only: bool = False) -
         app.include_router(tenants_router)
         app.include_router(operations_router)
         app.include_router(conversations_router)
+        app.include_router(feedback_router)
         app.include_router(stream_router)
         app.include_router(documents_router)
         app.include_router(share_router)

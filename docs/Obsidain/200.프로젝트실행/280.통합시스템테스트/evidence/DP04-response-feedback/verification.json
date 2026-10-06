@@ -1,0 +1,342 @@
+{
+  "task": "DP-04",
+  "status": "verified_mock/user_acceptance_pending",
+  "scope": "owner completed-answer feedback create/change/withdraw/recreate and aggregate-only tenant management",
+  "baseline_red": "GET feedback missing, expected 200 observed 404",
+  "related_backend": {
+    "passed": 308,
+    "failed": 0,
+    "skipped": 0,
+    "junit_sha256": "c0d733ba2c19c56a837086a5f3add0af5526afd182ae959282c7365036234d23",
+    "files": [
+      "test_dp04_acceptance",
+      "test_dp03_acceptance",
+      "test_conversations",
+      "test_operations",
+      "test_rag_execution",
+      "test_schema_rls",
+      "test_migrations",
+      "test_b_schema"
+    ],
+    "new_cases": [
+      {
+        "name": "test_owner_feedback_change_replay_withdraw_recreate_preserves_ledger",
+        "status": "pass"
+      },
+      {
+        "name": "test_feedback_strict_inputs_do_not_store_or_echo_comment[delta0]",
+        "status": "pass"
+      },
+      {
+        "name": "test_feedback_strict_inputs_do_not_store_or_echo_comment[delta1]",
+        "status": "pass"
+      },
+      {
+        "name": "test_feedback_strict_inputs_do_not_store_or_echo_comment[delta2]",
+        "status": "pass"
+      },
+      {
+        "name": "test_feedback_strict_inputs_do_not_store_or_echo_comment[delta3]",
+        "status": "pass"
+      },
+      {
+        "name": "test_feedback_strict_inputs_do_not_store_or_echo_comment[delta4]",
+        "status": "pass"
+      },
+      {
+        "name": "test_feedback_strict_inputs_do_not_store_or_echo_comment[delta5]",
+        "status": "pass"
+      },
+      {
+        "name": "test_feedback_strict_inputs_do_not_store_or_echo_comment[delta6]",
+        "status": "pass"
+      },
+      {
+        "name": "test_feedback_strict_inputs_do_not_store_or_echo_comment[delta7]",
+        "status": "pass"
+      },
+      {
+        "name": "test_feedback_strict_inputs_do_not_store_or_echo_comment[delta8]",
+        "status": "pass"
+      },
+      {
+        "name": "test_feedback_strict_inputs_do_not_store_or_echo_comment[delta9]",
+        "status": "pass"
+      },
+      {
+        "name": "test_owner_tenant_admin_csrf_deleted_and_direct_sql_boundaries",
+        "status": "pass"
+      },
+      {
+        "name": "test_noncompleted_answer_cannot_be_rated[accepted]",
+        "status": "pass"
+      },
+      {
+        "name": "test_noncompleted_answer_cannot_be_rated[failed]",
+        "status": "pass"
+      },
+      {
+        "name": "test_noncompleted_answer_cannot_be_rated[cancelled]",
+        "status": "pass"
+      },
+      {
+        "name": "test_noncompleted_answer_cannot_be_rated[interrupted]",
+        "status": "pass"
+      },
+      {
+        "name": "test_noncompleted_answer_cannot_be_rated[blocked]",
+        "status": "pass"
+      },
+      {
+        "name": "test_summary_current_capability_threshold_mode_period_no_private_fields",
+        "status": "pass"
+      },
+      {
+        "name": "test_feedback_audit_failure_rollback",
+        "status": "pass"
+      },
+      {
+        "name": "test_concurrent_feedback_unique_row_and_revision",
+        "status": "pass"
+      },
+      {
+        "name": "test_rag_feedback_is_private_and_revoked_source_hides_it",
+        "status": "pass"
+      },
+      {
+        "name": "test_feedback_bigint_overflow_empty_withdraw_and_raw_roles",
+        "status": "pass"
+      },
+      {
+        "name": "test_feedback_current_authority_revoked[account]",
+        "status": "pass"
+      },
+      {
+        "name": "test_feedback_current_authority_revoked[membership]",
+        "status": "pass"
+      },
+      {
+        "name": "test_feedback_current_authority_revoked[revoked]",
+        "status": "pass"
+      },
+      {
+        "name": "test_different_sessions_delete_and_feedback_are_serialized",
+        "status": "pass"
+      }
+    ]
+  },
+  "browser": {
+    "passed": 72,
+    "failed": 0,
+    "result_sha256": "678b5ef71874f9714e7bbac5027e4f912f1df6c920a8c7453c1b3f2ec5297589",
+    "new_cases": [
+      {
+        "test_id": "D04_01_owner_save_change_withdraw_recreate_reload_no_provider",
+        "status": "passed",
+        "duration_ms": 3589
+      },
+      {
+        "test_id": "D04_02_mobile_switch_tenant_clears_private_feedback",
+        "status": "passed",
+        "duration_ms": 3368
+      },
+      {
+        "test_id": "D04_03_admin_aggregate_no_private_content_and_threshold",
+        "status": "passed",
+        "duration_ms": 5504
+      },
+      {
+        "test_id": "D04_04_conflict_loads_current_feedback_without_overwrite",
+        "status": "passed",
+        "duration_ms": 2640
+      },
+      {
+        "test_id": "D04_05_late_previous_tenant_feedback_is_discarded",
+        "status": "passed",
+        "duration_ms": 3779
+      }
+    ]
+  },
+  "frontend": {
+    "typecheck": "pass",
+    "build": "pass"
+  },
+  "primary_migration": {
+    "migration": [
+      "022_response_feedback.sql"
+    ],
+    "existing_columns_preserved": true,
+    "tables_checked": 31,
+    "snapshots": {
+      "ops.audit_events": {
+        "rows": 66,
+        "sha256": "d5e997a6e930fc340a2a9ba4cbb7b7e23d13f8aeb0d5cfb3381d48f25a786d95"
+      },
+      "ops.call_attempts": {
+        "rows": 11,
+        "sha256": "afc051f43854f1e2c7e82d8e48cf32298891cb34e73cce34de2dbae17c801ec6"
+      },
+      "ops.project_budget": {
+        "rows": 2,
+        "sha256": "eac1abeaf6a7563a2d41c670fdae5010fa0bc5bb9c3e9f247ab09ea9526ef215"
+      },
+      "ops.tenant_budgets": {
+        "rows": 4,
+        "sha256": "d11cb3a9c6c71c15646beb3540449c5ce6cf0e8a1131f86d70dd5f6495c24e1f"
+      },
+      "ops.usage_events": {
+        "rows": 22,
+        "sha256": "8627d933274ac91b8d571455c7fa5bd057d20209451139b1e893ec7b35c18ee2"
+      },
+      "portal.agent_configs": {
+        "rows": 4,
+        "sha256": "d750f4378532ae0535bf44b5c12dc16ecdc5e2653020b2e22a53b74715a9a564"
+      },
+      "portal.answer_evidence": {
+        "rows": 2,
+        "sha256": "6128a624d25f3d23a17b8e8f236551a9828ed19938cab89152057997b667a0df"
+      },
+      "portal.conversations": {
+        "rows": 12,
+        "sha256": "ecabcd64e4a0419a5543bf8ce51b98acfbe47ab13bd718c57618be6507faee0e"
+      },
+      "portal.messages": {
+        "rows": 14,
+        "sha256": "80cfe8caa65cc0d9e652e75dfee68321c1d1bf24c8db9590bd0cf628f9723b71"
+      },
+      "portal.runs": {
+        "rows": 7,
+        "sha256": "60c5042589b1547f2b0eea82f0fcc7436c355a34d6769c991f6362ba15deaf77"
+      },
+      "rag.chunks": {
+        "rows": 2,
+        "sha256": "10e6750eddd7007e7a2445ef13f9b4984e1cf850b20d8381b91b23ed57d77fb7"
+      },
+      "rag.document_versions": {
+        "rows": 2,
+        "sha256": "7ad413960fedd28e20f65c27ca84e4fea7ec8376e4ee2233246a9c310500f4dd"
+      },
+      "rag.entities": {
+        "rows": 4,
+        "sha256": "b4c0a7aa3ea0225aa60164b0b9f3fac6cb10c584d3a0e383c035b62e80417a31"
+      },
+      "rag.evidence": {
+        "rows": 2,
+        "sha256": "7fe311291662244c07091afcd9fc2a48c0a493ceea0aed7a20f02ee0c42a7477"
+      },
+      "rag.index_builds": {
+        "rows": 2,
+        "sha256": "ed3193f872483fb0409ceca418f41cb484ca19dbe856f8ec134eac3f0ab9ef02"
+      },
+      "rag.jobs": {
+        "rows": 2,
+        "sha256": "3d018ca6f6c2adf1583e7e2707a1e43754182e305cf7ac3ab596240494604fbc"
+      },
+      "rag.relation_evidence": {
+        "rows": 2,
+        "sha256": "8b3142f198e8a4f53965613e511d36fb27dc4dc01387c6ba566d14a4101be598"
+      },
+      "rag.relations": {
+        "rows": 2,
+        "sha256": "3ace993c94dd968f2e286da4e24fc2762e1384110f4d7f53e7396ba1a9f1b91a"
+      },
+      "security.accounts": {
+        "rows": 13,
+        "sha256": "de5fc4df7c5b042c87da7b072882cc5cc171b89b58a731b49876dc9442c9baa2"
+      },
+      "security.document_access": {
+        "rows": 2,
+        "sha256": "7488d6bef3719dc57bc6e38ec47895e99968d0abbac7be73e934f8adc510a4c0"
+      },
+      "security.document_publications": {
+        "rows": 2,
+        "sha256": "4e70244fcf6cf671c6b1f13a780a097706abcb50a84ae61b6fd9916e5cc2bd41"
+      },
+      "security.job_authorizations": {
+        "rows": 2,
+        "sha256": "10f978c13917cbc3b4db0dd139b53f48b2f11886b43a4b2cfe5f36fc8d836121"
+      },
+      "security.login_windows": {
+        "rows": 15,
+        "sha256": "c5a07c51262b38bd294a3b31facd750816607f85f8eec4f467f8a353ae5b7cb0"
+      },
+      "security.managed_tenants": {
+        "rows": 1,
+        "sha256": "c7248bbd067dac99fc1057bef5c702a8ddf614a6fb779f1d753d5ec28d659ce1"
+      },
+      "security.memberships": {
+        "rows": 14,
+        "sha256": "2282b5df3eccc27b8a9beebff337719b87fe48c95c2f5c2947078fdd7297e5fe"
+      },
+      "security.operation_receipts": {
+        "rows": 2,
+        "sha256": "3fc4224af6257e96edffcf5a2ed193c44ff30f023e8945245c12d58c75024669"
+      },
+      "security.platform_access": {
+        "rows": 4,
+        "sha256": "0df7f0418a371484a98204aa981dae497399b40d6f0191d52c835b5b9c329247"
+      },
+      "security.private_readers": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "security.sessions": {
+        "rows": 37,
+        "sha256": "16a2fa200aa3ac08938aa228cfd65c53a387d0e72c4109a2e5bbf40c66be85ff"
+      },
+      "security.share_grants": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "security.tenants": {
+        "rows": 2,
+        "sha256": "872ec7551deb1abb37d26411043faa53c009cb6b4ce28fc4993e222d82924940"
+      }
+    },
+    "no_provider_calls": true
+  },
+  "source_sha256": {
+    "src/backend/migrations/022_response_feedback.sql": "62ef3df72fd8b5a21ddd901612816a1c472170857adf91fee3b4a2d30f65ac70",
+    "src/backend/app/feedback/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/backend/app/feedback/routes.py": "94da2f6bd2e1d8eb3304ebbc5484b859370fda5f54ae037be2c8344ffbf41bd0",
+    "src/backend/app/feedback/repository.py": "db0c2ef3bc3f3a67fc12168ccbedb5c1ce027f3c8eef7e3ed55aaded126b01c9",
+    "src/backend/app/main.py": "cf3e8978d313a02ebc1c3c4b5e09d6cd20f72b433e4835eb158f97944af9cd9c",
+    "src/backend/app/errors.py": "2a01d01b21c197fe757900190076970232a8709259be919173e36f64c4108cf6",
+    "src/backend/scripts/portal_test_control.py": "ddd285110177f9a5aaefd961c9e5cccb4d99acfe4d1d162da1c9d765d0fe0768",
+    "src/backend/tests/test_dp04_acceptance.py": "c407a0d0f828ad677ee697f14eb38d5d6a6c7c7087199efa6bdf3ee7277f86e8",
+    "src/backend/tests/support.py": "cef9f0ec2a930fc548028fae972d1381a02abec68ed08f391e240b39c1294d18",
+    "src/backend/tests/test_migrations.py": "5b20908b1e1de4a5e69bd378836f7de7440ee8bace471b0512bdc8ea6ac3e03a",
+    "src/frontend/src/ResponseFeedback.tsx": "7f6e30747d60a4135001554af8234df3b484729aad0e73b3ab3e29cfb0ca2e54",
+    "src/frontend/src/FeedbackSummaryPage.tsx": "0221ed0d89d55d3746e91fa7d94feb9599ffc64a1048b410fe76461c4d67c6fe",
+    "src/frontend/src/ChatPage.tsx": "ba203669d097ddcbdf18467c10d70bda8e1bf0fa1677b2cdcf4eea52a1ae1dab",
+    "src/frontend/src/App.tsx": "9ca535c66cce964f3d4b52bc9c6a5a0aac43f5560d539b7008b6c2c219c68e3a",
+    "src/frontend/src/api.ts": "3edbb26b6e84f7fb947bf830196aa9b4a1e92bbc475c36b172e97fbc8a723899",
+    "src/frontend/src/types.ts": "ddb536fd1c2524d431398671291d05ef159f263d9e0dd0c205dc213ad8004faf",
+    "src/frontend/src/styles.css": "957cb4ef12940142eb103dac1c35b5d9ed7438b93b41ae1eaeec0f113c7fa066",
+    "src/frontend/tests/dp04-acceptance.spec.ts": "11bda2bee0a98f930b98a7780f46b31ae6b6f713ed4c6d9933837b859457c7e5",
+    "src/frontend/tests/safe-reporter.ts": "abd386a966cbd0999712b08a39cd6b0b5e3eb97fc5cdda8fcb53490af7d37922"
+  },
+  "actual_provider_calls": 0,
+  "acceptance": {
+    "H08-01": "pass/mock",
+    "H08-02": "pass/mock",
+    "H08-03": "pass/mock",
+    "H08-04": "pass/mock",
+    "H08-05": "pass/mock",
+    "H08-06": "pass/mock",
+    "H08-07": "pass/mock",
+    "H08-08": "pass/mock"
+  },
+  "remaining": "Q20/full load/10-tenant concurrency/clean environment restore/HA-DR/direct user acceptance unchanged. Raw admin opinions, stars, assignment/improvement closure remain future.",
+  "initial_browser_failures": {
+    "first_run": {
+      "passed": 1,
+      "failed": 4
+    },
+    "after_first_fix": {
+      "passed": 4,
+      "failed": 1
+    },
+    "resolved": "explicit labels for feedback textarea and aggregate filters; test logs out before actor switch and selects tenant after multi-tenant reload. Initial failures excluded from final pass counts."
+  }
+}
