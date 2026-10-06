@@ -76,7 +76,14 @@ class EmbeddingGateway:
         if not permit['created']:raise AppError('INDEX_NEEDS_REVIEW',409)
         call=UUID(permit['call_id']);dispatch=secrets.token_bytes(32)
         # A commit-uncertain dispatch cannot authorize a provider call.
-        if not await self.rpc('document_embedding_dispatch',(*args,call,dispatch)):raise AppError('INDEX_NEEDS_REVIEW',409)
+        try:
+            if not await self.rpc('document_embedding_dispatch',(*args,call,dispatch)):raise AppError('INDEX_NEEDS_REVIEW',409)
+        except BaseException:
+            # The saved Job capability may release only a confirmed unfired call.
+            # A commit-uncertain/dispatched call retains its reservation and slot.
+            try:await self.rpc('document_embedding_release',(*args,call))
+            except BaseException:pass
+            raise
         try:
             vectors,receipt=await self.provider.embed(call,texts,batch.token_count)
             vectors=vector_values(vectors,len(texts));cost_krw(receipt)

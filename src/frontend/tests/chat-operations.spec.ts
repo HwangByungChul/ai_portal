@@ -199,3 +199,22 @@ test('B05_31_saved_prompt_rendered_as_text_without_storage',async({page})=>{
  }
 
 });
+
+
+test('T280_late_A_admin_settings_do_not_replace_B_form',async({page})=>{
+ await login(page,'DUAL-ADM');await selectTenant(page,'A');
+ let ready!:()=>void,release!:()=>void,done!:()=>void;
+ const waiting=new Promise<void>(r=>ready=r),gate=new Promise<void>(r=>release=r),delivered=new Promise<void>(r=>done=r);
+ await page.route('**/api/v1/admin/agents/general',async route=>{
+  if(route.request().method()!=='GET'||route.request().headers()['x-tenant-id']!==fixture().tenants.A)return route.continue();
+  const response=await route.fetch();const body=await response.json();body.data.name='A 이전 조직 보호 설정';ready();await gate;
+  try{await route.fulfill({response,json:body});}catch{}finally{done();}
+ });
+ await page.getByRole('button',{name:'Agent 관리',exact:true}).click();await waiting;
+ await selectTenant(page,'B');const editor=page.getByRole('region',{name:'일반 대화 설정'});
+ await expect(editor.getByLabel('이름',{exact:true})).toHaveValue('일반 대화');release();await delivered;
+ await expect(editor.getByLabel('이름',{exact:true})).toHaveValue('일반 대화');await expect(page.getByText('A 이전 조직 보호 설정',{exact:true})).toHaveCount(0);
+ let savedTenant='';page.on('request',req=>{if(req.method()==='PATCH'&&req.url().endsWith('/admin/agents/general'))savedTenant=req.headers()['x-tenant-id'];});
+ await editor.getByLabel('이름',{exact:true}).fill('B 현재 조직 설정');await editor.getByRole('button',{name:'설정 저장',exact:true}).click();
+ await expect(editor.getByText('저장되었습니다.',{exact:true})).toBeVisible();expect(savedTenant).toBe(fixture().tenants.B);
+});
