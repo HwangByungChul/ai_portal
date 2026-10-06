@@ -17,7 +17,9 @@ class DocumentManager:
             self.notify(ctx,UUID(row['job_id']),row['job_kind'],UUID(row['document_id']))
     def notify(self,ctx,job,kind='internal_index',document=None):
         self.contexts[ctx.tenant_id]=ctx
-        key=(ctx.tenant_id,job)
+        # Cleanup purges all versions of a document; recovery and repeated
+        # DELETE requests must share the same bounded queue entry.
+        key=(ctx.tenant_id,document if kind=='internal_cleanup' else job)
         if self.closing or key in self.tasks or len(self.tasks)>=100:return
         task=asyncio.create_task(self._run(ctx,job,kind,document));self.tasks[key]=task
         task.add_done_callback(lambda done:self.tasks.pop(key,None))

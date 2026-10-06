@@ -53,15 +53,7 @@ async def delete_document(request:Request,document_id:UUID,body:RevisionRequest)
     ctx=await context(request,True);data=await repository(request).delete(ctx,document_id,body.expected_revision)
     manager=request.app.state.document_manager
     if manager:
-        task=manager.cleanup(ctx,document_id)
-        # Cleanup scheduling is recoverable from durable tombstone/Job state.
-        import asyncio
-        scheduled=asyncio.create_task(task);key=(ctx.tenant_id,document_id)
-        manager.tasks[key]=scheduled
-        def done(t):
-            manager.tasks.pop(key,None)
-            if not t.cancelled():t.exception()
-        scheduled.add_done_callback(done)
+        manager.notify(ctx,document_id,'internal_cleanup',document_id)
     return response(request,data)
 @router.get('/jobs')
 async def jobs(request:Request,cursor:str|None=None,limit:int=Query(default=20,ge=1,le=50)):
