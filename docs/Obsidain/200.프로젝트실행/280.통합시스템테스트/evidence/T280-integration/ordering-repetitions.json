@@ -1,0 +1,154 @@
+{
+  "rounds": 3,
+  "unique_cases": 8,
+  "executions": 24,
+  "results": [
+    {
+      "exit_code": 0,
+      "duration_seconds": 13.06,
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "test_id": "tests.test_t280_integration.test_delete_publish_order_keeps_other_same_entity_document[delete_before_publish]",
+          "status": "pass",
+          "duration_ms": 1706.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_delete_publish_order_keeps_other_same_entity_document[publish_before_delete]",
+          "status": "pass",
+          "duration_ms": 1365.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_private_reader_membership_revocation_blocks_publish_without_erasing_cost[revoke_before_admission]",
+          "status": "pass",
+          "duration_ms": 1319.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_private_reader_membership_revocation_blocks_publish_without_erasing_cost[revoke_after_generation]",
+          "status": "pass",
+          "duration_ms": 1719.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_document_scheduler_per_tenant_one_and_project_two[A_then_B]",
+          "status": "pass",
+          "duration_ms": 1327.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_document_scheduler_per_tenant_one_and_project_two[B_then_A]",
+          "status": "pass",
+          "duration_ms": 1321.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_terminal_cas_orders_preserve_late_usage_once[cancel_before_complete]",
+          "status": "pass",
+          "duration_ms": 1226.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_terminal_cas_orders_preserve_late_usage_once[complete_before_cancel]",
+          "status": "pass",
+          "duration_ms": 1485.0
+        }
+      ]
+    },
+    {
+      "exit_code": 0,
+      "duration_seconds": 12.91,
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "test_id": "tests.test_t280_integration.test_delete_publish_order_keeps_other_same_entity_document[delete_before_publish]",
+          "status": "pass",
+          "duration_ms": 1705.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_delete_publish_order_keeps_other_same_entity_document[publish_before_delete]",
+          "status": "pass",
+          "duration_ms": 1382.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_private_reader_membership_revocation_blocks_publish_without_erasing_cost[revoke_before_admission]",
+          "status": "pass",
+          "duration_ms": 1259.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_private_reader_membership_revocation_blocks_publish_without_erasing_cost[revoke_after_generation]",
+          "status": "pass",
+          "duration_ms": 1734.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_document_scheduler_per_tenant_one_and_project_two[A_then_B]",
+          "status": "pass",
+          "duration_ms": 1338.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_document_scheduler_per_tenant_one_and_project_two[B_then_A]",
+          "status": "pass",
+          "duration_ms": 1322.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_terminal_cas_orders_preserve_late_usage_once[cancel_before_complete]",
+          "status": "pass",
+          "duration_ms": 1210.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_terminal_cas_orders_preserve_late_usage_once[complete_before_cancel]",
+          "status": "pass",
+          "duration_ms": 1361.0
+        }
+      ]
+    },
+    {
+      "exit_code": 0,
+      "duration_seconds": 13.06,
+      "passed": 8,
+      "failed": 0,
+      "skipped": 0,
+      "tests": [
+        {
+          "test_id": "tests.test_t280_integration.test_delete_publish_order_keeps_other_same_entity_document[delete_before_publish]",
+          "status": "pass",
+          "duration_ms": 1681.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_delete_publish_order_keeps_other_same_entity_document[publish_before_delete]",
+          "status": "pass",
+          "duration_ms": 1361.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_private_reader_membership_revocation_blocks_publish_without_erasing_cost[revoke_before_admission]",
+          "status": "pass",
+          "duration_ms": 1400.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_private_reader_membership_revocation_blocks_publish_without_erasing_cost[revoke_after_generation]",
+          "status": "pass",
+          "duration_ms": 1733.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_document_scheduler_per_tenant_one_and_project_two[A_then_B]",
+          "status": "pass",
+          "duration_ms": 1325.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_document_scheduler_per_tenant_one_and_project_two[B_then_A]",
+          "status": "pass",
+          "duration_ms": 1348.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_terminal_cas_orders_preserve_late_usage_once[cancel_before_complete]",
+          "status": "pass",
+          "duration_ms": 1243.0
+        },
+        {
+          "test_id": "tests.test_t280_integration.test_terminal_cas_orders_preserve_late_usage_once[complete_before_cancel]",
+          "status": "pass",
+          "duration_ms": 1336.0
+        }
+      ]
+    }
+  ]
+}

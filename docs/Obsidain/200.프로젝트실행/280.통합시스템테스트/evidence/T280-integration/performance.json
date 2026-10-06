@@ -1,0 +1,1266 @@
+{
+  "stage": "T280",
+  "mode": "mock",
+  "paid_dispatches": 0,
+  "metrics": {
+    "agent_list": {
+      "samples": [
+        {
+          "duration_ms": 12.113,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 11.901,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 12.346,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 11.338,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 10.439,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.446,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 10.077,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.111,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.952,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.603,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.909,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.525,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.355,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.759,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.309,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.726,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.131,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.605,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.927,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.464,
+          "status": 200,
+          "scope_valid": true
+        }
+      ],
+      "count": 20,
+      "expected_count": 20,
+      "errors": 0,
+      "error_rate": 0.0,
+      "p50_ms": 9.726,
+      "p95_ms": 12.113,
+      "max_ms": 12.346,
+      "target_ms": 300,
+      "verdict": "pass"
+    },
+    "document_list": {
+      "samples": [
+        {
+          "duration_ms": 9.094,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.417,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.581,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.144,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 10.202,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.485,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 10.122,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.27,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.053,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.504,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.108,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.432,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 8.83,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.557,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 8.764,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.819,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.211,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.003,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.41,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 8.814,
+          "status": 200,
+          "scope_valid": true
+        }
+      ],
+      "count": 20,
+      "expected_count": 20,
+      "errors": 0,
+      "error_rate": 0.0,
+      "p50_ms": 9.27,
+      "p95_ms": 10.122,
+      "max_ms": 10.202,
+      "target_ms": 300,
+      "verdict": "pass"
+    },
+    "conversation_list": {
+      "samples": [
+        {
+          "duration_ms": 6.45,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.918,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.688,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.609,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.01,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.371,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 5.74,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.076,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.322,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 5.626,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.132,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.326,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 5.774,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.052,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.95,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.729,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 7.334,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.576,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 7.028,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.547,
+          "status": 200,
+          "scope_valid": true
+        }
+      ],
+      "count": 20,
+      "expected_count": 20,
+      "errors": 0,
+      "error_rate": 0.0,
+      "p50_ms": 6.371,
+      "p95_ms": 7.028,
+      "max_ms": 7.334,
+      "target_ms": 300,
+      "verdict": "pass"
+    },
+    "personal_usage": {
+      "samples": [
+        {
+          "duration_ms": 6.486,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.512,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.848,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 5.878,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 5.921,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 5.621,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 5.715,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.097,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 5.903,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 5.677,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 5.846,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 5.648,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.053,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.285,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 5.855,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.25,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 5.982,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 5.619,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.135,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 7.11,
+          "status": 200,
+          "scope_valid": true
+        }
+      ],
+      "count": 20,
+      "expected_count": 20,
+      "errors": 0,
+      "error_rate": 0.0,
+      "p50_ms": 5.921,
+      "p95_ms": 6.848,
+      "max_ms": 7.11,
+      "target_ms": 300,
+      "verdict": "pass"
+    },
+    "organization_usage": {
+      "samples": [
+        {
+          "duration_ms": 10.832,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 10.637,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 11.057,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 10.94,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 10.73,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 12.008,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 12.743,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 12.283,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 10.721,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 11.662,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 10.641,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 10.709,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 10.982,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 10.746,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 11.037,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 11.101,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 10.686,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 11.263,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 10.945,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 10.879,
+          "status": 200,
+          "scope_valid": true
+        }
+      ],
+      "count": 20,
+      "expected_count": 20,
+      "errors": 0,
+      "error_rate": 0.0,
+      "p50_ms": 10.94,
+      "p95_ms": 12.283,
+      "max_ms": 12.743,
+      "target_ms": 300,
+      "verdict": "pass"
+    },
+    "run_state": {
+      "samples": [
+        {
+          "duration_ms": 7.235,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 7.368,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 7.019,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.761,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.47,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.543,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 7.027,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.156,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.429,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.177,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.14,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.313,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.14,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.769,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.405,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.162,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.272,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.248,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.146,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 6.487,
+          "status": 200,
+          "scope_valid": true
+        }
+      ],
+      "count": 20,
+      "expected_count": 20,
+      "errors": 0,
+      "error_rate": 0.0,
+      "p50_ms": 6.405,
+      "p95_ms": 7.235,
+      "max_ms": 7.368,
+      "target_ms": 300,
+      "verdict": "pass"
+    },
+    "evidence": {
+      "samples": [
+        {
+          "duration_ms": 8.135,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 7.712,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 7.993,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 7.926,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 7.803,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 7.639,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 8.294,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 8.192,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 7.875,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 7.709,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 7.923,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 8.117,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 8.441,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 7.74,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 8.573,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 7.87,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 7.752,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 7.968,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 7.303,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 7.712,
+          "status": 200,
+          "scope_valid": true
+        }
+      ],
+      "count": 20,
+      "expected_count": 20,
+      "errors": 0,
+      "error_rate": 0.0,
+      "p50_ms": 7.875,
+      "p95_ms": 8.441,
+      "max_ms": 8.573,
+      "target_ms": 500,
+      "verdict": "pass"
+    },
+    "source": {
+      "samples": [
+        {
+          "duration_ms": 9.715,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.414,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.5,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.484,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 10.607,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.367,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 10.673,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.038,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.022,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 8.989,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.292,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.058,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.128,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 8.891,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 8.884,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 8.736,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 8.777,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 8.752,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.011,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 9.584,
+          "status": 200,
+          "scope_valid": true
+        }
+      ],
+      "count": 20,
+      "expected_count": 20,
+      "errors": 0,
+      "error_rate": 0.0,
+      "p50_ms": 9.058,
+      "p95_ms": 10.607,
+      "max_ms": 10.673,
+      "target_ms": 300,
+      "verdict": "pass"
+    },
+    "fixed_vector_acl_search": {
+      "samples": [
+        {
+          "duration_ms": 53.481,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 50.348,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 49.395,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 47.863,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 54.282,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 53.985,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 49.283,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 57.174,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 53.039,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 55.69,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 47.614,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 47.46,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 47.397,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 47.473,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 46.739,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 46.639,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 46.325,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 47.808,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 47.832,
+          "status": 200,
+          "scope_valid": true
+        },
+        {
+          "duration_ms": 48.327,
+          "status": 200,
+          "scope_valid": true
+        }
+      ],
+      "count": 20,
+      "expected_count": 20,
+      "errors": 0,
+      "error_rate": 0.0,
+      "p50_ms": 47.863,
+      "p95_ms": 55.69,
+      "max_ms": 57.174,
+      "target_ms": 500,
+      "verdict": "pass"
+    }
+  },
+  "concurrent": {
+    "samples": [
+      {
+        "duration_ms": 8.707,
+        "status": 200,
+        "scope_valid": true
+      },
+      {
+        "duration_ms": 7.646,
+        "status": 200,
+        "scope_valid": true
+      },
+      {
+        "duration_ms": 8.257,
+        "status": 200,
+        "scope_valid": true
+      },
+      {
+        "duration_ms": 8.625,
+        "status": 200,
+        "scope_valid": true
+      },
+      {
+        "duration_ms": 8.483,
+        "status": 200,
+        "scope_valid": true
+      },
+      {
+        "duration_ms": 8.731,
+        "status": 200,
+        "scope_valid": true
+      },
+      {
+        "duration_ms": 7.15,
+        "status": 200,
+        "scope_valid": true
+      },
+      {
+        "duration_ms": 7.409,
+        "status": 200,
+        "scope_valid": true
+      },
+      {
+        "duration_ms": 6.941,
+        "status": 200,
+        "scope_valid": true
+      },
+      {
+        "duration_ms": 7.302,
+        "status": 200,
+        "scope_valid": true
+      },
+      {
+        "duration_ms": 7.267,
+        "status": 200,
+        "scope_valid": true
+      },
+      {
+        "duration_ms": 7.53,
+        "status": 200,
+        "scope_valid": true
+      },
+      {
+        "duration_ms": 6.823,
+        "status": 200,
+        "scope_valid": true
+      },
+      {
+        "duration_ms": 6.894,
+        "status": 200,
+        "scope_valid": true
+      },
+      {
+        "duration_ms": 6.562,
+        "status": 200,
+        "scope_valid": true
+      },
+      {
+        "duration_ms": 6.701,
+        "status": 200,
+        "scope_valid": true
+      },
+      {
+        "duration_ms": 8.243,
+        "status": 200,
+        "scope_valid": true
+      },
+      {
+        "duration_ms": 7.277,
+        "status": 200,
+        "scope_valid": true
+      },
+      {
+        "duration_ms": 7.222,
+        "status": 200,
+        "scope_valid": true
+      },
+      {
+        "duration_ms": 7.366,
+        "status": 200,
+        "scope_valid": true
+      }
+    ],
+    "count": 20,
+    "expected_count": 20,
+    "errors": 0,
+    "error_rate": 0.0,
+    "p50_ms": 7.302,
+    "p95_ms": 8.707,
+    "max_ms": 8.731,
+    "target_ms": 500,
+    "verdict": "pass",
+    "pairs": 10,
+    "connections": 2
+  },
+  "execution_status": "completed",
+  "index_observations": [
+    {
+      "document_alias": "D-A-R1",
+      "version_alias": "v1",
+      "bytes": 686,
+      "upload_to_observed_publication_ms": 561.41,
+      "mode": "mock",
+      "real_index_latency": "not_run"
+    },
+    {
+      "document_alias": "D-A-R2",
+      "version_alias": "v1",
+      "bytes": 694,
+      "upload_to_observed_publication_ms": 342.594,
+      "mode": "mock",
+      "real_index_latency": "not_run"
+    },
+    {
+      "document_alias": "D-A-P",
+      "version_alias": "v1",
+      "bytes": 551,
+      "upload_to_observed_publication_ms": 317.669,
+      "mode": "mock",
+      "real_index_latency": "not_run"
+    },
+    {
+      "document_alias": "D-B-R1",
+      "version_alias": "v1",
+      "bytes": 664,
+      "upload_to_observed_publication_ms": 383.513,
+      "mode": "mock",
+      "real_index_latency": "not_run"
+    },
+    {
+      "document_alias": "D-B-P",
+      "version_alias": "v1",
+      "bytes": 552,
+      "upload_to_observed_publication_ms": 315.489,
+      "mode": "mock",
+      "real_index_latency": "not_run"
+    },
+    {
+      "document_alias": "D-S",
+      "version_alias": "v1",
+      "bytes": 572,
+      "upload_to_observed_publication_ms": 319.229,
+      "mode": "mock",
+      "real_index_latency": "not_run"
+    },
+    {
+      "document_alias": "D-S",
+      "version_alias": "v2",
+      "bytes": 687,
+      "upload_to_observed_publication_ms": 313.387,
+      "mode": "mock",
+      "real_index_latency": "not_run"
+    }
+  ],
+  "corpus": {
+    "versions": 7,
+    "chunks": 7,
+    "entities": 23,
+    "relations": 16,
+    "evidence": 18
+  },
+  "calls": [
+    {
+      "operation": "embed_document",
+      "state": "settled",
+      "count": 7
+    },
+    {
+      "operation": "embed_query",
+      "state": "settled",
+      "count": 1
+    },
+    {
+      "operation": "generate_rag",
+      "state": "settled",
+      "count": 1
+    }
+  ],
+  "environment": {
+    "os": "Darwin",
+    "os_version": "26.7.1",
+    "architecture": "x86_64",
+    "cpu": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+    "memory_bytes": "17179869184",
+    "python": "3.13.2",
+    "node": "v22.23.1",
+    "postgresql": "15.18 (Homebrew)",
+    "pgvector": "0.8.6",
+    "sdk_openai": "3.24.0",
+    "workers": 1,
+    "provider": "Mock",
+    "external_network_calls": 0,
+    "free_disk_bytes": 64722341888,
+    "source_hashes": {
+      "data/synthetic/documents/D-A-R1.md": "b21abba9786aa11c43d57a3899e52208bb253af342ea691ad198ca9b9639f509",
+      "data/synthetic/documents/D-A-R2.md": "84ed0eb5be4874b7afaef43dcf177948f320e18b235c9b07f03526bce8806a7c",
+      "data/synthetic/documents/D-A-P.md": "b3b5b3500dc9befe7d50b7eba3438a90a6efbe56b08cb7c8400a5e3b5a262d46",
+      "data/synthetic/documents/D-B-R1.md": "5bb42596cd3c5e656e5aa543ec4d939f9f8c83bd831f7434d707a64b1198bf07",
+      "data/synthetic/documents/D-B-P.md": "049c0103b6b3f426e2bd0a64c7f004d146b55b9f64432d187ba6b9a9b6becb90",
+      "data/synthetic/documents/D-S-v1.md": "b0a98ddc64c3b95c9312cc08ad1626e77c402ebcaea69ef0a9a13a039711c026",
+      "data/synthetic/documents/D-S-v2.md": "e2d5db78c6c61638a30a2b61efaad9fd7cb59b4eb2dbad77bcdd3b4058efc859"
+    },
+    "lock_hashes": {
+      "src/frontend/package-lock.json": "401c8c23464f53627b0c6f3d9aee6ddb578ea26eaf84e78237556b4e7a3a03f0",
+      "src/backend/requirements.lock": "d8504cbc39ad9e40cadebaeb73143a5ae7361c580d89c9ba519f2b09229ff3b9"
+    }
+  },
+  "restart": {
+    "native_app_pid_changed": true,
+    "database_restarted": true,
+    "same_marked_database": true,
+    "saved_result_and_source_preserved": true,
+    "same_send_same_run": true,
+    "calls_evidence_accounted_reserved_unchanged": true,
+    "additional_provider_calls": 0
+  },
+  "verdict": "pass",
+  "runtime_connections_after": 0,
+  "fixture_removed": true,
+  "source_store_removed": true,
+  "cluster_after": "stopped",
+  "duration_seconds": 12.02
+}

@@ -1,0 +1,47 @@
+{
+  "before_fix": {
+    "exit_code": 1,
+    "duration_seconds": 4.71,
+    "passed": 1,
+    "failed": 1,
+    "skipped": 0,
+    "tests": [
+      {
+        "test_id": "tests.test_t280_integration.test_document_scheduler_per_tenant_one_and_project_two[A_then_B]",
+        "status": "fail",
+        "duration_ms": 1564.0
+      },
+      {
+        "test_id": "tests.test_t280_integration.test_document_scheduler_per_tenant_one_and_project_two[B_then_A]",
+        "status": "pass",
+        "duration_ms": 1473.0
+      }
+    ]
+  },
+  "expected": "A2 remains queued while A1/B1 run; tenant-one/project-two",
+  "observed_failure": "A_then_B: A2 state needs_review instead of queued",
+  "product_defect": "tenant limit was not applied before project semaphore and worker claim",
+  "changed_source": "src/backend/app/documents/manager.py",
+  "fix": "tenant lock before project semaphore",
+  "postfix_case_ids": [
+    "tests.test_t280_integration.test_document_scheduler_per_tenant_one_and_project_two[A_then_B]",
+    "tests.test_t280_integration.test_document_scheduler_per_tenant_one_and_project_two[B_then_A]"
+  ],
+  "final_verdict": "pass",
+  "final_repetitions_file": "ordering-repetitions.json",
+  "deployment_scope": "single native process/workers1; not distributed scheduler proof",
+  "test_setup_failures_separate": [
+    {
+      "scope": "initial reader tests",
+      "reason": "wrong table name, then intentionally frozen private-reader list; changed test to current reader membership revocation without weakening production guards"
+    },
+    {
+      "scope": "one related test command",
+      "reason": "nonexistent test_rag_http.py, exit4/test0; corrected to test_rag_api.py"
+    },
+    {
+      "scope": "one measurement invocation",
+      "reason": "direct file invocation missing scripts module; no measurement performed; corrected to -m scripts.t280_measure and checked fresh output mtime"
+    }
+  ]
+}

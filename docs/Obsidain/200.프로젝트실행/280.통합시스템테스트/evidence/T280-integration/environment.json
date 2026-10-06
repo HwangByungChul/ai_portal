@@ -1,0 +1,29 @@
+{
+  "os": "Darwin",
+  "os_version": "26.7.1",
+  "architecture": "x86_64",
+  "cpu": "Intel(R) Core(TM) i7-9750H CPU @ 2.60GHz",
+  "memory_bytes": "17179869184",
+  "python": "3.13.2",
+  "node": "v22.23.1",
+  "postgresql": "15.18 (Homebrew)",
+  "pgvector": "0.8.6",
+  "sdk_openai": "3.24.0",
+  "workers": 1,
+  "provider": "Mock",
+  "external_network_calls": 0,
+  "free_disk_bytes": 64722341888,
+  "source_hashes": {
+    "data/synthetic/documents/D-A-R1.md": "b21abba9786aa11c43d57a3899e52208bb253af342ea691ad198ca9b9639f509",
+    "data/synthetic/documents/D-A-R2.md": "84ed0eb5be4874b7afaef43dcf177948f320e18b235c9b07f03526bce8806a7c",
+    "data/synthetic/documents/D-A-P.md": "b3b5b3500dc9befe7d50b7eba3438a90a6efbe56b08cb7c8400a5e3b5a262d46",
+    "data/synthetic/documents/D-B-R1.md": "5bb42596cd3c5e656e5aa543ec4d939f9f8c83bd831f7434d707a64b1198bf07",
+    "data/synthetic/documents/D-B-P.md": "049c0103b6b3f426e2bd0a64c7f004d146b55b9f64432d187ba6b9a9b6becb90",
+    "data/synthetic/documents/D-S-v1.md": "b0a98ddc64c3b95c9312cc08ad1626e77c402ebcaea69ef0a9a13a039711c026",
+    "data/synthetic/documents/D-S-v2.md": "e2d5db78c6c61638a30a2b61efaad9fd7cb59b4eb2dbad77bcdd3b4058efc859"
+  },
+  "lock_hashes": {
+    "src/frontend/package-lock.json": "401c8c23464f53627b0c6f3d9aee6ddb578ea26eaf84e78237556b4e7a3a03f0",
+    "src/backend/requirements.lock": "d8504cbc39ad9e40cadebaeb73143a5ae7361c580d89c9ba519f2b09229ff3b9"
+  }
+}

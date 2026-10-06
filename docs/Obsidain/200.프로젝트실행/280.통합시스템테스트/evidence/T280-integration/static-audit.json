@@ -1,0 +1,66 @@
+{
+  "sdk_static_audit": {
+    "verdict": "pass",
+    "scope": "Python AST imports and known SDK create-call sites in backend/app and common_core; manual call-chain review",
+    "imports": [
+      {
+        "file": "src/backend/app/ai/providers.py",
+        "line": 5,
+        "module": "openai",
+        "allowed": true
+      },
+      {
+        "file": "src/backend/app/ai/providers.py",
+        "line": 6,
+        "module": "openai.types.chat",
+        "allowed": true
+      },
+      {
+        "file": "src/backend/app/documents/embedding.py",
+        "line": 45,
+        "module": "openai.types.create_embedding_response",
+        "allowed": true
+      },
+      {
+        "file": "src/backend/app/documents/embedding.py",
+        "line": 49,
+        "module": "openai",
+        "allowed": true
+      }
+    ],
+    "sdk_call_sites": [
+      {
+        "file": "src/backend/app/ai/providers.py",
+        "line": 53,
+        "call": "self.client.chat.completions.create",
+        "allowed": true
+      },
+      {
+        "file": "src/backend/app/documents/embedding.py",
+        "line": 55,
+        "call": "self.client.embeddings.create",
+        "allowed": true
+      }
+    ],
+    "allowlist": [
+      "src/backend/app/ai/providers.py",
+      "src/backend/app/documents/embedding.py"
+    ],
+    "generation_general_and_rag": "shared OpenAIProvider through AiGateway/generation",
+    "embedding_document_and_query": "OpenAIEmbeddingProvider through EmbeddingGateway/QueryGateway",
+    "max_retries": 0,
+    "fixed_endpoint": "https://api.openai.com/v1",
+    "runtime_dynamic_import_or_arbitrary_network_exhaustive_proof": false
+  },
+  "registered_secret_scan": {
+    "verdict": "pass",
+    "files_scanned": 26,
+    "leaks": 0,
+    "private_values_redacted": true,
+    "scope": "current frontend dist and T280 private test/build logs"
+  },
+  "protected_title_body_marker_fault_injection": {
+    "verdict": "not_run",
+    "reason": "등록 비밀값 검사와 별개로 보호 표식 주입 후 API/usage/Job/로그 전체 비노출 통합 대조 필요"
+  }
+}
