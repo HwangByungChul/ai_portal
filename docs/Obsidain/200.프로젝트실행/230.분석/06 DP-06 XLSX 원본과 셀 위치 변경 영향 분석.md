@@ -24,3 +24,5 @@ ZIP은 디스크로 펼치지 않고 부품·관계·타입을 먼저 확인한�
 대안은 범용 openpyxl 추가, Excel 실행 변환, 현재 표준ZIP+defusedxml 격리 구현이다. 범용 라이브러리는 호환 범위가 넓지만 지원하지 않는 구조를 별도 검출해야 하고 의존성이 늘어난다. Excel 실행은 설치/자동 실행/재현성 부담이 있다. 승인된 제한 범위와 비용0 원칙에 맞춰 현재 의존성만 사용하는 격리 파서를 채택한다. 구조 허용 목록은 DOCX와 독립적이다.
 
 공식 근거: [셀 유형/inlineStr](https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.cell), [숫자 서식과 날짜](https://learn.microsoft.com/en-us/dotnet/api/documentformat.openxml.spreadsheet.numberingformat). 셀 값과 화면 서식의 차이를 고려한 프로젝트의 보수적 설계다.
+
+일반 Excel 생성 파일의 빈 workbookProtection 메타데이터는 허용하되 속성/내용이 있는 보호 설정은 거부한다. 관계의 `/xl/...` 표기는 파일시스템 경로가 아니라 패키지 내부 절대 URI이며 정확한 허용 ZIP 키로만 해석한다. ZIP 항목 자체의 절대/상위 경로는 계속 거부한다. 셀 주소 레이블과 값은 별도 줄로 구성해 기존 GraphRAG 업무명 추출을 유지한다.
