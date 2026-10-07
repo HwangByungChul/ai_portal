@@ -413,3 +413,68 @@ def test_summary_new_error_http_contract(ops_rows,auth_settings,monkeypatch,case
         error=reply.json()['error'];assert error['code']==({'limit':'SUMMARY_LIMIT_EXCEEDED','not_ready':'SUMMARY_NOT_READY'}[case])
         assert error['message'] and error['retryable'] is False
         assert reply.headers['cache-control']=='no-store' and '첫째' not in reply.text
+
+
+def test_summary_unfired_cleanup_failure_latches_manager_and_blocks_new_admission(ops_rows,auth_settings,monkeypatch):
+    from decimal import Decimal
+    from fastapi.testclient import TestClient
+    from app.main import create_app
+    from app.ai.rag_gateway import RagCallRepository
+    from app.ai.providers import MockProvider
+    from app.execution.manager import ExecutionManager
+    from app.execution.stream import StreamHub
+    f=ops_rows;settings=auth_settings.model_copy(update={'execution_enabled':False})
+    docs=DocumentRepository(f.pool,SourceStorage(settings.source_root),settings.login_hmac_secret.get_secret_value())
+    snapshots=[];failures=[];dispatches=[];releases=[]
+    class Provider(SummaryMockProvider):
+        calls=0
+        async def generate(self,*args):self.calls+=1;return await super().generate(*args)
+    class Repository(CallRepository):
+        async def fail(self,ticket,code):
+            saved=await super().fail(ticket,code);failures.append((code,saved));return saved
+    def debt(run_id):
+        with f.db.admin_connection() as c:
+            return (
+                c.execute('SELECT state,slot_held,reserved_krw,dispatched_at FROM ops.call_attempts WHERE run_id=%s',(run_id,)).fetchall(),
+                c.execute("SELECT reserved_krw,accounted_krw,active_slot FROM ops.project_budget WHERE mode='mock'").fetchall(),
+                c.execute("SELECT t.reserved_krw,t.accounted_krw,t.active_slot FROM ops.tenant_budgets t JOIN ops.project_budget p USING(budget_id) WHERE p.mode='mock' ORDER BY t.tenant_id").fetchall(),
+                c.execute('SELECT event_kind,delta_reserved_krw,delta_accounted_krw FROM ops.usage_events u JOIN ops.call_attempts c USING(tenant_id,call_id) WHERE c.run_id=%s ORDER BY u.created_at',(run_id,)).fetchall(),
+            )
+    async def reject_dispatch(repo,ticket,call_id):
+        dispatches.append(call_id);snapshots.append(debt(ticket.run.run_id));raise ExecutionError('PERMIT_EXPIRED')
+    async def failed_release(repo,ticket,call_id):
+        releases.append(call_id);raise ExecutionError('LEDGER_UNAVAILABLE')
+    monkeypatch.setattr(RagCallRepository,'dispatch',reject_dispatch)
+    monkeypatch.setattr(RagCallRepository,'release_unfired',failed_release)
+    async def check():
+        ctx=await f.context('A-U1','A');ids=await publish(f,docs,await f.context('A-ADM','A'),raw=RAW)
+        other_ids=await publish(f,docs,await f.context('B-ADM','B'),raw=RAW)
+        data=await admit(f,docs,ctx,ids);run_id=UUID(data['run_id']);provider=Provider()
+        async with open_meter_pool(f.db.runtime_dsn('ai_meter')) as meter:
+            repo=Repository(f.pool,meter,PERIOD);engine=SummaryExecutor(repo,docs,provider)
+            manager=ExecutionManager(repo,MockProvider(),'mock',StreamHub(),summary=engine)
+            await manager._run(ctx,run_id)
+            assert failures==[('LEDGER_UNAVAILABLE',True)]
+            assert provider.calls==0 and len(dispatches)==1 and releases==dispatches
+            assert engine.stop_latch and manager.gateway.stop_latch
+            assert snapshots[0]==debt(run_id)
+            assert snapshots[0][0]==[('reserved',True,Decimal('3.64'),None)]
+            assert snapshots[0][1][0][0]==Decimal('3.64') and snapshots[0][1][0][2]==1
+            assert any(reserved==0 and slot==0 for reserved,accounted,slot in snapshots[0][2])  # Another tenant has capacity.
+            assert snapshots[0][3]==[('reserve',Decimal('3.64'),Decimal('0'))]
+            view=await SummaryRepository(docs).read(ctx,run_id)
+            assert view['state']=='failed' and view['error_code']=='LEDGER_UNAVAILABLE' and view['result'] is None and view['evidence']==[]
+            manager.notify(ctx,uuid4());assert manager.tasks=={}
+            await engine.provider.close();await manager.gateway.provider.close()
+        return manager,other_ids,run_id
+    manager,other_ids,run_id=f.run(check())
+    with TestClient(create_app(settings),base_url='http://127.0.0.1:8000',client=('127.0.0.1',50000)) as client:
+        client.app.state.execution=manager
+        login=client.post('/api/v1/auth/login',headers={'Origin':settings.origin,'X-Requested-With':'ai-portal'},json={'login_id':'b-u1','password':f.passwords['B-U1']});assert login.status_code==200
+        headers={'Origin':settings.origin,'X-Requested-With':'ai-portal','X-CSRF-Token':login.json()['data']['csrf_token'],'X-Tenant-ID':str(f.tenant_ids['B'])}
+        reply=client.post('/api/v1/document-summaries',headers=headers,json={'client_send_id':str(uuid4()),'document_ref':{k:other_ids[k] for k in ('document_id','version_id')},'bullet_count':3})
+        assert reply.status_code==503 and reply.json()['error']['code']=='PROJECT_STOPPED'
+    assert snapshots[0]==debt(run_id)
+    with f.db.admin_connection() as c:
+        assert c.execute('SELECT count(*) FROM portal.summary_requests').fetchone()[0]==1
+        assert c.execute('SELECT count(*) FROM portal.summary_evidence').fetchone()[0]==0

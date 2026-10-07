@@ -52,4 +52,9 @@ async def generation(repository,provider,ticket,sources,messages):
     repo=RagCallRepository(repository,'generate_rag',sources);gateway=AiGateway(repo,provider)
     from dataclasses import replace
     async def buffer_only(text):pass
-    return await gateway.execute(replace(ticket,messages=messages),buffer_only)
+    outcome=await gateway.execute(replace(ticket,messages=messages),buffer_only)
+    # execute() may latch a ledger failure during its finally cleanup after choosing an outcome.
+    if gateway.stop_latch:
+        code=outcome.safe_error_code if outcome.safe_error_code in ('LEDGER_UNAVAILABLE','LEDGER_CONFLICT','USAGE_INVALID','PROJECT_STOPPED') else 'LEDGER_UNAVAILABLE'
+        return ProviderOutcome(None,outcome.receipt,outcome.end_status,code)
+    return outcome

@@ -157,3 +157,30 @@ def test_provider_request_identifier_ascii_length_boundary(ops_rows,length,valid
             data=await repo.settle(t,c,UsageReceipt(1000,100,1100,'gpt-4o-mini','default','s'*length),'observed')
             assert data['state']==('settled' if valid else 'usage_unknown') and data['invalid']==(not valid)
     f.run(check())
+
+
+@pytest.mark.parametrize('latched,code,expected',[
+    (False,None,None),(True,None,'LEDGER_UNAVAILABLE'),(True,'PERMIT_EXPIRED','LEDGER_UNAVAILABLE'),
+    (True,'LEDGER_UNAVAILABLE','LEDGER_UNAVAILABLE'),(True,'LEDGER_CONFLICT','LEDGER_CONFLICT'),
+    (True,'USAGE_INVALID','USAGE_INVALID'),(True,'PROJECT_STOPPED','PROJECT_STOPPED'),
+])
+def test_shared_generation_propagates_final_latch_without_losing_receipt(monkeypatch,latched,code,expected):
+    from types import SimpleNamespace
+    from app.ai.types import ProviderOutcome
+    from app.ai.rag_gateway import generation
+    receipt=UsageReceipt(1000,100,1100,'gpt-4o-mini','default','synthetic-request')
+    original=ProviderOutcome('buffered-body',receipt,'observed',code)
+    class Gateway:
+        stop_latch=False
+        def __init__(self,*args):pass
+        async def execute(self,*args):
+            try:return original
+            finally:self.stop_latch=latched
+    monkeypatch.setattr('app.ai.rag_gateway.AiGateway',Gateway)
+    repo=SimpleNamespace(web_pool=None,meter_pool=None,period=None)
+    from app.ai.repository import RunTicket
+    ticket=RunTicket(None,None,'synthetic-worker',[])
+    outcome=asyncio.run(generation(repo,None,ticket,(),[]))
+    assert outcome.safe_error_code==expected and outcome.receipt is receipt and outcome.end_status=='observed'
+    assert outcome.body==('buffered-body' if not latched else None)
+    if not latched:assert outcome is original
