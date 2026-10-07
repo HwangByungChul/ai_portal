@@ -1,0 +1,5 @@
+import type {SummaryEvidence} from './types';
+import {DOCX_MEDIA_TYPE,XLSX_MEDIA_TYPE} from './types';
+export function SummaryEvidencePanel({rows,busy,onDownload}:{rows:SummaryEvidence[];busy:boolean;onDownload:(row:SummaryEvidence)=>void}){
+ return <section className="evidence-panel summary-evidence" aria-label="요약 출처"><h2>요약 출처</h2>{rows.map(row=><article key={row.ordinal}><strong>[{row.ordinal+1}] {row.title} · v{row.version_no}</strong><p>{row.source_media_type===DOCX_MEDIA_TYPE||row.source_media_type===XLSX_MEDIA_TYPE?row.structure_locations?.map(x=>x.kind==='paragraph'?`본문 ${x.paragraph}문단`:x.kind==='table_cell'?`표 ${x.table} · ${x.row}행 ${x.column}열`:x.kind==='cell'?`시트 ${x.sheet_name} · ${x.cell}셀`:`시트 ${x.sheet_name}`).join(' / '):row.source_media_type==='application/pdf'?`원문 ${row.page_start}~${row.page_end}페이지`:`원문 ${row.location.line_start}~${row.location.line_end}행`}</p><blockquote>{row.quote}</blockquote><button type="button" className="secondary small" disabled={busy} onClick={()=>onDownload(row)}>원문 내려받기</button></article>)}</section>;
+}

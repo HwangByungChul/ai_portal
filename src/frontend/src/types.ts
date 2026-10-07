@@ -37,3 +37,9 @@ export interface Evidence {ordinal:number;content_status:'available'|'unavailabl
 export type Rating='positive'|'negative';
 export interface ResponseFeedbackValue {run_id:string;active:boolean;revision:number;rating:Rating|null;comment:string|null;updated_at:string|null;replayed?:boolean}
 export interface FeedbackSummary {period:string;execution_mode:Mode;minimum_participants:number;items:{agent_key:AgentKey;status:'empty'|'suppressed'|'available';positive_count:number|null;negative_count:number|null;total_count:number|null}[]}
+
+export type SummaryMediaType='text/plain'|'text/markdown'|'application/pdf'|typeof DOCX_MEDIA_TYPE|typeof XLSX_MEDIA_TYPE;
+export interface SummaryEvidence {ordinal:number;document_id:string;version_id:string;title:string;version_no:number;quote:string;location:{start_offset:number;end_offset:number;line_start:number;line_end:number};source_url:string;source_media_type:SummaryMediaType;structure_locations?:Evidence['structure_locations'];page_start?:number;page_end?:number}
+export interface SummaryAdmission {run_id:string;state:string;revision:number;replayed:boolean}
+export interface SummaryRun extends Omit<Run,'result'> {task_kind:'document_summary';bullet_count:3|5;parent_run_id:string|null;result:{text:string}|null;evidence:SummaryEvidence[]}
+export interface SummarySubmission {client_send_id:string;document_ref:DocumentRef;bullet_count:3|5}

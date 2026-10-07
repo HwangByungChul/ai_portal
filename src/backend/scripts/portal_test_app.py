@@ -5,6 +5,7 @@ from app import main
 from app.ai.providers import MockProvider
 from app.ai.types import ProviderOutcome
 from app.ai.rag_provider import RagMockProvider
+from app.ai.summary_provider import SummaryMockProvider
 from app.documents.embedding import MockEmbeddingProvider
 from app.config import Settings
 from scripts.devdb import _read_private
@@ -26,6 +27,13 @@ class BrowserRag(RagMockProvider):
             await on_delta('공개금지 RAG 초안')
             while json.loads(_read_private(RUNTIME/'B05-provider-control.json'))['behavior']=='slow-rag':await asyncio.sleep(.05)
         return await super().generate(claim,messages,on_delta)
+class BrowserSummary(SummaryMockProvider):
+    async def generate(self,claim,messages,on_delta):
+        # Private disposable browser fixture only; production provider is unchanged.
+        if json.loads(_read_private(RUNTIME/'B05-provider-control.json'))['behavior']=='slow-rag':
+            await on_delta('공개금지 요약 초안')
+            while json.loads(_read_private(RUNTIME/'B05-provider-control.json'))['behavior']=='slow-rag':await asyncio.sleep(.05)
+        return await super().generate(claim,messages,on_delta)
 class BrowserEmbedding(MockEmbeddingProvider):
     async def embed(self,claim,texts,tokens):
         behavior=json.loads(_read_private(RUNTIME/'B05-provider-control.json'))['behavior']
@@ -35,5 +43,5 @@ class BrowserEmbedding(MockEmbeddingProvider):
 
 def create_app():
     settings=Settings(openai_api_key=None,mode='mock',execution_enabled=True)
-    main.MockProvider=BrowserMock;main.RagMockProvider=BrowserRag;main.MockEmbeddingProvider=BrowserEmbedding
+    main.SummaryMockProvider=BrowserSummary;main.MockProvider=BrowserMock;main.RagMockProvider=BrowserRag;main.MockEmbeddingProvider=BrowserEmbedding
     return main.create_app(settings)
