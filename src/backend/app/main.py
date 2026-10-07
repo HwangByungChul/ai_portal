@@ -22,6 +22,9 @@ from app.documents.user_routes import router as user_documents_router
 from app.documents.share_routes import router as share_router
 from app.documents.evidence_routes import router as evidence_router
 from app.execution.rag import RagExecutor
+from app.execution.document_summary import SummaryExecutor
+from app.execution.summary_routes import router as summary_router
+from app.ai.summary_provider import SummaryMockProvider,SummaryOpenAIProvider
 from app.ai.rag_provider import RagMockProvider,RagOpenAIProvider
 from app.documents.repository import DocumentRepository
 from app.documents.storage import SourceStorage
@@ -54,7 +57,8 @@ def create_app(settings: Settings | None = None, *, health_only: bool = False) -
                         provider=OpenAIProvider(settings.openai_api_key.get_secret_value()) if settings.mode=='real' else MockProvider()
                         repository=CallRepository(pool,meter,settings.budget_period)
                         rag=RagExecutor(repository,app.state.documents,OpenAIEmbeddingProvider(settings.openai_api_key.get_secret_value()) if settings.mode=='real' else MockEmbeddingProvider(),RagOpenAIProvider(settings.openai_api_key.get_secret_value()) if settings.mode=='real' else RagMockProvider())
-                        manager=ExecutionManager(repository,provider,settings.mode,StreamHub(),rag=rag)
+                        summary=SummaryExecutor(repository,app.state.documents,SummaryOpenAIProvider(settings.openai_api_key.get_secret_value()) if settings.mode=='real' else SummaryMockProvider())
+                        manager=ExecutionManager(repository,provider,settings.mode,StreamHub(),rag=rag,summary=summary)
                         await manager.start();stack.push_async_callback(manager.close);app.state.execution=manager
                     if settings.index_enabled:
                         index=await stack.enter_async_context(open_index_pool(settings.index_dsn.get_secret_value()))
@@ -69,7 +73,7 @@ def create_app(settings: Settings | None = None, *, health_only: bool = False) -
     @app.middleware('http')
     async def request_id(request: Request, call_next):
         request.state.request_id = str(uuid4())
-        if request.method=='POST' and (request.url.path in ('/api/v1/runs','/api/v1/conversations') or
+        if request.method=='POST' and (request.url.path in ('/api/v1/runs','/api/v1/conversations') or request.url.path.startswith('/api/v1/document-summaries') or
                 (request.url.path.startswith('/api/v1/runs/') and request.url.path.endswith('/cancel'))):
             # Bound the actual stream before JSON/Pydantic parsing; Content-Length is not trusted.
             body=bytearray()
@@ -96,7 +100,7 @@ def create_app(settings: Settings | None = None, *, health_only: bool = False) -
 
     @app.exception_handler(RequestValidationError)
     async def validation_error(request, error):
-        allowed = {'login_id', 'password','user_id','active','role','expected_revision','cursor','limit','agent_key','name','description','instructions','enabled','local_cap_krw','allocated_cap_krw','period','client_send_id','conversation_id','client_conversation_id','prompt','run_id','document_refs','document_id','version_id'}
+        allowed = {'login_id', 'password','user_id','active','role','expected_revision','cursor','limit','agent_key','name','description','instructions','enabled','local_cap_krw','allocated_cap_krw','period','client_send_id','conversation_id','client_conversation_id','prompt','run_id','document_refs','document_ref','bullet_count','document_id','version_id'}
         fields = sorted({str(item['loc'][-1]) if item['loc'][-1] in allowed else 'body' for item in error.errors()})
         return response(request, error=AppError('REQUEST_INVALID', 422), field_paths=fields)
 
@@ -115,6 +119,7 @@ def create_app(settings: Settings | None = None, *, health_only: bool = False) -
         app.include_router(user_documents_router)
         app.include_router(share_router)
         app.include_router(evidence_router)
+        app.include_router(summary_router)
     return app
 
 

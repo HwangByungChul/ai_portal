@@ -11,8 +11,10 @@ def test_full_catalog_and_new_privilege_boundary(documents):
         assert conn.execute("SELECT extversion,n.nspname FROM pg_extension e JOIN pg_namespace n ON n.oid=e.extnamespace WHERE extname='vector'").fetchone()==('0.8.6','rag')
         rows=conn.execute("SELECT c.relrowsecurity,c.relforcerowsecurity,r.rolname FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace JOIN pg_roles r ON r.oid=c.relowner WHERE c.relkind='r' AND n.nspname='rag'").fetchall()
         assert len(rows)==8 and all(r==(True,True,'ai_owner') for r in rows)
-        for table,col in [('rag.document_versions','title'),('rag.document_versions','source_object_key'),('rag.chunks','text'),('rag.chunks','embedding'),('rag.evidence','exact_quote'),('portal.answer_evidence','quote_snapshot')]:
+        for table,col in [('rag.document_versions','source_object_key'),('rag.chunks','text'),('rag.chunks','embedding'),('rag.evidence','exact_quote'),('portal.answer_evidence','quote_snapshot')]:
             assert not conn.execute('SELECT has_column_privilege(%s,%s,%s,\'SELECT\')',('ai_policy_executor',table,col)).fetchone()[0]
+        # SQL023 intentionally grants only title metadata for the authorized owner-private listing.
+        assert conn.execute("SELECT has_column_privilege('ai_policy_executor','rag.document_versions','title','SELECT')").fetchone()[0]
         for table in ['rag.document_versions','rag.chunks','rag.evidence','portal.answer_evidence']:
             assert not conn.execute('SELECT has_table_privilege(%s,%s,\'SELECT\')',('ai_meter',table)).fetchone()[0]
         assert conn.execute("SELECT count(*) FROM pg_roles WHERE rolname IN ('ai_owner','ai_policy_executor') AND NOT rolcanlogin").fetchone()[0]==2

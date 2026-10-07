@@ -33,6 +33,7 @@ class StrictReceiptClient(AsyncOpenAI):
 
 class OpenAIProvider:
     response_format=None
+    max_completion_tokens=1024
     def __init__(self,api_key,*,http_client=None):
         # Passing empty optional identity values prevents unrelated environment defaults.
         http_client=http_client or httpx2.AsyncClient(trust_env=False,timeout=60.0)
@@ -51,7 +52,7 @@ class OpenAIProvider:
         chunks=[];size=0;receipt=None;finished=False;code=None;stream=None;invalid=False
         try:
             stream=await self.client.chat.completions.create(model='gpt-4o-mini',messages=messages,
-                service_tier='default',max_completion_tokens=1024,stream=True,stream_options={'include_usage':True},n=1,store=False,**({'response_format':self.response_format} if self.response_format is not None else {}))
+                service_tier='default',max_completion_tokens=self.max_completion_tokens,stream=True,stream_options={'include_usage':True},n=1,store=False,**({'response_format':self.response_format} if self.response_format is not None else {}))
             request_id=stream.response.headers.get('x-request-id')
             async for chunk in stream:
                 if chunk.model not in ('gpt-4o-mini','gpt-4o-mini-2024-07-18') or chunk.service_tier!='default':invalid=True

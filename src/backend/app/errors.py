@@ -2,6 +2,9 @@ from datetime import datetime, timezone
 from fastapi.responses import JSONResponse
 
 MESSAGES = {
+    'SUMMARY_LIMIT_EXCEEDED': '문서가 요약 처리 한도를 초과했습니다. 내용을 줄여 주세요.',
+    'SUMMARY_NOT_READY': '검증이 완료된 요약만 내려받을 수 있습니다.',
+    'SUMMARY_OUTPUT_INVALID': '요약 결과를 검증할 수 없습니다.',
     'XLSX_INVALID': 'XLSX 파일 형식 또는 셀 값을 확인해 주세요.',
     'XLSX_UNSUPPORTED': '수식·숨김·병합·날짜/통화/백분율 서식 등은 현재 지원하지 않습니다.',
     'XLSX_ENCRYPTED': '암호화되지 않은 XLSX를 등록해 주세요.',

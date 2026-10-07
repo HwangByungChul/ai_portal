@@ -31,6 +31,7 @@ class RunTicket:
     messages:list=field(repr=False)
     agent:str="general"
     document_refs:tuple=()
+    task_kind:str="chat"
 
 class CallRepository:
     def __init__(self,web_pool,meter_pool,period):
@@ -47,15 +48,19 @@ class CallRepository:
                         row=await (await conn.execute('SELECT security.'+name+'('+','.join(['%s']*len(args))+') AS data',args)).fetchone()
             return row['data']
         except (psycopg.Error,ValueError) as error:
-            raise ExecutionError(CODES.get(getattr(error,'sqlstate',None),'LEDGER_UNAVAILABLE')) from None
+            code='SUMMARY_OUTPUT_INVALID' if name=='summary_finish' and getattr(error,'sqlstate',None)=='A0422' else CODES.get(getattr(error,'sqlstate',None),'LEDGER_UNAVAILABLE')
+            raise ExecutionError(code) from None
 
     async def claim(self,ctx,run_id,mode):
         worker=secrets.token_urlsafe(32)
-        data=await self._rpc(self.web_pool,'execution_claim',(ctx.session_id,ctx.tenant_id,run_id,mode,self.period,digest(worker)),ctx)
+        async with tenant_transaction(self.web_pool,ctx) as conn:
+            row=await (await conn.execute('SELECT task_kind FROM portal.runs WHERE tenant_id=%s AND run_id=%s',(ctx.tenant_id,run_id))).fetchone()
+        capability='summary_claim' if row and row['task_kind']=='document_summary' else 'execution_claim'
+        data=await self._rpc(self.web_pool,capability,(ctx.session_id,ctx.tenant_id,run_id,mode,self.period,digest(worker)),ctx)
         if data is None:return None
         v=VerifiedRun(*(UUID(data[k]) for k in ('tenant_id','run_id','owner_user_id','origin_session_id')),
             data['epoch'],data['config_revision'],data['mode'])
-        return RunTicket(ctx,v,worker,data['messages'],data.get('agent_key','general'),tuple(data.get('document_refs') or ()))
+        return RunTicket(ctx,v,worker,data['messages'],data.get('agent_key','general'),tuple(data.get('document_refs') or ()),data.get('task_kind','chat'))
 
     def worker_args(self,ticket):
         v=ticket.run;return (v.origin_session_id,v.tenant_id,v.run_id,v.epoch,digest(ticket.worker))

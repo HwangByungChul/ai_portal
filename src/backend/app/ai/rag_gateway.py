@@ -14,7 +14,7 @@ class RagCallRepository(CallRepository):
     def __init__(self,repository,operation,sources):
         super().__init__(repository.web_pool,repository.meter_pool,repository.period);self.operation=operation;self.sources=sources
     async def reserve(self,ticket,fingerprint):
-        return await self._rpc(self.web_pool,'rag_call_reserve',(*self.worker_args(ticket),self.period,fingerprint,self.operation,Jsonb(list(self.sources))),ticket.ctx)
+        return await self._rpc(self.web_pool,'summary_call_reserve' if ticket.task_kind=='document_summary' else 'rag_call_reserve',(*self.worker_args(ticket),self.period,fingerprint,self.operation,Jsonb(list(self.sources))),ticket.ctx)
 
 class QueryGateway:
     def __init__(self,repository,provider):self.repository=repository;self.provider=provider;self.stop_latch=False
