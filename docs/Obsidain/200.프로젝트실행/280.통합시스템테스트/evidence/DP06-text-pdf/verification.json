@@ -1,0 +1,658 @@
+{
+  "task": "DP-06",
+  "status": "partial/verified_mock (minimum intake and text PDF bundle)",
+  "verified_at": "2026-10-07T00:13:04.037701+00:00",
+  "source_commit": "00e31a51cf143f47ebb00ea71b13991f0a75ce94",
+  "source_sha256": {
+    "src/backend/README.md": "6399d4f125df8c2729108d48aa2cb6d189980f372f1817be94edbf79455b1b8d",
+    "src/backend/app/documents/evidence_routes.py": "158bbb9aecd0d17ef4dc61cc70899d45fa52300c16f41d19ee496bd626d3499e",
+    "src/backend/app/documents/pdf.py": "72303f3990436d52ba55b57b5b35687c7b1d026d3eda5a94a762d7149cbe67bd",
+    "src/backend/app/documents/pdf_worker.py": "19ed053189b29b18951fe4be772b79b451c921b9113a6e74c36d036797cdb9ee",
+    "src/backend/app/documents/repository.py": "0f41251aa418b8e189ffb6ad6a88f4aad3da7cdc5d166234c3399e1975aab1a4",
+    "src/backend/app/documents/search.py": "77bd659da6a39783d2c006b1e8ebd0a153123431a1397a4d6ff5e94850909625",
+    "src/backend/app/documents/storage.py": "117967cab01dfca570847529c9ec9f66f96ed5c8b6a96dbcd2163dde63d6129a",
+    "src/backend/app/documents/upload.py": "15e1faf59fa7db1867f523b2421e0dbf3e29e2a3cbfa0933c07e6dc34a1a0079",
+    "src/backend/app/documents/worker.py": "a8148a7d6d8b0f38fb6cc49b8e9f27173e5bd9a910e112319bff713951ca28a3",
+    "src/backend/app/errors.py": "1c9119c4fbe44e85da15c9ee9131c49dfffdb8274a3572509efe19fb9546df89",
+    "src/backend/app/policies/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "src/backend/app/policies/document_ingest.py": "612053e71747ea59f5f016157a1b08bbfa54b09b0ab758fd4b7beb2b83a5ecee",
+    "src/backend/migrations/024_document_intake_lookup.sql": "fa6b67022c9e0e1bf3eb89cce43ccb225eab0a79f5502f2aa086cf89d4c9d068",
+    "src/backend/requirements.in": "c566dbb0ae5e874516e830fb96315d3fe1e9b351d3c6a574699135f226bd3a6a",
+    "src/backend/requirements.lock": "36d20ff3ae8e5e4faefa64c97952fea3bb4135456fdb3956af00f9105eae8be3",
+    "src/backend/tests/pdf_support.py": "5b5065303aa57e11b770b0bd8186ee755742dcd8919cb9f4d06581b200a0a3e1",
+    "src/backend/tests/support.py": "300f6c6f70ef8c16d84e83d0a6e127462080ddcc806a87016df6a379842b232f",
+    "src/backend/tests/test_dp06_acceptance.py": "c41410ee21de01b8c196458edfaa423ee91b816f34ae1be618e56e2c93d2ad48",
+    "src/backend/tests/test_ingest_policy.py": "236b663d6e4ab3d817105088a7ff62d24bb32256017989c6ec0df67090a906b4",
+    "src/backend/tests/test_migrations.py": "d9794cac8f2d37dd7ef46735a93ed41b5c52dea654ab9ea014538b893f21a5a8",
+    "src/backend/tests/test_pdf_boundaries.py": "7e0d4435de95679ad1c58f9b184088d29f66280a5897c2ddc102f2103531b207",
+    "src/backend/tests/test_pdf_parser.py": "b26f6da07c57531cd38164efdcf8ada769258594f56f31a81847ebc164fd9a3d",
+    "src/backend/third_party/pypdf-LICENSE.txt": "a97ac230e5f33ef10a5367a850eb01f91f1a0b064e34742c7794d2294557f524",
+    "src/frontend/src/DocumentsPage.tsx": "28c6fde44ae4734ee0a3455f58d47eda7d4143d75ac00d8dca04538285028d3c",
+    "src/frontend/src/RagEvidencePanel.tsx": "26b387a77d45c6cb3f380b42a2bf97f229db85d0ab3b8ffd816bf538d69a1506",
+    "src/frontend/src/api.ts": "7d52b90f155379deb1f7ada9adcc252ccc8ea1016b5fa40eb35afa2910977988",
+    "src/frontend/src/types.ts": "26279e704876a1dd23db07b4304a2f875db3136ad9a30f442a5581ab1609f4b7",
+    "src/frontend/tests/dp06-acceptance.spec.ts": "d5bed80e0774c8980a8ab8ea07adabbc9b2c58328ff05191ad35f2edb7abc470",
+    "src/frontend/tests/fixtures/dp06-synthetic.pdf": "b99bc365950c9732a96a54e169742e47a865b37235509e2cec7eaac621084a7a",
+    "src/frontend/tests/safe-reporter.ts": "d9249d453afcf4abe43964ed02dd6fb6edfac86817e1413fc5a1fd358e071530"
+  },
+  "backend": {
+    "unique_related_cases": 275,
+    "initial_regression_passed": 266,
+    "final_focused_passed": 77,
+    "overlap": 68,
+    "new_after_initial": 9,
+    "collection_verified": 275,
+    "pdf_boundary_passed": 8
+  },
+  "browser": {
+    "passed": 80,
+    "failed": 0,
+    "new_dp06_cases": 3,
+    "runner_errors": 0,
+    "duration_ms": 268825.822,
+    "tests": [
+      {
+        "test_id": "A05_01_user_login_restore_and_direct_denial",
+        "status": "passed",
+        "duration_ms": 1263
+      },
+      {
+        "test_id": "A05_02_generic_login_failure_and_password_clear",
+        "status": "passed",
+        "duration_ms": 1029
+      },
+      {
+        "test_id": "A05_03_tadmin_active_changes_and_protected_rows",
+        "status": "passed",
+        "duration_ms": 1744
+      },
+      {
+        "test_id": "A05_04_padmin_role_changes",
+        "status": "passed",
+        "duration_ms": 1471
+      },
+      {
+        "test_id": "A05_05_no_members_has_no_organization",
+        "status": "passed",
+        "duration_ms": 922
+      },
+      {
+        "test_id": "A05_06_global_permission_does_not_enable_tenant_admin",
+        "status": "passed",
+        "duration_ms": 870
+      },
+      {
+        "test_id": "A05_07_two_tabs_independent_tenants",
+        "status": "passed",
+        "duration_ms": 1362
+      },
+      {
+        "test_id": "A05_08_late_actual_A_response_discarded",
+        "status": "passed",
+        "duration_ms": 1051
+      },
+      {
+        "test_id": "A05_09_membership_revoked_A_keeps_B_and_session",
+        "status": "passed",
+        "duration_ms": 1396
+      },
+      {
+        "test_id": "A05_10_demoted_admin_menu_and_rows_removed",
+        "status": "passed",
+        "duration_ms": 1326
+      },
+      {
+        "test_id": "A05_11_expired_session_clears_content",
+        "status": "passed",
+        "duration_ms": 1296
+      },
+      {
+        "test_id": "A05_12_conflict_refresh_without_auto_mutation",
+        "status": "passed",
+        "duration_ms": 1643
+      },
+      {
+        "test_id": "A05_13_logout_DB_failure_hidden_until_retry_confirmed",
+        "status": "passed",
+        "duration_ms": 1676
+      },
+      {
+        "test_id": "A05_14_logout_network_failure_hidden_until_retry",
+        "status": "passed",
+        "duration_ms": 1113
+      },
+      {
+        "test_id": "A05_15_logout_broadcast_clears_other_tab",
+        "status": "passed",
+        "duration_ms": 1248
+      },
+      {
+        "test_id": "A05_16_read_storage_failure_and_retry",
+        "status": "passed",
+        "duration_ms": 1806
+      },
+      {
+        "test_id": "A05_17_mobile_layout_real_management",
+        "status": "passed",
+        "duration_ms": 1067
+      },
+      {
+        "test_id": "A05_18_password_fill_failure_redacted",
+        "status": "passed",
+        "duration_ms": 757
+      },
+      {
+        "test_id": "A05_19_server_cursor_pagination",
+        "status": "passed",
+        "duration_ms": 1315
+      },
+      {
+        "test_id": "A05_20_blank_login_visuals_no_credentials",
+        "status": "passed",
+        "duration_ms": 767
+      },
+      {
+        "test_id": "B05_01_chat_surface",
+        "status": "passed",
+        "duration_ms": 1862
+      },
+      {
+        "test_id": "B05_02_save_reload_history",
+        "status": "passed",
+        "duration_ms": 3287
+      },
+      {
+        "test_id": "B05_03_lost_acceptance_one_provider_call",
+        "status": "passed",
+        "duration_ms": 2903
+      },
+      {
+        "test_id": "B05_04_missing_acceptance_replays_identical_payload_once",
+        "status": "passed",
+        "duration_ms": 2650
+      },
+      {
+        "test_id": "B05_05_double_click_one_admission",
+        "status": "passed",
+        "duration_ms": 2961
+      },
+      {
+        "test_id": "B05_06_stream_eof_queries_saved_state",
+        "status": "passed",
+        "duration_ms": 4351
+      },
+      {
+        "test_id": "B05_07_actual_stream_draft_and_cancel",
+        "status": "passed",
+        "duration_ms": 2646
+      },
+      {
+        "test_id": "B05_08_two_tabs_independent_conversation_scopes",
+        "status": "passed",
+        "duration_ms": 4024
+      },
+      {
+        "test_id": "B05_09_late_A_stream_discarded_after_switch",
+        "status": "passed",
+        "duration_ms": 2693
+      },
+      {
+        "test_id": "B05_10_user_admin_routes_and_APIs_denied",
+        "status": "passed",
+        "duration_ms": 1616
+      },
+      {
+        "test_id": "B05_11_agent_conflict_no_automatic_overwrite",
+        "status": "passed",
+        "duration_ms": 1720
+      },
+      {
+        "test_id": "B05_12_agent_stop_blocks_new_provider_calls",
+        "status": "passed",
+        "duration_ms": 2204
+      },
+      {
+        "test_id": "B05_13_platform_writer_only_no_usage_read",
+        "status": "passed",
+        "duration_ms": 1980
+      },
+      {
+        "test_id": "B05_14_platform_reader_only_no_write",
+        "status": "passed",
+        "duration_ms": 1545
+      },
+      {
+        "test_id": "B05_15_tadmin_local_cap_and_no_allocation",
+        "status": "passed",
+        "duration_ms": 1726
+      },
+      {
+        "test_id": "B05_16_padmin_current_managed_allocation_only",
+        "status": "passed",
+        "duration_ms": 1633
+      },
+      {
+        "test_id": "B05_17_unknown_usage_reservation_preserved",
+        "status": "passed",
+        "duration_ms": 3434
+      },
+      {
+        "test_id": "B05_18_expired_session_removes_stream_body",
+        "status": "passed",
+        "duration_ms": 2536
+      },
+      {
+        "test_id": "B05_19_platform_permission_revoked_clears_summary",
+        "status": "passed",
+        "duration_ms": 1884
+      },
+      {
+        "test_id": "B05_20_mobile_chat_no_page_overflow",
+        "status": "passed",
+        "duration_ms": 2566
+      },
+      {
+        "test_id": "B05_21_conversation_cursor_uses_real_server_pages",
+        "status": "passed",
+        "duration_ms": 2116
+      },
+      {
+        "test_id": "B05_22_GET_retry_bounded_no_new_generation",
+        "status": "passed",
+        "duration_ms": 6298
+      },
+      {
+        "test_id": "B05_23_invalid_stream_gap_canonical_recovery",
+        "status": "passed",
+        "duration_ms": 4363
+      },
+      {
+        "test_id": "B05_24_invalid_stream_epoch_canonical_recovery",
+        "status": "passed",
+        "duration_ms": 4341
+      },
+      {
+        "test_id": "B05_25_invalid_stream_org_canonical_recovery",
+        "status": "passed",
+        "duration_ms": 4399
+      },
+      {
+        "test_id": "B05_26_invalid_stream_size_canonical_recovery",
+        "status": "passed",
+        "duration_ms": 4366
+      },
+      {
+        "test_id": "B05_27_unresolved_admission_blocks_new_requests",
+        "status": "passed",
+        "duration_ms": 1985
+      },
+      {
+        "test_id": "B05_28_chat_logout_clears_other_tab_draft",
+        "status": "passed",
+        "duration_ms": 2329
+      },
+      {
+        "test_id": "B05_29_hidden_state_stops_poll_without_cancelling_run",
+        "status": "passed",
+        "duration_ms": 5384
+      },
+      {
+        "test_id": "B05_30_fragmented_UTF8_CRLF_stream_parser",
+        "status": "passed",
+        "duration_ms": 1773
+      },
+      {
+        "test_id": "B05_31_saved_prompt_rendered_as_text_without_storage",
+        "status": "passed",
+        "duration_ms": 2554
+      },
+      {
+        "test_id": "B05_32_late_A_admin_settings_do_not_replace_B_form",
+        "status": "passed",
+        "duration_ms": 1706
+      },
+      {
+        "test_id": "C05_01_upload_202_is_not_publication",
+        "status": "passed",
+        "duration_ms": 5201
+      },
+      {
+        "test_id": "C05_02_exact_v1_share_rag_source_revoke_and_v2_is_hidden",
+        "status": "passed",
+        "duration_ms": 13561
+      },
+      {
+        "test_id": "C05_03_private_management_does_not_expose_title",
+        "status": "passed",
+        "duration_ms": 2671
+      },
+      {
+        "test_id": "C05_04_lost_upload_confirm_preserves_id_and_one_index_call",
+        "status": "passed",
+        "duration_ms": 2689
+      },
+      {
+        "test_id": "C05_05_unknown_index_preserves_reservation_and_no_auto_retry",
+        "status": "passed",
+        "duration_ms": 5510
+      },
+      {
+        "test_id": "C05_06_rag_stream_is_buffered_until_provenance_is_saved",
+        "status": "passed",
+        "duration_ms": 9975
+      },
+      {
+        "test_id": "C05_07_mobile_document_surface_and_delete",
+        "status": "passed",
+        "duration_ms": 4423
+      },
+      {
+        "test_id": "C05_08_share_revision_conflict_requires_explicit_second_write",
+        "status": "passed",
+        "duration_ms": 4774
+      },
+      {
+        "test_id": "C05_09_late_A_document_response_discarded_after_B_switch",
+        "status": "passed",
+        "duration_ms": 4921
+      },
+      {
+        "test_id": "A05_unregistered_test",
+        "status": "passed",
+        "duration_ms": 3588
+      },
+      {
+        "test_id": "A05_unregistered_test",
+        "status": "passed",
+        "duration_ms": 2592
+      },
+      {
+        "test_id": "A05_unregistered_test",
+        "status": "passed",
+        "duration_ms": 3187
+      },
+      {
+        "test_id": "D04_01_owner_save_change_withdraw_recreate_reload_no_provider",
+        "status": "passed",
+        "duration_ms": 3721
+      },
+      {
+        "test_id": "D04_02_mobile_switch_tenant_clears_private_feedback",
+        "status": "passed",
+        "duration_ms": 3467
+      },
+      {
+        "test_id": "D04_03_admin_aggregate_no_private_content_and_threshold",
+        "status": "passed",
+        "duration_ms": 5511
+      },
+      {
+        "test_id": "D04_04_conflict_loads_current_feedback_without_overwrite",
+        "status": "passed",
+        "duration_ms": 2574
+      },
+      {
+        "test_id": "D04_05_late_previous_tenant_feedback_is_discarded",
+        "status": "passed",
+        "duration_ms": 3722
+      },
+      {
+        "test_id": "D05_01_private_upload_processing_attach_evidence_feedback_delete",
+        "status": "passed",
+        "duration_ms": 7066
+      },
+      {
+        "test_id": "D05_02_other_user_and_tenant_private_title_job_delete_hidden",
+        "status": "passed",
+        "duration_ms": 6127
+      },
+      {
+        "test_id": "D05_03_mobile_tenant_switch_discards_personal_rows_and_late_reply",
+        "status": "passed",
+        "duration_ms": 4486
+      },
+      {
+        "test_id": "D05_04_lost_personal_upload_confirmation_replays_same_id_once",
+        "status": "passed",
+        "duration_ms": 2728
+      },
+      {
+        "test_id": "D05_05_unknown_personal_index_has_no_retry_or_question_attachment",
+        "status": "passed",
+        "duration_ms": 4873
+      },
+      {
+        "test_id": "D06_01_personal_pdf_rag_page_original_download",
+        "status": "passed",
+        "duration_ms": 7194
+      },
+      {
+        "test_id": "D06_02_sensitive_document_rejected_without_job_or_call",
+        "status": "passed",
+        "duration_ms": 2510
+      },
+      {
+        "test_id": "D06_03_admin_pdf_upload_and_content_type_filename_mismatch",
+        "status": "passed",
+        "duration_ms": 4751
+      },
+      {
+        "test_id": "P270_01_admin_user_saved_rag_journey",
+        "status": "passed",
+        "duration_ms": 7940
+      },
+      {
+        "test_id": "P270_02_mobile_shared_version_revoke_journey",
+        "status": "passed",
+        "duration_ms": 11150
+      },
+      {
+        "test_id": "P270_03_private_owner_and_stop_journey",
+        "status": "passed",
+        "duration_ms": 4490
+      }
+    ]
+  },
+  "build": "passed",
+  "migration": {
+    "migration": [
+      "024_document_intake_lookup.sql"
+    ],
+    "existing_columns_preserved": true,
+    "tables_checked": 32,
+    "snapshots": {
+      "ops.audit_events": {
+        "rows": 66,
+        "sha256": "d5e997a6e930fc340a2a9ba4cbb7b7e23d13f8aeb0d5cfb3381d48f25a786d95"
+      },
+      "ops.call_attempts": {
+        "rows": 11,
+        "sha256": "afc051f43854f1e2c7e82d8e48cf32298891cb34e73cce34de2dbae17c801ec6"
+      },
+      "ops.project_budget": {
+        "rows": 2,
+        "sha256": "eac1abeaf6a7563a2d41c670fdae5010fa0bc5bb9c3e9f247ab09ea9526ef215"
+      },
+      "ops.tenant_budgets": {
+        "rows": 4,
+        "sha256": "d11cb3a9c6c71c15646beb3540449c5ce6cf0e8a1131f86d70dd5f6495c24e1f"
+      },
+      "ops.usage_events": {
+        "rows": 22,
+        "sha256": "8627d933274ac91b8d571455c7fa5bd057d20209451139b1e893ec7b35c18ee2"
+      },
+      "portal.agent_configs": {
+        "rows": 4,
+        "sha256": "d750f4378532ae0535bf44b5c12dc16ecdc5e2653020b2e22a53b74715a9a564"
+      },
+      "portal.answer_evidence": {
+        "rows": 2,
+        "sha256": "6128a624d25f3d23a17b8e8f236551a9828ed19938cab89152057997b667a0df"
+      },
+      "portal.conversations": {
+        "rows": 12,
+        "sha256": "ecabcd64e4a0419a5543bf8ce51b98acfbe47ab13bd718c57618be6507faee0e"
+      },
+      "portal.messages": {
+        "rows": 14,
+        "sha256": "80cfe8caa65cc0d9e652e75dfee68321c1d1bf24c8db9590bd0cf628f9723b71"
+      },
+      "portal.response_feedback": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "portal.runs": {
+        "rows": 7,
+        "sha256": "60c5042589b1547f2b0eea82f0fcc7436c355a34d6769c991f6362ba15deaf77"
+      },
+      "rag.chunks": {
+        "rows": 2,
+        "sha256": "10e6750eddd7007e7a2445ef13f9b4984e1cf850b20d8381b91b23ed57d77fb7"
+      },
+      "rag.document_versions": {
+        "rows": 2,
+        "sha256": "7ad413960fedd28e20f65c27ca84e4fea7ec8376e4ee2233246a9c310500f4dd"
+      },
+      "rag.entities": {
+        "rows": 4,
+        "sha256": "b4c0a7aa3ea0225aa60164b0b9f3fac6cb10c584d3a0e383c035b62e80417a31"
+      },
+      "rag.evidence": {
+        "rows": 2,
+        "sha256": "7fe311291662244c07091afcd9fc2a48c0a493ceea0aed7a20f02ee0c42a7477"
+      },
+      "rag.index_builds": {
+        "rows": 2,
+        "sha256": "ed3193f872483fb0409ceca418f41cb484ca19dbe856f8ec134eac3f0ab9ef02"
+      },
+      "rag.jobs": {
+        "rows": 2,
+        "sha256": "3d018ca6f6c2adf1583e7e2707a1e43754182e305cf7ac3ab596240494604fbc"
+      },
+      "rag.relation_evidence": {
+        "rows": 2,
+        "sha256": "8b3142f198e8a4f53965613e511d36fb27dc4dc01387c6ba566d14a4101be598"
+      },
+      "rag.relations": {
+        "rows": 2,
+        "sha256": "3ace993c94dd968f2e286da4e24fc2762e1384110f4d7f53e7396ba1a9f1b91a"
+      },
+      "security.accounts": {
+        "rows": 13,
+        "sha256": "de5fc4df7c5b042c87da7b072882cc5cc171b89b58a731b49876dc9442c9baa2"
+      },
+      "security.document_access": {
+        "rows": 2,
+        "sha256": "5c8ccddd261db9993cf86036c219dc2764a6ad5e177cee971c53a726a0b9a474"
+      },
+      "security.document_publications": {
+        "rows": 2,
+        "sha256": "4e70244fcf6cf671c6b1f13a780a097706abcb50a84ae61b6fd9916e5cc2bd41"
+      },
+      "security.job_authorizations": {
+        "rows": 2,
+        "sha256": "10f978c13917cbc3b4db0dd139b53f48b2f11886b43a4b2cfe5f36fc8d836121"
+      },
+      "security.login_windows": {
+        "rows": 15,
+        "sha256": "c5a07c51262b38bd294a3b31facd750816607f85f8eec4f467f8a353ae5b7cb0"
+      },
+      "security.managed_tenants": {
+        "rows": 1,
+        "sha256": "c7248bbd067dac99fc1057bef5c702a8ddf614a6fb779f1d753d5ec28d659ce1"
+      },
+      "security.memberships": {
+        "rows": 14,
+        "sha256": "2282b5df3eccc27b8a9beebff337719b87fe48c95c2f5c2947078fdd7297e5fe"
+      },
+      "security.operation_receipts": {
+        "rows": 2,
+        "sha256": "3fc4224af6257e96edffcf5a2ed193c44ff30f023e8945245c12d58c75024669"
+      },
+      "security.platform_access": {
+        "rows": 4,
+        "sha256": "0df7f0418a371484a98204aa981dae497399b40d6f0191d52c835b5b9c329247"
+      },
+      "security.private_readers": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "security.sessions": {
+        "rows": 37,
+        "sha256": "16a2fa200aa3ac08938aa228cfd65c53a387d0e72c4109a2e5bbf40c66be85ff"
+      },
+      "security.share_grants": {
+        "rows": 0,
+        "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+      },
+      "security.tenants": {
+        "rows": 2,
+        "sha256": "872ec7551deb1abb37d26411043faa53c009cb6b4ce28fc4993e222d82924940"
+      }
+    },
+    "no_provider_calls": true
+  },
+  "prior_migration_checksums_unchanged": [
+    "000_roles.sql",
+    "001_auth_portal.sql",
+    "002_context_control.sql",
+    "003_session_control.sql",
+    "004_membership_control.sql",
+    "005_conversation_ledger.sql",
+    "006_operations_control.sql",
+    "007_run_control.sql",
+    "008_ai_call_control.sql",
+    "009_document_graph_schema.sql",
+    "010_document_policy_control.sql",
+    "011_document_ingest_control.sql",
+    "012_document_embedding_control.sql",
+    "013_document_lifecycle_control.sql",
+    "014_document_sharing.sql",
+    "015_rag_execution.sql",
+    "016_rag_provenance.sql",
+    "017_document_call_control.sql",
+    "018_document_job_principal_control.sql",
+    "019_document_cleanup_principal_control.sql",
+    "020_document_request_trace.sql",
+    "021_conversation_metadata.sql",
+    "022_response_feedback.sql",
+    "023_user_documents.sql"
+  ],
+  "security_function_count": 96,
+  "dependency": {
+    "name": "pypdf",
+    "version": "6.19.0",
+    "wheel_sha256": "7e5d6e730e7dae87d560a2cee218b852f6498c8be61966f3cd02ead971e48d14",
+    "license": "BSD-3-Clause",
+    "license_file": "src/backend/third_party/pypdf-LICENSE.txt"
+  },
+  "limits": {
+    "raw_bytes": 131072,
+    "canonical_bytes": 131072,
+    "characters": 40000,
+    "pages": 20,
+    "page_stream_bytes_total": 4194304,
+    "cpu_seconds": 2,
+    "wall_seconds": 5,
+    "rss_termination_threshold_mb": 512,
+    "rss_sampling_ms": 50,
+    "hard_address_space_limit": false
+  },
+  "minimum_policy": {
+    "revision": "document-ingest-v1",
+    "positive_synthetic_cases": 11,
+    "negative_synthetic_cases": 5,
+    "documented_false_positive_cases": 2,
+    "documented_false_negative_cases": 3,
+    "general_policy_platform_complete": false
+  },
+  "paid_provider_calls": 0,
+  "direct_user_acceptance": "pending",
+  "institution_environment_validation": "not_run",
+  "next_task": "DP-06 DOCX",
+  "preview": {
+    "url": "http://127.0.0.1:5173/",
+    "mode": "mock",
+    "credentials_in_private_file": true
+  }
+}
