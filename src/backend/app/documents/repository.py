@@ -12,6 +12,8 @@ from app.auth.crypto import window_digest
 from app.documents.storage import validate_source,SourceStorageError,StoredSource
 from app.documents.plan import build_document_plan
 from app.documents.pdf import extract_pdf
+from app.documents.docx import extract_docx
+from app.documents.formats import DOCX_MEDIA_TYPE
 from app.policies.document_ingest import require_document_policy
 from common_core.ai_pipeline.document.schemas import DocumentMetadata
 from common_core.ai_pipeline.document.parser import parse_source
@@ -64,13 +66,14 @@ class DocumentRepository:
         if lookup.get('replayed'):return lookup
         if not lookup['allowed']:raise AppError('RATE_LIMITED',429,lookup['retry_after'])
         original=None;origin=None
-        if metadata['media_type']=='application/pdf':
+        if metadata['media_type'] in ('application/pdf',DOCX_MEDIA_TYPE):
             original=content
-            parsed=await asyncio.to_thread(extract_pdf,original)
+            parsed=await asyncio.to_thread(extract_pdf if metadata['media_type']=='application/pdf' else extract_docx,original)
             content=parsed['text'].encode('utf-8')
-            origin={'media_type':'application/pdf','source_sha256':source_sha.hex(),'byte_length':len(original),'parser_version':parsed['parser_version'],'text_sha256':hashlib.sha256(content).hexdigest(),'pages':parsed['pages']}
+            field='pages' if metadata['media_type']=='application/pdf' else 'locations'
+            origin={'media_type':metadata['media_type'],'source_sha256':source_sha.hex(),'byte_length':len(original),'parser_version':parsed['parser_version'],'text_sha256':hashlib.sha256(content).hexdigest(),field:parsed[field]}
             metadata={**metadata,'media_type':'text/plain'};source_sha=hashlib.sha256(content).digest()
-        elif content.startswith(b'%PDF-'):raise AppError('SOURCE_INVALID',422)
+        elif content.startswith((b'%PDF-',b'PK\x03\x04')):raise AppError('SOURCE_INVALID',422)
         try:text=validate_source(content,metadata['title'],metadata['media_type'])
         except SourceStorageError:raise AppError('SOURCE_INVALID',422) from None
         require_document_policy(metadata['title']+'\n'+text)

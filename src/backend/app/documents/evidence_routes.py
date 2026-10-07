@@ -7,6 +7,7 @@ from app.operations.routes import validate_query
 from app.errors import response,AppError
 from app.documents.storage import StoredSource,SourceStorageError
 from app.documents.search import source_binding
+from app.documents.formats import DOCX_MEDIA_TYPE
 from psycopg.types.json import Jsonb
 
 router=APIRouter(prefix='/api/v1')
@@ -35,9 +36,15 @@ async def evidence(request:Request,run_id:UUID):
             stored=StoredSource(x['source_object_key'],bytes(x['source_sha256']),x['byte_length'],x['character_length'],x['title'],x['media_type'],x['source_mapping'])
             try:origin=validate_origin(x['source_mapping'],stored)
             except SourceStorageError:raise AppError('STORAGE_UNAVAILABLE',503) from None
-            loc=x['location'];pages=[p['page'] for p in origin['pages'] if p['start']<loc['end_offset'] and p['end']>loc['start_offset']]
-            if not pages:raise AppError('STORAGE_UNAVAILABLE',503)
-            item.update(source_media_type='application/pdf',page_start=min(pages),page_end=max(pages))
+            loc=x['location'];item['source_media_type']=origin['media_type']
+            if origin['media_type']=='application/pdf':
+                pages=[p['page'] for p in origin['pages'] if p['start']<loc['end_offset'] and p['end']>loc['start_offset']]
+                if not pages:raise AppError('STORAGE_UNAVAILABLE',503)
+                item.update(page_start=min(pages),page_end=max(pages))
+            else:
+                matches=[p for p in origin['locations'] if p['start']<loc['end_offset'] and p['end']>loc['start_offset']]
+                if not matches:raise AppError('STORAGE_UNAVAILABLE',503)
+                item['structure_locations']=[{k:v for k,v in p.items() if k not in ('start','end')} for p in matches]
     return response(request,{'items':items})
 @router.get('/runs/{run_id}/evidence/{ordinal}/source')
 async def source(request:Request,run_id:UUID,ordinal:int=Path(ge=0,le=19)):
@@ -52,8 +59,11 @@ async def source(request:Request,run_id:UUID,ordinal:int=Path(ge=0,le=19)):
         try:content=request.app.state.documents.storage.read(StoredSource(x['source_object_key'],bytes(x['source_sha256']),x['byte_length'],x['character_length'],x['title'],x['media_type'],x['source_mapping']))
         except SourceStorageError:raise AppError('STORAGE_UNAVAILABLE',503) from None
         stored=StoredSource(x['source_object_key'],bytes(x['source_sha256']),x['byte_length'],x['character_length'],x['title'],x['media_type'],x['source_mapping'])
-        pdf=bool(x['source_mapping'].get('origin'))
-        if pdf:
+        origin=x['source_mapping'].get('origin')
+        original=bool(origin)
+        media=origin['media_type'] if original else 'text/plain; charset=utf-8'
+        filename='document.docx' if media==DOCX_MEDIA_TYPE else 'document.pdf' if original else 'document.txt'
+        if original:
             try:content=request.app.state.documents.storage.read_original(stored)
             except SourceStorageError:raise AppError('STORAGE_UNAVAILABLE',503) from None
-    return Response(content,media_type='application/pdf' if pdf else 'text/plain; charset=utf-8',headers={'Content-Disposition':'attachment; filename="document.pdf"' if pdf else 'attachment; filename="document.txt"','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','X-Request-ID':request.state.request_id})
+    return Response(content,media_type=media,headers={'Content-Disposition':f'attachment; filename="{filename}"','Cache-Control':'no-store','X-Content-Type-Options':'nosniff','X-Request-ID':request.state.request_id})

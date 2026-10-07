@@ -1,3 +1,4 @@
+export const DOCX_MEDIA_TYPE='application/vnd.openxmlformats-officedocument.wordprocessingml.document' as const;
 export type Role='USER'|'TADMIN'|'PADMIN';
 export interface User {user_id:string;display_name:string;session_expires_at:string;csrf_token:string;platform_availability?:{enabled:boolean;revision:number};capabilities:{can_view_platform_usage:boolean;can_change_platform_availability:boolean}}
 export interface Tenant {tenant_id:string;display_name:string;effective_role:Role;can_manage:boolean}
@@ -30,7 +31,7 @@ export interface DocumentJob extends DocumentRef {job_id:string;index_id:string;
 export interface UploadReceipt extends DocumentRef {job_id:string;index_id:string}
 export interface Grant {grant_id:string;recipient_tenant_id:string;active:boolean;revision:number}
 export interface GrantPage extends DocumentRef {publication_revision:number;items:Grant[]}
-export interface Evidence {ordinal:number;content_status:'available'|'unavailable';title?:string;version_no?:number;quote?:string;location?:{line_start:number;line_end:number};source_url?:string;source_media_type?:'application/pdf';page_start?:number;page_end?:number}
+export interface Evidence {ordinal:number;content_status:'available'|'unavailable';title?:string;version_no?:number;quote?:string;location?:{line_start:number;line_end:number};source_url?:string;source_media_type?:'application/pdf'|typeof DOCX_MEDIA_TYPE;structure_locations?:({kind:'paragraph';paragraph:number}|{kind:'table_cell';table:number;row:number;column:number})[];page_start?:number;page_end?:number}
 
 export type Rating='positive'|'negative';
 export interface ResponseFeedbackValue {run_id:string;active:boolean;revision:number;rating:Rating|null;comment:string|null;updated_at:string|null;replayed?:boolean}

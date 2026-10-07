@@ -12,7 +12,7 @@ export default class SafeReporter implements Reporter {
  }
  runnerErrors=0;
  onError(){this.runnerErrors+=1;}
- private safeId(title:string){return /^(A05|B05|C05|P270|D04|D05|D06)_[0-9]{2}_[A-Za-z0-9_]+$/.test(title)?title:'A05_unregistered_test';}
+ private safeId(title:string){return /^(A05|B05|C05|P270|D04|D05|D06|DX6)_[0-9]{2}_[A-Za-z0-9_]+$/.test(title)?title:'A05_unregistered_test';}
  onTestEnd(test:TestCase,result:TestResult){
   // Only sanitized diagnostics stay private; public evidence never includes them.
   const dir=resolve('.runtime');mkdirSync(dir,{recursive:true,mode:0o700});

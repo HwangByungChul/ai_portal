@@ -2,6 +2,17 @@ from datetime import datetime, timezone
 from fastapi.responses import JSONResponse
 
 MESSAGES = {
+    "DOCX_INVALID": "DOCX 파일 형식 또는 내용을 확인해 주세요.",
+    "DOCX_UNSUPPORTED": "본문 문단과 중첩·병합 없는 표만 지원합니다. 이미지·머리말·변경 추적 등은 제거해 주세요.",
+    "DOCX_ENCRYPTED": "암호화되지 않은 DOCX를 등록해 주세요.",
+    "DOCX_ZIP_LIMIT": "DOCX 압축 파일의 항목 또는 해제 크기 한도를 초과했습니다.",
+    "DOCX_XML_LIMIT": "DOCX 문서 구조의 복잡도 한도를 초과했습니다.",
+    "DOCX_TEXT_LIMIT": "DOCX 추출 텍스트가 허용 범위를 넘었습니다.",
+    "DOCX_EMPTY": "DOCX 본문에 읽을 수 있는 텍스트가 없습니다.",
+    "DOCX_ACTIVE_CONTENT": "외부 참조·매크로·첨부·활성 콘텐츠가 없는 DOCX를 등록해 주세요.",
+    "DOCX_RESOURCE_LIMIT": "DOCX 처리 한도를 초과했습니다. 파일을 줄여 주세요.",
+    "DOCX_PARSER_UNAVAILABLE": "DOCX 격리 처리 환경을 사용할 수 없습니다.",
+
     "PDF_INVALID": "PDF 파일 형식 또는 내용을 확인해 주세요.",
     "PDF_ENCRYPTED": "암호화되지 않은 텍스트 PDF를 등록해 주세요.",
     "PDF_PAGE_LIMIT": "PDF는 20페이지 이하로 등록해 주세요.",
