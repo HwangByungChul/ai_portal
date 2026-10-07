@@ -48,6 +48,7 @@ class StoredSource:
     character_length: int
     title: str
     media_type: str
+    source_mapping: dict | None = None
 
 
 class SourceStorage:
@@ -92,8 +93,8 @@ class SourceStorage:
             raise SourceStorageError('SOURCE_PATH_REJECTED')
         parts = key.split('/')
         try:
-            if (len(parts) != 6 or parts[0] != 'tenants' or parts[2] != 'documents' or parts[5] != 'source'
-                    or source_key(UUID(parts[1]), UUID(parts[3]), UUID(parts[4])) != key):
+            if (len(parts) != 6 or parts[0] != 'tenants' or parts[2] != 'documents' or parts[5] not in ('source','original')
+                    or source_key(UUID(parts[1]), UUID(parts[3]), UUID(parts[4])) != "/".join(parts[:-1]+["source"])):
                 raise ValueError()
         except (ValueError, TypeError):
             raise SourceStorageError('SOURCE_PATH_REJECTED') from None
@@ -124,7 +125,12 @@ class SourceStorage:
               content: bytes, title: str, media_type: str) -> StoredSource:
         text = validate_source(content, title, media_type)
         key = source_key(tenant_id, document_id, version_id)
+        self._write_blob(key,content)
+        return StoredSource(key, hashlib.sha256(content).digest(), len(content), len(text), title, media_type)
+
+    def _write_blob(self,key,content):
         directory = self._version_directory(key, True)
+        leaf=self._parts(key)[-1]
         temp = '.' + uuid4().hex + '.tmp'
         created = False
         try:
@@ -136,7 +142,7 @@ class SourceStorage:
                 os.fsync(stream.fileno())
             # link is an atomic add-if-absent; rename would overwrite an existing source.
             try:
-                os.link(temp, 'source', src_dir_fd=directory, dst_dir_fd=directory, follow_symlinks=False)
+                os.link(temp, leaf, src_dir_fd=directory, dst_dir_fd=directory, follow_symlinks=False)
             except FileExistsError:
                 raise SourceStorageError('SOURCE_ALREADY_EXISTS') from None
             os.unlink(temp, dir_fd=directory)
@@ -150,7 +156,26 @@ class SourceStorage:
             if created:
                 os.unlink(temp, dir_fd=directory)
             os.close(directory)
-        return StoredSource(key, hashlib.sha256(content).digest(), len(content), len(text), title, media_type)
+
+    def write_original(self,key,content,sha):
+        if type(content) is not bytes or not 1<=len(content)<=MAX_BYTES or hashlib.sha256(content).digest()!=sha:raise SourceStorageError("SOURCE_INTEGRITY_FAILED")
+        self._write_blob(key.rsplit("/",1)[0]+"/original",content)
+
+    def _read_blob(self,key):
+        directory=self._version_directory(key,False)
+        try:
+            fd=os.open(self._parts(key)[-1],os.O_RDONLY|os.O_NOFOLLOW,dir_fd=directory)
+            with os.fdopen(fd,"rb") as stream:
+                self._check(stream.fileno(),False);return stream.read(MAX_BYTES+1)
+        except OSError:raise SourceStorageError("SOURCE_UNAVAILABLE") from None
+        finally:os.close(directory)
+
+    def read_original(self,source):
+        origin=validate_origin(source.source_mapping,source)
+        if origin is None:raise SourceStorageError("SOURCE_INTEGRITY_FAILED")
+        raw=self._read_blob(source.object_key.rsplit("/",1)[0]+"/original")
+        if len(raw)!=origin["byte_length"] or hashlib.sha256(raw).hexdigest()!=origin["source_sha256"]:raise SourceStorageError("SOURCE_INTEGRITY_FAILED")
+        return raw
 
     def read(self, source: StoredSource) -> bytes:
         directory = self._version_directory(source.object_key, False)
@@ -166,25 +191,30 @@ class SourceStorage:
             if (len(content) != source.byte_length or len(text) != source.character_length
                     or hashlib.sha256(content).digest() != source.sha256):
                 raise SourceStorageError('SOURCE_INTEGRITY_FAILED')
+            if source.source_mapping and "origin" in source.source_mapping:
+                validate_origin(source.source_mapping,source);self.read_original(source)
             return content
         finally:
             os.close(directory)
 
-    def remove(self, key: str, *, minimum_age_seconds: int = 0) -> int:
-        """Only call after current deletion/confirmed orphan authorization; never read content."""
+    def remove(self,key,*,minimum_age_seconds=0):
+        """Remove both representations only after current deletion/orphan authorization."""
         directory=self._version_directory(key,False)
         try:
-            try:
-                fd=os.open('source',os.O_RDONLY|os.O_NOFOLLOW,dir_fd=directory)
-            except FileNotFoundError:return 0
-            try:
-                self._check(fd,False)
-                if time.time()-os.fstat(fd).st_mtime<minimum_age_seconds:return 0
-            finally:os.close(fd)
-            try:os.unlink('source',dir_fd=directory)
-            except FileNotFoundError:return 0
-            os.fsync(directory);return 1
-        except OSError:raise SourceStorageError('SOURCE_REMOVE_FAILED') from None
+            existing=[]
+            for leaf in ("source","original"):
+                try:fd=os.open(leaf,os.O_RDONLY|os.O_NOFOLLOW,dir_fd=directory)
+                except FileNotFoundError:continue
+                try:
+                    self._check(fd,False)
+                    if time.time()-os.fstat(fd).st_mtime<minimum_age_seconds:return 0
+                    existing.append(leaf)
+                finally:os.close(fd)
+            for leaf in existing:
+                try:os.unlink(leaf,dir_fd=directory)
+                except FileNotFoundError:pass
+            os.fsync(directory);return int(bool(existing))
+        except OSError:raise SourceStorageError("SOURCE_REMOVE_FAILED") from None
         finally:os.close(directory)
 
     def source_keys(self, tenant_id: UUID):
@@ -215,3 +245,18 @@ class SourceStorage:
             return tuple(result)
         finally:
             for fd in reversed(opened):os.close(fd)
+
+
+def validate_origin(mapping,source):
+    if not mapping or "origin" not in mapping:return None
+    origin=mapping["origin"]
+    try:
+        if set(origin)!={"media_type","source_sha256","byte_length","parser_version","text_sha256","pages"} or origin["media_type"]!="application/pdf" or origin["parser_version"]!="pypdf-6.19.0" or origin["text_sha256"]!=source.sha256.hex() or type(origin["byte_length"]) is not int or not 1<=origin["byte_length"]<=MAX_BYTES or len(bytes.fromhex(origin["source_sha256"]))!=32:raise ValueError()
+        pages=origin["pages"];previous=-2
+        if not 1<=len(pages)<=20:raise ValueError()
+        for n,p in enumerate(pages,1):
+            if set(p)!={"page","start","end"} or any(type(x) is not int for x in p.values()) or p["page"]!=n or p["start"]!=previous+2 or not p["start"]<p["end"]<=source.character_length:raise ValueError()
+            previous=p["end"]
+        if previous!=source.character_length:raise ValueError()
+    except (ValueError,TypeError,KeyError):raise SourceStorageError("SOURCE_INTEGRITY_FAILED") from None
+    return origin

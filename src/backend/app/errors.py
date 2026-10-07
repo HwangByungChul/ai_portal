@@ -2,6 +2,18 @@ from datetime import datetime, timezone
 from fastapi.responses import JSONResponse
 
 MESSAGES = {
+    "PDF_INVALID": "PDF 파일 형식 또는 내용을 확인해 주세요.",
+    "PDF_ENCRYPTED": "암호화되지 않은 텍스트 PDF를 등록해 주세요.",
+    "PDF_PAGE_LIMIT": "PDF는 20페이지 이하로 등록해 주세요.",
+    "PDF_ACTIVE_CONTENT": "링크·첨부·자동 실행 등이 없는 PDF를 등록해 주세요.",
+    "PDF_OCR_UNSUPPORTED": "텍스트가 없는 페이지가 있습니다. 스캔 PDF는 현재 지원하지 않습니다.",
+    "PDF_STREAM_LIMIT": "PDF 내부 데이터 크기가 허용 범위를 넘었습니다.",
+    "PDF_TEXT_LIMIT": "추출된 텍스트가 허용 범위를 넘었습니다.",
+    "PDF_RESOURCE_LIMIT": "PDF 처리 한도를 초과했습니다. 파일을 줄여 주세요.",
+    "PDF_PARSER_UNAVAILABLE": "PDF 격리 처리 환경을 사용할 수 없습니다.",
+
+    "DOCUMENT_POLICY_BLOCKED": "개인정보 후보 또는 위험 지시문이 포함되어 있습니다. 내용을 확인한 뒤 다시 등록해 주세요.",
+    "DOCUMENT_POLICY_UNAVAILABLE": "문서 수집 검사를 수행할 수 없습니다. 잠시 후 다시 시도해 주세요.",
     "FEEDBACK_CONFLICT":"평가가 변경되었습니다. 최신 평가를 확인한 뒤 다시 저장해 주세요.",
     "FEEDBACK_NOT_READY":"현재 조회 가능한 완료 답변만 평가할 수 있습니다.",
     "METADATA_CONFLICT":"다른 변경이 반영되었습니다. 최신 대화 목록에서 다시 시도해 주세요.",

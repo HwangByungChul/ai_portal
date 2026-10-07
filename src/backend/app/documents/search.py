@@ -4,6 +4,7 @@ from uuid import UUID
 from psycopg.types.json import Jsonb
 from app.db import tenant_transaction
 from app.errors import AppError
+from app.policies.document_ingest import require_document_policy
 from app.documents.policy import resolve_readable_version,DocumentUnavailable
 from app.documents.storage import StoredSource
 from app.documents.plan import build_document_plan
@@ -60,9 +61,10 @@ class SearchRepository:
                 rid=row['relation_id'];idx=row['index_id'];plan_key=(row['tenant_id'],idx);proofs=await (await conn.execute('''SELECT e.* FROM rag.relation_evidence re JOIN rag.evidence e ON (e.tenant_id,e.index_id,e.evidence_id)=(re.tenant_id,re.index_id,re.evidence_id) WHERE re.tenant_id=%s AND re.index_id=%s AND re.relation_id=%s ORDER BY e.evidence_id LIMIT 21''',(row['tenant_id'],idx,rid))).fetchall()
                 if not proofs or len(proofs)>20:raise AppError('ANSWER_EVIDENCE_INVALID',409)
                 if plan_key not in plans:
-                    v=await (await conn.execute('SELECT tenant_id,document_id,version_id,title,source_object_key,source_sha256,byte_length,character_length,media_type FROM rag.document_versions WHERE tenant_id=%s AND version_id=%s',(row['tenant_id'],row['version_id']))).fetchone()
+                    v=await (await conn.execute('SELECT tenant_id,document_id,version_id,title,source_object_key,source_sha256,byte_length,character_length,media_type,source_mapping FROM rag.document_versions WHERE tenant_id=%s AND version_id=%s',(row['tenant_id'],row['version_id']))).fetchone()
                     if v is None:raise AppError('DOCUMENT_UNAVAILABLE',404)
-                    raw=self.documents.storage.read(StoredSource(v['source_object_key'],bytes(v['source_sha256']),v['byte_length'],v['character_length'],v['title'],v['media_type']))
+                    raw=self.documents.storage.read(StoredSource(v['source_object_key'],bytes(v['source_sha256']),v['byte_length'],v['character_length'],v['title'],v['media_type'],v['source_mapping']))
+                    require_document_policy(v["title"]+"\n"+raw.decode("utf-8"))
                     plan=build_document_plan(raw,v['title'],v['media_type'],DocumentMetadata(row['tenant_id'],row['document_id'],row['version_id'],idx,bytes(v['source_sha256']),mode))
                     i=await (await conn.execute('SELECT source_fingerprint,pipeline_revision FROM rag.index_builds WHERE tenant_id=%s AND index_id=%s',(row['tenant_id'],idx))).fetchone()
                     if i is None or bytes(i['source_fingerprint']).hex()!=plan.source_fingerprint:raise AppError('ANSWER_EVIDENCE_INVALID',409)

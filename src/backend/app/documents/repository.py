@@ -1,4 +1,5 @@
 """Server-scoped document control; filesystem additions and DB commit stay separate."""
+import asyncio
 import hashlib
 import hmac
 import json
@@ -10,6 +11,8 @@ from app.errors import AppError
 from app.auth.crypto import window_digest
 from app.documents.storage import validate_source,SourceStorageError,StoredSource
 from app.documents.plan import build_document_plan
+from app.documents.pdf import extract_pdf
+from app.policies.document_ingest import require_document_policy
 from common_core.ai_pipeline.document.schemas import DocumentMetadata
 from common_core.ai_pipeline.document.parser import parse_source
 
@@ -49,26 +52,37 @@ class DocumentRepository:
         if personal:
             if document_id is not None or set(metadata)-{"client_upload_id","title","media_type"}:raise AppError("REQUEST_INVALID",422)
             metadata={**metadata,"visibility":"private","owner_user_id":ctx.user_id,"reader_ids":[]}
-        try:text=validate_source(content,metadata['title'],metadata['media_type'])
-        except SourceStorageError:raise AppError('SOURCE_INVALID',422) from None
+        if type(content) is not bytes or not 1<=len(content)<=131072:raise AppError('SOURCE_INVALID',422)
         client=metadata['client_upload_id'];doc=document_id or scoped_id(self.secret,ctx,client,'document')
         version=scoped_id(self.secret,ctx,client,'version');index=scoped_id(self.secret,ctx,client,'index');job=scoped_id(self.secret,ctx,client,'job')
         source_sha=hashlib.sha256(content).digest()
         expected=metadata.get('expected_revision');visibility=metadata.get('visibility','org');owner=metadata.get('owner_user_id') or ctx.user_id;readers=metadata.get('reader_ids',[])
         digest=request_digest({'metadata':{k:str(v) if isinstance(v,UUID) else [str(x) for x in v] if isinstance(v,list) else v for k,v in metadata.items()},'document_id':str(document_id) if document_id else None,'source_sha256':source_sha.hex(),'mode':self.mode})
         digest=hmac.new(self.secret.encode(),digest,hashlib.sha256).digest()
+        window=window_digest(self.secret,'document_admission','principal',str(ctx.user_id)+':'+str(ctx.tenant_id))
+        lookup=await self.rpc(ctx,'document_upload_lookup',(ctx.session_id,ctx.tenant_id,client,digest,document_id,expected,personal,window,request_id))
+        if lookup.get('replayed'):return lookup
+        if not lookup['allowed']:raise AppError('RATE_LIMITED',429,lookup['retry_after'])
+        original=None;origin=None
+        if metadata['media_type']=='application/pdf':
+            original=content
+            parsed=await asyncio.to_thread(extract_pdf,original)
+            content=parsed['text'].encode('utf-8')
+            origin={'media_type':'application/pdf','source_sha256':source_sha.hex(),'byte_length':len(original),'parser_version':parsed['parser_version'],'text_sha256':hashlib.sha256(content).hexdigest(),'pages':parsed['pages']}
+            metadata={**metadata,'media_type':'text/plain'};source_sha=hashlib.sha256(content).digest()
+        elif content.startswith(b'%PDF-'):raise AppError('SOURCE_INVALID',422)
+        try:text=validate_source(content,metadata['title'],metadata['media_type'])
+        except SourceStorageError:raise AppError('SOURCE_INVALID',422) from None
+        require_document_policy(metadata['title']+'\n'+text)
         try:
             source=parse_source(content,metadata['media_type'])
             plan=build_document_plan(content,metadata['title'],metadata['media_type'],DocumentMetadata(ctx.tenant_id,doc,version,index,source_sha,self.mode))
         except ValueError:raise AppError('SOURCE_INVALID',422) from None
         mapping={'revision':source.parser_revision,'offset_unit':'unicode_codepoint','mapping':source.mapping,'lines':[{'start':x.start,'end':x.end,'kind':x.kind} for x in source.lines]}
+        if origin:mapping['origin']=origin
         try:
             async with tenant_transaction(self.pool,ctx) as conn:
                 replayed=(await (await conn.execute('SELECT security.'+prefix+'document_upload_preflight(%s,%s,%s,%s,%s,%s) AS replayed',(ctx.session_id,ctx.tenant_id,client,digest,document_id,expected))).fetchone())['replayed']
-                if not replayed:
-                    window=window_digest(self.secret,'document_admission','principal',str(ctx.user_id)+':'+str(ctx.tenant_id))
-                    admission=await (await conn.execute('SELECT * FROM security.'+prefix+'document_admission_window(%s,%s,%s)',(ctx.session_id,ctx.tenant_id,window))).fetchone()
-                    if not admission['allowed']:raise AppError('RATE_LIMITED',429,admission['retry_after'])
                 await conn.execute('SELECT pg_advisory_xact_lock(hashtextextended(%s,0))',(str(ctx.tenant_id)+str(ctx.user_id)+str(client),))
                 await conn.execute('SELECT pg_advisory_xact_lock(hashtextextended(%s,0))',(f'tenants/{ctx.tenant_id}/documents/{doc}/{version}/source',))
                 # Write only after current authorization. Same key never overwrites.
@@ -76,6 +90,12 @@ class DocumentRepository:
                 except SourceStorageError as e:
                     if str(e)!='SOURCE_ALREADY_EXISTS':raise
                     self.storage.read(StoredSource(f'tenants/{ctx.tenant_id}/documents/{doc}/{version}/source',source_sha,len(content),len(text),metadata['title'],metadata['media_type']))
+                if original is not None:
+                    key=f'tenants/{ctx.tenant_id}/documents/{doc}/{version}/source'
+                    try:self.storage.write_original(key,original,bytes.fromhex(origin['source_sha256']))
+                    except SourceStorageError as e:
+                        if str(e)!='SOURCE_ALREADY_EXISTS':raise
+                        self.storage.read_original(StoredSource(key,source_sha,len(content),len(text),metadata['title'],metadata['media_type'],mapping))
                 args=(ctx.session_id,ctx.tenant_id,client,digest,doc,version,index,job,document_id is not None,expected,owner,visibility,readers,metadata['title'],metadata['media_type'],source_sha,len(content),len(text),bytes.fromhex(plan.source_fingerprint),self.mode,Jsonb(mapping))
                 row=await (await conn.execute('SELECT security.'+prefix+'document_register('+','.join(['%s']*len(args))+') AS data',args)).fetchone()
                 result=row['data']

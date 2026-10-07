@@ -7,6 +7,7 @@ from app.documents.storage import StoredSource
 from app.documents.plan import build_document_plan
 from common_core.ai_pipeline.document.schemas import DocumentMetadata
 from app.errors import AppError
+from app.policies.document_ingest import require_document_policy
 
 
 def local_id(index,kind,ordinal):return uuid5(index,f'{kind}:{ordinal}')
@@ -41,7 +42,8 @@ class DocumentWorker:
                         await self._guard(conn,ticket)
                         row=await (await conn.execute('SELECT * FROM rag.document_versions WHERE tenant_id=%s AND document_id=%s AND version_id=%s',(ctx.tenant_id,UUID(job['document_id']),UUID(job['version_id'])))).fetchone()
                         if row is None:raise AppError('DOCUMENT_UNAVAILABLE',404)
-                        content=self.repository.storage.read(StoredSource(row['source_object_key'],bytes(row['source_sha256']),row['byte_length'],row['character_length'],row['title'],row['media_type']))
+                        content=self.repository.storage.read(StoredSource(row['source_object_key'],bytes(row['source_sha256']),row['byte_length'],row['character_length'],row['title'],row['media_type'],row['source_mapping']))
+                require_document_policy(row["title"]+"\n"+content.decode("utf-8"))
                 meta=DocumentMetadata(ctx.tenant_id,UUID(job['document_id']),UUID(job['version_id']),UUID(job['index_id']),bytes(row['source_sha256']),job['mode'])
                 plan=build_document_plan(content,row['title'],row['media_type'],meta)
                 if plan.source_fingerprint!=job['source_fingerprint']:raise AppError('SOURCE_INVALID',422)
@@ -65,7 +67,7 @@ class DocumentWorker:
                         await conn.execute('SELECT security.document_publish(%s,%s,%s,%s,%s)',(ctx.tenant_id,job_id,ticket['epoch'],claim,Jsonb(counts)))
         except BaseException as error:
             code=error.code if isinstance(error,AppError) else 'INDEX_INTERRUPTED'
-            try:await self._control(ctx,job_id,'review',ticket['epoch'],claim,{'code':code})
+            try:await self._control(ctx,job_id,'fail' if code=='DOCUMENT_POLICY_BLOCKED' else 'review',ticket['epoch'],claim,{'code':code})
             except BaseException:pass
             raise
         finally:
