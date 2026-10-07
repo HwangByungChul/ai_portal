@@ -13,7 +13,8 @@ from app.documents.storage import validate_source,SourceStorageError,StoredSourc
 from app.documents.plan import build_document_plan
 from app.documents.pdf import extract_pdf
 from app.documents.docx import extract_docx
-from app.documents.formats import DOCX_MEDIA_TYPE
+from app.documents.xlsx import extract_xlsx
+from app.documents.formats import DOCX_MEDIA_TYPE,XLSX_MEDIA_TYPE
 from app.policies.document_ingest import require_document_policy
 from common_core.ai_pipeline.document.schemas import DocumentMetadata
 from common_core.ai_pipeline.document.parser import parse_source
@@ -66,9 +67,10 @@ class DocumentRepository:
         if lookup.get('replayed'):return lookup
         if not lookup['allowed']:raise AppError('RATE_LIMITED',429,lookup['retry_after'])
         original=None;origin=None
-        if metadata['media_type'] in ('application/pdf',DOCX_MEDIA_TYPE):
+        if metadata['media_type'] in ('application/pdf',DOCX_MEDIA_TYPE,XLSX_MEDIA_TYPE):
             original=content
-            parsed=await asyncio.to_thread(extract_pdf if metadata['media_type']=='application/pdf' else extract_docx,original)
+            parser={'application/pdf':extract_pdf,DOCX_MEDIA_TYPE:extract_docx,XLSX_MEDIA_TYPE:extract_xlsx}[metadata['media_type']]
+            parsed=await asyncio.to_thread(parser,original)
             content=parsed['text'].encode('utf-8')
             field='pages' if metadata['media_type']=='application/pdf' else 'locations'
             origin={'media_type':metadata['media_type'],'source_sha256':source_sha.hex(),'byte_length':len(original),'parser_version':parsed['parser_version'],'text_sha256':hashlib.sha256(content).hexdigest(),field:parsed[field]}

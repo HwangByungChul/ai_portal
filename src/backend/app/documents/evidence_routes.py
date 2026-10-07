@@ -7,7 +7,7 @@ from app.operations.routes import validate_query
 from app.errors import response,AppError
 from app.documents.storage import StoredSource,SourceStorageError
 from app.documents.search import source_binding
-from app.documents.formats import DOCX_MEDIA_TYPE
+from app.documents.formats import DOCX_MEDIA_TYPE,XLSX_MEDIA_TYPE
 from psycopg.types.json import Jsonb
 
 router=APIRouter(prefix='/api/v1')
@@ -62,7 +62,7 @@ async def source(request:Request,run_id:UUID,ordinal:int=Path(ge=0,le=19)):
         origin=x['source_mapping'].get('origin')
         original=bool(origin)
         media=origin['media_type'] if original else 'text/plain; charset=utf-8'
-        filename='document.docx' if media==DOCX_MEDIA_TYPE else 'document.pdf' if original else 'document.txt'
+        filename='document.xlsx' if media==XLSX_MEDIA_TYPE else 'document.docx' if media==DOCX_MEDIA_TYPE else 'document.pdf' if original else 'document.txt'
         if original:
             try:content=request.app.state.documents.storage.read_original(stored)
             except SourceStorageError:raise AppError('STORAGE_UNAVAILABLE',503) from None

@@ -6,7 +6,7 @@ from uuid import UUID
 from typing import Literal
 from pydantic import BaseModel,ConfigDict,Field,StrictInt,StrictStr,ValidationError
 from app.errors import AppError
-from app.documents.formats import DOCX_MEDIA_TYPE
+from app.documents.formats import DOCX_MEDIA_TYPE,XLSX_MEDIA_TYPE
 
 MAX_UPLOAD_BODY=147456
 
@@ -14,7 +14,7 @@ class UploadMetadata(BaseModel):
     model_config=ConfigDict(extra='forbid')
     client_upload_id:UUID
     title:StrictStr=Field(min_length=1,max_length=200)
-    media_type:Literal['text/plain','text/markdown','application/pdf',DOCX_MEDIA_TYPE]
+    media_type:Literal['text/plain','text/markdown','application/pdf',DOCX_MEDIA_TYPE,XLSX_MEDIA_TYPE]
     visibility:Literal['org','private']='org'
     owner_user_id:UUID|None=None
     reader_ids:list[UUID]=Field(default_factory=list,max_length=20)
@@ -23,13 +23,13 @@ class UserUploadMetadata(BaseModel):
     model_config=ConfigDict(extra="forbid")
     client_upload_id:UUID
     title:StrictStr=Field(min_length=1,max_length=200)
-    media_type:Literal["text/plain","text/markdown","application/pdf",DOCX_MEDIA_TYPE]
+    media_type:Literal["text/plain","text/markdown","application/pdf",DOCX_MEDIA_TYPE,XLSX_MEDIA_TYPE]
 
 class VersionMetadata(BaseModel):
     model_config=ConfigDict(extra='forbid')
     client_upload_id:UUID
     title:StrictStr=Field(min_length=1,max_length=200)
-    media_type:Literal['text/plain','text/markdown','application/pdf',DOCX_MEDIA_TYPE]
+    media_type:Literal['text/plain','text/markdown','application/pdf',DOCX_MEDIA_TYPE,XLSX_MEDIA_TYPE]
     expected_revision:StrictInt=Field(ge=1,le=9223372036854775807)
 
 
@@ -53,7 +53,8 @@ def parse_upload(body,content_type,version=False,*,personal=False):
         meta=(UserUploadMetadata if personal else VersionMetadata if version else UploadMetadata).model_validate(data)
         if meta.media_type=='application/pdf' and (type(filename) is not str or not filename.lower().endswith('.pdf') or file_media!='application/pdf' or not values['file'].startswith(b'%PDF-')):raise ValueError()
         if meta.media_type==DOCX_MEDIA_TYPE and (type(filename) is not str or not filename.lower().endswith('.docx') or file_media!=DOCX_MEDIA_TYPE or not values['file'].startswith(b'PK\x03\x04')):raise ValueError()
-        if meta.media_type not in ('application/pdf',DOCX_MEDIA_TYPE) and values['file'].startswith((b'%PDF-',b'PK\x03\x04')):raise ValueError()
+        if meta.media_type==XLSX_MEDIA_TYPE and (type(filename) is not str or not filename.lower().endswith('.xlsx') or file_media!=XLSX_MEDIA_TYPE or not values['file'].startswith(b'PK\x03\x04')):raise ValueError()
+        if meta.media_type not in ('application/pdf',DOCX_MEDIA_TYPE,XLSX_MEDIA_TYPE) and values['file'].startswith((b'%PDF-',b'PK\x03\x04')):raise ValueError()
         return meta.model_dump(),values['file']
     except (ValueError,UnicodeError,TypeError,ValidationError,KeyError):raise AppError('REQUEST_INVALID',422) from None
 

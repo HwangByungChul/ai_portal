@@ -248,17 +248,19 @@ class SourceStorage:
 
 
 def validate_origin(mapping,source):
-    from app.documents.formats import DOCX_MEDIA_TYPE,DOCX_PARSER_VERSION
+    from app.documents.formats import DOCX_MEDIA_TYPE,DOCX_PARSER_VERSION,XLSX_MEDIA_TYPE,XLSX_PARSER_VERSION
     from app.documents.docx_locations import validate_docx_locations
+    from app.documents.xlsx_locations import validate_xlsx_locations
     if not mapping or "origin" not in mapping:return None
     origin=mapping["origin"]
     try:
         if type(origin) is not dict:raise ValueError()
         media=origin.get("media_type")
-        field="pages" if media=="application/pdf" else "locations" if media==DOCX_MEDIA_TYPE else None
-        version="pypdf-6.19.0" if media=="application/pdf" else DOCX_PARSER_VERSION
+        field="pages" if media=="application/pdf" else "locations" if media in (DOCX_MEDIA_TYPE,XLSX_MEDIA_TYPE) else None
+        version="pypdf-6.19.0" if media=="application/pdf" else DOCX_PARSER_VERSION if media==DOCX_MEDIA_TYPE else XLSX_PARSER_VERSION
         if field is None or set(origin)!={"media_type","source_sha256","byte_length","parser_version","text_sha256",field} or origin["parser_version"]!=version or origin["text_sha256"]!=source.sha256.hex() or type(origin["byte_length"]) is not int or not 1<=origin["byte_length"]<=MAX_BYTES or len(bytes.fromhex(origin["source_sha256"]))!=32:raise ValueError()
-        if field=="locations":validate_docx_locations(origin["locations"],source.character_length)
+        if field=="locations":
+            (validate_docx_locations if media==DOCX_MEDIA_TYPE else validate_xlsx_locations)(origin["locations"],source.character_length)
         else:
             pages=origin["pages"];previous=-2
             if not 1<=len(pages)<=20:raise ValueError()

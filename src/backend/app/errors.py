@@ -2,6 +2,18 @@ from datetime import datetime, timezone
 from fastapi.responses import JSONResponse
 
 MESSAGES = {
+    'XLSX_INVALID': 'XLSX 파일 형식 또는 셀 값을 확인해 주세요.',
+    'XLSX_UNSUPPORTED': '수식·숨김·병합·날짜/통화/백분율 서식 등은 현재 지원하지 않습니다.',
+    'XLSX_ENCRYPTED': '암호화되지 않은 XLSX를 등록해 주세요.',
+    'XLSX_ZIP_LIMIT': 'XLSX 압축 구조 또는 해제 크기 한도를 초과했습니다.',
+    'XLSX_XML_LIMIT': 'XLSX 문서 구조 복잡도 한도를 초과했습니다.',
+    'XLSX_TEXT_LIMIT': 'XLSX 텍스트 또는 셀 수 한도를 초과했습니다.',
+    'XLSX_SHEET_LIMIT': 'XLSX는 표시 가능한 시트 10개 이하로 등록해 주세요.',
+    'XLSX_EMPTY': 'XLSX에 읽을 수 있는 셀 값이 없습니다.',
+    'XLSX_ACTIVE_CONTENT': '외부 참조·매크로·첨부 없는 XLSX를 등록해 주세요.',
+    'XLSX_RESOURCE_LIMIT': 'XLSX 처리 한도를 초과했습니다. 파일을 줄여 주세요.',
+    'XLSX_PARSER_UNAVAILABLE': 'XLSX 격리 처리 환경을 사용할 수 없습니다.',
+
     "DOCX_INVALID": "DOCX 파일 형식 또는 내용을 확인해 주세요.",
     "DOCX_UNSUPPORTED": "본문 문단과 중첩·병합 없는 표만 지원합니다. 이미지·머리말·변경 추적 등은 제거해 주세요.",
     "DOCX_ENCRYPTED": "암호화되지 않은 DOCX를 등록해 주세요.",
