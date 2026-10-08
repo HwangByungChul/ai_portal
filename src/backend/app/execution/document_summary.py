@@ -42,7 +42,7 @@ class SummaryExecutor:
             require_summary_policy(row['title'],body)
             return SummaryResult(body,tuple(x.evidence for x in selected),'answer' if selected else 'insufficient_evidence')
         except AppError as error:raise ExecutionError('EXECUTION_BLOCKED' if error.status in (401,403,404) else error.code) from None
-        except ValueError:raise ExecutionError('SUMMARY_OUTPUT_INVALID') from None
+        except ValueError as error:raise ExecutionError('EXECUTION_BLOCKED' if error.args==('CONTEXT_UNAVAILABLE',) else 'SUMMARY_OUTPUT_INVALID') from None
     async def finish(self,ticket,result):
         try:
             # Re-read the immutable original and evaluate current policy immediately before sealing.
@@ -52,4 +52,7 @@ class SummaryExecutor:
                 require_summary_policy(row['title'],result.body)
             return await self.repository._rpc(self.repository.web_pool,'summary_finish',(*self.repository.worker_args(ticket),result.body,result.answer_kind,Jsonb(list(result.evidence))),ticket.ctx)
         except AppError as error:raise ExecutionError('EXECUTION_BLOCKED' if error.status in (401,403,404) else error.code) from None
+        except ValueError as error:
+            if error.args==('CONTEXT_UNAVAILABLE',):raise ExecutionError('EXECUTION_BLOCKED') from None
+            raise
     async def close(self):await self.provider.close()

@@ -495,8 +495,9 @@ def test_summary_auth_required_maps_to_safe_terminal_code(monkeypatch,phase):
     asyncio.run(check())
 
 
-@pytest.mark.parametrize('phase',['after_claim','during_provider'])
-@pytest.mark.parametrize('loss',['revoked','membership','source'])
+@pytest.mark.parametrize('loss,phase',
+    [(loss,phase) for loss in ('revoked','membership','source') for phase in ('after_claim','during_provider')]
+    +[(loss,phase) for loss in ('revoked','membership') for phase in ('after_request_execute','after_request_finish')])
 def test_summary_manager_authority_loss_terminalizes_without_ledger_latch(ops_rows,tmp_path,phase,loss):
     from app.db import open_web_pool
     from dataclasses import asdict
@@ -518,7 +519,7 @@ def test_summary_manager_authority_loss_terminalizes_without_ledger_latch(ops_ro
         ctx=await f.context('A-U1','A');other=await f.context('B-U1','B');docs=setup(f,tmp_path)
         ids=await publish(f,docs,await f.context('A-ADM','A'),raw=RAW)
         other_ids=await publish(f,docs,await f.context('B-ADM','B'),raw=RAW)
-        provider=Provider()
+        provider=Provider();provider.block=phase=='during_provider';generated=phase in ('during_provider','after_request_finish')
         def revoke():
             if loss=='source':
                 with f.db.admin_connection() as c:
@@ -535,6 +536,15 @@ def test_summary_manager_authority_loss_terminalizes_without_ledger_latch(ops_ro
         async with open_web_pool(f.db.runtime_dsn()) as web,open_meter_pool(f.db.runtime_dsn('ai_meter')) as meter:
             repo=Repository(web,meter,PERIOD);engine=SummaryExecutor(repo,docs,provider)
             manager=ExecutionManager(repo,MockProvider(),'mock',StreamHub(),summary=engine)
+            original_request=engine.summary.request;request_calls=0
+            async def request(actor,run):
+                nonlocal request_calls
+                data=await original_request(actor,run)
+                if run==run_id:
+                    request_calls+=1
+                    if (phase=='after_request_execute' and request_calls==1) or (phase=='after_request_finish' and request_calls==2):revoke()
+                return data
+            engine.summary.request=request
             await manager.start()
             try:
                 data=await admit(f,docs,ctx,ids);run_id=UUID(data['run_id'])
@@ -546,7 +556,8 @@ def test_summary_manager_authority_loss_terminalizes_without_ledger_latch(ops_ro
                     revoke();provider.release.set()
                 await asyncio.wait_for(asyncio.gather(*list(manager.tasks.values())),10);await asyncio.sleep(0)
                 assert failures==[('EXECUTION_BLOCKED',True)]
-                assert provider.calls==(1 if phase=='during_provider' else 0)
+                assert provider.calls==int(generated)
+                if phase.startswith('after_request_'):assert request_calls==(2 if generated else 1)
                 assert not engine.stop_latch and not manager.gateway.stop_latch and not manager.tasks and not manager.hub.drafts
                 with f.db.admin_connection() as c:
                     assert c.execute('SELECT state,stage,safe_error_code,ended_at IS NOT NULL FROM portal.runs WHERE run_id=%s',(run_id,)).fetchone()==('failed','terminal','EXECUTION_BLOCKED',True)
@@ -554,7 +565,7 @@ def test_summary_manager_authority_loss_terminalizes_without_ledger_latch(ops_ro
                     assert c.execute('SELECT count(*) FROM portal.summary_evidence WHERE run_id=%s',(run_id,)).fetchone()[0]==0
                     assert c.execute("SELECT count(*) FROM portal.messages WHERE run_id=%s AND role='assistant'",(run_id,)).fetchone()[0]==0
                     attempts=c.execute('SELECT operation,state,provider_end_status,slot_held,usage_snapshot FROM ops.call_attempts WHERE run_id=%s',(run_id,)).fetchall()
-                    if phase=='during_provider':
+                    if generated:
                         assert attempts==[('generate_rag','settled','observed',False,asdict(provider.outcome.receipt))]
                         assert c.execute('SELECT event_kind FROM ops.usage_events u JOIN ops.call_attempts a USING(tenant_id,call_id) WHERE a.run_id=%s ORDER BY u.created_at',(run_id,)).fetchall()==[('reserve',),('settle',)]
                     else:assert attempts==[]
@@ -569,8 +580,27 @@ def test_summary_manager_authority_loss_terminalizes_without_ledger_latch(ops_ro
                 await asyncio.wait_for(asyncio.gather(*list(manager.tasks.values())),10);await asyncio.sleep(0)
                 view=await SummaryRepository(docs).read(other,other_run)
                 assert view['state']=='completed' and view['result'] is not None and len(view['evidence'])==3
-                assert provider.calls==(2 if phase=='during_provider' else 1)
+                assert provider.calls==int(generated)+1
                 assert not engine.stop_latch and not manager.gateway.stop_latch and not manager.tasks
             finally:
                 provider.release.set();await manager.close()
     f.run(check())
+
+
+@pytest.mark.parametrize('phase',['execute','finish'])
+@pytest.mark.parametrize('context_loss',[True,False])
+def test_summary_context_value_error_is_narrowly_normalized(monkeypatch,phase,context_loss):
+    from types import SimpleNamespace
+    message='CONTEXT_UNAVAILABLE' if context_loss else 'unexpected-save-error'
+    async def denied(*args):raise ValueError(message)
+    engine=SummaryExecutor(None,SimpleNamespace(pool=None),SummaryMockProvider())
+    monkeypatch.setattr(engine.summary,'request',denied)
+    ticket=SimpleNamespace(ctx=None,run=SimpleNamespace(run_id=uuid4()))
+    async def check():
+        expected=ExecutionError if context_loss or phase=='execute' else ValueError
+        code='EXECUTION_BLOCKED' if context_loss else 'SUMMARY_OUTPUT_INVALID' if phase=='execute' else message
+        with pytest.raises(expected,match='^'+code+'$'):
+            if phase=='execute':await engine.execute(ticket)
+            else:await engine.finish(ticket,None)
+        assert not engine.stop_latch
+    asyncio.run(check())
