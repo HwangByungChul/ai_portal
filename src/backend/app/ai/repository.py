@@ -48,13 +48,18 @@ class CallRepository:
                         row=await (await conn.execute('SELECT security.'+name+'('+','.join(['%s']*len(args))+') AS data',args)).fetchone()
             return row['data']
         except (psycopg.Error,ValueError) as error:
+            if ctx is not None and isinstance(error,ValueError) and error.args==('CONTEXT_UNAVAILABLE',):raise ExecutionError('EXECUTION_BLOCKED') from None
             code='SUMMARY_OUTPUT_INVALID' if name=='summary_finish' and getattr(error,'sqlstate',None)=='A0422' else CODES.get(getattr(error,'sqlstate',None),'LEDGER_UNAVAILABLE')
             raise ExecutionError(code) from None
 
     async def claim(self,ctx,run_id,mode):
         worker=secrets.token_urlsafe(32)
-        async with tenant_transaction(self.web_pool,ctx) as conn:
-            row=await (await conn.execute('SELECT task_kind FROM portal.runs WHERE tenant_id=%s AND run_id=%s',(ctx.tenant_id,run_id))).fetchone()
+        try:
+            async with tenant_transaction(self.web_pool,ctx) as conn:
+                row=await (await conn.execute('SELECT task_kind FROM portal.runs WHERE tenant_id=%s AND run_id=%s',(ctx.tenant_id,run_id))).fetchone()
+        except ValueError as error:
+            if error.args==('CONTEXT_UNAVAILABLE',):raise ExecutionError('EXECUTION_BLOCKED') from None
+            raise
         capability='summary_claim' if row and row['task_kind']=='document_summary' else 'execution_claim'
         data=await self._rpc(self.web_pool,capability,(ctx.session_id,ctx.tenant_id,run_id,mode,self.period,digest(worker)),ctx)
         if data is None:return None

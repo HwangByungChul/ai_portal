@@ -33,7 +33,9 @@ class ExecutionManager:
         while not work.done():
             await asyncio.sleep(20)
             try:ok=await self.repository.heartbeat(ticket)
-            except ExecutionError:ok=False;self.gateway.stop_latch=True
+            except ExecutionError as error:
+                ok=False
+                if error.code!='EXECUTION_BLOCKED':self.gateway.stop_latch=True
             if not ok:work.cancel();return
 
     async def _run(self,ctx,run_id):

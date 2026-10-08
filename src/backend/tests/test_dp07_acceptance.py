@@ -497,8 +497,9 @@ def test_summary_auth_required_maps_to_safe_terminal_code(monkeypatch,phase):
 
 @pytest.mark.parametrize('loss,phase',
     [(loss,phase) for loss in ('revoked','membership','source') for phase in ('after_claim','during_provider')]
-    +[(loss,phase) for loss in ('revoked','membership') for phase in ('after_request_execute','after_request_finish')])
-def test_summary_manager_authority_loss_terminalizes_without_ledger_latch(ops_rows,tmp_path,phase,loss):
+    +[(loss,phase) for loss in ('revoked','membership') for phase in ('after_request_execute','after_request_finish')]
+    +[(loss,phase) for loss in ('revoked','membership') for phase in ('before_claim','before_claim_rpc','before_reserve','before_dispatch','before_finish_rpc','heartbeat')])
+def test_summary_manager_authority_loss_terminalizes_without_ledger_latch(ops_rows,tmp_path,monkeypatch,phase,loss):
     from app.db import open_web_pool
     from dataclasses import asdict
     from decimal import Decimal
@@ -519,7 +520,13 @@ def test_summary_manager_authority_loss_terminalizes_without_ledger_latch(ops_ro
         ctx=await f.context('A-U1','A');other=await f.context('B-U1','B');docs=setup(f,tmp_path)
         ids=await publish(f,docs,await f.context('A-ADM','A'),raw=RAW)
         other_ids=await publish(f,docs,await f.context('B-ADM','B'),raw=RAW)
-        provider=Provider();provider.block=phase=='during_provider';generated=phase in ('during_provider','after_request_finish')
+        provider=Provider();provider.block=phase in ('during_provider','heartbeat');generated=phase in ('during_provider','after_request_finish','before_finish_rpc','heartbeat')
+        heartbeat_gate=asyncio.Event();original_sleep=asyncio.sleep
+        if phase=='heartbeat':
+            async def sleep(delay,*args):
+                if delay==20:await heartbeat_gate.wait()
+                else:await original_sleep(delay,*args)
+            monkeypatch.setattr('app.execution.manager.asyncio.sleep',sleep)
         def revoke():
             if loss=='source':
                 with f.db.admin_connection() as c:
@@ -527,12 +534,22 @@ def test_summary_manager_authority_loss_terminalizes_without_ledger_latch(ops_ro
             else:f.mutate_access(ctx,loss)
         class Repository(CallRepository):
             async def claim(self,actor,run,mode):
+                if phase=='before_claim' and run==run_id:revoke()
                 ticket=await super().claim(actor,run,mode)
                 if phase=='after_claim' and run==run_id:
                     assert ticket is not None;revoke()
                 return ticket
             async def fail(self,ticket,code):
                 saved=await super().fail(ticket,code);failures.append((code,saved));return saved
+            async def reject(self,actor,run,mode,code):
+                saved=await super().reject(actor,run,mode,code);failures.append((code,saved));return saved
+        original_rpc=CallRepository._rpc;rpc_losses=[]
+        async def rpc(repository,pool,name,args,actor=None):
+            target={'before_claim_rpc':'summary_claim','before_reserve':'summary_call_reserve','before_dispatch':'call_dispatch','before_finish_rpc':'summary_finish'}.get(phase)
+            if name==target and len(args)>2 and args[2]==run_id:
+                rpc_losses.append(name);revoke()
+            return await original_rpc(repository,pool,name,args,actor)
+        monkeypatch.setattr(CallRepository,'_rpc',rpc)
         async with open_web_pool(f.db.runtime_dsn()) as web,open_meter_pool(f.db.runtime_dsn('ai_meter')) as meter:
             repo=Repository(web,meter,PERIOD);engine=SummaryExecutor(repo,docs,provider)
             manager=ExecutionManager(repo,MockProvider(),'mock',StreamHub(),summary=engine)
@@ -549,28 +566,39 @@ def test_summary_manager_authority_loss_terminalizes_without_ledger_latch(ops_ro
             try:
                 data=await admit(f,docs,ctx,ids);run_id=UUID(data['run_id'])
                 manager.notify(ctx,run_id)
-                if phase=='during_provider':
+                if phase in ('during_provider','heartbeat'):
                     await asyncio.wait_for(provider.started.wait(),5)
                     with f.db.admin_connection() as c:
                         assert c.execute('SELECT state FROM portal.runs WHERE run_id=%s',(run_id,)).fetchone()==('running',)
-                    revoke();provider.release.set()
+                    revoke()
+                    if phase=='heartbeat':heartbeat_gate.set()
+                    else:provider.release.set()
                 await asyncio.wait_for(asyncio.gather(*list(manager.tasks.values())),10);await asyncio.sleep(0)
-                assert failures==[('EXECUTION_BLOCKED',True)]
+                expected_code='EXECUTION_INTERRUPTED' if phase=='heartbeat' else 'EXECUTION_BLOCKED'
+                assert failures==[(expected_code,True)]
+                if phase in ('before_claim_rpc','before_reserve','before_dispatch','before_finish_rpc'):assert len(rpc_losses)==1
                 assert provider.calls==int(generated)
                 if phase.startswith('after_request_'):assert request_calls==(2 if generated else 1)
                 assert not engine.stop_latch and not manager.gateway.stop_latch and not manager.tasks and not manager.hub.drafts
                 with f.db.admin_connection() as c:
-                    assert c.execute('SELECT state,stage,safe_error_code,ended_at IS NOT NULL FROM portal.runs WHERE run_id=%s',(run_id,)).fetchone()==('failed','terminal','EXECUTION_BLOCKED',True)
+                    assert c.execute('SELECT state,stage,safe_error_code,ended_at IS NOT NULL FROM portal.runs WHERE run_id=%s',(run_id,)).fetchone()==('blocked' if phase in ('before_claim','before_claim_rpc') else 'failed','terminal',expected_code,True)
                     assert c.execute('SELECT result FROM portal.summary_requests WHERE run_id=%s',(run_id,)).fetchone()==(None,)
                     assert c.execute('SELECT count(*) FROM portal.summary_evidence WHERE run_id=%s',(run_id,)).fetchone()[0]==0
                     assert c.execute("SELECT count(*) FROM portal.messages WHERE run_id=%s AND role='assistant'",(run_id,)).fetchone()[0]==0
                     attempts=c.execute('SELECT operation,state,provider_end_status,slot_held,usage_snapshot FROM ops.call_attempts WHERE run_id=%s',(run_id,)).fetchall()
-                    if generated:
+                    if phase=='heartbeat':
+                        assert attempts==[('generate_rag','usage_unknown','unknown',True,None)]
+                        assert c.execute('SELECT event_kind FROM ops.usage_events u JOIN ops.call_attempts a USING(tenant_id,call_id) WHERE a.run_id=%s ORDER BY u.created_at',(run_id,)).fetchall()==[('reserve',),('mark_unknown',)]
+                    elif phase=='before_dispatch':
+                        assert attempts==[('generate_rag','released_no_dispatch','not_started',False,None)]
+                        assert c.execute('SELECT event_kind FROM ops.usage_events u JOIN ops.call_attempts a USING(tenant_id,call_id) WHERE a.run_id=%s ORDER BY u.created_at',(run_id,)).fetchall()==[('reserve',),('release',)]
+                    elif generated:
                         assert attempts==[('generate_rag','settled','observed',False,asdict(provider.outcome.receipt))]
                         assert c.execute('SELECT event_kind FROM ops.usage_events u JOIN ops.call_attempts a USING(tenant_id,call_id) WHERE a.run_id=%s ORDER BY u.created_at',(run_id,)).fetchall()==[('reserve',),('settle',)]
                     else:assert attempts==[]
-                    assert c.execute("SELECT stopped,reserved_krw,active_slot FROM ops.project_budget WHERE mode='mock'").fetchone()==(False,Decimal(0),0)
-                    assert c.execute("SELECT sum(t.reserved_krw),sum(t.active_slot) FROM ops.tenant_budgets t JOIN ops.project_budget p USING(budget_id) WHERE p.mode='mock'").fetchone()==(Decimal(0),0)
+                    debt=Decimal('3.64') if phase=='heartbeat' else Decimal(0);slot=int(phase=='heartbeat')
+                    assert c.execute("SELECT stopped,stop_latch,reserved_krw,active_slot FROM ops.project_budget WHERE mode='mock'").fetchone()==(False,False,debt,slot)
+                    assert c.execute("SELECT sum(t.reserved_krw),sum(t.active_slot) FROM ops.tenant_budgets t JOIN ops.project_budget p USING(budget_id) WHERE p.mode='mock'").fetchone()==(debt,slot)
                 with pytest.raises(AppError) as denied:await SummaryRepository(docs).read(ctx,run_id)
                 assert denied.value.status==(404 if loss=='source' else 403)
                 assert ensure_execution(SimpleNamespace(app=SimpleNamespace(state=SimpleNamespace(execution=manager)))) is manager
@@ -603,4 +631,47 @@ def test_summary_context_value_error_is_narrowly_normalized(monkeypatch,phase,co
             if phase=='execute':await engine.execute(ticket)
             else:await engine.finish(ticket,None)
         assert not engine.stop_latch
+    asyncio.run(check())
+
+
+@pytest.mark.parametrize('operation',['rpc','claim','dispatch'])
+@pytest.mark.parametrize('failure',['context','value','sql'])
+def test_shared_repository_context_denial_preserves_fault_classification(monkeypatch,operation,failure):
+    from contextlib import asynccontextmanager
+    from types import SimpleNamespace
+    from app.ai.repository import DispatchUncertain
+    @asynccontextmanager
+    async def denied(*args):
+        if failure=='sql':raise psycopg.OperationalError('synthetic-sql-unavailable')
+        raise ValueError('CONTEXT_UNAVAILABLE' if failure=='context' else 'unexpected-ledger-error')
+        yield
+    monkeypatch.setattr('app.ai.repository.tenant_transaction',denied)
+    ctx=SimpleNamespace(session_id=uuid4(),tenant_id=uuid4())
+    repo=CallRepository(None,None,PERIOD)
+    ticket=SimpleNamespace(ctx=ctx,worker='synthetic-worker',run=SimpleNamespace(origin_session_id=ctx.session_id,tenant_id=ctx.tenant_id,run_id=uuid4(),epoch=1))
+    async def check():
+        expected=ExecutionError if failure=='context' or operation=='rpc' else (DispatchUncertain if operation=='dispatch' else (psycopg.OperationalError if failure=='sql' else ValueError))
+        with pytest.raises(expected) as error:
+            if operation=='rpc':await repo._rpc(None,'summary_call_reserve',(),ctx)
+            elif operation=='claim':await repo.claim(ctx,ticket.run.run_id,'mock')
+            else:await repo.dispatch(ticket,uuid4())
+        if failure=='context':assert type(error.value) is ExecutionError and error.value.code=='EXECUTION_BLOCKED'
+        elif operation in ('rpc','dispatch'):assert error.value.code=='LEDGER_UNAVAILABLE'
+    asyncio.run(check())
+
+
+@pytest.mark.parametrize('code',['EXECUTION_BLOCKED','LEDGER_UNAVAILABLE','USAGE_INVALID'])
+def test_heartbeat_only_authority_denial_avoids_stop_latch(monkeypatch,code):
+    from types import SimpleNamespace
+    from app.ai.providers import MockProvider
+    from app.execution.manager import ExecutionManager
+    from app.execution.stream import StreamHub
+    async def denied(*args):raise ExecutionError(code)
+    async def no_wait(*args):pass
+    monkeypatch.setattr('app.execution.manager.asyncio.sleep',no_wait)
+    async def check():
+        repo=SimpleNamespace(heartbeat=denied);manager=ExecutionManager(repo,MockProvider(),'mock',StreamHub())
+        work=asyncio.get_running_loop().create_future()
+        await manager._heartbeat(None,work)
+        assert work.cancelled() and manager.gateway.stop_latch==(code!='EXECUTION_BLOCKED')
     asyncio.run(check())
