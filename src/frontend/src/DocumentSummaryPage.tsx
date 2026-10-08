@@ -12,7 +12,7 @@ export function DocumentSummaryPage({tenant,user}:{tenant:Tenant;user:User}){
  const active=useRef<string|null>(null),current=useRef<SummaryRun|null>(null),lock=useRef(false),pending=useRef<Pending|null>(null),query=useRef(0),documentQuery=useRef(0),request=useRef<AbortController|null>(null),urls=useRef(new Set<string>());
  const options={tenantId:org,csrf:user.csrf_token,signal:ctx.signal};
  function dispose(){request.current?.abort();for(const url of urls.current)URL.revokeObjectURL(url);urls.current.clear();}
- function hide(){query.current++;dispose();current.current=null;active.current=null;setRun(null);setRunId(null);setHistory([]);setDocuments([]);setSelected(null);setCursor(null);setConfirm(false);pending.current=null;setUnresolved(false);}
+ function hide(){query.current++;documentQuery.current++;setLoading(false);dispose();current.current=null;active.current=null;setRun(null);setRunId(null);setHistory([]);setDocuments([]);setSelected(null);setCursor(null);setConfirm(false);pending.current=null;setUnresolved(false);}
  useEffect(()=>()=>{pending.current=null;active.current=null;current.current=null;dispose();},[]);
  async function failed(problem:unknown){if(!ctx.current())return;const message=await ctx.fail(problem,hide);if(ctx.current())setError(message);}
  async function list(next:string|null=null){const q=++documentQuery.current;setLoading(true);setError(null);if(!next){setDocuments([]);setSelected(null);}
@@ -28,8 +28,8 @@ export function DocumentSummaryPage({tenant,user}:{tenant:Tenant;user:User}){
   void load();const timer=setInterval(()=>void load(),2000);window.addEventListener('focus',load);document.addEventListener('visibilitychange',load);
   return()=>{clearInterval(timer);controller.abort();window.removeEventListener('focus',load);document.removeEventListener('visibilitychange',load);};
  },[runId]);
- async function submit(replay=false){if(lock.current||!ctx.current())return;let item=pending.current;
-  if(!replay){if(run&&!run.is_terminal)return;const doc=documents.find(d=>d.version_id===selected);if(confirm&&run)item={parent:run.run_id,body:{client_send_id:crypto.randomUUID(),expected_revision:run.revision}};else if(doc)item={body:{client_send_id:crypto.randomUUID(),document_ref:{document_id:doc.document_id,version_id:doc.version_id},bullet_count:count}};else return;pending.current=item;}
+ async function submit(intent:'create'|'regenerate'|'replay'){if(lock.current||!ctx.current())return;let item=pending.current;
+  if(intent!=='replay'){if(run&&!run.is_terminal)return;if(intent==='regenerate'){if(!run||run.content_status!=='final'||!['completed','insufficient_evidence'].includes(run.state))return;item={parent:run.run_id,body:{client_send_id:crypto.randomUUID(),expected_revision:run.revision}};}else{const doc=documents.find(d=>d.version_id===selected);if(!doc)return;item={body:{client_send_id:crypto.randomUUID(),document_ref:{document_id:doc.document_id,version_id:doc.version_id},bullet_count:count}};}pending.current=item;}
   if(!item)return;lock.current=true;setSending(true);setError(null);setConfirm(false);
   try{const accepted='parent' in item?await summaryAPI.regenerate(item.parent,item.body,options):await summaryAPI.create(item.body,options);if(!ctx.current())return;pending.current=null;setUnresolved(false);setHistory(old=>old.includes(accepted.run_id)?old:[...old,accepted.run_id]);choose(accepted.run_id);}
   catch(problem){if(ctx.current()){if(problem instanceof ApiError&&(problem.status===0||problem.status>=500)){setUnresolved(true);}else{pending.current=null;setUnresolved(false);if(problem instanceof ApiError&&[401,403,404].includes(problem.status))hide();}await failed(problem);}}
@@ -51,14 +51,14 @@ export function DocumentSummaryPage({tenant,user}:{tenant:Tenant;user:User}){
    {loading&&<p role="status">자료 확인 중</p>}{!loading&&!documents.length&&<p className="muted">현재 읽을 수 있는 게시 자료가 없습니다.</p>}
    <ul className="document-list">{documents.map(doc=><li key={doc.version_id}><label><input type="radio" name="summary-document" checked={selected===doc.version_id} disabled={busy} onChange={()=>setSelected(doc.version_id)}/>{doc.title} · {doc.safe_version_label} · {doc.visibility==='private'?'개인':doc.visibility==='shared'?'공유':'조직'}</label></li>)}</ul>
    {cursor&&<button className="secondary small" disabled={loading||busy} onClick={()=>void list(cursor)}>자료 더 보기</button>}
-   <div className="summary-actions"><label>핵심 항목 수 <select aria-label="핵심 항목 수" value={count} disabled={busy} onChange={e=>setCount(Number(e.target.value) as 3|5)}><option value="3">3개</option><option value="5">5개</option></select></label><button className="primary" disabled={!selected||busy} onClick={()=>void submit()}>요약하기</button></div>
+   <div className="summary-actions"><label>핵심 항목 수 <select aria-label="핵심 항목 수" value={count} disabled={busy} onChange={e=>setCount(Number(e.target.value) as 3|5)}><option value="3">3개</option><option value="5">5개</option></select></label><button className="primary" disabled={!selected||busy} onClick={()=>void submit('create')}>요약하기</button></div>
   </section>
-  {unresolved&&<div className="notice" role="status"><p>접수 상태 확인 필요 · 같은 접수 ID로 확인합니다. 새 요약 전송을 보류했습니다.</p><button className="secondary" disabled={sending} onClick={()=>void submit(true)}>요약 접수 확인</button></div>}
+  {unresolved&&<div className="notice" role="status"><p>접수 상태 확인 필요 · 같은 접수 ID로 확인합니다. 새 요약 전송을 보류했습니다.</p><button className="secondary" disabled={sending} onClick={()=>void submit('replay')}>요약 접수 확인</button></div>}
   {history.length>1&&<nav className="summary-history" aria-label="이번 방문의 요약 실행">{history.map((id,index)=><button key={id} className="secondary small" disabled={busy||downloading} aria-current={runId===id?'page':undefined} onClick={()=>choose(id)}>요약 실행 {index+1}</button>)}</nav>}
   {run&&<section className="card summary-result" aria-label="요약 결과"><span className="mode-tag">{modeLabel(run.execution_mode)}</span><p role="status" className="run-status">{run.answer_kind==='insufficient_evidence'?'근거 부족':stateName[run.state]??'상태 확인 중'}</p>
    {run.error_code&&<p role="alert">{new ApiError(422,run.error_code).message}</p>}{!run.is_terminal&&<button className="secondary" disabled={cancelling||run.state==='cancel_requested'} onClick={()=>void cancel()}>요약 취소</button>}
    {final&&<><h2>원문 발췌 요약</h2><p className="scope-note">실제 항목 {run.evidence.length}개 · 요청 {run.bullet_count}개</p><p className="summary-text">{run.result!.text}</p><SummaryEvidencePanel rows={run.evidence} busy={downloading||busy} onDownload={row=>void download(row)}/><div className="summary-actions"><button className="secondary" disabled={!regenerable||busy||downloading} onClick={()=>setConfirm(true)}>다시 요약</button><button className="secondary" disabled={busy||downloading} onClick={()=>void download()}>Markdown 내려받기</button></div></>}
-   {confirm&&<div className="confirmation"><p>같은 버전으로 새 실행을 만들며 실제 모드에서는 비용이 발생할 수 있습니다.</p><button className="primary" disabled={sending} onClick={()=>void submit()}>새 실행으로 요약</button><button className="secondary" onClick={()=>setConfirm(false)}>재생성 취소</button></div>}
+   {confirm&&<div className="confirmation"><p>같은 버전으로 새 실행을 만들며 실제 모드에서는 비용이 발생할 수 있습니다.</p><button className="primary" disabled={sending} onClick={()=>void submit('regenerate')}>새 실행으로 요약</button><button className="secondary" onClick={()=>setConfirm(false)}>재생성 취소</button></div>}
   </section>}
  </section>;
 }

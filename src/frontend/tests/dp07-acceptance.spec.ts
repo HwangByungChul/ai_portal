@@ -55,3 +55,56 @@ test('D07_13_blob_late_tenant_switch_no_download',async({page})=>{
 test('D07_14_revoke_during_processing_no_result_or_retry',async({page})=>{
  test.setTimeout(35000);await login(page,'A-U1');await upload(page,'처리 중 회수',{name:'revoke.txt',mimeType:'text/plain',buffer:Buffer.from(body)});control('slow-rag-provider');await page.getByRole('button',{name:'문서 요약',exact:true}).click();await page.getByLabel('처리 중 회수 · v1 · 개인',{exact:true}).check();await page.getByRole('button',{name:'요약하기',exact:true}).click();await expect(page.getByText('요약 처리 중',{exact:true})).toBeVisible();const h=await headers(page),doc=(await (await page.request.get('/api/v1/documents/mine',{headers:h})).json()).data.items[0];expect((await page.request.delete('/api/v1/documents/'+doc.document_id,{headers:h,data:{expected_revision:doc.revision}})).status()).toBe(200);control('release-provider');await expect(page.getByRole('region',{name:'요약 결과'})).toHaveCount(0,{timeout:7000});await expect(page.getByRole('region',{name:'요약할 문서'})).not.toContainText('처리 중 회수');expect(control('c05-counts').generate_rag).toBe(1);await expect(page.getByRole('button',{name:'다시 요약',exact:true})).toHaveCount(0);
 });
+
+// Confirmation state must never reinterpret the normal create button's selected request.
+test('D07_15_create_intent_independent_of_regeneration_confirmation',async({page})=>{
+ test.setTimeout(45000);await login(page,'A-U1');
+ await upload(page,'요청 의도 A',{name:'intent-a.txt',mimeType:'text/plain',buffer:Buffer.from(body)});
+ await page.getByRole('button',{name:'문서 요약',exact:true}).click();
+ const text='B 첫번째 안내 문장입니다.\nB 두번째 안내 문장입니다.\nB 세번째 안내 문장입니다.\nB 네번째 안내 문장입니다.\nB 다섯번째 안내 문장입니다.';
+ await upload(page,'요청 의도 B',{name:'intent-b.txt',mimeType:'text/plain',buffer:Buffer.from(text)});
+ const original=await summarize(page,'요청 의도 A'),value=await read(page,original);
+ const docs=(await (await page.request.get('/api/v1/documents?limit=20',{headers:await headers(page)})).json()).data.items;
+ const selected=docs.find((d:{title:string})=>d.title==='요청 의도 B');expect(selected).toBeTruthy();
+ await page.getByRole('button',{name:'다시 요약',exact:true}).click();
+ await expect(page.getByRole('button',{name:'새 실행으로 요약',exact:true})).toBeVisible();
+ await page.getByLabel('요청 의도 B · v1 · 개인',{exact:true}).check();await page.getByLabel('핵심 항목 수',{exact:true}).selectOption('5');
+ const admission=page.waitForResponse(r=>r.request().method()==='POST'&&/\/api\/v1\/document-summaries(?:\/[^/]+\/regenerate)?$/.test(r.url()));
+ await page.getByRole('button',{name:'요약하기',exact:true}).click();const response=await admission;
+ expect(new URL(response.url()).pathname).toBe('/api/v1/document-summaries');
+ const submitted=response.request().postDataJSON();expect(submitted.document_ref).toEqual({document_id:selected.document_id,version_id:selected.version_id});expect(submitted.bullet_count).toBe(5);
+ const created=(await response.json()).data.run_id;await expect(page.getByText('완료 · 저장 확인됨',{exact:true})).toBeVisible();
+ const saved=await read(page,created);expect(saved.parent_run_id).toBeNull();expect(saved.bullet_count).toBe(5);expect(saved.evidence).toHaveLength(5);
+ expect(saved.evidence.every((e:{document_id:string;version_id:string})=>e.document_id===selected.document_id&&e.version_id===selected.version_id)).toBe(true);
+ // Explicit regeneration keeps A's exact version/count even while the picker remains B/5.
+ await page.getByRole('button',{name:'요약 실행 1',exact:true}).click();await expect(page.locator('.summary-text')).toHaveText(value.result.text);
+ await expect(page.getByLabel('요청 의도 B · v1 · 개인',{exact:true})).toBeChecked();await expect(page.getByLabel('핵심 항목 수',{exact:true})).toHaveValue('5');
+ await page.getByRole('button',{name:'다시 요약',exact:true}).click();const regenerated=page.waitForResponse(r=>r.request().method()==='POST'&&r.url().endsWith('/'+original+'/regenerate'));
+ await page.getByRole('button',{name:'새 실행으로 요약',exact:true}).click();const child=(await (await regenerated).json()).data.run_id;
+ await expect(page.getByText('완료 · 저장 확인됨',{exact:true})).toBeVisible();const repeated=await read(page,child);
+ expect(repeated.parent_run_id).toBe(original);expect(repeated.bullet_count).toBe(value.bullet_count);
+ expect(repeated.evidence.every((e:{document_id:string;version_id:string})=>e.document_id===value.evidence[0].document_id&&e.version_id===value.evidence[0].version_id)).toBe(true);
+ expect(control('c05-counts').generate_rag).toBe(3);expect(control('c05-counts').embed_query).toBe(0);
+});
+
+// Delay an actually authorized list response across source deletion and the real summary 404.
+test('D07_16_revoked_title_not_restored_by_late_document_list',async({page})=>{
+ test.setTimeout(35000);await page.addInitScript(()=>{const original=window.fetch;window.fetch=(input,options)=>String(input).includes('/api/v1/documents?')?original(input,{...options,signal:undefined}):original(input,options);});
+ await login(page,'A-U1');await upload(page,'늦은 목록 회수 자료',{name:'late-list.txt',mimeType:'text/plain',buffer:Buffer.from(body)});const run=await summarize(page,'늦은 목록 회수 자료');
+ await expect(page.getByLabel('늦은 목록 회수 자료 · v1 · 개인',{exact:true})).toBeChecked();
+ let release!:()=>void,arrived!:()=>void,delivered!:()=>void;const gate=new Promise<void>(r=>release=r),ready=new Promise<void>(r=>arrived=r),done=new Promise<void>(r=>delivered=r);
+ await page.route('**/api/v1/documents?**',async route=>{const response=await route.fetch();expect(response.status()).toBe(200);const value=await response.json();expect(value.data.items.some((d:{title:string})=>d.title==='늦은 목록 회수 자료')).toBe(true);arrived();await gate;try{await route.fulfill({response});}finally{delivered();}});
+ const lateReply=page.waitForResponse(r=>r.request().method()==='GET'&&new URL(r.url()).pathname==='/api/v1/documents');
+ await page.getByRole('button',{name:'자료 새로고침',exact:true}).click();await ready;await expect(page.getByText('자료 확인 중',{exact:true})).toBeVisible();
+ let loadingBeforeDelivery=-1;
+ try{
+  const h=await headers(page),doc=(await (await page.request.get('/api/v1/documents/mine',{headers:h})).json()).data.items.find((d:{title:string})=>d.title==='늦은 목록 회수 자료');
+  const denied=page.waitForResponse(r=>r.url().endsWith('/api/v1/document-summaries/'+run)&&r.status()===404);
+  expect((await page.request.delete('/api/v1/documents/'+doc.document_id,{headers:h,data:{expected_revision:doc.revision}})).status()).toBe(200);await denied;
+  await expect(page.getByRole('region',{name:'요약 결과'})).toHaveCount(0);loadingBeforeDelivery=await page.getByText('자료 확인 중',{exact:true}).count();
+ }finally{release();}
+ await done;expect((await lateReply).status()).toBe(200);await page.evaluate(()=>new Promise<void>(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r()))));
+ await expect(page.getByRole('region',{name:'요약할 문서'})).not.toContainText('늦은 목록 회수 자료');await expect(page.getByRole('radio')).toHaveCount(0);expect(loadingBeforeDelivery).toBe(0);
+ await expect(page.getByRole('button',{name:'요약하기',exact:true})).toBeDisabled();await expect(page.getByRole('button',{name:'자료 새로고침',exact:true})).toBeEnabled();
+ expect(control('c05-counts').generate_rag).toBe(1);
+});
