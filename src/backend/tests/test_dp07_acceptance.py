@@ -478,3 +478,99 @@ def test_summary_unfired_cleanup_failure_latches_manager_and_blocks_new_admissio
     with f.db.admin_connection() as c:
         assert c.execute('SELECT count(*) FROM portal.summary_requests').fetchone()[0]==1
         assert c.execute('SELECT count(*) FROM portal.summary_evidence').fetchone()[0]==0
+
+
+@pytest.mark.parametrize('phase',['execute','finish'])
+def test_summary_auth_required_maps_to_safe_terminal_code(monkeypatch,phase):
+    from types import SimpleNamespace
+    async def denied(*args):raise AppError('AUTH_REQUIRED',401)
+    engine=SummaryExecutor(None,SimpleNamespace(pool=None),SummaryMockProvider())
+    monkeypatch.setattr(engine.summary,'request',denied)
+    ticket=SimpleNamespace(ctx=None,run=SimpleNamespace(run_id=uuid4()))
+    async def check():
+        with pytest.raises(ExecutionError,match='^EXECUTION_BLOCKED$'):
+            if phase=='execute':await engine.execute(ticket)
+            else:await engine.finish(ticket,None)
+        assert not engine.stop_latch
+    asyncio.run(check())
+
+
+@pytest.mark.parametrize('phase',['after_claim','during_provider'])
+@pytest.mark.parametrize('loss',['revoked','membership','source'])
+def test_summary_manager_authority_loss_terminalizes_without_ledger_latch(ops_rows,tmp_path,phase,loss):
+    from app.db import open_web_pool
+    from dataclasses import asdict
+    from decimal import Decimal
+    from types import SimpleNamespace
+    from app.ai.providers import MockProvider
+    from app.execution.manager import ExecutionManager
+    from app.execution.stream import StreamHub
+    from app.execution.summary_routes import ensure_execution
+    f=ops_rows;failures=[]
+    class Provider(SummaryMockProvider):
+        def __init__(self):
+            self.calls=0;self.started=asyncio.Event();self.release=asyncio.Event();self.block=True;self.outcome=None
+        async def generate(self,*args):
+            self.calls+=1;self.started.set()
+            if self.block:await self.release.wait()
+            self.outcome=await super().generate(*args);return self.outcome
+    async def check():
+        ctx=await f.context('A-U1','A');other=await f.context('B-U1','B');docs=setup(f,tmp_path)
+        ids=await publish(f,docs,await f.context('A-ADM','A'),raw=RAW)
+        other_ids=await publish(f,docs,await f.context('B-ADM','B'),raw=RAW)
+        provider=Provider()
+        def revoke():
+            if loss=='source':
+                with f.db.admin_connection() as c:
+                    c.execute('UPDATE security.document_access SET deleted_at=clock_timestamp() WHERE tenant_id=%s AND document_id=%s',(ctx.tenant_id,UUID(ids['document_id'])))
+            else:f.mutate_access(ctx,loss)
+        class Repository(CallRepository):
+            async def claim(self,actor,run,mode):
+                ticket=await super().claim(actor,run,mode)
+                if phase=='after_claim' and run==run_id:
+                    assert ticket is not None;revoke()
+                return ticket
+            async def fail(self,ticket,code):
+                saved=await super().fail(ticket,code);failures.append((code,saved));return saved
+        async with open_web_pool(f.db.runtime_dsn()) as web,open_meter_pool(f.db.runtime_dsn('ai_meter')) as meter:
+            repo=Repository(web,meter,PERIOD);engine=SummaryExecutor(repo,docs,provider)
+            manager=ExecutionManager(repo,MockProvider(),'mock',StreamHub(),summary=engine)
+            await manager.start()
+            try:
+                data=await admit(f,docs,ctx,ids);run_id=UUID(data['run_id'])
+                manager.notify(ctx,run_id)
+                if phase=='during_provider':
+                    await asyncio.wait_for(provider.started.wait(),5)
+                    with f.db.admin_connection() as c:
+                        assert c.execute('SELECT state FROM portal.runs WHERE run_id=%s',(run_id,)).fetchone()==('running',)
+                    revoke();provider.release.set()
+                await asyncio.wait_for(asyncio.gather(*list(manager.tasks.values())),10);await asyncio.sleep(0)
+                assert failures==[('EXECUTION_BLOCKED',True)]
+                assert provider.calls==(1 if phase=='during_provider' else 0)
+                assert not engine.stop_latch and not manager.gateway.stop_latch and not manager.tasks and not manager.hub.drafts
+                with f.db.admin_connection() as c:
+                    assert c.execute('SELECT state,stage,safe_error_code,ended_at IS NOT NULL FROM portal.runs WHERE run_id=%s',(run_id,)).fetchone()==('failed','terminal','EXECUTION_BLOCKED',True)
+                    assert c.execute('SELECT result FROM portal.summary_requests WHERE run_id=%s',(run_id,)).fetchone()==(None,)
+                    assert c.execute('SELECT count(*) FROM portal.summary_evidence WHERE run_id=%s',(run_id,)).fetchone()[0]==0
+                    assert c.execute("SELECT count(*) FROM portal.messages WHERE run_id=%s AND role='assistant'",(run_id,)).fetchone()[0]==0
+                    attempts=c.execute('SELECT operation,state,provider_end_status,slot_held,usage_snapshot FROM ops.call_attempts WHERE run_id=%s',(run_id,)).fetchall()
+                    if phase=='during_provider':
+                        assert attempts==[('generate_rag','settled','observed',False,asdict(provider.outcome.receipt))]
+                        assert c.execute('SELECT event_kind FROM ops.usage_events u JOIN ops.call_attempts a USING(tenant_id,call_id) WHERE a.run_id=%s ORDER BY u.created_at',(run_id,)).fetchall()==[('reserve',),('settle',)]
+                    else:assert attempts==[]
+                    assert c.execute("SELECT stopped,reserved_krw,active_slot FROM ops.project_budget WHERE mode='mock'").fetchone()==(False,Decimal(0),0)
+                    assert c.execute("SELECT sum(t.reserved_krw),sum(t.active_slot) FROM ops.tenant_budgets t JOIN ops.project_budget p USING(budget_id) WHERE p.mode='mock'").fetchone()==(Decimal(0),0)
+                with pytest.raises(AppError) as denied:await SummaryRepository(docs).read(ctx,run_id)
+                assert denied.value.status==(404 if loss=='source' else 403)
+                assert ensure_execution(SimpleNamespace(app=SimpleNamespace(state=SimpleNamespace(execution=manager)))) is manager
+                provider.block=False
+                other_data=await admit(f,docs,other,other_ids);other_run=UUID(other_data['run_id'])
+                manager.notify(other,other_run)
+                await asyncio.wait_for(asyncio.gather(*list(manager.tasks.values())),10);await asyncio.sleep(0)
+                view=await SummaryRepository(docs).read(other,other_run)
+                assert view['state']=='completed' and view['result'] is not None and len(view['evidence'])==3
+                assert provider.calls==(2 if phase=='during_provider' else 1)
+                assert not engine.stop_latch and not manager.gateway.stop_latch and not manager.tasks
+            finally:
+                provider.release.set();await manager.close()
+    f.run(check())
