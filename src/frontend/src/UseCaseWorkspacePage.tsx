@@ -35,7 +35,7 @@ export function UseCaseWorkspacePage({tenant,user}:{tenant:Tenant;user:User}){
  },[run?.run_id,run?.is_terminal,selected]);
  async function execute(){
   if(busy||active||!agent?.execution_ready||(!memo.trim()&&!documents.length))return;
-  setBusy(true);setError(null);const prompt=memo.trim();
+  setBusy(true);setError(null);const prompt=memo;
   const payload={prompt,...(selected==='AGENT_03'?{meeting_date:meetingDate||null,document_refs:documents.map(d=>({document_id:d.document_id,version_id:d.version_id}))}: {})};
   const fingerprint=JSON.stringify({caseId:selected,...payload});
   if(request.current?.fingerprint!==fingerprint)request.current={fingerprint,client:crypto.randomUUID()};
@@ -68,17 +68,17 @@ export function UseCaseWorkspacePage({tenant,user}:{tenant:Tenant;user:User}){
     {selected==='AGENT_03'&&<><label htmlFor="meeting-date">회의일 (선택 · 한국 업무 날짜)</label><input id="meeting-date" type="date" value={meetingDate} disabled={busy||active||!agent.execution_ready} onChange={e=>setMeetingDate(e.target.value)}/><p>오늘·내일은 입력한 회의일 기준입니다. 날짜가 없거나 모호한 기한은 미확정으로 남습니다.</p>{agent.execution_ready&&<MeetingDocuments key={tenant.tenant_id} tenant={tenant} user={user} selected={documents} onChange={setDocuments} disabled={busy||active}/>}</>}
     <label htmlFor="meeting-memo">{selected==='AGENT_03'?'회의 메모':'업무 질의'}</label>
     <textarea id="meeting-memo" rows={8} maxLength={4000} value={memo} disabled={busy||active||!agent.execution_ready} onChange={e=>setMemo(e.target.value)} style={{width:'100%'}}/>
-    <p role="status">메모 {memo.length}/4000자 · 자료 {documents.reduce((n,d)=>n+d.character_length,0)}자 · 회의일 {meetingDate.length}자 · 합계 예비 계산 {memo.trim().length+documents.reduce((n,d)=>n+d.character_length,0)+meetingDate.length}/4000자</p><p>서버 구분 문구가 추가됩니다. 최종 한도는 서버가 확인하며 초과 시 분량을 줄여야 합니다. 입력은 자동으로 잘리지 않습니다.</p>
+    <p role="status">메모 {memo.length}/4000자 · 자료 {documents.reduce((n,d)=>n+d.character_length,0)}자 · 회의일 {meetingDate.length}자 · 합계 예비 계산 {memo.length+documents.reduce((n,d)=>n+d.character_length,0)+meetingDate.length}/4000자</p><p>서버 구분 문구가 추가됩니다. 최종 한도는 서버가 확인하며 초과 시 분량을 줄여야 합니다. 입력은 자동으로 잘리지 않습니다.</p>
     {!agent.execution_ready&&<p role="status">{selected==='AGENT_03'?'현재 조직의 승인된 회의록 Workflow와 이용 권한을 확인해 주세요.':'이 업무 Agent는 추후 확장 예정입니다.'}</p>}
     <button className="primary" disabled={busy||active||!agent.execution_ready||(!memo.trim()&&!documents.length)} onClick={()=>void execute()}>Agent 실행 및 초안 생성</button>
     {active&&<button className="secondary" disabled={busy} onClick={()=>void cancel()}>실행 취소</button>}
     {run&&<><p role="status">{states[run.state]} · {modeLabel(run.execution_mode)}</p><p style={{overflowWrap:'anywhere'}}>실행 번호: {run.run_id}</p>
-     <p>봉인된 회의일: {run?.meeting_context?.meeting_date??(run?.meeting_context?'미입력':'과거 실행의 회의 정보 없음')}</p>{run?.meeting_context?.documents.map(d=><p key={d.version_id}>{d.current_available?d.title:'현재 원문 사용 불가'} · {d.source_ref}</p>)}<ol>{run.steps.map(s=><li key={s.node_id}>{s.node_id} · {s.state}</li>)}</ol>
+     <p>봉인된 회의일: {run?.meeting_context?.meeting_date??(run?.meeting_context?'미입력':'과거 실행의 회의 정보 없음')}</p>{run?.meeting_context?.documents.map(d=><p key={d.version_id}>{d.current_available?d.title:'현재 원문 사용 불가'}<details><summary>정확한 출처 식별자</summary>{d.source_ref}</details></p>)}<ol>{run.steps.map(s=><li key={s.node_id}>{s.node_id} · {s.state}</li>)}</ol>
      {run.is_terminal&&!result&&<p>현재 승인·권한 또는 결과 검증 조건으로 최종 결과를 제공할 수 없습니다.</p>}</>}
     {result&&<><h3>원문 근거를 검사한 회의록 초안</h3><p>담당자가 내용의 의미와 후속 업무를 최종 확인해 주세요.</p>
      <h4>결정사항</h4>{result.decisions.map((item,i)=><article key={i}><p>{item.text}</p><Evidence item={item}/></article>)}
      <h4>미정 사항</h4>{result.unresolved.map((item,i)=><article key={i}><p>{item.text}</p><Evidence item={item}/></article>)}
-     <h4>액션아이템</h4>{result.actions.map((item,i)=><article key={i}><p>{item.text}</p><p>담당자: {item.assignee??'미정'} · 기한: {item.due_date??'미확정'} · 원표현: {item.due_expression??'없음'} · 상태: {item.deadline_status??'과거 정보 없음'} · 사유: {item.deadline_reason??'없음'}</p><Evidence item={item}/></article>)}
+     <h4>액션아이템</h4>{result.actions.map((item,i)=><article key={i}><p>{item.text}</p><p>담당자: {item.assignee??'미정'} · 기한: {item.due_date??'미확정'} · 원표현: {item.due_expression??'없음'} · 상태: {deadlineLabel(item.deadline_status,false)} · 사유: {deadlineLabel(item.deadline_reason,true)}</p><Evidence item={item}/></article>)}
      {run?.state==='completed'&&<MeetingQualityPanel key={tenant.tenant_id+run.run_id} tenant={tenant} user={user} runId={run.run_id}/>}
     </>}
    </>}
@@ -86,4 +86,6 @@ export function UseCaseWorkspacePage({tenant,user}:{tenant:Tenant;user:User}){
  </section>;
 }
 
-function Evidence({item}:{item:MeetingEvidenceItem}){const display=item.source_display;return <><p>출처: {item.source_ref??'과거 출처 정보 없음'}{display&&<> · {display.title} · 버전 {display.version_id}{display.page_start!==undefined&&' · 페이지 '+display.page_start+(display.page_end!==undefined?'~'+display.page_end:'')}{display.structure_locations?.length?' · '+display.structure_locations.join(', '):''}{display.location_ambiguous?' · 동일 인용 위치가 여러 곳: 사람 확인 필요':''}</>}</p><blockquote>{item.quote}</blockquote></>;}
+const deadlineLabels:Record<string,string>={resolved:'확정',unresolved:'미확정',unspecified:'기한 언급 없음',past_due:'회의일 이전 기한',meeting_date_required:'회의일 필요',ambiguous_expression:'모호한 기한 표현',unsupported_expression:'지원하지 않는 기한 표현',expression_not_in_quote:'인용에서 기한 표현 확인 불가',invalid_calendar_date:'유효하지 않은 날짜',offset_out_of_bounds:'일수 범위 초과',calendar_out_of_bounds:'날짜 범위 초과',conflicting_expressions:'기한 표현 간 날짜 불일치'};
+function deadlineLabel(value:string|null|undefined,reason:boolean){return value==null?(reason?'없음':'과거 정보 없음'):(deadlineLabels[value]??'확인 필요 (알 수 없는 기한 정보)');}
+function Evidence({item}:{item:MeetingEvidenceItem}){const display=item.source_display;return <><p>출처: {item.source_ref==='memo'?'회의 메모':display?.title??'과거 출처 정보 없음'}{display&&<> · 버전 {display.version_id.slice(0,8)}{display.page_start!==undefined&&' · 페이지 '+display.page_start+(display.page_end!==undefined?'~'+display.page_end:'')}{display.structure_locations?.length?' · '+display.structure_locations.join(', '):''}{display.location_ambiguous?' · 동일 인용 위치가 여러 곳: 사람 확인 필요':''}</>}</p><details><summary>정확한 출처·버전 식별자</summary><p>{item.source_ref??'과거 출처 정보 없음'}</p>{display&&<p>버전: {display.version_id}</p>}</details><blockquote>{item.quote}</blockquote></>;}

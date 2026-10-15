@@ -1,0 +1,1 @@
+{"kind": "A05-runtime-cleanup", "api_pool_connections": 0, "fixture_removed": true, "private_credentials_removed": true, "owned_source_store_removed": true, "database_state_after": "stopped"}

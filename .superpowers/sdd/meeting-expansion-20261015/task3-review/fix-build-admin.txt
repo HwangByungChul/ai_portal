@@ -1,0 +1,5 @@
+
+> ai-platform-portal@0.1.0 build:admin
+> tsc --noEmit && vite build --mode admin && node scripts/verify-portal-builds.mjs admin
+
+tests/tool-workflow-approvals.spec.ts(48,369): error TS2552: Cannot find name 'candidate'. Did you mean 'candidates'?

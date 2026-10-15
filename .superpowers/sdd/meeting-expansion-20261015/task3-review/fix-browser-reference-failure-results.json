@@ -1,0 +1,23 @@
+{
+  "status": "failed",
+  "duration_ms": 28327.272,
+  "runner_errors": 0,
+  "tests": [
+    {
+      "test_id": "WF_03_meeting_ui_scoped_execution_and_structured_result_contract",
+      "status": "passed",
+      "duration_ms": 3792
+    },
+    {
+      "test_id": "WF_12_HTTP_stub_full_receipt_pagination_quality_replay_CAS",
+      "status": "passed",
+      "duration_ms": 3862
+    },
+    {
+      "test_id": "WF_05_real_DB_API_workflow_form_case03_head_USER_execute_revoke",
+      "status": "failed",
+      "duration_ms": 13911
+    }
+  ],
+  "steps": []
+}

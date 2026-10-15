@@ -36,7 +36,7 @@ export interface GrantPage extends DocumentRef {publication_revision:number;item
 export interface Evidence {ordinal:number;content_status:'available'|'unavailable';title?:string;version_no?:number;quote?:string;location?:{line_start:number;line_end:number};source_url?:string;source_media_type?:'application/pdf'|typeof DOCX_MEDIA_TYPE|typeof XLSX_MEDIA_TYPE;structure_locations?:({kind:'paragraph';paragraph:number}|{kind:'table_cell';table:number;row:number;column:number}|{kind:'sheet';sheet_index:number;sheet_name:string}|{kind:'cell';sheet_index:number;sheet_name:string;cell:string})[];page_start?:number;page_end?:number}
 
 export type Rating='positive'|'negative';
-export interface ResponseFeedbackValue {run_id:string;active:boolean;revision:number;rating:Rating|null;comment:string|null;updated_at:string|null;replayed?:boolean;meeting_context?:MeetingContext}
+export interface ResponseFeedbackValue {run_id:string;active:boolean;revision:number;rating:Rating|null;comment:string|null;updated_at:string|null;replayed?:boolean}
 export interface FeedbackSummary {period:string;execution_mode:Mode;minimum_participants:number;items:{agent_key:AgentKey;status:'empty'|'suppressed'|'available';positive_count:number|null;negative_count:number|null;total_count:number|null}[]}
 
 export type SummaryMediaType='text/plain'|'text/markdown'|'application/pdf'|typeof DOCX_MEDIA_TYPE|typeof XLSX_MEDIA_TYPE;
@@ -55,7 +55,7 @@ export interface AssetDetail extends Omit<AssetItem,'name'|'description'|'execut
 export interface AssetReceipt {asset_id:string;revision:number;version_id:string;config_hash:string;replayed:boolean}
 
 export interface CatalogItem {asset_id:string;agent_key:AgentKey;revision:number;name:string;description:string;category:'general'|'knowledge';available:boolean;safe_block_reason:string|null;favorite:boolean;favorite_revision:number}
-export interface AgentAccess {agent_key:AgentKey;mode:'all'|'restricted';member_ids:string[];revision:number;replayed?:boolean;meeting_context?:MeetingContext}
+export interface AgentAccess {agent_key:AgentKey;mode:'all'|'restricted';member_ids:string[];revision:number;replayed?:boolean}
 
 export interface ModelInfo {model_id:string;provider_key:string;model_name:string;pricing_version:string;input_usd_per_million:string;output_usd_per_million:string;context_window:number;max_output_tokens:number;enabled:boolean;capabilities:string[]}
 

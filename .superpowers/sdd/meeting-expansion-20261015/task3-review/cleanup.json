@@ -1,0 +1,10 @@
+{
+  "fixture_active": false,
+  "ports_listening": {
+    "8000": false,
+    "5173": false,
+    "5174": false
+  },
+  "exclusive_browser_DB_ownership_released": true,
+  "live_services_restarted": false
+}

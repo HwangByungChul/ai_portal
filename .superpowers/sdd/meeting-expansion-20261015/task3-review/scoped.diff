@@ -1,0 +1,261 @@
+--- a/src/frontend/src/UseCaseWorkspacePage.tsx
++++ b/src/frontend/src/UseCaseWorkspacePage.tsx
+@@ -1,24 +1,28 @@
+ import {useState,useEffect,useRef} from 'react';
+ import {api} from './api';
+ import {useScope,modeLabel} from './scoped';
+-import type {Tenant,User,UseCaseItem,WorkflowExecutionRun,MeetingResult} from './types';
++import type {Tenant,User,UseCaseItem,WorkflowExecutionRun,MeetingResult,MeetingDocument,MeetingEvidenceItem} from './types';
+ 
++import {MeetingDocuments} from './MeetingDocuments';
++import {MeetingQualityPanel} from './MeetingQualityPanel';
++import './meeting.css';
+ export function UseCaseWorkspacePage({tenant,user}:{tenant:Tenant;user:User}){
+  const scope=useScope(),options={tenantId:tenant.tenant_id,csrf:user.csrf_token,signal:scope.signal};
+  const [agents,setAgents]=useState<UseCaseItem[]>([]),[selected,setSelected]=useState('AGENT_03');
++ const [meetingDate,setMeetingDate]=useState(''),[documents,setDocuments]=useState<MeetingDocument[]>([]);
+  const [category,setCategory]=useState('all');
+  const [memo,setMemo]=useState(''),[run,setRun]=useState<WorkflowExecutionRun|null>(null);
+  const [loading,setLoading]=useState(true),[busy,setBusy]=useState(false),[error,setError]=useState<string|null>(null);
+- const request=useRef<{caseId:string;memo:string;client:string}|null>(null);
++ const request=useRef<{fingerprint:string;client:string}|null>(null);
+  const agent=agents.find(a=>a.use_case_id===selected),active=Boolean(run&&!run.is_terminal);
+  const states:Record<string,string>={accepted:'대기',running:'실행 중',completed:'완료',failed:'검증 또는 실행 실패',blocked:'권한·정책 차단',cancelled:'취소',interrupted:'중단 · 확인 필요'};
+- async function fail(problem:unknown){const value=await scope.fail(problem,()=>{setRun(null);setAgents([]);setMemo('');});if(scope.current())setError(value);}
++ async function fail(problem:unknown){const value=await scope.fail(problem,()=>{setRun(null);setAgents([]);setMemo('');setDocuments([]);setMeetingDate('');request.current=null;});if(scope.current())setError(value);}
+  async function load(){
+   setLoading(true);setError(null);
+   try{const data=await api.request<{items:UseCaseItem[]}>('/use-cases',options);if(scope.current())setAgents(data.items);}
+   catch(problem){await fail(problem);}finally{if(scope.current())setLoading(false);}
+  }
+- useEffect(()=>{setRun(null);setMemo('');request.current=null;void load();},[tenant.tenant_id]);
++ useEffect(()=>{setRun(null);setMemo('');setDocuments([]);setMeetingDate('');request.current=null;void load();},[tenant.tenant_id]);
+  useEffect(()=>{
+   if(!run||run.is_terminal)return;
+   let current=true;let timer:ReturnType<typeof setTimeout>;
+@@ -30,11 +34,13 @@
+   timer=setTimeout(()=>void poll(),800);return()=>{current=false;clearTimeout(timer);};
+  },[run?.run_id,run?.is_terminal,selected]);
+  async function execute(){
+-  if(busy||active||!agent?.execution_ready||!memo.trim())return;
+-  setBusy(true);setError(null);const prompt=memo.trim();
+-  if(run?.is_terminal||request.current?.caseId!==selected||request.current?.memo!==prompt)request.current={caseId:selected,memo:prompt,client:crypto.randomUUID()};
++  if(busy||active||!agent?.execution_ready||(!memo.trim()&&!documents.length))return;
++  setBusy(true);setError(null);const prompt=memo;
++  const payload={prompt,...(selected==='AGENT_03'?{meeting_date:meetingDate||null,document_refs:documents.map(d=>({document_id:d.document_id,version_id:d.version_id}))}: {})};
++  const fingerprint=JSON.stringify({caseId:selected,...payload});
++  if(request.current?.fingerprint!==fingerprint)request.current={fingerprint,client:crypto.randomUUID()};
+   setRun(null);
+-  try{const value=await api.request<WorkflowExecutionRun>('/use-cases/'+selected+'/execute',{...options,method:'POST',body:{prompt,client_request_id:request.current!.client}});if(scope.current())setRun(value);}
++  try{const value=await api.request<WorkflowExecutionRun>('/use-cases/'+selected+'/execute',{...options,method:'POST',body:{...payload,client_request_id:request.current!.client}});if(scope.current())setRun(value);}
+   catch(problem){await fail(problem);}finally{if(scope.current())setBusy(false);}
+  }
+  async function cancel(){
+@@ -46,33 +52,40 @@
+  const categories:Record<string,string>={all:'전체',compliance:'규정·준법',document:'문서·기안',customer:'고객·VOC',finance:'금융·여신·외환',operation:'영업점 운영'};
+  const visible=agents.filter(a=>category==='all'||a.category===category);
+  const result=run?.result_access==='final'?run.result as MeetingResult:null;
+- return <section className="admin-a-container" style={{maxWidth:1440,margin:'0 auto',padding:24}}>
++ return <section className="admin-a-container meeting-workspace" style={{maxWidth:1440,margin:'0 auto',padding:24}}>
+   <header><h1>10대 표준 업무 Agent 워크스페이스</h1><p>회의록 및 액션아이템 Agent를 우선 연결합니다. 나머지 9종은 추후 확장합니다.</p>
+    <p role="status">업무 정의 {agents.length}종 · 현재 이용 가능 {agents.filter(a=>a.execution_ready).length}종</p></header>
+   {error&&<p role="alert">{error}</p>}{loading&&<p>업무 Agent 확인 중</p>}
+   <div role="group" aria-label="업무 분류" style={{display:'flex',gap:8,flexWrap:'wrap',marginBottom:16}}>{Object.entries(categories).map(([key,label])=><button key={key} type="button" className="secondary" disabled={busy||active} aria-pressed={category===key} onClick={()=>setCategory(key)}>{label} ({key==='all'?agents.length:agents.filter(a=>a.category===key).length})</button>)}</div>
+   <div className="approval-layout"><nav className="approval-list" aria-label="업무 Agent 목록">
+-   {visible.map(a=><button key={a.use_case_id} type="button" className="approval-row" aria-pressed={selected===a.use_case_id} disabled={busy||active} onClick={()=>{setSelected(a.use_case_id);setMemo('');setRun(null);setError(null);request.current=null;}}>
++   {visible.map(a=><button key={a.use_case_id} type="button" className="approval-row" aria-pressed={selected===a.use_case_id} disabled={busy||active} onClick={()=>{setSelected(a.use_case_id);setMemo('');setMeetingDate('');setDocuments([]);setRun(null);setError(null);request.current=null;}}>
+     <span>{a.use_case_id}</span><strong>{a.name}</strong><span>{a.execution_ready?'현재 이용 가능':a.use_case_id==='AGENT_03'?'승인·실행 연결 준비 필요':'추후 확장'}</span>{a.auto_decision_prohibited&&<span>자동확정 금지</span>}
+    </button>)}
+   </nav><section className="card approval-detail" aria-label="업무 실행 상세">
+    {agent&&<><h2>{agent.name}</h2><p>{agent.description}</p>
+     {agent.approved_version_id&&<p style={{overflowWrap:'anywhere'}}>승인 버전: {agent.approved_version_id}</p>}
+     {agent.disclaimer&&<p role="note">{agent.disclaimer}</p>}
++    {selected==='AGENT_03'&&<><label htmlFor="meeting-date">회의일 (선택 · 한국 업무 날짜)</label><input id="meeting-date" type="date" value={meetingDate} disabled={busy||active||!agent.execution_ready} onChange={e=>setMeetingDate(e.target.value)}/><p>오늘·내일은 입력한 회의일 기준입니다. 날짜가 없거나 모호한 기한은 미확정으로 남습니다.</p>{agent.execution_ready&&<MeetingDocuments key={tenant.tenant_id} tenant={tenant} user={user} selected={documents} onChange={setDocuments} disabled={busy||active}/>}</>}
+     <label htmlFor="meeting-memo">{selected==='AGENT_03'?'회의 메모':'업무 질의'}</label>
+     <textarea id="meeting-memo" rows={8} maxLength={4000} value={memo} disabled={busy||active||!agent.execution_ready} onChange={e=>setMemo(e.target.value)} style={{width:'100%'}}/>
++    <p role="status">메모 {memo.length}/4000자 · 자료 {documents.reduce((n,d)=>n+d.character_length,0)}자 · 회의일 {meetingDate.length}자 · 합계 예비 계산 {memo.length+documents.reduce((n,d)=>n+d.character_length,0)+meetingDate.length}/4000자</p><p>서버 구분 문구가 추가됩니다. 최종 한도는 서버가 확인하며 초과 시 분량을 줄여야 합니다. 입력은 자동으로 잘리지 않습니다.</p>
+     {!agent.execution_ready&&<p role="status">{selected==='AGENT_03'?'현재 조직의 승인된 회의록 Workflow와 이용 권한을 확인해 주세요.':'이 업무 Agent는 추후 확장 예정입니다.'}</p>}
+-    <button className="primary" disabled={busy||active||!agent.execution_ready||!memo.trim()} onClick={()=>void execute()}>Agent 실행 및 초안 생성</button>
++    <button className="primary" disabled={busy||active||!agent.execution_ready||(!memo.trim()&&!documents.length)} onClick={()=>void execute()}>Agent 실행 및 초안 생성</button>
+     {active&&<button className="secondary" disabled={busy} onClick={()=>void cancel()}>실행 취소</button>}
+     {run&&<><p role="status">{states[run.state]} · {modeLabel(run.execution_mode)}</p><p style={{overflowWrap:'anywhere'}}>실행 번호: {run.run_id}</p>
+-     <ol>{run.steps.map(s=><li key={s.node_id}>{s.node_id} · {s.state}</li>)}</ol>
++     <p>봉인된 회의일: {run?.meeting_context?.meeting_date??(run?.meeting_context?'미입력':'과거 실행의 회의 정보 없음')}</p>{run?.meeting_context?.documents.map(d=><p key={d.version_id}>{d.current_available?d.title:'현재 원문 사용 불가'}<details><summary>정확한 출처 식별자</summary>{d.source_ref}</details></p>)}<ol>{run.steps.map(s=><li key={s.node_id}>{s.node_id} · {s.state}</li>)}</ol>
+      {run.is_terminal&&!result&&<p>현재 승인·권한 또는 결과 검증 조건으로 최종 결과를 제공할 수 없습니다.</p>}</>}
+-    {result&&<><h3>검증된 회의록 초안</h3><p>담당자가 내용의 의미와 후속 업무를 최종 확인해 주세요.</p>
+-     <h4>결정사항</h4>{result.decisions.map((item,i)=><article key={i}><p>{item.text}</p><blockquote>{item.quote}</blockquote></article>)}
+-     <h4>미정 사항</h4>{result.unresolved.map((item,i)=><article key={i}><p>{item.text}</p><blockquote>{item.quote}</blockquote></article>)}
+-     <h4>액션아이템</h4>{result.actions.map((item,i)=><article key={i}><p>{item.text}</p><p>담당자: {item.assignee??'미정'} · 기한: {item.due_date??'미정'}</p><blockquote>{item.quote}</blockquote></article>)}
++    {result&&<><h3>원문 근거를 검사한 회의록 초안</h3><p>담당자가 내용의 의미와 후속 업무를 최종 확인해 주세요.</p>
++     <h4>결정사항</h4>{result.decisions.map((item,i)=><article key={i}><p>{item.text}</p><Evidence item={item}/></article>)}
++     <h4>미정 사항</h4>{result.unresolved.map((item,i)=><article key={i}><p>{item.text}</p><Evidence item={item}/></article>)}
++     <h4>액션아이템</h4>{result.actions.map((item,i)=><article key={i}><p>{item.text}</p><p>담당자: {item.assignee??'미정'} · 기한: {item.due_date??'미확정'} · 원표현: {item.due_expression??'없음'} · 상태: {deadlineLabel(item.deadline_status,false)} · 사유: {deadlineLabel(item.deadline_reason,true)}</p><Evidence item={item}/></article>)}
++     {run?.state==='completed'&&<MeetingQualityPanel key={tenant.tenant_id+run.run_id} tenant={tenant} user={user} runId={run.run_id}/>}
+     </>}
+    </>}
+   </section></div>
+  </section>;
+ }
++
++const deadlineLabels:Record<string,string>={resolved:'확정',unresolved:'미확정',unspecified:'기한 언급 없음',past_due:'회의일 이전 기한',meeting_date_required:'회의일 필요',ambiguous_expression:'모호한 기한 표현',unsupported_expression:'지원하지 않는 기한 표현',expression_not_in_quote:'인용에서 기한 표현 확인 불가',invalid_calendar_date:'유효하지 않은 날짜',offset_out_of_bounds:'일수 범위 초과',calendar_out_of_bounds:'날짜 범위 초과',conflicting_expressions:'기한 표현 간 날짜 불일치'};
++function deadlineLabel(value:string|null|undefined,reason:boolean){return value==null?(reason?'없음':'과거 정보 없음'):(deadlineLabels[value]??'확인 필요 (알 수 없는 기한 정보)');}
++function Evidence({item}:{item:MeetingEvidenceItem}){const display=item.source_display;return <><p>출처: {item.source_ref==='memo'?'회의 메모':display?.title??'과거 출처 정보 없음'}{display&&<> · 버전 {display.version_id.slice(0,8)}{display.page_start!==undefined&&' · 페이지 '+display.page_start+(display.page_end!==undefined?'~'+display.page_end:'')}{display.structure_locations?.length?' · '+display.structure_locations.join(', '):''}{display.location_ambiguous?' · 동일 인용 위치가 여러 곳: 사람 확인 필요':''}</>}</p><details><summary>정확한 출처·버전 식별자</summary><p>{item.source_ref??'과거 출처 정보 없음'}</p>{display&&<p>버전: {display.version_id}</p>}</details><blockquote>{item.quote}</blockquote></>;}
+--- a/src/frontend/src/WorkflowApprovalRequest.tsx
++++ b/src/frontend/src/WorkflowApprovalRequest.tsx
+@@ -37,6 +37,6 @@
+  {!meeting&&<fieldset><legend>선행 승인 읽기 Tool (선택)</legend>{tools.map(t=><div key={t.tool_id}><label><input type="checkbox" checked={chosenTools.includes(t.tool_id)} onChange={e=>toggleTool(t.tool_id,e.target.checked)}/>{t.name}</label>{chosenTools.includes(t.tool_id)&&Object.keys((t.arg_schema.properties??{}) as object).map(key=><label key={key}>{t.name} arguments · {key}<input value={argumentsMap[t.tool_id]?.[key]??''} maxLength={4000} onChange={e=>setArgumentsMap(old=>({...old,[t.tool_id]:{...old[t.tool_id],[key]:e.target.value}}))}/></label>)}</div>)}</fieldset>}
+  {asset&&<fieldset><legend>Agent 변수 binding</legend>{asset.variables.map(v=>{const b=bindings[v]??initialBinding;const change=(patch:Partial<BindingEditor>)=>setBindings(old=>({...old,[v]:{...b,...patch}}));return <div className="workflow-binding" key={v}><label>{v} 연결<select aria-label={v+' 연결'} value={b.source} onChange={e=>change({source:e.target.value as BindingEditor['source']})}><option value="input">입력 {inputKey}</option><option value="literal">고정 문자열</option>{!meeting&&<option value="tool">선행 Tool 결과</option>}</select></label>{b.source==='literal'&&<label>{v} 고정값<textarea value={b.text} maxLength={4000} onChange={e=>change({text:e.target.value})}/></label>}{b.source==='tool'&&<><label>{v} 선행 노드<select value={b.tool} onChange={e=>change({tool:e.target.value})}><option value="">선행 Tool 선택</option>{toolNodes.map(t=><option key={t.node_id} value={t.node_id}>{t.title} · {t.node_id}</option>)}</select></label><label>{v} 결과 경로<input value={b.path} onChange={e=>change({path:e.target.value})} placeholder="data.items (최대 4단계)"/></label></>}</div>;})}</fieldset>}
+  <p>최종 출력: 게시 Agent의 text · 선행 binding / DAG / schema는 서버의 승인 schema 검증기를 사용합니다.</p></fieldset>
+- {meeting&&support&&<section className="meeting-contract"><h3>AGENT_03 서버 필수 계약</h3><p>자동 결정 금지 · 사람의 검토 필수 · 외부 Tool 없음 · 메모 입력 연결 최소 1개 필수</p><p>필수 자료: 사용자가 입력한 회의 메모. 실제 기관 자료 연결은 별도입니다.</p><details><summary>불변 입출력·근거 계약 확인</summary><pre>{JSON.stringify(support.meeting_contract,null,2)}</pre></details></section>}
++ {meeting&&support&&<section className="meeting-contract"><h3>AGENT_03 서버 필수 계약</h3><p>자동 결정 금지 · 사람의 검토 필수 · 외부 Tool 없음 · 메모 입력 연결 최소 1개 필수</p><p>메모 또는 현재 접근 가능한 원문 자료 1개 이상이 필요합니다. 회의일과 최대 3개 자료는 서버가 봉인합니다. 계약 revision 2 및 코드 변경 후에는 새 Workflow 제출과 타인 PADMIN 승인이 필요합니다. 과거 승인 snapshot은 변경하지 않습니다. 실제 제공자의 의미 품질 검토는 별도입니다.</p><details><summary>불변 입출력·근거 계약 확인</summary><pre>{JSON.stringify(support.meeting_contract,null,2)}</pre></details></section>}
+  <ApprovalAudience tenantId={tenant.tenant_id} audience={audience} members={members} disabled={busy} onChange={(a,m)=>{setAudience(a);setMembers(m);}}/><ol className="workflow-review-dag" aria-label="신청 노드 흐름">{nodes.map(n=><li key={n.node_id}><strong>{n.title}</strong><span>{n.node_type} · {n.node_id}</span></li>)}</ol><details><summary>생성된 승인 definition JSON (검토 전용)</summary><pre>{JSON.stringify(definition,null,2)}</pre></details><button className="secondary" disabled={busy||!ready} onClick={()=>void validate()}>승인 구조 검증</button><button className="primary" disabled={busy||!ready||validated!==fingerprint} onClick={()=>void submit()}>Workflow 승인 요청 제출</button><button className="secondary" disabled={busy} onClick={()=>void load()}>현재 승인 지원 정보 새로고침</button>{validated===fingerprint&&<p role="status">승인 schema·DAG·선행 reference 형식 검증 완료. 현재 의존성 권한과 업무 품질은 제출·검토 시 별도 확인합니다.</p>}{receipt&&<p role="status">승인 요청 접수 · 미승인 <a href={'/manage/admin/approvals?'+new URLSearchParams({kind:'workflow',request_id:receipt.version_id})}>접수 상세 열기</a></p>}</section>;
+ }
+--- a/src/frontend/packages/api-contract/src/types.ts
++++ b/src/frontend/packages/api-contract/src/types.ts
+@@ -89,10 +89,12 @@
+ 
+ export interface ApprovedWorkflowSummary {workflow_id:string;version_id:string;revision:number;name:string;description:string;input_key:string;execution_mode:'mock'|'real';execution_ready:boolean;node_count:number}
+ export interface WorkflowExecutionStep {node_id:string;node_type:string;state:string;child_run_id:string|null;tool_client_id:string|null;error_code:string|null}
+-export interface WorkflowExecutionRun {run_id:string;version_id:string;workflow_id:string;state:'accepted'|'running'|'completed'|'cancelled'|'failed'|'blocked'|'interrupted';revision:number;is_terminal:boolean;execution_mode:'mock'|'real';steps:WorkflowExecutionStep[];result_access:'final'|'unavailable'|'blocked';result:unknown;error_code:string|null;replayed?:boolean}
++export interface WorkflowExecutionRun {run_id:string;version_id:string;workflow_id:string;state:'accepted'|'running'|'completed'|'cancelled'|'failed'|'blocked'|'interrupted';revision:number;is_terminal:boolean;execution_mode:'mock'|'real';steps:WorkflowExecutionStep[];result_access:'final'|'unavailable'|'blocked';result:unknown;error_code:string|null;replayed?:boolean;meeting_context?:MeetingContext}
+ 
+-export interface MeetingEvidenceItem {text:string;quote:string}
+-export interface MeetingActionItem extends MeetingEvidenceItem {assignee:string|null;due_date:string|null}
++export interface MeetingDocument {document_id:string;version_id:string;version_no:number;title:string;character_length:number;source_sha256:string;ready:boolean;unavailable_reason:string|null}
++export interface MeetingContext {meeting_date:string|null;memo_character_count:number;aggregate_character_count:number;documents:{document_id:string;version_id:string;source_ref:string;title:string|null;current_available:boolean}[]}
++export interface MeetingEvidenceItem {text:string;quote:string;source_ref:string;source_display?:{title:string;version_id:string;page_start?:number;page_end?:number;structure_locations?:string[];location_ambiguous:boolean}}
++export interface MeetingActionItem extends MeetingEvidenceItem {assignee:string|null;due_date:string|null;due_expression?:string|null;deadline_status?:string;deadline_reason?:string|null}
+ export interface MeetingResult {decisions:MeetingEvidenceItem[];unresolved:MeetingEvidenceItem[];actions:MeetingActionItem[]}
+ 
+ // Administrative review DTOs: status records the historical decision, head records current availability.
+@@ -111,3 +113,7 @@
+ export interface ToolSupportItem extends ToolInfo {descriptor:ToolDescriptor;head_revision:number;current_head:ApprovalDetail<ToolApproval>['current_head']}
+ export interface WorkflowSupport {workflow_heads:{workflow_id:string;version_id:string;revision:number;enabled:boolean}[];use_case_heads:{use_case_id:string;version_id:string;revision:number}[];meeting_contract:Record<string,unknown>;published_assets_endpoint:string}
+ export interface PublishedWorkflowAsset {asset_id:string;version_id:string;publication_revision:number;name:string;variables:string[];execution_mode:Mode;required_tools?:string[]}
++
++export type MeetingRating='acceptable'|'needs_review'|'not_assessed';
++export interface MeetingRatings {accuracy:MeetingRating;omission:MeetingRating;owner:MeetingRating;deadline:MeetingRating;comment:string}
++export interface MeetingQuality {run_id:string;run_revision:number;result_digest:string;review_revision:number;history_limit:number;human_review_required:boolean;structural:{evidence_valid:boolean;item_count:number;unresolved_deadlines:number;past_deadlines:number;error:string|null;human_review_required:boolean};items:{review_id:string;review_revision:number;run_revision:number;result_digest:string;ratings:MeetingRatings;created_at:string}[]}
+--- a/src/frontend/src/MeetingDocuments.tsx
++++ b/src/frontend/src/MeetingDocuments.tsx
+@@ -0,0 +1,17 @@
++import {useEffect,useRef,useState} from 'react';
++import {api} from './api';
++import {useScope} from './scoped';
++import type {MeetingDocument,Tenant,User} from './types';
++export function MeetingDocuments({tenant,user,selected,onChange,disabled}:{tenant:Tenant;user:User;selected:MeetingDocument[];onChange:(docs:MeetingDocument[])=>void;disabled:boolean}){
++ const scope=useScope(),seq=useRef(0);const [items,setItems]=useState<MeetingDocument[]>([]),[cursor,setCursor]=useState<string|null>(null),[busy,setBusy]=useState(false),[error,setError]=useState<string|null>(null);
++ async function load(next:string|null=null){const id=++seq.current;setBusy(true);setError(null);try{
++  const fetchPage=(cursor:string|null)=>api.request<{items:MeetingDocument[];next_cursor:string|null}>('/use-cases/AGENT_03/documents?limit=20'+(cursor?'&cursor='+encodeURIComponent(cursor):''),{tenantId:tenant.tenant_id,signal:scope.signal});
++  const page=await fetchPage(next);let refreshed=page.items;let end=page.next_cursor;
++  // A first-page absence is not revocation. Finish the authorized listing before deciding.
++  if(!next&&selected.length){const visited=new Set<string>();while(end){if(visited.has(end))throw new Error('자료 목록을 끝까지 확인하지 못했습니다. 선택은 유지됩니다.');visited.add(end);const more=await fetchPage(end);if(!scope.current()||id!==seq.current)return;refreshed=[...refreshed,...more.items];end=more.next_cursor;}}
++  if(scope.current()&&id===seq.current){setItems(old=>next?[...old,...refreshed]:refreshed);setCursor(end);if(!next){const valid=selected.flatMap(d=>{const found=refreshed.find(v=>v.document_id===d.document_id&&v.version_id===d.version_id&&v.ready);return found?[found]:[];});if(valid.length!==selected.length)setError('선택한 자료 중 삭제·권한 변경 또는 원문 사용 불가로 확인된 자료를 선택에서 제외했습니다. 현재 자료를 다시 확인해 주세요.');onChange(valid);}}
++ }catch(p){const msg=await scope.fail(p,()=>{setItems([]);onChange([]);});if(scope.current()&&id===seq.current)setError(msg===null?null:msg+' 자료 재확인을 완료하지 못했습니다. 확인되지 않은 선택은 유지됩니다.');}finally{if(scope.current()&&id===seq.current)setBusy(false);}}
++
++ useEffect(()=>{void load();return()=>{seq.current++;};},[tenant.tenant_id]);
++ return <fieldset className="meeting-documents" disabled={disabled||busy}><legend>회의 자료 선택 · {selected.length}/3건</legend><p>현재 읽을 수 있는 원문 버전만 사용합니다. 원문 없는 자료는 선택할 수 없습니다. <a href="/user/documents">내 자료에서 원문 업로드</a></p>{error&&<p role="alert">{error}</p>}{items.map(d=><label key={d.version_id}><input type="checkbox" checked={selected.some(s=>s.version_id===d.version_id)} disabled={!d.ready||(!selected.some(s=>s.version_id===d.version_id)&&selected.length>=3)} onChange={e=>onChange(e.target.checked?[...selected,d]:selected.filter(s=>s.version_id!==d.version_id))}/><span>{d.title} · 버전 {d.version_no} · {d.character_length}자{!d.ready?' · 원문 사용 불가':''}</span></label>)}{!busy&&!items.length&&<p>현재 사용 가능한 자료가 없습니다.</p>}{selected.length>0&&<p>선택 유지: {selected.map(d=>d.title+' (v'+d.version_no+')').join(', ')}</p>}{busy&&<p role="status">자료 확인 중</p>}{cursor&&<button type="button" disabled={busy} onClick={()=>void load(cursor)}>자료 더 보기</button>}<button type="button" disabled={busy} onClick={()=>void load()}>자료 새로고침 · 선택 재확인</button></fieldset>;
++}
+--- a/src/frontend/src/MeetingQualityPanel.tsx
++++ b/src/frontend/src/MeetingQualityPanel.tsx
+@@ -0,0 +1,16 @@
++import {useEffect,useRef,useState} from 'react';
++import {api,ApiError} from './api';
++import {useScope} from './scoped';
++import type {Tenant,User,MeetingQuality,MeetingRatings,MeetingRating} from './types';
++const empty:MeetingRatings={accuracy:'not_assessed',omission:'not_assessed',owner:'not_assessed',deadline:'not_assessed',comment:''};
++const ratingLabels:Record<string,string>={not_assessed:'미평가',acceptable:'수용 가능',needs_review:'재검토 필요'};
++const labels={accuracy:'결정사항·액션아이템 정확성',omission:'누락',owner:'담당자 연결',deadline:'기한'};
++export function MeetingQualityPanel({tenant,user,runId}:{tenant:Tenant;user:User;runId:string}){
++ const scope=useScope(),seq=useRef(0),lock=useRef(false),receipt=useRef<{fingerprint:string;body:object}|null>(null);
++ const [quality,setQuality]=useState<MeetingQuality|null>(null),[ratings,setRatings]=useState<MeetingRatings>(empty),[busy,setBusy]=useState(false),[error,setError]=useState<string|null>(null),[saved,setSaved]=useState(false),[conflict,setConflict]=useState(false);
++ const options={tenantId:tenant.tenant_id,csrf:user.csrf_token,signal:scope.signal},path='/use-cases/AGENT_03/runs/'+runId+'/quality';
++ async function load(){const id=++seq.current;try{const value=await api.request<MeetingQuality>(path,options);if(scope.current()&&id===seq.current)setQuality(value);}catch(p){const msg=await scope.fail(p,()=>setQuality(null));if(scope.current()&&id===seq.current){setQuality(null);setError(msg);}}}
++ useEffect(()=>{setQuality(null);setRatings(empty);receipt.current=null;void load();return()=>{seq.current++;};},[runId,tenant.tenant_id]);
++ async function submit(){if(lock.current||!quality||!ratings.comment.trim()||saved||conflict)return;lock.current=true;setBusy(true);setError(null);const fingerprint=JSON.stringify(ratings);if(receipt.current?.fingerprint!==fingerprint)receipt.current={fingerprint,body:{...ratings,client_request_id:crypto.randomUUID(),expected_review_revision:quality.review_revision,expected_run_revision:quality.run_revision,result_digest:quality.result_digest}};try{await api.request(path,{...options,method:'POST',body:receipt.current.body});if(scope.current()){setSaved(true);await load();}}catch(p){const msg=await scope.fail(p,()=>setQuality(null));if(scope.current()){if(p instanceof ApiError&&p.status===409)setConflict(true);setError(msg);await load();}}finally{if(scope.current()){lock.current=false;setBusy(false);}}}
++ return <section className="meeting-quality" aria-label="회의록 사람 품질 검토"><h3>사람 품질 검토</h3><p>우선 검토: 결정사항·액션아이템이 원문의 뜻과 일치하는지 확인합니다. 누락·담당자·기한도 각각 별도로 평가합니다.</p><p>구조·원문 포함 검사는 의미 정확성이나 담당자 연결의 정확성을 보장하지 않습니다. 실제 업무 검토와 운영 승인은 별도입니다.</p>{error&&<p role="alert">{error}</p>}{quality&&<><p>원문 근거 검사: {quality.structural.evidence_valid?'충족':'확인 필요'} · 항목 {quality.structural.item_count} · 기한 미확정 {quality.structural.unresolved_deadlines} · 지난 기한 {quality.structural.past_deadlines}</p>{quality.structural.error&&<p role="alert">{quality.structural.error}</p>}<fieldset disabled={busy||conflict}><legend>완료된 현재 결과 평가</legend>{(Object.keys(labels) as (keyof typeof labels)[]).map(key=><label key={key}>{labels[key]}<select value={ratings[key]} onChange={e=>{setRatings(old=>({...old,[key]:e.target.value as MeetingRating}));setSaved(false);}}><option value="not_assessed">미평가</option><option value="acceptable">수용 가능</option><option value="needs_review">재검토 필요</option></select></label>)}<label>검토 의견 (필수 · 1~500자)<textarea maxLength={500} value={ratings.comment} onChange={e=>{setRatings(old=>({...old,comment:e.target.value}));setSaved(false);}}/></label><button type="button" disabled={!ratings.comment.trim()||saved} onClick={()=>void submit()}>평가 이력 추가</button></fieldset>{conflict&&<><p role="alert">현재 결과·평가 상태가 변경되었습니다. 최신 상태를 확인한 후 명시적으로 새 검토를 시작해 주세요.</p><button onClick={()=>{receipt.current=null;setConflict(false);setRatings(empty);setSaved(false);}}>최신 상태에서 새 검토 시작</button></>}{saved&&<p role="status">검토 기록이 추가되었습니다.</p>}<h4>변경 불가 평가 이력 · 최신 {quality.history_limit}건</h4><ol>{quality.items.map(item=><li key={item.review_id}>검토 {item.review_revision} · {item.created_at}<p>{Object.keys(labels).map(key=>labels[key as keyof typeof labels]+': '+(ratingLabels[item.ratings[key as keyof typeof labels]]??'확인 필요 (알 수 없는 평가)')).join(' · ')}</p><p>{item.ratings.comment}</p></li>)}</ol></>}{!quality&&!error&&<p role="status">현재 결과의 검토 정보 확인 중</p>}</section>;
++}
+--- a/src/frontend/src/meeting.css
++++ b/src/frontend/src/meeting.css
+@@ -0,0 +1,5 @@
++.meeting-workspace .meeting-documents label{display:flex;align-items:flex-start;gap:.5rem;margin:.75rem 0}.meeting-workspace fieldset{min-width:0;margin:1rem 0;padding:1rem}.meeting-workspace blockquote{white-space:pre-wrap;overflow-wrap:anywhere;border-left:3px solid #64748b;margin:.5rem 0;padding:.5rem 1rem}.meeting-workspace .meeting-quality label{display:block;margin:.75rem 0}.meeting-workspace .meeting-quality textarea{width:100%;box-sizing:border-box}.meeting-workspace article{padding:.75rem 0;border-bottom:1px solid #ddd}.meeting-workspace button:focus-visible,.meeting-workspace input:focus-visible,.meeting-workspace select:focus-visible,.meeting-workspace textarea:focus-visible{outline:3px solid #2563eb;outline-offset:3px}@media(max-width:1024px){.meeting-workspace .approval-layout{grid-template-columns:1fr!important}.meeting-workspace .approval-list{max-height:18rem}}@media(max-width:768px){.meeting-workspace{padding:12px!important}.meeting-workspace .approval-detail{min-width:0}.meeting-workspace fieldset{padding:.5rem}}
++
++.meeting-workspace .approval-layout>*{min-width:0}.meeting-workspace .approval-detail{overflow-wrap:anywhere}.meeting-workspace .approval-detail input,.meeting-workspace .approval-detail select{max-width:100%;box-sizing:border-box}
++
++@media(max-width:1100px){body:has(.meeting-workspace) .topbar-user{height:auto;min-height:64px;flex-wrap:wrap;gap:12px;padding:12px 20px}body:has(.meeting-workspace) .topbar-user .topbar-left,body:has(.meeting-workspace) .topbar-user .topbar-right{min-width:0;max-width:100%;flex-wrap:wrap;gap:12px}body:has(.meeting-workspace) .topbar-user .tenant-controls{min-width:0;max-width:100%;flex-wrap:wrap}.meeting-workspace .approval-list{overflow:auto}}
+--- a/src/backend/scripts/portal_test_app.py
++++ b/src/backend/scripts/portal_test_app.py
+@@ -23,7 +23,15 @@
+         outcome=await super().generate(claim,messages,on_delta)
+         # Explicit private fixture control; deterministic contract result, not quality acceptance.
+         if behavior=='meeting':
+-            outcome=replace(outcome,body=json.dumps({'decisions':[{'text':'자료 검토','quote':'자료를 검토하기로 했다.'}],'unresolved':[],'actions':[]},ensure_ascii=False))
++            context=None
++            for message in messages:
++                try:
++                    candidate=json.loads(message.get('content',''))
++                    if isinstance(candidate,dict) and 'meeting_date' in candidate:context=candidate
++                except (ValueError,TypeError):pass
++            documents=context.get('documents',[]) if context else []
++            ref=documents[0]['source_ref'] if documents else 'memo'
++            outcome=replace(outcome,body=json.dumps({'decisions':[{'text':'자료 검토','quote':'자료를 검토하기로 했다.','source_ref':ref}],'unresolved':[],'actions':[{'text':'후속 검토','quote':'김검토는 내일 자료를 확인한다.','source_ref':ref,'assignee':'김검토','due_expression':'내일','due_date':None}] if context else []},ensure_ascii=False))
+         return outcome
+ 
+ class BrowserRag(RagMockProvider):
+--- a/src/frontend/tests/tool-workflow-approvals.spec.ts
++++ b/src/frontend/tests/tool-workflow-approvals.spec.ts
+@@ -42,7 +42,15 @@
+  await expect(page.getByRole('region',{name:'승인 요청 상세'})).toContainText('현재 기술 조건 충족');
+  for(const width of [1440,1024,768]){await page.setViewportSize({width,height:1000});await page.screenshot({path:'.runtime/B-Approval-workflow-'+width+'.png',fullPage:true});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);}
+  await page.getByRole('button',{name:'변경 사항',exact:true}).focus();await page.keyboard.press('Enter');await expect(page.getByRole('button',{name:'변경 사항',exact:true})).toHaveAttribute('aria-pressed','true');await page.getByRole('button',{name:'목록으로 돌아가기'}).click();await expect(page.getByRole('heading',{name:'요청 목록',exact:true})).toBeFocused();
+- control('meeting-provider');await switchLogin(page,'a-u1','A-U1','user');await page.goto(env.user.origin!+'/user/use-cases');await page.getByLabel('회의 메모',{exact:true}).fill('자료를 검토하기로 했다.');await page.getByRole('button',{name:'Agent 실행 및 초안 생성',exact:true}).click();await expect(page.getByRole('heading',{name:'검증된 회의록 초안',exact:true})).toBeVisible();await expect(page.getByText('자료 검토',{exact:true})).toBeVisible();
++ control('meeting-provider');await switchLogin(page,'a-u1','A-U1','user');
++ await page.goto(env.user.origin!+'/user/documents');await page.getByLabel('문서 제목',{exact:true}).fill('합성 회의 원문');await page.getByLabel('문서 파일',{exact:true}).setInputFiles({name:'meeting.txt',mimeType:'text/plain',buffer:Buffer.from('자료를 검토하기로 했다. 김검토는 내일 자료를 확인한다.')});await page.getByRole('button',{name:'문서 접수',exact:true}).click();await expect(page.getByText('접수됐습니다. 처리·게시 상태를 확인해 주세요.',{exact:true})).toBeVisible();
++ await page.goto(env.user.origin!+'/user/use-cases');await expect(page.getByLabel('회의일 (선택 · 한국 업무 날짜)',{exact:true})).toHaveValue('');await page.getByLabel('회의일 (선택 · 한국 업무 날짜)',{exact:true}).fill('2026-10-15');const candidates=await apiCall(page,'/use-cases/AGENT_03/documents?limit=20');expect(candidates.value.data.items.find((d:{title:string})=>d.title==='합성 회의 원문').ready).toBe(true);await page.getByRole('checkbox',{name:/합성 회의 원문/}).check();await expect(page.getByRole('checkbox',{name:/합성 회의 원문/})).toBeChecked();await page.getByRole('button',{name:'Agent 실행 및 초안 생성',exact:true}).click();await expect(page.getByRole('heading',{name:'원문 근거를 검사한 회의록 초안',exact:true})).toBeVisible();await expect(page.getByText('자료 검토',{exact:true})).toBeVisible();
++ await expect(page.getByText('봉인된 회의일: 2026-10-15',{exact:true})).toBeVisible();await expect(page.getByText(/기한: 2026-10-16 · 원표현: 내일/)).toBeVisible();await expect(page.getByText(/출처: 합성 회의 원문/)).toHaveCount(2);const refs=page.getByText('정확한 출처·버전 식별자',{exact:true});await expect(refs).toHaveCount(2);await refs.first().click();await expect(page.locator('article details').first().getByText('document:'+candidates.value.data.items.find((d:{title:string})=>d.title==='합성 회의 원문').version_id,{exact:true})).toBeVisible();await expect(page.getByRole('region',{name:'회의록 사람 품질 검토'})).toBeVisible();await page.getByLabel('검토 의견 (필수 · 1~500자)').fill('합성 원문 대조 · 실제 품질 수용 아님');await page.getByRole('button',{name:'평가 이력 추가'}).focus();await page.keyboard.press('Enter');await expect(page.getByText('검토 기록이 추가되었습니다.',{exact:true})).toBeVisible();
++ for(const width of [1440,1024,768]){await page.setViewportSize({width,height:1000});await page.screenshot({path:'.runtime/WF12-meeting-'+width+'.png',fullPage:true});expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);}
++
++ const owned=await apiCall(page,'/documents/mine');const source=owned.value.data.items.find((d:{document_id:string})=>d.document_id===candidates.value.data.items.find((c:{title:string})=>c.title==='합성 회의 원문').document_id);expect(source).toBeTruthy();
++ const removed=await page.evaluate(async({documentId,revision,tenant})=>{const session=await(await fetch('/api/v1/auth/me')).json();const response=await fetch('/api/v1/documents/'+documentId,{method:'DELETE',headers:{'X-Tenant-ID':tenant,'Content-Type':'application/json','X-Requested-With':'ai-portal','X-CSRF-Token':session.data.csrf_token},body:JSON.stringify({expected_revision:revision})});return response.status;},{documentId:source.document_id,revision:source.revision,tenant:fixture().tenants.A});expect(removed).toBe(200);
++ await page.getByRole('button',{name:'Agent 실행 및 초안 생성',exact:true}).click();await expect(page.getByText('현재 원문 사용 불가',{exact:false})).toBeVisible();await expect(page.getByRole('heading',{name:'원문 근거를 검사한 회의록 초안',exact:true})).toHaveCount(0);await expect(page.getByText('봉인된 회의일: 2026-10-15',{exact:true})).toBeVisible();await page.getByRole('button',{name:'자료 새로고침 · 선택 재확인'}).click();await expect(page.getByRole('checkbox',{name:/합성 회의 원문/})).toHaveCount(0);
+  await switchLogin(page,'p-a','P-A');await page.goto(admin+'/approvals?kind=workflow&request_id='+request.version_id);await saveReview(page,'현재 활성 승인 철회','업무 head 이용 회수');await expect(page.getByRole('region',{name:'승인 요청 상세'})).toContainText('승인 완료 · 현재 head 철회됨');
+  await switchLogin(page,'a-u1','A-U1','user');const catalog=await apiCall(page,'/use-cases');expect(catalog.value.data.items.find((i:{use_case_id:string})=>i.use_case_id==='AGENT_03').execution_ready).toBe(false);
+ });
+--- a/src/frontend/tests/meeting-runtime.spec.ts
++++ b/src/frontend/tests/meeting-runtime.spec.ts
+@@ -20,12 +20,22 @@
+   submitted=route.request().postDataJSON();await route.fulfill({status:202,json:envelope(record)});
+  });
+  await page.route('**/api/v1/use-cases/AGENT_03/runs/'+run,async route=>route.fulfill({json:envelope({...record,state:'completed',revision:3,is_terminal:true,result_access:'final',result:{decisions:[{text:'자료 검토',quote:'자료를 검토하기로 했다.'}],unresolved:[],actions:[{text:'후속 검토',quote:'후속 검토를 하기로 했다.',assignee:null,due_date:null}]}})}));
++ await page.route('**/api/v1/use-cases/AGENT_03/documents?*',r=>r.fulfill({json:envelope({items:[],next_cursor:null})}));await page.route('**/api/v1/use-cases/AGENT_03/runs/'+run+'/quality',r=>r.fulfill({status:404,json:{error:{code:'RESOURCE_NOT_FOUND'}}}));
+  await page.goto('/user/use-cases');
+  await page.getByLabel('회의 메모',{exact:true}).fill('자료를 검토하기로 했다.');
+  await page.getByRole('button',{name:'Agent 실행 및 초안 생성',exact:true}).click();
+- await expect(page.getByRole('heading',{name:'검증된 회의록 초안',exact:true})).toBeVisible();
+- await expect(page.getByText('담당자: 미정 · 기한: 미정',{exact:true})).toBeVisible();
++ await expect(page.getByRole('heading',{name:'원문 근거를 검사한 회의록 초안',exact:true})).toBeVisible();
++ await expect(page.getByText(/담당자: 미정 · 기한: 미확정/)).toBeVisible();
+  expect(submitted).toMatchObject({prompt:'자료를 검토하기로 했다.'});
+  expect(submitted?.client_request_id).toMatch(/^[0-9a-f-]{36}$/);
+  expect(submitted).not.toHaveProperty('context_data');expect(submitted).not.toHaveProperty('version_id');
+ });
++
++test('WF_12_HTTP_stub_full_receipt_pagination_quality_replay_CAS',async({page})=>{
++ await login(page,'A-U1');const tenant='10000000-0000-4000-8000-00000000000a',id='30000000-0000-4000-8000-000000000012';const envelope=(data:unknown)=>({data,meta:{tenant_id:tenant,request_id:id}});const doc=(n:number)=>({document_id:id.slice(0,-2)+String(n).padStart(2,'0'),version_id:id.slice(0,-2)+String(n+10).padStart(2,'0'),version_no:1,title:'합성 자료 '+n,character_length:20,source_sha256:'a'.repeat(64),ready:n!==4,unavailable_reason:n===4?'source_unavailable':null});
++ let revoked=false,listingFailure=false;await page.route('**/api/v1/use-cases',r=>r.fulfill({json:envelope({items:[{use_case_id:'AGENT_03',name:'회의록',category:'document',description:'합성',execution_ready:true}]})}));await page.route('**/api/v1/use-cases/AGENT_03/documents?*',r=>listingFailure?r.abort('failed'):r.fulfill({json:envelope(r.request().url().includes('cursor')?{items:revoked?[doc(4)]:[doc(3),doc(4)],next_cursor:null}:{items:[doc(1),doc(2)],next_cursor:id})}));
++ const result={decisions:[{text:'합성 결정',quote:'검토한다',source_ref:'memo'}],unresolved:[],actions:[]};const run={run_id:id,version_id:id,workflow_id:id,state:'completed',revision:3,is_terminal:true,execution_mode:'mock',steps:[],result_access:'final',result,error_code:null,meeting_context:{meeting_date:'2026-10-15',documents:[]}};let writes:any[]=[];await page.route('**/api/v1/use-cases/AGENT_03/execute',async r=>{writes.push(r.request().postDataJSON());if(writes.length===1)await r.abort('failed');else await r.fulfill({json:envelope(run)});});
++ let reviews:any[]=[];let revision=0;const quality=()=>({run_id:id,run_revision:3,result_digest:'a'.repeat(64),review_revision:revision,history_limit:20,human_review_required:true,structural:{evidence_valid:true,item_count:1,unresolved_deadlines:0,past_deadlines:0,error:null,human_review_required:true},items:[]});await page.route('**/api/v1/use-cases/AGENT_03/runs/'+id+'/quality',async r=>{if(r.request().method()==='GET')return r.fulfill({json:envelope(quality())});reviews.push(r.request().postDataJSON());if(reviews.length===1){revision=1;return r.abort('failed');}if(reviews.length===2)return r.fulfill({json:envelope(quality())});return r.fulfill({status:409,json:{error:{code:'REVISION_CONFLICT'},meta:{tenant_id:tenant,request_id:id}}});});
++ await page.goto('/user/use-cases');await page.getByRole('checkbox',{name:/합성 자료 1/}).check();await page.getByRole('button',{name:'자료 더 보기'}).click();await page.getByRole('checkbox',{name:/합성 자료 2/}).check();await page.getByRole('checkbox',{name:/합성 자료 3/}).check();await expect(page.getByRole('checkbox',{name:/합성 자료 4/})).toBeDisabled();await expect(page.getByText(/선택 유지:/)).toContainText('합성 자료 1');await page.getByRole('button',{name:'자료 새로고침 · 선택 재확인'}).click();await expect(page.getByRole('checkbox',{name:/합성 자료 3/})).toBeChecked();listingFailure=true;await page.getByRole('button',{name:'자료 새로고침 · 선택 재확인'}).click();await expect(page.getByRole('alert')).toContainText('확인되지 않은 선택은 유지');await expect(page.getByRole('checkbox',{name:/합성 자료 3/})).toBeChecked();listingFailure=false;await page.getByRole('button',{name:'자료 새로고침 · 선택 재확인'}).click();await expect(page.getByRole('checkbox',{name:/합성 자료 3/})).toBeChecked();await page.getByLabel('회의일 (선택 · 한국 업무 날짜)').fill('2026-10-15');await page.getByLabel('회의 메모',{exact:true}).fill('검토한다');await page.getByRole('button',{name:'Agent 실행 및 초안 생성'}).click();await expect(page.getByRole('alert')).toBeVisible();await page.getByRole('button',{name:'Agent 실행 및 초안 생성'}).click();await expect(page.getByRole('heading',{name:'원문 근거를 검사한 회의록 초안'})).toBeVisible();expect(writes[0]).toEqual(writes[1]);expect(writes[1].document_refs).toHaveLength(3);revoked=true;await page.getByRole('button',{name:'자료 새로고침 · 선택 재확인'}).click();await expect(page.getByRole('alert')).toContainText('선택에서 제외');await expect(page.getByText(/선택 유지:/)).not.toContainText('합성 자료 3');
++ await page.getByLabel('회의일 (선택 · 한국 업무 날짜)').fill('2026-10-20');await expect(page.getByText('봉인된 회의일: 2026-10-15',{exact:true})).toBeVisible();await page.getByLabel('검토 의견 (필수 · 1~500자)').fill('합성 검토');await page.getByRole('button',{name:'평가 이력 추가'}).click();await expect(page.getByRole('region',{name:'회의록 사람 품질 검토'}).getByRole('alert')).toBeVisible();await page.getByRole('button',{name:'평가 이력 추가'}).click();await expect(page.getByText('검토 기록이 추가되었습니다.')).toBeVisible();expect(reviews[0]).toEqual(reviews[1]);await page.getByLabel('검토 의견 (필수 · 1~500자)').fill('새 검토');await page.getByRole('button',{name:'평가 이력 추가'}).click();await expect(page.getByRole('button',{name:'최신 상태에서 새 검토 시작'})).toBeVisible();await expect(page.getByRole('button',{name:'평가 이력 추가'})).toBeDisabled();
++});
+--- a/src/frontend/packages/api-contract/src/api.ts
++++ b/src/frontend/packages/api-contract/src/api.ts
+@@ -5,7 +5,7 @@
+  CSRF_FAILED:'요청을 확인할 수 없습니다. 다시 로그인해 주세요.',REQUEST_INVALID:'입력 내용을 확인해 주세요.',
+  RESOURCE_NOT_FOUND:'자료를 찾을 수 없거나 접근 권한이 변경되었습니다.',REVISION_CONFLICT:'다른 변경이 먼저 적용되었습니다. 최신 내용을 확인한 뒤 다시 변경해 주세요.',
+  RATE_LIMITED:'잠시 후 다시 시도해 주세요.',STORAGE_UNAVAILABLE:'처리 결과를 확인할 수 없습니다. 다시 조회해 주세요.',
+- AGENT_DISABLED:'현재 이 Agent의 운영이 중지되어 있습니다.',FEATURE_NOT_READY:'아직 준비 중인 기능입니다.',PROJECT_STOPPED:'플랫폼 운영이 중지되어 있습니다.',TENANT_STOPPED:'이 조직의 운영이 중지되어 있습니다.',QUOTA_EXCEEDED:'사용 한도에 도달했습니다.',BUDGET_NOT_READY:'조직의 사용 한도 설정이 필요합니다.',EXECUTION_NOT_READY:'실행 설정이 필요합니다.',EXECUTION_CAPACITY_EXCEEDED:'진행 중인 작업을 마친 뒤 다시 시도해 주세요.',BUDGET_LIMIT_CONFLICT:'배정 한도 또는 기존 사용·예약 금액을 확인해 주세요.',REVIEW_REQUIRED:'사용량 확인이 필요해 재개할 수 없습니다.',PAYLOAD_TOO_LARGE:'입력 크기를 줄여 주세요.',AGENT_MISMATCH:'다른 Agent를 사용하려면 새 대화를 시작해 주세요.',WORKFLOW_BLOCKED:'Workflow 승인 또는 이용 권한이 변경되었습니다.',WORKFLOW_QUEUE_LIMIT:'진행 중인 Workflow를 확인해 주세요.',WORKFLOW_BINDING_INVALID:'Workflow 노드 연결값을 확인해 주세요.',WORKFLOW_CHILD_FAILED:'연결된 Agent 또는 Tool 실행을 완료하지 못했습니다.',NETWORK:'연결을 확인할 수 없습니다. 다시 시도해 주세요.',SCOPE_CHANGED:'현재 조직의 내용을 다시 조회해 주세요.'};
++ AGENT_DISABLED:'현재 이 Agent의 운영이 중지되어 있습니다.',FEATURE_NOT_READY:'아직 준비 중인 기능입니다.',PROJECT_STOPPED:'플랫폼 운영이 중지되어 있습니다.',TENANT_STOPPED:'이 조직의 운영이 중지되어 있습니다.',QUOTA_EXCEEDED:'사용 한도에 도달했습니다.',BUDGET_NOT_READY:'조직의 사용 한도 설정이 필요합니다.',EXECUTION_NOT_READY:'실행 설정이 필요합니다.',EXECUTION_CAPACITY_EXCEEDED:'진행 중인 작업을 마친 뒤 다시 시도해 주세요.',BUDGET_LIMIT_CONFLICT:'배정 한도 또는 기존 사용·예약 금액을 확인해 주세요.',REVIEW_REQUIRED:'사용량 확인이 필요해 재개할 수 없습니다.',PAYLOAD_TOO_LARGE:'입력 크기를 줄여 주세요.',AGENT_MISMATCH:'다른 Agent를 사용하려면 새 대화를 시작해 주세요.',WORKFLOW_BLOCKED:'Workflow 승인 또는 이용 권한이 변경되었습니다.',WORKFLOW_QUEUE_LIMIT:'진행 중인 Workflow를 확인해 주세요.',WORKFLOW_BINDING_INVALID:'Workflow 노드 연결값을 확인해 주세요.',WORKFLOW_CHILD_FAILED:'연결된 Agent 또는 Tool 실행을 완료하지 못했습니다.',MEETING_CONTEXT_TOO_LARGE:'회의 메모·자료·날짜와 서버 구분 문구가 4000자 한도를 넘었습니다. 분량을 줄여 주세요.',TOKEN_LIMIT_EXCEEDED:'실행 입력의 토큰 한도를 넘었습니다. 분량을 줄여 주세요.',NETWORK:'연결을 확인할 수 없습니다. 다시 시도해 주세요.',SCOPE_CHANGED:'현재 조직의 내용을 다시 조회해 주세요.'};
+ export class ApiError extends Error {
+  constructor(public status:number,public code:string,public requestId:string|null=null){super(messages[code]??messages.STORAGE_UNAVAILABLE);}
+ }
