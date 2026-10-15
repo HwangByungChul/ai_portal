@@ -1,0 +1,1 @@
+2026-10-15: Task1 pure implementation complete; 47 focused tests passed; exact pre/post scoped package captured. DB/provider/services unchanged. Backend integration pending Task2; fresh Workflow approval required for rev2.

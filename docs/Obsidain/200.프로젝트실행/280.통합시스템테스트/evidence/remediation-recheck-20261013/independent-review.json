@@ -1,0 +1,26 @@
+{
+  "date": "2026-10-13",
+  "scope": "pure-and-production-composition-with-test-doubles",
+  "backend_tests": {
+    "passed": 16,
+    "seconds": 1.67,
+    "full_suite": false
+  },
+  "typescript_exit": 0,
+  "environment_tests": {
+    "passed": 19,
+    "failed": 0
+  },
+  "reproductions": {
+    "raw_stream_before_inspection": true,
+    "final_masked": true,
+    "manager_mode": "real",
+    "router_mode": "mock",
+    "actual_provider": "MockProvider",
+    "same_request_adapter_calls": 2,
+    "workflow_raw_input_returned": true
+  },
+  "db_changes": false,
+  "paid_calls": 0,
+  "app_changes": false
+}

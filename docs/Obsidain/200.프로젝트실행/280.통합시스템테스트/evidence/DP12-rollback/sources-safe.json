@@ -1,0 +1,12 @@
+{
+  "src/backend/migrations/038_asset_rollback_history.sql": "e4ee240fbcb568ea4b09812c489fbb1af141072660ea4888855c46f89da44a14",
+  "src/backend/app/assets/deployments.py": "e831671eefe53e3bccba87ecfb7470361e30f66f1af04d59e34c915d426844cf",
+  "src/backend/tests/test_asset_rollback.py": "1009370447791c41f3975da1237064088f8cec9f83c9bfc0bc567493909ca734",
+  "src/backend/tests/test_dynamic_extended.py": "9e57ba81ba070f2cae04a5d791712ab1728f09951dd9c9ef6e463f4fe43a0374",
+  "src/backend/tests/support.py": "9ec119fc3780564a11f68906ec5713de0e605d5e1834ebcc8cdf87ca232222c6",
+  "src/backend/scripts/portal_test_control.py": "c318be26ab97208a8c2c7e3231670c2ca98261e06b2c6161666ed307ad232f8b",
+  "src/frontend/src/AssetPublicationHistory.tsx": "833bf1558c6ee307bf83216b45350575d928887f957a607da535b03bd3f1f126",
+  "src/frontend/src/AssetDeployments.tsx": "bcb95b3519c5313407ac64608a3da2813005c13636db66d80d6d3bdfd67f2fb5",
+  "src/frontend/scripts/verify-portal-builds.mjs": "ce9290f5443a5b0f0dae1394938890b03e5ff42b3d8ec23ee3b6832f94fa2273",
+  "src/frontend/tests/asset-rollback.spec.ts": "8677bf53be9a8f6a12592130d9ae5f50e12c6307f012433ee710eb85f54f5ba6"
+}

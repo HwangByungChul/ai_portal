@@ -1,0 +1,15 @@
+{
+  "status": "passed",
+  "builds": [
+    {
+      "built": "user",
+      "other_artifact_unchanged": true,
+      "boundary_verified": true
+    },
+    {
+      "built": "admin",
+      "other_artifact_unchanged": true,
+      "boundary_verified": true
+    }
+  ]
+}

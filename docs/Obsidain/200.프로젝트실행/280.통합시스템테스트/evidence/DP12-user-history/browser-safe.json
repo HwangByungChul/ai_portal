@@ -1,0 +1,67 @@
+{
+  "status": "passed",
+  "latest_distinct": 12,
+  "single_full_suite": false,
+  "tests": [
+    {
+      "test_id": "D12_03_historical_compare_rollback_receipt_and_user_exact_version",
+      "status": "passed",
+      "duration_ms": 14373
+    },
+    {
+      "test_id": "D12_01_approve_publish_ordinary_user_execution_and_retire",
+      "status": "passed",
+      "duration_ms": 7911
+    },
+    {
+      "test_id": "D12_02_reject_keeps_catalog_unpublished",
+      "status": "passed",
+      "duration_ms": 5543
+    },
+    {
+      "test_id": "U11_01_home_launch_preserves_prompt_without_sending",
+      "status": "passed",
+      "duration_ms": 2617
+    },
+    {
+      "test_id": "U11_02_admin_home_and_real_request_approval",
+      "status": "passed",
+      "duration_ms": 3225
+    },
+    {
+      "test_id": "U11_03_direct_denial_and_mobile_navigation",
+      "status": "passed",
+      "duration_ms": 1535
+    },
+    {
+      "test_id": "U11_04_org_switch_discards_request_and_prompt",
+      "status": "passed",
+      "duration_ms": 1595
+    },
+    {
+      "test_id": "U11_05_empty_filter_and_pending_submission_recovery",
+      "status": "passed",
+      "duration_ms": 2022
+    },
+    {
+      "test_id": "U11_06_responsive_keyboard_and_private_visual_evidence",
+      "status": "passed",
+      "duration_ms": 1888
+    },
+    {
+      "test_id": "D12_05_history_scope_late_record_after_org_switch",
+      "status": "passed",
+      "duration_ms": 8879
+    },
+    {
+      "test_id": "D12_06_history_cancel_running_preserves_unknown_usage",
+      "status": "passed",
+      "duration_ms": 9682
+    },
+    {
+      "test_id": "D12_04_global_history_current_result_retire_hide_and_reload",
+      "status": "passed",
+      "duration_ms": 14391
+    }
+  ]
+}

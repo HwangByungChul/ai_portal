@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "checks": {
+    "8000": true,
+    "5173": true,
+    "5174": true,
+    "asset_api": true,
+    "list_instructions_absent": true,
+    "own_session_logout": true
+  },
+  "returned_page_counts": {
+    "legacy": 2,
+    "draft": 0
+  },
+  "paid_calls": 0,
+  "created_primary_assets": 0,
+  "primary_reset": false
+}

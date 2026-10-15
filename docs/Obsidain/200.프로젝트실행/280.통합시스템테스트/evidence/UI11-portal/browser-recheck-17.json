@@ -1,0 +1,148 @@
+{
+  "status": "failed",
+  "duration_ms": 158773.735,
+  "runner_errors": 0,
+  "tests": [
+    {
+      "test_id": "C05_01_upload_202_is_not_publication",
+      "status": "passed",
+      "duration_ms": 5751
+    },
+    {
+      "test_id": "C05_02_exact_v1_share_rag_source_revoke_and_v2_is_hidden",
+      "status": "passed",
+      "duration_ms": 13846
+    },
+    {
+      "test_id": "C05_03_private_management_does_not_expose_title",
+      "status": "passed",
+      "duration_ms": 3127
+    },
+    {
+      "test_id": "C05_04_lost_upload_confirm_preserves_id_and_one_index_call",
+      "status": "passed",
+      "duration_ms": 3034
+    },
+    {
+      "test_id": "C05_05_unknown_index_preserves_reservation_and_no_auto_retry",
+      "status": "passed",
+      "duration_ms": 5744
+    },
+    {
+      "test_id": "C05_06_rag_stream_is_buffered_until_provenance_is_saved",
+      "status": "passed",
+      "duration_ms": 10342
+    },
+    {
+      "test_id": "C05_07_mobile_document_surface_and_delete",
+      "status": "passed",
+      "duration_ms": 4916
+    },
+    {
+      "test_id": "C05_08_share_revision_conflict_requires_explicit_second_write",
+      "status": "passed",
+      "duration_ms": 5092
+    },
+    {
+      "test_id": "C05_09_late_A_document_response_discarded_after_B_switch",
+      "status": "passed",
+      "duration_ms": 5666
+    },
+    {
+      "test_id": "D07_08_late_tenant_response_discard_and_logout",
+      "status": "passed",
+      "duration_ms": 9721
+    },
+    {
+      "test_id": "D07_10_mobile320_keyboard_flow",
+      "status": "timedOut",
+      "duration_ms": 35636
+    },
+    {
+      "test_id": "D07_12_exact_old_version_selected_and_regenerated",
+      "status": "passed",
+      "duration_ms": 9908
+    },
+    {
+      "test_id": "D07_13_blob_late_tenant_switch_no_download",
+      "status": "passed",
+      "duration_ms": 7286
+    },
+    {
+      "test_id": "P270_01_admin_user_saved_rag_journey",
+      "status": "passed",
+      "duration_ms": 9107
+    },
+    {
+      "test_id": "P270_02_mobile_shared_version_revoke_journey",
+      "status": "passed",
+      "duration_ms": 11575
+    },
+    {
+      "test_id": "P270_03_private_owner_and_stop_journey",
+      "status": "failed",
+      "duration_ms": 8929
+    },
+    {
+      "test_id": "U11_06_responsive_keyboard_and_private_visual_evidence",
+      "status": "passed",
+      "duration_ms": 1687
+    }
+  ],
+  "steps": [
+    {
+      "test_id": "P270_01_admin_user_saved_rag_journey",
+      "step_id": "P270_STEP_01_admin_publish",
+      "status": "passed",
+      "duration_ms": 3066
+    },
+    {
+      "test_id": "P270_01_admin_user_saved_rag_journey",
+      "step_id": "P270_STEP_02_general_usage_history",
+      "status": "passed",
+      "duration_ms": 1817
+    },
+    {
+      "test_id": "P270_01_admin_user_saved_rag_journey",
+      "step_id": "P270_STEP_03_rag_source_download",
+      "status": "passed",
+      "duration_ms": 2442
+    },
+    {
+      "test_id": "P270_02_mobile_shared_version_revoke_journey",
+      "step_id": "P270_STEP_04_share_version_and_update",
+      "status": "passed",
+      "duration_ms": 3355
+    },
+    {
+      "test_id": "P270_02_mobile_shared_version_revoke_journey",
+      "step_id": "P270_STEP_05_mobile_v1_evidence",
+      "status": "passed",
+      "duration_ms": 1569
+    },
+    {
+      "test_id": "P270_02_mobile_shared_version_revoke_journey",
+      "step_id": "P270_STEP_06_revoke_prior_result_and_source",
+      "status": "passed",
+      "duration_ms": 5156
+    },
+    {
+      "test_id": "P270_03_private_owner_and_stop_journey",
+      "step_id": "P270_STEP_07_private_owner_API_and_admin_redaction",
+      "status": "passed",
+      "duration_ms": 339
+    },
+    {
+      "test_id": "P270_03_private_owner_and_stop_journey",
+      "step_id": "P270_STEP_08_owner_personal_evidence",
+      "status": "passed",
+      "duration_ms": 1523
+    },
+    {
+      "test_id": "P270_03_private_owner_and_stop_journey",
+      "step_id": "P270_STEP_09_stop_prevents_admission",
+      "status": "failed",
+      "duration_ms": 5130
+    }
+  ]
+}

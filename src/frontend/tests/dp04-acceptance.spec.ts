@@ -1,7 +1,7 @@
 import {writeFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {test,expect,type Page} from '@playwright/test';
-import {login,selectTenant,control,fixture} from './support';
+import {login,selectTenant,control,fixture,navigate} from './support';
 test.beforeEach(()=>control('case-start'));
 test.afterEach(async({page},info)=>{if(info.status!==info.expectedStatus)writeFileSync(resolve('.runtime',info.title+'-ui-private.txt'),await page.locator('main').innerText().catch(()=>'no main'),{mode:0o600});control('release-provider');await expect.poll(()=>control('b05-counts').active,{timeout:6000}).toBe(0);});
 async function switchActor(page:Page,actor:string){if(await page.getByRole('button',{name:'로그아웃',exact:true}).isVisible()){await page.getByRole('button',{name:'로그아웃',exact:true}).click();await expect(page.getByLabel('로그인 ID',{exact:true})).toBeVisible();}await login(page,actor);}
@@ -25,9 +25,9 @@ test('D04_02_mobile_switch_tenant_clears_private_feedback',async({page})=>{
 
 test('D04_03_admin_aggregate_no_private_content_and_threshold',async({page})=>{
  await login(page,'A-U1');await question(page);await rate(page,'never-show-summary');await expect(page.getByRole('button',{name:'답변 평가',exact:true})).toHaveCount(0);
- await switchActor(page,'A-ADM');await page.getByRole('button',{name:'답변 평가',exact:true}).click();await expect(page.getByText('참여자가 적어 평가 건수를 표시하지 않습니다.',{exact:true})).toBeVisible();await expect(page.getByText('never-show-summary',{exact:false})).toHaveCount(0);
+ await switchActor(page,'A-ADM');await navigate(page,'답변 평가');await expect(page.getByText('참여자가 적어 평가 건수를 표시하지 않습니다.',{exact:true})).toBeVisible();await expect(page.getByText('never-show-summary',{exact:false})).toHaveCount(0);
  await switchActor(page,'A-U2');await question(page);await rate(page,'second-private');
- await switchActor(page,'A-ADM');await question(page);await rate(page,'admin-own-private');await page.getByRole('button',{name:'답변 평가',exact:true}).click();await expect(page.getByText('전체 평가',{exact:true})).toBeVisible();await expect(page.locator('.feedback-summary-item').first()).toContainText('3건');await expect(page.getByText('admin-own-private',{exact:false})).toHaveCount(0);
+ await switchActor(page,'A-ADM');await question(page);await rate(page,'admin-own-private');await navigate(page,'답변 평가');await expect(page.getByText('전체 평가',{exact:true})).toBeVisible();await expect(page.locator('.feedback-summary-item').first()).toContainText('3건');await expect(page.getByText('admin-own-private',{exact:false})).toHaveCount(0);
  await page.getByLabel('평가 Agent',{exact:true}).selectOption('rules_rag');await page.getByRole('button',{name:'집계 조회',exact:true}).click();await expect(page.locator('.feedback-summary-item')).toHaveCount(1);await expect(page.getByText('해당 월의 활성 평가가 없습니다.',{exact:true})).toBeVisible();
 });
 

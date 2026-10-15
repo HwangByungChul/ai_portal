@@ -1,0 +1,19 @@
+[
+  "src/backend/app/use_cases/routes.py",
+  "src/backend/app/use_cases/service.py",
+  "src/backend/app/use_cases/runtime.py",
+  "src/backend/app/workflows/service.py",
+  "src/backend/app/workflows/repository.py",
+  "src/backend/app/workflows/identity.py",
+  "src/backend/app/main.py",
+  "src/backend/migrations/051_meeting_context_quality.sql",
+  "src/backend/tests/test_meeting_runtime_context.py",
+  "src/backend/tests/test_meeting_context_migration.py",
+  "src/backend/app/ai/repository.py",
+  "src/backend/app/assets/published.py",
+  "src/backend/tests/support.py",
+  "src/backend/scripts/portal_test_control.py",
+  "src/backend/tests/test_meeting_workflow.py",
+  "src/backend/scripts/evaluate_meeting_fixture.py",
+  "src/backend/tests/fixtures/meeting-runtime-evaluation-v2.json"
+]

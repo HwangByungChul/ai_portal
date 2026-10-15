@@ -1,0 +1,3833 @@
+[
+  {
+    "id": "SCR-COM-001",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 4,
+    "app": "공통",
+    "group": "공통 서비스",
+    "name": "SSO 로그인·콜백",
+    "original_url": "/auth/callback",
+    "original_purpose": "계열사 SSO 인증 후 역할·조직·테넌트 컨텍스트 생성",
+    "original_functions": "F-006",
+    "technical_ids": "T-053",
+    "included_functions": [
+      "F-006"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "부분 구현",
+    "current_scope": "로컬 인증/세션",
+    "gap": "계열사 SSO 콜백·AD",
+    "current_evidence": [
+      "src/backend/app/auth/routes.py"
+    ],
+    "delivery_group": [
+      "DP-16"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-COM-002",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 5,
+    "app": "공통",
+    "group": "공통 서비스",
+    "name": "접근권한 없음",
+    "original_url": "/error/403",
+    "original_purpose": "권한 부족·직무분리 충돌·테넌트 불일치 사유를 안전하게 안내",
+    "original_functions": "F-006,F-011",
+    "technical_ids": "T-055",
+    "included_functions": [
+      "F-006",
+      "F-011"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "부분 구현",
+    "current_scope": "권한별 메뉴·일반 오류",
+    "gap": "독립 안내 화면·SOD 충돌",
+    "current_evidence": [
+      "src/backend/app/auth/routes.py",
+      "src/backend/app/main.py"
+    ],
+    "delivery_group": [
+      "DP-16",
+      "DP-21"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-COM-003",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 6,
+    "app": "공통",
+    "group": "공통 서비스",
+    "name": "Tenant 선택·전환",
+    "original_url": "/context/tenant",
+    "original_purpose": "복수 계열사 권한 보유자의 활성 Tenant를 전환하고 세션을 재발급",
+    "original_functions": "F-005,F-043,F-046",
+    "technical_ids": "T-044,T-053",
+    "included_functions": [
+      "F-005",
+      "F-043",
+      "F-046"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "부분 구현",
+    "current_scope": "복수 소속 조직전환·늦은응답 가림",
+    "gap": "SSO 조직마스터·10tenant 승인환경",
+    "current_evidence": [
+      "src/backend/app/db.py",
+      "src/backend/migrations/006_operations_control.sql"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-26"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-COM-004",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 7,
+    "app": "공통",
+    "group": "공통 서비스",
+    "name": "통합검색 결과",
+    "original_url": "/search",
+    "original_purpose": "Agent·Prompt·MCP·Knowledge·화면 도움말을 권한 필터 후 통합 검색",
+    "original_functions": "F-020,F-023",
+    "technical_ids": "T-038",
+    "included_functions": [
+      "F-020",
+      "F-023"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "규정 RAG 검색은 별개",
+    "gap": "대화·문서·자산 통합 검색",
+    "current_evidence": [
+      "src/backend/app/documents/search.py",
+      "src/frontend/src/AgentSettingsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-10"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-COM-005",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 8,
+    "app": "공통",
+    "group": "공통 서비스",
+    "name": "알림센터",
+    "original_url": "/notifications",
+    "original_purpose": "승인·배포·작업·거버넌스 기일 알림을 읽음·보관 처리",
+    "original_functions": "F-017,F-057",
+    "technical_ids": "T-009,T-053",
+    "included_functions": [
+      "F-017"
+    ],
+    "excluded_governance_refs": [
+      "F-057"
+    ],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "없음",
+    "gap": "사용자 알림",
+    "current_evidence": [
+      "src/frontend/src/types.ts"
+    ],
+    "delivery_group": [
+      "DP-10"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-COM-006",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 9,
+    "app": "공통",
+    "group": "공통 서비스",
+    "name": "통합 승인함",
+    "original_url": "/approvals",
+    "original_purpose": "사용신청·자산·반입·배포·예외·거버넌스 결재를 역할별 조회·처리",
+    "original_functions": "F-019,F-024,F-029,F-039,F-041,F-052",
+    "technical_ids": "T-009,T-042,T-055",
+    "included_functions": [
+      "F-019",
+      "F-024",
+      "F-029",
+      "F-039",
+      "F-041"
+    ],
+    "excluded_governance_refs": [
+      "F-052"
+    ],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "없음",
+    "gap": "자산/과제/반입/배포 승인함",
+    "current_evidence": [
+      "src/backend/app/documents/worker.py",
+      "src/backend/app/main.py",
+      "src/backend/app/operations/routes.py",
+      "src/backend/migrations/006_operations_control.sql"
+    ],
+    "delivery_group": [
+      "DP-10",
+      "DP-12",
+      "DP-17",
+      "DP-25"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-COM-007",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 10,
+    "app": "공통",
+    "group": "공통 서비스",
+    "name": "장기작업 상태",
+    "original_url": "/jobs",
+    "original_purpose": "파일처리·RAG·평가·Export·배포 작업의 진행·실패·재처리 상태 제공",
+    "original_functions": "F-014,F-015,F-018,F-039,F-041,F-053,F-058,F-059",
+    "technical_ids": "T-024,T-033,T-039",
+    "included_functions": [
+      "F-014",
+      "F-015",
+      "F-018",
+      "F-039",
+      "F-041"
+    ],
+    "excluded_governance_refs": [
+      "F-053",
+      "F-058",
+      "F-059"
+    ],
+    "scope": "비교 포함",
+    "status": "부분 구현",
+    "current_scope": "문서 index/cleanup Job",
+    "gap": "평가/Export/배포 장기작업",
+    "current_evidence": [
+      "src/backend/app/documents/evidence_routes.py",
+      "src/backend/app/documents/repository.py",
+      "src/backend/app/documents/worker.py",
+      "src/backend/app/main.py",
+      "src/frontend/src/DocumentsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-05",
+      "DP-07",
+      "DP-12",
+      "DP-17"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-COM-008",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 11,
+    "app": "공통",
+    "group": "공통 서비스",
+    "name": "시스템 오류·점검",
+    "original_url": "/error",
+    "original_purpose": "서비스 장애·점검·상관ID·재시도 가능 여부 안내",
+    "original_functions": "F-003",
+    "technical_ids": "T-059,T-061",
+    "included_functions": [
+      "F-003"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "부분 구현",
+    "current_scope": "서버/연결 오류·retry 안내",
+    "gap": "시스템 점검/SSO 오류 독립화면",
+    "current_evidence": [
+      "src/frontend/src/App.tsx"
+    ],
+    "delivery_group": [
+      "DP-02"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-HOM-001",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 12,
+    "app": "사용자 통합 포털",
+    "group": "통합 Home",
+    "name": "통합 Home",
+    "original_url": "/portal/home",
+    "original_purpose": "역할별 빠른 실행, 추천 Agent, 최근 대화, 승인대기, 사용량과 서비스 상태 제공",
+    "original_functions": "F-001,F-004,F-005,F-006,F-007,F-017",
+    "technical_ids": "T-053,T-061",
+    "included_functions": [
+      "F-001",
+      "F-004",
+      "F-005",
+      "F-006",
+      "F-007",
+      "F-017"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "기존 AI 업무 진입/메뉴",
+    "gap": "Home/공지/추천·서비스 바로가기",
+    "current_evidence": [
+      "src/backend/app/auth/routes.py",
+      "src/backend/app/db.py",
+      "src/backend/migrations/001_auth_portal.sql",
+      "src/frontend/src/App.tsx",
+      "src/frontend/src/types.ts"
+    ],
+    "delivery_group": [
+      "DP-02",
+      "DP-09",
+      "DP-10",
+      "DP-16",
+      "DP-26"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-CHT-001",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 13,
+    "app": "사용자 통합 포털",
+    "group": "AI Chat",
+    "name": "AI Chat",
+    "original_url": "/portal/chat",
+    "original_purpose": "모델·Agent 선택, 스트리밍 질의응답, 세션 유지, 중단·재생성",
+    "original_functions": "F-008,F-009,F-010,F-011,F-012",
+    "technical_ids": "T-001,T-002,T-004,T-005,T-010,T-013,T-054",
+    "included_functions": [
+      "F-008",
+      "F-009",
+      "F-010",
+      "F-011",
+      "F-012"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "부분 구현",
+    "current_scope": "고정2Agent·SSE·취소·이력",
+    "gap": "다중모델·첨부·추천·가드레일",
+    "current_evidence": [
+      "src/backend/app/ai/token_limits.py",
+      "src/backend/app/documents/policy.py",
+      "src/backend/app/execution/rag.py",
+      "src/backend/app/main.py",
+      "src/frontend/src/ChatPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-03",
+      "DP-18",
+      "DP-21"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-CHT-002",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 14,
+    "app": "사용자 통합 포털",
+    "group": "AI Chat",
+    "name": "출처·원문 상세",
+    "original_url": "/portal/chat/sources/:evidenceId",
+    "original_purpose": "RAG 문서·청크·점수·원문 링크를 최신 권한으로 조회",
+    "original_functions": "F-013",
+    "technical_ids": "T-023,T-026,T-027,T-028",
+    "included_functions": [
+      "F-013"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "부분 구현",
+    "current_scope": "규정 답변의 인용/quote/원문",
+    "gap": "일반 지원문서·제안 메타정보 전체",
+    "current_evidence": [
+      "src/frontend/src/RagEvidencePanel.tsx"
+    ],
+    "delivery_group": [
+      "DP-04"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-CHT-003",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 15,
+    "app": "사용자 통합 포털",
+    "group": "AI Chat",
+    "name": "대화 파일 업로드",
+    "original_url": "/portal/chat/upload",
+    "original_purpose": "문서·이미지 업로드, 검사, 파싱·OCR, 요약·번역 요청",
+    "original_functions": "F-014",
+    "technical_ids": "T-024,T-025,T-048,T-051",
+    "included_functions": [
+      "F-014"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "관리자 TXT/MD 접수",
+    "gap": "사용자 대화첨부·이미지/OCR",
+    "current_evidence": [
+      "src/frontend/src/DocumentsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-05"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-CHT-004",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 16,
+    "app": "사용자 통합 포털",
+    "group": "AI Chat",
+    "name": "개인 RAG 처리상태",
+    "original_url": "/portal/chat/personal-rag/jobs/:jobId",
+    "original_purpose": "개인 문서의 파싱·청크·임베딩·인덱싱 상태와 실패 재처리",
+    "original_functions": "F-015",
+    "technical_ids": "T-025,T-026,T-044",
+    "included_functions": [
+      "F-015"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "관리자 문서 Job 상태",
+    "gap": "일반사용자 자기 첨부의 처리상태",
+    "current_evidence": [
+      "src/backend/app/documents/repository.py"
+    ],
+    "delivery_group": [
+      "DP-05"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-CHT-005",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 17,
+    "app": "사용자 통합 포털",
+    "group": "AI Chat",
+    "name": "전체 Prompt 조회",
+    "original_url": "/portal/chat/prompt",
+    "original_purpose": "Agent 관리자에게 승인 Prompt 버전과 구성 정보를 읽기 전용 제공",
+    "original_functions": "F-016",
+    "technical_ids": "T-005,T-022",
+    "included_functions": [
+      "F-016"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "부분 구현",
+    "current_scope": "관리자 고정 지시문 조회/편집",
+    "gap": "전체 승인 Prompt 읽기·민감값 치환",
+    "current_evidence": [
+      "src/frontend/src/AgentSettingsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-11"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-CHT-006",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 18,
+    "app": "사용자 통합 포털",
+    "group": "AI Chat",
+    "name": "응답 피드백",
+    "original_url": "/portal/chat/feedback",
+    "original_purpose": "답변 별점·좋아요/싫어요·의견·개선요청을 응답 버전에 연결",
+    "original_functions": "F-013,F-026",
+    "technical_ids": "T-012,T-043",
+    "included_functions": [
+      "F-013",
+      "F-026"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "없음",
+    "gap": "사용자 답변 피드백",
+    "current_evidence": [
+      "src/backend/app/conversations/routes.py",
+      "src/frontend/src/RagEvidencePanel.tsx"
+    ],
+    "delivery_group": [
+      "DP-04"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-CHT-007",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 19,
+    "app": "사용자 통합 포털",
+    "group": "AI Chat",
+    "name": "대화·응답 Export",
+    "original_url": "/portal/chat/export",
+    "original_purpose": "대화·응답·출처를 정책에 따라 PDF/문서로 비동기 출력",
+    "original_functions": "F-018",
+    "technical_ids": "T-051,T-052",
+    "included_functions": [
+      "F-018"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "원문 다운로드는 별개",
+    "gap": "답변/대화 문서 Export",
+    "current_evidence": [
+      "src/backend/app/documents/evidence_routes.py"
+    ],
+    "delivery_group": [
+      "DP-07"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MYW-001",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 20,
+    "app": "사용자 통합 포털",
+    "group": "My Workspace",
+    "name": "My Agent 목록",
+    "original_url": "/portal/workspace/agents",
+    "original_purpose": "사용 가능·즐겨찾기·최근 사용 Agent를 상태별 조회",
+    "original_functions": "F-017,F-019",
+    "technical_ids": "T-038",
+    "included_functions": [
+      "F-017",
+      "F-019"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "없음",
+    "gap": "개인화·My Agent·즐겨찾기/설정",
+    "current_evidence": [
+      "src/backend/app/operations/routes.py",
+      "src/frontend/src/types.ts"
+    ],
+    "delivery_group": [
+      "DP-10"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MYW-002",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 21,
+    "app": "사용자 통합 포털",
+    "group": "My Workspace",
+    "name": "My Agent 상세",
+    "original_url": "/portal/workspace/agents/:agentId",
+    "original_purpose": "Agent 설명·버전·권한·최근 사용·피드백·실행 진입 제공",
+    "original_functions": "F-013,F-017,F-019,F-026",
+    "technical_ids": "T-012,T-038",
+    "included_functions": [
+      "F-013",
+      "F-017",
+      "F-019",
+      "F-026"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "없음",
+    "gap": "개인화·My Agent·즐겨찾기/설정",
+    "current_evidence": [
+      "src/backend/app/conversations/routes.py",
+      "src/backend/app/operations/routes.py",
+      "src/frontend/src/RagEvidencePanel.tsx",
+      "src/frontend/src/types.ts"
+    ],
+    "delivery_group": [
+      "DP-04",
+      "DP-10"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MYW-003",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 22,
+    "app": "사용자 통합 포털",
+    "group": "My Workspace",
+    "name": "My Knowledge 목록",
+    "original_url": "/portal/workspace/knowledge",
+    "original_purpose": "개인 문서와 처리·보존 상태를 조회",
+    "original_functions": "F-014,F-015",
+    "technical_ids": "T-025,T-026",
+    "included_functions": [
+      "F-014",
+      "F-015"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "부분 구현",
+    "current_scope": "읽을 수 있는 게시자료/근거",
+    "gap": "자기 Knowledge 상세/업로드·일반문서 활용",
+    "current_evidence": [
+      "src/backend/app/documents/repository.py",
+      "src/frontend/src/DocumentsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-05"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MYW-004",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 23,
+    "app": "사용자 통합 포털",
+    "group": "My Workspace",
+    "name": "Knowledge 업로드",
+    "original_url": "/portal/workspace/knowledge/upload",
+    "original_purpose": "파일 업로드와 보안검사 후 개인 Knowledge 생성을 요청",
+    "original_functions": "F-014,F-015",
+    "technical_ids": "T-024,T-025,T-048",
+    "included_functions": [
+      "F-014",
+      "F-015"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "관리자 업로드·Job·삭제",
+    "gap": "일반사용자 자기문서 작업 계약/화면",
+    "current_evidence": [
+      "src/backend/app/documents/repository.py",
+      "src/frontend/src/DocumentsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-05"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MYW-005",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 24,
+    "app": "사용자 통합 포털",
+    "group": "My Workspace",
+    "name": "Knowledge 상세",
+    "original_url": "/portal/workspace/knowledge/:knowledgeId",
+    "original_purpose": "원본·파싱결과·청크·인덱스 버전·사용 Agent 조회",
+    "original_functions": "F-015",
+    "technical_ids": "T-025,T-026,T-031",
+    "included_functions": [
+      "F-015"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "부분 구현",
+    "current_scope": "읽을 수 있는 게시자료/근거",
+    "gap": "자기 Knowledge 상세/업로드·일반문서 활용",
+    "current_evidence": [
+      "src/backend/app/documents/repository.py"
+    ],
+    "delivery_group": [
+      "DP-05"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MYW-006",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 25,
+    "app": "사용자 통합 포털",
+    "group": "My Workspace",
+    "name": "Knowledge 처리이력",
+    "original_url": "/portal/workspace/knowledge/:knowledgeId/jobs",
+    "original_purpose": "인덱싱·재인덱싱·실패·삭제 전파 상태 조회와 재처리",
+    "original_functions": "F-015",
+    "technical_ids": "T-030,T-031",
+    "included_functions": [
+      "F-015"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "관리자 업로드·Job·삭제",
+    "gap": "일반사용자 자기문서 작업 계약/화면",
+    "current_evidence": [
+      "src/backend/app/documents/repository.py"
+    ],
+    "delivery_group": [
+      "DP-05"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MYW-007",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 26,
+    "app": "사용자 통합 포털",
+    "group": "My Workspace",
+    "name": "Knowledge 설정·삭제",
+    "original_url": "/portal/workspace/knowledge/:knowledgeId/settings",
+    "original_purpose": "명칭·보존기간·Agent 연결을 변경하고 원본·임베딩 삭제 요청",
+    "original_functions": "F-015",
+    "technical_ids": "T-025,T-051",
+    "included_functions": [
+      "F-015"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "관리자 업로드·Job·삭제",
+    "gap": "일반사용자 자기문서 작업 계약/화면",
+    "current_evidence": [
+      "src/backend/app/documents/repository.py"
+    ],
+    "delivery_group": [
+      "DP-05"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MYW-008",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 27,
+    "app": "사용자 통합 포털",
+    "group": "My Workspace",
+    "name": "대화 이력 목록",
+    "original_url": "/portal/workspace/conversations",
+    "original_purpose": "기간·Agent·키워드별 개인 대화 이력을 검색",
+    "original_functions": "F-012,F-017",
+    "technical_ids": "T-013",
+    "included_functions": [
+      "F-012",
+      "F-017"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "부분 구현",
+    "current_scope": "본인 대화 목록/상세/페이징",
+    "gap": "검색/제목/핀/삭제",
+    "current_evidence": [
+      "src/frontend/src/ChatPage.tsx",
+      "src/frontend/src/types.ts"
+    ],
+    "delivery_group": [
+      "DP-03",
+      "DP-10"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MYW-009",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 28,
+    "app": "사용자 통합 포털",
+    "group": "My Workspace",
+    "name": "대화 이력 상세",
+    "original_url": "/portal/workspace/conversations/:sessionId",
+    "original_purpose": "저장된 질의·응답·출처·피드백·삭제상태 조회",
+    "original_functions": "F-012,F-013,F-017",
+    "technical_ids": "T-013",
+    "included_functions": [
+      "F-012",
+      "F-013",
+      "F-017"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "부분 구현",
+    "current_scope": "본인 대화 목록/상세/페이징",
+    "gap": "검색/제목/핀/삭제",
+    "current_evidence": [
+      "src/frontend/src/ChatPage.tsx",
+      "src/frontend/src/RagEvidencePanel.tsx",
+      "src/frontend/src/types.ts"
+    ],
+    "delivery_group": [
+      "DP-03",
+      "DP-04",
+      "DP-10"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MYW-010",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 29,
+    "app": "사용자 통합 포털",
+    "group": "My Workspace",
+    "name": "즐겨찾기",
+    "original_url": "/portal/workspace/favorites",
+    "original_purpose": "즐겨찾기 Agent·Prompt·Knowledge를 조회·정렬·해제",
+    "original_functions": "F-017",
+    "technical_ids": "T-038",
+    "included_functions": [
+      "F-017"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "없음",
+    "gap": "개인화·My Agent·즐겨찾기/설정",
+    "current_evidence": [
+      "src/frontend/src/types.ts"
+    ],
+    "delivery_group": [
+      "DP-10"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MYW-011",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 30,
+    "app": "사용자 통합 포털",
+    "group": "My Workspace",
+    "name": "개인설정·알림",
+    "original_url": "/portal/workspace/settings",
+    "original_purpose": "기본 모델·Agent·알림채널·대화 보존·접근성 설정",
+    "original_functions": "F-017",
+    "technical_ids": "T-053,T-061",
+    "included_functions": [
+      "F-017"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "없음",
+    "gap": "개인화·My Agent·즐겨찾기/설정",
+    "current_evidence": [
+      "src/frontend/src/types.ts"
+    ],
+    "delivery_group": [
+      "DP-10"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MKT-001",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 31,
+    "app": "사용자 통합 포털",
+    "group": "AI Marketplace",
+    "name": "Marketplace Home",
+    "original_url": "/portal/marketplace",
+    "original_purpose": "추천·인기·신규 자산과 유형별 현황 제공",
+    "original_functions": "F-020,F-022,F-023",
+    "technical_ids": "T-038",
+    "included_functions": [
+      "F-020",
+      "F-022",
+      "F-023"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "추천·인기·신규 자산과 유형별 현황 제공",
+    "current_evidence": [
+      "src/backend/app/documents/search.py",
+      "src/backend/app/documents/sharing.py",
+      "src/frontend/src/AgentSettingsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-10"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MKT-002",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 32,
+    "app": "사용자 통합 포털",
+    "group": "AI Marketplace",
+    "name": "통합 카탈로그 검색",
+    "original_url": "/portal/marketplace/search",
+    "original_purpose": "Agent·Workflow·Prompt·MCP·Knowledge·Model을 권한·태그·랭킹으로 검색",
+    "original_functions": "F-020,F-023",
+    "technical_ids": "T-038",
+    "included_functions": [
+      "F-020",
+      "F-023"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "Agent·Workflow·Prompt·MCP·Knowledge·Model을 권한·태그·랭킹으로 검색",
+    "current_evidence": [
+      "src/backend/app/documents/search.py",
+      "src/frontend/src/AgentSettingsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-10"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MKT-003",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 33,
+    "app": "사용자 통합 포털",
+    "group": "AI Marketplace",
+    "name": "Agent 상세",
+    "original_url": "/portal/marketplace/agents/:assetId",
+    "original_purpose": "Agent 설명·버전·평가·사용량·공개범위·사용신청 제공",
+    "original_functions": "F-019,F-022,F-023,F-026",
+    "technical_ids": "T-038,T-041",
+    "included_functions": [
+      "F-019",
+      "F-022",
+      "F-023",
+      "F-026"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "Agent 설명·버전·평가·사용량·공개범위·사용신청 제공",
+    "current_evidence": [
+      "src/backend/app/conversations/routes.py",
+      "src/backend/app/documents/sharing.py",
+      "src/backend/app/operations/routes.py",
+      "src/frontend/src/AgentSettingsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-04",
+      "DP-10"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MKT-004",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 34,
+    "app": "사용자 통합 포털",
+    "group": "AI Marketplace",
+    "name": "Prompt 상세",
+    "original_url": "/portal/marketplace/prompts/:assetId",
+    "original_purpose": "Prompt 설명·버전·사용조건·평가·복제 진입 제공",
+    "original_functions": "F-020,F-022,F-024",
+    "technical_ids": "T-022,T-038",
+    "included_functions": [
+      "F-020",
+      "F-022",
+      "F-024"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "Prompt 설명·버전·사용조건·평가·복제 진입 제공",
+    "current_evidence": [
+      "src/backend/app/documents/search.py",
+      "src/backend/app/documents/sharing.py",
+      "src/backend/migrations/006_operations_control.sql"
+    ],
+    "delivery_group": [
+      "DP-10",
+      "DP-12"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MKT-005",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 35,
+    "app": "사용자 통합 포털",
+    "group": "AI Marketplace",
+    "name": "MCP·Tool 상세",
+    "original_url": "/portal/marketplace/tools/:assetId",
+    "original_purpose": "Tool 권한·파라미터·연계시스템·승인조건·사용신청 제공",
+    "original_functions": "F-011,F-020,F-021",
+    "technical_ids": "T-035,T-038",
+    "included_functions": [
+      "F-011",
+      "F-020",
+      "F-021"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "Tool 권한·파라미터·연계시스템·승인조건·사용신청 제공",
+    "current_evidence": [
+      "src/backend/app/documents/search.py",
+      "src/backend/app/main.py"
+    ],
+    "delivery_group": [
+      "DP-10",
+      "DP-21",
+      "DP-22"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MKT-006",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 36,
+    "app": "사용자 통합 포털",
+    "group": "AI Marketplace",
+    "name": "Workflow 상세",
+    "original_url": "/portal/marketplace/workflows/:assetId",
+    "original_purpose": "Workflow 노드·입출력·필요권한·버전·복제 진입 제공",
+    "original_functions": "F-020,F-022,F-024",
+    "technical_ids": "T-033,T-038",
+    "included_functions": [
+      "F-020",
+      "F-022",
+      "F-024"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "Workflow 노드·입출력·필요권한·버전·복제 진입 제공",
+    "current_evidence": [
+      "src/backend/app/documents/search.py",
+      "src/backend/app/documents/sharing.py",
+      "src/backend/migrations/006_operations_control.sql"
+    ],
+    "delivery_group": [
+      "DP-10",
+      "DP-12"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MKT-007",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 37,
+    "app": "사용자 통합 포털",
+    "group": "AI Marketplace",
+    "name": "Knowledge 상세",
+    "original_url": "/portal/marketplace/knowledge/:assetId",
+    "original_purpose": "공유 Knowledge의 출처·소유조직·갱신일·사용조건 제공",
+    "original_functions": "F-020,F-022",
+    "technical_ids": "T-025,T-038",
+    "included_functions": [
+      "F-020",
+      "F-022"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "공유 Knowledge의 출처·소유조직·갱신일·사용조건 제공",
+    "current_evidence": [
+      "src/backend/app/documents/search.py",
+      "src/backend/app/documents/sharing.py"
+    ],
+    "delivery_group": [
+      "DP-10"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MKT-008",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 38,
+    "app": "사용자 통합 포털",
+    "group": "AI Marketplace",
+    "name": "Model 상세",
+    "original_url": "/portal/marketplace/models/:assetId",
+    "original_purpose": "승인 모델의 용도·성능·제약·Quota·사용가능 Agent 제공",
+    "original_functions": "F-023",
+    "technical_ids": "T-001,T-008",
+    "included_functions": [
+      "F-023"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "승인 모델의 용도·성능·제약·Quota·사용가능 Agent 제공",
+    "current_evidence": [
+      "src/frontend/src/AgentSettingsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-10"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MKT-009",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 39,
+    "app": "사용자 통합 포털",
+    "group": "AI Marketplace",
+    "name": "자산 사용신청",
+    "original_url": "/portal/marketplace/requests/new",
+    "original_purpose": "개인·부서·계열사 범위의 자산 사용권한을 신청",
+    "original_functions": "F-019,F-021,F-024",
+    "technical_ids": "T-009,T-038",
+    "included_functions": [
+      "F-019",
+      "F-021",
+      "F-024"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "개인·부서·계열사 범위의 자산 사용권한을 신청",
+    "current_evidence": [
+      "src/backend/app/main.py",
+      "src/backend/app/operations/routes.py",
+      "src/backend/migrations/006_operations_control.sql"
+    ],
+    "delivery_group": [
+      "DP-10",
+      "DP-12",
+      "DP-22"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MKT-010",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 40,
+    "app": "사용자 통합 포털",
+    "group": "AI Marketplace",
+    "name": "AI자산 템플릿 복제",
+    "original_url": "/portal/marketplace/templates/:assetId/clone",
+    "original_purpose": "검증 자산을 개인 Studio 초안으로 복제하고 원본 Lineage를 보존",
+    "original_functions": "F-022,F-024",
+    "technical_ids": "T-036,T-038,T-042",
+    "included_functions": [
+      "F-022",
+      "F-024"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "검증 자산을 개인 Studio 초안으로 복제하고 원본 Lineage를 보존",
+    "current_evidence": [
+      "src/backend/app/documents/sharing.py",
+      "src/backend/migrations/006_operations_control.sql"
+    ],
+    "delivery_group": [
+      "DP-10",
+      "DP-12"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MKT-011",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 41,
+    "app": "사용자 통합 포털",
+    "group": "AI Marketplace",
+    "name": "My Marketplace",
+    "original_url": "/portal/marketplace/my",
+    "original_purpose": "사용신청·승인·구독·복제·평가 이력과 권한만료 제공",
+    "original_functions": "F-017,F-019,F-024,F-026",
+    "technical_ids": "T-038",
+    "included_functions": [
+      "F-017",
+      "F-019",
+      "F-024",
+      "F-026"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "사용신청·승인·구독·복제·평가 이력과 권한만료 제공",
+    "current_evidence": [
+      "src/backend/app/conversations/routes.py",
+      "src/backend/app/operations/routes.py",
+      "src/backend/migrations/006_operations_control.sql",
+      "src/frontend/src/types.ts"
+    ],
+    "delivery_group": [
+      "DP-04",
+      "DP-10",
+      "DP-12"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MKT-012",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 42,
+    "app": "사용자 통합 포털",
+    "group": "AI Marketplace",
+    "name": "커뮤니티·지식공유 목록",
+    "original_url": "/portal/marketplace/community",
+    "original_purpose": "공지·과제산출물·지식공유 게시물을 권한별 조회",
+    "original_functions": "F-025",
+    "technical_ids": "T-061",
+    "included_functions": [
+      "F-025"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "공지·과제산출물·지식공유 게시물을 권한별 조회",
+    "current_evidence": [
+      "src/frontend/src/App.tsx"
+    ],
+    "delivery_group": [
+      "DP-25"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MKT-013",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 43,
+    "app": "사용자 통합 포털",
+    "group": "AI Marketplace",
+    "name": "커뮤니티 게시물 상세",
+    "original_url": "/portal/marketplace/community/:postId",
+    "original_purpose": "본문·첨부·댓글·공개범위·변경이력 조회",
+    "original_functions": "F-025",
+    "technical_ids": "T-048,T-051",
+    "included_functions": [
+      "F-025"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "본문·첨부·댓글·공개범위·변경이력 조회",
+    "current_evidence": [
+      "src/frontend/src/App.tsx"
+    ],
+    "delivery_group": [
+      "DP-25"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-MKT-014",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 44,
+    "app": "사용자 통합 포털",
+    "group": "AI Marketplace",
+    "name": "커뮤니티 게시물 작성·편집",
+    "original_url": "/portal/marketplace/community/editor/:postId?",
+    "original_purpose": "게시물·첨부·공개범위를 작성·수정하고 보안검사 후 게시",
+    "original_functions": "F-025",
+    "technical_ids": "T-048,T-051",
+    "included_functions": [
+      "F-025"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "게시물·첨부·공개범위를 작성·수정하고 보안검사 후 게시",
+    "current_evidence": [
+      "src/frontend/src/App.tsx"
+    ],
+    "delivery_group": [
+      "DP-25"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-001",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 45,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "Agent 프로젝트 목록",
+    "original_url": "/portal/studio",
+    "original_purpose": "개발·테스트·승인·운영 상태의 Agent 프로젝트 조회",
+    "original_functions": "F-032,F-047,F-049",
+    "technical_ids": "T-032,T-037,T-042",
+    "included_functions": [
+      "F-032",
+      "F-047",
+      "F-049"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "개발·테스트·승인·운영 상태의 Agent 프로젝트 조회",
+    "current_evidence": [
+      "src/backend/app/main.py",
+      "src/backend/migrations/001_auth_portal.sql",
+      "src/frontend/src/AgentSettingsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-26"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-002",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 46,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "Agent 프로젝트 생성",
+    "original_url": "/portal/studio/projects/new",
+    "original_purpose": "빈 프로젝트 또는 승인 템플릿으로 Agent 초안 생성",
+    "original_functions": "F-024,F-032,F-047",
+    "technical_ids": "T-032,T-036,T-038",
+    "included_functions": [
+      "F-024",
+      "F-032",
+      "F-047"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "빈 프로젝트 또는 승인 템플릿으로 Agent 초안 생성",
+    "current_evidence": [
+      "src/backend/migrations/001_auth_portal.sql",
+      "src/backend/migrations/006_operations_control.sql",
+      "src/frontend/src/AgentSettingsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-12",
+      "DP-26"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-003",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 47,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "Agent 프로젝트 개요",
+    "original_url": "/portal/studio/projects/:projectId",
+    "original_purpose": "완성도·버전·검증·승인·배포상태와 의존자산 조회",
+    "original_functions": "F-032,F-039,F-049",
+    "technical_ids": "T-032,T-042,T-043",
+    "included_functions": [
+      "F-032",
+      "F-039",
+      "F-049"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "완성도·버전·검증·승인·배포상태와 의존자산 조회",
+    "current_evidence": [
+      "src/backend/app/main.py",
+      "src/frontend/src/AgentSettingsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-12"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-004",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 48,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "Agent 기본설정",
+    "original_url": "/portal/studio/projects/:projectId/settings",
+    "original_purpose": "명칭·설명·업무목적·모델·공개범위·Owner 설정",
+    "original_functions": "F-032,F-034",
+    "technical_ids": "T-001,T-032",
+    "included_functions": [
+      "F-032",
+      "F-034"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "고정 설정/문서 pipeline·추적/시험 도구",
+    "gap": "제품 Studio의 생성·설정·시험·추적/평가 화면/API",
+    "current_evidence": [
+      "src/backend/app/documents/sharing.py",
+      "src/frontend/src/AgentSettingsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-10"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-005",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 49,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "Prompt 편집기",
+    "original_url": "/portal/studio/projects/:projectId/prompt",
+    "original_purpose": "System Prompt·Template·파라미터·변수·금칙조건 편집",
+    "original_functions": "F-008,F-009,F-010,F-016,F-024",
+    "technical_ids": "T-005,T-022,T-032",
+    "included_functions": [
+      "F-008",
+      "F-009",
+      "F-010",
+      "F-016",
+      "F-024"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "고정 설정/문서 pipeline·추적/시험 도구",
+    "gap": "제품 Studio의 생성·설정·시험·추적/평가 화면/API",
+    "current_evidence": [
+      "src/backend/app/ai/token_limits.py",
+      "src/backend/app/documents/policy.py",
+      "src/backend/app/execution/rag.py",
+      "src/backend/migrations/006_operations_control.sql",
+      "src/frontend/src/AgentSettingsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-11",
+      "DP-12",
+      "DP-18"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-006",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 50,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "Prompt 버전 비교",
+    "original_url": "/portal/studio/projects/:projectId/prompt/versions",
+    "original_purpose": "Prompt 변경 전후, 승인 버전, 평가결과 비교와 복원",
+    "original_functions": "F-024,F-032,F-049",
+    "technical_ids": "T-022,T-042",
+    "included_functions": [
+      "F-024",
+      "F-032",
+      "F-049"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "Prompt 변경 전후, 승인 버전, 평가결과 비교와 복원",
+    "current_evidence": [
+      "src/backend/app/main.py",
+      "src/backend/migrations/006_operations_control.sql",
+      "src/frontend/src/AgentSettingsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-12"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-007",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 51,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "Workflow Canvas",
+    "original_url": "/portal/studio/projects/:projectId/workflow",
+    "original_purpose": "노드 기반 Agent Workflow 구성·연결·검증",
+    "original_functions": "F-024,F-032,F-049",
+    "technical_ids": "T-033,T-036",
+    "included_functions": [
+      "F-024",
+      "F-032",
+      "F-049"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "노드 기반 Agent Workflow 구성·연결·검증",
+    "current_evidence": [
+      "src/backend/app/main.py",
+      "src/backend/migrations/006_operations_control.sql",
+      "src/frontend/src/AgentSettingsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-12"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-008",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 52,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "Workflow 노드 설정",
+    "original_url": "/portal/studio/projects/:projectId/workflow/nodes/:nodeId",
+    "original_purpose": "입출력·조건·재시도·Timeout·권한·보상 규칙 설정",
+    "original_functions": "F-011,F-021,F-024",
+    "technical_ids": "T-033,T-035,T-036",
+    "included_functions": [
+      "F-011",
+      "F-021",
+      "F-024"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "입출력·조건·재시도·Timeout·권한·보상 규칙 설정",
+    "current_evidence": [
+      "src/backend/app/main.py",
+      "src/backend/migrations/006_operations_control.sql"
+    ],
+    "delivery_group": [
+      "DP-12",
+      "DP-21",
+      "DP-22"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-009",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 53,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "Workflow 실행이력",
+    "original_url": "/portal/studio/projects/:projectId/runs",
+    "original_purpose": "단계별 상태·입출력 Masking·Checkpoint·보상 이력 조회",
+    "original_functions": "F-011,F-032",
+    "technical_ids": "T-039,T-040",
+    "included_functions": [
+      "F-011",
+      "F-032"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "단계별 상태·입출력 Masking·Checkpoint·보상 이력 조회",
+    "current_evidence": [
+      "src/backend/app/main.py",
+      "src/frontend/src/AgentSettingsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-21"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-010",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 54,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "Knowledge 소스 목록",
+    "original_url": "/portal/studio/projects/:projectId/knowledge",
+    "original_purpose": "Agent에 연결된 문서·DB·공유 Knowledge와 Index 버전 조회",
+    "original_functions": "F-015,F-021,F-024",
+    "technical_ids": "T-025,T-026",
+    "included_functions": [
+      "F-015",
+      "F-021",
+      "F-024"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "고정 설정/문서 pipeline·추적/시험 도구",
+    "gap": "제품 Studio의 생성·설정·시험·추적/평가 화면/API",
+    "current_evidence": [
+      "src/backend/app/documents/repository.py",
+      "src/backend/app/main.py",
+      "src/backend/migrations/006_operations_control.sql"
+    ],
+    "delivery_group": [
+      "DP-05",
+      "DP-12",
+      "DP-22"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-011",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 55,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "Knowledge 소스 추가",
+    "original_url": "/portal/studio/projects/:projectId/knowledge/new",
+    "original_purpose": "승인된 문서·DB·공유 자산을 Agent Knowledge로 연결",
+    "original_functions": "F-014,F-015,F-021",
+    "technical_ids": "T-024,T-025,T-026",
+    "included_functions": [
+      "F-014",
+      "F-015",
+      "F-021"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "고정 설정/문서 pipeline·추적/시험 도구",
+    "gap": "제품 Studio의 생성·설정·시험·추적/평가 화면/API",
+    "current_evidence": [
+      "src/backend/app/documents/repository.py",
+      "src/backend/app/main.py",
+      "src/frontend/src/DocumentsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-05",
+      "DP-22"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-012",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 56,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "RAG 검색설정",
+    "original_url": "/portal/studio/projects/:projectId/rag",
+    "original_purpose": "검색방식·Top-K·Threshold·Rerank·Citation 옵션 설정",
+    "original_functions": "F-013,F-015",
+    "technical_ids": "T-023,T-027,T-028,T-030",
+    "included_functions": [
+      "F-013",
+      "F-015"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "고정 설정/문서 pipeline·추적/시험 도구",
+    "gap": "제품 Studio의 생성·설정·시험·추적/평가 화면/API",
+    "current_evidence": [
+      "src/backend/app/documents/repository.py",
+      "src/frontend/src/RagEvidencePanel.tsx"
+    ],
+    "delivery_group": [
+      "DP-04",
+      "DP-05"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-013",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 57,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "RAG 재인덱싱 상태",
+    "original_url": "/portal/studio/projects/:projectId/rag/indexes",
+    "original_purpose": "Blue/Green Index 생성·평가·Alias 전환·Rollback 상태",
+    "original_functions": "F-015,F-049",
+    "technical_ids": "T-031",
+    "included_functions": [
+      "F-015",
+      "F-049"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "고정 설정/문서 pipeline·추적/시험 도구",
+    "gap": "제품 Studio의 생성·설정·시험·추적/평가 화면/API",
+    "current_evidence": [
+      "src/backend/app/documents/repository.py",
+      "src/backend/app/main.py"
+    ],
+    "delivery_group": [
+      "DP-05",
+      "DP-09"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-014",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 58,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "MCP·Tool 목록",
+    "original_url": "/portal/studio/projects/:projectId/tools",
+    "original_purpose": "연결 Tool·Credential·허용범위·상태 조회",
+    "original_functions": "F-011,F-021,F-024",
+    "technical_ids": "T-035",
+    "included_functions": [
+      "F-011",
+      "F-021",
+      "F-024"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "연결 Tool·Credential·허용범위·상태 조회",
+    "current_evidence": [
+      "src/backend/app/main.py",
+      "src/backend/migrations/006_operations_control.sql"
+    ],
+    "delivery_group": [
+      "DP-12",
+      "DP-21",
+      "DP-22"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-015",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 59,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "MCP·Tool 연결",
+    "original_url": "/portal/studio/projects/:projectId/tools/new",
+    "original_purpose": "승인 Tool을 연결하고 Credential·Allowlist·파라미터 제한 설정",
+    "original_functions": "F-011,F-021",
+    "technical_ids": "T-035,T-047",
+    "included_functions": [
+      "F-011",
+      "F-021"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "승인 Tool을 연결하고 Credential·Allowlist·파라미터 제한 설정",
+    "current_evidence": [
+      "src/backend/app/main.py"
+    ],
+    "delivery_group": [
+      "DP-21",
+      "DP-22"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-016",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 60,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "Tool 연결 테스트",
+    "original_url": "/portal/studio/projects/:projectId/tools/:toolId/test",
+    "original_purpose": "테스트 데이터로 권한·Timeout·응답·감사 이벤트 검증",
+    "original_functions": "F-011,F-021",
+    "technical_ids": "T-035,T-039",
+    "included_functions": [
+      "F-011",
+      "F-021"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "테스트 데이터로 권한·Timeout·응답·감사 이벤트 검증",
+    "current_evidence": [
+      "src/backend/app/main.py"
+    ],
+    "delivery_group": [
+      "DP-21",
+      "DP-22"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-017",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 61,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "Agent Test Playground",
+    "original_url": "/portal/studio/projects/:projectId/test",
+    "original_purpose": "Prompt·RAG·Tool 조합을 테스트 데이터로 실행·비교",
+    "original_functions": "F-008,F-009,F-010,F-011,F-032",
+    "technical_ids": "T-005,T-030,T-039,T-043",
+    "included_functions": [
+      "F-008",
+      "F-009",
+      "F-010",
+      "F-011",
+      "F-032"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "고정 설정/문서 pipeline·추적/시험 도구",
+    "gap": "제품 Studio의 생성·설정·시험·추적/평가 화면/API",
+    "current_evidence": [
+      "src/backend/app/ai/token_limits.py",
+      "src/backend/app/documents/policy.py",
+      "src/backend/app/execution/rag.py",
+      "src/backend/app/main.py",
+      "src/frontend/src/AgentSettingsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-18",
+      "DP-21"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-018",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 62,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "Trace·Debug",
+    "original_url": "/portal/studio/projects/:projectId/traces/:runId",
+    "original_purpose": "단계별 실행시간·입출력·추론·Tool·오류·보상 Trace 조회",
+    "original_functions": "F-032,F-038",
+    "technical_ids": "T-039,T-040",
+    "included_functions": [
+      "F-032",
+      "F-038"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "고정 설정/문서 pipeline·추적/시험 도구",
+    "gap": "제품 Studio의 생성·설정·시험·추적/평가 화면/API",
+    "current_evidence": [
+      "src/backend/migrations/020_document_request_trace.sql",
+      "src/frontend/src/AgentSettingsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-18"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-019",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 63,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "평가 계획",
+    "original_url": "/portal/studio/projects/:projectId/evaluations/new",
+    "original_purpose": "정확성·환각·안전·편향·성능·비용 평가셋과 임계치 설정",
+    "original_functions": "F-008,F-009,F-010,F-032",
+    "technical_ids": "T-043",
+    "included_functions": [
+      "F-008",
+      "F-009",
+      "F-010",
+      "F-032"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "고정 설정/문서 pipeline·추적/시험 도구",
+    "gap": "제품 Studio의 생성·설정·시험·추적/평가 화면/API",
+    "current_evidence": [
+      "src/backend/app/ai/token_limits.py",
+      "src/backend/app/documents/policy.py",
+      "src/backend/app/execution/rag.py",
+      "src/frontend/src/AgentSettingsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-18"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-020",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 64,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "평가 결과",
+    "original_url": "/portal/studio/projects/:projectId/evaluations/:evaluationId",
+    "original_purpose": "항목별 점수·실패케이스·증적·승인 가능 여부 조회",
+    "original_functions": "F-032,F-038,F-039",
+    "technical_ids": "T-043",
+    "included_functions": [
+      "F-032",
+      "F-038",
+      "F-039"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "고정 설정/문서 pipeline·추적/시험 도구",
+    "gap": "제품 Studio의 생성·설정·시험·추적/평가 화면/API",
+    "current_evidence": [
+      "src/backend/app/main.py",
+      "src/backend/migrations/020_document_request_trace.sql",
+      "src/frontend/src/AgentSettingsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-12",
+      "DP-18"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-021",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 65,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "승인·배포 요청",
+    "original_url": "/portal/studio/projects/:projectId/releases/new",
+    "original_purpose": "불변 Artifact·평가증적·공개범위·목표환경을 묶어 승인 요청",
+    "original_functions": "F-024,F-032,F-039",
+    "technical_ids": "T-009,T-042,T-043",
+    "included_functions": [
+      "F-024",
+      "F-032",
+      "F-039"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "불변 Artifact·평가증적·공개범위·목표환경을 묶어 승인 요청",
+    "current_evidence": [
+      "src/backend/app/main.py",
+      "src/backend/migrations/006_operations_control.sql",
+      "src/frontend/src/AgentSettingsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-12"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-022",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 66,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "Release 상태",
+    "original_url": "/portal/studio/projects/:projectId/releases/:releaseId",
+    "original_purpose": "승인·검증·배포·Canary·운영·실패 상태와 증적 조회",
+    "original_functions": "F-039",
+    "technical_ids": "T-009,T-042",
+    "included_functions": [
+      "F-039"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "승인·검증·배포·Canary·운영·실패 상태와 증적 조회",
+    "current_evidence": [
+      "src/backend/app/main.py"
+    ],
+    "delivery_group": [
+      "DP-12"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-STD-023",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 67,
+    "app": "사용자 통합 포털",
+    "group": "AI Studio",
+    "name": "버전·Rollback 이력",
+    "original_url": "/portal/studio/projects/:projectId/versions",
+    "original_purpose": "Agent·Prompt·Workflow·RAG·Tool 버전 Lineage와 Rollback 이력 조회",
+    "original_functions": "F-024,F-032,F-039,F-049",
+    "technical_ids": "T-042",
+    "included_functions": [
+      "F-024",
+      "F-032",
+      "F-039",
+      "F-049"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "Agent·Prompt·Workflow·RAG·Tool 버전 Lineage와 Rollback 이력 조회",
+    "current_evidence": [
+      "src/backend/app/main.py",
+      "src/backend/migrations/006_operations_control.sql",
+      "src/frontend/src/AgentSettingsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-12"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-HLP-001",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 68,
+    "app": "사용자 통합 포털",
+    "group": "도움말·가이드",
+    "name": "도움말 센터",
+    "original_url": "/portal/help",
+    "original_purpose": "역할·화면·기능별 도움말과 활용 예시 검색",
+    "original_functions": "F-007",
+    "technical_ids": "T-061",
+    "included_functions": [
+      "F-007"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "역할·화면·기능별 도움말과 활용 예시 검색",
+    "current_evidence": [
+      "src/frontend/src/App.tsx"
+    ],
+    "delivery_group": [
+      "DP-02"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-HLP-002",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 69,
+    "app": "사용자 통합 포털",
+    "group": "도움말·가이드",
+    "name": "온보딩 튜토리얼",
+    "original_url": "/portal/help/tutorials/:tutorialId",
+    "original_purpose": "첫 로그인과 주요 기능별 단계형 튜토리얼 제공",
+    "original_functions": "F-007",
+    "technical_ids": "T-061",
+    "included_functions": [
+      "F-007"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "첫 로그인과 주요 기능별 단계형 튜토리얼 제공",
+    "current_evidence": [
+      "src/frontend/src/App.tsx"
+    ],
+    "delivery_group": [
+      "DP-02"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-USR-HLP-003",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 70,
+    "app": "사용자 통합 포털",
+    "group": "도움말·가이드",
+    "name": "기능 변경·릴리스 안내",
+    "original_url": "/portal/help/releases",
+    "original_purpose": "기능 변경, 정책 시행, 사용 중단, 점검 공지 제공",
+    "original_functions": "F-007,F-042",
+    "technical_ids": "T-061",
+    "included_functions": [
+      "F-007",
+      "F-042"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "기능 변경, 정책 시행, 사용 중단, 점검 공지 제공",
+    "current_evidence": [
+      "src/frontend/src/App.tsx"
+    ],
+    "delivery_group": [
+      "DP-02",
+      "DP-25"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-DSH-001",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 71,
+    "app": "관리자 포털",
+    "group": "운영 대시보드",
+    "name": "운영 통합 대시보드",
+    "original_url": "/admin/dashboard",
+    "original_purpose": "플랫폼 사용자·AI자산·가용성·비용·자원·알림 현황 제공",
+    "original_functions": "F-027,F-028",
+    "technical_ids": "T-010,T-011,T-041,T-058",
+    "included_functions": [
+      "F-027",
+      "F-028"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "현재 usage/project 운영 화면",
+    "gap": "종합 KPI·drilldown·Export",
+    "current_evidence": [
+      "src/frontend/src/App.tsx",
+      "src/frontend/src/UsagePage.tsx"
+    ],
+    "delivery_group": [
+      "DP-02",
+      "DP-14"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-DSH-002",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 72,
+    "app": "관리자 포털",
+    "group": "운영 대시보드",
+    "name": "운영 KPI 드릴다운",
+    "original_url": "/admin/dashboard/metrics/:metricId",
+    "original_purpose": "KPI 원천·기간·계열사·서비스·Agent 단위 상세와 대사 제공",
+    "original_functions": "F-028",
+    "technical_ids": "T-010,T-011,T-041,T-058",
+    "included_functions": [
+      "F-028"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "현재 usage/project 운영 화면",
+    "gap": "종합 KPI·drilldown·Export",
+    "current_evidence": [
+      "src/frontend/src/UsagePage.tsx"
+    ],
+    "delivery_group": [
+      "DP-14"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-DSH-003",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 73,
+    "app": "관리자 포털",
+    "group": "운영 대시보드",
+    "name": "운영 리포트 Export",
+    "original_url": "/admin/dashboard/export",
+    "original_purpose": "조회조건을 고정해 운영 리포트를 비동기 생성·다운로드",
+    "original_functions": "F-028",
+    "technical_ids": "T-010,T-057",
+    "included_functions": [
+      "F-028"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "현재 usage/project 운영 화면",
+    "gap": "종합 KPI·drilldown·Export",
+    "current_evidence": [
+      "src/frontend/src/UsagePage.tsx"
+    ],
+    "delivery_group": [
+      "DP-14"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-IAM-001",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 74,
+    "app": "관리자 포털",
+    "group": "사용자·역할·권한",
+    "name": "사용자·역할 목록",
+    "original_url": "/admin/iam/roles",
+    "original_purpose": "사용자·조직·역할·상태·유효기간 조회",
+    "original_functions": "F-031,F-033",
+    "technical_ids": "T-008,T-053,T-055",
+    "included_functions": [
+      "F-031",
+      "F-033"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "부분 구현",
+    "current_scope": "소속 목록·active·role변경",
+    "gap": "동적 역할/부서·승인·위임",
+    "current_evidence": [
+      "src/backend/app/tenants/repository.py",
+      "src/frontend/src/MembersPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-10",
+      "DP-16"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-IAM-002",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 75,
+    "app": "관리자 포털",
+    "group": "사용자·역할·권한",
+    "name": "역할 상세",
+    "original_url": "/admin/iam/roles/:roleId",
+    "original_purpose": "권한·메뉴·데이터 Scope·SOD·부여대상 조회",
+    "original_functions": "F-031,F-033",
+    "technical_ids": "T-008,T-055",
+    "included_functions": [
+      "F-031",
+      "F-033"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "권한·메뉴·데이터 Scope·SOD·부여대상 조회",
+    "current_evidence": [
+      "src/backend/app/tenants/repository.py",
+      "src/frontend/src/MembersPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-10",
+      "DP-16"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-IAM-003",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 76,
+    "app": "관리자 포털",
+    "group": "사용자·역할·권한",
+    "name": "역할 생성·편집",
+    "original_url": "/admin/iam/roles/:roleId/edit",
+    "original_purpose": "역할·권한·유효기간·SOD 규칙 작성과 승인 요청",
+    "original_functions": "F-031,F-033",
+    "technical_ids": "T-008,T-055",
+    "included_functions": [
+      "F-031",
+      "F-033"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "역할·권한·유효기간·SOD 규칙 작성과 승인 요청",
+    "current_evidence": [
+      "src/backend/app/tenants/repository.py",
+      "src/frontend/src/MembersPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-10",
+      "DP-16"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-IAM-004",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 77,
+    "app": "관리자 포털",
+    "group": "사용자·역할·권한",
+    "name": "사용자 권한 부여·회수",
+    "original_url": "/admin/iam/entitlements",
+    "original_purpose": "사용자·부서·계열사별 서비스·Agent 권한 부여·만료·회수",
+    "original_functions": "F-031,F-033",
+    "technical_ids": "T-008,T-055",
+    "included_functions": [
+      "F-031",
+      "F-033"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "부분 구현",
+    "current_scope": "소속 목록·active·role변경",
+    "gap": "동적 역할/부서·승인·위임",
+    "current_evidence": [
+      "src/backend/app/tenants/repository.py",
+      "src/frontend/src/MembersPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-10",
+      "DP-16"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-IAM-005",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 78,
+    "app": "관리자 포털",
+    "group": "사용자·역할·권한",
+    "name": "결재라인 관리",
+    "original_url": "/admin/iam/approval-lines",
+    "original_purpose": "조직·위험·서비스유형별 결재선과 대결 규칙 관리",
+    "original_functions": "F-031,F-052,F-056",
+    "technical_ids": "T-009,T-055",
+    "included_functions": [
+      "F-031"
+    ],
+    "excluded_governance_refs": [
+      "F-052",
+      "F-056"
+    ],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "조직·위험·서비스유형별 결재선과 대결 규칙 관리",
+    "current_evidence": [
+      "src/frontend/src/MembersPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-16"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-IAM-006",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 79,
+    "app": "관리자 포털",
+    "group": "사용자·역할·권한",
+    "name": "접속·활동 이력",
+    "original_url": "/admin/iam/activity",
+    "original_purpose": "인증·메뉴·권한변경·고위험 작업 이력 검색",
+    "original_functions": "F-031,F-040",
+    "technical_ids": "T-052,T-056",
+    "included_functions": [
+      "F-031",
+      "F-040"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "DB 행위 감사",
+    "gap": "접속/활동조회 API와 화면",
+    "current_evidence": [
+      "src/backend/app/documents/policy.py",
+      "src/frontend/src/MembersPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-15",
+      "DP-16"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-IAM-007",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 80,
+    "app": "관리자 포털",
+    "group": "사용자·역할·권한",
+    "name": "위임·비상권한 관리",
+    "original_url": "/admin/iam/delegations",
+    "original_purpose": "휴가·장애 대응 위임과 비상권한의 승인·만료·회수 관리",
+    "original_functions": "F-031,F-056",
+    "technical_ids": "T-055",
+    "included_functions": [
+      "F-031"
+    ],
+    "excluded_governance_refs": [
+      "F-056"
+    ],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "휴가·장애 대응 위임과 비상권한의 승인·만료·회수 관리",
+    "current_evidence": [
+      "src/frontend/src/MembersPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-16"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-AST-001",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 81,
+    "app": "관리자 포털",
+    "group": "AI서비스·자산 운영",
+    "name": "AI서비스·자산 목록",
+    "original_url": "/admin/assets",
+    "original_purpose": "서비스·Agent·MCP·Model·Data를 계열사·상태별 조회",
+    "original_functions": "F-032,F-034,F-035",
+    "technical_ids": "T-001,T-038,T-042",
+    "included_functions": [
+      "F-032",
+      "F-034",
+      "F-035"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "부분 구현",
+    "current_scope": "고정 Agent 설정·중지/재개",
+    "gap": "일반 서비스/자산·등록/게시/폐기",
+    "current_evidence": [
+      "src/backend/app/documents/sharing.py",
+      "src/frontend/src/AgentSettingsPage.tsx",
+      "src/frontend/src/PlatformPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-10",
+      "DP-16"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-AST-002",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 82,
+    "app": "관리자 포털",
+    "group": "AI서비스·자산 운영",
+    "name": "AI서비스·자산 등록",
+    "original_url": "/admin/assets/new",
+    "original_purpose": "자산 메타데이터·Owner·버전·공개범위·운영정책 등록",
+    "original_functions": "F-032,F-034",
+    "technical_ids": "T-001,T-038",
+    "included_functions": [
+      "F-032",
+      "F-034"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "자산 메타데이터·Owner·버전·공개범위·운영정책 등록",
+    "current_evidence": [
+      "src/backend/app/documents/sharing.py",
+      "src/frontend/src/AgentSettingsPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-10"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-AST-003",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 83,
+    "app": "관리자 포털",
+    "group": "AI서비스·자산 운영",
+    "name": "AI서비스·자산 상세",
+    "original_url": "/admin/assets/:assetId",
+    "original_purpose": "버전·Lineage·권한·평가·배포·사용량·의존성 조회",
+    "original_functions": "F-032,F-034,F-035",
+    "technical_ids": "T-038,T-041,T-042,T-043",
+    "included_functions": [
+      "F-032",
+      "F-034",
+      "F-035"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "부분 구현",
+    "current_scope": "고정 Agent 설정·중지/재개",
+    "gap": "일반 서비스/자산·등록/게시/폐기",
+    "current_evidence": [
+      "src/backend/app/documents/sharing.py",
+      "src/frontend/src/AgentSettingsPage.tsx",
+      "src/frontend/src/PlatformPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-10",
+      "DP-16"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-AST-004",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 84,
+    "app": "관리자 포털",
+    "group": "AI서비스·자산 운영",
+    "name": "공개·공유범위 설정",
+    "original_url": "/admin/assets/:assetId/visibility",
+    "original_purpose": "개인·부서·계열사·그룹 공개범위와 승인·회수 관리",
+    "original_functions": "F-033,F-034,F-046",
+    "technical_ids": "T-008,T-038",
+    "included_functions": [
+      "F-033",
+      "F-034",
+      "F-046"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "문서 버전 공유",
+    "gap": "Agent 등 일반 자산 공개/승인 범위",
+    "current_evidence": [
+      "src/backend/app/documents/sharing.py",
+      "src/backend/app/tenants/repository.py",
+      "src/backend/migrations/006_operations_control.sql"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-10"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-AST-005",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 85,
+    "app": "관리자 포털",
+    "group": "AI서비스·자산 운영",
+    "name": "서비스 생명주기 관리",
+    "original_url": "/admin/assets/:assetId/lifecycle",
+    "original_purpose": "검증·게시·중지·폐기와 구독자 영향·Rollback 관리",
+    "original_functions": "F-032,F-035",
+    "technical_ids": "T-009,T-042",
+    "included_functions": [
+      "F-032",
+      "F-035"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "부분 구현",
+    "current_scope": "고정 Agent 설정·중지/재개",
+    "gap": "일반 서비스/자산·등록/게시/폐기",
+    "current_evidence": [
+      "src/frontend/src/AgentSettingsPage.tsx",
+      "src/frontend/src/PlatformPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-16"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-AST-006",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 86,
+    "app": "관리자 포털",
+    "group": "AI서비스·자산 운영",
+    "name": "모델·데이터 반입 승인",
+    "original_url": "/admin/assets/imports",
+    "original_purpose": "반입 요청·해시·보안검사·라이선스·PII 결과와 승인 처리",
+    "original_functions": "F-041",
+    "technical_ids": "T-001,T-021,T-046,T-047,T-048",
+    "included_functions": [
+      "F-041"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "반입 요청·해시·보안검사·라이선스·PII 결과와 승인 처리",
+    "current_evidence": [
+      "src/backend/app/documents/worker.py"
+    ],
+    "delivery_group": [
+      "DP-17"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-PRJ-001",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 87,
+    "app": "관리자 포털",
+    "group": "계열사 AI 과제",
+    "name": "AI 과제 목록",
+    "original_url": "/admin/projects",
+    "original_purpose": "계열사·단계·상태·위험·비용별 AI 과제 조회",
+    "original_functions": "F-029",
+    "technical_ids": "T-055",
+    "included_functions": [
+      "F-029"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "계열사·단계·상태·위험·비용별 AI 과제 조회",
+    "current_evidence": [
+      "src/backend/app/operations/routes.py"
+    ],
+    "delivery_group": [
+      "DP-25"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-PRJ-002",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 88,
+    "app": "관리자 포털",
+    "group": "계열사 AI 과제",
+    "name": "AI 과제 등록·편집",
+    "original_url": "/admin/projects/editor/:projectId?",
+    "original_purpose": "과제 목표·범위·담당·일정·자원·예산·산출물 등록",
+    "original_functions": "F-029",
+    "technical_ids": "T-055",
+    "included_functions": [
+      "F-029"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "과제 목표·범위·담당·일정·자원·예산·산출물 등록",
+    "current_evidence": [
+      "src/backend/app/operations/routes.py"
+    ],
+    "delivery_group": [
+      "DP-25"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-PRJ-003",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 89,
+    "app": "관리자 포털",
+    "group": "계열사 AI 과제",
+    "name": "AI 과제 상세",
+    "original_url": "/admin/projects/:projectId",
+    "original_purpose": "결재·이행·자원·비용·산출물·거버넌스 연계 현황 조회",
+    "original_functions": "F-029",
+    "technical_ids": "T-010,T-055",
+    "included_functions": [
+      "F-029"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "결재·이행·자원·비용·산출물·거버넌스 연계 현황 조회",
+    "current_evidence": [
+      "src/backend/app/operations/routes.py"
+    ],
+    "delivery_group": [
+      "DP-25"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-PRJ-004",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 90,
+    "app": "관리자 포털",
+    "group": "계열사 AI 과제",
+    "name": "AI 과제 검토·결재",
+    "original_url": "/admin/projects/:projectId/approval",
+    "original_purpose": "과제 검토·반려·재상신·승인과 증적 보존",
+    "original_functions": "F-029",
+    "technical_ids": "T-009,T-055",
+    "included_functions": [
+      "F-029"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "과제 검토·반려·재상신·승인과 증적 보존",
+    "current_evidence": [
+      "src/backend/app/operations/routes.py"
+    ],
+    "delivery_group": [
+      "DP-25"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-RES-001",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 91,
+    "app": "관리자 포털",
+    "group": "자원관리",
+    "name": "GPU·CPU 자원 현황",
+    "original_url": "/admin/resources",
+    "original_purpose": "클러스터·계열사·서비스별 자원·할당·사용률 제공",
+    "original_functions": "F-030",
+    "technical_ids": "T-006,T-007,T-058,T-059",
+    "included_functions": [
+      "F-030"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "클러스터·계열사·서비스별 자원·할당·사용률 제공",
+    "current_evidence": [
+      "src/backend/app/ai/token_limits.py"
+    ],
+    "delivery_group": [
+      "DP-27"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-RES-002",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 92,
+    "app": "관리자 포털",
+    "group": "자원관리",
+    "name": "Quota 정책 관리",
+    "original_url": "/admin/resources/quotas",
+    "original_purpose": "계열사·부서·서비스별 GPU·CPU·Token Quota와 임계치 관리",
+    "original_functions": "F-030",
+    "technical_ids": "T-006,T-007,T-008,T-010",
+    "included_functions": [
+      "F-030"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "비용/token/동시 한도·사용량",
+    "gap": "GPU/CPU 할당·운영정책·실측 경보",
+    "current_evidence": [
+      "src/backend/app/ai/token_limits.py"
+    ],
+    "delivery_group": [
+      "DP-27"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-RES-003",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 93,
+    "app": "관리자 포털",
+    "group": "자원관리",
+    "name": "자원 할당·예약",
+    "original_url": "/admin/resources/allocations",
+    "original_purpose": "과제·모델·Agent별 자원 Profile·예약·회수 관리",
+    "original_functions": "F-029,F-030",
+    "technical_ids": "T-006,T-007",
+    "included_functions": [
+      "F-029",
+      "F-030"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "비용/token/동시 한도·사용량",
+    "gap": "GPU/CPU 할당·운영정책·실측 경보",
+    "current_evidence": [
+      "src/backend/app/ai/token_limits.py",
+      "src/backend/app/operations/routes.py"
+    ],
+    "delivery_group": [
+      "DP-25",
+      "DP-27"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-RES-004",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 94,
+    "app": "관리자 포털",
+    "group": "자원관리",
+    "name": "자원 사용·경보 상세",
+    "original_url": "/admin/resources/usage/:resourceId",
+    "original_purpose": "시간대별 사용량·병목·예측·Quota 초과·조치 이력 조회",
+    "original_functions": "F-028,F-030",
+    "technical_ids": "T-011,T-058",
+    "included_functions": [
+      "F-028",
+      "F-030"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "비용/token/동시 한도·사용량",
+    "gap": "GPU/CPU 할당·운영정책·실측 경보",
+    "current_evidence": [
+      "src/backend/app/ai/token_limits.py",
+      "src/frontend/src/UsagePage.tsx"
+    ],
+    "delivery_group": [
+      "DP-14",
+      "DP-27"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-REL-001",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 95,
+    "app": "관리자 포털",
+    "group": "배포관리",
+    "name": "Release 목록",
+    "original_url": "/admin/releases",
+    "original_purpose": "배포 요청·예약·진행·완료·실패·Rollback 이력 조회",
+    "original_functions": "F-039",
+    "technical_ids": "T-009,T-042",
+    "included_functions": [
+      "F-039"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "배포 요청·예약·진행·완료·실패·Rollback 이력 조회",
+    "current_evidence": [
+      "src/backend/app/main.py"
+    ],
+    "delivery_group": [
+      "DP-12"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-REL-002",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 96,
+    "app": "관리자 포털",
+    "group": "배포관리",
+    "name": "Release 상세·승인",
+    "original_url": "/admin/releases/:releaseId",
+    "original_purpose": "Artifact 해시·평가·보안검사·목표환경·승인·예약 확인",
+    "original_functions": "F-039,F-041",
+    "technical_ids": "T-009,T-042,T-043",
+    "included_functions": [
+      "F-039",
+      "F-041"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "Artifact 해시·평가·보안검사·목표환경·승인·예약 확인",
+    "current_evidence": [
+      "src/backend/app/documents/worker.py",
+      "src/backend/app/main.py"
+    ],
+    "delivery_group": [
+      "DP-12",
+      "DP-17"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-REL-003",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 97,
+    "app": "관리자 포털",
+    "group": "배포관리",
+    "name": "배포 Pipeline 상세",
+    "original_url": "/admin/releases/:releaseId/pipeline",
+    "original_purpose": "Build·검사·평가·승인·Canary·운영 단계와 로그 조회",
+    "original_functions": "F-039",
+    "technical_ids": "T-042,T-060",
+    "included_functions": [
+      "F-039"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "Build·검사·평가·승인·Canary·운영 단계와 로그 조회",
+    "current_evidence": [
+      "src/backend/app/main.py"
+    ],
+    "delivery_group": [
+      "DP-12"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-REL-004",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 98,
+    "app": "관리자 포털",
+    "group": "배포관리",
+    "name": "Rollback 실행·이력",
+    "original_url": "/admin/releases/:releaseId/rollback",
+    "original_purpose": "승인된 이전 버전으로 긴급·일반 Rollback하고 영향·증적 기록",
+    "original_functions": "F-039,F-049",
+    "technical_ids": "T-042,T-060",
+    "included_functions": [
+      "F-039",
+      "F-049"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "승인된 이전 버전으로 긴급·일반 Rollback하고 영향·증적 기록",
+    "current_evidence": [
+      "src/backend/app/main.py"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-12"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-REL-005",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 99,
+    "app": "관리자 포털",
+    "group": "배포관리",
+    "name": "환경·승격경로 관리",
+    "original_url": "/admin/releases/environments",
+    "original_purpose": "개발·검증·운영 환경과 승격·SOD·배포창 정책 관리",
+    "original_functions": "F-039",
+    "technical_ids": "T-042,T-059,T-060",
+    "included_functions": [
+      "F-039"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "개발·검증·운영 환경과 승격·SOD·배포창 정책 관리",
+    "current_evidence": [
+      "src/backend/app/main.py"
+    ],
+    "delivery_group": [
+      "DP-12"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-OPS-001",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 100,
+    "app": "관리자 포털",
+    "group": "모니터링·미터링·빌링",
+    "name": "통합 모니터링",
+    "original_url": "/admin/operations",
+    "original_purpose": "API·LLM·Agent·RAG·Tool·자원 가용성·성능·오류 관제",
+    "original_functions": "F-028,F-030,F-038",
+    "technical_ids": "T-011,T-041,T-058",
+    "included_functions": [
+      "F-028",
+      "F-030",
+      "F-038"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "비용/usage/unknown",
+    "gap": "실시간 성능·자원·청구 확정",
+    "current_evidence": [
+      "src/backend/app/ai/token_limits.py",
+      "src/backend/migrations/020_document_request_trace.sql",
+      "src/frontend/src/UsagePage.tsx"
+    ],
+    "delivery_group": [
+      "DP-14",
+      "DP-18",
+      "DP-27"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-OPS-002",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 101,
+    "app": "관리자 포털",
+    "group": "모니터링·미터링·빌링",
+    "name": "서비스·Agent 성능 상세",
+    "original_url": "/admin/operations/services/:serviceId",
+    "original_purpose": "Latency·TTFT·Token/s·Error·단계별 Trace와 Alert 조회",
+    "original_functions": "F-028,F-038",
+    "technical_ids": "T-011,T-039,T-040",
+    "included_functions": [
+      "F-028",
+      "F-038"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "비용/usage/unknown",
+    "gap": "실시간 성능·자원·청구 확정",
+    "current_evidence": [
+      "src/backend/migrations/020_document_request_trace.sql",
+      "src/frontend/src/UsagePage.tsx"
+    ],
+    "delivery_group": [
+      "DP-14",
+      "DP-18"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-OPS-003",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 102,
+    "app": "관리자 포털",
+    "group": "모니터링·미터링·빌링",
+    "name": "미터링 사용량",
+    "original_url": "/admin/operations/usage",
+    "original_purpose": "계열사·부서·사용자·Agent·모델별 Token·호출·자원 사용량 조회",
+    "original_functions": "F-028",
+    "technical_ids": "T-010,T-041,T-057",
+    "included_functions": [
+      "F-028"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "부분 구현",
+    "current_scope": "조직/본인/project usage와예약/한도",
+    "gap": "계열사/부서/Agent 세부 통계·추이/Export",
+    "current_evidence": [
+      "src/frontend/src/UsagePage.tsx"
+    ],
+    "delivery_group": [
+      "DP-14"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-OPS-004",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 103,
+    "app": "관리자 포털",
+    "group": "모니터링·미터링·빌링",
+    "name": "빌링·정산",
+    "original_url": "/admin/operations/billing",
+    "original_purpose": "단가·배부기준·기간별 비용·보정·마감·정산 보고 제공",
+    "original_functions": "F-028",
+    "technical_ids": "T-010,T-057",
+    "included_functions": [
+      "F-028"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "비용/usage/unknown",
+    "gap": "실시간 성능·자원·청구 확정",
+    "current_evidence": [
+      "src/frontend/src/UsagePage.tsx"
+    ],
+    "delivery_group": [
+      "DP-14"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-OPS-005",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 104,
+    "app": "관리자 포털",
+    "group": "모니터링·미터링·빌링",
+    "name": "운영 알림·장애조치",
+    "original_url": "/admin/operations/alerts",
+    "original_purpose": "임계치·장애·정책위반 알림, 담당배정, 조치·종결·Escalation 관리",
+    "original_functions": "F-028,F-038",
+    "technical_ids": "T-011,T-058",
+    "included_functions": [
+      "F-028",
+      "F-038"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "임계치·장애·정책위반 알림, 담당배정, 조치·종결·Escalation 관리",
+    "current_evidence": [
+      "src/backend/migrations/020_document_request_trace.sql",
+      "src/frontend/src/UsagePage.tsx"
+    ],
+    "delivery_group": [
+      "DP-14",
+      "DP-18"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-SEC-001",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 105,
+    "app": "관리자 포털",
+    "group": "보안·정책·감사",
+    "name": "가드레일 정책 목록",
+    "original_url": "/admin/security/guardrails",
+    "original_purpose": "그룹·계열사 정책 버전·적용범위·시행일·배포상태 조회",
+    "original_functions": "F-036,F-040",
+    "technical_ids": "T-045,T-046,T-047",
+    "included_functions": [
+      "F-036",
+      "F-040"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "그룹·계열사 정책 버전·적용범위·시행일·배포상태 조회",
+    "current_evidence": [
+      "src/backend/app/documents/policy.py",
+      "src/backend/app/operations/routes.py"
+    ],
+    "delivery_group": [
+      "DP-15",
+      "DP-18"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-SEC-002",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 106,
+    "app": "관리자 포털",
+    "group": "보안·정책·감사",
+    "name": "가드레일 정책 편집·배포",
+    "original_url": "/admin/security/guardrails/:policyId/edit",
+    "original_purpose": "금칙·유해·PII·Prompt Injection·Tool 정책 편집·승인·배포",
+    "original_functions": "F-008,F-009,F-010,F-011,F-036,F-040",
+    "technical_ids": "T-045,T-046,T-047",
+    "included_functions": [
+      "F-008",
+      "F-009",
+      "F-010",
+      "F-011",
+      "F-036",
+      "F-040"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "금칙·유해·PII·Prompt Injection·Tool 정책 편집·승인·배포",
+    "current_evidence": [
+      "src/backend/app/ai/token_limits.py",
+      "src/backend/app/documents/policy.py",
+      "src/backend/app/execution/rag.py",
+      "src/backend/app/main.py",
+      "src/backend/app/operations/routes.py"
+    ],
+    "delivery_group": [
+      "DP-15",
+      "DP-18",
+      "DP-21"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-SEC-003",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 107,
+    "app": "관리자 포털",
+    "group": "보안·정책·감사",
+    "name": "서비스별 정책·예외",
+    "original_url": "/admin/security/exceptions",
+    "original_purpose": "서비스·Agent별 가드레일 예외 요청·승인·만료·보상통제 관리",
+    "original_functions": "F-037,F-040",
+    "technical_ids": "T-045,T-046",
+    "included_functions": [
+      "F-037",
+      "F-040"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "서비스·Agent별 가드레일 예외 요청·승인·만료·보상통제 관리",
+    "current_evidence": [
+      "src/backend/app/documents/policy.py",
+      "src/backend/app/main.py"
+    ],
+    "delivery_group": [
+      "DP-15",
+      "DP-18"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-SEC-004",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 108,
+    "app": "관리자 포털",
+    "group": "보안·정책·감사",
+    "name": "가드레일 위반 현황",
+    "original_url": "/admin/security/violations",
+    "original_purpose": "탐지·차단·위반을 정책·서비스·사용자·계열사별 조회",
+    "original_functions": "F-038,F-040",
+    "technical_ids": "T-045,T-046,T-052",
+    "included_functions": [
+      "F-038",
+      "F-040"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "탐지·차단·위반을 정책·서비스·사용자·계열사별 조회",
+    "current_evidence": [
+      "src/backend/app/documents/policy.py",
+      "src/backend/migrations/020_document_request_trace.sql"
+    ],
+    "delivery_group": [
+      "DP-15",
+      "DP-18"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-SEC-005",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 109,
+    "app": "관리자 포털",
+    "group": "보안·정책·감사",
+    "name": "데이터 Scope 정책",
+    "original_url": "/admin/security/data-scopes",
+    "original_purpose": "RLS·CLS·다운로드·복호화·데이터셋 접근정책 관리",
+    "original_functions": "F-040,F-043,F-044,F-045,F-046",
+    "technical_ids": "T-014,T-015,T-016,T-018,T-044,T-049,T-050",
+    "included_functions": [
+      "F-040",
+      "F-043",
+      "F-044",
+      "F-045",
+      "F-046"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "문서ACL/RLS/Grant",
+    "gap": "Scope 정책 편집·DLP/DRM·권한승인",
+    "current_evidence": [
+      "src/backend/app/db.py",
+      "src/backend/app/documents/policy.py",
+      "src/backend/app/documents/storage.py",
+      "src/backend/migrations/006_operations_control.sql"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-15",
+      "DP-19",
+      "DP-26"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-SEC-006",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 110,
+    "app": "관리자 포털",
+    "group": "보안·정책·감사",
+    "name": "개인정보·복호화 예외승인",
+    "original_url": "/admin/security/privacy-exceptions",
+    "original_purpose": "PII 탐지·마스킹·동의 기반 복호화 예외의 승인·만료 관리",
+    "original_functions": "F-009,F-040,F-045",
+    "technical_ids": "T-047,T-049,T-050,T-051",
+    "included_functions": [
+      "F-009",
+      "F-040",
+      "F-045"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "PII 탐지·마스킹·동의 기반 복호화 예외의 승인·만료 관리",
+    "current_evidence": [
+      "src/backend/app/documents/policy.py",
+      "src/backend/app/documents/storage.py"
+    ],
+    "delivery_group": [
+      "DP-15",
+      "DP-18",
+      "DP-19"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-SEC-007",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 111,
+    "app": "관리자 포털",
+    "group": "보안·정책·감사",
+    "name": "감사로그 검색·상세",
+    "original_url": "/admin/security/audit",
+    "original_purpose": "사용자·Agent·정책·데이터·Tool·승인·복호화 End-to-End 감사조회",
+    "original_functions": "F-031,F-038,F-040,F-044",
+    "technical_ids": "T-013,T-052,T-056",
+    "included_functions": [
+      "F-031",
+      "F-038",
+      "F-040",
+      "F-044"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "ID·행위·revision 감사",
+    "gap": "감사조회 권한·검색·상세 화면/API",
+    "current_evidence": [
+      "src/backend/app/documents/policy.py",
+      "src/backend/migrations/020_document_request_trace.sql",
+      "src/frontend/src/MembersPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-15",
+      "DP-16",
+      "DP-18",
+      "DP-26"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-CMS-001",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 112,
+    "app": "관리자 포털",
+    "group": "콘텐츠·사이트",
+    "name": "공지·콘텐츠 관리",
+    "original_url": "/admin/content",
+    "original_purpose": "공지·콘텐츠의 작성·검토·예약게시·종료·버전 관리",
+    "original_functions": "F-027,F-042",
+    "technical_ids": "T-061",
+    "included_functions": [
+      "F-027",
+      "F-042"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "공지·콘텐츠의 작성·검토·예약게시·종료·버전 관리",
+    "current_evidence": [
+      "src/frontend/src/App.tsx"
+    ],
+    "delivery_group": [
+      "DP-02",
+      "DP-25"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-CMS-002",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 113,
+    "app": "관리자 포털",
+    "group": "콘텐츠·사이트",
+    "name": "커뮤니티·게시판 관리",
+    "original_url": "/admin/content/community",
+    "original_purpose": "게시물·댓글·첨부·신고·공개범위·보존 관리",
+    "original_functions": "F-025,F-027,F-042",
+    "technical_ids": "T-048,T-051",
+    "included_functions": [
+      "F-025",
+      "F-027",
+      "F-042"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "게시물·댓글·첨부·신고·공개범위·보존 관리",
+    "current_evidence": [
+      "src/frontend/src/App.tsx"
+    ],
+    "delivery_group": [
+      "DP-02",
+      "DP-25"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-CMS-003",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 114,
+    "app": "관리자 포털",
+    "group": "콘텐츠·사이트",
+    "name": "도움말·튜토리얼 관리",
+    "original_url": "/admin/content/help",
+    "original_purpose": "역할·화면·버전별 도움말과 온보딩 콘텐츠 관리",
+    "original_functions": "F-007,F-027,F-042",
+    "technical_ids": "T-061",
+    "included_functions": [
+      "F-007",
+      "F-027",
+      "F-042"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "역할·화면·버전별 도움말과 온보딩 콘텐츠 관리",
+    "current_evidence": [
+      "src/frontend/src/App.tsx"
+    ],
+    "delivery_group": [
+      "DP-02",
+      "DP-25"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-CMS-004",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 115,
+    "app": "관리자 포털",
+    "group": "콘텐츠·사이트",
+    "name": "사이트·메뉴 설정",
+    "original_url": "/admin/content/site",
+    "original_purpose": "브랜드·메뉴·배너·푸터·공통 문구와 노출범위 설정",
+    "original_functions": "F-002,F-027",
+    "technical_ids": "T-061",
+    "included_functions": [
+      "F-002",
+      "F-027"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "브랜드·메뉴·배너·푸터·공통 문구와 노출범위 설정",
+    "current_evidence": [
+      "src/frontend/src/App.tsx",
+      "src/frontend/src/styles.css"
+    ],
+    "delivery_group": [
+      "DP-02"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-SYS-001",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 116,
+    "app": "관리자 포털",
+    "group": "시스템 설정",
+    "name": "Tenant·기준정보 관리",
+    "original_url": "/admin/system/tenants",
+    "original_purpose": "계열사·부서·코드·기본정책·Quota·Namespace 활성화 관리",
+    "original_functions": "F-005,F-035,F-043,F-047",
+    "technical_ids": "T-044,T-059",
+    "included_functions": [
+      "F-005",
+      "F-035",
+      "F-043",
+      "F-047"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "tenant 선택/설정·health/Job",
+    "gap": "Tenant 기준정보관리/전체 시스템 운영관제",
+    "current_evidence": [
+      "src/backend/app/db.py",
+      "src/backend/migrations/001_auth_portal.sql",
+      "src/frontend/src/PlatformPage.tsx"
+    ],
+    "delivery_group": [
+      "DP-16",
+      "DP-26"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-SYS-002",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 117,
+    "app": "관리자 포털",
+    "group": "시스템 설정",
+    "name": "연계 Connector 관리",
+    "original_url": "/admin/system/connectors",
+    "original_purpose": "기존·신규 업무시스템 API·Event·MCP Connector와 Credential 관리",
+    "original_functions": "F-021,F-048,F-049",
+    "technical_ids": "T-004,T-014,T-017,T-035,T-059",
+    "included_functions": [
+      "F-021",
+      "F-048",
+      "F-049"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "미구현",
+    "current_scope": "대응 제품 화면/API 확인 안 됨",
+    "gap": "기존·신규 업무시스템 API·Event·MCP Connector와 Credential 관리",
+    "current_evidence": [
+      "src/backend/app/main.py"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-20",
+      "DP-22"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  },
+  {
+    "id": "SCR-ADM-SYS-003",
+    "source_book": "03. IA/BNK_그룹공동AI플랫폼_실제구축_IA_v1.0.xlsx",
+    "source_sheet": "02_화면정의",
+    "source_row": 118,
+    "app": "관리자 포털",
+    "group": "시스템 설정",
+    "name": "시스템 상태·운영로그",
+    "original_url": "/admin/system/health",
+    "original_purpose": "Control Plane·Tenant Cell·AI Service·DB·Queue 상태와 운영로그 조회",
+    "original_functions": "F-028,F-035,F-049",
+    "technical_ids": "T-054,T-058,T-059",
+    "included_functions": [
+      "F-028",
+      "F-035",
+      "F-049"
+    ],
+    "excluded_governance_refs": [],
+    "scope": "비교 포함",
+    "status": "관련 기반",
+    "current_scope": "tenant 선택/설정·health/Job",
+    "gap": "Tenant 기준정보관리/전체 시스템 운영관제",
+    "current_evidence": [
+      "src/backend/app/main.py",
+      "src/frontend/src/PlatformPage.tsx",
+      "src/frontend/src/UsagePage.tsx"
+    ],
+    "delivery_group": [
+      "DP-09",
+      "DP-14",
+      "DP-16"
+    ],
+    "adopted_presentation": "동일 도메인의 목록/상세/등록/승인 패널로 병합 가능; 기존 ID는 시험 추적에 유지",
+    "definition_status": "baseline_defined; detailed UI selected at task design",
+    "acceptance_status": "not_run"
+  }
+]

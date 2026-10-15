@@ -1,0 +1,1306 @@
+--- a/src/backend/app/use_cases/routes.py
++++ b/src/backend/app/use_cases/routes.py
+@@ -1,21 +1,34 @@
+ """Standard Business Use Case Agents Router."""
+-from typing import Any
+-from uuid import UUID,uuid4
+-from fastapi import APIRouter, Request
+-from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr
++from uuid import UUID
++from fastapi import APIRouter, Request, Query
++from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator, model_validator
+ 
+ from app.errors import AppError, response
++from app.use_cases.meeting import MeetingInput, DocumentRef
++from datetime import date
++from app.use_cases.runtime import QualityReview
+ from app.tenants.routes import context
+-from app.guardrails.engine import evaluate_input, evaluate_output
+-from app.tools.registry import GLOBAL_TOOL_REGISTRY
+-from app.use_cases.catalog import get_use_cases, get_use_case, UseCaseManifest
++from app.guardrails.engine import evaluate_input
++from app.use_cases.catalog import get_use_cases, get_use_case
+ 
+ router = APIRouter(prefix="/api/v1/use-cases")
+ 
+ 
+ class ExecuteUseCaseRequest(BaseModel):
+     model_config = ConfigDict(extra="forbid")
+-    prompt: StrictStr = Field(..., min_length=1, max_length=4000)
++    prompt: StrictStr = Field(default="", max_length=4000)
++
++    meeting_date: date | None = None
++    document_refs: list[DocumentRef] = Field(default_factory=list, max_length=3)
++
++    @field_validator('meeting_date', mode='before')
++    @classmethod
++    def strict_date(cls,value):return MeetingInput.valid_date(value)
++
++    @model_validator(mode='after')
++    def valid_source(self):
++        MeetingInput(memo=self.prompt,meeting_date=self.meeting_date,document_refs=self.document_refs)
++        return self
+     client_request_id: UUID
+ 
+ 
+@@ -54,9 +67,11 @@
+     if not manifest:
+         raise AppError("NOT_FOUND", 404)
+ 
+-    prompt = body.prompt.strip()
+-    if not prompt:
++    prompt = body.prompt
++    if use_case_id != "AGENT_03" and body.model_fields_set & {"meeting_date","document_refs"}:
+         raise AppError("REQUEST_INVALID", 422)
++    try:source=MeetingInput(memo=prompt,meeting_date=body.meeting_date,document_refs=body.document_refs)
++    except ValueError:raise AppError("REQUEST_INVALID",422) from None
+ 
+     # 1. Input Guardrail Inspection
+     g_res = evaluate_input(prompt)
+@@ -65,7 +80,7 @@
+ 
+     executor=getattr(request.app.state,'use_case_execution',None)
+     if executor is None:raise AppError('EXECUTION_NOT_READY',409)
+-    data=await executor.submit(ctx,use_case_id,prompt,body.client_request_id)
++    data=await executor.submit(ctx,use_case_id,prompt,body.client_request_id,source.meeting_date,source.document_refs)
+     return response(request,data,status_code=200 if data['replayed'] else 202)
+ 
+ 
+@@ -88,3 +103,29 @@
+ async def cancel_run(request:Request,use_case_id:str,run_id:UUID,body:CancelUseCaseRequest):
+     ctx=await context(request,write=True)
+     return response(request,await service(request).cancel(ctx,use_case_id,run_id,body.expected_revision))
++
++@router.get('/AGENT_03/documents')
++async def meeting_documents(request:Request,cursor:UUID|None=None,limit:int=Query(default=20,ge=1,le=20)):
++    ctx=await context(request)
++    params=request.query_params
++    if set(params)-{'cursor','limit'} or any(len(params.getlist(k))!=1 for k in params):raise AppError('REQUEST_INVALID',422)
++    return response(request,await service(request).meetings.candidates(ctx,cursor,limit))
++
++@router.get('/AGENT_03/runs/{run_id}/quality')
++async def meeting_quality(request:Request,run_id:UUID):
++    ctx=await context(request)
++    if request.query_params:raise AppError('REQUEST_INVALID',422)
++    await service(request).own(ctx,'AGENT_03',run_id)
++    return response(request,await service(request).meetings.quality(ctx,run_id))
++
++@router.get('/AGENT_03/runs/{run_id}/quality/history')
++async def meeting_quality_history(request:Request,run_id:UUID):
++    return await meeting_quality(request,run_id)
++
++@router.post('/AGENT_03/runs/{run_id}/quality')
++async def review_meeting_quality(request:Request,run_id:UUID,body:QualityReview):
++    ctx=await context(request,write=True)
++    if request.query_params:raise AppError('REQUEST_INVALID',422)
++    await service(request).own(ctx,'AGENT_03',run_id)
++    data=await service(request).meetings.quality(ctx,run_id,body)
++    return response(request,data,status_code=200 if data['replayed'] else 201)
+--- a/src/backend/app/use_cases/service.py
++++ b/src/backend/app/use_cases/service.py
+@@ -1,10 +1,17 @@
+ """One approved business case; parent admission, calls and cancellation remain centralized."""
+ from uuid import UUID
+ from app.errors import AppError
++from app.documents.storage import SourceStorageError
+ from app.use_cases.meeting import MeetingInput,meeting_contract
+ 
+ class UseCaseExecutionService:
+-    def __init__(self,workflow):self.workflow=workflow;self.repository=workflow.repository
++    def __init__(self,workflow,documents=None):
++        from app.use_cases.runtime import MeetingRuntime
++        self.workflow=workflow;self.repository=workflow.repository
++        self.meetings=MeetingRuntime(self.repository,documents)
++        self.workflow.meetings=self.meetings
++        if workflow.agent_execution is not None:
++            workflow.agent_execution.repository.meeting_guard=self.meetings.guard_child
+ 
+     async def ready(self,ctx,case):
+         if case!='AGENT_03' or self.workflow.agent_execution is None:return None
+@@ -15,13 +22,18 @@
+         if binding and binding['use_case_digest']==meeting_contract()['manifest_digest']:return binding
+         return None
+ 
+-    async def submit(self,ctx,case,prompt,client):
++    async def submit(self,ctx,case,prompt,client,meeting_date=None,document_refs=None):
+         if case!='AGENT_03':raise AppError('EXECUTION_NOT_READY',409)
+-        try:MeetingInput(memo=prompt)
++        try:source=MeetingInput(memo=prompt,meeting_date=meeting_date,document_refs=document_refs or [])
+         except ValueError:raise AppError('REQUEST_INVALID',422) from None
++        from app.workflows.identity import runtime_digest
++        replay=await self.repository.call(ctx,'meeting_receipt_lookup',(ctx.session_id,ctx.tenant_id,client,self.repository.json(source.model_dump(mode='json')),self.repository.mode,runtime_digest(),self.repository.period))
++        if replay is not None:return await self.workflow.safe_public(ctx,replay)
+         binding=await self.ready(ctx,case)
+         if binding is None:raise AppError('EXECUTION_NOT_READY',409)
+-        return await self.workflow.admit(ctx,UUID(binding['version_id']),client,{binding['input_key']:prompt})
++        try:sealed=await self.meetings.resolve(ctx,source)
++        except SourceStorageError:raise AppError('DOCUMENT_UNAVAILABLE',404) from None
++        return await self.workflow.admit(ctx,UUID(binding['version_id']),client,{binding['input_key']:sealed['compiled']},meeting_context=sealed)
+ 
+     async def own(self,ctx,case,parent):
+         binding=await self.repository.meeting(ctx,parent)
+--- a/src/backend/app/use_cases/runtime.py
++++ b/src/backend/app/use_cases/runtime.py
+@@ -0,0 +1,194 @@
++"""Server-owned exact meeting context. No model-supplied document metadata is trusted."""
++import json
++from typing import Literal
++from uuid import UUID
++from pydantic import BaseModel, ConfigDict, Field, StrictInt, StrictStr, field_validator
++from app.db import tenant_transaction
++from app.errors import AppError
++from app.documents.storage import SourceStorageError
++from app.execution.summary_repository import stored
++from app.use_cases.meeting import MeetingInput, MeetingResult
++from app.use_cases.meeting_quality import evaluate_structure, HUMAN_RUBRIC
++
++
++def canonical(value):
++    return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(',', ':'), allow_nan=False)
++
++
++class QualityReview(BaseModel):
++    model_config = ConfigDict(extra='forbid')
++    client_request_id: UUID
++    expected_review_revision: StrictInt = Field(ge=0, le=9223372036854775806)
++    expected_run_revision: StrictInt = Field(ge=1, le=9223372036854775806)
++    result_digest: StrictStr = Field(pattern=r'^[0-9a-f]{64}$')
++    accuracy: Literal['acceptable', 'needs_review', 'not_assessed']
++    omission: Literal['acceptable', 'needs_review', 'not_assessed']
++    owner: Literal['acceptable', 'needs_review', 'not_assessed']
++    deadline: Literal['acceptable', 'needs_review', 'not_assessed']
++    comment: StrictStr = Field(min_length=1, max_length=500)
++
++    @field_validator('comment')
++    @classmethod
++    def comment_text(cls, value):
++        value = value.strip()
++        if not value or '\x00' in value:
++            raise ValueError('invalid comment')
++        value.encode('utf-8', errors='strict')
++        return value
++
++
++def compile_context(source, documents):
++    # Legacy memo-only prompt remains byte-for-byte identical. Date authority is
++    # persisted separately; a memo that looks like this header cannot replace it.
++    if source.meeting_date is None and not documents:
++        return source.memo
++    value = canonical({'meeting_date': source.meeting_date.isoformat() if source.meeting_date else None,
++                       'memo': source.memo,
++                       'documents': [{'source_ref': x['source_ref'], 'text': x['text']} for x in documents]})
++    if len(value) > 4000:
++        raise AppError('MEETING_CONTEXT_TOO_LARGE', 422)
++    return value
++
++
++class MeetingRuntime:
++    def __init__(self, repository, documents):
++        self.repository = repository
++        self.documents = documents
++
++    async def resolve(self, ctx, source):
++        docs = []
++        if source.document_refs and self.documents is None:
++            raise AppError('DOCUMENT_UNAVAILABLE', 404)
++        for ref in source.document_refs:
++            row = await self.repository.call(ctx, 'meeting_source',
++                    (ctx.session_id, ctx.tenant_id, ref.document_id, ref.version_id))
++            try:
++                text = self.verify_source(row)
++            except (SourceStorageError, ValueError, TypeError, KeyError):
++                raise AppError('DOCUMENT_UNAVAILABLE', 404) from None
++            docs.append({'source_tenant_id': row['tenant_id'], 'document_id': row['document_id'],
++                         'version_id': row['version_id'], 'source_ref': f'document:{row["version_id"]}',
++                         'source_sha256': row['source_sha256'], 'title': row['title'], 'version_no': row['version_no'],
++                         'source_mapping': row['source_mapping'], 'text': text})
++        compiled = compile_context(source, docs)
++        return {'source': source.model_dump(mode='json'), 'documents': docs, 'compiled': compiled}
++
++    def verify_source(self, row):
++        from common_core.ai_pipeline.document.parser import parse_source
++        from app.policies.document_ingest import require_document_policy
++        material = row | {'source_sha256': bytes.fromhex(row['source_sha256'])}
++        raw = self.documents.storage.read(stored(material))
++        parsed = parse_source(raw, row['media_type'])
++        mapping = {'revision': parsed.parser_revision, 'offset_unit': 'unicode_codepoint',
++                   'mapping': parsed.mapping, 'lines': [{'start': x.start, 'end': x.end, 'kind': x.kind} for x in parsed.lines]}
++        expected = {k:v for k,v in row['source_mapping'].items() if k != 'origin'}
++        if parsed.parser_revision != row['parser_revision'] or canonical(mapping) != canonical(expected):
++            raise SourceStorageError('SOURCE_INTEGRITY_FAILED')
++        text = raw.decode('utf-8')
++        require_document_policy(row['title'] + '\n' + text)
++        return text
++
++    async def context(self, ctx, parent):
++        data = await self.repository.meeting_context(ctx, parent)
++        if data is None:
++            return None
++        source = MeetingInput.model_validate(data['source'])
++        # SQL rechecks current ACL/version/SHA. Filesystem and parser are rechecked
++        # independently before any provider dispatch or content exposure.
++        fresh = await self.resolve(ctx, source)
++        if canonical(fresh) != canonical(data):
++            raise AppError('DOCUMENT_UNAVAILABLE', 404)
++        return data
++
++    async def summary(self,ctx,parent):
++        summary=await self.repository.call(ctx,'meeting_context_summary',(ctx.session_id,ctx.tenant_id,parent))
++        if summary is None:return None
++        for doc in summary['documents']:
++            if doc['current_available']:
++                try:
++                    row=await self.repository.call(ctx,'meeting_source',(ctx.session_id,ctx.tenant_id,UUID(doc['document_id']),UUID(doc['version_id'])))
++                    self.verify_source(row)
++                    if row['source_sha256']!=doc['source_sha256']:raise SourceStorageError('SOURCE_INTEGRITY_FAILED')
++                except (AppError,SourceStorageError,ValueError,TypeError,KeyError) as error:
++                    if isinstance(error,AppError) and error.status not in (404,409,422):raise
++                    doc['current_available']=False;doc['title']=None
++            doc.pop('source_sha256',None)
++        return summary
++
++    @staticmethod
++    def annotate(value,data):
++        documents={x['source_ref']:x for x in data['documents']}
++        for kind in ('decisions','unresolved','actions'):
++            for item in value[kind]:
++                doc=documents.get(item['source_ref'])
++                if doc is None:continue
++                starts=[];position=0
++                while True:
++                    start=doc['text'].find(item['quote'],position)
++                    if start<0:break
++                    starts.append(start);position=start+1
++                spans=[(start,start+len(item['quote'])) for start in starts]
++                display={'title':doc['title'],'version_id':doc['version_id'],'location_ambiguous':len(starts)>1}
++                start,end=spans[0]
++                origin=doc['source_mapping'].get('origin')
++                if origin and origin['media_type']=='application/pdf':
++                    pages=[x['page'] for x in origin['pages'] if any(x['start']<end and x['end']>start for start,end in spans)]
++                    if pages:display.update(page_start=min(pages),page_end=max(pages))
++                elif origin:
++                    display['structure_locations']=[{k:v for k,v in x.items() if k not in ('start','end')} for x in origin['locations'] if x['kind']!='sheet' and any(x['start']<end and x['end']>start for start,end in spans)]
++                item['source_display']=display
++        return value
++
++    async def guard_child(self, ctx, child):
++        parent = await self.repository.call(ctx, 'meeting_parent_for_child', (ctx.session_id,ctx.tenant_id,child))
++        if parent is not None:
++            await self.context(ctx, UUID(str(parent)))
++
++    @staticmethod
++    def normalize(value, data):
++        source = MeetingInput.model_validate(data['source'])
++        documents = {x['source_ref']: x['text'] for x in data['documents']}
++        try:
++            result = MeetingResult.model_validate_json(value) if isinstance(value, str) else MeetingResult.model_validate(value)
++            return result.check_evidence(source, documents).model_dump(mode='json')
++        except ValueError:raise AppError('MEETING_EVIDENCE_INVALID',422) from None
++
++    async def candidates(self, ctx, cursor=None, limit=20):
++        if not 1 <= limit <= 20:
++            raise AppError('REQUEST_INVALID', 422)
++        # Fixed RPC returns only same-tenant currently readable exact versions;
++        # source bodies/object keys never appear in the public response.
++        data = await self.repository.call(ctx, 'meeting_document_candidates',
++                                          (ctx.session_id, ctx.tenant_id, cursor, limit, self.repository.mode))
++        for item in data['items']:
++            item['ready'] = False
++            item['unavailable_reason'] = 'source_unavailable'
++            if self.documents is None:
++                continue
++            try:
++                row = await self.repository.call(ctx, 'meeting_source',
++                        (ctx.session_id,ctx.tenant_id,UUID(item['document_id']),UUID(item['version_id'])))
++                self.verify_source(row)
++                item['ready'] = True
++                item['unavailable_reason'] = None
++            except (SourceStorageError, AppError, ValueError, TypeError, KeyError) as error:
++                if isinstance(error, AppError) and error.status not in (404, 409, 422):
++                    raise
++                # Authorized metadata is visible, but never invented as source.
++        return data
++
++    async def quality(self, ctx, parent, body=None):
++        data = await self.context(ctx, parent)
++        if data is None:
++            raise AppError('NOT_FOUND', 404)
++        row = await self.repository.runtime(ctx, 'read', parent)
++        if row.get('state') != 'completed' or row.get('result_access') != 'final':
++            raise AppError('REVISION_CONFLICT', 409)
++        value = self.normalize(row['result'], data)
++        action = 'review' if body is not None else 'read'
++        result = await self.repository.call(ctx, 'meeting_quality_control',
++                 (ctx.session_id, ctx.tenant_id, action, parent, self.repository.json(body.model_dump(mode='json') if body else {})))
++        result.update(structural=evaluate_structure(MeetingResult.model_validate(value), MeetingInput.model_validate(data['source']),
++                      {x['source_ref']: x['text'] for x in data['documents']}).__dict__,
++                      rubric=HUMAN_RUBRIC, human_review_required=True)
++        return result
+--- a/src/backend/app/workflows/service.py
++++ b/src/backend/app/workflows/service.py
+@@ -16,6 +16,7 @@
+ class WorkflowExecutionService:
+     def __init__(self,repository,agent_execution,tools,guardrails):
+         self.repository=repository;self.agent_execution=agent_execution;self.tools=tools;self.guardrails=guardrails
++        self.meetings=None
+         self.tasks={};self.closed=False;self.leader=None;self.recovery=None
+ 
+     async def start(self):
+@@ -29,7 +30,7 @@
+         except BaseException:
+             await self.leader.close();await self.repository.pool.putconn(self.leader);self.leader=None;raise
+ 
+-    async def admit(self,ctx,version,client,inputs,trace=None):
++    async def admit(self,ctx,version,client,inputs,trace=None,meeting_context=None):
+         if self.closed or self.agent_execution is None:raise AppError('EXECUTION_NOT_READY',409)
+         detail=await self.repository.runtime(ctx,'definition',UUID(str(version)))
+         definition=ApprovedWorkflow.model_validate(detail['definition'])
+@@ -45,7 +46,9 @@
+                 if self.tools.descriptor(node.config['tool_id'])['digest']!=node.config['version_digest']:raise AppError('REVISION_CONFLICT',409)
+         checked=await self.guardrails.inspect(ctx,json.dumps(inputs,ensure_ascii=False),direction='input')
+         if checked.action=='block':raise AppError('GUARDRAIL_INPUT_BLOCKED',422)
+-        data=await self.repository.runtime(ctx,'admit',body={'version_id':str(version),'client_request_id':str(client),'inputs':inputs},trace=trace)
++        body={'version_id':str(version),'client_request_id':str(client),'inputs':inputs}
++        if meeting_context is not None:body['meeting_context']=meeting_context
++        data=await self.repository.runtime(ctx,'admit',body=body,trace=trace)
+         if not data['is_terminal']:self.notify(ctx,data['run_id'])
+         return await self.safe_public(ctx,data)
+ 
+@@ -56,13 +59,22 @@
+         task.add_done_callback(lambda _:self.tasks.pop(key,None))
+ 
+     async def safe_public(self,ctx,data):
++        if self.meetings is not None:
++            summary=await self.meetings.summary(ctx,UUID(data['run_id']))
++            if summary is not None:data=data|{'meeting_context':summary}
+         if data.get('result_access')=='final':
+-            try:value=await self.safe_value(ctx,data['result'])
++            try:
++                if self.meetings is not None:
++                    sealed=await self.meetings.context(ctx,UUID(data['run_id']))
++                    value=self.meetings.normalize(data['result'],sealed) if sealed else data['result']
++                else:value=data['result']
++                value=await self.safe_value(ctx,value)
+             except AppError as error:
+-                if error.code=='GUARDRAIL_OUTPUT_BLOCKED':return data|{'result':None,'result_access':'blocked'}
++                if error.code in ('GUARDRAIL_OUTPUT_BLOCKED','DOCUMENT_UNAVAILABLE','MEETING_EVIDENCE_INVALID'):return data|{'result':None,'result_access':'blocked'}
+                 raise
+             current=await self.repository.runtime(ctx,'read',UUID(data['run_id']))
+             if current.get('result_access')!='final':return data|current
++            if self.meetings is not None and sealed is not None:value=self.meetings.annotate(value,sealed)
+             data=data|current|{'result':value}
+         return data
+ 
+@@ -70,7 +82,7 @@
+         data=await self.repository.runtime(ctx,'read',parent)
+         try:return await self.safe_public(ctx,data)
+         except AppError as error:
+-            if error.code=='GUARDRAIL_OUTPUT_BLOCKED':return data|{'result':None,'result_access':'blocked'}
++            if error.code in ('GUARDRAIL_OUTPUT_BLOCKED','DOCUMENT_UNAVAILABLE','MEETING_EVIDENCE_INVALID'):return data|{'result':None,'result_access':'blocked'}
+             raise
+ 
+     async def safe_value(self,ctx,value,previous=None):
+@@ -121,11 +133,13 @@
+             if work is None:return
+             definition=ApprovedWorkflow.model_validate(work['definition']);results={}
+             binding=await self.repository.meeting(ctx,parent)
++            sealed=await self.meetings.context(ctx,parent) if self.meetings is not None else None
+             heartbeat=asyncio.create_task(beat(asyncio.current_task()))
+             policy=await self.guardrails.snapshot(ctx)
+             nodes={n.node_id:n for n in definition.nodes}
+             for node_id in definition.order():
+                 node=nodes[node_id]
++                if self.meetings is not None:sealed=await self.meetings.context(ctx,parent)
+                 await self.repository.runtime(ctx,'step',parent,{'node_id':node_id},token)
+                 if node.node_type=='input':value=work['inputs'][node.config['input_key']]
+                 elif node.node_type=='read_tool':
+@@ -151,8 +165,10 @@
+                     value=resolve(node.config['source'],results)
+                     if node.node_type=='validate' and (value is None or isinstance(value,str) and not value.strip() or isinstance(value,dict) and value.get('answer_kind')=='insufficient_evidence'):raise AppError('WORKFLOW_INSUFFICIENT_EVIDENCE',409)
+                 if binding and node.node_type=='output':
+-                    source=MeetingInput(memo=work['inputs'][binding['input_key']])
+-                    value=(MeetingResult.model_validate_json(value) if isinstance(value,str) else MeetingResult.model_validate(value)).check_evidence(source).model_dump(mode='json')
++                    if sealed is not None:value=self.meetings.normalize(value,sealed)
++                    else:
++                        source=MeetingInput(memo=work['inputs'][binding['input_key']])
++                        value=(MeetingResult.model_validate_json(value) if isinstance(value,str) else MeetingResult.model_validate(value)).check_evidence(source).model_dump(mode='json')
+                 value=await self.safe_value(ctx,value,policy)
+                 await self.repository.runtime(ctx,'checkpoint',parent,{'node_id':node_id,'result':value},token)
+                 results[node_id]=value
+--- a/src/backend/app/workflows/repository.py
++++ b/src/backend/app/workflows/repository.py
+@@ -55,6 +55,12 @@
+         if 'admission_error' in data:raise AppError(data['admission_error'],429,data['retry_after'])
+         return data
+ 
++    @staticmethod
++    def json(value):return Jsonb(value)
++
++    async def meeting_context(self,ctx,parent):
++        return await self.call(ctx,'meeting_context_read',(ctx.session_id,ctx.tenant_id,parent,self.mode))
++
+     async def meeting(self,ctx,parent=None):
+         return await self.call(ctx,'meeting_binding',(ctx.session_id,ctx.tenant_id,parent,self.mode,runtime_digest(),self.period))
+ 
+--- a/src/backend/app/workflows/identity.py
++++ b/src/backend/app/workflows/identity.py
+@@ -10,6 +10,8 @@
+     paths=[directory/'approved_models.py',directory/'bindings.py',directory/'service.py',directory/'repository.py',directory/'identity.py',directory.parents[1]/'migrations/048_workflow_execution_ledger.sql']
+     paths.extend([directory.parent/'use_cases/meeting.py',directory.parent/'use_cases/catalog.py',directory.parent/'use_cases/service.py',directory.parents[1]/'migrations/049_meeting_workflow_binding.sql'])
+     paths.append(directory.parents[1]/'migrations/050_tool_workflow_approval_reviews.sql')
++    paths.extend([directory.parent/'use_cases/meeting_dates.py',directory.parent/'use_cases/meeting_quality.py',directory.parent/'use_cases/runtime.py',directory.parents[1]/'migrations/051_meeting_context_quality.sql'])
++    paths.extend([directory.parent/'use_cases/routes.py',directory.parent/'ai/repository.py',directory.parent/'assets/published.py'])
+     digest=hashlib.sha256()
+     for path in paths:
+         digest.update(path.name.encode());digest.update(b'\0');digest.update(path.read_bytes());digest.update(b'\0')
+--- a/src/backend/app/main.py
++++ b/src/backend/app/main.py
+@@ -94,7 +94,7 @@
+                         await manager.start();stack.push_async_callback(manager.close);app.state.execution=manager
+                     workflow=WorkflowExecutionService(app.state.workflow_repository,app.state.execution,app.state.tool_control,app.state.guardrails)
+                     app.state.workflow_control=workflow
+-                    app.state.use_case_execution=UseCaseExecutionService(workflow)
++                    app.state.use_case_execution=UseCaseExecutionService(workflow,app.state.documents)
+                     if settings.execution_enabled:
+                         await workflow.start();stack.push_async_callback(workflow.close);app.state.workflow_execution=workflow
+                     if settings.index_enabled:
+--- a/src/backend/migrations/051_meeting_context_quality.sql
++++ b/src/backend/migrations/051_meeting_context_quality.sql
+@@ -0,0 +1,282 @@
++-- AGENT_03 immutable server context and owner-only append-only human reviews.
++-- Historical migrations and approved manifest snapshots are deliberately untouched.
++GRANT SELECT(source_object_key,source_sha256,media_type,byte_length,character_length,parser_revision,source_mapping) ON rag.document_versions TO ai_policy_executor;
++
++CREATE FUNCTION security.meeting_source_allowed(p_tenant uuid,p_document uuid,p_version uuid) RETURNS boolean
++LANGUAGE sql STABLE SECURITY DEFINER SET search_path=pg_catalog,security,pg_temp AS $$
++ SELECT session_user='ai_web' AND p_tenant=NULLIF(current_setting('app.tenant_id',true),'')::uuid
++ AND security.can_read_agent(p_tenant) AND EXISTS(
++ SELECT 1 FROM security.document_access a JOIN rag.document_versions v USING(tenant_id,document_id)
++ WHERE (a.tenant_id,a.document_id,v.version_id)=(p_tenant,p_document,p_version) AND a.deleted_at IS NULL AND NOT v.payload_purged
++ AND ((a.user_owned AND a.visibility='private' AND a.owner_user_id=NULLIF(current_setting('app.user_id',true),'')::uuid
++ AND v.version_no=(SELECT max(x.version_no) FROM rag.document_versions x WHERE (x.tenant_id,x.document_id)=(v.tenant_id,v.document_id)))
++ OR security.document_can_read(p_tenant,p_document,p_version)));
++$$;
++
++CREATE FUNCTION security.meeting_source(p_session uuid,p_tenant uuid,p_document uuid,p_version uuid) RETURNS jsonb
++LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,security,pg_temp AS $$
++DECLARE data jsonb;
++BEGIN
++ PERFORM security.run_authorize(p_session,p_tenant,false);
++ IF NOT security.meeting_source_allowed(p_tenant,p_document,p_version) THEN RAISE EXCEPTION 'DOCUMENT_UNAVAILABLE' USING ERRCODE='D0404';END IF;
++ SELECT jsonb_build_object('tenant_id',v.tenant_id,'document_id',v.document_id,'version_id',v.version_id,'version_no',v.version_no,'title',v.title,
++ 'source_object_key',v.source_object_key,'source_sha256',encode(v.source_sha256,'hex'),'media_type',v.media_type,'byte_length',v.byte_length,
++ 'character_length',v.character_length,'parser_revision',v.parser_revision,'source_mapping',v.source_mapping)
++ INTO data FROM rag.document_versions v WHERE (v.tenant_id,v.document_id,v.version_id)=(p_tenant,p_document,p_version);
++ RETURN data;
++END;$$;
++
++CREATE FUNCTION security.meeting_document_candidates(p_session uuid,p_tenant uuid,p_cursor uuid,p_limit integer,p_mode text) RETURNS jsonb
++LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,security,pg_temp AS $$
++DECLARE items jsonb;next_id uuid;
++BEGIN
++ PERFORM security.run_authorize(p_session,p_tenant,false);
++ IF p_limit IS NULL OR p_limit NOT BETWEEN 1 AND 20 THEN RAISE EXCEPTION 'ARGUMENT_REJECTED' USING ERRCODE='A0422';END IF;
++ SELECT coalesce(jsonb_agg(to_jsonb(x) ORDER BY document_id),'[]') INTO items FROM (
++ SELECT v.document_id,v.version_id,v.version_no,v.title,v.character_length,encode(v.source_sha256,'hex') AS source_sha256
++ FROM rag.document_versions v WHERE v.tenant_id=p_tenant AND (p_cursor IS NULL OR v.document_id>p_cursor)
++ AND security.meeting_source_allowed(v.tenant_id,v.document_id,v.version_id) ORDER BY v.document_id LIMIT p_limit+1) x;
++ IF jsonb_array_length(items)>p_limit THEN items:=items-p_limit;next_id:=(items->(p_limit-1)->>'document_id')::uuid;END IF;
++ RETURN jsonb_build_object('items',items,'next_cursor',next_id);
++END;$$;
++
++CREATE TABLE portal.meeting_run_contexts(
++ tenant_id uuid NOT NULL,parent_id uuid NOT NULL,owner_id uuid NOT NULL,
++ context jsonb NOT NULL CHECK(jsonb_typeof(context)='object' AND octet_length(context::text)<=262144),
++ context_digest text NOT NULL CHECK(context_digest ~ '^[0-9a-f]{64}$'),
++ created_at timestamptz NOT NULL DEFAULT clock_timestamp(),PRIMARY KEY(tenant_id,parent_id),
++ FOREIGN KEY(tenant_id,parent_id) REFERENCES portal.workflow_runs(tenant_id,run_id));
++CREATE TABLE portal.meeting_quality_reviews(
++ tenant_id uuid NOT NULL,parent_id uuid NOT NULL,owner_id uuid NOT NULL,review_id uuid NOT NULL DEFAULT gen_random_uuid(),
++ client_request_id uuid NOT NULL,request_hash text NOT NULL,review_revision bigint NOT NULL CHECK(review_revision>0),
++ run_revision bigint NOT NULL,result_digest text NOT NULL CHECK(result_digest ~ '^[0-9a-f]{64}$'),
++ body jsonb NOT NULL,created_at timestamptz NOT NULL DEFAULT clock_timestamp(),PRIMARY KEY(tenant_id,review_id),
++ UNIQUE(tenant_id,owner_id,client_request_id),UNIQUE(tenant_id,parent_id,review_revision),
++ FOREIGN KEY(tenant_id,parent_id) REFERENCES portal.meeting_run_contexts(tenant_id,parent_id));
++ALTER TABLE portal.meeting_run_contexts OWNER TO ai_owner;
++ALTER TABLE portal.meeting_quality_reviews OWNER TO ai_owner;
++ALTER TABLE portal.meeting_run_contexts ENABLE ROW LEVEL SECURITY;ALTER TABLE portal.meeting_run_contexts FORCE ROW LEVEL SECURITY;
++ALTER TABLE portal.meeting_quality_reviews ENABLE ROW LEVEL SECURITY;ALTER TABLE portal.meeting_quality_reviews FORCE ROW LEVEL SECURITY;
++REVOKE ALL ON portal.meeting_run_contexts,portal.meeting_quality_reviews FROM PUBLIC,ai_web,ai_index,ai_meter;
++GRANT SELECT,INSERT ON portal.meeting_run_contexts,portal.meeting_quality_reviews TO ai_policy_executor;
++CREATE POLICY meeting_context_owner ON portal.meeting_run_contexts TO ai_policy_executor
++ USING(tenant_id=NULLIF(current_setting('app.tenant_id',true),'')::uuid AND owner_id=NULLIF(current_setting('app.user_id',true),'')::uuid AND security.can_read_agent(tenant_id))
++ WITH CHECK(tenant_id=NULLIF(current_setting('app.tenant_id',true),'')::uuid AND owner_id=NULLIF(current_setting('app.user_id',true),'')::uuid AND security.can_read_agent(tenant_id));
++CREATE POLICY meeting_quality_owner ON portal.meeting_quality_reviews TO ai_policy_executor
++ USING(tenant_id=NULLIF(current_setting('app.tenant_id',true),'')::uuid AND owner_id=NULLIF(current_setting('app.user_id',true),'')::uuid AND security.can_read_agent(tenant_id))
++ WITH CHECK(tenant_id=NULLIF(current_setting('app.tenant_id',true),'')::uuid AND owner_id=NULLIF(current_setting('app.user_id',true),'')::uuid AND security.can_read_agent(tenant_id));
++CREATE FUNCTION portal.meeting_immutable() RETURNS trigger LANGUAGE plpgsql SET search_path=pg_catalog AS $$
++BEGIN RAISE EXCEPTION 'MEETING_IMMUTABLE' USING ERRCODE='23514';END;$$;
++ALTER FUNCTION portal.meeting_immutable() OWNER TO ai_owner;
++REVOKE ALL ON FUNCTION portal.meeting_immutable() FROM PUBLIC,ai_web,ai_index,ai_meter,ai_policy_executor;
++CREATE TRIGGER meeting_context_immutable BEFORE UPDATE OR DELETE ON portal.meeting_run_contexts FOR EACH ROW EXECUTE FUNCTION portal.meeting_immutable();
++CREATE TRIGGER meeting_quality_immutable BEFORE UPDATE OR DELETE ON portal.meeting_quality_reviews FOR EACH ROW EXECUTE FUNCTION portal.meeting_immutable();
++
++-- Match existing document mutation/provenance order: access, publication, version.
++-- Access serializes latest-version inserts and publication replacement, including
++-- absent publication rows. Locks last until the protected RPC transaction ends.
++CREATE FUNCTION security.meeting_sources_guard(p_tenant uuid,p_documents jsonb,p_admission boolean) RETURNS boolean
++LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,security,pg_temp AS $$
++DECLARE doc jsonb;document uuid;version uuid;
++BEGIN
++ FOR doc IN SELECT value FROM jsonb_array_elements(p_documents)
++ ORDER BY (value->>'document_id')::uuid,(value->>'version_id')::uuid LOOP
++  document:=(doc->>'document_id')::uuid;version:=(doc->>'version_id')::uuid;
++  PERFORM document_id FROM security.document_access WHERE tenant_id=p_tenant AND document_id=document FOR SHARE;
++  PERFORM version_id FROM security.document_publications WHERE tenant_id=p_tenant AND document_id=document ORDER BY version_id FOR SHARE;
++  PERFORM version_id FROM rag.document_versions WHERE tenant_id=p_tenant AND document_id=document AND version_id=version FOR SHARE;
++  -- A fresh statement after any wait sees the winning mutation at READ COMMITTED.
++  IF NOT security.meeting_source_allowed(p_tenant,document,version)
++  OR NOT EXISTS(SELECT 1 FROM rag.document_versions v WHERE (v.tenant_id,v.document_id,v.version_id)=(p_tenant,document,version)
++   AND encode(v.source_sha256,'hex')=doc->>'source_sha256' AND v.title=doc->>'title' AND v.source_mapping=doc->'source_mapping'
++   AND (NOT p_admission OR v.character_length=char_length(doc->>'text') AND encode(sha256(convert_to(doc->>'text','UTF8')),'hex')=doc->>'source_sha256'))
++  THEN RAISE EXCEPTION 'DOCUMENT_UNAVAILABLE' USING ERRCODE='D0404';END IF;
++ END LOOP;
++ RETURN true;
++END;$$;
++ALTER FUNCTION security.meeting_sources_guard(uuid,jsonb,boolean) OWNER TO ai_policy_executor;
++REVOKE ALL ON FUNCTION security.meeting_sources_guard(uuid,jsonb,boolean) FROM PUBLIC,ai_web,ai_index,ai_meter;
++
++CREATE FUNCTION security.meeting_context_guard(p_session uuid,p_tenant uuid,p_parent uuid) RETURNS jsonb
++LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,security,pg_temp AS $$
++DECLARE saved portal.meeting_run_contexts%ROWTYPE;doc jsonb;
++BEGIN
++ PERFORM security.run_authorize(p_session,p_tenant,false);
++ SELECT * INTO saved FROM portal.meeting_run_contexts WHERE tenant_id=p_tenant AND parent_id=p_parent;
++ IF NOT FOUND THEN RETURN NULL;END IF;
++ PERFORM security.meeting_sources_guard(p_tenant,saved.context->'documents',false);
++ RETURN saved.context;
++END;$$;
++CREATE FUNCTION security.meeting_context_read(p_session uuid,p_tenant uuid,p_parent uuid,p_mode text) RETURNS jsonb
++LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,security,pg_temp AS $$
++DECLARE data jsonb;
++BEGIN
++ data:=security.meeting_context_guard(p_session,p_tenant,p_parent);
++ IF data IS NOT NULL THEN
++  PERFORM security.workflow_version_guard(p_session,p_tenant,r.version_id,r.execution_mode,r.runtime_digest,r.budget_period)
++  FROM portal.workflow_runs r WHERE r.tenant_id=p_tenant AND r.run_id=p_parent;
++ END IF;RETURN data;
++END;$$;
++
++ALTER FUNCTION security.workflow_parent_guard(uuid,uuid,uuid,uuid,boolean) RENAME TO workflow_parent_guard_v048;
++CREATE FUNCTION security.workflow_parent_guard(p_session uuid,p_tenant uuid,p_parent uuid,p_token uuid,p_active boolean) RETURNS jsonb
++LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,security,pg_temp AS $$
++DECLARE data jsonb;
++BEGIN
++ data:=security.workflow_parent_guard_v048(p_session,p_tenant,p_parent,p_token,p_active);
++ PERFORM security.meeting_context_guard(p_session,p_tenant,p_parent);RETURN data;
++END;$$;
++
++ALTER FUNCTION security.workflow_runtime(uuid,uuid,text,uuid,jsonb,text,text,uuid,date,uuid) RENAME TO workflow_runtime_v048;
++CREATE FUNCTION security.workflow_runtime(p_session uuid,p_tenant uuid,p_action text,p_id uuid,p_body jsonb,p_mode text,p_code text,p_token uuid,p_period date,p_trace uuid) RETURNS jsonb
++LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,security,pg_temp AS $$
++DECLARE data jsonb;sealed jsonb;doc jsonb;u uuid;key text;bound text;saved jsonb;clean jsonb;
++BEGIN
++ u:=security.run_authorize(p_session,p_tenant,p_action<>'read');
++ IF p_action='admit' THEN
++  SELECT v.use_case_id,(SELECT n->'config'->>'input_key' FROM jsonb_array_elements(v.definition->'nodes') n WHERE n->>'node_type'='input')
++  INTO bound,key FROM portal.workflow_versions v WHERE v.tenant_id=p_tenant AND v.version_id=(p_body->>'version_id')::uuid;
++  sealed:=p_body->'meeting_context';clean:=p_body-'meeting_context';
++  IF bound='AGENT_03' THEN
++   IF sealed IS NULL THEN
++    sealed:=jsonb_build_object('source',jsonb_build_object('memo',p_body->'inputs'->>key,'meeting_date',NULL,'document_refs','[]'::jsonb),'documents','[]'::jsonb,'compiled',p_body->'inputs'->>key);
++   END IF;
++   IF jsonb_typeof(sealed) IS DISTINCT FROM 'object' OR sealed-ARRAY['source','documents','compiled']<>'{}'
++   OR jsonb_typeof(sealed->'source') IS DISTINCT FROM 'object' OR (sealed->'source')-ARRAY['memo','meeting_date','document_refs']<>'{}'
++   OR jsonb_typeof(sealed->'source'->'memo') IS DISTINCT FROM 'string' OR char_length(sealed->'source'->>'memo')>4000
++   OR jsonb_typeof(sealed->'documents') IS DISTINCT FROM 'array' OR jsonb_array_length(sealed->'documents')>3
++   OR jsonb_typeof(sealed->'source'->'document_refs') IS DISTINCT FROM 'array'
++   OR jsonb_array_length(sealed->'source'->'document_refs')<>jsonb_array_length(sealed->'documents')
++   OR jsonb_typeof(sealed->'compiled') IS DISTINCT FROM 'string' OR char_length(sealed->>'compiled') NOT BETWEEN 1 AND 4000
++   OR sealed->>'compiled' IS DISTINCT FROM p_body->'inputs'->>key
++   OR coalesce(sealed->'source'->>'meeting_date','')<>'' AND (sealed->'source'->>'meeting_date' !~ '^[0-9]{4}-[0-9]{2}-[0-9]{2}$' OR (sealed->'source'->>'meeting_date')::date::text<>sealed->'source'->>'meeting_date')
++   THEN RAISE EXCEPTION 'ARGUMENT_REJECTED' USING ERRCODE='A0422';END IF;
++   IF btrim(sealed->'source'->>'memo')='' AND jsonb_array_length(sealed->'documents')=0 THEN RAISE EXCEPTION 'ARGUMENT_REJECTED' USING ERRCODE='A0422';END IF;
++   IF (SELECT count(DISTINCT value->>'version_id') FROM jsonb_array_elements(sealed->'documents'))<>jsonb_array_length(sealed->'documents')
++   OR (SELECT count(DISTINCT value->>'document_id') FROM jsonb_array_elements(sealed->'documents'))<>jsonb_array_length(sealed->'documents') THEN RAISE EXCEPTION 'ARGUMENT_REJECTED' USING ERRCODE='A0422';END IF;
++   FOR doc IN SELECT value FROM jsonb_array_elements(sealed->'documents') LOOP
++    IF doc->>'source_ref' IS DISTINCT FROM 'document:'||(doc->>'version_id') OR doc->>'source_tenant_id' IS DISTINCT FROM p_tenant::text
++    OR jsonb_typeof(doc->'text') IS DISTINCT FROM 'string'
++    OR NOT EXISTS(SELECT 1 FROM jsonb_array_elements(sealed->'source'->'document_refs') ref WHERE ref->>'document_id'=doc->>'document_id' AND ref->>'version_id'=doc->>'version_id')
++    THEN RAISE EXCEPTION 'DOCUMENT_UNAVAILABLE' USING ERRCODE='D0404';END IF;
++   END LOOP;
++   PERFORM security.meeting_sources_guard(p_tenant,sealed->'documents',true);
++   PERFORM pg_advisory_xact_lock(hashtextextended(p_tenant::text||u::text||':workflow-capacity',0));
++   SELECT c.context INTO saved FROM portal.workflow_runs r JOIN portal.meeting_run_contexts c ON (c.tenant_id,c.parent_id)=(r.tenant_id,r.run_id)
++   WHERE r.tenant_id=p_tenant AND r.owner_id=u AND r.client_request_id=(p_body->>'client_request_id')::uuid;
++   IF FOUND AND saved IS DISTINCT FROM sealed THEN RAISE EXCEPTION 'REVISION_CONFLICT' USING ERRCODE='A0409';END IF;
++  ELSIF sealed IS NOT NULL THEN RAISE EXCEPTION 'ARGUMENT_REJECTED' USING ERRCODE='A0422';END IF;
++  data:=security.workflow_runtime_v048(p_session,p_tenant,p_action,p_id,clean,p_mode,p_code,p_token,p_period,p_trace);
++  IF bound='AGENT_03' AND NOT (data->>'replayed')::boolean THEN
++   INSERT INTO portal.meeting_run_contexts(tenant_id,parent_id,owner_id,context,context_digest)
++   VALUES(p_tenant,(data->>'run_id')::uuid,u,sealed,encode(sha256(convert_to(sealed::text,'UTF8')),'hex'));
++  END IF;RETURN data;
++ END IF;
++ IF p_action IN ('claim','heartbeat','step','checkpoint','finish') THEN PERFORM security.meeting_context_guard(p_session,p_tenant,p_id);END IF;
++ IF p_action='read' THEN
++  BEGIN PERFORM security.meeting_context_guard(p_session,p_tenant,p_id);
++  EXCEPTION WHEN SQLSTATE 'D0404' THEN
++   data:=security.workflow_runtime_v048(p_session,p_tenant,p_action,p_id,p_body,p_mode,p_code,p_token,p_period,p_trace);
++   RETURN data||jsonb_build_object('result',NULL,'result_access','blocked');
++  END;
++ END IF;
++ RETURN security.workflow_runtime_v048(p_session,p_tenant,p_action,p_id,p_body,p_mode,p_code,p_token,p_period,p_trace);
++END;$$;
++
++CREATE FUNCTION security.meeting_receipt_lookup(p_session uuid,p_tenant uuid,p_client uuid,p_source jsonb,p_mode text,p_code text,p_period date) RETURNS jsonb
++LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,security,pg_temp AS $$
++DECLARE u uuid;parent uuid;saved jsonb;data jsonb;
++BEGIN
++ u:=security.run_authorize(p_session,p_tenant,false);
++ SELECT r.run_id,c.context->'source' INTO parent,saved FROM portal.workflow_runs r JOIN portal.meeting_run_contexts c ON (c.tenant_id,c.parent_id)=(r.tenant_id,r.run_id)
++ WHERE r.tenant_id=p_tenant AND r.owner_id=u AND r.client_request_id=p_client;
++ IF parent IS NULL THEN RETURN NULL;END IF;
++ IF saved IS DISTINCT FROM p_source THEN RAISE EXCEPTION 'REVISION_CONFLICT' USING ERRCODE='A0409';END IF;
++ data:=security.workflow_runtime(p_session,p_tenant,'read',parent,'{}',p_mode,p_code,NULL,p_period,gen_random_uuid());
++ RETURN data||jsonb_build_object('replayed',true);
++END;$$;
++CREATE FUNCTION security.meeting_parent_for_child(p_session uuid,p_tenant uuid,p_child uuid) RETURNS uuid
++LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,security,pg_temp AS $$
++DECLARE parent uuid;
++BEGIN
++ PERFORM security.run_authorize(p_session,p_tenant,false);
++ SELECT s.parent_id INTO parent FROM portal.workflow_steps s JOIN portal.meeting_run_contexts c ON (c.tenant_id,c.parent_id)=(s.tenant_id,s.parent_id)
++ WHERE s.tenant_id=p_tenant AND s.child_run_id=p_child AND s.owner_id=NULLIF(current_setting('app.user_id',true),'')::uuid;
++ RETURN parent;
++END;$$;
++
++CREATE FUNCTION security.meeting_quality_control(p_session uuid,p_tenant uuid,p_action text,p_parent uuid,p_body jsonb) RETURNS jsonb
++LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,security,pg_temp AS $$
++DECLARE u uuid;wr portal.workflow_runs%ROWTYPE;view jsonb;digest text;rev bigint;items jsonb;h text;old portal.meeting_quality_reviews%ROWTYPE;fresh portal.meeting_quality_reviews%ROWTYPE;
++BEGIN
++ u:=security.run_authorize(p_session,p_tenant,p_action='review');
++ PERFORM security.meeting_context_read(p_session,p_tenant,p_parent,'mock');
++ SELECT * INTO wr FROM portal.workflow_runs WHERE tenant_id=p_tenant AND run_id=p_parent AND owner_id=u FOR SHARE;
++ IF NOT FOUND OR NOT EXISTS(SELECT 1 FROM portal.meeting_run_contexts WHERE tenant_id=p_tenant AND parent_id=p_parent) THEN RAISE EXCEPTION 'NOT_FOUND' USING ERRCODE='A0404';END IF;
++ view:=security.workflow_run_view(p_session,p_tenant,p_parent);
++ IF wr.state<>'completed' OR view->>'result_access'<>'final' THEN RAISE EXCEPTION 'REVISION_CONFLICT' USING ERRCODE='A0409';END IF;
++ digest:=encode(sha256(convert_to(wr.result::text,'UTF8')),'hex');
++ PERFORM pg_advisory_xact_lock(hashtextextended(p_tenant::text||p_parent::text||':meeting-quality',0));
++ SELECT coalesce(max(review_revision),0) INTO rev FROM portal.meeting_quality_reviews WHERE tenant_id=p_tenant AND parent_id=p_parent;
++ IF p_action='review' THEN
++  IF ARRAY(SELECT jsonb_object_keys(p_body) ORDER BY 1)<>ARRAY['accuracy','client_request_id','comment','deadline','expected_review_revision','expected_run_revision','omission','owner','result_digest']
++  OR EXISTS(SELECT 1 FROM unnest(ARRAY['accuracy','omission','owner','deadline']) k WHERE coalesce(p_body->>k,'') NOT IN ('acceptable','needs_review','not_assessed'))
++  OR jsonb_typeof(p_body->'comment') IS DISTINCT FROM 'string' OR char_length(p_body->>'comment') NOT BETWEEN 1 AND 500 OR btrim(p_body->>'comment')='' OR p_body->>'comment'<>btrim(p_body->>'comment')
++  OR coalesce(p_body->>'expected_review_revision','') !~ '^(0|[1-9][0-9]*)$' OR coalesce(p_body->>'expected_run_revision','') !~ '^[1-9][0-9]*$'
++  THEN RAISE EXCEPTION 'ARGUMENT_REJECTED' USING ERRCODE='A0422';END IF;
++  h:=encode(sha256(convert_to(jsonb_build_object('parent',p_parent,'body',p_body)::text,'UTF8')),'hex');
++  PERFORM pg_advisory_xact_lock(hashtextextended(p_tenant::text||u::text||(p_body->>'client_request_id')||':meeting-review-receipt',0));
++  SELECT * INTO old FROM portal.meeting_quality_reviews WHERE tenant_id=p_tenant AND owner_id=u AND client_request_id=(p_body->>'client_request_id')::uuid;
++  IF FOUND THEN
++   IF old.request_hash<>h THEN RAISE EXCEPTION 'REVISION_CONFLICT' USING ERRCODE='A0409';END IF;
++  ELSE
++   IF wr.revision<>(p_body->>'expected_run_revision')::bigint OR rev<>(p_body->>'expected_review_revision')::bigint OR digest IS DISTINCT FROM p_body->>'result_digest' THEN RAISE EXCEPTION 'REVISION_CONFLICT' USING ERRCODE='A0409';END IF;
++   INSERT INTO portal.meeting_quality_reviews(tenant_id,parent_id,owner_id,client_request_id,request_hash,review_revision,run_revision,result_digest,body)
++   VALUES(p_tenant,p_parent,u,(p_body->>'client_request_id')::uuid,h,rev+1,wr.revision,digest,p_body) RETURNING * INTO fresh;
++   INSERT INTO ops.audit_events(event_id,scope_kind,tenant_id,actor_id,action,opaque_target_id,result)
++   VALUES(gen_random_uuid(),'tenant',p_tenant,u,'meeting.quality_review',p_parent,'ok');rev:=rev+1;
++  END IF;
++ ELSIF p_action<>'read' THEN RAISE EXCEPTION 'ARGUMENT_REJECTED' USING ERRCODE='A0422';END IF;
++ SELECT coalesce(jsonb_agg(to_jsonb(x) ORDER BY review_revision DESC),'[]') INTO items FROM (
++ SELECT review_id,review_revision,run_revision,result_digest,body-ARRAY['client_request_id','expected_review_revision','expected_run_revision','result_digest'] AS ratings,created_at
++ FROM portal.meeting_quality_reviews WHERE tenant_id=p_tenant AND parent_id=p_parent ORDER BY review_revision DESC LIMIT 20) x;
++ RETURN jsonb_build_object('run_id',p_parent,'run_revision',wr.revision,'result_digest',digest,'review_revision',rev,'items',items,'history_limit',20,'replayed',old.review_id IS NOT NULL,'review_id',coalesce(old.review_id,fresh.review_id));
++END;$$;
++
++ALTER FUNCTION security.meeting_source_allowed(uuid,uuid,uuid) OWNER TO ai_policy_executor;
++ALTER FUNCTION security.meeting_source(uuid,uuid,uuid,uuid) OWNER TO ai_policy_executor;
++ALTER FUNCTION security.meeting_document_candidates(uuid,uuid,uuid,integer,text) OWNER TO ai_policy_executor;
++ALTER FUNCTION security.meeting_context_guard(uuid,uuid,uuid) OWNER TO ai_policy_executor;
++ALTER FUNCTION security.meeting_context_read(uuid,uuid,uuid,text) OWNER TO ai_policy_executor;
++ALTER FUNCTION security.workflow_parent_guard(uuid,uuid,uuid,uuid,boolean) OWNER TO ai_policy_executor;
++ALTER FUNCTION security.workflow_runtime(uuid,uuid,text,uuid,jsonb,text,text,uuid,date,uuid) OWNER TO ai_policy_executor;
++ALTER FUNCTION security.meeting_quality_control(uuid,uuid,text,uuid,jsonb) OWNER TO ai_policy_executor;
++REVOKE ALL ON FUNCTION security.meeting_source_allowed(uuid,uuid,uuid),security.meeting_source(uuid,uuid,uuid,uuid),security.meeting_document_candidates(uuid,uuid,uuid,integer,text),security.meeting_context_guard(uuid,uuid,uuid),security.meeting_context_read(uuid,uuid,uuid,text),security.meeting_quality_control(uuid,uuid,text,uuid,jsonb),security.workflow_parent_guard_v048(uuid,uuid,uuid,uuid,boolean),security.workflow_runtime_v048(uuid,uuid,text,uuid,jsonb,text,text,uuid,date,uuid),security.workflow_parent_guard(uuid,uuid,uuid,uuid,boolean),security.workflow_runtime(uuid,uuid,text,uuid,jsonb,text,text,uuid,date,uuid) FROM PUBLIC,ai_web,ai_index,ai_meter;
++GRANT EXECUTE ON FUNCTION security.meeting_source(uuid,uuid,uuid,uuid),security.meeting_document_candidates(uuid,uuid,uuid,integer,text),security.meeting_context_read(uuid,uuid,uuid,text),security.meeting_quality_control(uuid,uuid,text,uuid,jsonb),security.workflow_runtime(uuid,uuid,text,uuid,jsonb,text,text,uuid,date,uuid) TO ai_web;
++
++ALTER FUNCTION security.meeting_receipt_lookup(uuid,uuid,uuid,jsonb,text,text,date) OWNER TO ai_policy_executor;
++ALTER FUNCTION security.meeting_parent_for_child(uuid,uuid,uuid) OWNER TO ai_policy_executor;
++REVOKE ALL ON FUNCTION security.meeting_receipt_lookup(uuid,uuid,uuid,jsonb,text,text,date),security.meeting_parent_for_child(uuid,uuid,uuid) FROM PUBLIC,ai_web,ai_index,ai_meter;
++GRANT EXECUTE ON FUNCTION security.meeting_receipt_lookup(uuid,uuid,uuid,jsonb,text,text,date),security.meeting_parent_for_child(uuid,uuid,uuid) TO ai_web;
++CREATE POLICY audit_meeting_quality ON ops.audit_events FOR INSERT TO ai_policy_executor
++ WITH CHECK(session_user='ai_web' AND scope_kind='tenant' AND action='meeting.quality_review'
++ AND tenant_id=NULLIF(current_setting('app.tenant_id',true),'')::uuid AND actor_id=NULLIF(current_setting('app.user_id',true),'')::uuid
++ AND EXISTS(SELECT 1 FROM portal.meeting_run_contexts c WHERE c.tenant_id=audit_events.tenant_id AND c.parent_id=audit_events.opaque_target_id AND c.owner_id=audit_events.actor_id));
++CREATE FUNCTION security.meeting_context_summary(p_session uuid,p_tenant uuid,p_parent uuid) RETURNS jsonb
++LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,security,pg_temp AS $$
++DECLARE saved jsonb;doc jsonb;items jsonb:='[]';available boolean;
++BEGIN
++ PERFORM security.run_authorize(p_session,p_tenant,false);
++ SELECT context INTO saved FROM portal.meeting_run_contexts WHERE tenant_id=p_tenant AND parent_id=p_parent;
++ IF NOT FOUND THEN RETURN NULL;END IF;
++ FOR doc IN SELECT value FROM jsonb_array_elements(saved->'documents') LOOP
++  available:=security.meeting_source_allowed(p_tenant,(doc->>'document_id')::uuid,(doc->>'version_id')::uuid)
++   AND EXISTS(SELECT 1 FROM rag.document_versions v WHERE (v.tenant_id,v.document_id,v.version_id)=(p_tenant,(doc->>'document_id')::uuid,(doc->>'version_id')::uuid) AND encode(v.source_sha256,'hex')=doc->>'source_sha256');
++  items:=items||jsonb_build_array(jsonb_build_object('document_id',doc->>'document_id','version_id',doc->>'version_id','source_ref',doc->>'source_ref',
++   'source_sha256',doc->>'source_sha256','title',CASE WHEN available THEN doc->>'title' ELSE NULL END,'current_available',available));
++ END LOOP;
++ RETURN jsonb_build_object('meeting_date',saved->'source'->'meeting_date','memo_character_count',char_length(saved->'source'->>'memo'),'aggregate_character_count',char_length(saved->>'compiled'),'documents',items);
++END;$$;
++ALTER FUNCTION security.meeting_context_summary(uuid,uuid,uuid) OWNER TO ai_policy_executor;
++REVOKE ALL ON FUNCTION security.meeting_context_summary(uuid,uuid,uuid) FROM PUBLIC,ai_web,ai_index,ai_meter;
++GRANT EXECUTE ON FUNCTION security.meeting_context_summary(uuid,uuid,uuid) TO ai_web;
+--- a/src/backend/tests/test_meeting_runtime_context.py
++++ b/src/backend/tests/test_meeting_runtime_context.py
+@@ -0,0 +1,375 @@
++import json
++from datetime import date
++from uuid import UUID,uuid4
++import pytest
++from app.db import open_meter_pool, tenant_transaction
++from app.use_cases.service import UseCaseExecutionService
++from app.use_cases.runtime import compile_context, QualityReview
++from app.use_cases.meeting import MeetingInput
++from app.errors import AppError
++from test_operations import ops_rows
++from test_workflow_runtime import prepared,wait
++from test_meeting_workflow import bind,MeetingProvider,MEMO
++
++
++def test_meeting_context_admission_smoke(ops_rows):
++    f=ops_rows
++    async def check():
++        async with open_meter_pool(f.db.runtime_dsn('ai_meter')) as meter:
++            repo,workflow,agent,_,_,user,approver,version,definition=await prepared(f,meter,provider=MeetingProvider())
++            try:
++                await bind(f,repo,version,definition,user,approver)
++                async def raw(ctx,name,args):
++                    async with tenant_transaction(repo.pool,ctx) as conn:
++                        return (await (await conn.execute('SELECT security.'+name+'('+','.join(['%s']*len(args))+') AS data',args)).fetchone())['data']
++                repo.call=raw
++                service=UseCaseExecutionService(workflow)
++                run=await service.submit(user,'AGENT_03',MEMO,uuid4())
++                view=await wait(workflow,user,run['run_id'])
++                assert view['state']=='completed',view
++            finally:await workflow.close();await agent.close()
++    f.run(check())
++
++@pytest.mark.parametrize('delta',[0,1])
++def test_compile_context_never_truncates(delta):
++    source=MeetingInput(memo='x'*(4000+delta)) if not delta else None
++    if source:assert compile_context(source,[])==source.memo
++    with pytest.raises(AppError,match='MEETING_CONTEXT_TOO_LARGE'):
++        compile_context(MeetingInput(memo='x'*4000,meeting_date='2026-10-15'),[])
++
++@pytest.mark.parametrize('comment',['',' ','x'*501,'bad\x00comment'])
++def test_quality_comment_rejects_invalid(comment):
++    from pydantic import ValidationError
++    with pytest.raises(ValidationError):QualityReview(client_request_id=uuid4(),expected_review_revision=0,expected_run_revision=1,result_digest='a'*64,accuracy='acceptable',omission='not_assessed',owner='needs_review',deadline='not_assessed',comment=comment)
++
++
++def test_exact_private_source_date_replay_tamper_acl_quality_and_audit(ops_rows,tmp_path):
++    from app.documents.repository import DocumentRepository
++    from app.documents.storage import SourceStorage
++    from dataclasses import replace
++    from test_workflow_runtime import CountingProvider
++    text='김담당이 내일까지 자료를 제출한다.'
++    class Provider(CountingProvider):
++        result=None
++        async def generate(self,*args):return replace(await super().generate(*args),body=json.dumps(self.result,ensure_ascii=False))
++    f=ops_rows
++    async def check():
++        docs=DocumentRepository(f.pool,SourceStorage(tmp_path/'sources'),'fixture-secret','mock')
++        async with open_meter_pool(f.db.runtime_dsn('ai_meter')) as meter:
++            provider=Provider()
++            repo,workflow,agent,_,_,user,approver,version,definition=await prepared(f,meter,provider=provider)
++            service=UseCaseExecutionService(workflow,docs)
++            try:
++                await bind(f,repo,version,definition,user,approver)
++                registered=await docs.register(user,{'client_upload_id':uuid4(),'title':'합성 회의자료','media_type':'text/plain'},text.encode(),personal=True)
++                ref={'document_id':registered['document_id'],'version_id':registered['version_id']}
++                key='document:'+str(ref['version_id'])
++                provider.result={'decisions':[],'unresolved':[],'actions':[{'text':'자료 제출','quote':text,'source_ref':key,'assignee':'김담당'}]}
++                candidates=await service.meetings.candidates(user)
++                item=next(x for x in candidates['items'] if x['document_id']==str(ref['document_id']))
++                assert item['ready'] and item['character_length']==len(text)
++                other=await f.context('A-U2','A');cross=await f.context('B-U1','B')
++                assert all(x['document_id']!=str(ref['document_id']) for x in (await service.meetings.candidates(other))['items'])
++                for actor in [other,cross]:
++                    with pytest.raises(AppError):await service.submit(actor,'AGENT_03','',uuid4(),'2026-10-15',[ref])
++                client=uuid4();run=await service.submit(user,'AGENT_03','',client,'2026-10-15',[ref]);parent=UUID(run['run_id'])
++                view=await wait(workflow,user,run['run_id'])
++                assert view['state']=='completed',view
++                action=view['result']['actions'][0]
++                assert action['due_date']=='2026-10-16' and action['deadline_status']=='resolved'
++                assert action['source_display']['title']=='합성 회의자료'
++                assert view['meeting_context']['meeting_date']=='2026-10-15'
++                assert view['meeting_context']['memo_character_count']==0
++                replay=await service.submit(user,'AGENT_03','',client,'2026-10-15',[ref])
++                assert replay['replayed'] and provider.calls==1
++                with pytest.raises(AppError) as changed:await service.submit(user,'AGENT_03','',client,'2026-10-16',[ref])
++                assert changed.value.status==409
++                quality=await service.meetings.quality(user,parent)
++                assert quality['structural']['evidence_valid'] and quality['human_review_required'] and quality['review_revision']==0
++                body=QualityReview(client_request_id=uuid4(),expected_review_revision=0,expected_run_revision=quality['run_revision'],result_digest=quality['result_digest'],accuracy='acceptable',omission='not_assessed',owner='needs_review',deadline='acceptable',comment='  합성자료 검토  ')
++                reviewed=await service.meetings.quality(user,parent,body)
++                assert reviewed['review_revision']==1 and not reviewed['replayed']
++                assert (await service.meetings.quality(user,parent,body))['replayed']
++                with pytest.raises(AppError) as cas:await service.meetings.quality(user,parent,body.model_copy(update={'client_request_id':uuid4()}))
++                assert cas.value.status==409
++                with pytest.raises(AppError) as payload:await service.meetings.quality(user,parent,body.model_copy(update={'comment':'변경'}))
++                assert payload.value.status==409
++                with pytest.raises(AppError):await service.meetings.quality(other,parent)
++                with f.db.admin_connection() as conn:
++                    assert conn.execute("SELECT count(*) FROM ops.audit_events WHERE action='meeting.quality_review'").fetchone()[0]==1
++                    assert conn.execute('SELECT count(*) FROM portal.meeting_quality_reviews').fetchone()[0]==1
++                    original=conn.execute('SELECT source_object_key FROM rag.document_versions WHERE version_id=%s',(UUID(str(ref['version_id'])),)).fetchone()[0]
++                import psycopg
++                with f.db.admin_connection() as conn:
++                    with pytest.raises(psycopg.errors.CheckViolation):
++                        with conn.transaction():conn.execute("UPDATE portal.meeting_quality_reviews SET body='{}' WHERE parent_id=%s",(parent,))
++                    conn.execute("CREATE FUNCTION portal.fixture_meeting_audit_failure() RETURNS trigger LANGUAGE plpgsql AS $$BEGIN IF NEW.action='meeting.quality_review' THEN RAISE EXCEPTION 'fixture audit failure';END IF;RETURN NEW;END;$$")
++                    conn.execute('CREATE TRIGGER fixture_meeting_audit_failure BEFORE INSERT ON ops.audit_events FOR EACH ROW EXECUTE FUNCTION portal.fixture_meeting_audit_failure()')
++                try:
++                    with pytest.raises(AppError) as failed:
++                        await service.meetings.quality(user,parent,body.model_copy(update={'client_request_id':uuid4(),'expected_review_revision':1}))
++                    assert failed.value.status==503
++                    with f.db.admin_connection() as conn:
++                        assert conn.execute('SELECT count(*) FROM portal.meeting_quality_reviews').fetchone()[0]==1
++                        assert conn.execute("SELECT count(*) FROM ops.audit_events WHERE action='meeting.quality_review'").fetchone()[0]==1
++                finally:
++                    with f.db.admin_connection() as conn:
++                        conn.execute('DROP TRIGGER fixture_meeting_audit_failure ON ops.audit_events')
++                        conn.execute('DROP FUNCTION portal.fixture_meeting_audit_failure()')
++                file=docs.storage.root/original
++                bytes_before=file.read_bytes();file.write_bytes(b'tampered')
++                assert not next(x for x in (await service.meetings.candidates(user))['items'] if x['document_id']==str(ref['document_id']))['ready']
++                assert (await service.read(user,'AGENT_03',parent))['result'] is None
++                child=UUID(next(x['child_run_id'] for x in view['steps'] if x['node_type']=='llm'))
++                with pytest.raises(AppError):await service.meetings.guard_child(user,child)
++                with pytest.raises(AppError):await service.meetings.quality(user,parent)
++                file.write_bytes(bytes_before)
++                workflow.notify=lambda *args:None
++                pending=await service.submit(user,'AGENT_03','',uuid4(),'2026-10-15',[ref])
++                # Normal owner withdrawal, not a global policy change.
++                await docs.delete(user,UUID(str(ref['document_id'])),1,personal=True)
++                cancelled=await service.cancel(user,'AGENT_03',UUID(pending['run_id']),pending['revision'])
++                assert cancelled['state']=='cancelled' and provider.calls==1
++                hidden=await service.read(user,'AGENT_03',parent)
++                assert hidden['result'] is None and hidden['meeting_context']['documents'][0]['title'] is None
++                assert hidden['meeting_context']['meeting_date']=='2026-10-15'
++                assert (await service.submit(user,'AGENT_03','',client,'2026-10-15',[ref]))['replayed']
++                with pytest.raises(AppError):await service.meetings.quality(user,parent)
++            finally:await workflow.close();await agent.close()
++    f.run(check())
++
++
++def test_new_meeting_http_dto_quality_csrf_query_and_private_metadata(ops_rows,auth_settings,monkeypatch):
++    import time
++    from fastapi.testclient import TestClient
++    from pydantic import SecretStr
++    from app.main import create_app
++    from support import login
++    from test_operations import headers
++    f=ops_rows
++    async def setup():
++        async with open_meter_pool(f.db.runtime_dsn('ai_meter')) as meter:
++            repo,workflow,agent,_,_,user,approver,version,definition=await prepared(f,meter)
++            try:await bind(f,repo,version,definition,user,approver)
++            finally:await workflow.close();await agent.close()
++    f.run(setup())
++    monkeypatch.setattr('app.main.MockProvider',MeetingProvider)
++    monkeypatch.setattr('app.ai.routing.MockProvider',MeetingProvider)
++    settings=auth_settings.model_copy(update={'execution_enabled':True,'meter_dsn':SecretStr(f.db.runtime_dsn('ai_meter'))})
++    with TestClient(create_app(settings),base_url='http://127.0.0.1:8000',client=('127.0.0.1',50000)) as client:
++        csrf=login(client,'A-U1',f.passwords)['csrf_token'];h=headers(f,csrf=csrf);r=headers(f)
++        base='/api/v1/use-cases/AGENT_03'
++        assert client.get(base+'/documents?limit=1&limit=2',headers=r).status_code==422
++        assert client.get(base+'/documents?unknown=1',headers=r).status_code==422
++        candidates=client.get(base+'/documents',headers=r)
++        assert candidates.status_code==200 and all('text' not in x and 'source_object_key' not in x for x in candidates.json()['data']['items'])
++        for bad in [True,1,'2026-10-15T00:00:00','20261015','2026-02-30']:
++            assert client.post(base+'/execute',headers=h,json={'prompt':MEMO,'client_request_id':str(uuid4()),'meeting_date':bad}).status_code==422
++        for extra in [{'meeting_date':'2026-10-15'},{'meeting_date':None},{'document_refs':[]}]:
++            assert client.post('/api/v1/use-cases/AGENT_01/execute',headers=h,json={'prompt':MEMO,'client_request_id':str(uuid4())}|extra).status_code==422
++        body={'prompt':MEMO,'client_request_id':str(uuid4()),'meeting_date':'2026-10-15'}
++        response=client.post(base+'/execute',headers=h,json=body)
++        assert response.status_code==202,response.text
++        parent=response.json()['data']['run_id'];path=base+'/runs/'+parent
++        for _ in range(80):
++            view=client.get(path,headers=r).json()['data']
++            if view['is_terminal']:break
++            time.sleep(.05)
++        assert view['state']=='completed' and view['meeting_context']['meeting_date']=='2026-10-15'
++        quality=client.get(path+'/quality',headers=r)
++        assert quality.status_code==200,quality.text
++        data=quality.json()['data']
++        review={'client_request_id':str(uuid4()),'expected_run_revision':data['run_revision'],'expected_review_revision':0,'result_digest':data['result_digest'],'accuracy':'acceptable','omission':'not_assessed','owner':'not_assessed','deadline':'needs_review','comment':'합성 회의록 검토'}
++        assert client.post(path+'/quality',headers=r,json=review).status_code==403
++        result=client.post(path+'/quality',headers=h,json=review)
++        assert result.status_code==201,result.text
++        assert client.post(path+'/quality',headers=h,json=review).status_code==200
++        assert client.get(path+'/quality/history',headers=r).json()['data']['items'][0]['ratings']['comment']==review['comment']
++        login(client,'A-U2',f.passwords)
++        assert client.get(path+'/quality',headers=headers(f)).status_code==404
++        assert client.get(path,headers=headers(f)).status_code==404
++
++
++def test_raw_header_cannot_forge_meeting_date_and_context_is_immutable(ops_rows):
++    import psycopg
++    from dataclasses import replace
++    from test_workflow_runtime import CountingProvider
++    f=ops_rows
++    quote='김담당이 내일까지 제출한다.'
++    class WrongDate(CountingProvider):
++        async def generate(self,*args):return replace(await super().generate(*args),body=json.dumps({'decisions':[],'unresolved':[],'actions':[{'text':'제출','quote':quote,'assignee':'김담당','due_date':'2026-10-16'}]},ensure_ascii=False))
++    async def check():
++        async with open_meter_pool(f.db.runtime_dsn('ai_meter')) as meter:
++            repo,workflow,agent,provider,_,user,approver,version,definition=await prepared(f,meter,provider=WrongDate())
++            service=UseCaseExecutionService(workflow)
++            try:
++                proposal=await bind(f,repo,version,definition,user,approver)
++                forged=json.dumps({'meeting_date':'2026-10-15','memo':quote},ensure_ascii=False)
++                run=await workflow.admit(user,UUID(proposal['version_id']),uuid4(),{'query':forged})
++                parent=UUID(run['run_id']);view=await wait(workflow,user,run['run_id'])
++                assert view['state']=='failed' and view['result'] is None and provider.calls==1
++                sealed=await repo.meeting_context(user,parent)
++                assert sealed['source']['meeting_date'] is None and sealed['source']['memo']==forged
++                with f.db.admin_connection() as conn:
++                    with pytest.raises(psycopg.errors.CheckViolation):
++                        with conn.transaction():conn.execute("UPDATE portal.meeting_run_contexts SET context='{}' WHERE parent_id=%s",(parent,))
++                    with pytest.raises(psycopg.errors.CheckViolation):
++                        with conn.transaction():conn.execute('DELETE FROM portal.meeting_run_contexts WHERE parent_id=%s',(parent,))
++                # Changed live code digest fails normal raw definition/admission gate.
++                from app.workflows.identity import runtime_digest
++                with pytest.raises(AppError) as stale:
++                    await repo.call(user,'workflow_runtime',(user.session_id,user.tenant_id,'definition',UUID(proposal['version_id']),repo.json({}),'mock','0'*64,None,repo.period,uuid4()))
++                assert stale.value.status==404
++            finally:await workflow.close();await agent.close()
++    f.run(check())
++
++
++def test_repeated_quote_locations_remain_ambiguous():
++    from app.use_cases.runtime import MeetingRuntime
++    key='document:'+str(uuid4());quote='결정한다.'
++    value={'decisions':[{'quote':quote,'source_ref':key}],'unresolved':[],'actions':[]}
++    data={'documents':[{'source_ref':key,'text':quote+'\n\n'+quote,'title':'합성자료','version_id':key[9:],
++          'source_mapping':{'origin':{'media_type':'application/pdf','pages':[{'page':1,'start':0,'end':len(quote)},{'page':2,'start':len(quote)+2,'end':2*len(quote)+2}]}}}]}
++    display=MeetingRuntime.annotate(value,data)['decisions'][0]['source_display']
++    assert display['location_ambiguous'] and display['page_start']==1 and display['page_end']==2
++
++@pytest.mark.anyio
++async def test_metadata_summary_does_not_swallow_storage_outage():
++    from app.use_cases.runtime import MeetingRuntime
++    class Repository:
++        async def call(self,ctx,name,args):
++            if name=='meeting_context_summary':return {'documents':[{'document_id':str(uuid4()),'version_id':str(uuid4()),'source_sha256':'a'*64,'title':'합成','current_available':True}]}
++            raise AppError('STORAGE_UNAVAILABLE',503)
++    class Context:
++        session_id=uuid4();tenant_id=uuid4()
++    with pytest.raises(AppError) as error:await MeetingRuntime(Repository(),None).summary(Context(),uuid4())
++    assert error.value.code=='STORAGE_UNAVAILABLE' and error.value.status==503
++
++@pytest.mark.anyio
++@pytest.mark.parametrize('action',['claim','dispatch','heartbeat','finish','stream_view'])
++async def test_child_boundaries_fail_closed_before_rpc_when_source_guard_fails(action):
++    from app.ai.repository import CallRepository,ExecutionError
++    from types import SimpleNamespace
++    repo=CallRepository(None,None,date(2026,10,1));run=uuid4();ctx=object()
++    ticket=SimpleNamespace(ctx=ctx,run=SimpleNamespace(run_id=run))
++    calls=[]
++    async def guard(actor,parent):calls.append((actor,parent));raise AppError('DOCUMENT_UNAVAILABLE',404)
++    repo.meeting_guard=guard
++    invoke={'claim':lambda:repo.claim(ctx,run,'mock'),'dispatch':lambda:repo.dispatch(ticket,uuid4()),
++            'heartbeat':lambda:repo.heartbeat(ticket),'finish':lambda:repo.finish(ticket,'answer'),
++            'stream_view':lambda:repo.stream_view(ctx,run,'mock')}
++    with pytest.raises(ExecutionError) as error:await invoke[action]()
++    assert error.value.code=='EXECUTION_BLOCKED' and calls==[(ctx,run)]
++
++@pytest.mark.parametrize('operation',['dispatch','quality'])
++@pytest.mark.parametrize('winner',['fence','withdrawal'])
++def test_selected_source_transaction_fence_independent_sessions(ops_rows,tmp_path,operation,winner):
++    """Actual RPCs, independent owner sessions, deterministic database barriers."""
++    import time
++    import hashlib
++    import psycopg
++    from concurrent.futures import ThreadPoolExecutor
++    from dataclasses import replace
++    from psycopg.types.json import Jsonb
++    from app.documents.repository import DocumentRepository
++    from app.documents.storage import SourceStorage
++    from app.ai.repository import digest
++    f=ops_rows
++    async def prepare():
++        docs=DocumentRepository(f.pool,SourceStorage(tmp_path/'sources'),'fixture-secret','mock')
++        async with open_meter_pool(f.db.runtime_dsn('ai_meter')) as meter:
++            repo,workflow,agent,provider,_,user,approver,version,definition=await prepared(f,meter,provider=MeetingProvider())
++            try:
++                await bind(f,repo,version,definition,user,approver)
++                # Neither RPC borrows the seed session. Different session rows avoid
++                # touch_session serialization masking the selected-source race.
++                sessions=[uuid4(),uuid4()]
++                with f.db.admin_connection() as conn:
++                    for session in sessions:
++                        conn.execute('INSERT INTO security.sessions(session_id,token_hash,user_id,auth_revision,csrf_secret,issued_at,last_activity_at,expires_at) SELECT %s,%s,user_id,auth_revision,csrf_secret,issued_at,last_activity_at,expires_at FROM security.sessions WHERE session_id=%s',(session,uuid4().bytes+uuid4().bytes,user.session_id))
++                actor=replace(user,session_id=sessions[0]);mutator=replace(user,session_id=sessions[1])
++                registered=await docs.register(actor,{'client_upload_id':uuid4(),'title':'합성 잠금 자료','media_type':'text/plain'},MEMO.encode(),personal=True)
++                ref={'document_id':registered['document_id'],'version_id':registered['version_id']}
++                service=UseCaseExecutionService(workflow,docs)
++                if operation=='dispatch':workflow.notify=lambda *args:None
++                run=await service.submit(actor,'AGENT_03',MEMO,uuid4(),'2026-10-15',[ref]);parent=UUID(run['run_id'])
++                if operation=='quality':
++                    assert (await wait(workflow,actor,run['run_id']))['state']=='completed'
++                    quality=await service.meetings.quality(actor,parent)
++                    body=QualityReview(client_request_id=uuid4(),expected_review_revision=0,expected_run_revision=quality['run_revision'],result_digest=quality['result_digest'],accuracy='acceptable',omission='not_assessed',owner='not_assessed',deadline='not_assessed',comment='합성 동시성 검토')
++                    name='meeting_quality_control';args=(actor.session_id,actor.tenant_id,'review',parent,Jsonb(body.model_dump(mode='json')));call=None
++                else:
++                    token=uuid4();work=await repo.runtime(actor,'claim',parent,token=token)
++                    await repo.runtime(actor,'step',parent,{'node_id':'input'},token)
++                    text=work['inputs']['query']
++                    await repo.runtime(actor,'checkpoint',parent,{'node_id':'input','result':text},token)
++                    await repo.runtime(actor,'step',parent,{'node_id':'agent'},token)
++                    config=next(n['config'] for n in definition['nodes'] if n['node_id']=='agent')
++                    child=await repo.child(actor,parent,'agent',token,config,{'question':text,'audience':'담당자','rule':'기준'},hashlib.sha256(b'fixture-window').digest())
++                    ticket=await agent.repository.claim(actor,UUID(child['run_id']),'mock')
++                    reserved=await agent.repository.reserve(ticket,b'x'*32);call=UUID(reserved['call_id'])
++                    name='call_dispatch';args=(*agent.repository.worker_args(ticket),call,digest('fixture-dispatch'))
++                    assert provider.calls==0
++                return actor,mutator,ref,parent,name,args,call
++            finally:await workflow.close();await agent.close()
++    actor,mutator,ref,parent,name,args,call=f.run(prepare())
++    barrier=936015
++    with f.db.admin_connection() as observer, f.role_connection('ai_web') as op, f.role_connection('ai_web') as mutation, f.db.admin_connection() as controller:
++        assert op.info.backend_pid!=mutation.info.backend_pid
++        def identity(conn,ctx):
++            assert conn.execute('SELECT * FROM security.current_membership(%s,%s)',(ctx.session_id,ctx.tenant_id)).fetchone()
++            for key,value in [('app.user_id',ctx.user_id),('app.tenant_id',ctx.tenant_id),('app.session_id',ctx.session_id)]:conn.execute('SELECT set_config(%s,%s,true)',(key,str(value)))
++            conn.execute("SET LOCAL statement_timeout='10s'")
++        def protected():
++            try:
++                with op.transaction():
++                    identity(op,actor)
++                    if winner=='fence':op.execute("SELECT set_config('fixture.meeting_barrier','on',true)")
++                    return op.execute('SELECT security.'+name+'('+','.join(['%s']*len(args))+')',args).fetchone()[0]
++            except psycopg.Error as error:return error.sqlstate
++        def withdraw():
++            with mutation.transaction():
++                identity(mutation,mutator)
++                return mutation.execute('SELECT security.user_document_delete(%s,%s,%s,%s)',(mutator.session_id,mutator.tenant_id,UUID(str(ref['document_id'])),1)).fetchone()[0]
++        def blocked(waiter,blocker):
++            limit=time.monotonic()+4
++            while time.monotonic()<limit:
++                if observer.execute('SELECT %s=ANY(pg_blocking_pids(%s))',(blocker,waiter)).fetchone()[0]:return
++                time.sleep(.01)
++            pytest.fail('Controlled transaction barrier was not reached')
++        # Test-only wrapper pauses after the real fence has acquired/rechecked
++        # all selected rows, before call_dispatch/review writes can proceed.
++        observer.execute('ALTER FUNCTION security.meeting_sources_guard(uuid,jsonb,boolean) RENAME TO fixture_meeting_sources_guard')
++        observer.execute("""CREATE FUNCTION security.meeting_sources_guard(p_tenant uuid,p_documents jsonb,p_admission boolean) RETURNS boolean LANGUAGE plpgsql SECURITY DEFINER SET search_path=pg_catalog,security,pg_temp AS $$ BEGIN PERFORM security.fixture_meeting_sources_guard(p_tenant,p_documents,p_admission); IF current_setting('fixture.meeting_barrier',true)='on' THEN PERFORM pg_advisory_xact_lock(936015);END IF;RETURN true;END;$$""")
++        observer.execute('ALTER FUNCTION security.meeting_sources_guard(uuid,jsonb,boolean) OWNER TO ai_policy_executor')
++        observer.execute('REVOKE ALL ON FUNCTION security.meeting_sources_guard(uuid,jsonb,boolean) FROM PUBLIC,ai_web,ai_index,ai_meter')
++        try:
++            with ThreadPoolExecutor(max_workers=2) as workers:
++                if winner=='fence':
++                    with controller.transaction():
++                        controller.execute('SELECT pg_advisory_xact_lock(%s)',(barrier,))
++                        result=workers.submit(protected);blocked(op.info.backend_pid,controller.info.backend_pid)
++                        deletion=workers.submit(withdraw);blocked(mutation.info.backend_pid,op.info.backend_pid)
++                        assert not result.done() and not deletion.done()
++                        assert observer.execute('SELECT count(*) FROM portal.meeting_quality_reviews WHERE parent_id=%s',(parent,)).fetchone()[0]==0
++                        if call:assert observer.execute('SELECT state FROM ops.call_attempts WHERE call_id=%s',(call,)).fetchone()[0]=='reserved'
++                    value=result.result(timeout=5);deletion.result(timeout=5)
++                    assert value is True if operation=='dispatch' else value['review_revision']==1
++                else:
++                    with mutation.transaction():
++                        identity(mutation,mutator)
++                        mutation.execute('SELECT security.user_document_delete(%s,%s,%s,%s)',(mutator.session_id,mutator.tenant_id,UUID(str(ref['document_id'])),1))
++                        result=workers.submit(protected);blocked(op.info.backend_pid,mutation.info.backend_pid)
++                        assert not result.done()
++                    assert result.result(timeout=5)=='D0404'
++            expected=1 if operation=='quality' and winner=='fence' else 0
++            assert observer.execute('SELECT count(*) FROM portal.meeting_quality_reviews WHERE parent_id=%s',(parent,)).fetchone()[0]==expected
++            assert observer.execute("SELECT count(*) FROM ops.audit_events WHERE action='meeting.quality_review' AND opaque_target_id=%s",(parent,)).fetchone()[0]==expected
++            if call:
++                state=observer.execute('SELECT state FROM ops.call_attempts WHERE call_id=%s',(call,)).fetchone()[0]
++                assert state==('dispatched' if winner=='fence' else 'reserved')
++                claim,dispatched=observer.execute('SELECT dispatch_claim_hash,dispatched_at FROM ops.call_attempts WHERE call_id=%s',(call,)).fetchone()
++                assert (claim is not None and dispatched is not None)==(winner=='fence')
++        finally:
++            observer.execute('DROP FUNCTION security.meeting_sources_guard(uuid,jsonb,boolean)')
++            observer.execute('ALTER FUNCTION security.fixture_meeting_sources_guard(uuid,jsonb,boolean) RENAME TO meeting_sources_guard')
+--- a/src/backend/tests/test_meeting_context_migration.py
++++ b/src/backend/tests/test_meeting_context_migration.py
+@@ -0,0 +1,38 @@
++import hashlib
++import shutil
++import psycopg
++import pytest
++from scripts.migrate import MIGRATIONS, create_fixture_database, apply_migrations
++from scripts.seed import seed_fixture
++from test_catalog_migration import fingerprint
++
++
++def test_051_preserves_rows_checksums_and_private_append_only_tables(owned_cluster,tmp_path):
++    stage=tmp_path/'through050';stage.mkdir()
++    for p in MIGRATIONS.glob('*.sql'):
++        if p.name<'051_':shutil.copy2(p,stage/p.name)
++    db=create_fixture_database();state=None
++    try:
++        apply_migrations(db,stage);state=seed_fixture(db)
++        with db.admin_connection() as conn:before=fingerprint(conn)
++        assert apply_migrations(db)==['051_meeting_context_quality.sql']
++        with db.admin_connection() as conn:
++            after=fingerprint(conn)
++            assert all(after[k]==v for k,v in before.items())
++            for table in ('meeting_run_contexts','meeting_quality_reviews'):
++                assert conn.execute('SELECT relrowsecurity,relforcerowsecurity FROM pg_class WHERE oid=%s::regclass',('portal.'+table,)).fetchone()==(True,True)
++                assert conn.execute('SELECT count(*) FROM portal.'+table).fetchone()[0]==0
++            assert dict(conn.execute("SELECT version,sha256 FROM infra.schema_migrations WHERE version<'051_'").fetchall())=={p.name:hashlib.sha256(p.read_bytes()).hexdigest() for p in stage.iterdir()}
++            guard=conn.execute("SELECT pg_get_functiondef('security.meeting_sources_guard(uuid,jsonb,boolean)'::regprocedure)").fetchone()[0]
++            assert 'FOR SHARE' in guard and 'ORDER BY' in guard
++            assert guard.index('security.document_access WHERE')<guard.index('security.document_publications WHERE')<guard.index('rag.document_versions WHERE')<guard.index('IF NOT security.meeting_source_allowed')
++            for function in ('meeting_context_guard(uuid,uuid,uuid)','workflow_runtime(uuid,uuid,text,uuid,jsonb,text,text,uuid,date,uuid)'):
++                assert 'security.meeting_sources_guard' in conn.execute('SELECT pg_get_functiondef(%s::regprocedure)',('security.'+function,)).fetchone()[0]
++        with psycopg.connect(db.runtime_dsn(),autocommit=True) as conn:
++            with pytest.raises(psycopg.errors.InsufficientPrivilege):conn.execute("SELECT security.meeting_sources_guard(NULL,'[]',false)")
++            for table in ('meeting_run_contexts','meeting_quality_reviews'):
++                with pytest.raises(psycopg.errors.InsufficientPrivilege):conn.execute('SELECT * FROM portal.'+table)
++        assert apply_migrations(db)==[]
++    finally:
++        db.drop()
++        if state:state.secret_path.unlink(missing_ok=True)
+--- a/src/backend/app/ai/repository.py
++++ b/src/backend/app/ai/repository.py
+@@ -61,7 +61,15 @@
+             code='SUMMARY_OUTPUT_INVALID' if name=='summary_finish' and getattr(error,'sqlstate',None)=='A0422' else CODES.get(getattr(error,'sqlstate',None),'LEDGER_UNAVAILABLE')
+             raise ExecutionError(code) from None
+ 
++    async def check_meeting(self,ctx,run):
++        guard=getattr(self,'meeting_guard',None)
++        if guard is not None:
++            from app.errors import AppError
++            try:await guard(ctx,run)
++            except AppError:raise ExecutionError('EXECUTION_BLOCKED') from None
++
+     async def claim(self,ctx,run_id,mode):
++        await self.check_meeting(ctx,run_id)
+         worker=secrets.token_urlsafe(32)
+         try:
+             async with tenant_transaction(self.web_pool,ctx) as conn:
+@@ -87,6 +95,7 @@
+         return await self._rpc(self.web_pool,'call_reserve',(*self.worker_args(ticket),self.period,input_fingerprint),ticket.ctx)
+ 
+     async def dispatch(self,ticket,call_id):
++        await self.check_meeting(ticket.ctx,ticket.run.run_id)
+         secret=secrets.token_urlsafe(32);claim=DispatchClaim(call_id,ticket.run.epoch,secret)
+         # Only confirmed successful commit returns a usable dispatch capability.
+         try:ok=await self._rpc(self.web_pool,'call_dispatch',(*self.worker_args(ticket),call_id,digest(secret)),ticket.ctx)
+@@ -107,9 +116,11 @@
+         return await self.settle(ticket,claim,None,end_status,invalid)
+ 
+     async def heartbeat(self,ticket):
++        await self.check_meeting(ticket.ctx,ticket.run.run_id)
+         return await self._rpc(self.web_pool,'execution_heartbeat',self.worker_args(ticket),ticket.ctx)
+ 
+     async def finish(self,ticket,body):
++        await self.check_meeting(ticket.ctx,ticket.run.run_id)
+         return await self._rpc(self.web_pool,'execution_finish',(*self.worker_args(ticket),body),ticket.ctx)
+ 
+     async def fail(self,ticket,code):
+@@ -123,4 +134,5 @@
+         return await self._rpc(self.web_pool,'execution_reject',(ctx.session_id,ctx.tenant_id,ctx.user_id,run_id,mode,code))
+ 
+     async def stream_view(self,ctx,run_id,mode):
++        await self.check_meeting(ctx,run_id)
+         return await self._rpc(self.web_pool,'execution_stream_view',(ctx.session_id,ctx.tenant_id,run_id,mode,self.period),ctx)
+--- a/src/backend/app/assets/published.py
++++ b/src/backend/app/assets/published.py
+@@ -52,6 +52,10 @@
+     valid_keys=set(allowed) if allowed is not None else ({'cursor'} if query else set())
+     if (set(params)-valid_keys) or any(len(params.getlist(k))!=1 for k in params):raise AppError('REQUEST_INVALID',422)
+     await request.app.state.documents.read_window(ctx)
++    if action=='run':
++        meetings=getattr(request.app.state,'use_case_execution',None)
++        if meetings is not None:
++            await meetings.meetings.guard_child(ctx,target)
+     data=await PublishedRepository(request.app.state.pool).rpc(ctx,'published_agent_read',(ctx.session_id,ctx.tenant_id,action,target,Jsonb(body or {}),request.app.state.settings.mode))
+     if action=='list':await apply_agent_readiness(request,ctx,data)
+     elif action=='detail':await apply_agent_readiness(request,ctx,{'items':[data]})
+--- a/src/backend/tests/support.py
++++ b/src/backend/tests/support.py
+@@ -54,12 +54,12 @@
+ 
+     def verify_catalog(self):
+         with self.db.admin_connection() as conn:
+-            assert conn.execute("SELECT count(*) FROM pg_tables WHERE schemaname IN ('security','portal','ops','rag')").fetchone()[0]==66
+-            assert conn.execute("SELECT count(*) FROM infra.schema_migrations").fetchone()[0]==51
++            assert conn.execute("SELECT count(*) FROM pg_tables WHERE schemaname IN ('security','portal','ops','rag')").fetchone()[0]==68
++            assert conn.execute("SELECT count(*) FROM infra.schema_migrations").fetchone()[0]==52
+             rows=conn.execute("SELECT n.nspname,c.relname,c.relrowsecurity,c.relforcerowsecurity,r.rolname "
+                 "FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace JOIN pg_roles r ON r.oid=c.relowner "
+-                "WHERE n.nspname IN ('portal','ops') AND c.relname IN ('conversations','agent_configs','audit_events','messages','runs','tenant_budgets','call_attempts','usage_events','assets','asset_versions','builder_profiles','builder_receipts','builder_trials','builder_assessments','builder_cases','builder_evaluations','builder_evidence_shares','asset_deployments','asset_publications','published_agent_runs','asset_publication_events','dynamic_agent_favorites','data_imports','guardrail_policy_versions','guardrail_policy_heads','guardrail_violations','tool_approvals','tool_heads','tool_receipts','workflows','workflow_versions','workflow_heads','workflow_runs','workflow_steps','use_case_heads')").fetchall()
+-            assert len(rows)==35 and all(r[2] and r[3] and r[4]=='ai_owner' for r in rows)
++                "WHERE n.nspname IN ('portal','ops') AND c.relname IN ('conversations','agent_configs','audit_events','messages','runs','tenant_budgets','call_attempts','usage_events','assets','asset_versions','builder_profiles','builder_receipts','builder_trials','builder_assessments','builder_cases','builder_evaluations','builder_evidence_shares','asset_deployments','asset_publications','published_agent_runs','asset_publication_events','dynamic_agent_favorites','data_imports','guardrail_policy_versions','guardrail_policy_heads','guardrail_violations','tool_approvals','tool_heads','tool_receipts','workflows','workflow_versions','workflow_heads','workflow_runs','workflow_steps','use_case_heads','meeting_run_contexts','meeting_quality_reviews')").fetchall()
++            assert len(rows)==37 and all(r[2] and r[3] and r[4]=='ai_owner' for r in rows)
+             assert conn.execute("SELECT has_table_privilege('ai_policy_executor','portal.conversations','SELECT')").fetchone()[0]
+             assert conn.execute("SELECT has_column_privilege('ai_policy_executor','ops.project_budget','accounted_krw','SELECT')").fetchone()[0]
+             assert conn.execute("SELECT has_column_privilege('ai_policy_executor','portal.messages','body','SELECT')").fetchone()[0]
+@@ -69,7 +69,7 @@
+                 "EXISTS(SELECT 1 FROM aclexplode(p.proacl) a WHERE a.grantee=0 AND a.privilege_type='EXECUTE') "
+                 "FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace JOIN pg_roles r ON r.oid=p.proowner "
+                 "WHERE n.nspname='security'").fetchall()
+-            assert len(funcs)==172 and all(r[0] and r[1]==['search_path=pg_catalog, security, pg_temp'] and r[2]=='ai_policy_executor' and not r[3] for r in funcs)
++            assert len(funcs)==184 and all(r[0] and r[1]==['search_path=pg_catalog, security, pg_temp'] and r[2]=='ai_policy_executor' and not r[3] for r in funcs)
+             assert conn.execute('SELECT count(*) FROM security.managed_tenants').fetchone()[0]==1
+ 
+ 
+--- a/src/backend/scripts/portal_test_control.py
++++ b/src/backend/scripts/portal_test_control.py
+@@ -33,7 +33,7 @@
+                 conn.execute('UPDATE security.platform_access SET active=true')
+                 conn.execute('UPDATE security.managed_tenants SET active=true')
+                 # Only this marked disposable browser DB is reset; primary is rejected above.
+-                conn.execute('TRUNCATE portal.approval_reviews,portal.use_case_heads,portal.workflow_steps,portal.workflow_runs,portal.workflow_heads,portal.workflow_versions,portal.workflows,portal.tool_receipts,portal.tool_heads,portal.tool_approvals,portal.asset_publication_events,portal.published_agent_runs,portal.asset_publications,portal.asset_deployments,portal.builder_evidence_shares,portal.builder_evaluations,portal.builder_cases,portal.builder_assessments,portal.builder_trials,portal.agent_deployments,portal.summary_evidence,portal.summary_requests,portal.response_feedback,security.operation_receipts,security.job_authorizations,security.share_grants,security.document_publications,security.private_readers,rag.jobs,rag.index_builds,rag.document_versions,security.document_access,portal.answer_evidence,rag.relation_evidence,rag.evidence,rag.relations,rag.entities,rag.chunks,ops.usage_events,ops.call_attempts,portal.messages,portal.runs')
++                conn.execute('TRUNCATE portal.meeting_quality_reviews,portal.meeting_run_contexts,portal.approval_reviews,portal.use_case_heads,portal.workflow_steps,portal.workflow_runs,portal.workflow_heads,portal.workflow_versions,portal.workflows,portal.tool_receipts,portal.tool_heads,portal.tool_approvals,portal.asset_publication_events,portal.published_agent_runs,portal.asset_publications,portal.asset_deployments,portal.builder_evidence_shares,portal.builder_evaluations,portal.builder_cases,portal.builder_assessments,portal.builder_trials,portal.agent_deployments,portal.summary_evidence,portal.summary_requests,portal.response_feedback,security.operation_receipts,security.job_authorizations,security.share_grants,security.document_publications,security.private_readers,rag.jobs,rag.index_builds,rag.document_versions,security.document_access,portal.answer_evidence,rag.relation_evidence,rag.evidence,rag.relations,rag.entities,rag.chunks,ops.usage_events,ops.call_attempts,portal.messages,portal.runs')
+                 conn.execute('DELETE FROM portal.conversations WHERE NOT(conversation_id=ANY(%s))',([UUID(v) for v in config['conversations']],))
+                 conn.execute('UPDATE ops.project_budget SET stopped=false,stop_latch=false,revision=1,accounted_krw=0,reserved_krw=0,active_slot=0')
+                 conn.execute('UPDATE ops.tenant_budgets SET allocated_cap_krw=12500,local_cap_krw=12500,accounted_krw=0,reserved_krw=0,active_slot=0,stopped=false,revision=1')
+--- a/src/backend/tests/test_meeting_workflow.py
++++ b/src/backend/tests/test_meeting_workflow.py
+@@ -10,7 +10,7 @@
+ from test_workflow_runtime import prepared,wait,CountingProvider
+ 
+ MEMO='자료를 검토하기로 했다.'
+-RESULT={'decisions':[{'text':'자료 검토','quote':MEMO}],'unresolved':[],'actions':[]}
++RESULT={'decisions':[{'text':'자료 검토','quote':MEMO,'source_ref':'memo'}],'unresolved':[],'actions':[]}
+ 
+ class MeetingProvider(CountingProvider):
+     async def generate(self,*args):return replace(await super().generate(*args),body=json.dumps(RESULT,ensure_ascii=False))
+--- a/src/backend/scripts/evaluate_meeting_fixture.py
++++ b/src/backend/scripts/evaluate_meeting_fixture.py
+@@ -0,0 +1,22 @@
++"""Free structural fixture runner. Never calls DB/providers or claims semantic quality."""
++import json
++from dataclasses import asdict
++from pathlib import Path
++import sys
++from app.use_cases.meeting import MeetingInput,MeetingResult
++from app.use_cases.meeting_quality import evaluate_structure
++
++
++def evaluate(path):
++    fixture=json.loads(Path(path).read_text())
++    if fixture.get('provenance')!='synthetic_fixture_only':raise ValueError('SYNTHETIC_FIXTURE_REQUIRED')
++    items=[]
++    for case in fixture['cases']:
++        metrics=evaluate_structure(MeetingResult.model_validate(case['result']),MeetingInput.model_validate(case['source']),case.get('documents',{}))
++        items.append({'id':case['id'],'structural':asdict(metrics)})
++    return {'revision':fixture['revision'],'provenance':fixture['provenance'],'provider_calls':0,'human_review_required':True,'items':items}
++
++
++if __name__=='__main__':
++    path=sys.argv[1] if len(sys.argv)==2 else Path(__file__).parents[1]/'tests/fixtures/meeting-runtime-evaluation-v2.json'
++    print(json.dumps(evaluate(path),ensure_ascii=False,sort_keys=True))
+--- a/src/backend/tests/fixtures/meeting-runtime-evaluation-v2.json
++++ b/src/backend/tests/fixtures/meeting-runtime-evaluation-v2.json
+@@ -0,0 +1 @@
++{"revision":2,"provenance":"synthetic_fixture_only","cases":[{"id":"document-relative","source":{"memo":"","meeting_date":"2026-10-15","document_refs":[{"document_id":"00000000-0000-0000-0000-000000000001","version_id":"00000000-0000-0000-0000-000000000002"}]},"documents":{"document:00000000-0000-0000-0000-000000000002":"김담당이 내일까지 제출한다."},"result":{"decisions":[],"unresolved":[],"actions":[{"text":"제출","quote":"김담당이 내일까지 제출한다.","source_ref":"document:00000000-0000-0000-0000-000000000002","assignee":"김담당"}]}},{"id":"ambiguous-calendar","source":{"memo":"김담당이 월말까지 제출한다.","meeting_date":"2026-10-15"},"documents":{},"result":{"decisions":[],"unresolved":[],"actions":[{"text":"제출","quote":"김담당이 월말까지 제출한다.","assignee":"김담당"}]}},{"id":"structurally-valid-wrong-owner","source":{"memo":"김담당은 참관하고 이담당이 내일까지 제출한다.","meeting_date":"2026-10-15"},"documents":{},"result":{"decisions":[],"unresolved":[],"actions":[{"text":"제출","quote":"김담당은 참관하고 이담당이 내일까지 제출한다.","assignee":"김담당"}]},"human_expectation":"wrong owner despite literal containment; structural validity is not semantic correctness"}]}

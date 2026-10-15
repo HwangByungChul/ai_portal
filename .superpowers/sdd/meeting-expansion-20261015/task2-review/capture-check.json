@@ -1,0 +1,14 @@
+{
+  "source_paths": 17,
+  "historical_migrations_verified": 51,
+  "historical_migrations_changed": 0,
+  "source_sha256_match": true,
+  "original_pre_manifest_match": true,
+  "reviewed_post_before_p1_preserved": true,
+  "p1_changed_paths": [
+    "src/backend/migrations/051_meeting_context_quality.sql",
+    "src/backend/tests/test_meeting_runtime_context.py",
+    "src/backend/tests/test_meeting_context_migration.py",
+    "src/backend/tests/support.py"
+  ]
+}

@@ -1,0 +1,8 @@
+{
+  "status": "passed",
+  "tables": 40,
+  "migrations": 30,
+  "security_functions": 112,
+  "new_tables_empty_after_read_smoke": true,
+  "backup_mode_600": true
+}

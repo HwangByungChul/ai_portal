@@ -1,6 +1,6 @@
 import { test,expect } from '@playwright/test';
 import { redact } from './safe-reporter';
-import { control,fixture,login,members,password,row,selectTenant } from './support';
+import { control,fixture,login,members,password,row,selectTenant ,navigate} from './support';
 const pageErrors=new Map<string,number>();
 test.beforeEach(({context},info)=>{
  control('case-start');pageErrors.set(info.title,0);
@@ -13,7 +13,7 @@ test('A05_01_user_login_restore_and_direct_denial',async({page})=>{
  await expect(page.getByRole('button',{name:'사용자 관리',exact:true})).toHaveCount(0);
  const reply=await page.request.get('/api/v1/admin/memberships',{headers:{'X-Tenant-ID':fixture().tenants.A}});
  expect(reply.status()).toBe(403);await page.reload();await expect(page.getByRole('button',{name:'로그아웃',exact:true})).toBeVisible();
- await page.goto('/admin/members');await expect(page.getByRole('heading',{name:'AI 업무',exact:true})).toBeVisible();await expect(page.locator('tbody tr')).toHaveCount(0);
+ await page.goto('/admin/members');await expect(page.getByRole('heading',{name:'업무 홈',exact:true})).toBeVisible();await expect(page.locator('tbody tr')).toHaveCount(0);
  const empty=await page.evaluate(()=>localStorage.length===0&&sessionStorage.length===0);expect(empty).toBe(true);
 });
 
@@ -53,7 +53,7 @@ test('A05_06_global_permission_does_not_enable_tenant_admin',async({page})=>{
 
 test('A05_07_two_tabs_independent_tenants',async({page,context})=>{
  await login(page,'DUAL-ADM');await expect(page.getByRole('heading',{name:'업무 조직을 선택해 주세요.'})).toBeVisible();
- await selectTenant(page,'A');await members(page);const second=await context.newPage();await second.goto('/');
+ await selectTenant(page,'A');await members(page);const second=await context.newPage();await second.goto('/workspace');
  await selectTenant(second,'B');await members(second);await expect(row(second,'B-U1')).toBeVisible();await expect(row(second,'A-U1')).toHaveCount(0);
  await expect(page.getByLabel('현재 조직')).toHaveValue(fixture().tenants.A);await expect(row(page,'A-U1')).toBeVisible();
  await expect(second.getByLabel('현재 조직')).toHaveValue(fixture().tenants.B);
@@ -72,7 +72,7 @@ test('A05_08_late_actual_A_response_discarded',async({page})=>{
   if(route.request().headers()['x-tenant-id']!==orgA){await route.continue();return;}
   const actual=await route.fetch();fetched();await gate;try{await route.fulfill({response:actual});}finally{delivered();}
  });
- await page.getByRole('button',{name:'사용자 관리',exact:true}).click();await ready;
+ await navigate(page,'사용자 관리');await ready;
  await selectTenant(page,'B');await expect(row(page,'B-U1')).toBeVisible();release();await completed;
  await page.evaluate(()=>new Promise<void>(r=>requestAnimationFrame(()=>requestAnimationFrame(()=>r()))));
  await expect(row(page,'A-U1')).toHaveCount(0);await expect(row(page,'B-U1')).toBeVisible();
@@ -123,7 +123,7 @@ test('A05_14_logout_network_failure_hidden_until_retry',async({page})=>{
 });
 
 test('A05_15_logout_broadcast_clears_other_tab',async({page,context})=>{
- await login(page,'A-U1');const second=await context.newPage();await second.goto('/');await expect(second.getByRole('button',{name:'로그아웃',exact:true})).toBeVisible();
+ await login(page,'A-U1');const second=await context.newPage();await second.goto('/workspace');await expect(second.getByRole('button',{name:'로그아웃',exact:true})).toBeVisible();
  await page.getByRole('button',{name:'로그아웃',exact:true}).click();await expect(second.getByLabel('로그인 ID',{exact:true})).toBeVisible();
  await expect(second.getByRole('heading',{name:'AI 업무',exact:true})).toHaveCount(0);
 });
@@ -141,7 +141,7 @@ test('A05_17_mobile_layout_real_management',async({page})=>{
 });
 
 test('A05_18_password_fill_failure_redacted',async({page})=>{
- await page.goto('/');const secret=password('A-U1');let message='';
+ await page.goto('/workspace');const secret=password('A-U1');let message='';
  try{await page.locator('#missing-password').fill(secret,{timeout:150});}catch(error){message=String(error);}
  expect(message.length>0).toBe(true);expect(redact(message,[secret]).includes(secret)).toBe(false);
  const protectedValue='C'.repeat(43);expect(redact('s='+protectedValue,[protectedValue])).toBe('s=[REDACTED]');

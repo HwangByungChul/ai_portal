@@ -210,7 +210,7 @@ def test_user_tenant_and_project_capacity_and_mode_separation(client,login,ops_r
             for actor,tenant in [('A-U1','A'),('A-U2','A'),('B-U1','B'),('DUAL','B')]:
                 rid=uuid4()
                 if mode=='mock':mock_runs.append(rid)
-                conn.execute("INSERT INTO portal.runs(tenant_id,run_id,conversation_id,owner_user_id,client_send_id,request_hash,agent_key,config_snapshot,origin_session_id,execution_mode) VALUES(%s,%s,%s,%s,%s,%s,'general','{}',%s,%s)",
+                conn.execute("INSERT INTO portal.runs(tenant_id,run_id,conversation_id,owner_user_id,client_send_id,request_hash,agent_key,config_snapshot,origin_session_id,execution_mode) VALUES(%s,%s,%s,%s,%s,%s,'general',jsonb_build_object('agent_key','general','config_version',1),%s,%s)",
                     (f.tenant_ids[tenant],rid,f.conversation_ids[tenant+':'+actor],f.actor_ids[actor],uuid4(),bytes(32),f.state.session_ids[actor],mode))
     def new_c():
         return client.post('/api/v1/runs',headers=headers(f,'C',csrf),json={'client_send_id':str(uuid4()),'agent_key':'general','prompt':'합성 C 질문'})
@@ -355,7 +355,7 @@ def test_message_pages_hidden_drafts_and_purged_sequence_no_collision(client,log
 def test_actual_last_six_history_selected_and_snapshot_private(client,login,ops_rows):
     f=ops_rows;csrf=login(client,'A-U1')['csrf_token'];cid=f.conversation_ids['A:A-U1'];ids=[]
     with f.db.admin_connection() as conn:
-        rid=uuid4();conn.execute("INSERT INTO portal.runs(tenant_id,run_id,conversation_id,owner_user_id,client_send_id,request_hash,agent_key,config_snapshot,origin_session_id,execution_mode,state,stage,answer_kind,ended_at) VALUES(%s,%s,%s,%s,%s,%s,'general','{}',%s,'mock','completed','terminal','answer',clock_timestamp())",
+        rid=uuid4();conn.execute("INSERT INTO portal.runs(tenant_id,run_id,conversation_id,owner_user_id,client_send_id,request_hash,agent_key,config_snapshot,origin_session_id,execution_mode,state,stage,answer_kind,ended_at) VALUES(%s,%s,%s,%s,%s,%s,'general',jsonb_build_object('agent_key','general','config_version',1),%s,'mock','completed','terminal','answer',clock_timestamp())",
             (f.tenant_ids['A'],rid,cid,f.actor_ids['A-U1'],uuid4(),bytes(32),f.state.session_ids['A-U1']))
         for i in range(8):
             mid=uuid4();ids.append(str(mid));role='user' if i%2==0 else 'assistant'

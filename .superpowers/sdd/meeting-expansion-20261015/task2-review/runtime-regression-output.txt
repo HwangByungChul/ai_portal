@@ -1,0 +1,256 @@
+FFFF..........F................                                          [100%]
+=================================== FAILURES ===================================
+________ test_meeting_approval_execution_replay_current_gate_and_owner _________
+
+ops_rows = FixtureState(db=FixtureDatabase(name='ai_portal_mvp_test_a1a4f651c3fb484a97fb477ccac3950c'))
+
+    def test_meeting_approval_execution_replay_current_gate_and_owner(ops_rows):
+        f=ops_rows
+        async def check():
+            async with open_meter_pool(f.db.runtime_dsn('ai_meter')) as meter:
+                repo,workflow,agent,provider,_,user,approver,version,definition=await prepared(f,meter,provider=MeetingProvider())
+                service=UseCaseExecutionService(workflow)
+                try:
+                    assert await service.ready(user,'AGENT_03') is None
+                    proposal=await bind(f,repo,version,definition,user,approver)
+                    binding=await service.ready(user,'AGENT_03')
+                    assert binding['version_id']==proposal['version_id'] and binding['use_case_digest']==meeting_contract()['manifest_digest']
+                    assert await service.ready(user,'AGENT_01') is None
+                    client=uuid4();run=await service.submit(user,'AGENT_03',MEMO,client)
+                    view=await wait(workflow,user,run['run_id'])
+                    assert view['state']=='completed' and view['result']==RESULT,view
+                    replay=await service.submit(user,'AGENT_03',MEMO,client)
+                    assert replay['run_id']==run['run_id'] and replay['replayed'] and provider.calls==1
+                    with pytest.raises(AppError) as conflict:await service.submit(user,'AGENT_03','변경 메모',client)
+                    assert conflict.value.status==409
+                    other=await f.context('A-U2','A')
+                    with pytest.raises(AppError):await service.read(other,'AGENT_03',UUID(run['run_id']))
+                    with pytest.raises(AppError):await service.read(user,'AGENT_01',UUID(run['run_id']))
+                    with f.db.admin_connection() as conn:
+                        assert conn.execute('SELECT revision FROM portal.use_case_heads').fetchone()[0]==1
+                        assert conn.execute("SELECT count(*) FROM ops.call_attempts WHERE state='settled'").fetchone()[0]>=1
+                    await repo.approval(approver,'revoke',None,{'workflow_id':definition['workflow_id'],'comment':'fixture review', 'expected_revision':2},'mock')
+                    assert await service.ready(user,'AGENT_03') is None
+                    assert (await service.read(user,'AGENT_03',UUID(run['run_id'])))['result'] is None
+                finally:await workflow.close();await agent.close()
+>       f.run(check())
+
+src/backend/tests/test_meeting_workflow.py:58: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/backend/tests/support.py:25: in run
+    def run(self,coroutine): return self.loop.run_until_complete(coroutine)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py:725: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+src/backend/tests/test_meeting_workflow.py:41: in check
+    client=uuid4();run=await service.submit(user,'AGENT_03',MEMO,client)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/backend/app/use_cases/service.py:31: in submit
+    return await self.workflow.admit(ctx,UUID(binding['version_id']),client,{binding['input_key']:sealed['compiled']},meeting_context=sealed)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/backend/app/workflows/service.py:51: in admit
+    data=await self.repository.runtime(ctx,'admit',body=body,trace=trace)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/backend/app/workflows/repository.py:41: in runtime
+    return await self.call(ctx,'workflow_runtime',(ctx.session_id,ctx.tenant_id,action,target,Jsonb(body or {}),self.mode,runtime_digest(),token,self.period,trace or uuid4()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <app.workflows.repository.WorkflowRepository object at 0x110a36ba0>
+ctx = AuthContext(session_id=UUID('540766c4-bae0-4537-9667-7da4dcfa6ea9'), user_id=UUID('83996d43-7f27-571a-a9c4-966d3e92176b'), tenant_id=UUID('10000000-0000-4000-8000-00000000000a'), effective_role='USER')
+name = 'workflow_runtime'
+args = (UUID('540766c4-bae0-4537-9667-7da4dcfa6ea9'), UUID('10000000-0000-4000-8000-00000000000a'), 'admit', None, Jsonb({'version_id': 'd2c6d0b1-8039-4cce- ... (300 chars)), 'mock', ...)
+
+    async def call(self,ctx,name,args):
+        try:
+            async with tenant_transaction(self.pool,ctx) as conn:
+                data=await (await conn.execute('SELECT security.'+name+'('+','.join(['%s']*len(args))+') AS data',args)).fetchone()
+                return data['data']
+        except (psycopg.Error,ValueError) as error:
+            codes={'A0401':('AUTH_REQUIRED',401),'A0403':('MANAGEMENT_DENIED',403),'A0404':('NOT_FOUND',404),'A0409':('REVISION_CONFLICT',409),'A0422':('REQUEST_INVALID',422),'22P02':('REQUEST_INVALID',422),'A0429':('WORKFLOW_QUEUE_LIMIT',429),'B0401':('WORKFLOW_BLOCKED',409),'D0404':('DOCUMENT_UNAVAILABLE',404),'B0340':('WORKFLOW_BLOCKED',409)}
+            if isinstance(error,ValueError):raise AppError('AUTH_REQUIRED',401) from None
+>           raise AppError(*codes.get(error.sqlstate,('STORAGE_UNAVAILABLE',503))) from None
+E           app.errors.AppError: REQUEST_INVALID
+
+src/backend/app/workflows/repository.py:31: AppError
+_______ test_direct_workflow_api_also_rejects_unconfirmed_meeting_output _______
+
+ops_rows = FixtureState(db=FixtureDatabase(name='ai_portal_mvp_test_38f4152f518b46e3b0d4d0f79da2a64c'))
+
+    def test_direct_workflow_api_also_rejects_unconfirmed_meeting_output(ops_rows):
+        f=ops_rows
+        class InvalidProvider(CountingProvider):
+            async def generate(self,*args):return replace(await super().generate(*args),body=json.dumps({'decisions':[{'text':'가짜 결정','quote':'원문에 없는 문장'}],'unresolved':[],'actions':[]}))
+        async def check():
+            async with open_meter_pool(f.db.runtime_dsn('ai_meter')) as meter:
+                repo,workflow,agent,provider,_,user,approver,version,definition=await prepared(f,meter,provider=InvalidProvider())
+                try:
+                    proposal=await bind(f,repo,version,definition,user,approver)
+                    run=await workflow.admit(user,UUID(proposal['version_id']),uuid4(),{'query':MEMO})
+                    view=await wait(workflow,user,run['run_id'])
+                    assert view['state']=='failed' and view['result'] is None and provider.calls==1,view
+                finally:await workflow.close();await agent.close()
+>       f.run(check())
+
+src/backend/tests/test_meeting_workflow.py:74: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/backend/tests/support.py:25: in run
+    def run(self,coroutine): return self.loop.run_until_complete(coroutine)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py:725: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+src/backend/tests/test_meeting_workflow.py:70: in check
+    run=await workflow.admit(user,UUID(proposal['version_id']),uuid4(),{'query':MEMO})
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/backend/app/workflows/service.py:51: in admit
+    data=await self.repository.runtime(ctx,'admit',body=body,trace=trace)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/backend/app/workflows/repository.py:41: in runtime
+    return await self.call(ctx,'workflow_runtime',(ctx.session_id,ctx.tenant_id,action,target,Jsonb(body or {}),self.mode,runtime_digest(),token,self.period,trace or uuid4()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <app.workflows.repository.WorkflowRepository object at 0x11296ce10>
+ctx = AuthContext(session_id=UUID('336b3484-a039-488c-9077-2c8f3c522139'), user_id=UUID('83996d43-7f27-571a-a9c4-966d3e92176b'), tenant_id=UUID('10000000-0000-4000-8000-00000000000a'), effective_role='USER')
+name = 'workflow_runtime'
+args = (UUID('336b3484-a039-488c-9077-2c8f3c522139'), UUID('10000000-0000-4000-8000-00000000000a'), 'admit', None, Jsonb({'version_id': '7cc40192-2073-4712- ... (153 chars)), 'mock', ...)
+
+    async def call(self,ctx,name,args):
+        try:
+            async with tenant_transaction(self.pool,ctx) as conn:
+                data=await (await conn.execute('SELECT security.'+name+'('+','.join(['%s']*len(args))+') AS data',args)).fetchone()
+                return data['data']
+        except (psycopg.Error,ValueError) as error:
+            codes={'A0401':('AUTH_REQUIRED',401),'A0403':('MANAGEMENT_DENIED',403),'A0404':('NOT_FOUND',404),'A0409':('REVISION_CONFLICT',409),'A0422':('REQUEST_INVALID',422),'22P02':('REQUEST_INVALID',422),'A0429':('WORKFLOW_QUEUE_LIMIT',429),'B0401':('WORKFLOW_BLOCKED',409),'D0404':('DOCUMENT_UNAVAILABLE',404),'B0340':('WORKFLOW_BLOCKED',409)}
+            if isinstance(error,ValueError):raise AppError('AUTH_REQUIRED',401) from None
+>           raise AppError(*codes.get(error.sqlstate,('STORAGE_UNAVAILABLE',503))) from None
+E           app.errors.AppError: REQUEST_INVALID
+
+src/backend/app/workflows/repository.py:31: AppError
+_____________ test_meeting_parent_can_be_cancelled_before_dispatch _____________
+
+ops_rows = FixtureState(db=FixtureDatabase(name='ai_portal_mvp_test_4c520031d5e54475b3dff0a96f4faa00'))
+
+    def test_meeting_parent_can_be_cancelled_before_dispatch(ops_rows):
+        f=ops_rows
+        async def check():
+            async with open_meter_pool(f.db.runtime_dsn('ai_meter')) as meter:
+                repo,workflow,agent,provider,_,user,approver,version,definition=await prepared(f,meter,provider=MeetingProvider())
+                service=UseCaseExecutionService(workflow)
+                try:
+                    await bind(f,repo,version,definition,user,approver)
+                    workflow.notify=lambda *args:None
+                    run=await service.submit(user,'AGENT_03',MEMO,uuid4())
+                    cancelled=await service.cancel(user,'AGENT_03',UUID(run['run_id']),run['revision'])
+                    assert cancelled['state']=='cancelled'
+                    assert (await service.read(user,'AGENT_03',UUID(run['run_id'])))['result'] is None
+                finally:await workflow.close();await agent.close()
+>       f.run(check())
+
+src/backend/tests/test_meeting_workflow.py:91: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/backend/tests/support.py:25: in run
+    def run(self,coroutine): return self.loop.run_until_complete(coroutine)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py:725: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+src/backend/tests/test_meeting_workflow.py:86: in check
+    run=await service.submit(user,'AGENT_03',MEMO,uuid4())
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/backend/app/use_cases/service.py:31: in submit
+    return await self.workflow.admit(ctx,UUID(binding['version_id']),client,{binding['input_key']:sealed['compiled']},meeting_context=sealed)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/backend/app/workflows/service.py:51: in admit
+    data=await self.repository.runtime(ctx,'admit',body=body,trace=trace)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/backend/app/workflows/repository.py:41: in runtime
+    return await self.call(ctx,'workflow_runtime',(ctx.session_id,ctx.tenant_id,action,target,Jsonb(body or {}),self.mode,runtime_digest(),token,self.period,trace or uuid4()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <app.workflows.repository.WorkflowRepository object at 0x1109ebb10>
+ctx = AuthContext(session_id=UUID('1cd5e10b-fcb3-483d-9368-121a46944ab7'), user_id=UUID('83996d43-7f27-571a-a9c4-966d3e92176b'), tenant_id=UUID('10000000-0000-4000-8000-00000000000a'), effective_role='USER')
+name = 'workflow_runtime'
+args = (UUID('1cd5e10b-fcb3-483d-9368-121a46944ab7'), UUID('10000000-0000-4000-8000-00000000000a'), 'admit', None, Jsonb({'version_id': '252dd01f-6040-43fd- ... (300 chars)), 'mock', ...)
+
+    async def call(self,ctx,name,args):
+        try:
+            async with tenant_transaction(self.pool,ctx) as conn:
+                data=await (await conn.execute('SELECT security.'+name+'('+','.join(['%s']*len(args))+') AS data',args)).fetchone()
+                return data['data']
+        except (psycopg.Error,ValueError) as error:
+            codes={'A0401':('AUTH_REQUIRED',401),'A0403':('MANAGEMENT_DENIED',403),'A0404':('NOT_FOUND',404),'A0409':('REVISION_CONFLICT',409),'A0422':('REQUEST_INVALID',422),'22P02':('REQUEST_INVALID',422),'A0429':('WORKFLOW_QUEUE_LIMIT',429),'B0401':('WORKFLOW_BLOCKED',409),'D0404':('DOCUMENT_UNAVAILABLE',404),'B0340':('WORKFLOW_BLOCKED',409)}
+            if isinstance(error,ValueError):raise AppError('AUTH_REQUIRED',401) from None
+>           raise AppError(*codes.get(error.sqlstate,('STORAGE_UNAVAILABLE',503))) from None
+E           app.errors.AppError: REQUEST_INVALID
+
+src/backend/app/workflows/repository.py:31: AppError
+_________ test_actual_factory_meeting_http_csrf_poll_replay_and_owner __________
+
+ops_rows = FixtureState(db=FixtureDatabase(name='ai_portal_mvp_test_abc10fed548043ea906b336306776307'))
+auth_settings = Settings(profile='local', environment='local', portal_origins=(), origin='http://127.0.0.1:5173', mode='mock', budget_period=datetime.date(2026, 10, 1), execution_enabled=False, index_enabled=False, db_port=55432, bind_host='127.0.0.1')
+monkeypatch = <_pytest.monkeypatch.MonkeyPatch object at 0x1129655b0>
+
+    def test_actual_factory_meeting_http_csrf_poll_replay_and_owner(ops_rows,auth_settings,monkeypatch):
+        import time
+        from fastapi.testclient import TestClient
+        from pydantic import SecretStr
+        from app.main import create_app
+        from support import login
+        from test_operations import headers
+        f=ops_rows
+        async def setup():
+            async with open_meter_pool(f.db.runtime_dsn('ai_meter')) as meter:
+                repo,workflow,agent,_,_,user,approver,version,definition=await prepared(f,meter)
+                try:await bind(f,repo,version,definition,user,approver)
+                finally:await workflow.close();await agent.close()
+        f.run(setup())
+        monkeypatch.setattr('app.main.MockProvider',MeetingProvider)
+        monkeypatch.setattr('app.ai.routing.MockProvider',MeetingProvider)
+        settings=auth_settings.model_copy(update={'execution_enabled':True,'meter_dsn':SecretStr(f.db.runtime_dsn('ai_meter'))})
+        with TestClient(create_app(settings),base_url='http://127.0.0.1:8000',client=('127.0.0.1',50000)) as client:
+            csrf=login(client,'A-U1',f.passwords)['csrf_token'];h=headers(f,csrf=csrf)
+            catalog=client.get('/api/v1/use-cases',headers=headers(f)).json()['data']['items']
+            assert [row['use_case_id'] for row in catalog if row['execution_ready']]==['AGENT_03']
+            path='/api/v1/use-cases/AGENT_03';body={'prompt':MEMO,'client_request_id':str(uuid4())}
+            assert client.post(path+'/execute',headers=headers(f),json=body).status_code==403
+            reply=client.post(path+'/execute',headers=h,json=body)
+>           assert reply.status_code==202,reply.text
+E           AssertionError: {"error":{"code":"REQUEST_INVALID","message":"입력 형식을 확인해 주세요.","field_paths":[],"retryable":false},"meta":{"request_id":"d929cfeb-017a-456c-a40b-7e33021232c7","tenant_id":"10000000-0000-4000-8000-00000000000a","server_time":"2026-10-14T21:39:05.622346+00:00"}}
+E           assert 422 == 202
+E            +  where 422 = <Response [422 Unprocessable Content]>.status_code
+
+src/backend/tests/test_meeting_workflow.py:118: AssertionError
+______ test_workflow_helpers_and_private_tables_are_not_web_capabilities _______
+
+db_fixture = FixtureState(db=FixtureDatabase(name='ai_portal_mvp_test_a62d42ece91241c7a78f37565113ad5b'))
+
+    def test_workflow_helpers_and_private_tables_are_not_web_capabilities(db_fixture):
+        f=db_fixture
+        with f.role_connection('ai_web') as conn:
+            for statement in ['SELECT * FROM portal.workflow_runs','SELECT * FROM portal.workflow_steps',"SELECT security.workflow_bindings(NULL,NULL,NULL,NULL)","SELECT security.workflow_approval_control_v047(NULL,NULL,NULL,NULL,'{}',NULL,NULL)","SELECT security.published_run_guard_v047(NULL,NULL,NULL)"]:
+                with pytest.raises(psycopg.errors.InsufficientPrivilege):conn.execute(statement)
+>       f.verify_catalog()
+
+src/backend/tests/test_workflow_runtime.py:210: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = FixtureState(db=FixtureDatabase(name='ai_portal_mvp_test_a62d42ece91241c7a78f37565113ad5b'))
+
+    def verify_catalog(self):
+        with self.db.admin_connection() as conn:
+>           assert conn.execute("SELECT count(*) FROM pg_tables WHERE schemaname IN ('security','portal','ops','rag')").fetchone()[0]==66
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+E           AssertionError
+
+src/backend/tests/support.py:57: AssertionError
+=========================== short test summary info ============================
+FAILED src/backend/tests/test_meeting_workflow.py::test_meeting_approval_execution_replay_current_gate_and_owner
+FAILED src/backend/tests/test_meeting_workflow.py::test_direct_workflow_api_also_rejects_unconfirmed_meeting_output
+FAILED src/backend/tests/test_meeting_workflow.py::test_meeting_parent_can_be_cancelled_before_dispatch
+FAILED src/backend/tests/test_meeting_workflow.py::test_actual_factory_meeting_http_csrf_poll_replay_and_owner
+FAILED src/backend/tests/test_workflow_runtime.py::test_workflow_helpers_and_private_tables_are_not_web_capabilities
+5 failed, 26 passed in 51.59s

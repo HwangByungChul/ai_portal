@@ -1,0 +1,17 @@
+{
+  "src/backend/migrations/034_builder_evaluations.sql": "7069def1f4f0645f3fc659abf7dba12732e139d50f21d9d82ef0c97e152df11e",
+  "src/backend/app/builder/evaluations.py": "60353eefd023ba3a7280aec401075a0b9d27d726750efa73d2d68aaa9ecda2cb",
+  "src/backend/app/builder/execution.py": "206e8a5f969da2f0e701b80e7df0d4bce2b58aa99e4d8bef4d010346693d1229",
+  "src/backend/app/main.py": "3445e40e0bc66eb5e87b1093ae84ae752bbd3e466fe73cce6e763b4e2760d044",
+  "src/backend/tests/test_builder_evaluations.py": "ea8163f45c08c1f8c5a1b01b49e61dcbec1a490237d812cfce48fd44cf95cb69",
+  "src/backend/tests/test_builder_evaluations_migration.py": "fc5b9ef83ec752744cf7491faafbc826b2fb0f9ac0ab1ee9a6d2ddc0fddcfc23",
+  "src/backend/tests/test_builder_evidence_migration.py": "6b4a13c905d89bb81a5e03c166f27fc18a7201ec7a49e9793ce89e0346f22801",
+  "src/backend/tests/support.py": "677765b883d7823a84c9e2ea81808cac5c06d9e6a53525c11ee392c59e6a35fb",
+  "src/backend/scripts/portal_test_control.py": "1e36455e6cbf7f3493f4c45c0f395ae3d5e827476d5aec5ceb73b6888d71869b",
+  "src/frontend/src/BuilderEvaluation.tsx": "0e65ff07fa9b0c51f535561bb2f30f3c2af3934b86701322fcdeeeff978ef2fd",
+  "src/frontend/src/BuilderTrial.tsx": "e1f9d9fc975cd19cb2e99aaeddb27a67f9aad79fc87d04c35914400e2b1b186b",
+  "src/frontend/src/BuilderPreview.tsx": "14d9da4bd089ad4fdb9f8d54e3168739499b5853c862e9317fe410b9136323cf",
+  "src/frontend/src/BuilderEvidence.tsx": "f1765b58df25d6ca8aba23c2fe1cd9cf40ecda7a577b003b7916b74a24235a94",
+  "src/frontend/scripts/verify-portal-builds.mjs": "161ec973834c68435dbb07f65188e39e85ce635d0fc2d5260140691191b4aa93",
+  "src/frontend/tests/builder-evaluations.spec.ts": "31f780ddbcb33aeb9c19a51defb01a5bfa67786833f98f32a1f56091c601d18a"
+}

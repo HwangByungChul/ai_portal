@@ -1,0 +1,11 @@
+--- pre/src/frontend/src/AdminHomePage.tsx
++++ post/src/frontend/src/AdminHomePage.tsx
+@@ -139,7 +139,7 @@
+       {toolApprovals.data?.items.map(item=>'tool_id' in item&&<PendingRow key={item.request_id} item={{kind:'tool',request_id:item.request_id,requester_id:item.requester_id,asset_name:item.tool_id,base_version:item.revision,created_at:item.created_at}} onApprovals={onApprovals}/>)}
+       {workflowApprovals.data?.items.map(item=>'definition' in item&&<PendingRow key={item.version_id} item={{kind:'workflow',request_id:item.version_id,requester_id:item.created_by,asset_name:item.definition.name,base_version:item.revision,created_at:item.created_at}} onApprovals={onApprovals}/>)}
+       {ov.data?.pending.items.map(item=><PendingRow key={item.request_id} item={item} onApprovals={onApprovals}/>)}
+-      {ov.data&&!ov.data.pending.items.length&&<p className="hub-empty">승인 대기 중인 배포 요청이 없습니다.</p>}
++      {ov.data&&!ov.data.pending.items.length&&<p className="hub-empty">표시할 운영 설정·동적 Agent 배포 대기 요청이 없습니다.</p>}
+      </div>
+      {ov.data&&ov.data.pending.total>ov.data.pending.items.length&&
+       <p className="scope-note" style={{margin:0}}>불러온 5건 외 추가 요청이 있습니다. 승인·검증 메뉴에서 확인하세요.</p>}

@@ -1,0 +1,163 @@
+{
+  "first": {
+    "status": "failed",
+    "duration_ms": 161377.045,
+    "runner_errors": 0,
+    "tests": [
+      {
+        "test_id": "D12_03_historical_compare_rollback_receipt_and_user_exact_version",
+        "status": "failed",
+        "duration_ms": 17131
+      },
+      {
+        "test_id": "D11_14_case_saved_input_trial_check_and_reload",
+        "status": "passed",
+        "duration_ms": 6944
+      },
+      {
+        "test_id": "D11_15_lost_case_and_check_receipts_do_not_duplicate",
+        "status": "passed",
+        "duration_ms": 7267
+      },
+      {
+        "test_id": "D11_16_insufficient_evidence_case_does_not_generate",
+        "status": "passed",
+        "duration_ms": 8205
+      },
+      {
+        "test_id": "D11_11_history_reload_manual_assessment_and_version_comparison",
+        "status": "passed",
+        "duration_ms": 9092
+      },
+      {
+        "test_id": "D11_12_uncertain_assessment_retries_same_receipt_once",
+        "status": "passed",
+        "duration_ms": 5148
+      },
+      {
+        "test_id": "D11_13_displayed_evidence_revocation_clears_cached_content",
+        "status": "passed",
+        "duration_ms": 9757
+      },
+      {
+        "test_id": "D11_04_structured_roles_historical_version_clone_and_reload",
+        "status": "passed",
+        "duration_ms": 3673
+      },
+      {
+        "test_id": "D11_05_uncertain_clone_retries_same_id_without_duplicate_assets",
+        "status": "passed",
+        "duration_ms": 2581
+      },
+      {
+        "test_id": "D11_06_conflict_preserves_profile_and_shows_latest_profile",
+        "status": "passed",
+        "duration_ms": 2707
+      },
+      {
+        "test_id": "D11_17_explicit_share_reviewer_minimum_and_private_denied",
+        "status": "passed",
+        "duration_ms": 6386
+      },
+      {
+        "test_id": "D11_18_lost_share_receipt_recovery_and_owner_withdraw",
+        "status": "passed",
+        "duration_ms": 6289
+      },
+      {
+        "test_id": "D11_19_shared_detail_revalidation_clears_display",
+        "status": "passed",
+        "duration_ms": 10559
+      },
+      {
+        "test_id": "D11_07_trial_completed_mock_cost_and_dirty_lock",
+        "status": "passed",
+        "duration_ms": 4405
+      },
+      {
+        "test_id": "D11_08_lost_trial_receipt_recovers_same_run_once",
+        "status": "passed",
+        "duration_ms": 4677
+      },
+      {
+        "test_id": "D11_09_trial_cancel_preserves_unknown_ledger_without_partial_text",
+        "status": "passed",
+        "duration_ms": 3378
+      },
+      {
+        "test_id": "D11_10_empty_explicit_rag_scope_does_not_call_provider",
+        "status": "passed",
+        "duration_ms": 5185
+      },
+      {
+        "test_id": "D11_01_saved_template_preview_dirty_and_reload",
+        "status": "passed",
+        "duration_ms": 2812
+      },
+      {
+        "test_id": "D11_02_malformed_template_and_empty_rag_scope",
+        "status": "passed",
+        "duration_ms": 2507
+      },
+      {
+        "test_id": "D11_03_late_preview_cannot_cross_organization",
+        "status": "passed",
+        "duration_ms": 2070
+      },
+      {
+        "test_id": "D12_01_approve_publish_ordinary_user_execution_and_retire",
+        "status": "passed",
+        "duration_ms": 8371
+      },
+      {
+        "test_id": "D12_02_reject_keeps_catalog_unpublished",
+        "status": "passed",
+        "duration_ms": 5779
+      },
+      {
+        "test_id": "U11_01_home_launch_preserves_prompt_without_sending",
+        "status": "passed",
+        "duration_ms": 2659
+      },
+      {
+        "test_id": "U11_02_admin_home_and_real_request_approval",
+        "status": "passed",
+        "duration_ms": 2958
+      },
+      {
+        "test_id": "U11_03_direct_denial_and_mobile_navigation",
+        "status": "passed",
+        "duration_ms": 1534
+      },
+      {
+        "test_id": "U11_04_org_switch_discards_request_and_prompt",
+        "status": "passed",
+        "duration_ms": 1465
+      },
+      {
+        "test_id": "U11_05_empty_filter_and_pending_submission_recovery",
+        "status": "passed",
+        "duration_ms": 1973
+      },
+      {
+        "test_id": "U11_06_responsive_keyboard_and_private_visual_evidence",
+        "status": "passed",
+        "duration_ms": 1835
+      }
+    ],
+    "steps": []
+  },
+  "new_final": {
+    "status": "passed",
+    "duration_ms": 22027.547000000002,
+    "runner_errors": 0,
+    "tests": [
+      {
+        "test_id": "D12_03_historical_compare_rollback_receipt_and_user_exact_version",
+        "status": "passed",
+        "duration_ms": 15435
+      }
+    ],
+    "steps": []
+  }
+}

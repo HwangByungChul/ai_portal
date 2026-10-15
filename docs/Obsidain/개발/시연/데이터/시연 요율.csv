@@ -1,0 +1,3 @@
+﻿tariff_version,currency,unit_rate_krw,fee_krw,tax_krw,demo_only
+T001,KRW,100,0,0,True
+T002,KRW,1001,0,0,True

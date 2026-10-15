@@ -16,6 +16,9 @@ BACKEND = ROOT / "src/backend"
 FRONTEND = ROOT / "src/frontend"
 PYTHON = BACKEND / ".venv/bin/python"
 
+sys.path.insert(0,str(BACKEND))
+from app.environment import load_environment
+
 def identity(pid):
     if type(pid) is not int or pid <= 1:
         return None
@@ -59,11 +62,12 @@ def stop_owned(record, service, timeout=20):
     return False
 
 def main():
-    if len(sys.argv) != 3 or sys.argv[1] not in ("backend", "frontend") or sys.argv[2] not in ("start", "stop"):
-        raise ValueError("사용법: service_control.py backend|frontend start|stop")
+    if len(sys.argv) != 3 or sys.argv[1] not in ("backend", "frontend", "admin-frontend") or sys.argv[2] not in ("start", "stop"):
+        raise ValueError("사용법: service_control.py backend|frontend|admin-frontend start|stop")
     service, action = sys.argv[1:]
     folder = BACKEND if service == "backend" else FRONTEND
     runtime = folder / ".runtime/service-control"
+    if service=="admin-frontend":runtime=runtime/"admin-frontend"
     runtime.mkdir(mode=0o700, parents=True, exist_ok=True)
     if runtime.is_symlink() or runtime.parent.is_symlink():
         raise ValueError("실행 기록 폴더의 링크는 허용하지 않습니다.")
@@ -72,7 +76,7 @@ def main():
     with os.fdopen(private_open(runtime / "control.lock", os.O_RDWR | os.O_CREAT), "w") as lock:
         fcntl.flock(lock, fcntl.LOCK_EX)
         record = load_record(record_path)
-        port = 8000 if service == "backend" else 5173
+        port = 8000 if service == "backend" else 5174 if service=="admin-frontend" else 5173
         if action == "stop":
             if not owned(record, service):
                 if record:
@@ -85,7 +89,14 @@ def main():
             record_path.unlink(missing_ok=True)
             print(f"{service}: 종료했습니다." + (" 데이터베이스는 유지했습니다." if service == "backend" else ""))
             return
+        config_record=runtime/"configuration.json"
+        configuration=load_environment(os.environ.get('AI_ENVIRONMENT','local'))
+        if configuration['environment']!='local':raise ValueError('USE_DEPLOYMENT_RUNTIME_FOR_NONLOCAL')
+        endpoint=configuration['api' if service=='backend' else 'admin' if service=='admin-frontend' else 'user']
+        port=endpoint['port']
+        config_sha=hashlib.sha256(json.dumps(configuration,sort_keys=True).encode()).hexdigest()
         if owned(record, service):
+            if not config_record.is_file() or config_record.read_text().strip()!=config_sha:raise ValueError('CONFIGURATION_CHANGED_RESTART_REQUIRED')
             print(f"{service}: 이미 실행 중입니다. http://127.0.0.1:{port}/")
             return
         if record:
@@ -93,18 +104,20 @@ def main():
         if listening(port):
             raise ValueError(f"포트 {port}가 다른 프로세스에서 사용 중입니다. 해당 프로세스를 먼저 확인하세요.")
         env = {k: v for k, v in os.environ.items() if not k.startswith(("AI_", "PG"))}
+        env['AI_ENVIRONMENT']=configuration['environment']
         if service == "backend":
             if not (BACKEND / ".runtime/app.env").is_file():
                 raise ValueError("기존 backend/.runtime/app.env 설정이 필요합니다.")
             command = [str(PYTHON), "-m", "uvicorn", "app.main:create_app", "--factory",
-                       "--env-file", ".runtime/app.env", "--host", "127.0.0.1", "--port", "8000",
+                       "--env-file", ".runtime/app.env", "--host", "127.0.0.1", "--port", str(port),
                        "--no-proxy-headers", "--no-access-log"]
         else:
             node = Path.home() / ".nvm/versions/node/v22.23.1/bin/node"
             vite = FRONTEND / "node_modules/vite/bin/vite.js"
             if not node.is_file() or not vite.is_file():
                 raise ValueError("Node 22.23.1과 frontend/node_modules 설치가 필요합니다.")
-            command = [str(node), str(vite), "--host", "127.0.0.1", "--port", "5173", "--strictPort"]
+            command = [str(node), str(vite), "--host", "127.0.0.1", "--port", str(port), "--strictPort"]
+            if service=="admin-frontend":command += ["--mode","admin"]
         log_path = runtime / "service.log"
         with os.fdopen(private_open(log_path, os.O_WRONLY | os.O_CREAT | os.O_APPEND), "a") as log:
             os.chmod(log_path, 0o600)
@@ -124,6 +137,7 @@ def main():
         with os.fdopen(private_open(temp, os.O_WRONLY | os.O_CREAT | os.O_EXCL), "w") as f:
             json.dump(record, f)
         os.replace(temp, record_path)
+        with os.fdopen(private_open(config_record,os.O_WRONLY|os.O_CREAT|os.O_TRUNC),'w') as f:f.write(config_sha)
         url = f"http://127.0.0.1:{port}/" + ("api/v1/health" if service == "backend" else "")
         ready = False
         for _ in range(150):

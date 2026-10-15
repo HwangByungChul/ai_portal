@@ -1,0 +1,1 @@
+Exact source snapshots captured before this corrective task. Scope is the four files listed in files.json. pre/post/scoped.diff exclude prior task changes; these are corrections to the existing approved implementation. No commit or historical migration edits.

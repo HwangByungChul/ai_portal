@@ -139,7 +139,7 @@ def running_server(db_fixture, auth_settings, request):
         path = BACKEND / '.runtime' / ('A06-cleanup-' + request.node.name + '.json')
         path.unlink(missing_ok=True)
         _write_private(path, json.dumps({'test_id': request.node.name,
-            'api_child_stopped': live.child.poll() is not None,
+            'api_child_stopped': live.child is None or live.child.poll() is not None,
             'api_pool_remaining_connections': remaining,
             'private_log_secret_hits': 0,
             'fixture_id': hashlib.sha256(db_fixture.db.name.encode()).hexdigest()[:12]}))

@@ -23,6 +23,7 @@ def main():
             with conn.transaction():
                 conn.execute('ALTER TABLE ops.audit_events DROP CONSTRAINT IF EXISTS a05_fail_logout')
                 conn.execute('GRANT EXECUTE ON FUNCTION security.list_memberships(uuid,uuid,uuid,integer) TO ai_web')
+                conn.execute('TRUNCATE portal.agent_access,portal.agent_favorites,portal.catalog_mutations')
                 conn.execute("DELETE FROM security.memberships WHERE user_id IN (SELECT user_id FROM security.accounts WHERE login_id LIKE 'a05page_%%')")
                 conn.execute("DELETE FROM security.accounts WHERE login_id LIKE 'a05page_%%'")
                 conn.execute('DELETE FROM security.login_windows')
@@ -32,7 +33,7 @@ def main():
                 conn.execute('UPDATE security.platform_access SET active=true')
                 conn.execute('UPDATE security.managed_tenants SET active=true')
                 # Only this marked disposable browser DB is reset; primary is rejected above.
-                conn.execute('TRUNCATE portal.summary_evidence,portal.summary_requests,portal.response_feedback,security.operation_receipts,security.job_authorizations,security.share_grants,security.document_publications,security.private_readers,rag.jobs,rag.index_builds,rag.document_versions,security.document_access,portal.answer_evidence,rag.relation_evidence,rag.evidence,rag.relations,rag.entities,rag.chunks,ops.usage_events,ops.call_attempts,portal.messages,portal.runs')
+                conn.execute('TRUNCATE portal.meeting_quality_reviews,portal.meeting_run_contexts,portal.approval_reviews,portal.use_case_heads,portal.workflow_steps,portal.workflow_runs,portal.workflow_heads,portal.workflow_versions,portal.workflows,portal.tool_receipts,portal.tool_heads,portal.tool_approvals,portal.asset_publication_events,portal.published_agent_runs,portal.asset_publications,portal.asset_deployments,portal.builder_evidence_shares,portal.builder_evaluations,portal.builder_cases,portal.builder_assessments,portal.builder_trials,portal.agent_deployments,portal.summary_evidence,portal.summary_requests,portal.response_feedback,security.operation_receipts,security.job_authorizations,security.share_grants,security.document_publications,security.private_readers,rag.jobs,rag.index_builds,rag.document_versions,security.document_access,portal.answer_evidence,rag.relation_evidence,rag.evidence,rag.relations,rag.entities,rag.chunks,ops.usage_events,ops.call_attempts,portal.messages,portal.runs')
                 conn.execute('DELETE FROM portal.conversations WHERE NOT(conversation_id=ANY(%s))',([UUID(v) for v in config['conversations']],))
                 conn.execute('UPDATE ops.project_budget SET stopped=false,stop_latch=false,revision=1,accounted_krw=0,reserved_krw=0,active_slot=0')
                 conn.execute('UPDATE ops.tenant_budgets SET allocated_cap_krw=12500,local_cap_krw=12500,accounted_krw=0,reserved_krw=0,active_slot=0,stopped=false,revision=1')
@@ -51,15 +52,15 @@ def main():
             print(_read_private(proof) if proof.exists() else json.dumps({'restarted':False}));return 0
         elif action=='c05-enable':conn.execute("UPDATE portal.agent_configs SET enabled=true WHERE agent_key='rules_rag'")
         elif action=='c05-counts':
-            print(json.dumps({'documents':conn.execute('SELECT count(*) FROM security.document_access').fetchone()[0],'active':conn.execute("SELECT (SELECT count(*) FROM portal.runs WHERE state IN ('queued','running','cancel_requested'))+(SELECT count(*) FROM rag.jobs WHERE state IN ('queued','running'))").fetchone()[0],'embed_document':conn.execute("SELECT count(*) FROM ops.call_attempts WHERE operation='embed_document'").fetchone()[0],'embed_query':conn.execute("SELECT count(*) FROM ops.call_attempts WHERE operation='embed_query'").fetchone()[0],'generate_rag':conn.execute("SELECT count(*) FROM ops.call_attempts WHERE operation='generate_rag'").fetchone()[0],'reserved_positive':conn.execute("SELECT coalesce(sum(reserved_krw),0)>0 FROM ops.project_budget").fetchone()[0]}));return 0
-        elif action in ('slow-provider','release-provider','unknown-provider','slow-rag-provider','slow-index-provider','unknown-index-provider'):
+            print(json.dumps({'documents':conn.execute('SELECT count(*) FROM security.document_access').fetchone()[0],'active':conn.execute("SELECT (SELECT count(*) FROM portal.runs WHERE state IN ('accepted','queued','running','cancel_requested'))+(SELECT count(*) FROM rag.jobs WHERE state IN ('queued','running'))").fetchone()[0],'embed_document':conn.execute("SELECT count(*) FROM ops.call_attempts WHERE operation='embed_document'").fetchone()[0],'embed_query':conn.execute("SELECT count(*) FROM ops.call_attempts WHERE operation='embed_query'").fetchone()[0],'generate_rag':conn.execute("SELECT count(*) FROM ops.call_attempts WHERE operation='generate_rag'").fetchone()[0],'reserved_positive':conn.execute("SELECT coalesce(sum(reserved_krw),0)>0 FROM ops.project_budget").fetchone()[0]}));return 0
+        elif action in ('slow-provider','release-provider','unknown-provider','slow-rag-provider','slow-index-provider','unknown-index-provider','meeting-provider'):
             path=BACKEND/'.runtime/B05-provider-control.json';path.unlink()
-            _write_private(path,json.dumps({'behavior':{'slow-provider':'slow','release-provider':'normal','unknown-provider':'unknown','slow-rag-provider':'slow-rag','slow-index-provider':'slow-index','unknown-index-provider':'unknown-index'}[action]}))
+            _write_private(path,json.dumps({'behavior':{'slow-provider':'slow','release-provider':'normal','unknown-provider':'unknown','slow-rag-provider':'slow-rag','slow-index-provider':'slow-index','unknown-index-provider':'unknown-index','meeting-provider':'meeting'}[action]}))
         elif action=='b05-counts':
             count_path=BACKEND/'.runtime/B05-provider-count.txt'
             print(json.dumps({'provider_calls':len(_read_private(count_path).splitlines()) if count_path.exists() else 0,
                 'runs':conn.execute('SELECT count(*) FROM portal.runs').fetchone()[0],
-                'active':conn.execute("SELECT count(*) FROM portal.runs WHERE state IN ('queued','running','cancel_requested')").fetchone()[0],
+                'active':conn.execute("SELECT (SELECT count(*) FROM portal.runs WHERE state IN ('accepted','queued','running','cancel_requested'))+(SELECT count(*) FROM portal.workflow_runs WHERE state IN ('accepted','running'))").fetchone()[0],
                 'messages':conn.execute('SELECT count(*) FROM portal.messages').fetchone()[0],
                 'unknown':conn.execute("SELECT count(*) FROM ops.call_attempts WHERE state='usage_unknown'").fetchone()[0]}));return 0
         elif action=='revoke-platform':conn.execute('UPDATE security.platform_access SET active=false WHERE user_id=%s',(user,))

@@ -1,0 +1,171 @@
+{
+  "scope": "Changes from beginning of independent-app phase, not previous UI11 changes. Backend source unchanged against UI11 manifest.",
+  "backend_unchanged": true,
+  "files": [
+    {
+      "path": "src/frontend/README.md",
+      "sha256": "432f2b3e46dedac26668ba644b9ae8f524aa0ffed129caba1ff14a42f096b80d",
+      "previous_sha256": "9ea89d2dc33a742b9683197e0a1db8f64ef770811466619400fe415d1f8af3b3"
+    },
+    {
+      "path": "src/frontend/apps/admin-web/index.html",
+      "sha256": "db455afb2322375fe1c106c8b5aadc28462255b0e992b3d4c5b3ca10f1658cf1",
+      "previous_sha256": null
+    },
+    {
+      "path": "src/frontend/apps/admin-web/src/App.tsx",
+      "sha256": "53924123f2dffebe11ea3d714c9708dd9a82964e6460ee691b1b8d66528d5174",
+      "previous_sha256": "5db7994043f2be7cf9fc032828e5c1e5c91b26ce6d1fa98b126188875abdce6c"
+    },
+    {
+      "path": "src/frontend/apps/admin-web/src/main.tsx",
+      "sha256": "4425fbb54ce68d8215a122595900a8785fa48d42a472890a2e2e960401bfe37d",
+      "previous_sha256": null
+    },
+    {
+      "path": "src/frontend/apps/user-web/index.html",
+      "sha256": "0f5a2142ad26af1a90b1ee17b3b5d5dc211fde1f1af0d611b8032b134e46d711",
+      "previous_sha256": null
+    },
+    {
+      "path": "src/frontend/apps/user-web/src/App.tsx",
+      "sha256": "90eb9efe9f84f22a4ba5aee5d85ae41dda9d82ea2d5a844f6ab29498458e0747",
+      "previous_sha256": null
+    },
+    {
+      "path": "src/frontend/apps/user-web/src/main.tsx",
+      "sha256": "4425fbb54ce68d8215a122595900a8785fa48d42a472890a2e2e960401bfe37d",
+      "previous_sha256": null
+    },
+    {
+      "path": "src/frontend/package.json",
+      "sha256": "88986808568a2c2f49d3e935e671c800a21d5fb4f18b98041bd68e06acc4452b",
+      "previous_sha256": "1b6be302c5f51766d0af497a5235762faf98ffad54a0387932ad4be0461d8236"
+    },
+    {
+      "path": "src/frontend/packages/api-contract/src/api.ts",
+      "sha256": "f4f919333420af999f8022553b4a1b0a2b2456df5af1fbf9640f51d98c707377",
+      "previous_sha256": null
+    },
+    {
+      "path": "src/frontend/packages/api-contract/src/session.ts",
+      "sha256": "0812bf82902c83ad045befa3624a0caa3fd2d444686bbabd06380a25da95f185",
+      "previous_sha256": null
+    },
+    {
+      "path": "src/frontend/packages/api-contract/src/types.ts",
+      "sha256": "cb9773f44b64e00f386f8bbc087133f3a6553dc1c8480eeea25f6f498c21ab9d",
+      "previous_sha256": null
+    },
+    {
+      "path": "src/frontend/packages/ui/src/LoginPage.tsx",
+      "sha256": "c8c3c505a2a1ba1d9c946315c18ecce468a817911555142fc06329637986cace",
+      "previous_sha256": null
+    },
+    {
+      "path": "src/frontend/packages/ui/src/PortalShell.tsx",
+      "sha256": "c885f07ab78182b838fb242e3b320c81de084158e56d7938b74d82aca0a52a27",
+      "previous_sha256": "bc318e5b5e6fe5b0aa3d3b7d5af6e90ef1a53bc1920ca686e6e5b738560352a0"
+    },
+    {
+      "path": "src/frontend/packages/ui/src/TenantHeader.tsx",
+      "sha256": "b65eef9fd4017dfc757bc93b6c8b5e4abd10e800daedc9f9c61488796d9fb993",
+      "previous_sha256": null
+    },
+    {
+      "path": "src/frontend/packages/ui/src/portal.css",
+      "sha256": "0c5ba23669e9b7ea2738256666d92ce5a17ff824862a41cf070de27a7f27cfbe",
+      "previous_sha256": "04fa55a08a4b9c0a04d7cc0f864a3d36cd14de722d2b75ea0a474dd83165005b"
+    },
+    {
+      "path": "src/frontend/packages/ui/src/scoped.ts",
+      "sha256": "914066478dee5ee63369b3c2ac2444beef8c3ad16c0a91d7cae5f28857c0fd0a",
+      "previous_sha256": null
+    },
+    {
+      "path": "src/frontend/packages/ui/src/styles.css",
+      "sha256": "3002d55f6d862c1fb756089aa779934fc45672c73fd575369407ebfbbdec7fe8",
+      "previous_sha256": null
+    },
+    {
+      "path": "src/frontend/scripts/verify-portal-builds.mjs",
+      "sha256": "9935ce90cf8d7a683d30e85cc443224a927bb39eedf0fd7a36b414b5982fad15",
+      "previous_sha256": "7d94f4a3da2e3aade241634ba1c66d31a5c9e36aea330b52b2b902f9c1661f12"
+    },
+    {
+      "path": "src/frontend/src/DocumentJobsPage.tsx",
+      "sha256": "00a4c1b70fe9889625006fc46f17aae8b32a388efd5523596c65aa6164cef5fe",
+      "previous_sha256": "c4ef869585305cc8c84fec358b6b32e7289cd4daa73417617f963986eb2fd675"
+    },
+    {
+      "path": "src/frontend/src/DocumentsPage.tsx",
+      "sha256": "15822ba496cd8218304dabad8fb05d9ebea2fa66b1e4b59295352b01a00109e3",
+      "previous_sha256": "eaaa59f3bcbbe12b65914ba50dd9a8cf604dcabb804d63648a4b812b5f4e251b"
+    },
+    {
+      "path": "src/frontend/src/LoginPage.tsx",
+      "sha256": "d4df3ec8fece4009faaa43f9079b8be28135d886b318ae37e8ac8a7bb778990c",
+      "previous_sha256": "0cef5e29113e81ce39f4844a61d16944d5fed6b013af462ad6b39b6b0d079742"
+    },
+    {
+      "path": "src/frontend/src/TenantHeader.tsx",
+      "sha256": "3622f3bb11a8e736f5f148e5ea47e9ba5f85db67b61708c10a7f72e0751c24d6",
+      "previous_sha256": "824e83970456a8e512e1f59e7d32b8578adcf002058b39ca7ed461bf2880bcb5"
+    },
+    {
+      "path": "src/frontend/src/UsagePage.tsx",
+      "sha256": "2fa40bc99b7d28806b7e3a5822aae516321ce99769e6df533285d63126d78629",
+      "previous_sha256": "7ffe74722b6472c34d2a174987b0d690f11c12349ba0162a2f47d46cac655992"
+    },
+    {
+      "path": "src/frontend/src/api.ts",
+      "sha256": "4207c1677ae7139bcf8909bd2c12dded5eda328f6de908a800a407646f252750",
+      "previous_sha256": "f4f919333420af999f8022553b4a1b0a2b2456df5af1fbf9640f51d98c707377"
+    },
+    {
+      "path": "src/frontend/src/portal.css",
+      "sha256": "94c98941e202d2215eb082fc7d3dec6c6abfa0f77a3231830669a1e0ee58121b",
+      "previous_sha256": "04fa55a08a4b9c0a04d7cc0f864a3d36cd14de722d2b75ea0a474dd83165005b"
+    },
+    {
+      "path": "src/frontend/src/scoped.ts",
+      "sha256": "071f92b7d9086e1e737d2ecf970dbfbdaf0bb7361e917854a6bfa48b987f91c8",
+      "previous_sha256": "d69ff8036b56983a5999d4a4a353e722eca0b072513b34769eb21adbd098e55f"
+    },
+    {
+      "path": "src/frontend/src/session.ts",
+      "sha256": "07587c4b298dc3056ff9ef551bc4afcf856efc8ab6bf5bf0bbad69441866b0d1",
+      "previous_sha256": "0812bf82902c83ad045befa3624a0caa3fd2d444686bbabd06380a25da95f185"
+    },
+    {
+      "path": "src/frontend/src/styles.css",
+      "sha256": "ba873f5f2c55d4bef46908ae7098a130492115ef553ffa40a4e2c45e778afa7f",
+      "previous_sha256": "3002d55f6d862c1fb756089aa779934fc45672c73fd575369407ebfbbdec7fe8"
+    },
+    {
+      "path": "src/frontend/src/types.ts",
+      "sha256": "0337ab81fa1640308dab8f0d71cb2d8031bd4b03508106a847bf1bfd7780fc46",
+      "previous_sha256": "cb9773f44b64e00f386f8bbc087133f3a6553dc1c8480eeea25f6f498c21ab9d"
+    },
+    {
+      "path": "src/frontend/tests/portal-sites.spec.ts",
+      "sha256": "f73ecac577ef053941018f3c06b9f992b64284ed06936e573b8fd310729fdc59",
+      "previous_sha256": "03ebc34fe2884080cbf5c3376825db4e271b580ed7506366404929363ea667d9"
+    },
+    {
+      "path": "src/frontend/tests/safe-reporter.ts",
+      "sha256": "951d61b311feaba6b73fc7f9ad06f55a4a85e1a48bbdcfd6223a9158096d159a",
+      "previous_sha256": "64c7fa7b63386bd6d89c52bd800351abc5d15b117a3ee0fcff1d912360af4463"
+    },
+    {
+      "path": "src/frontend/tsconfig.json",
+      "sha256": "a99be97d684747ef1ab31f696b20116743ec8587af290f5cb54e07e8d2b2ede6",
+      "previous_sha256": "5736d64481f5b17801326a293310614ef37a82d07a8437e977ee98ad4141eb82"
+    },
+    {
+      "path": "src/frontend/vite.config.ts",
+      "sha256": "20eab6c03204e08ab3c8f1602f161bf5b506fd3052dbcf035e68bcb37e2ac857",
+      "previous_sha256": "9947f9973727f9349ae23802532319869ad4da62a59c885843b69c9433836761"
+    }
+  ]
+}

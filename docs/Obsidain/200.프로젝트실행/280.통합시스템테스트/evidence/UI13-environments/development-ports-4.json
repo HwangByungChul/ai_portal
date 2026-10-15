@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "duration_ms": 12666.046,
+  "runner_errors": 0,
+  "tests": [
+    {
+      "test_id": "U13_01_real_ports_share_development_session_and_launch",
+      "status": "passed",
+      "duration_ms": 2584
+    },
+    {
+      "test_id": "U13_02_admin_port_actual_request_and_other_approver",
+      "status": "passed",
+      "duration_ms": 2034
+    },
+    {
+      "test_id": "U13_03_origin_csrf_and_cross_port_server_logout",
+      "status": "passed",
+      "duration_ms": 1579
+    },
+    {
+      "test_id": "U13_04_admin_port_does_not_grant_user_permissions",
+      "status": "passed",
+      "duration_ms": 1240
+    }
+  ],
+  "steps": []
+}

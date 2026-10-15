@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "environment": "local",
+  "configured": true,
+  "bind_host": "127.0.0.1",
+  "session_mode": "shared-host-development",
+  "user": {
+    "origin": "http://127.0.0.1:5173",
+    "port": 5173,
+    "entry": "/user/home"
+  },
+  "admin": {
+    "origin": "http://127.0.0.1:5174",
+    "port": 5174,
+    "entry": "/manage/admin"
+  },
+  "api": {
+    "origin": "http://127.0.0.1:8000",
+    "port": 8000,
+    "entry": "/api/v1"
+  }
+}

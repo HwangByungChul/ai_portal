@@ -1,0 +1,29 @@
+{
+  "backend": {
+    "targeted_suites_passed": 147,
+    "targeted_suites_seconds": 200.83,
+    "additional_snapshot_restart_passed": 2,
+    "additional_seconds": 8.96,
+    "unique_passed": 149,
+    "full_backend_suite_claimed": false
+  },
+  "browser": {
+    "initial_cases": 104,
+    "initial_passed": 100,
+    "initial_failed": 4,
+    "recheck_17_passed": 15,
+    "recheck_17_failed": 2,
+    "recheck_2_passed": 1,
+    "recheck_2_failed": 1,
+    "final_1_passed": 1,
+    "latest_unique_cases_passed": 108,
+    "single_108_case_run_claimed": false
+  },
+  "build": {
+    "typecheck": true,
+    "vite_build": true,
+    "modules": 42
+  },
+  "provider_calls": "mock only; no paid real provider calls",
+  "old_migrations_modified": false
+}

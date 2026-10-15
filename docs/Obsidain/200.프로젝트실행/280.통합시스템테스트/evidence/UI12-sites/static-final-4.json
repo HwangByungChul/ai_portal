@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "duration_ms": 11028.84,
+  "runner_errors": 0,
+  "tests": [
+    {
+      "test_id": "U12_02_admin_artifact_approval_and_site_switch",
+      "status": "passed",
+      "duration_ms": 1976
+    },
+    {
+      "test_id": "U12_05_org_change_and_same_origin_logout",
+      "status": "passed",
+      "duration_ms": 1485
+    },
+    {
+      "test_id": "U12_06_mobile_keyboard_and_artifact_visuals",
+      "status": "passed",
+      "duration_ms": 1311
+    },
+    {
+      "test_id": "U12_07_tenant_hint_cannot_grant_management",
+      "status": "passed",
+      "duration_ms": 978
+    }
+  ],
+  "steps": []
+}

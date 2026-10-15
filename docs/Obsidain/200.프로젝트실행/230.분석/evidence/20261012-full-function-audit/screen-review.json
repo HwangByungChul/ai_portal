@@ -1,0 +1,2671 @@
+[
+  {
+    "id": "SCR-COM-001",
+    "name": "SSO 로그인·콜백",
+    "app": "공통",
+    "source_row": 4,
+    "original_url": "/auth/callback",
+    "original_purpose": "계열사 SSO 인증 후 역할·조직·테넌트 컨텍스트 생성",
+    "original_functions": "F-006",
+    "status": "부분 구현",
+    "implemented": "로컬 로그인/세션",
+    "remaining": "SSO callback/AD 연계",
+    "evidence_groups": [
+      "auth"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-COM-002",
+    "name": "접근권한 없음",
+    "app": "공통",
+    "source_row": 5,
+    "original_url": "/error/403",
+    "original_purpose": "권한 부족·직무분리 충돌·테넌트 불일치 사유를 안전하게 안내",
+    "original_functions": "F-006,F-011",
+    "status": "부분 구현",
+    "implemented": "접근 거부 화면·401/403/404·현재 권한",
+    "remaining": "직무분리·새 자산/연계 범위 전수",
+    "evidence_groups": [
+      "portal",
+      "auth"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-COM-003",
+    "name": "Tenant 선택·전환",
+    "app": "공통",
+    "source_row": 6,
+    "original_url": "/context/tenant",
+    "original_purpose": "복수 계열사 권한 보유자의 활성 Tenant를 전환하고 세션을 재발급",
+    "original_functions": "F-005,F-043,F-046",
+    "status": "부분 구현",
+    "implemented": "소속 tenant 선택·세대 변경·앱간 허용 힌트",
+    "remaining": "SSO 세션 재발급·전역 org lifecycle",
+    "evidence_groups": [
+      "auth",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-COM-004",
+    "name": "통합검색 결과",
+    "app": "공통",
+    "source_row": 7,
+    "original_url": "/search",
+    "original_purpose": "Agent·Prompt·MCP·Knowledge·화면 도움말을 권한 필터 후 통합 검색",
+    "original_functions": "F-020,F-023",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "Agent·Prompt·MCP·Knowledge·화면 도움말을 권한 필터 후 통합 검색",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-COM-005",
+    "name": "알림센터",
+    "app": "공통",
+    "source_row": 8,
+    "original_url": "/notifications",
+    "original_purpose": "승인·배포·작업·거버넌스 기일 알림을 읽음·보관 처리",
+    "original_functions": "F-017,F-057",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "승인·배포·작업·거버넌스 기일 알림을 읽음·보관 처리",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-COM-006",
+    "name": "통합 승인함",
+    "app": "공통",
+    "source_row": 9,
+    "original_url": "/approvals",
+    "original_purpose": "사용신청·자산·반입·배포·예외·거버넌스 결재를 역할별 조회·처리",
+    "original_functions": "F-019,F-024,F-029,F-039,F-041,F-052",
+    "status": "부분 구현",
+    "implemented": "고정 Agent 설정 승인 목록/상세",
+    "remaining": "사용신청/반입/예외/과제 등 통합 승인",
+    "evidence_groups": [
+      "approval"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-COM-007",
+    "name": "장기작업 상태",
+    "app": "공통",
+    "source_row": 10,
+    "original_url": "/jobs",
+    "original_purpose": "파일처리·RAG·평가·Export·배포 작업의 진행·실패·재처리 상태 제공",
+    "original_functions": "F-014,F-015,F-018,F-039,F-041,F-053,F-058,F-059",
+    "status": "부분 구현",
+    "implemented": "run/문서 Job 처리·취소/관리 재시도",
+    "remaining": "평가/Export/실배포 등 전체 장기작업",
+    "evidence_groups": [
+      "docs",
+      "chat"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-COM-008",
+    "name": "시스템 오류·점검",
+    "app": "공통",
+    "source_row": 11,
+    "original_url": "/error",
+    "original_purpose": "서비스 장애·점검·상관ID·재시도 가능 여부 안내",
+    "original_functions": "F-003",
+    "status": "부분 구현",
+    "implemented": "정제 오류·request ID·재조회",
+    "remaining": "점검 공지·전체 의존 서비스 장애 시나리오",
+    "evidence_groups": [
+      "portal",
+      "chat"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-HOM-001",
+    "name": "통합 Home",
+    "app": "사용자 통합 포털",
+    "source_row": 12,
+    "original_url": "/portal/home",
+    "original_purpose": "역할별 빠른 실행, 추천 Agent, 최근 대화, 승인대기, 사용량과 서비스 상태 제공",
+    "original_functions": "F-001,F-004,F-005,F-006,F-007,F-017",
+    "status": "부분 구현",
+    "implemented": "A홈 질문 진입·도우미·최근 대화·자료/요약",
+    "remaining": "명세 전체 역할 추천/승인대기/사용량/상태 위젯",
+    "evidence_groups": [
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-CHT-001",
+    "name": "AI Chat",
+    "app": "사용자 통합 포털",
+    "source_row": 13,
+    "original_url": "/portal/chat",
+    "original_purpose": "모델·Agent 선택, 스트리밍 질의응답, 세션 유지, 중단·재생성",
+    "original_functions": "F-008,F-009,F-010,F-011,F-012",
+    "status": "부분 구현",
+    "implemented": "고정2 Agent Chat·SSE·취소·이력",
+    "remaining": "다중모델 선택·일반 재생성",
+    "evidence_groups": [
+      "chat"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-CHT-002",
+    "name": "출처·원문 상세",
+    "app": "사용자 통합 포털",
+    "source_row": 14,
+    "original_url": "/portal/chat/sources/:evidenceId",
+    "original_purpose": "RAG 문서·청크·점수·원문 링크를 최신 권한으로 조회",
+    "original_functions": "F-013",
+    "status": "부분 구현",
+    "implemented": "RAG 출처·정확 원문·최신권한",
+    "remaining": "전체 요구 출처 상세/검색설정·실자료 품질 수용",
+    "evidence_groups": [
+      "chat",
+      "docs"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-CHT-003",
+    "name": "대화 파일 업로드",
+    "app": "사용자 통합 포털",
+    "source_row": 15,
+    "original_url": "/portal/chat/upload",
+    "original_purpose": "문서·이미지 업로드, 검사, 파싱·OCR, 요약·번역 요청",
+    "original_functions": "F-014",
+    "status": "부분 구현",
+    "implemented": "자료함 등록 후 질문에 버전 선택",
+    "remaining": "대화 내 업로드/이미지·OCR/번역",
+    "evidence_groups": [
+      "docs",
+      "chat"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-CHT-004",
+    "name": "개인 RAG 처리상태",
+    "app": "사용자 통합 포털",
+    "source_row": 16,
+    "original_url": "/portal/chat/personal-rag/jobs/:jobId",
+    "original_purpose": "개인 문서의 파싱·청크·임베딩·인덱싱 상태와 실패 재처리",
+    "original_functions": "F-015",
+    "status": "부분 구현",
+    "implemented": "개인 문서 처리상태·현재 게시",
+    "remaining": "사용자 재처리·확장 형식",
+    "evidence_groups": [
+      "docs"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-CHT-005",
+    "name": "전체 Prompt 조회",
+    "app": "사용자 통합 포털",
+    "source_row": 17,
+    "original_url": "/portal/chat/prompt",
+    "original_purpose": "Agent 관리자에게 승인 Prompt 버전과 구성 정보를 읽기 전용 제공",
+    "original_functions": "F-016",
+    "status": "부분 구현",
+    "implemented": "관리자가 고정 instructions 조회",
+    "remaining": "전체 Prompt 조합·읽기 전용 승인버전",
+    "evidence_groups": [
+      "approval"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-CHT-006",
+    "name": "응답 피드백",
+    "app": "사용자 통합 포털",
+    "source_row": 18,
+    "original_url": "/portal/chat/feedback",
+    "original_purpose": "답변 별점·좋아요/싫어요·의견·개선요청을 응답 버전에 연결",
+    "original_functions": "F-013,F-026",
+    "status": "부분 구현",
+    "implemented": "응답 positive/negative/의견·변경/철회",
+    "remaining": "별점·개선요청 workflow",
+    "evidence_groups": [
+      "feedback"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-CHT-007",
+    "name": "대화·응답 Export",
+    "app": "사용자 통합 포털",
+    "source_row": 19,
+    "original_url": "/portal/chat/export",
+    "original_purpose": "대화·응답·출처를 정책에 따라 PDF/문서로 비동기 출력",
+    "original_functions": "F-018",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "대화·응답·출처를 정책에 따라 PDF/문서로 비동기 출력",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MYW-001",
+    "name": "My Agent 목록",
+    "app": "사용자 통합 포털",
+    "source_row": 20,
+    "original_url": "/portal/workspace/agents",
+    "original_purpose": "사용 가능·즐겨찾기·최근 사용 Agent를 상태별 조회",
+    "original_functions": "F-017,F-019",
+    "status": "부분 구현",
+    "implemented": "홈의 고정 도우미 목록",
+    "remaining": "My Agent 즐겨찾기/최근/상태별 목록",
+    "evidence_groups": [
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MYW-002",
+    "name": "My Agent 상세",
+    "app": "사용자 통합 포털",
+    "source_row": 21,
+    "original_url": "/portal/workspace/agents/:agentId",
+    "original_purpose": "Agent 설명·버전·권한·최근 사용·피드백·실행 진입 제공",
+    "original_functions": "F-013,F-017,F-019,F-026",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "Agent 설명·버전·권한·최근 사용·피드백·실행 진입 제공",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MYW-003",
+    "name": "My Knowledge 목록",
+    "app": "사용자 통합 포털",
+    "source_row": 22,
+    "original_url": "/portal/workspace/knowledge",
+    "original_purpose": "개인 문서와 처리·보존 상태를 조회",
+    "original_functions": "F-014,F-015",
+    "status": "부분 구현",
+    "implemented": "내 자료 목록/상태",
+    "remaining": "보존 상태/기한 관리",
+    "evidence_groups": [
+      "docs"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MYW-004",
+    "name": "Knowledge 업로드",
+    "app": "사용자 통합 포털",
+    "source_row": 23,
+    "original_url": "/portal/workspace/knowledge/upload",
+    "original_purpose": "파일 업로드와 보안검사 후 개인 Knowledge 생성을 요청",
+    "original_functions": "F-014,F-015",
+    "status": "부분 구현",
+    "implemented": "제한5형식 개인 업로드·검사/색인",
+    "remaining": "전체 형식/이미지/OCR·대용량",
+    "evidence_groups": [
+      "docs"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MYW-005",
+    "name": "Knowledge 상세",
+    "app": "사용자 통합 포털",
+    "source_row": 24,
+    "original_url": "/portal/workspace/knowledge/:knowledgeId",
+    "original_purpose": "원본·파싱결과·청크·인덱스 버전·사용 Agent 조회",
+    "original_functions": "F-015",
+    "status": "부분 구현",
+    "implemented": "게시 버전/원문/출처",
+    "remaining": "청크/인덱스/사용Agent 전용 상세",
+    "evidence_groups": [
+      "docs"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MYW-006",
+    "name": "Knowledge 처리이력",
+    "app": "사용자 통합 포털",
+    "source_row": 25,
+    "original_url": "/portal/workspace/knowledge/:knowledgeId/jobs",
+    "original_purpose": "인덱싱·재인덱싱·실패·삭제 전파 상태 조회와 재처리",
+    "original_functions": "F-015",
+    "status": "부분 구현",
+    "implemented": "개인 Job/삭제 상태·관리 재시도",
+    "remaining": "개인 전체 재인덱싱/재처리 UI",
+    "evidence_groups": [
+      "docs"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MYW-007",
+    "name": "Knowledge 설정·삭제",
+    "app": "사용자 통합 포털",
+    "source_row": 26,
+    "original_url": "/portal/workspace/knowledge/:knowledgeId/settings",
+    "original_purpose": "명칭·보존기간·Agent 연결을 변경하고 원본·임베딩 삭제 요청",
+    "original_functions": "F-015",
+    "status": "부분 구현",
+    "implemented": "개인 자료 삭제",
+    "remaining": "명칭/보존기간/Agent 연결 설정",
+    "evidence_groups": [
+      "docs"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MYW-008",
+    "name": "대화 이력 목록",
+    "app": "사용자 통합 포털",
+    "source_row": 27,
+    "original_url": "/portal/workspace/conversations",
+    "original_purpose": "기간·Agent·키워드별 개인 대화 이력을 검색",
+    "original_functions": "F-012,F-017",
+    "status": "부분 구현",
+    "implemented": "제목/핀 검색·이력",
+    "remaining": "기간/Agent/본문 다면 검색",
+    "evidence_groups": [
+      "chat"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MYW-009",
+    "name": "대화 이력 상세",
+    "app": "사용자 통합 포털",
+    "source_row": 28,
+    "original_url": "/portal/workspace/conversations/:sessionId",
+    "original_purpose": "저장된 질의·응답·출처·피드백·삭제상태 조회",
+    "original_functions": "F-012,F-013,F-017",
+    "status": "부분 구현",
+    "implemented": "질문·응답·출처·피드백 이력",
+    "remaining": "삭제 상세·전용 개별 이력 요구 수용",
+    "evidence_groups": [
+      "chat",
+      "feedback"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MYW-010",
+    "name": "즐겨찾기",
+    "app": "사용자 통합 포털",
+    "source_row": 29,
+    "original_url": "/portal/workspace/favorites",
+    "original_purpose": "즐겨찾기 Agent·Prompt·Knowledge를 조회·정렬·해제",
+    "original_functions": "F-017",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "즐겨찾기 Agent·Prompt·Knowledge를 조회·정렬·해제",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MYW-011",
+    "name": "개인설정·알림",
+    "app": "사용자 통합 포털",
+    "source_row": 30,
+    "original_url": "/portal/workspace/settings",
+    "original_purpose": "기본 모델·Agent·알림채널·대화 보존·접근성 설정",
+    "original_functions": "F-017",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "기본 모델·Agent·알림채널·대화 보존·접근성 설정",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MKT-001",
+    "name": "Marketplace Home",
+    "app": "사용자 통합 포털",
+    "source_row": 31,
+    "original_url": "/portal/marketplace",
+    "original_purpose": "추천·인기·신규 자산과 유형별 현황 제공",
+    "original_functions": "F-020,F-022,F-023",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "추천·인기·신규 자산과 유형별 현황 제공",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MKT-002",
+    "name": "통합 카탈로그 검색",
+    "app": "사용자 통합 포털",
+    "source_row": 32,
+    "original_url": "/portal/marketplace/search",
+    "original_purpose": "Agent·Workflow·Prompt·MCP·Knowledge·Model을 권한·태그·랭킹으로 검색",
+    "original_functions": "F-020,F-023",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "Agent·Workflow·Prompt·MCP·Knowledge·Model을 권한·태그·랭킹으로 검색",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MKT-003",
+    "name": "Agent 상세",
+    "app": "사용자 통합 포털",
+    "source_row": 33,
+    "original_url": "/portal/marketplace/agents/:assetId",
+    "original_purpose": "Agent 설명·버전·평가·사용량·공개범위·사용신청 제공",
+    "original_functions": "F-019,F-022,F-023,F-026",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "Agent 설명·버전·평가·사용량·공개범위·사용신청 제공",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MKT-004",
+    "name": "Prompt 상세",
+    "app": "사용자 통합 포털",
+    "source_row": 34,
+    "original_url": "/portal/marketplace/prompts/:assetId",
+    "original_purpose": "Prompt 설명·버전·사용조건·평가·복제 진입 제공",
+    "original_functions": "F-020,F-022,F-024",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "Prompt 설명·버전·사용조건·평가·복제 진입 제공",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MKT-005",
+    "name": "MCP·Tool 상세",
+    "app": "사용자 통합 포털",
+    "source_row": 35,
+    "original_url": "/portal/marketplace/tools/:assetId",
+    "original_purpose": "Tool 권한·파라미터·연계시스템·승인조건·사용신청 제공",
+    "original_functions": "F-011,F-020,F-021",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "Tool 권한·파라미터·연계시스템·승인조건·사용신청 제공",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MKT-006",
+    "name": "Workflow 상세",
+    "app": "사용자 통합 포털",
+    "source_row": 36,
+    "original_url": "/portal/marketplace/workflows/:assetId",
+    "original_purpose": "Workflow 노드·입출력·필요권한·버전·복제 진입 제공",
+    "original_functions": "F-020,F-022,F-024",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "Workflow 노드·입출력·필요권한·버전·복제 진입 제공",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MKT-007",
+    "name": "Knowledge 상세",
+    "app": "사용자 통합 포털",
+    "source_row": 37,
+    "original_url": "/portal/marketplace/knowledge/:assetId",
+    "original_purpose": "공유 Knowledge의 출처·소유조직·갱신일·사용조건 제공",
+    "original_functions": "F-020,F-022",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "공유 Knowledge의 출처·소유조직·갱신일·사용조건 제공",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MKT-008",
+    "name": "Model 상세",
+    "app": "사용자 통합 포털",
+    "source_row": 38,
+    "original_url": "/portal/marketplace/models/:assetId",
+    "original_purpose": "승인 모델의 용도·성능·제약·Quota·사용가능 Agent 제공",
+    "original_functions": "F-023",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "승인 모델의 용도·성능·제약·Quota·사용가능 Agent 제공",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MKT-009",
+    "name": "자산 사용신청",
+    "app": "사용자 통합 포털",
+    "source_row": 39,
+    "original_url": "/portal/marketplace/requests/new",
+    "original_purpose": "개인·부서·계열사 범위의 자산 사용권한을 신청",
+    "original_functions": "F-019,F-021,F-024",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "개인·부서·계열사 범위의 자산 사용권한을 신청",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MKT-010",
+    "name": "AI자산 템플릿 복제",
+    "app": "사용자 통합 포털",
+    "source_row": 40,
+    "original_url": "/portal/marketplace/templates/:assetId/clone",
+    "original_purpose": "검증 자산을 개인 Studio 초안으로 복제하고 원본 Lineage를 보존",
+    "original_functions": "F-022,F-024",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "검증 자산을 개인 Studio 초안으로 복제하고 원본 Lineage를 보존",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MKT-011",
+    "name": "My Marketplace",
+    "app": "사용자 통합 포털",
+    "source_row": 41,
+    "original_url": "/portal/marketplace/my",
+    "original_purpose": "사용신청·승인·구독·복제·평가 이력과 권한만료 제공",
+    "original_functions": "F-017,F-019,F-024,F-026",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "사용신청·승인·구독·복제·평가 이력과 권한만료 제공",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MKT-012",
+    "name": "커뮤니티·지식공유 목록",
+    "app": "사용자 통합 포털",
+    "source_row": 42,
+    "original_url": "/portal/marketplace/community",
+    "original_purpose": "공지·과제산출물·지식공유 게시물을 권한별 조회",
+    "original_functions": "F-025",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "공지·과제산출물·지식공유 게시물을 권한별 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MKT-013",
+    "name": "커뮤니티 게시물 상세",
+    "app": "사용자 통합 포털",
+    "source_row": 43,
+    "original_url": "/portal/marketplace/community/:postId",
+    "original_purpose": "본문·첨부·댓글·공개범위·변경이력 조회",
+    "original_functions": "F-025",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "본문·첨부·댓글·공개범위·변경이력 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-MKT-014",
+    "name": "커뮤니티 게시물 작성·편집",
+    "app": "사용자 통합 포털",
+    "source_row": 44,
+    "original_url": "/portal/marketplace/community/editor/:postId?",
+    "original_purpose": "게시물·첨부·공개범위를 작성·수정하고 보안검사 후 게시",
+    "original_functions": "F-025",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "게시물·첨부·공개범위를 작성·수정하고 보안검사 후 게시",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-001",
+    "name": "Agent 프로젝트 목록",
+    "app": "사용자 통합 포털",
+    "source_row": 45,
+    "original_url": "/portal/studio",
+    "original_purpose": "개발·테스트·승인·운영 상태의 Agent 프로젝트 조회",
+    "original_functions": "F-032,F-047,F-049",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "개발·테스트·승인·운영 상태의 Agent 프로젝트 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-002",
+    "name": "Agent 프로젝트 생성",
+    "app": "사용자 통합 포털",
+    "source_row": 46,
+    "original_url": "/portal/studio/projects/new",
+    "original_purpose": "빈 프로젝트 또는 승인 템플릿으로 Agent 초안 생성",
+    "original_functions": "F-024,F-032,F-047",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "빈 프로젝트 또는 승인 템플릿으로 Agent 초안 생성",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-003",
+    "name": "Agent 프로젝트 개요",
+    "app": "사용자 통합 포털",
+    "source_row": 47,
+    "original_url": "/portal/studio/projects/:projectId",
+    "original_purpose": "완성도·버전·검증·승인·배포상태와 의존자산 조회",
+    "original_functions": "F-032,F-039,F-049",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "완성도·버전·검증·승인·배포상태와 의존자산 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-004",
+    "name": "Agent 기본설정",
+    "app": "사용자 통합 포털",
+    "source_row": 48,
+    "original_url": "/portal/studio/projects/:projectId/settings",
+    "original_purpose": "명칭·설명·업무목적·모델·공개범위·Owner 설정",
+    "original_functions": "F-032,F-034",
+    "status": "부분 구현",
+    "implemented": "고정2 Agent 명칭/설명/instructions",
+    "remaining": "프로젝트/동적 Agent·모델/Owner/공개범위",
+    "evidence_groups": [
+      "approval"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-005",
+    "name": "Prompt 편집기",
+    "app": "사용자 통합 포털",
+    "source_row": 49,
+    "original_url": "/portal/studio/projects/:projectId/prompt",
+    "original_purpose": "System Prompt·Template·파라미터·변수·금칙조건 편집",
+    "original_functions": "F-008,F-009,F-010,F-016,F-024",
+    "status": "부분 구현",
+    "implemented": "고정 instructions 변경안",
+    "remaining": "Prompt template/변수/파라미터/금칙조건",
+    "evidence_groups": [
+      "approval"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-006",
+    "name": "Prompt 버전 비교",
+    "app": "사용자 통합 포털",
+    "source_row": 50,
+    "original_url": "/portal/studio/projects/:projectId/prompt/versions",
+    "original_purpose": "Prompt 변경 전후, 승인 버전, 평가결과 비교와 복원",
+    "original_functions": "F-024,F-032,F-049",
+    "status": "부분 구현",
+    "implemented": "승인 요청의 현재/제안 지시문 비교",
+    "remaining": "버전선택·평가비교/복원 일반 Prompt 버전",
+    "evidence_groups": [
+      "approval"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-007",
+    "name": "Workflow Canvas",
+    "app": "사용자 통합 포털",
+    "source_row": 51,
+    "original_url": "/portal/studio/projects/:projectId/workflow",
+    "original_purpose": "노드 기반 Agent Workflow 구성·연결·검증",
+    "original_functions": "F-024,F-032,F-049",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "노드 기반 Agent Workflow 구성·연결·검증",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-008",
+    "name": "Workflow 노드 설정",
+    "app": "사용자 통합 포털",
+    "source_row": 52,
+    "original_url": "/portal/studio/projects/:projectId/workflow/nodes/:nodeId",
+    "original_purpose": "입출력·조건·재시도·Timeout·권한·보상 규칙 설정",
+    "original_functions": "F-011,F-021,F-024",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "입출력·조건·재시도·Timeout·권한·보상 규칙 설정",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-009",
+    "name": "Workflow 실행이력",
+    "app": "사용자 통합 포털",
+    "source_row": 53,
+    "original_url": "/portal/studio/projects/:projectId/runs",
+    "original_purpose": "단계별 상태·입출력 Masking·Checkpoint·보상 이력 조회",
+    "original_functions": "F-011,F-032",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "단계별 상태·입출력 Masking·Checkpoint·보상 이력 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-010",
+    "name": "Knowledge 소스 목록",
+    "app": "사용자 통합 포털",
+    "source_row": 54,
+    "original_url": "/portal/studio/projects/:projectId/knowledge",
+    "original_purpose": "Agent에 연결된 문서·DB·공유 Knowledge와 Index 버전 조회",
+    "original_functions": "F-015,F-021,F-024",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "Agent에 연결된 문서·DB·공유 Knowledge와 Index 버전 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-011",
+    "name": "Knowledge 소스 추가",
+    "app": "사용자 통합 포털",
+    "source_row": 55,
+    "original_url": "/portal/studio/projects/:projectId/knowledge/new",
+    "original_purpose": "승인된 문서·DB·공유 자산을 Agent Knowledge로 연결",
+    "original_functions": "F-014,F-015,F-021",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "승인된 문서·DB·공유 자산을 Agent Knowledge로 연결",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-012",
+    "name": "RAG 검색설정",
+    "app": "사용자 통합 포털",
+    "source_row": 56,
+    "original_url": "/portal/studio/projects/:projectId/rag",
+    "original_purpose": "검색방식·Top-K·Threshold·Rerank·Citation 옵션 설정",
+    "original_functions": "F-013,F-015",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "검색방식·Top-K·Threshold·Rerank·Citation 옵션 설정",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-013",
+    "name": "RAG 재인덱싱 상태",
+    "app": "사용자 통합 포털",
+    "source_row": 57,
+    "original_url": "/portal/studio/projects/:projectId/rag/indexes",
+    "original_purpose": "Blue/Green Index 생성·평가·Alias 전환·Rollback 상태",
+    "original_functions": "F-015,F-049",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "Blue/Green Index 생성·평가·Alias 전환·Rollback 상태",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-014",
+    "name": "MCP·Tool 목록",
+    "app": "사용자 통합 포털",
+    "source_row": 58,
+    "original_url": "/portal/studio/projects/:projectId/tools",
+    "original_purpose": "연결 Tool·Credential·허용범위·상태 조회",
+    "original_functions": "F-011,F-021,F-024",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "연결 Tool·Credential·허용범위·상태 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-015",
+    "name": "MCP·Tool 연결",
+    "app": "사용자 통합 포털",
+    "source_row": 59,
+    "original_url": "/portal/studio/projects/:projectId/tools/new",
+    "original_purpose": "승인 Tool을 연결하고 Credential·Allowlist·파라미터 제한 설정",
+    "original_functions": "F-011,F-021",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "승인 Tool을 연결하고 Credential·Allowlist·파라미터 제한 설정",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-016",
+    "name": "Tool 연결 테스트",
+    "app": "사용자 통합 포털",
+    "source_row": 60,
+    "original_url": "/portal/studio/projects/:projectId/tools/:toolId/test",
+    "original_purpose": "테스트 데이터로 권한·Timeout·응답·감사 이벤트 검증",
+    "original_functions": "F-011,F-021",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "테스트 데이터로 권한·Timeout·응답·감사 이벤트 검증",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-017",
+    "name": "Agent Test Playground",
+    "app": "사용자 통합 포털",
+    "source_row": 61,
+    "original_url": "/portal/studio/projects/:projectId/test",
+    "original_purpose": "Prompt·RAG·Tool 조합을 테스트 데이터로 실행·비교",
+    "original_functions": "F-008,F-009,F-010,F-011,F-032",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "Prompt·RAG·Tool 조합을 테스트 데이터로 실행·비교",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-018",
+    "name": "Trace·Debug",
+    "app": "사용자 통합 포털",
+    "source_row": 62,
+    "original_url": "/portal/studio/projects/:projectId/traces/:runId",
+    "original_purpose": "단계별 실행시간·입출력·추론·Tool·오류·보상 Trace 조회",
+    "original_functions": "F-032,F-038",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "단계별 실행시간·입출력·추론·Tool·오류·보상 Trace 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-019",
+    "name": "평가 계획",
+    "app": "사용자 통합 포털",
+    "source_row": 63,
+    "original_url": "/portal/studio/projects/:projectId/evaluations/new",
+    "original_purpose": "정확성·환각·안전·편향·성능·비용 평가셋과 임계치 설정",
+    "original_functions": "F-008,F-009,F-010,F-032",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "정확성·환각·안전·편향·성능·비용 평가셋과 임계치 설정",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-020",
+    "name": "평가 결과",
+    "app": "사용자 통합 포털",
+    "source_row": 64,
+    "original_url": "/portal/studio/projects/:projectId/evaluations/:evaluationId",
+    "original_purpose": "항목별 점수·실패케이스·증적·승인 가능 여부 조회",
+    "original_functions": "F-032,F-038,F-039",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "항목별 점수·실패케이스·증적·승인 가능 여부 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-021",
+    "name": "승인·배포 요청",
+    "app": "사용자 통합 포털",
+    "source_row": 65,
+    "original_url": "/portal/studio/projects/:projectId/releases/new",
+    "original_purpose": "불변 Artifact·평가증적·공개범위·목표환경을 묶어 승인 요청",
+    "original_functions": "F-024,F-032,F-039",
+    "status": "부분 구현",
+    "implemented": "관리자의 고정 설정 승인 제출",
+    "remaining": "개발자 Studio·Artifact/평가/공개범위/목표환경",
+    "evidence_groups": [
+      "approval"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-022",
+    "name": "Release 상태",
+    "app": "사용자 통합 포털",
+    "source_row": 66,
+    "original_url": "/portal/studio/projects/:projectId/releases/:releaseId",
+    "original_purpose": "승인·검증·배포·Canary·운영·실패 상태와 증적 조회",
+    "original_functions": "F-039",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "승인·검증·배포·Canary·운영·실패 상태와 증적 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-STD-023",
+    "name": "버전·Rollback 이력",
+    "app": "사용자 통합 포털",
+    "source_row": 67,
+    "original_url": "/portal/studio/projects/:projectId/versions",
+    "original_purpose": "Agent·Prompt·Workflow·RAG·Tool 버전 Lineage와 Rollback 이력 조회",
+    "original_functions": "F-024,F-032,F-039,F-049",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "Agent·Prompt·Workflow·RAG·Tool 버전 Lineage와 Rollback 이력 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-HLP-001",
+    "name": "도움말 센터",
+    "app": "사용자 통합 포털",
+    "source_row": 68,
+    "original_url": "/portal/help",
+    "original_purpose": "역할·화면·기능별 도움말과 활용 예시 검색",
+    "original_functions": "F-007",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "역할·화면·기능별 도움말과 활용 예시 검색",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-HLP-002",
+    "name": "온보딩 튜토리얼",
+    "app": "사용자 통합 포털",
+    "source_row": 69,
+    "original_url": "/portal/help/tutorials/:tutorialId",
+    "original_purpose": "첫 로그인과 주요 기능별 단계형 튜토리얼 제공",
+    "original_functions": "F-007",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "첫 로그인과 주요 기능별 단계형 튜토리얼 제공",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-USR-HLP-003",
+    "name": "기능 변경·릴리스 안내",
+    "app": "사용자 통합 포털",
+    "source_row": 70,
+    "original_url": "/portal/help/releases",
+    "original_purpose": "기능 변경, 정책 시행, 사용 중단, 점검 공지 제공",
+    "original_functions": "F-007,F-042",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "기능 변경, 정책 시행, 사용 중단, 점검 공지 제공",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-DSH-001",
+    "name": "운영 통합 대시보드",
+    "app": "관리자 포털",
+    "source_row": 71,
+    "original_url": "/admin/dashboard",
+    "original_purpose": "플랫폼 사용자·AI자산·가용성·비용·자원·알림 현황 제공",
+    "original_functions": "F-027,F-028",
+    "status": "부분 구현",
+    "implemented": "A운영 홈·호출/추정비용/예약/unknown·승인",
+    "remaining": "사용자/모델/자원·전체가용성/알림",
+    "evidence_groups": [
+      "usage",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-DSH-002",
+    "name": "운영 KPI 드릴다운",
+    "app": "관리자 포털",
+    "source_row": 72,
+    "original_url": "/admin/dashboard/metrics/:metricId",
+    "original_purpose": "KPI 원천·기간·계열사·서비스·Agent 단위 상세와 대사 제공",
+    "original_functions": "F-028",
+    "status": "부분 구현",
+    "implemented": "조직/기간 usage 상세",
+    "remaining": "서비스/Agent KPI·원천대사 drilldown",
+    "evidence_groups": [
+      "usage"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-DSH-003",
+    "name": "운영 리포트 Export",
+    "app": "관리자 포털",
+    "source_row": 73,
+    "original_url": "/admin/dashboard/export",
+    "original_purpose": "조회조건을 고정해 운영 리포트를 비동기 생성·다운로드",
+    "original_functions": "F-028",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "조회조건을 고정해 운영 리포트를 비동기 생성·다운로드",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-IAM-001",
+    "name": "사용자·역할 목록",
+    "app": "관리자 포털",
+    "source_row": 74,
+    "original_url": "/admin/iam/roles",
+    "original_purpose": "사용자·조직·역할·상태·유효기간 조회",
+    "original_functions": "F-031,F-033",
+    "status": "부분 구현",
+    "implemented": "사용자 소속·고정역할·active 목록",
+    "remaining": "동적 역할/조직/유효기간 상세",
+    "evidence_groups": [
+      "auth"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-IAM-002",
+    "name": "역할 상세",
+    "app": "관리자 포털",
+    "source_row": 75,
+    "original_url": "/admin/iam/roles/:roleId",
+    "original_purpose": "권한·메뉴·데이터 Scope·SOD·부여대상 조회",
+    "original_functions": "F-031,F-033",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "권한·메뉴·데이터 Scope·SOD·부여대상 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-IAM-003",
+    "name": "역할 생성·편집",
+    "app": "관리자 포털",
+    "source_row": 76,
+    "original_url": "/admin/iam/roles/:roleId/edit",
+    "original_purpose": "역할·권한·유효기간·SOD 규칙 작성과 승인 요청",
+    "original_functions": "F-031,F-033",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "역할·권한·유효기간·SOD 규칙 작성과 승인 요청",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-IAM-004",
+    "name": "사용자 권한 부여·회수",
+    "app": "관리자 포털",
+    "source_row": 77,
+    "original_url": "/admin/iam/entitlements",
+    "original_purpose": "사용자·부서·계열사별 서비스·Agent 권한 부여·만료·회수",
+    "original_functions": "F-031,F-033",
+    "status": "부분 구현",
+    "implemented": "소속 활성/비활성·고정역할 변경",
+    "remaining": "부서/서비스/Agent별 권한·만료",
+    "evidence_groups": [
+      "auth"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-IAM-005",
+    "name": "결재라인 관리",
+    "app": "관리자 포털",
+    "source_row": 78,
+    "original_url": "/admin/iam/approval-lines",
+    "original_purpose": "조직·위험·서비스유형별 결재선과 대결 규칙 관리",
+    "original_functions": "F-031,F-052,F-056",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "조직·위험·서비스유형별 결재선과 대결 규칙 관리",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-IAM-006",
+    "name": "접속·활동 이력",
+    "app": "관리자 포털",
+    "source_row": 79,
+    "original_url": "/admin/iam/activity",
+    "original_purpose": "인증·메뉴·권한변경·고위험 작업 이력 검색",
+    "original_functions": "F-031,F-040",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "인증·메뉴·권한변경·고위험 작업 이력 검색",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-IAM-007",
+    "name": "위임·비상권한 관리",
+    "app": "관리자 포털",
+    "source_row": 80,
+    "original_url": "/admin/iam/delegations",
+    "original_purpose": "휴가·장애 대응 위임과 비상권한의 승인·만료·회수 관리",
+    "original_functions": "F-031,F-056",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "휴가·장애 대응 위임과 비상권한의 승인·만료·회수 관리",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-AST-001",
+    "name": "AI서비스·자산 목록",
+    "app": "관리자 포털",
+    "source_row": 81,
+    "original_url": "/admin/assets",
+    "original_purpose": "서비스·Agent·MCP·Model·Data를 계열사·상태별 조회",
+    "original_functions": "F-032,F-034,F-035",
+    "status": "부분 구현",
+    "implemented": "고정2 Agent/문서 목록",
+    "remaining": "전체 동적 AI자산·상태 필터",
+    "evidence_groups": [
+      "approval",
+      "docs"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-AST-002",
+    "name": "AI서비스·자산 등록",
+    "app": "관리자 포털",
+    "source_row": 82,
+    "original_url": "/admin/assets/new",
+    "original_purpose": "자산 메타데이터·Owner·버전·공개범위·운영정책 등록",
+    "original_functions": "F-032,F-034",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "자산 메타데이터·Owner·버전·공개범위·운영정책 등록",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-AST-003",
+    "name": "AI서비스·자산 상세",
+    "app": "관리자 포털",
+    "source_row": 83,
+    "original_url": "/admin/assets/:assetId",
+    "original_purpose": "버전·Lineage·권한·평가·배포·사용량·의존성 조회",
+    "original_functions": "F-032,F-034,F-035",
+    "status": "부분 구현",
+    "implemented": "고정 설정·revision·사용 가능 상태",
+    "remaining": "Lineage·권한/평가/배포/의존성 통합",
+    "evidence_groups": [
+      "approval"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-AST-004",
+    "name": "공개·공유범위 설정",
+    "app": "관리자 포털",
+    "source_row": 84,
+    "original_url": "/admin/assets/:assetId/visibility",
+    "original_purpose": "개인·부서·계열사·그룹 공개범위와 승인·회수 관리",
+    "original_functions": "F-033,F-034,F-046",
+    "status": "부분 구현",
+    "implemented": "문서 private/org·조직 version Grant",
+    "remaining": "일반자산 개인/부서/그룹 공개범위/승인",
+    "evidence_groups": [
+      "sharing"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-AST-005",
+    "name": "서비스 생명주기 관리",
+    "app": "관리자 포털",
+    "source_row": 85,
+    "original_url": "/admin/assets/:assetId/lifecycle",
+    "original_purpose": "검증·게시·중지·폐기와 구독자 영향·Rollback 관리",
+    "original_functions": "F-032,F-035",
+    "status": "부분 구현",
+    "implemented": "고정 Agent 중지/재개·설정 승인",
+    "remaining": "서비스 등록/폐기·구독 영향·Release 복귀",
+    "evidence_groups": [
+      "approval"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-AST-006",
+    "name": "모델·데이터 반입 승인",
+    "app": "관리자 포털",
+    "source_row": 86,
+    "original_url": "/admin/assets/imports",
+    "original_purpose": "반입 요청·해시·보안검사·라이선스·PII 결과와 승인 처리",
+    "original_functions": "F-041",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "반입 요청·해시·보안검사·라이선스·PII 결과와 승인 처리",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-PRJ-001",
+    "name": "AI 과제 목록",
+    "app": "관리자 포털",
+    "source_row": 87,
+    "original_url": "/admin/projects",
+    "original_purpose": "계열사·단계·상태·위험·비용별 AI 과제 조회",
+    "original_functions": "F-029",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "계열사·단계·상태·위험·비용별 AI 과제 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-PRJ-002",
+    "name": "AI 과제 등록·편집",
+    "app": "관리자 포털",
+    "source_row": 88,
+    "original_url": "/admin/projects/editor/:projectId?",
+    "original_purpose": "과제 목표·범위·담당·일정·자원·예산·산출물 등록",
+    "original_functions": "F-029",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "과제 목표·범위·담당·일정·자원·예산·산출물 등록",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-PRJ-003",
+    "name": "AI 과제 상세",
+    "app": "관리자 포털",
+    "source_row": 89,
+    "original_url": "/admin/projects/:projectId",
+    "original_purpose": "결재·이행·자원·비용·산출물·거버넌스 연계 현황 조회",
+    "original_functions": "F-029",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "결재·이행·자원·비용·산출물·거버넌스 연계 현황 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-PRJ-004",
+    "name": "AI 과제 검토·결재",
+    "app": "관리자 포털",
+    "source_row": 90,
+    "original_url": "/admin/projects/:projectId/approval",
+    "original_purpose": "과제 검토·반려·재상신·승인과 증적 보존",
+    "original_functions": "F-029",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "과제 검토·반려·재상신·승인과 증적 보존",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-RES-001",
+    "name": "GPU·CPU 자원 현황",
+    "app": "관리자 포털",
+    "source_row": 91,
+    "original_url": "/admin/resources",
+    "original_purpose": "클러스터·계열사·서비스별 자원·할당·사용률 제공",
+    "original_functions": "F-030",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "클러스터·계열사·서비스별 자원·할당·사용률 제공",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-RES-002",
+    "name": "Quota 정책 관리",
+    "app": "관리자 포털",
+    "source_row": 92,
+    "original_url": "/admin/resources/quotas",
+    "original_purpose": "계열사·부서·서비스별 GPU·CPU·Token Quota와 임계치 관리",
+    "original_functions": "F-030",
+    "status": "부분 구현",
+    "implemented": "조직 token/비용/동시 한도 기반",
+    "remaining": "GPU/CPU·부서/서비스 자원 quota",
+    "evidence_groups": [
+      "usage"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-RES-003",
+    "name": "자원 할당·예약",
+    "app": "관리자 포털",
+    "source_row": 93,
+    "original_url": "/admin/resources/allocations",
+    "original_purpose": "과제·모델·Agent별 자원 Profile·예약·회수 관리",
+    "original_functions": "F-029,F-030",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "과제·모델·Agent별 자원 Profile·예약·회수 관리",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-RES-004",
+    "name": "자원 사용·경보 상세",
+    "app": "관리자 포털",
+    "source_row": 94,
+    "original_url": "/admin/resources/usage/:resourceId",
+    "original_purpose": "시간대별 사용량·병목·예측·Quota 초과·조치 이력 조회",
+    "original_functions": "F-028,F-030",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "시간대별 사용량·병목·예측·Quota 초과·조치 이력 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-REL-001",
+    "name": "Release 목록",
+    "app": "관리자 포털",
+    "source_row": 95,
+    "original_url": "/admin/releases",
+    "original_purpose": "배포 요청·예약·진행·완료·실패·Rollback 이력 조회",
+    "original_functions": "F-039",
+    "status": "부분 구현",
+    "implemented": "고정 설정 승인 목록",
+    "remaining": "실제 Release·예약/배포/rollback 이력",
+    "evidence_groups": [
+      "approval"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-REL-002",
+    "name": "Release 상세·승인",
+    "app": "관리자 포털",
+    "source_row": 96,
+    "original_url": "/admin/releases/:releaseId",
+    "original_purpose": "Artifact 해시·평가·보안검사·목표환경·승인·예약 확인",
+    "original_functions": "F-039,F-041",
+    "status": "부분 구현",
+    "implemented": "고정 설정 상세/승인/반려",
+    "remaining": "Artifact hash/평가/보안검사·목표환경/예약",
+    "evidence_groups": [
+      "approval"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-REL-003",
+    "name": "배포 Pipeline 상세",
+    "app": "관리자 포털",
+    "source_row": 97,
+    "original_url": "/admin/releases/:releaseId/pipeline",
+    "original_purpose": "Build·검사·평가·승인·Canary·운영 단계와 로그 조회",
+    "original_functions": "F-039",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "Build·검사·평가·승인·Canary·운영 단계와 로그 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-REL-004",
+    "name": "Rollback 실행·이력",
+    "app": "관리자 포털",
+    "source_row": 98,
+    "original_url": "/admin/releases/:releaseId/rollback",
+    "original_purpose": "승인된 이전 버전으로 긴급·일반 Rollback하고 영향·증적 기록",
+    "original_functions": "F-039,F-049",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "승인된 이전 버전으로 긴급·일반 Rollback하고 영향·증적 기록",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-REL-005",
+    "name": "환경·승격경로 관리",
+    "app": "관리자 포털",
+    "source_row": 99,
+    "original_url": "/admin/releases/environments",
+    "original_purpose": "개발·검증·운영 환경과 승격·SOD·배포창 정책 관리",
+    "original_functions": "F-039",
+    "status": "부분 구현",
+    "implemented": "local/dev/tb/prd 공개 실행 설정",
+    "remaining": "환경 승격/SOD/배포창 관리 UI·정책",
+    "evidence_groups": [
+      "env"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-OPS-001",
+    "name": "통합 모니터링",
+    "app": "관리자 포털",
+    "source_row": 100,
+    "original_url": "/admin/operations",
+    "original_purpose": "API·LLM·Agent·RAG·Tool·자원 가용성·성능·오류 관제",
+    "original_functions": "F-028,F-030,F-038",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "API·LLM·Agent·RAG·Tool·자원 가용성·성능·오류 관제",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-OPS-002",
+    "name": "서비스·Agent 성능 상세",
+    "app": "관리자 포털",
+    "source_row": 101,
+    "original_url": "/admin/operations/services/:serviceId",
+    "original_purpose": "Latency·TTFT·Token/s·Error·단계별 Trace와 Alert 조회",
+    "original_functions": "F-028,F-038",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "Latency·TTFT·Token/s·Error·단계별 Trace와 Alert 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-OPS-003",
+    "name": "미터링 사용량",
+    "app": "관리자 포털",
+    "source_row": 102,
+    "original_url": "/admin/operations/usage",
+    "original_purpose": "계열사·부서·사용자·Agent·모델별 Token·호출·자원 사용량 조회",
+    "original_functions": "F-028",
+    "status": "부분 구현",
+    "implemented": "owner/tenant usage·token/call/추정비용",
+    "remaining": "부서/Agent/모델/자원 다면통계",
+    "evidence_groups": [
+      "usage"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-OPS-004",
+    "name": "빌링·정산",
+    "app": "관리자 포털",
+    "source_row": 103,
+    "original_url": "/admin/operations/billing",
+    "original_purpose": "단가·배부기준·기간별 비용·보정·마감·정산 보고 제공",
+    "original_functions": "F-028",
+    "status": "부분 구현",
+    "implemented": "내부 추정/unknown/예약·한도",
+    "remaining": "청구확정·배부/보정·마감/정산",
+    "evidence_groups": [
+      "usage"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-OPS-005",
+    "name": "운영 알림·장애조치",
+    "app": "관리자 포털",
+    "source_row": 104,
+    "original_url": "/admin/operations/alerts",
+    "original_purpose": "임계치·장애·정책위반 알림, 담당배정, 조치·종결·Escalation 관리",
+    "original_functions": "F-028,F-038",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "임계치·장애·정책위반 알림, 담당배정, 조치·종결·Escalation 관리",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-SEC-001",
+    "name": "가드레일 정책 목록",
+    "app": "관리자 포털",
+    "source_row": 105,
+    "original_url": "/admin/security/guardrails",
+    "original_purpose": "그룹·계열사 정책 버전·적용범위·시행일·배포상태 조회",
+    "original_functions": "F-036,F-040",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "그룹·계열사 정책 버전·적용범위·시행일·배포상태 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-SEC-002",
+    "name": "가드레일 정책 편집·배포",
+    "app": "관리자 포털",
+    "source_row": 106,
+    "original_url": "/admin/security/guardrails/:policyId/edit",
+    "original_purpose": "금칙·유해·PII·Prompt Injection·Tool 정책 편집·승인·배포",
+    "original_functions": "F-008,F-009,F-010,F-011,F-036,F-040",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "금칙·유해·PII·Prompt Injection·Tool 정책 편집·승인·배포",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-SEC-003",
+    "name": "서비스별 정책·예외",
+    "app": "관리자 포털",
+    "source_row": 107,
+    "original_url": "/admin/security/exceptions",
+    "original_purpose": "서비스·Agent별 가드레일 예외 요청·승인·만료·보상통제 관리",
+    "original_functions": "F-037,F-040",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "서비스·Agent별 가드레일 예외 요청·승인·만료·보상통제 관리",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-SEC-004",
+    "name": "가드레일 위반 현황",
+    "app": "관리자 포털",
+    "source_row": 108,
+    "original_url": "/admin/security/violations",
+    "original_purpose": "탐지·차단·위반을 정책·서비스·사용자·계열사별 조회",
+    "original_functions": "F-038,F-040",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "탐지·차단·위반을 정책·서비스·사용자·계열사별 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-SEC-005",
+    "name": "데이터 Scope 정책",
+    "app": "관리자 포털",
+    "source_row": 109,
+    "original_url": "/admin/security/data-scopes",
+    "original_purpose": "RLS·CLS·다운로드·복호화·데이터셋 접근정책 관리",
+    "original_functions": "F-040,F-043,F-044,F-045,F-046",
+    "status": "부분 구현",
+    "implemented": "문서 범위/Grant·RLS 정책함수",
+    "remaining": "CLS/다운로드/복호화·정책 관리화면",
+    "evidence_groups": [
+      "sharing"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-SEC-006",
+    "name": "개인정보·복호화 예외승인",
+    "app": "관리자 포털",
+    "source_row": 110,
+    "original_url": "/admin/security/privacy-exceptions",
+    "original_purpose": "PII 탐지·마스킹·동의 기반 복호화 예외의 승인·만료 관리",
+    "original_functions": "F-009,F-040,F-045",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "PII 탐지·마스킹·동의 기반 복호화 예외의 승인·만료 관리",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-SEC-007",
+    "name": "감사로그 검색·상세",
+    "app": "관리자 포털",
+    "source_row": 111,
+    "original_url": "/admin/security/audit",
+    "original_purpose": "사용자·Agent·정책·데이터·Tool·승인·복호화 End-to-End 감사조회",
+    "original_functions": "F-031,F-038,F-040,F-044",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "사용자·Agent·정책·데이터·Tool·승인·복호화 End-to-End 감사조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-CMS-001",
+    "name": "공지·콘텐츠 관리",
+    "app": "관리자 포털",
+    "source_row": 112,
+    "original_url": "/admin/content",
+    "original_purpose": "공지·콘텐츠의 작성·검토·예약게시·종료·버전 관리",
+    "original_functions": "F-027,F-042",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "공지·콘텐츠의 작성·검토·예약게시·종료·버전 관리",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-CMS-002",
+    "name": "커뮤니티·게시판 관리",
+    "app": "관리자 포털",
+    "source_row": 113,
+    "original_url": "/admin/content/community",
+    "original_purpose": "게시물·댓글·첨부·신고·공개범위·보존 관리",
+    "original_functions": "F-025,F-027,F-042",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "게시물·댓글·첨부·신고·공개범위·보존 관리",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-CMS-003",
+    "name": "도움말·튜토리얼 관리",
+    "app": "관리자 포털",
+    "source_row": 114,
+    "original_url": "/admin/content/help",
+    "original_purpose": "역할·화면·버전별 도움말과 온보딩 콘텐츠 관리",
+    "original_functions": "F-007,F-027,F-042",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "역할·화면·버전별 도움말과 온보딩 콘텐츠 관리",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-CMS-004",
+    "name": "사이트·메뉴 설정",
+    "app": "관리자 포털",
+    "source_row": 115,
+    "original_url": "/admin/content/site",
+    "original_purpose": "브랜드·메뉴·배너·푸터·공통 문구와 노출범위 설정",
+    "original_functions": "F-002,F-027",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "브랜드·메뉴·배너·푸터·공통 문구와 노출범위 설정",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-SYS-001",
+    "name": "Tenant·기준정보 관리",
+    "app": "관리자 포털",
+    "source_row": 116,
+    "original_url": "/admin/system/tenants",
+    "original_purpose": "계열사·부서·코드·기본정책·Quota·Namespace 활성화 관리",
+    "original_functions": "F-005,F-035,F-043,F-047",
+    "status": "부분 구현",
+    "implemented": "소속 role/active·tenant 예산",
+    "remaining": "계열사/부서/코드/namespace 기준정보 CRUD",
+    "evidence_groups": [
+      "auth",
+      "usage"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-SYS-002",
+    "name": "연계 Connector 관리",
+    "app": "관리자 포털",
+    "source_row": 117,
+    "original_url": "/admin/system/connectors",
+    "original_purpose": "기존·신규 업무시스템 API·Event·MCP Connector와 Credential 관리",
+    "original_functions": "F-021,F-048,F-049",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "기존·신규 업무시스템 API·Event·MCP Connector와 Credential 관리",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-ADM-SYS-003",
+    "name": "시스템 상태·운영로그",
+    "app": "관리자 포털",
+    "source_row": 118,
+    "original_url": "/admin/system/health",
+    "original_purpose": "Control Plane·Tenant Cell·AI Service·DB·Queue 상태와 운영로그 조회",
+    "original_functions": "F-028,F-035,F-049",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "Control Plane·Tenant Cell·AI Service·DB·Queue 상태와 운영로그 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "기존 비거버넌스 개발 대상",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-DSH-001",
+    "name": "거버넌스 통합 대시보드",
+    "app": "AI 거버넌스 포털",
+    "source_row": 119,
+    "original_url": "/governance/dashboard",
+    "original_purpose": "AI서비스·위험등급·정책준수·예외·기일·계열사 현황 제공",
+    "original_functions": "F-050,F-060",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "AI서비스·위험등급·정책준수·예외·기일·계열사 현황 제공",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-DSH-002",
+    "name": "거버넌스 KPI 드릴다운",
+    "app": "AI 거버넌스 포털",
+    "source_row": 120,
+    "original_url": "/governance/dashboard/metrics/:metricId",
+    "original_purpose": "위험·위반·예외·모니터링 KPI의 원천 사업·자산·증적 조회",
+    "original_functions": "F-058,F-060",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "위험·위반·예외·모니터링 KPI의 원천 사업·자산·증적 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-AST-001",
+    "name": "AI 자산 등록부",
+    "app": "AI 거버넌스 포털",
+    "source_row": 121,
+    "original_url": "/governance/assets",
+    "original_purpose": "거버넌스 대상 AI서비스·Agent·Model을 계열사·위험·단계별 조회",
+    "original_functions": "F-050,F-060",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "거버넌스 대상 AI서비스·Agent·Model을 계열사·위험·단계별 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-AST-002",
+    "name": "AI 자산 등록·편집",
+    "app": "AI 거버넌스 포털",
+    "source_row": 122,
+    "original_url": "/governance/assets/editor/:assetId?",
+    "original_purpose": "업무목적·Owner·데이터·모델·외부연계·영향·모니터링 기준 등록",
+    "original_functions": "F-050,F-051,F-054",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "업무목적·Owner·데이터·모델·외부연계·영향·모니터링 기준 등록",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-AST-003",
+    "name": "AI 자산 상세·이력",
+    "app": "AI 거버넌스 포털",
+    "source_row": 123,
+    "original_url": "/governance/assets/:assetId",
+    "original_purpose": "위험평가·통제·결재·예외·증적·변경·연간 모니터링 이력 조회",
+    "original_functions": "F-050,F-060",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "위험평가·통제·결재·예외·증적·변경·연간 모니터링 이력 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-RSK-001",
+    "name": "위험평가 목록",
+    "app": "AI 거버넌스 포털",
+    "source_row": 124,
+    "original_url": "/governance/risks",
+    "original_purpose": "신규·변경·정기평가 대상을 상태·위험등급·기한별 조회",
+    "original_functions": "F-050,F-060",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "신규·변경·정기평가 대상을 상태·위험등급·기한별 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-RSK-002",
+    "name": "위험평가 작성",
+    "app": "AI 거버넌스 포털",
+    "source_row": 125,
+    "original_url": "/governance/risks/:assessmentId/edit",
+    "original_purpose": "고객·업무·데이터·모델·자율성·외부연계·설명가능성·인적감독 평가",
+    "original_functions": "F-050,F-051,F-054",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "고객·업무·데이터·모델·자율성·외부연계·설명가능성·인적감독 평가",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-RSK-003",
+    "name": "통제 자동·수동 매핑",
+    "app": "AI 거버넌스 포털",
+    "source_row": 126,
+    "original_url": "/governance/risks/:assessmentId/controls",
+    "original_purpose": "위험항목에 가드레일·데이터 Scope·로그·인적승인·모니터링 통제 매핑",
+    "original_functions": "F-036,F-037,F-040,F-050",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "위험항목에 가드레일·데이터 Scope·로그·인적승인·모니터링 통제 매핑",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-RSK-004",
+    "name": "위험평가 검토·승인",
+    "app": "AI 거버넌스 포털",
+    "source_row": 127,
+    "original_url": "/governance/risks/:assessmentId/approval",
+    "original_purpose": "평가결과·미적용 통제·보완계획을 검토·반려·승인",
+    "original_functions": "F-050,F-052,F-060",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "평가결과·미적용 통제·보완계획을 검토·반려·승인",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-PRC-001",
+    "name": "거버넌스 프로세스 목록",
+    "app": "AI 거버넌스 포털",
+    "source_row": 128,
+    "original_url": "/governance/processes",
+    "original_purpose": "AI 도입·변경·정기점검 프로세스 정의와 시행버전 조회",
+    "original_functions": "F-050,F-051,F-054,F-055",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "AI 도입·변경·정기점검 프로세스 정의와 시행버전 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-PRC-002",
+    "name": "Flow Diagram",
+    "app": "AI 거버넌스 포털",
+    "source_row": 129,
+    "original_url": "/governance/processes/:processId/diagram",
+    "original_purpose": "단계·분기·결재·외부트리거와 실행상태 시각화",
+    "original_functions": "F-051,F-052,F-053",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "단계·분기·결재·외부트리거와 실행상태 시각화",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-PRC-003",
+    "name": "단계 입력·증적 작성",
+    "app": "AI 거버넌스 포털",
+    "source_row": 130,
+    "original_url": "/governance/processes/:instanceId/steps/:stepId",
+    "original_purpose": "단계별 입력폼·체크리스트·첨부·완료조건 작성",
+    "original_functions": "F-051,F-059",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "단계별 입력폼·체크리스트·첨부·완료조건 작성",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-PRC-004",
+    "name": "프로세스 정의 편집",
+    "app": "AI 거버넌스 포털",
+    "source_row": 131,
+    "original_url": "/governance/processes/:processId/edit",
+    "original_purpose": "단계·폼·분기·기한·결재·트리거를 초안으로 편집·검증",
+    "original_functions": "F-051,F-053,F-054,F-055",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "단계·폼·분기·기한·결재·트리거를 초안으로 편집·검증",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-PRC-005",
+    "name": "외부시스템 트리거 상태",
+    "app": "AI 거버넌스 포털",
+    "source_row": 132,
+    "original_url": "/governance/processes/:instanceId/integrations",
+    "original_purpose": "ITSM·그룹웨어 등 단계 트리거의 실행·재시도·보상·수동조치 이력",
+    "original_functions": "F-053",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "ITSM·그룹웨어 등 단계 트리거의 실행·재시도·보상·수동조치 이력",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-APR-001",
+    "name": "거버넌스 결재함",
+    "app": "AI 거버넌스 포털",
+    "source_row": 133,
+    "original_url": "/governance/approvals",
+    "original_purpose": "단계·위험·예외·모니터링 결재를 기한·상태별 조회",
+    "original_functions": "F-052,F-060",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "단계·위험·예외·모니터링 결재를 기한·상태별 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-APR-002",
+    "name": "결재 상세·처리",
+    "app": "AI 거버넌스 포털",
+    "source_row": 134,
+    "original_url": "/governance/approvals/:approvalId",
+    "original_purpose": "입력·증적·의견·결재선 확인 후 승인·반려·재상신·회수 처리",
+    "original_functions": "F-052",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "입력·증적·의견·결재선 확인 후 승인·반려·재상신·회수 처리",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-APR-003",
+    "name": "부서별 담당자·대행 설정",
+    "app": "AI 거버넌스 포털",
+    "source_row": 135,
+    "original_url": "/governance/approvals/assignments",
+    "original_purpose": "조직·프로세스 역할별 담당·대행·유효기간·Escalation 설정",
+    "original_functions": "F-056",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "조직·프로세스 역할별 담당·대행·유효기간·Escalation 설정",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-POL-001",
+    "name": "정책·가드레일 현황",
+    "app": "AI 거버넌스 포털",
+    "source_row": 136,
+    "original_url": "/governance/policies",
+    "original_purpose": "법규·그룹·계열사 정책과 적용 AI자산·준수상태 조회",
+    "original_functions": "F-036,F-040,F-055",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "법규·그룹·계열사 정책과 적용 AI자산·준수상태 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-POL-002",
+    "name": "정책·통제 상세",
+    "app": "AI 거버넌스 포털",
+    "source_row": 137,
+    "original_url": "/governance/policies/:policyId",
+    "original_purpose": "정책 원문·통제·적용범위·예외·시행버전·변경영향 조회",
+    "original_functions": "F-036,F-037,F-040,F-055",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "정책 원문·통제·적용범위·예외·시행버전·변경영향 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-POL-003",
+    "name": "가이드라인 최신화",
+    "app": "AI 거버넌스 포털",
+    "source_row": 138,
+    "original_url": "/governance/policies/guidelines/:guidelineId/edit",
+    "original_purpose": "법률 자문 결과를 정책·프로세스·체크리스트 버전으로 등록·승인·시행",
+    "original_functions": "F-055",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "법률 자문 결과를 정책·프로세스·체크리스트 버전으로 등록·승인·시행",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-DAT-001",
+    "name": "데이터 Scope 현황",
+    "app": "AI 거버넌스 포털",
+    "source_row": 139,
+    "original_url": "/governance/data-scopes",
+    "original_purpose": "AI자산별 사용 데이터·민감도·계열사·접근권한·복호화 상태 조회",
+    "original_functions": "F-040,F-043,F-044,F-045,F-046",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "AI자산별 사용 데이터·민감도·계열사·접근권한·복호화 상태 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-DAT-002",
+    "name": "데이터 Scope 상세·검토",
+    "app": "AI 거버넌스 포털",
+    "source_row": 140,
+    "original_url": "/governance/data-scopes/:scopeId",
+    "original_purpose": "RLS·CLS·다운로드·보존·동의권원·DRM·복호화 조건 검토",
+    "original_functions": "F-040,F-045,F-046",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "RLS·CLS·다운로드·보존·동의권원·DRM·복호화 조건 검토",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-DAT-003",
+    "name": "데이터 접근 승인",
+    "app": "AI 거버넌스 포털",
+    "source_row": 141,
+    "original_url": "/governance/data-scopes/:scopeId/approval",
+    "original_purpose": "데이터 Owner·보안·거버넌스 검토와 기간·목적 제한 승인",
+    "original_functions": "F-040,F-045",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "데이터 Owner·보안·거버넌스 검토와 기간·목적 제한 승인",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-EXC-001",
+    "name": "예외 목록",
+    "app": "AI 거버넌스 포털",
+    "source_row": 142,
+    "original_url": "/governance/exceptions",
+    "original_purpose": "가드레일·데이터·모델·절차 예외를 상태·위험·만료일별 조회",
+    "original_functions": "F-037,F-040,F-060",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "가드레일·데이터·모델·절차 예외를 상태·위험·만료일별 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-EXC-002",
+    "name": "예외 요청·보완",
+    "app": "AI 거버넌스 포털",
+    "source_row": 143,
+    "original_url": "/governance/exceptions/editor/:exceptionId?",
+    "original_purpose": "예외 대상·사유·기간·위험·보상통제·증적 작성과 보완",
+    "original_functions": "F-037,F-040",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "예외 대상·사유·기간·위험·보상통제·증적 작성과 보완",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-EXC-003",
+    "name": "예외 검토·승인",
+    "app": "AI 거버넌스 포털",
+    "source_row": 144,
+    "original_url": "/governance/exceptions/:exceptionId/approval",
+    "original_purpose": "정책 Owner·보안·거버넌스 검토와 승인·반려·조건부 승인",
+    "original_functions": "F-037,F-040,F-052",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "정책 Owner·보안·거버넌스 검토와 승인·반려·조건부 승인",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-MON-001",
+    "name": "거버넌스 모니터링",
+    "app": "AI 거버넌스 포털",
+    "source_row": 145,
+    "original_url": "/governance/monitoring",
+    "original_purpose": "위험·정책위반·예외·기일·통제효과와 조치상태 관제",
+    "original_functions": "F-038,F-040,F-060",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "위험·정책위반·예외·기일·통제효과와 조치상태 관제",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-MON-002",
+    "name": "감사로그·증적 검색",
+    "app": "AI 거버넌스 포털",
+    "source_row": 146,
+    "original_url": "/governance/monitoring/audit",
+    "original_purpose": "AI자산·정책·사용자·Agent·데이터·결재 단위 감사와 증적 조회",
+    "original_functions": "F-038,F-040",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "AI자산·정책·사용자·Agent·데이터·결재 단위 감사와 증적 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-MON-003",
+    "name": "위반·조치 상세",
+    "app": "AI 거버넌스 포털",
+    "source_row": 147,
+    "original_url": "/governance/monitoring/issues/:issueId",
+    "original_purpose": "위반 탐지·영향·담당·조치·재검증·종결 승인 이력 관리",
+    "original_functions": "F-038,F-040,F-060",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "위반 탐지·영향·담당·조치·재검증·종결 승인 이력 관리",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-RPT-001",
+    "name": "컴플라이언스 보고서 목록",
+    "app": "AI 거버넌스 포털",
+    "source_row": 148,
+    "original_url": "/governance/reports",
+    "original_purpose": "사업 건별·계열사·그룹·기간별 보고서와 생성상태 조회",
+    "original_functions": "F-058,F-060",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "사업 건별·계열사·그룹·기간별 보고서와 생성상태 조회",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-RPT-002",
+    "name": "보고서 생성·Export",
+    "app": "AI 거버넌스 포털",
+    "source_row": 149,
+    "original_url": "/governance/reports/new",
+    "original_purpose": "조회조건·서식버전·증적을 고정해 Excel/PDF 비동기 생성",
+    "original_functions": "F-058",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "조회조건·서식버전·증적을 고정해 Excel/PDF 비동기 생성",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-ANN-001",
+    "name": "의무 모니터링 일정",
+    "app": "AI 거버넌스 포털",
+    "source_row": 150,
+    "original_url": "/governance/annual-monitoring",
+    "original_purpose": "AI자산별 연간 기준일·기일도래·지연·완료 일정을 제공",
+    "original_functions": "F-057,F-060",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "AI자산별 연간 기준일·기일도래·지연·완료 일정을 제공",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-ANN-002",
+    "name": "모니터링 수행·검토",
+    "app": "AI 거버넌스 포털",
+    "source_row": 151,
+    "original_url": "/governance/annual-monitoring/:monitoringId",
+    "original_purpose": "체크리스트·지표·증적·이슈·개선계획 작성과 검토",
+    "original_functions": "F-051,F-057,F-059,F-060",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "체크리스트·지표·증적·이슈·개선계획 작성과 검토",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-ANN-003",
+    "name": "모니터링 승인·종결",
+    "app": "AI 거버넌스 포털",
+    "source_row": 152,
+    "original_url": "/governance/annual-monitoring/:monitoringId/approval",
+    "original_purpose": "결과·미조치·위험수용을 승인하고 차기 일정·Escalation 생성",
+    "original_functions": "F-052,F-057,F-060",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "결과·미조치·위험수용을 승인하고 차기 일정·Escalation 생성",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  },
+  {
+    "id": "SCR-GOV-SET-001",
+    "name": "거버넌스 기준정보",
+    "app": "AI 거버넌스 포털",
+    "source_row": 153,
+    "original_url": "/governance/settings",
+    "original_purpose": "위험등급·유형·통제·기일·보고서·알림 기준과 시행버전 관리",
+    "original_functions": "F-054,F-055,F-056,F-057,F-060",
+    "status": "미구현",
+    "implemented": "실제 앱의 해당 업무 흐름 없음; 기획/시연/유사 기반은 완료 증거 아님",
+    "remaining": "위험등급·유형·통제·기일·보고서·알림 기준과 시행버전 관리",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "scope": "이전 개발 제외",
+    "route_mapping": "기능 병합은 허용하나 원본 하위동작은 그대로 대조; URL 차이만으로 미구현 판정하지 않음"
+  }
+]

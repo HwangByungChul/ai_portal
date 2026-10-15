@@ -1,0 +1,22 @@
+{
+  "date": "2026-10-12",
+  "phase": "UI13",
+  "configuration_tests": 19,
+  "backend_tests": 75,
+  "browser_runs": {
+    "static_ports_and_home": 10,
+    "static_sites_regression": 7,
+    "development_ports_after_fix": 4
+  },
+  "final_build": "passed",
+  "unconfigured_prd_build": "rejected-existing-output-preserved",
+  "initial_development_admin_health": "404",
+  "fixed_development_admin_health": 200,
+  "services_restored": true,
+  "new_migrations": 0,
+  "primary_database_reset": false,
+  "paid_provider_calls": 0,
+  "production_deployed": false,
+  "external_environments_configured": false,
+  "obsidian_render_verified": false
+}

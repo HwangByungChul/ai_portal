@@ -1,0 +1,9 @@
+{
+  "src/backend/app/use_cases/meeting.py": "0e89fac4caf40498bbb6db261c5bdeeb7ec5b10ac44b44029563ff1037a33d03",
+  "src/backend/app/use_cases/meeting_dates.py": "c915d9ea7d224fbc8552af4b9ba6eb7df8201db0895cfd0a4b15cadadba2b92b",
+  "src/backend/app/use_cases/meeting_quality.py": "7ace0ca395407a65a441a370d8fcc0c1f6e66a826b12ccc76f1ae31775976c1d",
+  "src/backend/tests/test_meeting_contract.py": "1f47812ab1c0c1ab52a9185452b6b9754974d9a775da7801cc945126a93ac50e",
+  "src/backend/tests/test_meeting_dates.py": "9c71191f5d0c355c23a6fd8d85a4e8fe1dc9de17ebbc10161d768e14fc4b3278",
+  "src/backend/tests/test_meeting_quality.py": "a64a31272fd88d014dfdf599229b59143f7335aff1d4201343b9b978e4cc7133",
+  "src/backend/tests/fixtures/meeting-evaluation-v2.json": "29a7b52b62bdc3676ef01a96684aefbf659ec417e35c35681329a93fe04e0b2b"
+}

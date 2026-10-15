@@ -1,0 +1,10 @@
+{
+  "site": "admin",
+  "files": {
+    "index.html": "f18ec2117cc67b515cc62aebaf82f557b51b3c4158e8e6a09053349808052177",
+    "portal-build.json": "be387cc82188d20976ae6adfdb9844a92e503b8d88cb0fb4b232472560da2814",
+    "assets/index-BtnQNAM2.js": "24d31908ae88cd5a18553d5eb82f997cf442638956c8ed2911c14ae15cbf57da",
+    "assets/index-urEDpYfm.css": "0e8e769931a2daae44cf23c26cf7240380933bc0029458e714122ded5ce3b597",
+    ".vite/manifest.json": "bf60e86f50370610c5fb7ab8603c49d3534e016c7074678ad3f91e77726edf1f"
+  }
+}

@@ -1,0 +1,100 @@
+F                                                                        [100%]
+=================================== FAILURES ===================================
+_____________________ test_meeting_context_admission_smoke _____________________
+
+ops_rows = FixtureState(db=FixtureDatabase(name='ai_portal_mvp_test_6dddf5f3c4f44b978ff2191bf7a20e3a'))
+
+    def test_meeting_context_admission_smoke(ops_rows):
+        f=ops_rows
+        async def check():
+            async with open_meter_pool(f.db.runtime_dsn('ai_meter')) as meter:
+                repo,workflow,agent,_,_,user,approver,version,definition=await prepared(f,meter,provider=MeetingProvider())
+                try:
+                    await bind(f,repo,version,definition,user,approver)
+                    async def raw(ctx,name,args):
+                        async with tenant_transaction(repo.pool,ctx) as conn:
+                            return (await (await conn.execute('SELECT security.'+name+'('+','.join(['%s']*len(args))+') AS data',args)).fetchone())['data']
+                    repo.call=raw
+                    service=UseCaseExecutionService(workflow)
+                    run=await service.submit(user,'AGENT_03',MEMO,uuid4())
+                    view=await wait(workflow,user,run['run_id'])
+                    assert view['state']=='completed',view
+                finally:await workflow.close();await agent.close()
+>       f.run(check())
+
+src/backend/tests/test_meeting_runtime_context.py:31: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+src/backend/tests/support.py:25: in run
+    def run(self,coroutine): return self.loop.run_until_complete(coroutine)
+                                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+/Library/Frameworks/Python.framework/Versions/3.13/lib/python3.13/asyncio/base_events.py:725: in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+src/backend/tests/test_meeting_runtime_context.py:27: in check
+    run=await service.submit(user,'AGENT_03',MEMO,uuid4())
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/backend/app/use_cases/service.py:31: in submit
+    return await self.workflow.admit(ctx,UUID(binding['version_id']),client,{binding['input_key']:sealed['compiled']},meeting_context=sealed)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/backend/app/workflows/service.py:51: in admit
+    data=await self.repository.runtime(ctx,'admit',body=body,trace=trace)
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/backend/app/workflows/repository.py:41: in runtime
+    return await self.call(ctx,'workflow_runtime',(ctx.session_id,ctx.tenant_id,action,target,Jsonb(body or {}),self.mode,runtime_digest(),token,self.period,trace or uuid4()))
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+src/backend/tests/test_meeting_runtime_context.py:24: in raw
+    return (await (await conn.execute('SELECT security.'+name+'('+','.join(['%s']*len(args))+') AS data',args)).fetchone())['data']
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = <psycopg.AsyncConnection [IDLE] (host=127.0.0.1 port=55432 user=ai_web database=ai_portal_mvp_test_6dddf5f3c4f44b978ff2191bf7a20e3a) at 0x10e109fd0>
+query = 'SELECT security.workflow_runtime(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s) AS data'
+params = (UUID('b15ed18f-33d7-4d35-b633-9a63bf338b54'), UUID('10000000-0000-4000-8000-00000000000a'), 'admit', None, Jsonb({'version_id': 'd04425ca-da93-4903- ... (300 chars)), 'mock', ...)
+prepare = None, binary = False
+
+    async def execute(
+        self,
+        query: Query,
+        params: Params | None = None,
+        *,
+        prepare: bool | None = None,
+        binary: bool = False,
+    ) -> AsyncCursor[Row]:
+        """Execute a query and return a cursor to read its results."""
+        try:
+            cur = self.cursor()
+            if binary:
+                cur.format = BINARY
+    
+            if isinstance(query, Template):
+                if params is not None:
+                    raise TypeError(
+                        "'execute()' with string template query"
+                        " doesn't support parameters"
+                    )
+                return await cur.execute(query, prepare=prepare)
+            else:
+                return await cur.execute(query, params, prepare=prepare)
+    
+        except e._NO_TRACEBACK as ex:
+>           raise ex.with_traceback(None)
+E           psycopg.errors.InvalidTextRepresentation: invalid input syntax for type json
+E           LINE 2: ...d->'source') IS DISTINCT FROM 'object' OR sealed->'source'-A...
+E                                                                        ^
+E           DETAIL:  Token "source" is invalid.
+E           QUERY:  jsonb_typeof(sealed) IS DISTINCT FROM 'object' OR sealed-ARRAY['source','documents','compiled']<>'{}'
+E              OR jsonb_typeof(sealed->'source') IS DISTINCT FROM 'object' OR sealed->'source'-ARRAY['memo','meeting_date','document_refs']<>'{}'
+E              OR jsonb_typeof(sealed->'source'->'memo') IS DISTINCT FROM 'string' OR char_length(sealed->'source'->>'memo')>4000
+E              OR jsonb_typeof(sealed->'documents') IS DISTINCT FROM 'array' OR jsonb_array_length(sealed->'documents')>3
+E              OR jsonb_typeof(sealed->'source'->'document_refs') IS DISTINCT FROM 'array'
+E              OR jsonb_array_length(sealed->'source'->'document_refs')<>jsonb_array_length(sealed->'documents')
+E              OR jsonb_typeof(sealed->'compiled') IS DISTINCT FROM 'string' OR char_length(sealed->>'compiled') NOT BETWEEN 1 AND 4000
+E              OR sealed->>'compiled' IS DISTINCT FROM p_body->'inputs'->>key
+E              OR coalesce(sealed->'source'->>'meeting_date','')<>'' AND (sealed->'source'->>'meeting_date' !~ '^[0-9]{4}-[0-9]{2}-[0-9]{2}$' OR (sealed->'source'->>'meeting_date')::date::text<>sealed->'source'->>'meeting_date')
+E           CONTEXT:  JSON data, line 1: source
+E           PL/pgSQL function workflow_runtime(uuid,uuid,text,uuid,jsonb,text,text,uuid,date,uuid) line 13 at IF
+
+src/backend/.venv/lib/python3.13/site-packages/psycopg/connection_async.py:333: InvalidTextRepresentation
+=========================== short test summary info ============================
+FAILED src/backend/tests/test_meeting_runtime_context.py::test_meeting_context_admission_smoke
+1 failed in 3.47s

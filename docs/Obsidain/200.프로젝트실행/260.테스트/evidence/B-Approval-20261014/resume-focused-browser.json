@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "duration_ms": 26197.702999999998,
+  "runner_errors": 0,
+  "tests": [
+    {
+      "test_id": "WF_05_real_DB_API_workflow_form_case03_head_USER_execute_revoke",
+      "status": "passed",
+      "duration_ms": 15847
+    },
+    {
+      "test_id": "WF_11_HTTP_stub_late_selection_and_refresh_response_ignored",
+      "status": "passed",
+      "duration_ms": 3379
+    }
+  ],
+  "steps": []
+}

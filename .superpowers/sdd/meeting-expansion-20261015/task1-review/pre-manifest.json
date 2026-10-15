@@ -1,0 +1,9 @@
+{
+  "src/backend/app/use_cases/meeting.py": "1f0cac63ada4a6c99a9b3075ed3fec02d7b71217f16f0acd6d8056b8eb8ada4a",
+  "src/backend/app/use_cases/meeting_dates.py": null,
+  "src/backend/app/use_cases/meeting_quality.py": null,
+  "src/backend/tests/test_meeting_contract.py": "aa8d08dab020ba18603605349d60449b9b91544ba7bf1ebc81d2124ff8de74d1",
+  "src/backend/tests/test_meeting_dates.py": null,
+  "src/backend/tests/test_meeting_quality.py": null,
+  "src/backend/tests/fixtures/meeting-evaluation-v2.json": null
+}

@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "sites": {
+    "user": {
+      "modules": 21,
+      "boundary_verified": true
+    },
+    "admin": {
+      "modules": 21,
+      "boundary_verified": true
+    }
+  }
+}

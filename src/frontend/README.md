@@ -73,3 +73,23 @@ B06 현재전체결과는250.04 24~26절/260 B06 JSON이다. frontend소스는B0
 이 폴더에서 `./start.sh`로 백그라운드 실행하고 `./stop.sh`로 종료한다. 스크립트가 실행한 PID·시각이 일치하는 프로세스만 종료하며 중복 실행과 포트 충돌을 확인한다. 로그는 `.runtime/service-control/service.log`에 기록한다. 기존 설치·설정이 필요하며 데이터 초기화나 패키지 설치는 수행하지 않는다.
 Node22.23.1과 기존 node_modules를 사용한다. API는 별도 backend/start.sh로 먼저 실행한다.
 전체 사용 안내: `docs/Obsidain/200.프로젝트실행/270.파일럿적용/01 개발 서비스 시작 및 종료 안내.md`.
+
+## 2026-10-11 · 포털 UI와 Agent 설정 배포 승인
+
+기본 진입 `/`·`/home`은 실제 API에 연결된 사용자 업무 홈이다. `/workspace` 대화와 기존 문서·요약·사용량 경로는 유지한다. 관리자 기본 진입은 `/admin`, 요청 목록·상세는 `/admin/approvals`이며 사용자·관리자 메뉴를 분리했다. 현재 빌드·출처는 공통이다. 독립 앱·SSO·운영 출처 전환 기준은 Obsidian의 `100.프로젝트계획/12 사용자 관리자 사이트 분리와 상용 이행 설계.md`를 따른다.
+
+Agent의 이름·설명·지시문 변경은 직접 PATCH로 저장하지 않는다. 조직 관리자가 `POST /api/v1/admin/agent-deployments`로 봉인된 변경안을 제출하고 해당 조직을 관리하는 다른 PADMIN이 결정한다. 승인과 기존 설정의 버전 CAS·감사가 한 transaction에서 수행된다. 자기 승인·오래된 버전·다른 조직·직접 RPC 우회는 거부한다. 운영 중지/재개와 비용·예약은 유지한다. 모델·도구·코드·인프라 배포 승인까지 확장한 기능은 아니다.
+
+기존 직접 PATCH `/admin/agents/{key}`는 `APPROVAL_REQUIRED` 409를 반환한다. 클라이언트는 제출 API로 전환해야 한다. 새 migration026만 추가하고 000~025 checksum은 보존한다. 기존 환경의 이행은 소유·주 DB 확인과 사적 백업·데이터 지문 대조 후 수행하며 재seed하지 않는다.
+
+시험: backend `tests/test_agent_approvals.py`, frontend `tests/portal-ui.spec.ts`. 기존 회귀의 메뉴 이동 도우미는 사용자·관리자 사이트 이동과 모바일 메뉴 열기를 명시한다. 최종 시험 결과와 적용 범위는 Obsidian 작업 로그와 UI 통합 결과에 기록한다. 현재 합성 계정·fixture DB와 모의 모델 시험은 상용 운영 준비 완료를 의미하지 않는다.
+
+
+## 사용자·관리자 독립 앱 (2026-10-12)
+
+- `apps/user-web`과 `apps/admin-web`이 정적 import 경계를 가진 별도 진입점입니다.
+- `packages/api-contract`은 types/API/session의 단일 원본, `packages/ui`는 공통 인증·조직 헤더·레이아웃/스코프/스타일입니다. 기존 `src` re-export는 호환 앱과 기능 화면이 같은 세션을 쓰도록 유지합니다.
+- 기존 lock/Node22.23.1로 `npm run build:user`, `npm run build:admin`을 각각 실행합니다. `npm run build`는 typecheck와 두 빌드, 관리 코드 제외 검사를 수행합니다. 의존성·lock 버전을 변경하지 않았습니다.
+- `dist/user`는 `/user/`, `dist/admin`은 `/manage/` 경로에서 각각 호스팅할 수 있는 index/assets/manifest/module graph를 갖습니다. 별도 배포 파이프라인에서 두 디렉터리를 각각 릴리스할 수 있습니다. 해당 prefix의 history fallback은 각 index.html로, `/api`는 기존 서버로 연결해야 합니다.
+- 개발 서버5173에서 `/user/home`, `/manage/admin`은 각각의 실제 앱입니다. `/home`·`/workspace`·`/admin`은 이전 호환 진입으로 유지합니다. 새 앱 사이 이동은 전체 페이지 이동이며 서버 인증을 다시 확인합니다.
+- 하위 경로 정적 산출물이며 별도 도메인·사이트별 세션/BFF·SSO·운영 배포는 아직 연결하지 않았습니다. 기존 Origin/CSRF/쿠키 제한을 완화하지 않았습니다. 실제 운영 IdP/도메인이 확정되면 그 계약을 먼저 적용합니다.

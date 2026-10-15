@@ -1,0 +1,45 @@
+{
+  "date": "2026-10-14",
+  "backend": [
+    {
+      "passed": 132,
+      "seconds": 192.45,
+      "scope": "meeting/workflow/tool/migrations/schema/legacy execution boundaries; before final graph binding hardening"
+    },
+    {
+      "passed": 39,
+      "seconds": 65.36,
+      "scope": "final meeting integration/migration/contracts and workflow approval/runtime; includes graph hardening"
+    },
+    {
+      "passed": 1,
+      "seconds": 2.45,
+      "scope": "049 legacy row and null metadata preservation; before graph-only hardening"
+    }
+  ],
+  "browser": {
+    "passed": 4,
+    "actual_fixture_api_cases": 2,
+    "http_stub_contract_cases": 2,
+    "before_final_graph_only_sql_hardening": true
+  },
+  "build": {
+    "node": "22.23.1",
+    "user_modules": 26,
+    "admin_modules": 37,
+    "boundary_verified": true
+  },
+  "migration": {
+    "prior_tables": 64,
+    "after_tables": 65,
+    "prior_source_files_unchanged": 49,
+    "db_checksums_preserved": 49,
+    "migrations_after": 50,
+    "security_functions": 169,
+    "protected_tables": 35,
+    "reapply_changes": 0
+  },
+  "primary_migrated": false,
+  "paid_calls": 0,
+  "real_provider_or_business_quality_accepted": false
+}

@@ -1,0 +1,991 @@
+[
+  {
+    "id": "F-001",
+    "name": "역할별 워크스페이스",
+    "source_row": 4,
+    "original_requirement": "포탈 사용자 역할별(일반사용자/에이전트개발자/모델러/데이터담당자/운영자/관리자) 워크스페이스 제공, 금융규제·보안·감사·운영단계 고려 포탈 구성방안",
+    "original_acceptance": "역할별 워크스페이스: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "사용자/관리자 독립 앱·조직별 메뉴·USER/TADMIN/PADMIN 및 전역 capability",
+    "remaining": "개발자·모델러·데이터담당자 역할별 workspace, 동적 역할·SOD·위임",
+    "evidence_groups": [
+      "portal",
+      "auth"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-002",
+    "name": "통합 UX/UI 디자인체계",
+    "source_row": 5,
+    "original_requirement": "직관적·통합 UX/UI 방안 제시(전체 화면 일관 디자인체계 적용)",
+    "original_acceptance": "통합 UX/UI 디자인체계: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "A 사용자 홈·A 관리 홈/B 승인 패널·공통 Shell·반응형·키보드 일부",
+    "remaining": "명세 전체 화면 디자인/동작·접근성·지원 브라우저 전수 수용",
+    "evidence_groups": [
+      "portal"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-003",
+    "name": "비즈니스 프로세스 안내",
+    "source_row": 6,
+    "original_requirement": "플랫폼 활용·운용을 위한 주요 비즈니스 프로세스 제시(단계별 목표·범위·관련자·입력·출력·제한 표현)",
+    "original_acceptance": "비즈니스 프로세스 안내: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "화면 상태·오류 설명만 있음",
+    "remaining": "업무 단계별 목표/담당/입출력/제한 안내와 버전 관리",
+    "evidence_groups": [
+      "portal"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-004",
+    "name": "공통 AI자산 공유·확장",
+    "source_row": 7,
+    "original_requirement": "그룹공통 AI자산의 공유·재사용과 계열사별 특화 AI서비스의 유연한 추가·확장이 가능한 포탈 환경",
+    "original_acceptance": "공통 AI자산 공유·확장: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "문서 버전 공유/회수, 고정 Agent 조직 설정·승인",
+    "remaining": "Agent/Prompt/Workflow 자산 registry·파생/재사용·변경전파",
+    "evidence_groups": [
+      "sharing",
+      "approval"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-005",
+    "name": "공통·계열사 전용영역",
+    "source_row": 8,
+    "original_requirement": "그룹 공통영역과 계열사별 전용영역을 구성하여 공동활용과 독립적 운영환경을 동시에 제공",
+    "original_acceptance": "공통·계열사 전용영역: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "tenant RLS·문서 scope·조직별 설정/한도",
+    "remaining": "그룹 공통 자산 영역·계열사 전용 서비스/저장/운영 영역",
+    "evidence_groups": [
+      "auth",
+      "sharing",
+      "usage"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-006",
+    "name": "SSO·권한 기반 메뉴 노출",
+    "source_row": 9,
+    "original_requirement": "로그인 후 사용자 권한에 따라 접근 가능한 워크스페이스·메뉴·기능만 노출(계열사별 SSO 등 통합인증 연동)",
+    "original_acceptance": "SSO·권한 기반 메뉴 노출: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "로컬 인증·세션·권한 기반 메뉴/API·권한 회수",
+    "remaining": "SSO/OIDC/SAML·AD/조직 생명주기 동기화",
+    "evidence_groups": [
+      "auth",
+      "portal"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-007",
+    "name": "온보딩·도움말",
+    "source_row": 10,
+    "original_requirement": "튜토리얼·가이드 제공(온보딩 가이드, 기능별 도움말, 활용 예시)",
+    "original_acceptance": "온보딩·도움말: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "일부 정적 화면 설명",
+    "remaining": "온보딩·도움말 센터·역할별 가이드/튜토리얼 CMS",
+    "evidence_groups": [
+      "portal"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-008",
+    "name": "AI 전 과정 가드레일",
+    "source_row": 11,
+    "original_requirement": "사용자 입력부터 모델 응답 및 Agent 실행까지 AI서비스 전 과정에 대한 가드레일 적용 기능",
+    "original_acceptance": "AI 전 과정 가드레일: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "입력 제한·실행허가·비용통제·RAG 근거검증·수집/요약 최소 정책",
+    "remaining": "일반 Chat/모델 출력/Tool의 전 과정 정책·공격/유해성·예외·정책 장애 통제",
+    "evidence_groups": [
+      "policy",
+      "chat"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-009",
+    "name": "중요정보 탐지·비식별화",
+    "source_row": 12,
+    "original_requirement": "개인정보·신용정보·기밀정보 등 중요정보의 입·출력 탐지 및 차단·비식별화(익명화/범주화/마스킹) 기능",
+    "original_acceptance": "중요정보 탐지·비식별화: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "수집·요약의 주민번호/전화/메일/계좌 후보 규칙 차단",
+    "remaining": "일반 입출력의 신용/기밀 탐지·비식별/마스킹·탐지 평가/예외",
+    "evidence_groups": [
+      "policy"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-010",
+    "name": "금칙어·유해콘텐츠 필터",
+    "source_row": 13,
+    "original_requirement": "금칙어, 유해콘텐츠, 부적절 질의 및 응답에 대한 탐지·필터링 기능",
+    "original_acceptance": "금칙어·유해콘텐츠 필터: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "수집 지시문 우회 후보 차단은 있음; 유해콘텐츠 필터와 다름",
+    "remaining": "금칙어/유해성/다국어 분류·질문/응답 필터·정책 관리",
+    "evidence_groups": [
+      "policy"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-011",
+    "name": "MCP·Tool 실행 통제",
+    "source_row": 14,
+    "original_requirement": "Agent의 시스템·MCP·각종 Tool 호출 시 사용자 권한 및 허용범위에 따른 실행 통제 기능",
+    "original_acceptance": "MCP·Tool 실행 통제: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "모델 호출 중앙 허가는 있음; MCP 실행 기능은 없음",
+    "remaining": "MCP/Tool 등록·위임권한·allowlist·실행 gateway·중복/장애 통제",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-012",
+    "name": "생성형 AI 통합 Chat",
+    "source_row": 15,
+    "original_requirement": "생성형AI 통합포털 구축(모델·에이전트 선택 Chat 프롬프팅, 대화이력관리·세션유지, 질의추천·샘플문구)",
+    "original_acceptance": "생성형 AI 통합 Chat: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "고정2 Agent·SSE·취소·저장·이력 제목/핀/검색/삭제·홈 샘플질문",
+    "remaining": "다중 모델 선택·일반 답변 재생성·모델전환/전체 질의추천 흐름",
+    "evidence_groups": [
+      "chat",
+      "portal"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-013",
+    "name": "답변 출처·피드백",
+    "source_row": 16,
+    "original_requirement": "답변 출처/원문 링크 표시(RAG 참조 문서·청크 확인), 답변 피드백(rating/좋아요싫어요/의견) 제공(사용자)·조회(관리자) 기능",
+    "original_acceptance": "답변 출처·피드백: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "RAG 출처/원문 최신권한·응답 긍정/부정/의견/철회·관리 최소집계",
+    "remaining": "명세의 관리자 피드백 조회 범위 확정·출처/피드백 전체 흐름 수용; 별점은 IA에 명시",
+    "evidence_groups": [
+      "feedback",
+      "chat"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-014",
+    "name": "대화 파일 업로드·활용",
+    "source_row": 17,
+    "original_requirement": "대화중 파일 업로드 기능(문서/이미지), 업로드 파일 기반 응답·요약·번역",
+    "original_acceptance": "대화 파일 업로드·활용: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "사용자 문서 등록·질문에 게시 버전 선택·제한5형식·단일 발췌요약",
+    "remaining": "대화 내 직접 파일업로드·이미지/OCR·번역/자유요약·큰 문서; PPTX/OCR 사용자 보류",
+    "evidence_groups": [
+      "docs",
+      "summary",
+      "chat"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-015",
+    "name": "개인 문서 RAG",
+    "source_row": 18,
+    "original_requirement": "개인 문서 기반 RAG 구성(업로드 문서 자동 파싱·벡터 적재, 개인별 격리 저장)",
+    "original_acceptance": "개인 문서 RAG: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "개인 문서함·자동파싱/색인·owner ACL·원문/청크/벡터/Graph 경계·삭제",
+    "remaining": "개인 RAG 전체 자료/대용량·보존/백업 삭제·형식 전범위 수용",
+    "evidence_groups": [
+      "docs",
+      "sharing"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-016",
+    "name": "전체 프롬프트 조회",
+    "source_row": 19,
+    "original_requirement": "전체 프롬프트 보기 기능(해당 AI 에이전트 관리자인 경우)",
+    "original_acceptance": "전체 프롬프트 조회: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "조직 관리자에게 고정 Agent instructions 조회·승인 변경",
+    "remaining": "조합된 System/개발자/템플릿 전체 프롬프트·승인버전·민감값 치환/읽기권한",
+    "evidence_groups": [
+      "approval",
+      "chat"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-017",
+    "name": "개인화·알림·My Agent",
+    "source_row": 20,
+    "original_requirement": "즐겨찾기, 개인화 설정(기본 모델·기본 에이전트 등), 알림 기능, My Agent·최근 이용서비스 등 개인화 기능",
+    "original_acceptance": "개인화·알림·My Agent: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "최근 대화·대화 핀·홈 도우미 목록",
+    "remaining": "My Agent·자산 즐겨찾기·기본 모델/Agent 개인 설정·알림/권한정리",
+    "evidence_groups": [
+      "chat",
+      "portal"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-018",
+    "name": "대화·문서 출력",
+    "source_row": 21,
+    "original_requirement": "문서 출력 기능 제공",
+    "original_acceptance": "대화·문서 출력: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "단일 문서 요약 Markdown 출력·원문 내려받기",
+    "remaining": "대화/답변/출처 PDF·문서 출력·비동기 Export·보존/만료/민감 검사",
+    "evidence_groups": [
+      "summary"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-019",
+    "name": "배포 Agent 검색·권한관리",
+    "source_row": 22,
+    "original_requirement": "그룹/전사/부서 단위 배포(승인) 에이전트에 대한 검색 및 권한 관리 체계 구현",
+    "original_acceptance": "배포 Agent 검색·권한관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "허용 고정2 Agent 조회·조직별 실행 제한·고정 설정 승인",
+    "remaining": "승인 Agent 검색·그룹/본부/부서/개별 권한 신청/부여/회수",
+    "evidence_groups": [
+      "approval",
+      "usage"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-020",
+    "name": "AI자산 통합 카탈로그",
+    "source_row": 23,
+    "original_requirement": "업무 목적별 Agent, Prompt, MCP 등 AI자산의 통합 카탈로그 및 검색기능",
+    "original_acceptance": "AI자산 통합 카탈로그: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "고정 도우미 목록/자료 검색은 있음; 자산 통합 카탈로그 없음",
+    "remaining": "Agent/Prompt/MCP/Workflow/Knowledge/Model 유형·태그·통합검색",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-021",
+    "name": "권한 기반 연계·실행환경",
+    "source_row": 24,
+    "original_requirement": "사용자 권한에 따른 각 사내 시스템, 데이터, MCP연계 및 Agent 실행환경",
+    "original_acceptance": "권한 기반 연계·실행환경: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "공급자 API 호출만 연결",
+    "remaining": "사용자 위임·사내시스템/데이터/MCP connector·실행환경",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-022",
+    "name": "검증 AI자산 공유·재사용",
+    "source_row": 25,
+    "original_requirement": "검증된 Agent, Prompt 등 AI 자산의 그룹·계열사·부서 단위 공유 및 재사용 기능",
+    "original_acceptance": "검증 AI자산 공유·재사용: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "문서 공유 기반은 있음; 승인 Agent/Prompt 재사용 기능 없음",
+    "remaining": "검증 자산 그룹/계열사/부서 공유·구독·복제·lineage",
+    "evidence_groups": [
+      "sharing"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-023",
+    "name": "모델·Agent 검색·랭킹",
+    "source_row": 26,
+    "original_requirement": "모델 및 에이전트에 대한 검색 기능(키워드/태그/카테고리), 사용량·평가 기반 랭킹 표시",
+    "original_acceptance": "모델·Agent 검색·랭킹: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "고정 Agent 목록만 있음",
+    "remaining": "모델/Agent 키워드·태그·카테고리 검색·평가/사용량 랭킹",
+    "evidence_groups": [
+      "usage"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-024",
+    "name": "템플릿·승인·배포범위",
+    "source_row": 27,
+    "original_requirement": "에이전트/워크플로우/프롬프트의 템플릿화 및 조직 내 재사용 자산 관리, 관리자 승인 절차 기반 배포·공유 범위(개인/부서/본부/계열사/그룹) 통제",
+    "original_acceptance": "템플릿·승인·배포범위: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "고정2 Agent 설정 변경의 불변 요청·타인 승인/반려·버전 충돌 통제",
+    "remaining": "Agent/Workflow/Prompt 템플릿·복제·공개범위 계층·자산버전/롤백",
+    "evidence_groups": [
+      "approval"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-025",
+    "name": "공지·커뮤니티·지식공유",
+    "source_row": 28,
+    "original_requirement": "공지사항, 커뮤니티(과제 산출물 등록 및 공유), 지식공유 게시판 기능",
+    "original_acceptance": "공지·커뮤니티·지식공유: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "실제 앱에는 공지/게시판 API·저장 모델 없음",
+    "remaining": "공지·게시물/댓글/첨부·과제 산출물 공유·공개범위",
+    "evidence_groups": [
+      "portal"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-026",
+    "name": "사용자 평가·개선관리",
+    "source_row": 29,
+    "original_requirement": "사용자 피드백 수렴 및 개선 절차(에이전트별 별점 평가, 의견 수집·관리)",
+    "original_acceptance": "사용자 평가·개선관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "응답 긍정/부정·비공개 의견·변경/철회·조직 최소집계",
+    "remaining": "Agent별 별점·개선요청 담당/분류/처리/종결 프로세스",
+    "evidence_groups": [
+      "feedback"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-027",
+    "name": "관리자 포털 프레임",
+    "source_row": 30,
+    "original_requirement": "플랫폼 운영자·관리자가 사용하는 어드민 포털 화면 구축(UI 기반 콘텐츠 관리, 사이트 관리, 커뮤니티 관리 포함)",
+    "original_acceptance": "관리자 포털 프레임: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "독립 admin 앱·운영 홈·승인 목록/상세·현재 권한 메뉴",
+    "remaining": "CMS/사이트/커뮤니티 관리·전체 운영메뉴; 고위험 재인증",
+    "evidence_groups": [
+      "portal",
+      "approval"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-028",
+    "name": "통합 운영 대시보드",
+    "source_row": 31,
+    "original_requirement": "통합 대시보드(사용자·에이전트·모델·자원 현황, 모니터링(API호출·성능·장애), 미터링·빌링 현황(계열사별 사용량·비용), Export 기능)",
+    "original_acceptance": "통합 운영 대시보드: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "호출/토큰·추정 비용·예약/unknown·한도·관리 홈/상세",
+    "remaining": "사용자/모델/자원 지표·성능/장애/추이·drilldown·Export·확정 정산",
+    "evidence_groups": [
+      "usage"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-029",
+    "name": "계열사 과제 관리",
+    "source_row": 32,
+    "original_requirement": "과제 관리 화면(계열사별 과제 등록·검토·결재·이행 모니터링, 과제별 자원·비용 현황)",
+    "original_acceptance": "계열사 과제 관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "조직 예산은 과제 객체가 아님",
+    "remaining": "과제 등록/검토/결재/일정·이행·산출물·과제별 자원/비용",
+    "evidence_groups": [
+      "usage"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-030",
+    "name": "GPU·CPU 자원 관리",
+    "source_row": 33,
+    "original_requirement": "자원 관리 화면(GPU/CPU 자원 현황·정책 관리, 사용 현황 모니터링)",
+    "original_acceptance": "GPU·CPU 자원 관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "호출/토큰/비용 한도는 GPU/CPU 자원 관리가 아님",
+    "remaining": "GPU/CPU 수집·할당/예약·정책·사용률/경보",
+    "evidence_groups": [
+      "usage"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-031",
+    "name": "역할·권한·결재선 관리",
+    "source_row": 34,
+    "original_requirement": "사용자 역할 권한 관리 화면(역할 조회·생성·비활성화, 권한 부여·변경, 결재라인 관리, 접속·활동 이력 조회)",
+    "original_acceptance": "역할·권한·결재선 관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "소속 active·USER/TADMIN 변경·PADMIN 보호·현재권한·고정 설정 자기승인 금지",
+    "remaining": "역할 CRUD·유효기간/위임·결재선·활동 검색·종합 SOD",
+    "evidence_groups": [
+      "auth",
+      "approval"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-032",
+    "name": "AI서비스 운영 생명주기",
+    "source_row": 35,
+    "original_requirement": "AI서비스·Agent·MCP 등 포탈 내 서비스 등록·게시·중지 등 운영관리 기능",
+    "original_acceptance": "AI서비스 운영 생명주기: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "고정2 Agent 설정 승인·중지/재개·문서 게시/삭제",
+    "remaining": "새 Agent/서비스/MCP 생성·검증·게시·폐기·의존성/구독 영향",
+    "evidence_groups": [
+      "approval",
+      "docs"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-033",
+    "name": "서비스·Agent 이용권한",
+    "source_row": 36,
+    "original_requirement": "계열사·부서·사용자별 AI서비스 및 Agent 접근 및 이용권한 설정 기능",
+    "original_acceptance": "서비스·Agent 이용권한: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "조직 role/capability·고정 Agent 허가",
+    "remaining": "부서/개별 사용자/자산 ABAC·권한 상속/신청/만료·일괄부여",
+    "evidence_groups": [
+      "auth",
+      "usage"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-034",
+    "name": "AI자산 공개·공유범위",
+    "source_row": 37,
+    "original_requirement": "그룹 공통 AI자산과 계열사 전용 AI 자산의 공개, 공유 범위 설정 기능",
+    "original_acceptance": "AI자산 공개·공유범위: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "문서 private/org·특정 게시버전 조직 Grant/회수",
+    "remaining": "Agent/Prompt/Workflow 자산 그룹/부서 공개범위·승인/복제 영향",
+    "evidence_groups": [
+      "sharing"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-035",
+    "name": "공통·전용 서비스 운영분리",
+    "source_row": 38,
+    "original_requirement": "그룹 공통서비스 및 계열사 전용서비스의 운영영역 분리 및 관리 기능",
+    "original_acceptance": "공통·전용 서비스 운영분리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "조직 관리와 전역 capability 분리·tenant 운영 설정",
+    "remaining": "그룹공통/계열사 전용 서비스 영역·자산관리·운영 위임",
+    "evidence_groups": [
+      "auth",
+      "usage"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-036",
+    "name": "계열사별 가드레일 정책",
+    "source_row": 39,
+    "original_requirement": "그룹·계열사별 AI가드레일 정책의 적용범위 및 세부기준 설정 기능",
+    "original_acceptance": "계열사별 가드레일 정책: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "정적 수집/요약 정책과 stop/cap는 있음",
+    "remaining": "그룹 필수/계열사 강화 가드레일 정책·버전/시행·충돌·관리 UI/API",
+    "evidence_groups": [
+      "policy"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-037",
+    "name": "서비스별 가드레일·예외",
+    "source_row": 40,
+    "original_requirement": "AI서비스·Agent별 입·출력 실행 등 가드레일 적용 및 예외 설정 기능",
+    "original_acceptance": "서비스별 가드레일·예외: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "기존 ACL/한도/수집 정책은 있음",
+    "remaining": "서비스별 입출력/실행 정책·예외 신청/승인/만료/복구",
+    "evidence_groups": [
+      "policy"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-038",
+    "name": "가드레일 위반 현황·이력",
+    "source_row": 41,
+    "original_requirement": "가드레일의 탐지·차단·정책위반 현황 및 이력 조회 기능",
+    "original_acceptance": "가드레일 위반 현황·이력: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "오류 코드와 감사 기반은 있음",
+    "remaining": "탐지/차단/위반 이벤트 원장·정책별 현황/추세·마스킹 조회",
+    "evidence_groups": [
+      "policy",
+      "usage"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-039",
+    "name": "서비스 배포 관리",
+    "source_row": 42,
+    "original_requirement": "서비스 배포 관리 화면(배포 승인·진행 상태 조회, 테스트·배포 현황 관리)",
+    "original_acceptance": "서비스 배포 관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "고정 Agent 설정 승인 대기/승인/반려·설정 반영",
+    "remaining": "Artifact·평가증적·목표환경·불변 Release·실제 승격/배포·canary/롤백",
+    "evidence_groups": [
+      "approval"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-040",
+    "name": "보안·거버넌스 통합관리",
+    "source_row": 43,
+    "original_requirement": "보안·거버넌스 관리 화면(개인정보 탐지·예외승인 정책, 가드레일·필터링 정책, 데이터 스코프 정책, 감사 로그 검색·조회)",
+    "original_acceptance": "보안·거버넌스 통합관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "문서 Scope/ACL/공유와 DB 최소 감사",
+    "remaining": "PII예외/가드레일/데이터 Scope 정책 편집·감사 검색·보안 관리화면",
+    "evidence_groups": [
+      "sharing",
+      "policy"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-041",
+    "name": "모델·데이터 반입 승인",
+    "source_row": 44,
+    "original_requirement": "모델·데이터 반입 승인 화면(반입 요청·검사 결과·승인 처리 현황)",
+    "original_acceptance": "모델·데이터 반입 승인: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "문서 반입·형식/PII 후보 검사 기반은 있음; 사람 반입 승인 없음",
+    "remaining": "모델/데이터 반입 요청·검사결과·라이선스/악성코드·사람 승인/해시봉인",
+    "evidence_groups": [
+      "docs",
+      "policy"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-042",
+    "name": "공지·콘텐츠·게시판 관리",
+    "source_row": 45,
+    "original_requirement": "공지·콘텐츠·게시판 관리 화면",
+    "original_acceptance": "공지·콘텐츠·게시판 관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "실제 CMS/게시판 API·schema·UI 없음",
+    "remaining": "작성/검토/예약게시/종료/버전·콘텐츠/게시판 관리",
+    "evidence_groups": [
+      "portal"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-043",
+    "name": "테넌트 논리적 분리",
+    "source_row": 46,
+    "original_requirement": "그룹 공통영역과 계열사 전용영역 간 데이터·서비스·접근권한의 논리적 분리구조 적용",
+    "original_acceptance": "테넌트 논리적 분리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "tenant RLS·세션/owner·문서/검색/Graph/벡터 경계",
+    "remaining": "그룹공통/전용 서비스·캐시/큐/저장/키·10계열사 전체 경계 검증",
+    "evidence_groups": [
+      "auth",
+      "sharing"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-044",
+    "name": "계열사 간 데이터 교차방지",
+    "source_row": 47,
+    "original_requirement": "계열사 간 데이터의 비인가 접근, 전송 및 교차 활용을 방지할 수 있는 통제체계 적용",
+    "original_acceptance": "계열사 간 데이터 교차방지: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "A/B 대화/원문/출처/Graph/벡터 비인가 교차 접근 통제",
+    "remaining": "연계/Tool/전송·배치/복구·10계열사·새 기능의 교차방지 수용",
+    "evidence_groups": [
+      "auth",
+      "sharing"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-045",
+    "name": "데이터 보호정책 연계",
+    "source_row": 48,
+    "original_requirement": "개인정보·신용정보 등 중요정보 활용 시 그룹 및 계열사 데이터 보호정책과 연계 가능한 구조 제공",
+    "original_acceptance": "데이터 보호정책 연계: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "문서 ACL/private 저장·후보검사는 있음; 보호정책 연계 없음",
+    "remaining": "DLP/DRM/키·동의권원·암복호화·그룹/계열사 정책 adapter",
+    "evidence_groups": [
+      "policy",
+      "sharing"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-046",
+    "name": "공통자산·독립정책 결합",
+    "source_row": 49,
+    "original_requirement": "그룹 공통 AI자산은 재사용하되 계열사별 데이터·보안·권한 정책을 독립적으로 적용할 수 있는 구조",
+    "original_acceptance": "공통자산·독립정책 결합: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "동일 고정 Agent의 조직 config·권한·한도 분리",
+    "remaining": "공통자산 불변버전+tenant model/connector/credential/보안 정책 바인딩",
+    "evidence_groups": [
+      "usage",
+      "approval"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-047",
+    "name": "신규 계열사·서비스 확장",
+    "source_row": 50,
+    "original_requirement": "신규 계열사, AI서비스, Agent, LLM, MCP 등의 추가/변경이 용이한 확장형 구조 제공",
+    "original_acceptance": "신규 계열사·서비스 확장: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "tenant row·모듈·Provider 인터페이스·환경파일 기반",
+    "remaining": "계열사 자동 onboarding·새 Agent/LLM/MCP 동적등록·기본정책/철수",
+    "evidence_groups": [
+      "arch",
+      "auth"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-048",
+    "name": "기존·신규 시스템 표준연계",
+    "source_row": 51,
+    "original_requirement": "기존 그룹·계열사 시스템 및 향후 신규 업무 시스템(단위시스템, 차세대 등)과의 표준 연계 방식 지원",
+    "original_acceptance": "기존·신규 시스템 표준연계: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "내부 REST/envelope/요청 ID 기반은 있음",
+    "remaining": "사내 시스템 표준 connector·서비스 인증/위임·event/MCP/전문·버전/SLA",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-049",
+    "name": "모듈형 변경영향 최소화",
+    "source_row": 52,
+    "original_requirement": "AI서비스, Agent, MCP 등의 추가·변경 시 기존 서비스에 미치는 영향을 최소화할 수 있는 모듈형 구조 제공",
+    "original_acceptance": "모듈형 변경영향 최소화: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "부분 구현",
+    "development_scope": "기존 비거버넌스 개발 대상",
+    "implemented": "AI/문서/실행 모듈·공통 core·독립 UI·config snapshot",
+    "remaining": "동적 자산·공유 DB 변경 계약·서비스 장애 격리·버전 route·일반 점진 배포",
+    "evidence_groups": [
+      "arch",
+      "portal"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-050",
+    "name": "AI 거버넌스 포털",
+    "source_row": 53,
+    "original_requirement": "AI플랫폼 포탈 내 별도 기능으로 'AI거버넌스 포탈' 구축(AI거버넌스 컨설팅 산출물의 전산 시스템화)",
+    "original_acceptance": "AI 거버넌스 포털: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "이전 개발 범위 제외 유지; 이번 전체 명세 검토에 포함",
+    "implemented": "별도 HTML 시연/기획 자료는 있음; 실제 앱 전용 UI/API/schema 없음",
+    "remaining": "거버넌스 전용 기능과 해당 프로세스/양식/연계·검증 전체",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-051",
+    "name": "거버넌스 Flow Diagram",
+    "source_row": 54,
+    "original_requirement": "내부 프로세스 흐름도 제공, 각 단계 클릭 시 설명·내용 작성화면 제공(입출력값 포맷 별도 제공)",
+    "original_acceptance": "거버넌스 Flow Diagram: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "이전 개발 범위 제외 유지; 이번 전체 명세 검토에 포함",
+    "implemented": "별도 HTML 시연/기획 자료는 있음; 실제 앱 전용 UI/API/schema 없음",
+    "remaining": "거버넌스 전용 기능과 해당 프로세스/양식/연계·검증 전체",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-052",
+    "name": "단계별 결재선",
+    "source_row": 55,
+    "original_requirement": "단계별 결재선 기능 제공",
+    "original_acceptance": "단계별 결재선: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "이전 개발 범위 제외 유지; 이번 전체 명세 검토에 포함",
+    "implemented": "별도 HTML 시연/기획 자료는 있음; 실제 앱 전용 UI/API/schema 없음",
+    "remaining": "거버넌스 전용 기능과 해당 프로세스/양식/연계·검증 전체",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-053",
+    "name": "단계별 외부시스템 트리거",
+    "source_row": 56,
+    "original_requirement": "기존 시스템(ex. ITSM)간 연동 감안한 확장성 - 각 단계별 타시스템 트리거 추가 입력 On/Off 설정",
+    "original_acceptance": "단계별 외부시스템 트리거: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "이전 개발 범위 제외 유지; 이번 전체 명세 검토에 포함",
+    "implemented": "별도 HTML 시연/기획 자료는 있음; 실제 앱 전용 UI/API/schema 없음",
+    "remaining": "거버넌스 전용 기능과 해당 프로세스/양식/연계·검증 전체",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-054",
+    "name": "단계·세부내용 CRUD·버전",
+    "source_row": 57,
+    "original_requirement": "각 단계 및 세부 내용의 신규/수정/삭제 기능",
+    "original_acceptance": "단계·세부내용 CRUD·버전: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "이전 개발 범위 제외 유지; 이번 전체 명세 검토에 포함",
+    "implemented": "별도 HTML 시연/기획 자료는 있음; 실제 앱 전용 UI/API/schema 없음",
+    "remaining": "거버넌스 전용 기능과 해당 프로세스/양식/연계·검증 전체",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-055",
+    "name": "AI 법규·가이드라인 최신화",
+    "source_row": 58,
+    "original_requirement": "AI기본법 관련 가이드라인 최신화를 위한 기존 BNK그룹 AI거버넌스 컨설팅 수행 로펌(김앤장) 공수(4M/M) 포함 제안",
+    "original_acceptance": "AI 법규·가이드라인 최신화: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "이전 개발 범위 제외 유지; 이번 전체 명세 검토에 포함",
+    "implemented": "별도 HTML 시연/기획 자료는 있음; 실제 앱 전용 UI/API/schema 없음",
+    "remaining": "거버넌스 전용 기능과 해당 프로세스/양식/연계·검증 전체",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-056",
+    "name": "부서별 담당자 설정",
+    "source_row": 59,
+    "original_requirement": "부서별 담당자 설정 화면 제공",
+    "original_acceptance": "부서별 담당자 설정: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "이전 개발 범위 제외 유지; 이번 전체 명세 검토에 포함",
+    "implemented": "별도 HTML 시연/기획 자료는 있음; 실제 앱 전용 UI/API/schema 없음",
+    "remaining": "거버넌스 전용 기능과 해당 프로세스/양식/연계·검증 전체",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-057",
+    "name": "단계 도래 알림",
+    "source_row": 60,
+    "original_requirement": "각 단계 도래 시 알림 제공(그룹웨어 메일/메신저 등)",
+    "original_acceptance": "단계 도래 알림: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "이전 개발 범위 제외 유지; 이번 전체 명세 검토에 포함",
+    "implemented": "별도 HTML 시연/기획 자료는 있음; 실제 앱 전용 UI/API/schema 없음",
+    "remaining": "거버넌스 전용 기능과 해당 프로세스/양식/연계·검증 전체",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-058",
+    "name": "거버넌스 보고서 Export",
+    "source_row": 61,
+    "original_requirement": "보고서 export 기능 제공(사업 건별 및 전체)",
+    "original_acceptance": "거버넌스 보고서 Export: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "이전 개발 범위 제외 유지; 이번 전체 명세 검토에 포함",
+    "implemented": "별도 HTML 시연/기획 자료는 있음; 실제 앱 전용 UI/API/schema 없음",
+    "remaining": "거버넌스 전용 기능과 해당 프로세스/양식/연계·검증 전체",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-059",
+    "name": "단계별 파일 업로드",
+    "source_row": 62,
+    "original_requirement": "필요 단계별 파일 업로드 기능 제공",
+    "original_acceptance": "단계별 파일 업로드: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "이전 개발 범위 제외 유지; 이번 전체 명세 검토에 포함",
+    "implemented": "별도 HTML 시연/기획 자료는 있음; 실제 앱 전용 UI/API/schema 없음",
+    "remaining": "거버넌스 전용 기능과 해당 프로세스/양식/연계·검증 전체",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  },
+  {
+    "id": "F-060",
+    "name": "거버넌스 대시보드·의무모니터링",
+    "source_row": 63,
+    "original_requirement": "대시보드 제공(전체 AI서비스 수, 고위험/고영향 AI 수, 연1회 의무 모니터링 현황, 위험등급별·진행단계별·유형별 서비스 수, 모니터링 상태(기일도래관리) 등)",
+    "original_acceptance": "거버넌스 대시보드·의무모니터링: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+    "status": "미구현",
+    "development_scope": "이전 개발 범위 제외 유지; 이번 전체 명세 검토에 포함",
+    "implemented": "별도 HTML 시연/기획 자료는 있음; 실제 앱 전용 UI/API/schema 없음",
+    "remaining": "거버넌스 전용 기능과 해당 프로세스/양식/연계·검증 전체",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_spec_acceptance": "미검증: 원본 전체 수용 시나리오의 현재 소스 실행 증거 없음",
+    "source_criteria": "의미 기반 수동 대조; 기술스택 차이 자체는 미구현 판정 근거로 사용하지 않음"
+  }
+]

@@ -1,0 +1,28 @@
+{
+  "status": "passed",
+  "duration_ms": 23556.563000000002,
+  "runner_errors": 0,
+  "tests": [
+    {
+      "test_id": "DP24_01_use_case_workspace_page_10_agents_and_safety_badges",
+      "status": "passed",
+      "duration_ms": 3237
+    },
+    {
+      "test_id": "WF_03_meeting_ui_scoped_execution_and_structured_result_contract",
+      "status": "passed",
+      "duration_ms": 4547
+    },
+    {
+      "test_id": "WF_01_workflow_canvas_page_view_and_dag_nodes",
+      "status": "passed",
+      "duration_ms": 2767
+    },
+    {
+      "test_id": "WF_02_approved_version_runtime_ui_contract",
+      "status": "passed",
+      "duration_ms": 4648
+    }
+  ],
+  "steps": []
+}

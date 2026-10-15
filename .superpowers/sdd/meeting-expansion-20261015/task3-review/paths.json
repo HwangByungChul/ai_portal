@@ -1,0 +1,12 @@
+[
+  "src/frontend/src/UseCaseWorkspacePage.tsx",
+  "src/frontend/src/WorkflowApprovalRequest.tsx",
+  "src/frontend/packages/api-contract/src/types.ts",
+  "src/frontend/src/MeetingDocuments.tsx",
+  "src/frontend/src/MeetingQualityPanel.tsx",
+  "src/frontend/src/meeting.css",
+  "src/backend/scripts/portal_test_app.py",
+  "src/frontend/tests/tool-workflow-approvals.spec.ts",
+  "src/frontend/tests/meeting-runtime.spec.ts",
+  "src/frontend/packages/api-contract/src/api.ts"
+]

@@ -1,3 +1,4 @@
+import {RunAssetInfo} from './RunAssetInfo';
 import {useEffect,useRef,useState} from 'react';
 import {api,ApiError,isAbort} from './api';
 import {blockReason,get,modeLabel,useScope,wait} from './scoped';
@@ -6,16 +7,16 @@ import {RagEvidencePanel} from './RagEvidencePanel';
 import {subscribe} from './stream';
 import {ConversationHistory,type HistoryFilter} from './ConversationHistory';
 import {ResponseFeedback} from './ResponseFeedback';
-import type {AgentKey,AgentSummary,Conversation,DocumentRef,Message,PageResult,Run,Tenant,User} from './types';
-type Submission={client_send_id:string;agent_key:AgentKey;prompt:string;conversation_id?:string;document_refs?:DocumentRef[]};
+import type {AgentKey,AgentSummary,Conversation,DocumentRef,Message,PageResult,Run,Tenant,User,ChatLaunch} from './types';
+type Submission={asset_id?:string;client_send_id:string;agent_key:AgentKey;prompt:string;conversation_id?:string;document_refs?:DocumentRef[]};
 const stateName:Record<string,string>={queued:'접수됨',running:'답변 작성 중',cancel_requested:'취소 요청됨 · 결과 확인 중',completed:'완료 · 저장 확인됨',cancelled:'취소됨',failed:'처리 실패',blocked:'현재 처리할 수 없음',interrupted:'처리가 중단됨'};
-export function ChatPage({tenant,user}:{tenant:Tenant;user:User}){
+export function ChatPage({tenant,user,initial={},onPublishedHistory}:{tenant:Tenant;user:User;initial?:ChatLaunch;onPublishedHistory?:()=>void}){
  const context=useScope();const org=tenant.tenant_id;
- const [agents,setAgents]=useState<AgentSummary[]>([]);const [agent,setAgent]=useState<AgentKey>('general');
+ const [agents,setAgents]=useState<AgentSummary[]>([]);const [agent,setAgent]=useState<AgentKey>(initial.agentKey??initial.conversation?.agent_key??'general');
  const [conversations,setConversations]=useState<Conversation[]>([]);const [conversationCursor,setConversationCursor]=useState<string|null>(null);
  const [selected,setSelected]=useState<string|null>(null);const [messages,setMessages]=useState<Message[]>([]);const [messageCursor,setMessageCursor]=useState<string|null>(null);
  const [documentRefs,setDocumentRefs]=useState<DocumentRef[]>([]);
- const [prompt,setPrompt]=useState('');const [run,setRun]=useState<Run|null>(null);const [draft,setDraft]=useState('');
+ const [prompt,setPrompt]=useState(initial.prompt??'');const [run,setRun]=useState<Run|null>(null);const [draft,setDraft]=useState('');
  const [error,setError]=useState<string|null>(null);const [notice,setNotice]=useState<string|null>(null);const [loading,setLoading]=useState(true);
  const [historyOpen,setHistoryOpen]=useState(false);const [sending,setSending]=useState(false);const [unresolved,setUnresolved]=useState(false);const [cancelling,setCancelling]=useState(false);
  const lock=useRef(false);const pending=useRef<Submission|null>(null);const selection=useRef(0);const listQuery=useRef(0);const chosen=useRef<string|null>(null);
@@ -49,7 +50,7 @@ export function ChatPage({tenant,user}:{tenant:Tenant;user:User}){
   catch(problem){await failed(problem);}
   await list();await currentAuthority();if(context.current())setLoading(false);
  }
- useEffect(()=>{void initialize();},[]);
+ useEffect(()=>{void initialize().then(()=>{if(initial.conversation?.tenant_id===org&&context.current())void choose(initial.conversation);});},[]);
  function hideAnswer(id:string){historyQuery.current++;setMessages(old=>old.filter(m=>m.role!=='assistant'||m.run_id!==id));const value=currentRun.current;if(value?.run_id===id){publishRun({...value,content_status:'unavailable',result:null});}}
  async function currentAuthority(){
   if(!context.current()||!chosen.current||authorityBusy.current||currentRun.current&&!currentRun.current.is_terminal)return;authorityBusy.current=true;
@@ -93,7 +94,7 @@ export function ChatPage({tenant,user}:{tenant:Tenant;user:User}){
   if(lock.current||busy||unresolved||!active?.available||!prompt.trim())return;
   if(prompt.length>4000||new TextEncoder().encode(prompt).byteLength>16384){setError('질문은 4,000자와 16KB 이내로 입력해 주세요.');return;}
   lock.current=true;setSending(true);setError(null);setNotice(null);selection.current++;
-  const payload:Submission={...(agent==='rules_rag'&&documentRefs.length?{document_refs:documentRefs}:{}),client_send_id:crypto.randomUUID(),agent_key:agent,prompt,...(selected?{conversation_id:selected}:{})};pending.current=payload;
+  const payload:Submission={...(initial?.assetId&&agent===initial.agentKey?{asset_id:initial.assetId}:{}),...(agent==='rules_rag'&&documentRefs.length?{document_refs:documentRefs}:{}),client_send_id:crypto.randomUUID(),agent_key:agent,prompt,...(selected?{conversation_id:selected}:{})};pending.current=payload;
   try{accept(await api.request<Run>('/runs',{method:'POST',tenantId:org,csrf:user.csrf_token,body:payload,signal:context.signal}));}
   catch(problem){
    if(problem instanceof ApiError&&(problem.status===0||problem.status>=500)){await recover(payload,true);}
@@ -147,36 +148,104 @@ export function ChatPage({tenant,user}:{tenant:Tenant;user:User}){
   }}finally{if(context.current())setCancelling(false);}
  }
  const final=run?.is_terminal&&run.content_status==='final'&&run.result;
- return <section className="chat-panel" aria-labelledby="chat-title">
-  <div className="page-heading"><div><p className="eyebrow teal">AI WORKSPACE</p><h1 id="chat-title">AI 업무</h1><p className="muted">{tenant.display_name} · 본인의 대화만 표시합니다.</p></div><button className="secondary" disabled={sending||unresolved} onClick={()=>void initialize()}>업무 새로고침</button></div>
-  <div className="chat-layout"><aside className="conversation-panel" aria-label="내 대화"><div className="panel-heading"><h2>내 대화</h2><button className="secondary small history-toggle" aria-expanded={historyOpen} aria-controls="conversation-list" onClick={()=>setHistoryOpen(open=>!open)}>{historyOpen?'목록 닫기':'목록 열기'}</button><button className="secondary small" disabled={sending||unresolved||busy} onClick={fresh}>새 대화</button></div>
-   <div id="conversation-list" className={'conversation-list '+(historyOpen?'expanded':'')}><ConversationHistory items={conversations} selected={selected} disabled={sending||unresolved} loading={loading} cursor={conversationCursor} tenantId={org} csrf={user.csrf_token} stateName={stateName}
-    onChoose={c=>void choose(c)} onMore={()=>void list(conversationCursor)} onFilter={filter=>{historyFilter.current=filter;setConversations([]);setConversationCursor(null);void list();}}
-    onChanged={()=>list()} onDeleted={id=>{if(chosen.current===id)fresh();}} onError={failed}/>
+ return <section className="chat-workspace-v2" aria-labelledby="chat-title">
+  {/* 좌측: 대화 목록 사이드 패널 */}
+  <aside className="chat-sidebar-v2" aria-label="내 대화">
+   <div className="chat-sidebar-header">
+    <div className="sidebar-title-row">
+     <h2 id="chat-title">내 대화</h2>
+     <button type="button" className="secondary small" disabled={sending||unresolved||busy} onClick={fresh}>+ 새 대화</button>
+    </div>
+   </div>
+   <div id="conversation-list" className="chat-sidebar-list">
+    <ConversationHistory items={conversations} selected={selected} disabled={sending||unresolved} loading={loading} cursor={conversationCursor} tenantId={org} csrf={user.csrf_token} stateName={stateName}
+     onChoose={c=>void choose(c)} onMore={()=>void list(conversationCursor)} onFilter={filter=>{historyFilter.current=filter;setConversations([]);setConversationCursor(null);void list();}}
+     onChanged={()=>list()} onDeleted={id=>{if(chosen.current===id)fresh();}} onError={failed}/>
+   </div>
+  </aside>
 
-   </div></aside><div className="chat-main">
-   {error&&<p role="alert" className="error-message">{error}</p>}{notice&&<p role="status" className="notice">{notice}</p>}
-   <div className="card agent-choice"><label htmlFor="agent-choice">Agent</label><select id="agent-choice" value={agent} disabled={sending||busy||unresolved||!!selected} onChange={e=>{setAgent(e.target.value as AgentKey);setDocumentRefs([]);}}>{agents.map(a=><option key={a.agent_key} value={a.agent_key}>{a.name}</option>)}</select>
-    <p className="muted">{active?.description||'질문에 대한 답변을 작성합니다.'}</p><p className="scope-note">{agent==='general'?'문서 검색 사용 안 함':'현재 읽을 수 있는 자료만 검색합니다. 각 질문을 독립적으로 처리합니다.'}</p>
-    {active&&!active.available&&<p className="blocked-note">{blockReason[active.safe_block_reason??'']??'현재 사용할 수 없습니다.'}</p>}
+  {/* 우측: 메인 대화 콘솔 */}
+  <div className="chat-main-v2">
+   {/* 상단: Agent 선택 및 도구 툴바 */}
+   <div className="chat-top-toolbar">
+    <div className="chat-agent-selector-bar">
+     <label htmlFor="agent-choice"><strong>Agent</strong></label>
+     <select id="agent-choice" value={agent} disabled={sending||busy||unresolved||!!selected} onChange={e=>{setAgent(e.target.value as AgentKey);setDocumentRefs([]);}}>
+      {agents.map(a=><option key={a.agent_key} value={a.agent_key}>{a.name}</option>)}
+     </select>
+     <span className="chat-agent-desc">{active?.description||'질문에 대한 답변을 작성합니다.'} · {agent==='general'?'일반 대화':'자료 검색'}</span>
+     {active&&!active.available&&<span className="blocked-note" style={{padding:'2px 8px',margin:0,fontSize:'11px'}}>{blockReason[active.safe_block_reason??'']??'현재 사용 불가'}</span>}
+    </div>
+    <div className="chat-toolbar-actions">
+     {onPublishedHistory&&<button type="button" className="quiet small" disabled={sending||unresolved} onClick={onPublishedHistory}>독립 Agent 실행 이력</button>}
+     <button type="button" className="quiet small" disabled={sending||unresolved} onClick={()=>void initialize()}>새로고침</button>
+    </div>
    </div>
-   {agent==='rules_rag'&&<ReadableDocuments tenantId={org} selected={documentRefs} onChange={setDocumentRefs} disabled={sending||busy||unresolved}/>}
-   <div className="message-list" aria-label="대화 내용">{messages.map(m=><article className={'message '+m.role} key={m.message_id}><strong>{m.role==='user'?'내 질문':'저장된 답변'}</strong><p>{m.text}</p>{m.role==='assistant'&&agent==='rules_rag'&&<RagEvidencePanel tenantId={org} runId={m.run_id} onUnavailable={()=>hideAnswer(m.run_id)}/>}{m.role==='assistant'&&m.run_state==='completed'&&m.answer_kind==='answer'&&<ResponseFeedback key={org+':'+m.run_id} tenantId={org} runId={m.run_id} csrf={user.csrf_token} onUnavailable={()=>hideAnswer(m.run_id)}/>}</article>)}
-    {messageCursor&&selected&&<button className="secondary small" onClick={()=>void moreMessages()}>메시지 더 보기</button>}
-    {run&&<article className="run-card" aria-label="실행 상태"><p className="mode-tag">{modeLabel(run.execution_mode)}</p><p role="status" className="run-status">{stateName[run.state]??'상태 확인 중'}{agent==='rules_rag'&&!run.is_terminal?' · '+({retrieval:'자료 검색',generation:'근거 선택',finalizing:'근거 검증·저장'}[run.stage]??'처리 중'):''}</p>
-     {draft&&!run.is_terminal&&<div className="draft"><strong>작성 중 · 저장 미확정</strong><p>{draft}</p></div>}
-     {final&&!messages.some(m=>m.run_id===run.run_id&&m.role==='assistant')&&<div className="message assistant"><strong>저장된 답변</strong><p>{run.result!.text}</p>{agent==='rules_rag'&&<RagEvidencePanel tenantId={org} runId={run.run_id} onUnavailable={()=>hideAnswer(run.run_id)}/>}{run.answer_kind==='answer'&&<ResponseFeedback key={org+':'+run.run_id} tenantId={org} runId={run.run_id} csrf={user.csrf_token} onUnavailable={()=>hideAnswer(run.run_id)}/>}</div>}
-     {run.is_terminal&&run.answer_kind==='insufficient_evidence'&&<p className="scope-note">현재 허용 자료에서 필요한 근거를 확인하지 못했습니다.</p>}
-     {run.is_terminal&&run.content_status==='unavailable'&&<p className="muted">답변을 표시할 수 없습니다. 실행 결과와 현재 권한을 확인해 주세요.</p>}
-     {run.usage_status==='unknown'&&<p className="blocked-note">사용량 확인 필요 · 예약 유지</p>}
-     {!run.is_terminal&&<button className="quiet" disabled={cancelling||run.state==='cancel_requested'} onClick={()=>void cancel()}>답변 취소 요청</button>}
-    </article>}
-    {!run&&!messages.length&&<div className="chat-welcome"><span className="empty-symbol">✦</span><h2>질문을 입력해 주세요.</h2><p className="muted">일반 대화부터 업무 흐름을 확인할 수 있습니다.</p></div>}
+
+   {error&&<div style={{padding:'12px 24px 0'}}><p role="alert" className="error-message" style={{margin:0}}>{error}</p></div>}
+   {notice&&<div style={{padding:'12px 24px 0'}}><p role="status" className="notice" style={{margin:0}}>{notice}</p></div>}
+   {agent==='rules_rag'&&<div style={{padding:'12px 24px 0'}}><ReadableDocuments tenantId={org} selected={documentRefs} onChange={setDocumentRefs} disabled={sending||busy||unresolved}/></div>}
+
+   {/* 중앙: 대화 메시지 스크롤 영역 */}
+   <div className="chat-messages-container" aria-label="대화 내용">
+    <div className="chat-messages-inner">
+     {messages.map(m=><article className={`chat-message-bubble ${m.role}`} key={m.message_id}>
+      <div className="bubble-role-header">{m.role==='user'?'내 질문':'답변'}</div>
+      <p style={{margin:0,whiteSpace:'pre-wrap'}}>{m.text}</p>
+      {m.role==='assistant'&&agent==='rules_rag'&&<RagEvidencePanel tenantId={org} runId={m.run_id} onUnavailable={()=>hideAnswer(m.run_id)}/>}
+      {m.role==='assistant'&&m.run_state==='completed'&&m.answer_kind==='answer'&&<ResponseFeedback key={org+':'+m.run_id} tenantId={org} runId={m.run_id} csrf={user.csrf_token} onUnavailable={()=>hideAnswer(m.run_id)}/>}
+     </article>)}
+
+     {messageCursor&&selected&&<button type="button" className="secondary small" style={{alignSelf:'center'}} onClick={()=>void moreMessages()}>메시지 더 보기</button>}
+
+     {run&&<article className="run-card" aria-label="실행 상태" style={{width:'100%',boxSizing:'border-box'}}>
+      <p className="mode-tag">{modeLabel(run.execution_mode)}</p>
+      <p role="status" className="run-status">{stateName[run.state]??'상태 확인 중'}{agent==='rules_rag'&&!run.is_terminal?' · '+({retrieval:'자료 검색',generation:'근거 선택',finalizing:'근거 검증·저장'}[run.stage]??'처리 중'):''}</p>
+      {draft&&!run.is_terminal&&<div className="draft"><strong>작성 중 · 저장 미확정</strong><p>{draft}</p></div>}
+      {final&&!messages.some(m=>m.run_id===run.run_id&&m.role==='assistant')&&<div className="chat-message-bubble assistant">
+       <div className="bubble-role-header">저장된 답변</div>
+       <p style={{margin:0,whiteSpace:'pre-wrap'}}>{run.result!.text}</p>
+       {agent==='rules_rag'&&<RagEvidencePanel tenantId={org} runId={run.run_id} onUnavailable={()=>hideAnswer(run.run_id)}/>}
+       {run.answer_kind==='answer'&&<ResponseFeedback key={org+':'+run.run_id} tenantId={org} runId={run.run_id} csrf={user.csrf_token} onUnavailable={()=>hideAnswer(run.run_id)}/>}
+      </div>}
+      {run.is_terminal&&run.answer_kind==='insufficient_evidence'&&<p className="scope-note">현재 허용 자료에서 필요한 근거를 확인하지 못했습니다.</p>}
+      {run.is_terminal&&run.content_status==='unavailable'&&<p className="muted">답변을 표시할 수 없습니다. 실행 결과와 현재 권한을 확인해 주세요.</p>}
+      <RunAssetInfo binding={run.asset_binding}/>
+      {run.usage_status==='unknown'&&<p className="blocked-note">사용량 확인 필요 · 예약 유지</p>}
+      {!run.is_terminal&&<button type="button" className="quiet" disabled={cancelling||run.state==='cancel_requested'} onClick={()=>void cancel()}>답변 취소 요청</button>}
+     </article>}
+
+     {!run&&!messages.length&&<div className="chat-welcome-box">
+      <div className="chat-welcome-symbol">✦</div>
+      <h2>질문을 입력해 주세요</h2>
+      <p>업무 규정 확인, 공문서 초안 작성, 안건 요약 등 궁금한 점을 질문하시면 AI 에이전트가 신속하게 답변해 드립니다.</p>
+     </div>}
+    </div>
    </div>
-   <form className="card prompt-form" onSubmit={e=>{e.preventDefault();void send();}}><label htmlFor="prompt">질문</label><textarea id="prompt" value={prompt} maxLength={4000} rows={4} disabled={sending||busy||unresolved} onChange={e=>setPrompt(e.target.value)} placeholder="확인하고 싶은 내용을 입력해 주세요."/><div className="prompt-actions"><p className="muted">{prompt.length.toLocaleString()} / 4,000자</p><button type="submit" className="primary" disabled={loading||sending||busy||unresolved||!active?.available||!prompt.trim()}>{sending?'접수 확인 중':'질문 보내기'}</button></div>
-    {unresolved&&<button type="button" className="secondary" disabled={sending} onClick={()=>void confirmAdmission()}>접수 상태 확인</button>}
-    <p className="scope-note">조직 전환이나 화면 닫기는 업무 취소가 아닙니다. 저장된 대화에서 결과를 다시 확인할 수 있습니다.</p>
-   </form>
-  </div></div>
+
+   {/* 하단: 프롬프트 입력 영역 */}
+   <div className="chat-bottom-input-bar">
+    <form className="chat-input-wrapper" onSubmit={e=>{e.preventDefault();void send();}}>
+     <textarea
+      id="prompt"
+      value={prompt}
+      maxLength={4000}
+      rows={2}
+      disabled={sending||busy||unresolved}
+      onChange={e=>setPrompt(e.target.value)}
+      placeholder="확인하고 싶은 내용을 입력해 주세요 (Enter 키로 줄바꿈 가능)"
+     />
+     <div className="chat-input-controls">
+      <span className="chat-char-counter">{prompt.length.toLocaleString()} / 4,000자</span>
+      <div style={{display:'flex',gap:'8px',alignItems:'center'}}>
+       {unresolved&&<button type="button" className="secondary small" disabled={sending} onClick={()=>void confirmAdmission()}>접수 상태 확인</button>}
+       <button type="submit" className="chat-send-btn" disabled={loading||sending||busy||unresolved||!active?.available||!prompt.trim()}>
+        {sending?'접수 확인 중':'질문 보내기'}
+       </button>
+      </div>
+     </div>
+    </form>
+   </div>
+  </div>
  </section>;
 }

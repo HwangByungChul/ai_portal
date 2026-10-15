@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "services": [
+    {
+      "url": "http://127.0.0.1:8000/api/v1/health",
+      "http_status": 200,
+      "expected_entry_verified": true
+    },
+    {
+      "url": "http://127.0.0.1:5173/user/home",
+      "http_status": 200,
+      "expected_entry_verified": true
+    },
+    {
+      "url": "http://127.0.0.1:5174/manage/admin",
+      "http_status": 200,
+      "expected_entry_verified": true
+    }
+  ]
+}

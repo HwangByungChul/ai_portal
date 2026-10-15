@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "backup_private": true,
+  "backup_sha256": "49402153be5c6bef0a25dc08910cd5ab6f29dc06c489cc2ede5a386177951520",
+  "prior_tables": 46,
+  "current_tables": 47,
+  "prior_rows_preserved": true,
+  "prior_checksums_preserved": 35,
+  "new_migration": "035_builder_evidence_shares.sql",
+  "current_migrations": 36,
+  "security_functions": 132,
+  "new_tables_empty": true,
+  "rerun_unchanged": true,
+  "primary_seed_reset": false,
+  "primary_assets_runs_policy_mutations": 0,
+  "primary_paid_calls": 0
+}

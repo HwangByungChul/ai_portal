@@ -1,0 +1,3 @@
+﻿invoice_id,usage_id,billed_krw,received_krw,receipt_id,mode
+INV001,U001,10000,10000,RECEIPT001,MOCK
+INV002,U002,1001,1001,RECEIPT002,MOCK

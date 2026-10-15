@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "backup_private": true,
+  "backup_sha256": "29828ab55a5c4a044b8f668ba79b1e562711b4c4934ce7a8765fbf09b6baea32",
+  "prior_tables": 42,
+  "current_tables": 42,
+  "prior_rows_preserved": true,
+  "prior_checksums_preserved": 31,
+  "new_migration": "031_builder_scope_dedup.sql",
+  "current_migrations": 32,
+  "security_functions": 116,
+  "new_tables_empty": true,
+  "rerun_unchanged": true,
+  "primary_seed_reset": false,
+  "primary_assets_runs_policy_mutations": 0,
+  "primary_paid_calls": 0
+}

@@ -1,0 +1,18 @@
+{
+  "src/backend/migrations/028_run_asset_binding.sql": "8d06a7250c7a38b8d0786d9cdff835c6cd1b384a6ddbd3fe529805f470c51ed0",
+  "src/backend/app/ai/repository.py": "07c2c30332f19c4ecfac83598c6d5e07e204a342e51007e29530e8cc7c7be2f0",
+  "src/backend/app/conversations/repository.py": "754771f1b38143658a6a2708d394a412524d939a67a267691bbf4f015610a429",
+  "src/backend/app/conversations/routes.py": "fa46c4d9efb2e3a88d2dd5d78c8f3407c23fd1b8af8201de4328414b536b13fa",
+  "src/backend/tests/test_run_assets.py": "fe844e2690831a352af6a2735af19bb66ff0d092f102875bb6eefe4f4e1d2e5a",
+  "src/backend/tests/test_run_assets_migration.py": "31acaafe81ec8c92932d67388d41a8fd45ac3e7b3e9020eaf9083f35b188d3ad",
+  "src/backend/tests/support.py": "06038cd392691553c0e844ce80261b4af2628175def31b843411683eb8b260d3",
+  "src/backend/tests/test_migrations.py": "d6abb45faf5076c73c60aad0238b696b9cc88e64a629e2aec8636fa7ca7a972b",
+  "src/backend/tests/test_assets_migration.py": "092c20f56c269f65bf3e7f3e594393679d243b2fbeb13f7e41fd58e43b329f13",
+  "src/backend/tests/test_conversations.py": "7bf4314e70e154d540d8325051c1319ab683106ef4cec2dd76dab71053e9de5f",
+  "src/frontend/packages/api-contract/src/types.ts": "1b0d5c9e0a9a918c02d21cd91e867bd23b127a2c7fc3b0cb01cea26da69c08f2",
+  "src/frontend/src/RunAssetInfo.tsx": "7a32894764ba85554847ac1ebe9586ac561430086e15c01608325378c0ec3089",
+  "src/frontend/src/ChatPage.tsx": "097abaf79bc5bbe855d4d87f87ad0136a7bf35f31a845da84a05302029b00c9f",
+  "src/frontend/src/DocumentSummaryPage.tsx": "426da1a307a9cd5d71b94ac4311a99aecc12b43b6a482409100ca33081e7f214",
+  "src/frontend/tests/run-assets.spec.ts": "d095f0d764c1096d2fc8986922ab22c6d6d5132f6447b64d317abe317c47696e",
+  "src/frontend/tests/dp07-acceptance.spec.ts": "43c19258dd52d650ad9ad289d2795db5ee3e96326bb020bf868faa43dc3f9a13"
+}

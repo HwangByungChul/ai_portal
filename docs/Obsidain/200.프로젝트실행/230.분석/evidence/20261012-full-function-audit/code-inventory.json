@@ -1,0 +1,1963 @@
+{
+  "head": "c1ca18fe251d5b87183a80c7289476205fa7de88",
+  "source_files": [
+    {
+      "path": "src/backend/app/__init__.py",
+      "sha256": "03a54177ba5f9337019f796db79cc8b994a42f9c5aff3188174fde35259d511e"
+    },
+    {
+      "path": "src/backend/app/ai/__init__.py",
+      "sha256": "01739a3207004e8a02702075ce002b8553532a151da262d8116315bd725404b7"
+    },
+    {
+      "path": "src/backend/app/ai/gateway.py",
+      "sha256": "b6456ca8cee1df37de0512c144baa694e691416909988ab854e5f65f76d6501d"
+    },
+    {
+      "path": "src/backend/app/ai/pricing.py",
+      "sha256": "1c1499bb89f6e223ff2caf4c1093584f3fa45bcbc4966107a85f0c65953c0bd6"
+    },
+    {
+      "path": "src/backend/app/ai/providers.py",
+      "sha256": "553b080cb03795abd67da3edf247e2f0e6ff48d23fbf745bfd0d405ea23ac745"
+    },
+    {
+      "path": "src/backend/app/ai/rag_gateway.py",
+      "sha256": "885421be5d6b314acbcd3351fb3b85ea4bdc4dfb6e33a9f334a217e6f75e60c7"
+    },
+    {
+      "path": "src/backend/app/ai/rag_provider.py",
+      "sha256": "95699e11167bd46affbff1d7cf834b35146b96dc5083ac9e4cdc61aeda2439e4"
+    },
+    {
+      "path": "src/backend/app/ai/repository.py",
+      "sha256": "4abaac4c25d10788122e16a5658bdc48aa4bb7b774a42d32e3157ed924ee23ea"
+    },
+    {
+      "path": "src/backend/app/ai/summary_provider.py",
+      "sha256": "2ed48f500a7e68b9346c0524f8899a13ef6a94ca5a18733c0b3cca1fdde551ce"
+    },
+    {
+      "path": "src/backend/app/ai/token_limits.py",
+      "sha256": "03d9bf3b98d8fa384f1e3c9c2b613cc30ee82f3d373f4ddd82fe0fd4217ee31c"
+    },
+    {
+      "path": "src/backend/app/ai/types.py",
+      "sha256": "1588c715ef9084aa175cdb0c394ed8ffde4b85109a812dc186ba22279bc1f597"
+    },
+    {
+      "path": "src/backend/app/approvals/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/backend/app/approvals/repository.py",
+      "sha256": "b491f0dce5e2acae1c72b1f7e5ed3dd12c6713c51f69c8e4cc66097ea8845432"
+    },
+    {
+      "path": "src/backend/app/approvals/routes.py",
+      "sha256": "cb601fe30fccac4a501849f7d2ae68c102cd90b18a70e78f68d797e0d62eedf6"
+    },
+    {
+      "path": "src/backend/app/auth/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/backend/app/auth/crypto.py",
+      "sha256": "df0d8314077ffa75183969205b43ef137a8cec5188b69866cbaf03f55a5cf08e"
+    },
+    {
+      "path": "src/backend/app/auth/guards.py",
+      "sha256": "65a144c5a729d316ccbb98e705e5cb512a790e0aee053091b325a317e0d41424"
+    },
+    {
+      "path": "src/backend/app/auth/repository.py",
+      "sha256": "e5952131a85e7397f7ba25e0911616946c8d17b5687a1086c593fec30f4140c9"
+    },
+    {
+      "path": "src/backend/app/auth/routes.py",
+      "sha256": "5833792214d5877bdf4caeb51fac7703c4f9053b14a294f1fcb7448936cfde01"
+    },
+    {
+      "path": "src/backend/app/auth/service.py",
+      "sha256": "fbed9213288b7bb831d5efe07d37f79cbf58f6c45253aa9bb3fa5d2a1e1d3d82"
+    },
+    {
+      "path": "src/backend/app/config.py",
+      "sha256": "aff2410daa1211b512cd4f275fe257b5d33d54438b726edd144214c42c9ae03c"
+    },
+    {
+      "path": "src/backend/app/conversations/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/backend/app/conversations/pagination.py",
+      "sha256": "63d62136d7f74249adfd97fb3818f75dcb715819b956f873fa13a8300f275280"
+    },
+    {
+      "path": "src/backend/app/conversations/repository.py",
+      "sha256": "ac61b7c267082b0f23316c5a16824613b0e0e9d6289b64830021a6a93fefe066"
+    },
+    {
+      "path": "src/backend/app/conversations/routes.py",
+      "sha256": "28e5211be3a9082cd063973b17b459746baa2e08f3b6d13d88e4c755fbd3aa88"
+    },
+    {
+      "path": "src/backend/app/db.py",
+      "sha256": "5563236b352c46de0b8d1668d7efee2d085a7233a8499acaa3d2f5fe81f56f3c"
+    },
+    {
+      "path": "src/backend/app/documents/__init__.py",
+      "sha256": "fa92b5c13445795e3f39e192e381532eb2569b4307050c5abba4b349fec1ba60"
+    },
+    {
+      "path": "src/backend/app/documents/cursor.py",
+      "sha256": "31d1e72b8d8e93ad81f32080a8fad66775fb77fb353b589c22770d3b0462467b"
+    },
+    {
+      "path": "src/backend/app/documents/docx.py",
+      "sha256": "a88223ab15c9bcfad1ed1b5fd69862ddfe93269854deaf4bdde5e004c76121d1"
+    },
+    {
+      "path": "src/backend/app/documents/docx_locations.py",
+      "sha256": "3ee8d0e9fabeef23de2b277cf0a153d4940eacf4729710a49cb80564d6e40c6f"
+    },
+    {
+      "path": "src/backend/app/documents/docx_worker.py",
+      "sha256": "b50f38bde4eeae983c7537f7508c2f866fa2463a5d4c7243f8cb192508ae1a3e"
+    },
+    {
+      "path": "src/backend/app/documents/embedding.py",
+      "sha256": "850746904ee1abc250be13926fb78f3411996662f42d3d00b0614bb44cd8c017"
+    },
+    {
+      "path": "src/backend/app/documents/evidence_routes.py",
+      "sha256": "04151ee38a602ee82c03e3d03969f941ebee8dd9e687accfc2ac468a255c960f"
+    },
+    {
+      "path": "src/backend/app/documents/formats.py",
+      "sha256": "3230811916a5c9aa18f56a4637098eadeccdf1c8d35e7171cd18cac7c7d914e5"
+    },
+    {
+      "path": "src/backend/app/documents/manager.py",
+      "sha256": "2a0eb021696f91eebac5e1b1df287748c9fa58fd6a3afc95a88e9241958fcde3"
+    },
+    {
+      "path": "src/backend/app/documents/pdf.py",
+      "sha256": "72303f3990436d52ba55b57b5b35687c7b1d026d3eda5a94a762d7149cbe67bd"
+    },
+    {
+      "path": "src/backend/app/documents/pdf_worker.py",
+      "sha256": "19ed053189b29b18951fe4be772b79b451c921b9113a6e74c36d036797cdb9ee"
+    },
+    {
+      "path": "src/backend/app/documents/plan.py",
+      "sha256": "38fe0926038c73cc3a8cc3e9f8f02d6997af5cb8c7e5b5284a3ea9c1f3033425"
+    },
+    {
+      "path": "src/backend/app/documents/policy.py",
+      "sha256": "b77d2e80b13fbd77edb842336b931d47080c3aa4911f2c9d65f34f8586e17a3f"
+    },
+    {
+      "path": "src/backend/app/documents/repository.py",
+      "sha256": "6923a0869a0182bdb5c9b6fa035265367ca66f37b2fa764496d9a067925cf2c7"
+    },
+    {
+      "path": "src/backend/app/documents/routes.py",
+      "sha256": "8b491907aa8e2a16ddca5c53a487271e788cb619d47bc4a34ec33a7159abcfcb"
+    },
+    {
+      "path": "src/backend/app/documents/search.py",
+      "sha256": "77bd659da6a39783d2c006b1e8ebd0a153123431a1397a4d6ff5e94850909625"
+    },
+    {
+      "path": "src/backend/app/documents/share_routes.py",
+      "sha256": "31c636c40a561d5f1e202ee2c0d331805ed5f9aea466af171f2df8d86acbd7c4"
+    },
+    {
+      "path": "src/backend/app/documents/sharing.py",
+      "sha256": "801d5dcecd510a076c7f3bcd217ed6d2d2b9aeb3a01ae4a874e20078131c27a2"
+    },
+    {
+      "path": "src/backend/app/documents/storage.py",
+      "sha256": "f28ac2994b6865e21ebaa0381180fe3172d16ead0416e3f16d45bdb32e9d4069"
+    },
+    {
+      "path": "src/backend/app/documents/upload.py",
+      "sha256": "ceb2581526ed5ec8554a807d83c19b585e769f6e99460f85448961513ada2197"
+    },
+    {
+      "path": "src/backend/app/documents/user_routes.py",
+      "sha256": "e46f7428a64cc2bd9034e8abe4a92a1ddb679e8d7b619af381731afb8743b633"
+    },
+    {
+      "path": "src/backend/app/documents/worker.py",
+      "sha256": "a8148a7d6d8b0f38fb6cc49b8e9f27173e5bd9a910e112319bff713951ca28a3"
+    },
+    {
+      "path": "src/backend/app/documents/xlsx.py",
+      "sha256": "beef1f81f3bac1e962ef6ed49903513d093f6875c4b6138de71f46f1d4d43700"
+    },
+    {
+      "path": "src/backend/app/documents/xlsx_locations.py",
+      "sha256": "f85ac282738eaee3f392d00269c3c94686ace43940293315cc548ac18991568d"
+    },
+    {
+      "path": "src/backend/app/documents/xlsx_worker.py",
+      "sha256": "75b36834895dfe228669dd946522be903379fba42baeac6b31f20d7ab9f2f797"
+    },
+    {
+      "path": "src/backend/app/environment.py",
+      "sha256": "65d73b61c529b0b84334e6ee280b8fae1bb5fac5372512cacb9268966c0e0541"
+    },
+    {
+      "path": "src/backend/app/errors.py",
+      "sha256": "78b04a16c0694afeb87fe61d434130d6d1147bebe3ece077dc79e67cc309b5b7"
+    },
+    {
+      "path": "src/backend/app/execution/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/backend/app/execution/document_summary.py",
+      "sha256": "b1d38407a3e53e807b7bb01a790f9425e43251989ba7d5445aae23146e56af95"
+    },
+    {
+      "path": "src/backend/app/execution/exports.py",
+      "sha256": "659c29f2198068fb0413316b9734689b23bf4950aeaaf74805949e3de1b21326"
+    },
+    {
+      "path": "src/backend/app/execution/manager.py",
+      "sha256": "56899eb70dc2e5981e8591db2dfce8251518ae0ee160bff78ce362c89e162638"
+    },
+    {
+      "path": "src/backend/app/execution/rag.py",
+      "sha256": "85928922c291eca01dc8ddf603151c8683e8ff2db5cd34862cb8d458c33610e4"
+    },
+    {
+      "path": "src/backend/app/execution/stream.py",
+      "sha256": "8d709e1d7de7575cdcfec714911e7a6f6a6c91828f3893b8576a38a292060465"
+    },
+    {
+      "path": "src/backend/app/execution/summary_repository.py",
+      "sha256": "9e4f242b741eac581a10cf1afc5c853c95c0e4a1ddfab7eefefa5ff013c3290c"
+    },
+    {
+      "path": "src/backend/app/execution/summary_routes.py",
+      "sha256": "245d41e8f198fec1350a3a9a5f3570189052bb5530c20fb50fbb0aac32963c25"
+    },
+    {
+      "path": "src/backend/app/feedback/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/backend/app/feedback/repository.py",
+      "sha256": "db0c2ef3bc3f3a67fc12168ccbedb5c1ce027f3c8eef7e3ed55aaded126b01c9"
+    },
+    {
+      "path": "src/backend/app/feedback/routes.py",
+      "sha256": "94da2f6bd2e1d8eb3304ebbc5484b859370fda5f54ae037be2c8344ffbf41bd0"
+    },
+    {
+      "path": "src/backend/app/main.py",
+      "sha256": "f0c18528b461fb3a48b81406c8f249a1a23947b38eff54ca7a96a33da1cdb7a4"
+    },
+    {
+      "path": "src/backend/app/operations/__init__.py",
+      "sha256": "e7d14355b4f18998b8a10eb6654e231bdc79183b94388bbb4a280acc5d4715d4"
+    },
+    {
+      "path": "src/backend/app/operations/repository.py",
+      "sha256": "92779c3afa643cd716639c75503e9dea1a29099b68e4f2e0612da6359bd2c535"
+    },
+    {
+      "path": "src/backend/app/operations/routes.py",
+      "sha256": "af5a4e3d5a095c32e2d71ec86e3e34a73efa1e2daaed2c539b6cc8fb9ed62598"
+    },
+    {
+      "path": "src/backend/app/policies/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/backend/app/policies/document_ingest.py",
+      "sha256": "612053e71747ea59f5f016157a1b08bbfa54b09b0ab758fd4b7beb2b83a5ecee"
+    },
+    {
+      "path": "src/backend/app/policies/document_summary.py",
+      "sha256": "59e2006d21da03fff2c7ef6eb35aae470d86ac43ec0358e10fc1771ecdffe0f3"
+    },
+    {
+      "path": "src/backend/app/tenants/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "src/backend/app/tenants/repository.py",
+      "sha256": "bbf044e117b2c672dee37032323a1ecd2cfc9b4e57c021c28e19dc9fce87689c"
+    },
+    {
+      "path": "src/backend/app/tenants/routes.py",
+      "sha256": "24d4fc9de7f7078abe47b9dfa6312d820caa0080165e794f38a70dff7282d396"
+    },
+    {
+      "path": "src/backend/app/types.py",
+      "sha256": "8cdbab6de928a1f856a91134f3ad222f3313b5166e141f1128851188b4f464cd"
+    },
+    {
+      "path": "src/backend/migrations/000_roles.sql",
+      "sha256": "93eb2ed791a0c65e507b5bb84ec94e25d6bbd58da989f854680cee2bb6895047"
+    },
+    {
+      "path": "src/backend/migrations/001_auth_portal.sql",
+      "sha256": "1cea48eca5c80c13bbccb07aeebe38c9380e26fe8e2dfaea909b276b43009b3c"
+    },
+    {
+      "path": "src/backend/migrations/002_context_control.sql",
+      "sha256": "06bace1838d4def9e47d7162f3db0276a9fd5722399ac268ee06e4d23d3a3500"
+    },
+    {
+      "path": "src/backend/migrations/003_session_control.sql",
+      "sha256": "9595273cb0bc0d37bd6e9bd1af7bae141cdb6a33e7e03bd5e8747b00e12b3d59"
+    },
+    {
+      "path": "src/backend/migrations/004_membership_control.sql",
+      "sha256": "312a448b529c724cd21d3cfb77987ce4e628878058f96e14b52d938f9ce358a3"
+    },
+    {
+      "path": "src/backend/migrations/005_conversation_ledger.sql",
+      "sha256": "c9742d7ac1690e78f2e1e7517ec16e5adeda1e66a028d56ab18c1c7585d62421"
+    },
+    {
+      "path": "src/backend/migrations/006_operations_control.sql",
+      "sha256": "605b03dd77ff2453b3b76093d59eb07b82f292bd155c687108a882e691dd8352"
+    },
+    {
+      "path": "src/backend/migrations/007_run_control.sql",
+      "sha256": "8ccfd9589e90abaf871d277a8318ea8704b75d039eef3ee800f709445df62209"
+    },
+    {
+      "path": "src/backend/migrations/008_ai_call_control.sql",
+      "sha256": "e43e89b9d416a2ce10e3daea06d705e554a414eecfde1afdf17728c383b4d374"
+    },
+    {
+      "path": "src/backend/migrations/009_document_graph_schema.sql",
+      "sha256": "ec510d5d29272073060794f0675653d294e966c0493804647bb12454ce24aaaa"
+    },
+    {
+      "path": "src/backend/migrations/010_document_policy_control.sql",
+      "sha256": "49ecd272cd89e650400358270604f2f21328094caf3d0e4906940ccb32d8f5f0"
+    },
+    {
+      "path": "src/backend/migrations/011_document_ingest_control.sql",
+      "sha256": "49bbbb10db9f898241d4af64b6280fcdadfb3dbcf43ecec8ac3548b8ae2a49e2"
+    },
+    {
+      "path": "src/backend/migrations/012_document_embedding_control.sql",
+      "sha256": "8c3f224488cd861b08d57cd22247101ae453e38368623c4121cc62913ede0848"
+    },
+    {
+      "path": "src/backend/migrations/013_document_lifecycle_control.sql",
+      "sha256": "c8b5f22c51660b22ca46328c35a555e2e80efe927f3cab0629e24404f04d8899"
+    },
+    {
+      "path": "src/backend/migrations/014_document_sharing.sql",
+      "sha256": "a38d007f11b78acd229a077be25f06219bd609eb1cc7d2a7faf4dff72a48dde6"
+    },
+    {
+      "path": "src/backend/migrations/015_rag_execution.sql",
+      "sha256": "18a7583dfd28670e98e7de4d813c9e5e46e9fb121f7814e37ccd732f9ad42068"
+    },
+    {
+      "path": "src/backend/migrations/016_rag_provenance.sql",
+      "sha256": "6e1f1617061f1b015300407699a51d2711e643edfd23150720f7c9dade8d3c51"
+    },
+    {
+      "path": "src/backend/migrations/017_document_call_control.sql",
+      "sha256": "045d65f3e5a55a6583a484310376040590fa16a9ecac9708d5d409bf639c9b09"
+    },
+    {
+      "path": "src/backend/migrations/018_document_job_principal_control.sql",
+      "sha256": "27a21be899326f4339993b080de90607fc4c506590f35ab24ddc8d3a21a4090e"
+    },
+    {
+      "path": "src/backend/migrations/019_document_cleanup_principal_control.sql",
+      "sha256": "056f5c269d1767fd353c7558320e326bae94d9f1fbc4bc93d8a1f95cd7746fac"
+    },
+    {
+      "path": "src/backend/migrations/020_document_request_trace.sql",
+      "sha256": "f49667b142aa119eedc8c53c3c91ab0dd6b0e53aad118233e15e3a991dcd32b3"
+    },
+    {
+      "path": "src/backend/migrations/021_conversation_metadata.sql",
+      "sha256": "a01fd84e4689ebd87662ca501cb801c0899af93f7441c114e6bada0c28152def"
+    },
+    {
+      "path": "src/backend/migrations/022_response_feedback.sql",
+      "sha256": "62ef3df72fd8b5a21ddd901612816a1c472170857adf91fee3b4a2d30f65ac70"
+    },
+    {
+      "path": "src/backend/migrations/023_user_documents.sql",
+      "sha256": "8cec6af069eca01f0fd4794d910e11c1d6e9048d04c566ddd437a06aa1c1346c"
+    },
+    {
+      "path": "src/backend/migrations/024_document_intake_lookup.sql",
+      "sha256": "fa6b67022c9e0e1bf3eb89cce43ccb225eab0a79f5502f2aa086cf89d4c9d068"
+    },
+    {
+      "path": "src/backend/migrations/025_document_summary_control.sql",
+      "sha256": "88d33d47c383ee8f9443cd2daf75b22df21d593e28c550e112f1b29f5488b90e"
+    },
+    {
+      "path": "src/backend/migrations/026_agent_deployment_approval.sql",
+      "sha256": "ab0e7cf8c614b6c02b3034d89e64531c3773096c19aa4470db5be5cc1cb35360"
+    },
+    {
+      "path": "src/backend/tests/c02_corpus_support.py",
+      "sha256": "69c3964f69d59a7be36f53fc7780fb963f60e47e10d9fe6745c990b18fbf2c0d"
+    },
+    {
+      "path": "src/backend/tests/c02_support.py",
+      "sha256": "0002a8e411944f1beb7b35e30613702f2024722610bc16246e4a8686cce99658"
+    },
+    {
+      "path": "src/backend/tests/conftest.py",
+      "sha256": "07ebbe157f286b15f1f45a473e375553fcd639d57cf2cd9c05b14322bc1e6d06"
+    },
+    {
+      "path": "src/backend/tests/document_support.py",
+      "sha256": "6170d0a104ecbc4af49e8802d1b77c9649fefd39ff44666cdf58f0978950f2dd"
+    },
+    {
+      "path": "src/backend/tests/docx_support.py",
+      "sha256": "8c37d50b5d19bd1280fff4988ecf19dfc8345b5b08dccb5fc148ef52f4ca40d1"
+    },
+    {
+      "path": "src/backend/tests/pdf_support.py",
+      "sha256": "5b5065303aa57e11b770b0bd8186ee755742dcd8919cb9f4d06581b200a0a3e1"
+    },
+    {
+      "path": "src/backend/tests/support.py",
+      "sha256": "a853903d93dece164d7ff6a519efe37961c35032f63f76002c675f6ce29291a0"
+    },
+    {
+      "path": "src/backend/tests/test_agent_approvals.py",
+      "sha256": "3c7aeb2eb746ba4912bab98b411d661583f3707f0d76e30777a356c78fd51f3d"
+    },
+    {
+      "path": "src/backend/tests/test_ai_ledger.py",
+      "sha256": "064b569d8d6056e7a621d4887c9f53f6122645fda7db246b06baefbc535ff88a"
+    },
+    {
+      "path": "src/backend/tests/test_ai_provider.py",
+      "sha256": "3d554be86f88a6c9abc8f51d439cf27a825a5372b4582e636195ed2ad09f09f9"
+    },
+    {
+      "path": "src/backend/tests/test_auth.py",
+      "sha256": "a755841233b5cc9b913e7267c4419dfd45d5f0421db28259143f217ba507c4b5"
+    },
+    {
+      "path": "src/backend/tests/test_auth_restart.py",
+      "sha256": "ee40198a11fc067180d214d6f605840268242ccb1cebd240283228692bee9095"
+    },
+    {
+      "path": "src/backend/tests/test_b_http.py",
+      "sha256": "2a5663bccd15210632d005bed5161628c32d5d928ee61f97a8a3f95c36e4b541"
+    },
+    {
+      "path": "src/backend/tests/test_b_restart.py",
+      "sha256": "cc07e2e75ba63d77a22b7d598d5f4c92e32c081cecd0199aa8a027aaa0b82b84"
+    },
+    {
+      "path": "src/backend/tests/test_b_schema.py",
+      "sha256": "79bb07bd89f27580dea33d53397aa07a9eb90b7a8a039e8e78f52080d90f6bc9"
+    },
+    {
+      "path": "src/backend/tests/test_b_tokens.py",
+      "sha256": "385bc7bf63aff5eb5379ea7127abe7e3bc88ce1c928347dae241fa2a1b53fa60"
+    },
+    {
+      "path": "src/backend/tests/test_c06_evaluation.py",
+      "sha256": "aa08f2e2ed7f9a65e4b75b36519503e1f3254f789f9cfd5eb1aa6c5c8a75e272"
+    },
+    {
+      "path": "src/backend/tests/test_c_schema.py",
+      "sha256": "0e5948c68945d30428f6c6f77a2c5f712b2bb63afce97a25e1ea4387cc9c8940"
+    },
+    {
+      "path": "src/backend/tests/test_config.py",
+      "sha256": "0d1a12e4b1cb434ccd8f8297f4a6e257af90561c50d081f35b27f7c9675a19c4"
+    },
+    {
+      "path": "src/backend/tests/test_conversations.py",
+      "sha256": "356c9fe58f298c1dc5f52c20fd331cb8ef62d69f9e46b3558ffcffc346e298bc"
+    },
+    {
+      "path": "src/backend/tests/test_devdb.py",
+      "sha256": "f9c9eee09242e76d580322dfe0988f1340c3ccc2fb48ae5481676d217dcda0d5"
+    },
+    {
+      "path": "src/backend/tests/test_document_api.py",
+      "sha256": "91c4a9fe5d471816d538bc3d40c78085de11ac502e59c1dac63b43e49b19e7a4"
+    },
+    {
+      "path": "src/backend/tests/test_document_corpus.py",
+      "sha256": "f78135ab397961f68ffcd51e2b58b138ae1fdc4909795d3503bf9aef6fc0ab09"
+    },
+    {
+      "path": "src/backend/tests/test_document_embedding.py",
+      "sha256": "239d05fe95b7a46daea711c789cabe7444fc322c4988001a21ef1b1e63f3e3e1"
+    },
+    {
+      "path": "src/backend/tests/test_document_ingest.py",
+      "sha256": "1841a7519575f58694d67800ad6320930a4bcb6b247a2d86491ab03ae6a6f83c"
+    },
+    {
+      "path": "src/backend/tests/test_document_jobs.py",
+      "sha256": "7b95b0cc6ce262f778a797c594dad0127428d344ab8e5968f4f7d7120add6bf2"
+    },
+    {
+      "path": "src/backend/tests/test_document_mapping.py",
+      "sha256": "737f9f877e7d29ae9093601d6378903249e8a91d054ceb94357fecd96770ee63"
+    },
+    {
+      "path": "src/backend/tests/test_document_plan.py",
+      "sha256": "f758c4777a55434221971e8696c12e23e224381d7c7067185f4287408346f4ba"
+    },
+    {
+      "path": "src/backend/tests/test_document_policy.py",
+      "sha256": "b27d208eba22638786d5dd339db1a67e1219d8c3c37b3d2a6daf8f615e508086"
+    },
+    {
+      "path": "src/backend/tests/test_document_restart.py",
+      "sha256": "354502301951af85356b3a1a91e6c6fa02e766764bcb4cf36a8ab8026d094b27"
+    },
+    {
+      "path": "src/backend/tests/test_document_sharing.py",
+      "sha256": "fcba5fe07b31e5a6aa593d2376d536b205118fff452d7f153d52a44ffdb3da4d"
+    },
+    {
+      "path": "src/backend/tests/test_docx_acceptance.py",
+      "sha256": "4c4c8d4302cf75cfd82a6c39f9d57ac604e82182cf760b3e19c72be29c2995fe"
+    },
+    {
+      "path": "src/backend/tests/test_docx_boundaries.py",
+      "sha256": "595c01c3c54b8f44ea4c1b7671a7e26a98859910ca3b241535432915a066367e"
+    },
+    {
+      "path": "src/backend/tests/test_docx_parser.py",
+      "sha256": "3b9921e3af5170a721d3b70e895ad4024c22ab2ccb670a95a21ca76215787b69"
+    },
+    {
+      "path": "src/backend/tests/test_dp03_acceptance.py",
+      "sha256": "77d02d86fafd74023e686c428c8e52c58ff55932fc4d9d1788478004dfffcea8"
+    },
+    {
+      "path": "src/backend/tests/test_dp04_acceptance.py",
+      "sha256": "c407a0d0f828ad677ee697f14eb38d5d6a6c7c7087199efa6bdf3ee7277f86e8"
+    },
+    {
+      "path": "src/backend/tests/test_dp05_acceptance.py",
+      "sha256": "962319d98cde22fd47f64d2548a814cd4df52ee72c5c87bdd8799cb1ee443a02"
+    },
+    {
+      "path": "src/backend/tests/test_dp06_acceptance.py",
+      "sha256": "c41410ee21de01b8c196458edfaa423ee91b816f34ae1be618e56e2c93d2ad48"
+    },
+    {
+      "path": "src/backend/tests/test_dp07_acceptance.py",
+      "sha256": "5fef992d43dad6944fe34eaca8f9203e13adf5582f7a0e9e033ba614eebf9330"
+    },
+    {
+      "path": "src/backend/tests/test_dp07_selection.py",
+      "sha256": "55488f8872a7950d2b9f7f730f7eeaae65f1489798ecf047c894793aa7a3381a"
+    },
+    {
+      "path": "src/backend/tests/test_environment.py",
+      "sha256": "caa4c341dd16578f7afe20837a10b48732213b84d5d82e956c75c90c2ba0393e"
+    },
+    {
+      "path": "src/backend/tests/test_execution.py",
+      "sha256": "cca30f2e1b6220d4c3da926ff811264459a8390d59166845c8e0ffc833acd9fe"
+    },
+    {
+      "path": "src/backend/tests/test_graph_evidence.py",
+      "sha256": "36097a7915ba82b845ca994a4075b9435d0f663e1a4ad7fc5116cf3a48b2b7ed"
+    },
+    {
+      "path": "src/backend/tests/test_graph_extraction.py",
+      "sha256": "77aba94b5b0369225efbded3eee513abdb95b26d6a51b3265a9851d56b2b9533"
+    },
+    {
+      "path": "src/backend/tests/test_health.py",
+      "sha256": "2dd14bc6fcc93a0a57e6bde9c4e1cce553d10a5c6d4edacbd7f06c358ad273d3"
+    },
+    {
+      "path": "src/backend/tests/test_ingest_policy.py",
+      "sha256": "236b663d6e4ab3d817105088a7ff62d24bb32256017989c6ec0df67090a906b4"
+    },
+    {
+      "path": "src/backend/tests/test_memberships.py",
+      "sha256": "b7337079c5313979d03a898454c85b63d281b802a1e485bb53b3c48504ae280a"
+    },
+    {
+      "path": "src/backend/tests/test_migrations.py",
+      "sha256": "3a4c29dd8e67e131f1a4d4ba4a375bd314fc343975ce9cbfff0e792d93fcd513"
+    },
+    {
+      "path": "src/backend/tests/test_mock_preparation.py",
+      "sha256": "87eb34dd199fb420ae3e6314f5215a73f5550896106b364100bc0c6ee3dd1d1c"
+    },
+    {
+      "path": "src/backend/tests/test_operations.py",
+      "sha256": "7bce8ff2e24b2f53fc789f8f9cfca0458ff8e8abbee915d1d2cced563fa356cb"
+    },
+    {
+      "path": "src/backend/tests/test_pdf_boundaries.py",
+      "sha256": "7e0d4435de95679ad1c58f9b184088d29f66280a5897c2ddc102f2103531b207"
+    },
+    {
+      "path": "src/backend/tests/test_pdf_parser.py",
+      "sha256": "b26f6da07c57531cd38164efdcf8ada769258594f56f31a81847ebc164fd9a3d"
+    },
+    {
+      "path": "src/backend/tests/test_pool_context.py",
+      "sha256": "59f95fe38b8b0ccd7db6a1b840ef899fef7e752d8ad80cc772974f2d8420b4cd"
+    },
+    {
+      "path": "src/backend/tests/test_rag_answer.py",
+      "sha256": "a5d078e465174c172dc5f45eb408cf9a1a3fd4d11a7dd2c536b2aa6523bc4dea"
+    },
+    {
+      "path": "src/backend/tests/test_rag_api.py",
+      "sha256": "8593146c44dc6a0cf2a9628d015ea88cfed654e59ee9f0911ecde80d69558e32"
+    },
+    {
+      "path": "src/backend/tests/test_rag_execution.py",
+      "sha256": "2dc1ff3e0a63fefad9f7732b170ddfe93ccf5a94731e412955147eeee683fc09"
+    },
+    {
+      "path": "src/backend/tests/test_rag_restart.py",
+      "sha256": "59681d5f4eb78ae4d3525513e69f5de0194db46ced61f9bed661cff9ea74f7e8"
+    },
+    {
+      "path": "src/backend/tests/test_rag_sdk.py",
+      "sha256": "ac549417af520d98cb4fb7872d07b2eb6a63f097200fdd6eaa30d939a75947fc"
+    },
+    {
+      "path": "src/backend/tests/test_real_general_check.py",
+      "sha256": "7e9be8b3fe7c5ae5f10dca343af7e31dee77ffc8998d8cb0e36d4fa2bb401f44"
+    },
+    {
+      "path": "src/backend/tests/test_schema_rls.py",
+      "sha256": "2a0c92c25c09ebddd451039903aa0a67c5b6c9f2e0e85b5a0a07c639f0e24dc7"
+    },
+    {
+      "path": "src/backend/tests/test_source_storage.py",
+      "sha256": "c258129e0af6f1f8fff85f50eae94d0cbba9176464e4f9af84ef9886015eb519"
+    },
+    {
+      "path": "src/backend/tests/test_t280_cleanup_sessions.py",
+      "sha256": "a32d9d1deee4d6aee03748359b84436a3933c8e7c3eb35591d43de0d19a7642d"
+    },
+    {
+      "path": "src/backend/tests/test_t280_completion.py",
+      "sha256": "37d98288ef910d09f0ce3bb91f0be9fea057b6b4afa92a2e511309e0cd8c6c6b"
+    },
+    {
+      "path": "src/backend/tests/test_t280_controls.py",
+      "sha256": "0ffbbbf8b7ee22657d4f08c46914a9613a057ac86b985804447f91e361c88cc1"
+    },
+    {
+      "path": "src/backend/tests/test_t280_followup.py",
+      "sha256": "d22b4243adb8e6896bc93e2c6ddaad8baa1df2f1ada05abfffaf184f7ff69406"
+    },
+    {
+      "path": "src/backend/tests/test_t280_grant_race.py",
+      "sha256": "7e320240327bbc5f0e6c03b518d0d06d44269f39aed93b784648749a7db42840"
+    },
+    {
+      "path": "src/backend/tests/test_t280_integration.py",
+      "sha256": "e0a36e567f6af0d3a5433028437fd5a2fbb1888f6b81299f516dacf3ef2782d8"
+    },
+    {
+      "path": "src/backend/tests/test_t280_job_sessions.py",
+      "sha256": "5f0fced9549507f5e73d8d7e04ecc5670ec94125ad5008ca7bd9059d0948f220"
+    },
+    {
+      "path": "src/backend/tests/test_t280_markers.py",
+      "sha256": "901db69574e11ec1dd9fef287195d248225247714859da9a0695d609dc990d46"
+    },
+    {
+      "path": "src/backend/tests/test_t280_measure.py",
+      "sha256": "23d2b3f09f69ff8a32cb1ae4d2317524781429dc06f593dc5b444a52a4f76d4a"
+    },
+    {
+      "path": "src/backend/tests/test_t280_provider_errors.py",
+      "sha256": "621656a79b0bf3e7cc1a3c4ed4488cecce31546c4d64fd5b6992f36d884bf339"
+    },
+    {
+      "path": "src/backend/tests/test_t280_rag_boundaries.py",
+      "sha256": "a6bcb9b02ea4f9c6b326d90d0625fd7e4f9a1e858ca06a24700e2b9ff5adf928"
+    },
+    {
+      "path": "src/backend/tests/test_t280_request_trace.py",
+      "sha256": "06b5c129e118082c8f1b531f5290909b568410c9157e57c8d4221a5874643486"
+    },
+    {
+      "path": "src/backend/tests/test_t280_retry_trace.py",
+      "sha256": "6e786467740eaac4a2b04d8812af3cc372e4e286710398a312bdabed627bd0f3"
+    },
+    {
+      "path": "src/backend/tests/test_t280_timeout_retry.py",
+      "sha256": "3e1b92ffb78b7201dedb29040a774aad537e791d0112c341073cd369b6b8d01d"
+    },
+    {
+      "path": "src/backend/tests/test_xlsx_acceptance.py",
+      "sha256": "dbf0a5a4e5c235b4b84885d591e4a0bbace7277df79c78e75063b2613f4b1a68"
+    },
+    {
+      "path": "src/backend/tests/test_xlsx_boundaries.py",
+      "sha256": "2afffa10b36d54841531938b1067a2b61ed950cd20de976bf83f5902741c0c42"
+    },
+    {
+      "path": "src/backend/tests/test_xlsx_parser.py",
+      "sha256": "6b1bb7dd1c5362593f2d948e22d06dbac6125cd5b577964f8c60fdcc37146341"
+    },
+    {
+      "path": "src/backend/tests/xlsx_support.py",
+      "sha256": "5712321eafda92ca19edea02121b38129796cfdb8d78a800eab2027883bbace4"
+    },
+    {
+      "path": "src/frontend/src/AdminHomePage.tsx",
+      "sha256": "916f957f745d309dfb863ec1dc1f7585047da8283072286a80da03d766304d2a"
+    },
+    {
+      "path": "src/frontend/src/AgentSettingsPage.tsx",
+      "sha256": "d5c9924d6eae1c89db16aa1280a5c1ba0c37423c80aebaef13a78e92a9ab6b1e"
+    },
+    {
+      "path": "src/frontend/src/App.tsx",
+      "sha256": "87c0cd234c75885c12de8aa81d0ed723567f2f8ee197a99327bdec800a4e6a2d"
+    },
+    {
+      "path": "src/frontend/src/ApprovalsPage.tsx",
+      "sha256": "692b4f7a9de4850669c049e56dafd6ad8dc813352e50ffd4e03ccd1d72b339f9"
+    },
+    {
+      "path": "src/frontend/src/ChatPage.tsx",
+      "sha256": "df397697d6fa622efd325faecc496d72e406b82d1e9d9392e702600bc1bec1ab"
+    },
+    {
+      "path": "src/frontend/src/ConversationHistory.tsx",
+      "sha256": "4116c2994ac04bff4b5d629d1aee352ea0331f58c0ee0a4d163b41fac0aa922c"
+    },
+    {
+      "path": "src/frontend/src/DocumentJobsPage.tsx",
+      "sha256": "00a4c1b70fe9889625006fc46f17aae8b32a388efd5523596c65aa6164cef5fe"
+    },
+    {
+      "path": "src/frontend/src/DocumentSharingPanel.tsx",
+      "sha256": "67d863beb2f73426be14ffa95aa90bed28c966b450c5e816a8a716f97d7c9fae"
+    },
+    {
+      "path": "src/frontend/src/DocumentSummaryPage.tsx",
+      "sha256": "7969e220d67b346f7c23aeb6e4fdf99b2f2d3f6961ca28800a53940029d5f5bb"
+    },
+    {
+      "path": "src/frontend/src/DocumentsPage.tsx",
+      "sha256": "15822ba496cd8218304dabad8fb05d9ebea2fa66b1e4b59295352b01a00109e3"
+    },
+    {
+      "path": "src/frontend/src/FeedbackSummaryPage.tsx",
+      "sha256": "0221ed0d89d55d3746e91fa7d94feb9599ffc64a1048b410fe76461c4d67c6fe"
+    },
+    {
+      "path": "src/frontend/src/HomePage.tsx",
+      "sha256": "d02eeb796bc48c9a667ddb83661775d6a7d17bd19cf53aeea2032deba7f10c8b"
+    },
+    {
+      "path": "src/frontend/src/LoginPage.tsx",
+      "sha256": "d4df3ec8fece4009faaa43f9079b8be28135d886b318ae37e8ac8a7bb778990c"
+    },
+    {
+      "path": "src/frontend/src/MembersPage.tsx",
+      "sha256": "1ffbc7c09277dccf04539c73dd061bcfd1f5e09e63df8dce377683ae5dcb2495"
+    },
+    {
+      "path": "src/frontend/src/PlatformPage.tsx",
+      "sha256": "9be8f29307aaaf4098b425559275606fb9c2cd0152863ce4dfac1d572d6360fd"
+    },
+    {
+      "path": "src/frontend/src/RagEvidencePanel.tsx",
+      "sha256": "0d6880085c18edfa77d9b85a9c247effdd37e4d22c42fc4f7db67956ffb7cdc9"
+    },
+    {
+      "path": "src/frontend/src/ReadableDocuments.tsx",
+      "sha256": "f005af58f846052da2e0241aa0e3223255bc655c0fa301848309964ea6394222"
+    },
+    {
+      "path": "src/frontend/src/ResponseFeedback.tsx",
+      "sha256": "7f6e30747d60a4135001554af8234df3b484729aad0e73b3ab3e29cfb0ca2e54"
+    },
+    {
+      "path": "src/frontend/src/SummaryEvidencePanel.tsx",
+      "sha256": "8e807a4928f01eb59f03f23eaf7da13755541953bb9de4a11cdc005f606150f4"
+    },
+    {
+      "path": "src/frontend/src/TenantHeader.tsx",
+      "sha256": "3622f3bb11a8e736f5f148e5ea47e9ba5f85db67b61708c10a7f72e0751c24d6"
+    },
+    {
+      "path": "src/frontend/src/UsagePage.tsx",
+      "sha256": "2fa40bc99b7d28806b7e3a5822aae516321ce99769e6df533285d63126d78629"
+    },
+    {
+      "path": "src/frontend/src/api.ts",
+      "sha256": "4207c1677ae7139bcf8909bd2c12dded5eda328f6de908a800a407646f252750"
+    },
+    {
+      "path": "src/frontend/src/main.tsx",
+      "sha256": "a76ffe16cd210dda3a3a20ebbfefede32e8cedcb15f6d331fa740068396c8e94"
+    },
+    {
+      "path": "src/frontend/src/portal.css",
+      "sha256": "94c98941e202d2215eb082fc7d3dec6c6abfa0f77a3231830669a1e0ee58121b"
+    },
+    {
+      "path": "src/frontend/src/scoped.ts",
+      "sha256": "071f92b7d9086e1e737d2ecf970dbfbdaf0bb7361e917854a6bfa48b987f91c8"
+    },
+    {
+      "path": "src/frontend/src/session.ts",
+      "sha256": "07587c4b298dc3056ff9ef551bc4afcf856efc8ab6bf5bf0bbad69441866b0d1"
+    },
+    {
+      "path": "src/frontend/src/stream.ts",
+      "sha256": "20be464d8b6ddbc2c945d86c12c2c9008915a486b7cef5123833a1603b8f3383"
+    },
+    {
+      "path": "src/frontend/src/styles.css",
+      "sha256": "ba873f5f2c55d4bef46908ae7098a130492115ef553ffa40a4e2c45e778afa7f"
+    },
+    {
+      "path": "src/frontend/src/types.ts",
+      "sha256": "0337ab81fa1640308dab8f0d71cb2d8031bd4b03508106a847bf1bfd7780fc46"
+    },
+    {
+      "path": "src/frontend/apps/admin-web/index.html",
+      "sha256": "db455afb2322375fe1c106c8b5aadc28462255b0e992b3d4c5b3ca10f1658cf1"
+    },
+    {
+      "path": "src/frontend/apps/admin-web/src/App.tsx",
+      "sha256": "53924123f2dffebe11ea3d714c9708dd9a82964e6460ee691b1b8d66528d5174"
+    },
+    {
+      "path": "src/frontend/apps/admin-web/src/main.tsx",
+      "sha256": "4425fbb54ce68d8215a122595900a8785fa48d42a472890a2e2e960401bfe37d"
+    },
+    {
+      "path": "src/frontend/apps/user-web/index.html",
+      "sha256": "0f5a2142ad26af1a90b1ee17b3b5d5dc211fde1f1af0d611b8032b134e46d711"
+    },
+    {
+      "path": "src/frontend/apps/user-web/src/App.tsx",
+      "sha256": "90eb9efe9f84f22a4ba5aee5d85ae41dda9d82ea2d5a844f6ab29498458e0747"
+    },
+    {
+      "path": "src/frontend/apps/user-web/src/main.tsx",
+      "sha256": "4425fbb54ce68d8215a122595900a8785fa48d42a472890a2e2e960401bfe37d"
+    },
+    {
+      "path": "src/frontend/packages/api-contract/src/api.ts",
+      "sha256": "f4f919333420af999f8022553b4a1b0a2b2456df5af1fbf9640f51d98c707377"
+    },
+    {
+      "path": "src/frontend/packages/api-contract/src/session.ts",
+      "sha256": "0812bf82902c83ad045befa3624a0caa3fd2d444686bbabd06380a25da95f185"
+    },
+    {
+      "path": "src/frontend/packages/api-contract/src/types.ts",
+      "sha256": "cb9773f44b64e00f386f8bbc087133f3a6553dc1c8480eeea25f6f498c21ab9d"
+    },
+    {
+      "path": "src/frontend/packages/ui/src/LoginPage.tsx",
+      "sha256": "c8c3c505a2a1ba1d9c946315c18ecce468a817911555142fc06329637986cace"
+    },
+    {
+      "path": "src/frontend/packages/ui/src/PortalShell.tsx",
+      "sha256": "44bdba1b1218c6c3ffc0aba64718306f59638967353b8e2ceea845eb34acc6a8"
+    },
+    {
+      "path": "src/frontend/packages/ui/src/TenantHeader.tsx",
+      "sha256": "b65eef9fd4017dfc757bc93b6c8b5e4abd10e800daedc9f9c61488796d9fb993"
+    },
+    {
+      "path": "src/frontend/packages/ui/src/portal.css",
+      "sha256": "0c5ba23669e9b7ea2738256666d92ce5a17ff824862a41cf070de27a7f27cfbe"
+    },
+    {
+      "path": "src/frontend/packages/ui/src/scoped.ts",
+      "sha256": "914066478dee5ee63369b3c2ac2444beef8c3ad16c0a91d7cae5f28857c0fd0a"
+    },
+    {
+      "path": "src/frontend/packages/ui/src/styles.css",
+      "sha256": "3002d55f6d862c1fb756089aa779934fc45672c73fd575369407ebfbbdec7fe8"
+    },
+    {
+      "path": "src/frontend/scripts/check-environments.mjs",
+      "sha256": "3c50ac2c9e698888e26ea0095e5a90d01bf620b163ce270597888cc5f9e051b9"
+    },
+    {
+      "path": "src/frontend/scripts/environment.mjs",
+      "sha256": "562ba236dc2bebb6ec5f88f7d9dd64121d234e6e39e8eef238d515750121c441"
+    },
+    {
+      "path": "src/frontend/scripts/environment.test.mjs",
+      "sha256": "435fccf11e400003ee762ac96e0ca1efdc06c1973847b172b2dce184fb15b84a"
+    },
+    {
+      "path": "src/frontend/scripts/verify-portal-builds.mjs",
+      "sha256": "9935ce90cf8d7a683d30e85cc443224a927bb39eedf0fd7a36b414b5982fad15"
+    },
+    {
+      "path": "src/frontend/tests/auth-tenants.spec.ts",
+      "sha256": "9e8a24641a9779bf1cd9e77b0a5c0a5e61fc64145288b477e4193dfc0affb8db"
+    },
+    {
+      "path": "src/frontend/tests/chat-operations.spec.ts",
+      "sha256": "abf3f900fee95ba09dc808c20de7d58157d46ddac2a7bb14300d4af31192938f"
+    },
+    {
+      "path": "src/frontend/tests/documents-rag.spec.ts",
+      "sha256": "7b7877817de5bff1aca9ee1e0ec5502c7b5249f54e51b1ae7c8dee7054f06a6b"
+    },
+    {
+      "path": "src/frontend/tests/docx-acceptance.spec.ts",
+      "sha256": "5de25581c869184262789d6672813013ca1f90308647a151288fbc966981742f"
+    },
+    {
+      "path": "src/frontend/tests/dp03-acceptance.spec.ts",
+      "sha256": "235bec5c6b95108c389979ac53bca5f9b3a00ecdf3f64e188991123642cb1e5d"
+    },
+    {
+      "path": "src/frontend/tests/dp04-acceptance.spec.ts",
+      "sha256": "f04f216bab21811f46e888ac716fc2427f92a2e3d672574a4a0e172f16c63995"
+    },
+    {
+      "path": "src/frontend/tests/dp05-acceptance.spec.ts",
+      "sha256": "f9da5cf40cc82b49d6807f61ecba916b8ba105a60d44acb3c60fa623415c67d0"
+    },
+    {
+      "path": "src/frontend/tests/dp06-acceptance.spec.ts",
+      "sha256": "c193574612aa902ece7dda3658816b14443f0ea6550c0802ac31e72deeb8e296"
+    },
+    {
+      "path": "src/frontend/tests/dp07-acceptance.spec.ts",
+      "sha256": "144fee2c387fcfc962d39099399034ac9370804b97e29a1b8419f23e01e92ab9"
+    },
+    {
+      "path": "src/frontend/tests/p270-pilot.spec.ts",
+      "sha256": "6f366e259838f46028343ec2b73a2c8a931742558ce82b0c1d33c307a403843e"
+    },
+    {
+      "path": "src/frontend/tests/portal-ports.spec.ts",
+      "sha256": "48148f488720d52c055021e7a29f4b7eee8712aa2c38b1a4b3653dc314a0ac3b"
+    },
+    {
+      "path": "src/frontend/tests/portal-sites.spec.ts",
+      "sha256": "b0e82cab09ef05e61a2d24e28c103bc712c9b8c0f3e669613f9103d5506ff2fa"
+    },
+    {
+      "path": "src/frontend/tests/portal-ui.spec.ts",
+      "sha256": "ccd57235122b1a76e322171cbef3eabf84a1dc007eaba93ee79d89f2e99536ad"
+    },
+    {
+      "path": "src/frontend/tests/safe-reporter.ts",
+      "sha256": "3b3b941fca635bfd8bb6c5bfda7865bd090f45e9527a9ea66d4ce0ae5c390bf5"
+    },
+    {
+      "path": "src/frontend/tests/support.ts",
+      "sha256": "934cf2454a844d5ace392039afed02a04e7dea4dff7f5a780f5a0cadc14647ca"
+    },
+    {
+      "path": "src/frontend/tests/xlsx-acceptance.spec.ts",
+      "sha256": "320ac36d17d6023eb9577b4d76de121659c2f2f50a9cde89574e33d0af67c6c8"
+    },
+    {
+      "path": "src/common_core/__init__.py",
+      "sha256": "b7314d03b43d4834a483543e1c961a91fb513639131e7d5e5aef481466b19e0e"
+    },
+    {
+      "path": "src/common_core/ai_pipeline/__init__.py",
+      "sha256": "b7314d03b43d4834a483543e1c961a91fb513639131e7d5e5aef481466b19e0e"
+    },
+    {
+      "path": "src/common_core/ai_pipeline/document/__init__.py",
+      "sha256": "b7314d03b43d4834a483543e1c961a91fb513639131e7d5e5aef481466b19e0e"
+    },
+    {
+      "path": "src/common_core/ai_pipeline/document/chunker.py",
+      "sha256": "49978622b62ecaea9896cfd86ba37e350152fdab20f5f0bf3e8228ba86654a17"
+    },
+    {
+      "path": "src/common_core/ai_pipeline/document/mapping.py",
+      "sha256": "15856135d983045e6663c693ed32155ec9d2ecffb38b4c24cb8576c4a2f6917c"
+    },
+    {
+      "path": "src/common_core/ai_pipeline/document/parser.py",
+      "sha256": "490c801b9fb8431a42f17ca5f36d01ab6f9e19b0f984a52d65303d38f1702f84"
+    },
+    {
+      "path": "src/common_core/ai_pipeline/document/pipeline.py",
+      "sha256": "86641575d6180bc97ba72a8b7512c4157f69a48b73ff30a0aea3266b10b9dfff"
+    },
+    {
+      "path": "src/common_core/ai_pipeline/document/schemas.py",
+      "sha256": "610b8c0603155d82b3b5705a6c2001d2143092f5cd108252cd4b2182d8b84bc5"
+    },
+    {
+      "path": "src/common_core/ai_pipeline/graphrag/__init__.py",
+      "sha256": "b7314d03b43d4834a483543e1c961a91fb513639131e7d5e5aef481466b19e0e"
+    },
+    {
+      "path": "src/common_core/ai_pipeline/graphrag/answer.py",
+      "sha256": "5c7f89349d9e1769ae721cb7baa408775bb0cd4d47598f14551cb8a027997578"
+    },
+    {
+      "path": "src/common_core/ai_pipeline/graphrag/context.py",
+      "sha256": "b7c0b63e88676d8bf87b8ba22ebc6913f658bf43ae61b3d965bc9dcb91f121d7"
+    },
+    {
+      "path": "src/common_core/ai_pipeline/graphrag/evidence.py",
+      "sha256": "2263493727de5721b5c84b72f66f32a26f24569b3e57482be6e0faa330521738"
+    },
+    {
+      "path": "src/common_core/ai_pipeline/graphrag/extractor.py",
+      "sha256": "cdb767d6092c1d86d7463d1dbb571ace87713d04aef80a550b4ea6b7ec709801"
+    },
+    {
+      "path": "src/common_core/ai_pipeline/graphrag/schemas.py",
+      "sha256": "89dfaaba513666746a9abc7d121872de5b740f24ceccd56941eb1e7006de296f"
+    },
+    {
+      "path": "src/common_core/ai_pipeline/summary/__init__.py",
+      "sha256": "5be8d6a904cc6a1414fbdca3b956d4141e7559fc42de0fa7103a79eafb1f330c"
+    },
+    {
+      "path": "src/common_core/ai_pipeline/summary/render.py",
+      "sha256": "4459bc436c90eb52bb0da26218607554476acbc65c99df6d308f6cbb86186122"
+    },
+    {
+      "path": "src/common_core/ai_pipeline/summary/schemas.py",
+      "sha256": "c07f426b46e6fc46f373b6388f975f6ae74b5e0fa61585e3120a19d0965cd730"
+    },
+    {
+      "path": "src/common_core/ai_pipeline/summary/selection.py",
+      "sha256": "e08e51cafff5d9861d105c8ede9e041627250ada8be502fff8a900e6c94161c9"
+    },
+    {
+      "path": "src/common_core/provenance.json",
+      "sha256": "c97784d213bad9111e0fda0073eae6f942505125668bd4000da721846c1be246"
+    },
+    {
+      "path": "scripts/service_control.py",
+      "sha256": "9715757f6a89d7c70347440d11aebaa2b105251d629f5171564a3be7811fc767"
+    },
+    {
+      "path": "config/environments/dev.json",
+      "sha256": "b3f7714b5467e5dc8f2d5220ee09d406302b8e321d89824fb482fe3ad0daf9f2"
+    },
+    {
+      "path": "config/environments/local.json",
+      "sha256": "93fef1254ea5f5d3ffd34c062673100493864495be783a202e402833216ba69f"
+    },
+    {
+      "path": "config/environments/prd.json",
+      "sha256": "734de20a7da0fd89e5d589275887a240dd1cd85945246881f4628987ed786bab"
+    },
+    {
+      "path": "config/environments/tb.json",
+      "sha256": "6e34ca6c580900062df9e244a1ec5e96bdfe85809ea279ed2d93bb3b3dc57e9b"
+    }
+  ],
+  "routes": [
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/agent-deployments",
+      "file": "src/backend/app/approvals/routes.py",
+      "line": 68
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/agent-deployments",
+      "file": "src/backend/app/approvals/routes.py",
+      "line": 74
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/agent-deployments/{request_id}",
+      "file": "src/backend/app/approvals/routes.py",
+      "line": 80
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/agent-deployments/{request_id}/decision",
+      "file": "src/backend/app/approvals/routes.py",
+      "line": 85
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/login",
+      "file": "src/backend/app/auth/routes.py",
+      "line": 16
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/auth/me",
+      "file": "src/backend/app/auth/routes.py",
+      "line": 30
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/auth/logout",
+      "file": "src/backend/app/auth/routes.py",
+      "line": 38
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/conversations",
+      "file": "src/backend/app/conversations/routes.py",
+      "line": 95
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/conversations",
+      "file": "src/backend/app/conversations/routes.py",
+      "line": 101
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/conversations/{conversation_id}",
+      "file": "src/backend/app/conversations/routes.py",
+      "line": 108
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/conversations/{conversation_id}",
+      "file": "src/backend/app/conversations/routes.py",
+      "line": 114
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/conversations/{conversation_id}/messages",
+      "file": "src/backend/app/conversations/routes.py",
+      "line": 120
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/runs",
+      "file": "src/backend/app/conversations/routes.py",
+      "line": 124
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runs/by-send/{client_send_id}",
+      "file": "src/backend/app/conversations/routes.py",
+      "line": 137
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runs/{run_id}",
+      "file": "src/backend/app/conversations/routes.py",
+      "line": 140
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/runs/{run_id}/cancel",
+      "file": "src/backend/app/conversations/routes.py",
+      "line": 143
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runs/{run_id}/evidence",
+      "file": "src/backend/app/documents/evidence_routes.py",
+      "line": 23
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runs/{run_id}/evidence/{ordinal}/source",
+      "file": "src/backend/app/documents/evidence_routes.py",
+      "line": 50
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/documents",
+      "file": "src/backend/app/documents/routes.py",
+      "line": 31
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/documents",
+      "file": "src/backend/app/documents/routes.py",
+      "line": 48
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/documents/{document_id}/versions",
+      "file": "src/backend/app/documents/routes.py",
+      "line": 50
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/admin/documents/{document_id}",
+      "file": "src/backend/app/documents/routes.py",
+      "line": 52
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/jobs",
+      "file": "src/backend/app/documents/routes.py",
+      "line": 59
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/jobs/{job_id}",
+      "file": "src/backend/app/documents/routes.py",
+      "line": 66
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/jobs/{job_id}/retry",
+      "file": "src/backend/app/documents/routes.py",
+      "line": 69
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/documents",
+      "file": "src/backend/app/documents/share_routes.py",
+      "line": 21
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/share-recipients",
+      "file": "src/backend/app/documents/share_routes.py",
+      "line": 25
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/documents/{document_id}/versions/{version_id}/grants",
+      "file": "src/backend/app/documents/share_routes.py",
+      "line": 28
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/admin/documents/{document_id}/versions/{version_id}/grants",
+      "file": "src/backend/app/documents/share_routes.py",
+      "line": 32
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/admin/grants/{grant_id}",
+      "file": "src/backend/app/documents/share_routes.py",
+      "line": 37
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/documents",
+      "file": "src/backend/app/documents/user_routes.py",
+      "line": 12
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/documents/mine",
+      "file": "src/backend/app/documents/user_routes.py",
+      "line": 28
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/document-jobs",
+      "file": "src/backend/app/documents/user_routes.py",
+      "line": 32
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/document-jobs/{job_id}",
+      "file": "src/backend/app/documents/user_routes.py",
+      "line": 36
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/documents/{document_id}",
+      "file": "src/backend/app/documents/user_routes.py",
+      "line": 41
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runs/{run_id}/events",
+      "file": "src/backend/app/execution/stream.py",
+      "line": 69
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/document-summaries",
+      "file": "src/backend/app/execution/summary_routes.py",
+      "line": 44
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/document-summaries/{run_id}",
+      "file": "src/backend/app/execution/summary_routes.py",
+      "line": 50
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/document-summaries/{run_id}/regenerate",
+      "file": "src/backend/app/execution/summary_routes.py",
+      "line": 53
+    },
+    {
+      "method": "POST",
+      "path": "/api/v1/document-summaries/{run_id}/cancel",
+      "file": "src/backend/app/execution/summary_routes.py",
+      "line": 60
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/document-summaries/{run_id}/export",
+      "file": "src/backend/app/execution/summary_routes.py",
+      "line": 66
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/document-summaries/{run_id}/evidence/{ordinal}/source",
+      "file": "src/backend/app/execution/summary_routes.py",
+      "line": 70
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/runs/{run_id}/feedback",
+      "file": "src/backend/app/feedback/routes.py",
+      "line": 36
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/runs/{run_id}/feedback",
+      "file": "src/backend/app/feedback/routes.py",
+      "line": 43
+    },
+    {
+      "method": "DELETE",
+      "path": "/api/v1/runs/{run_id}/feedback",
+      "file": "src/backend/app/feedback/routes.py",
+      "line": 50
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/feedback/summary",
+      "file": "src/backend/app/feedback/routes.py",
+      "line": 57
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/health",
+      "file": "src/backend/app/main.py",
+      "line": 109
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/agents",
+      "file": "src/backend/app/operations/routes.py",
+      "line": 116
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/agents/{agent_key}",
+      "file": "src/backend/app/operations/routes.py",
+      "line": 119
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/admin/agents/{agent_key}",
+      "file": "src/backend/app/operations/routes.py",
+      "line": 122
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/admin/agents/{agent_key}/availability",
+      "file": "src/backend/app/operations/routes.py",
+      "line": 125
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/usage/me",
+      "file": "src/backend/app/operations/routes.py",
+      "line": 128
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/usage",
+      "file": "src/backend/app/operations/routes.py",
+      "line": 131
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/budget",
+      "file": "src/backend/app/operations/routes.py",
+      "line": 135
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/admin/budget",
+      "file": "src/backend/app/operations/routes.py",
+      "line": 138
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/platform/summary",
+      "file": "src/backend/app/operations/routes.py",
+      "line": 141
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/platform/availability",
+      "file": "src/backend/app/operations/routes.py",
+      "line": 144
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/platform/tenant-budgets/{tenant_id}",
+      "file": "src/backend/app/operations/routes.py",
+      "line": 147
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/me/tenants",
+      "file": "src/backend/app/tenants/routes.py",
+      "line": 48
+    },
+    {
+      "method": "GET",
+      "path": "/api/v1/admin/memberships",
+      "file": "src/backend/app/tenants/routes.py",
+      "line": 57
+    },
+    {
+      "method": "PATCH",
+      "path": "/api/v1/admin/memberships/{user_id}",
+      "file": "src/backend/app/tenants/routes.py",
+      "line": 69
+    },
+    {
+      "method": "PUT",
+      "path": "/api/v1/admin/memberships/{user_id}/role",
+      "file": "src/backend/app/tenants/routes.py",
+      "line": 77
+    }
+  ],
+  "sql_create_tables": [
+    {
+      "table": "security.accounts",
+      "file": "src/backend/migrations/001_auth_portal.sql",
+      "line": 4
+    },
+    {
+      "table": "security.tenants",
+      "file": "src/backend/migrations/001_auth_portal.sql",
+      "line": 11
+    },
+    {
+      "table": "security.memberships",
+      "file": "src/backend/migrations/001_auth_portal.sql",
+      "line": 16
+    },
+    {
+      "table": "security.platform_access",
+      "file": "src/backend/migrations/001_auth_portal.sql",
+      "line": 22
+    },
+    {
+      "table": "security.managed_tenants",
+      "file": "src/backend/migrations/001_auth_portal.sql",
+      "line": 28
+    },
+    {
+      "table": "security.sessions",
+      "file": "src/backend/migrations/001_auth_portal.sql",
+      "line": 34
+    },
+    {
+      "table": "security.login_windows",
+      "file": "src/backend/migrations/001_auth_portal.sql",
+      "line": 42
+    },
+    {
+      "table": "portal.agent_configs",
+      "file": "src/backend/migrations/001_auth_portal.sql",
+      "line": 49
+    },
+    {
+      "table": "portal.conversations",
+      "file": "src/backend/migrations/001_auth_portal.sql",
+      "line": 58
+    },
+    {
+      "table": "ops.project_budget",
+      "file": "src/backend/migrations/001_auth_portal.sql",
+      "line": 69
+    },
+    {
+      "table": "ops.audit_events",
+      "file": "src/backend/migrations/001_auth_portal.sql",
+      "line": 79
+    },
+    {
+      "table": "portal.runs",
+      "file": "src/backend/migrations/005_conversation_ledger.sql",
+      "line": 8
+    },
+    {
+      "table": "portal.messages",
+      "file": "src/backend/migrations/005_conversation_ledger.sql",
+      "line": 36
+    },
+    {
+      "table": "ops.tenant_budgets",
+      "file": "src/backend/migrations/005_conversation_ledger.sql",
+      "line": 51
+    },
+    {
+      "table": "ops.call_attempts",
+      "file": "src/backend/migrations/005_conversation_ledger.sql",
+      "line": 78
+    },
+    {
+      "table": "ops.usage_events",
+      "file": "src/backend/migrations/005_conversation_ledger.sql",
+      "line": 112
+    },
+    {
+      "table": "security.document_access",
+      "file": "src/backend/migrations/009_document_graph_schema.sql",
+      "line": 6
+    },
+    {
+      "table": "security.private_readers",
+      "file": "src/backend/migrations/009_document_graph_schema.sql",
+      "line": 14
+    },
+    {
+      "table": "rag.document_versions",
+      "file": "src/backend/migrations/009_document_graph_schema.sql",
+      "line": 20
+    },
+    {
+      "table": "rag.index_builds",
+      "file": "src/backend/migrations/009_document_graph_schema.sql",
+      "line": 36
+    },
+    {
+      "table": "rag.jobs",
+      "file": "src/backend/migrations/009_document_graph_schema.sql",
+      "line": 52
+    },
+    {
+      "table": "security.document_publications",
+      "file": "src/backend/migrations/009_document_graph_schema.sql",
+      "line": 70
+    },
+    {
+      "table": "security.share_grants",
+      "file": "src/backend/migrations/009_document_graph_schema.sql",
+      "line": 78
+    },
+    {
+      "table": "security.job_authorizations",
+      "file": "src/backend/migrations/009_document_graph_schema.sql",
+      "line": 88
+    },
+    {
+      "table": "security.operation_receipts",
+      "file": "src/backend/migrations/009_document_graph_schema.sql",
+      "line": 99
+    },
+    {
+      "table": "rag.chunks",
+      "file": "src/backend/migrations/009_document_graph_schema.sql",
+      "line": 110
+    },
+    {
+      "table": "rag.entities",
+      "file": "src/backend/migrations/009_document_graph_schema.sql",
+      "line": 124
+    },
+    {
+      "table": "rag.relations",
+      "file": "src/backend/migrations/009_document_graph_schema.sql",
+      "line": 134
+    },
+    {
+      "table": "rag.evidence",
+      "file": "src/backend/migrations/009_document_graph_schema.sql",
+      "line": 144
+    },
+    {
+      "table": "rag.relation_evidence",
+      "file": "src/backend/migrations/009_document_graph_schema.sql",
+      "line": 154
+    },
+    {
+      "table": "portal.answer_evidence",
+      "file": "src/backend/migrations/009_document_graph_schema.sql",
+      "line": 160
+    },
+    {
+      "table": "portal.response_feedback",
+      "file": "src/backend/migrations/022_response_feedback.sql",
+      "line": 2
+    },
+    {
+      "table": "portal.summary_requests",
+      "file": "src/backend/migrations/025_document_summary_control.sql",
+      "line": 8
+    },
+    {
+      "table": "portal.summary_evidence",
+      "file": "src/backend/migrations/025_document_summary_control.sql",
+      "line": 20
+    },
+    {
+      "table": "portal.agent_deployments",
+      "file": "src/backend/migrations/026_agent_deployment_approval.sql",
+      "line": 2
+    }
+  ],
+  "expected_domains_missing": [
+    "src/backend/app/assets",
+    "src/backend/app/tools",
+    "src/backend/app/connectors",
+    "src/backend/app/workflows",
+    "src/backend/app/api_clients",
+    "src/backend/app/protection",
+    "src/backend/app/meetings",
+    "src/backend/app/search",
+    "src/backend/app/use_cases",
+    "src/frontend/src/AssetCatalogPage.tsx",
+    "src/frontend/src/AgentBuilderPage.tsx",
+    "src/frontend/src/WorkflowCanvasPage.tsx",
+    "src/frontend/src/UseCaseWorkspacePage.tsx"
+  ],
+  "scope": "complete static product source inventory; absence judgement also uses route/UI/schema semantics; not domain-name search alone",
+  "verification_source_comparison": [
+    {
+      "phase": "DP07-summary",
+      "manifest_available": true,
+      "path": "200.프로젝트실행/280.통합시스템테스트/evidence/DP07-summary/verification.json",
+      "matching_source_files": [
+        "src/backend/app/ai/providers.py",
+        "src/backend/app/ai/rag_gateway.py",
+        "src/backend/app/ai/repository.py",
+        "src/backend/app/ai/summary_provider.py",
+        "src/backend/app/documents/evidence_routes.py",
+        "src/backend/app/execution/document_summary.py",
+        "src/backend/app/execution/exports.py",
+        "src/backend/app/execution/manager.py",
+        "src/backend/app/execution/summary_repository.py",
+        "src/backend/app/execution/summary_routes.py",
+        "src/backend/app/policies/document_summary.py",
+        "src/backend/migrations/025_document_summary_control.sql",
+        "src/backend/tests/test_ai_ledger.py",
+        "src/backend/tests/test_c_schema.py",
+        "src/backend/tests/test_dp07_acceptance.py",
+        "src/backend/tests/test_dp07_selection.py",
+        "src/common_core/ai_pipeline/summary/__init__.py",
+        "src/common_core/ai_pipeline/summary/render.py",
+        "src/common_core/ai_pipeline/summary/schemas.py",
+        "src/common_core/ai_pipeline/summary/selection.py",
+        "src/frontend/src/DocumentSummaryPage.tsx",
+        "src/frontend/src/SummaryEvidencePanel.tsx"
+      ],
+      "changed_source_files": [
+        "src/backend/app/errors.py",
+        "src/backend/app/main.py",
+        "src/backend/scripts/portal_test_app.py",
+        "src/backend/scripts/portal_test_control.py",
+        "src/backend/tests/support.py",
+        "src/backend/tests/test_migrations.py",
+        "src/frontend/src/App.tsx",
+        "src/frontend/src/api.ts",
+        "src/frontend/src/styles.css",
+        "src/frontend/src/types.ts",
+        "src/frontend/tests/dp07-acceptance.spec.ts",
+        "src/frontend/tests/safe-reporter.ts"
+      ],
+      "missing_source_files": [],
+      "interpretation": "historical verification, not rerun in this audit; changed files do not imply a failing test"
+    },
+    {
+      "phase": "DP06-xlsx",
+      "manifest_available": true,
+      "path": "200.프로젝트실행/280.통합시스템테스트/evidence/DP06-xlsx/verification.json",
+      "matching_source_files": [
+        "src/backend/app/documents/formats.py",
+        "src/backend/app/documents/repository.py",
+        "src/backend/app/documents/storage.py",
+        "src/backend/app/documents/upload.py",
+        "src/backend/app/documents/xlsx.py",
+        "src/backend/app/documents/xlsx_locations.py",
+        "src/backend/app/documents/xlsx_worker.py",
+        "src/backend/tests/fixtures/xlsx-excel-compatible.xlsx",
+        "src/backend/tests/test_xlsx_acceptance.py",
+        "src/backend/tests/test_xlsx_boundaries.py",
+        "src/backend/tests/test_xlsx_parser.py",
+        "src/backend/tests/xlsx_support.py",
+        "src/frontend/src/RagEvidencePanel.tsx",
+        "src/frontend/tests/fixtures/xlsx-admin.xlsx",
+        "src/frontend/tests/fixtures/xlsx-personal.xlsx",
+        "src/frontend/tests/fixtures/xlsx-sensitive.xlsx"
+      ],
+      "changed_source_files": [
+        "src/backend/app/documents/evidence_routes.py",
+        "src/backend/app/errors.py",
+        "src/frontend/src/DocumentsPage.tsx",
+        "src/frontend/src/api.ts",
+        "src/frontend/src/types.ts",
+        "src/frontend/tests/safe-reporter.ts",
+        "src/frontend/tests/xlsx-acceptance.spec.ts"
+      ],
+      "missing_source_files": [],
+      "interpretation": "historical verification, not rerun in this audit; changed files do not imply a failing test"
+    },
+    {
+      "phase": "DP06-docx",
+      "manifest_available": true,
+      "path": "200.프로젝트실행/280.통합시스템테스트/evidence/DP06-docx/verification.json",
+      "matching_source_files": [
+        "src/backend/app/documents/docx.py",
+        "src/backend/app/documents/docx_locations.py",
+        "src/backend/app/documents/docx_worker.py",
+        "src/backend/requirements.in",
+        "src/backend/requirements.lock",
+        "src/backend/tests/docx_support.py",
+        "src/backend/tests/test_docx_acceptance.py",
+        "src/backend/tests/test_docx_boundaries.py",
+        "src/backend/tests/test_docx_parser.py",
+        "src/backend/third_party/defusedxml-LICENSE.txt",
+        "src/frontend/tests/fixtures/docx-paragraph.docx",
+        "src/frontend/tests/fixtures/docx-sensitive.docx",
+        "src/frontend/tests/fixtures/docx-table.docx"
+      ],
+      "changed_source_files": [
+        "src/backend/app/documents/evidence_routes.py",
+        "src/backend/app/documents/formats.py",
+        "src/backend/app/documents/repository.py",
+        "src/backend/app/documents/storage.py",
+        "src/backend/app/documents/upload.py",
+        "src/backend/app/errors.py",
+        "src/frontend/src/DocumentsPage.tsx",
+        "src/frontend/src/RagEvidencePanel.tsx",
+        "src/frontend/src/api.ts",
+        "src/frontend/src/types.ts",
+        "src/frontend/tests/docx-acceptance.spec.ts",
+        "src/frontend/tests/safe-reporter.ts"
+      ],
+      "missing_source_files": [],
+      "interpretation": "historical verification, not rerun in this audit; changed files do not imply a failing test"
+    },
+    {
+      "phase": "DP06-text-pdf",
+      "manifest_available": true,
+      "path": "200.프로젝트실행/280.통합시스템테스트/evidence/DP06-text-pdf/verification.json",
+      "matching_source_files": [
+        "src/backend/app/documents/pdf.py",
+        "src/backend/app/documents/pdf_worker.py",
+        "src/backend/app/documents/search.py",
+        "src/backend/app/documents/worker.py",
+        "src/backend/app/policies/__init__.py",
+        "src/backend/app/policies/document_ingest.py",
+        "src/backend/migrations/024_document_intake_lookup.sql",
+        "src/backend/tests/pdf_support.py",
+        "src/backend/tests/test_dp06_acceptance.py",
+        "src/backend/tests/test_ingest_policy.py",
+        "src/backend/tests/test_pdf_boundaries.py",
+        "src/backend/tests/test_pdf_parser.py",
+        "src/backend/third_party/pypdf-LICENSE.txt",
+        "src/frontend/tests/fixtures/dp06-synthetic.pdf"
+      ],
+      "changed_source_files": [
+        "src/backend/README.md",
+        "src/backend/app/documents/evidence_routes.py",
+        "src/backend/app/documents/repository.py",
+        "src/backend/app/documents/storage.py",
+        "src/backend/app/documents/upload.py",
+        "src/backend/app/errors.py",
+        "src/backend/requirements.in",
+        "src/backend/requirements.lock",
+        "src/backend/tests/support.py",
+        "src/backend/tests/test_migrations.py",
+        "src/frontend/src/DocumentsPage.tsx",
+        "src/frontend/src/RagEvidencePanel.tsx",
+        "src/frontend/src/api.ts",
+        "src/frontend/src/types.ts",
+        "src/frontend/tests/dp06-acceptance.spec.ts",
+        "src/frontend/tests/safe-reporter.ts"
+      ],
+      "missing_source_files": [],
+      "interpretation": "historical verification, not rerun in this audit; changed files do not imply a failing test"
+    },
+    {
+      "phase": "DP05-personal-documents",
+      "manifest_available": true,
+      "path": "200.프로젝트실행/280.통합시스템테스트/evidence/DP05-personal-documents/verification.json",
+      "matching_source_files": [
+        "src/backend/app/documents/user_routes.py",
+        "src/backend/migrations/023_user_documents.sql",
+        "src/backend/tests/test_dp05_acceptance.py"
+      ],
+      "changed_source_files": [
+        "src/backend/README.md",
+        "src/backend/app/documents/repository.py",
+        "src/backend/app/documents/upload.py",
+        "src/backend/app/main.py",
+        "src/backend/tests/support.py",
+        "src/backend/tests/test_migrations.py",
+        "src/frontend/src/DocumentJobsPage.tsx",
+        "src/frontend/src/DocumentsPage.tsx",
+        "src/frontend/src/types.ts",
+        "src/frontend/tests/safe-reporter.ts",
+        "src/frontend/tests/dp05-acceptance.spec.ts"
+      ],
+      "missing_source_files": [],
+      "interpretation": "historical verification, not rerun in this audit; changed files do not imply a failing test"
+    },
+    {
+      "phase": "UI11-portal",
+      "manifest_available": true,
+      "path": "200.프로젝트실행/280.통합시스템테스트/evidence/UI11-portal/source-manifest.json",
+      "matching_source_files": [
+        "src/backend/README.md",
+        "src/backend/app/approvals/__init__.py",
+        "src/backend/app/approvals/repository.py",
+        "src/backend/app/approvals/routes.py",
+        "src/backend/app/errors.py",
+        "src/backend/app/operations/repository.py",
+        "src/backend/migrations/026_agent_deployment_approval.sql",
+        "src/backend/scripts/portal_test_control.py",
+        "src/backend/tests/support.py",
+        "src/backend/tests/test_agent_approvals.py",
+        "src/backend/tests/test_migrations.py",
+        "src/backend/tests/test_operations.py",
+        "src/frontend/index.html",
+        "src/frontend/src/AdminHomePage.tsx",
+        "src/frontend/src/AgentSettingsPage.tsx",
+        "src/frontend/src/App.tsx",
+        "src/frontend/src/ApprovalsPage.tsx",
+        "src/frontend/src/ChatPage.tsx",
+        "src/frontend/src/HomePage.tsx",
+        "src/frontend/src/main.tsx",
+        "src/frontend/tests/auth-tenants.spec.ts",
+        "src/frontend/tests/chat-operations.spec.ts",
+        "src/frontend/tests/documents-rag.spec.ts",
+        "src/frontend/tests/docx-acceptance.spec.ts",
+        "src/frontend/tests/dp04-acceptance.spec.ts",
+        "src/frontend/tests/dp05-acceptance.spec.ts",
+        "src/frontend/tests/dp06-acceptance.spec.ts",
+        "src/frontend/tests/dp07-acceptance.spec.ts",
+        "src/frontend/tests/p270-pilot.spec.ts",
+        "src/frontend/tests/portal-ui.spec.ts",
+        "src/frontend/tests/support.ts",
+        "src/frontend/tests/xlsx-acceptance.spec.ts"
+      ],
+      "changed_source_files": [
+        "src/backend/app/main.py",
+        "src/frontend/README.md",
+        "src/frontend/src/LoginPage.tsx",
+        "src/frontend/src/TenantHeader.tsx",
+        "src/frontend/src/api.ts",
+        "src/frontend/src/portal.css",
+        "src/frontend/src/types.ts",
+        "src/frontend/tests/safe-reporter.ts"
+      ],
+      "missing_source_files": [],
+      "interpretation": "historical verification, not rerun in this audit; changed files do not imply a failing test"
+    },
+    {
+      "phase": "UI12-sites",
+      "manifest_available": true,
+      "path": "200.프로젝트실행/280.통합시스템테스트/evidence/UI12-sites/source-manifest.json",
+      "matching_source_files": [
+        "src/frontend/README.md",
+        "src/frontend/apps/admin-web/index.html",
+        "src/frontend/apps/admin-web/src/App.tsx",
+        "src/frontend/apps/admin-web/src/main.tsx",
+        "src/frontend/apps/user-web/index.html",
+        "src/frontend/apps/user-web/src/App.tsx",
+        "src/frontend/apps/user-web/src/main.tsx",
+        "src/frontend/packages/api-contract/src/api.ts",
+        "src/frontend/packages/api-contract/src/session.ts",
+        "src/frontend/packages/api-contract/src/types.ts",
+        "src/frontend/packages/ui/src/LoginPage.tsx",
+        "src/frontend/packages/ui/src/TenantHeader.tsx",
+        "src/frontend/packages/ui/src/portal.css",
+        "src/frontend/packages/ui/src/scoped.ts",
+        "src/frontend/packages/ui/src/styles.css",
+        "src/frontend/scripts/verify-portal-builds.mjs",
+        "src/frontend/src/DocumentJobsPage.tsx",
+        "src/frontend/src/DocumentsPage.tsx",
+        "src/frontend/src/LoginPage.tsx",
+        "src/frontend/src/TenantHeader.tsx",
+        "src/frontend/src/UsagePage.tsx",
+        "src/frontend/src/api.ts",
+        "src/frontend/src/portal.css",
+        "src/frontend/src/scoped.ts",
+        "src/frontend/src/session.ts",
+        "src/frontend/src/styles.css",
+        "src/frontend/src/types.ts",
+        "src/frontend/tsconfig.json"
+      ],
+      "changed_source_files": [
+        "src/frontend/package.json",
+        "src/frontend/packages/ui/src/PortalShell.tsx",
+        "src/frontend/tests/portal-sites.spec.ts",
+        "src/frontend/tests/safe-reporter.ts",
+        "src/frontend/vite.config.ts"
+      ],
+      "missing_source_files": [],
+      "interpretation": "historical verification, not rerun in this audit; changed files do not imply a failing test"
+    },
+    {
+      "phase": "UI13-environments",
+      "manifest_available": true,
+      "path": "200.프로젝트실행/280.통합시스템테스트/evidence/UI13-environments/source-manifest.json",
+      "matching_source_files": [
+        "config/environments/local.json",
+        "config/environments/dev.json",
+        "config/environments/tb.json",
+        "config/environments/prd.json",
+        "src/backend/app/environment.py",
+        "src/backend/app/config.py",
+        "src/backend/app/main.py",
+        "src/backend/app/auth/guards.py",
+        "src/frontend/scripts/environment.mjs",
+        "src/frontend/scripts/environment.d.mts",
+        "src/frontend/scripts/check-environments.mjs",
+        "src/frontend/vite.config.ts",
+        "src/frontend/packages/ui/src/PortalShell.tsx",
+        "src/frontend/package.json",
+        "scripts/service_control.py",
+        "src/frontend/admin-start.sh",
+        "src/frontend/admin-stop.sh",
+        "config/environments/README.md",
+        "src/frontend/scripts/environment.test.mjs",
+        "src/backend/tests/test_environment.py",
+        "src/backend/scripts/portal_test_server.py",
+        "src/backend/scripts/portal_test_app.py",
+        "src/frontend/tests/safe-reporter.ts",
+        "src/frontend/tests/portal-ports.spec.ts",
+        "src/frontend/playwright.config.ts",
+        "src/frontend/tests/portal-sites.spec.ts"
+      ],
+      "changed_source_files": [],
+      "missing_source_files": [],
+      "interpretation": "historical verification, not rerun in this audit; changed files do not imply a failing test"
+    }
+  ],
+  "services_or_data_changed": false
+}

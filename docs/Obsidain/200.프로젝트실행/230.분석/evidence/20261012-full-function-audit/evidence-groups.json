@@ -1,0 +1,402 @@
+{
+  "portal": {
+    "name": "포털·독립 앱/UI",
+    "references": [
+      {
+        "path": "src/frontend/apps/user-web/src/App.tsx",
+        "line": 9,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/apps/user-web/src/App.tsx"
+      },
+      {
+        "path": "src/frontend/apps/admin-web/src/App.tsx",
+        "line": 11,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/apps/admin-web/src/App.tsx"
+      },
+      {
+        "path": "src/frontend/packages/ui/src/PortalShell.tsx",
+        "line": 5,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/packages/ui/src/PortalShell.tsx"
+      },
+      {
+        "path": "src/frontend/src/HomePage.tsx",
+        "line": 4,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/src/HomePage.tsx"
+      },
+      {
+        "path": "src/frontend/src/AdminHomePage.tsx",
+        "line": 3,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/src/AdminHomePage.tsx"
+      },
+      {
+        "path": "src/frontend/tests/portal-sites.spec.ts",
+        "line": 9,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/tests/portal-sites.spec.ts"
+      }
+    ]
+  },
+  "auth": {
+    "name": "인증·역할·조직",
+    "references": [
+      {
+        "path": "src/backend/app/auth/routes.py",
+        "line": 9,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/auth/routes.py"
+      },
+      {
+        "path": "src/backend/app/tenants/routes.py",
+        "line": 20,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/tenants/routes.py"
+      },
+      {
+        "path": "src/backend/app/db.py",
+        "line": 136,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/db.py"
+      },
+      {
+        "path": "src/frontend/src/MembersPage.tsx",
+        "line": 17,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/src/MembersPage.tsx"
+      },
+      {
+        "path": "src/backend/migrations/001_auth_portal.sql",
+        "line": 4,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/migrations/001_auth_portal.sql"
+      },
+      {
+        "path": "src/backend/tests/test_auth.py",
+        "line": 9,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/tests/test_auth.py"
+      }
+    ]
+  },
+  "chat": {
+    "name": "대화·이력·RAG 실행",
+    "references": [
+      {
+        "path": "src/backend/app/conversations/routes.py",
+        "line": 56,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/conversations/routes.py"
+      },
+      {
+        "path": "src/backend/app/execution/manager.py",
+        "line": 7,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/execution/manager.py"
+      },
+      {
+        "path": "src/frontend/src/ChatPage.tsx",
+        "line": 12,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/src/ChatPage.tsx"
+      },
+      {
+        "path": "src/frontend/src/ConversationHistory.tsx",
+        "line": 9,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/src/ConversationHistory.tsx"
+      },
+      {
+        "path": "src/frontend/src/RagEvidencePanel.tsx",
+        "line": 6,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/src/RagEvidencePanel.tsx"
+      },
+      {
+        "path": "src/backend/migrations/021_conversation_metadata.sql",
+        "line": 2,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/migrations/021_conversation_metadata.sql"
+      }
+    ]
+  },
+  "feedback": {
+    "name": "응답 피드백",
+    "references": [
+      {
+        "path": "src/backend/app/feedback/routes.py",
+        "line": 15,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/feedback/routes.py"
+      },
+      {
+        "path": "src/frontend/src/ResponseFeedback.tsx",
+        "line": 4,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/src/ResponseFeedback.tsx"
+      },
+      {
+        "path": "src/frontend/src/FeedbackSummaryPage.tsx",
+        "line": 5,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/src/FeedbackSummaryPage.tsx"
+      },
+      {
+        "path": "src/backend/migrations/022_response_feedback.sql",
+        "line": 2,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/migrations/022_response_feedback.sql"
+      },
+      {
+        "path": "src/frontend/tests/dp04-acceptance.spec.ts",
+        "line": 11,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/tests/dp04-acceptance.spec.ts"
+      }
+    ]
+  },
+  "docs": {
+    "name": "개인/조직 자료·제한 파서",
+    "references": [
+      {
+        "path": "src/backend/app/documents/user_routes.py",
+        "line": 11,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/documents/user_routes.py"
+      },
+      {
+        "path": "src/backend/app/documents/upload.py",
+        "line": 11,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/documents/upload.py"
+      },
+      {
+        "path": "src/backend/app/documents/pdf.py",
+        "line": 42,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/documents/pdf.py"
+      },
+      {
+        "path": "src/backend/app/documents/docx.py",
+        "line": 11,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/documents/docx.py"
+      },
+      {
+        "path": "src/backend/app/documents/xlsx.py",
+        "line": 11,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/documents/xlsx.py"
+      },
+      {
+        "path": "src/backend/app/documents/worker.py",
+        "line": 16,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/documents/worker.py"
+      },
+      {
+        "path": "src/frontend/src/DocumentsPage.tsx",
+        "line": 9,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/src/DocumentsPage.tsx"
+      },
+      {
+        "path": "src/backend/migrations/023_user_documents.sql",
+        "line": 2,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/migrations/023_user_documents.sql"
+      }
+    ]
+  },
+  "summary": {
+    "name": "원문 발췌 요약·Markdown 출력",
+    "references": [
+      {
+        "path": "src/backend/app/execution/summary_routes.py",
+        "line": 19,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/execution/summary_routes.py"
+      },
+      {
+        "path": "src/backend/app/execution/document_summary.py",
+        "line": 20,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/execution/document_summary.py"
+      },
+      {
+        "path": "src/common_core/ai_pipeline/summary/selection.py",
+        "line": 4,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/common_core/ai_pipeline/summary/selection.py"
+      },
+      {
+        "path": "src/frontend/src/DocumentSummaryPage.tsx",
+        "line": 9,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/src/DocumentSummaryPage.tsx"
+      },
+      {
+        "path": "src/backend/migrations/025_document_summary_control.sql",
+        "line": 8,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/migrations/025_document_summary_control.sql"
+      },
+      {
+        "path": "src/frontend/tests/dp07-acceptance.spec.ts",
+        "line": 11,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/tests/dp07-acceptance.spec.ts"
+      }
+    ]
+  },
+  "sharing": {
+    "name": "문서 Scope·Grant·출처",
+    "references": [
+      {
+        "path": "src/backend/app/documents/share_routes.py",
+        "line": 11,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/documents/share_routes.py"
+      },
+      {
+        "path": "src/backend/app/documents/evidence_routes.py",
+        "line": 22,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/documents/evidence_routes.py"
+      },
+      {
+        "path": "src/backend/app/documents/search.py",
+        "line": 18,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/documents/search.py"
+      },
+      {
+        "path": "src/frontend/src/DocumentSharingPanel.tsx",
+        "line": 5,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/src/DocumentSharingPanel.tsx"
+      },
+      {
+        "path": "src/backend/migrations/014_document_sharing.sql",
+        "line": 1,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/migrations/014_document_sharing.sql"
+      }
+    ]
+  },
+  "usage": {
+    "name": "고정 Agent·사용량/원장·제한",
+    "references": [
+      {
+        "path": "src/backend/app/operations/routes.py",
+        "line": 115,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/operations/routes.py"
+      },
+      {
+        "path": "src/backend/app/ai/repository.py",
+        "line": 36,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/ai/repository.py"
+      },
+      {
+        "path": "src/backend/app/ai/pricing.py",
+        "line": 7,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/ai/pricing.py"
+      },
+      {
+        "path": "src/frontend/src/UsagePage.tsx",
+        "line": 32,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/src/UsagePage.tsx"
+      },
+      {
+        "path": "src/frontend/src/PlatformPage.tsx",
+        "line": 7,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/src/PlatformPage.tsx"
+      },
+      {
+        "path": "src/frontend/src/AdminHomePage.tsx",
+        "line": 3,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/src/AdminHomePage.tsx"
+      }
+    ]
+  },
+  "approval": {
+    "name": "고정 Agent 설정 승인",
+    "references": [
+      {
+        "path": "src/backend/app/approvals/routes.py",
+        "line": 13,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/approvals/routes.py"
+      },
+      {
+        "path": "src/backend/app/approvals/repository.py",
+        "line": 8,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/approvals/repository.py"
+      },
+      {
+        "path": "src/frontend/src/ApprovalsPage.tsx",
+        "line": 6,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/src/ApprovalsPage.tsx"
+      },
+      {
+        "path": "src/frontend/src/AgentSettingsPage.tsx",
+        "line": 48,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/src/AgentSettingsPage.tsx"
+      },
+      {
+        "path": "src/backend/migrations/026_agent_deployment_approval.sql",
+        "line": 2,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/migrations/026_agent_deployment_approval.sql"
+      },
+      {
+        "path": "src/backend/tests/test_agent_approvals.py",
+        "line": 25,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/tests/test_agent_approvals.py"
+      }
+    ]
+  },
+  "policy": {
+    "name": "수집·요약 최소 정책",
+    "references": [
+      {
+        "path": "src/backend/app/policies/document_ingest.py",
+        "line": 12,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/policies/document_ingest.py"
+      },
+      {
+        "path": "src/backend/app/policies/document_summary.py",
+        "line": 4,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/policies/document_summary.py"
+      },
+      {
+        "path": "src/backend/app/documents/worker.py",
+        "line": 10,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/documents/worker.py"
+      },
+      {
+        "path": "src/backend/app/execution/document_summary.py",
+        "line": 10,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/execution/document_summary.py"
+      }
+    ]
+  },
+  "arch": {
+    "name": "현재 제품 전체 구조·부재 대조",
+    "references": [
+      {
+        "path": "src/backend/app/main.py",
+        "line": 38,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/main.py"
+      },
+      {
+        "path": "src/backend/app/ai/providers.py",
+        "line": 13,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/ai/providers.py"
+      },
+      {
+        "path": "src/backend/app/ai/pricing.py",
+        "line": 7,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/ai/pricing.py"
+      },
+      {
+        "path": "src/frontend/apps/user-web/src/App.tsx",
+        "line": 9,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/apps/user-web/src/App.tsx"
+      },
+      {
+        "path": "src/frontend/apps/admin-web/src/App.tsx",
+        "line": 11,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/apps/admin-web/src/App.tsx"
+      }
+    ]
+  },
+  "env": {
+    "name": "기존 환경/코드 분리 작업",
+    "references": [
+      {
+        "path": "config/environments/local.json",
+        "line": 3,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/config/environments/local.json"
+      },
+      {
+        "path": "src/backend/app/environment.py",
+        "line": 35,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/app/environment.py"
+      },
+      {
+        "path": "src/frontend/vite.config.ts",
+        "line": 27,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/vite.config.ts"
+      },
+      {
+        "path": "scripts/service_control.py",
+        "line": 64,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/scripts/service_control.py"
+      },
+      {
+        "path": "src/frontend/scripts/verify-portal-builds.mjs",
+        "line": 1,
+        "absolute_path": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/frontend/scripts/verify-portal-builds.mjs"
+      }
+    ]
+  }
+}

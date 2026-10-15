@@ -1,0 +1,8 @@
+{
+  "migration_count": 30,
+  "prior_checksums_match": true,
+  "new_migrations": 0,
+  "primary_asset_run_mutations": 0,
+  "primary_paid_calls": 0,
+  "existing_primary_row_fingerprints": "not remeasured; no primary data mutation/migration in this unit"
+}

@@ -1,0 +1,2 @@
+﻿trust_contract_id,application_id,party_id,initial_state,expected_state_after_events,evidence_id,mode
+TRUST001,APP001,P001,DRAFT,MOCK_SIGNED,EV-TRUST,MOCK

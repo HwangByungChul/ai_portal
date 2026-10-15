@@ -1,0 +1,16 @@
+{
+  "status": "passed",
+  "checks": {
+    "api": {
+      "status": 200
+    },
+    "user": {
+      "status": 200
+    },
+    "admin": {
+      "status": 200
+    }
+  },
+  "authenticated_primary_mutations": 0,
+  "paid_calls": 0
+}

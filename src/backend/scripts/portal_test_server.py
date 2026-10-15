@@ -19,7 +19,7 @@ def stop(signum,frame):
 def main():
     cluster=DevCluster();prior=cluster.status()['state'];db=None;state=None;children=[];logs=[];configured=False;source_root=BACKEND/'.runtime'/("C05-source-"+uuid4().hex)
     try:
-        for port in (8000,5173):
+        for port in ((8000,5173,5174) if os.environ.get('PORTAL_TEST_PORTS')=='1' else (8000,5173)):
             with socket.socket() as probe:
                 probe.setsockopt(socket.SOL_SOCKET,socket.SO_REUSEADDR,1);probe.bind(('127.0.0.1',port))
         if CONFIG.exists(): raise RuntimeError('TEST_RUNTIME_ALREADY_EXISTS')
@@ -49,6 +49,7 @@ def main():
         commands=[([str(BACKEND/'.venv/bin/python'),'-m','uvicorn','scripts.portal_test_app:create_app','--factory',
             '--host','127.0.0.1','--port','8000','--no-proxy-headers','--no-access-log'],BACKEND,api_env,'api'),
             ([str(Path.home()/'.nvm/versions/node/v22.23.1/bin/node'),str(FRONTEND/'node_modules/vite/bin/vite.js')],FRONTEND,env,'vite')]
+        if os.environ.get('PORTAL_TEST_PORTS')=='1':commands.append((commands[1][0]+['--mode','admin'],FRONTEND,env,'vite-admin'))
         for command,cwd,child_env,name in commands:
             fd=os.open(BACKEND/'.runtime'/f'A05-{name}.log',os.O_WRONLY|os.O_CREAT|os.O_TRUNC,0o600)
             log=os.fdopen(fd,'w');logs.append(log)

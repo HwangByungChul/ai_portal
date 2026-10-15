@@ -1,0 +1,3 @@
+﻿usage_id,file_id,source_record_key,usage_date,title,internal_code,quantity,unit_rate_krw,license_id
+U001,FILE001,ROW001,2026-09-15,시연곡 봄의 기록,DEMO-W001,100,100,LC001
+U002,FILE001,ROW002,2026-09-16,시연곡 세 사람의 노래,DEMO-W002,1,1001,LC002

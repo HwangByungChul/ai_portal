@@ -1,0 +1,20 @@
+{
+  "first_run": {
+    "passed": 6,
+    "failed": 6
+  },
+  "second_run": {
+    "passed": 1,
+    "failed": 5
+  },
+  "third_run": {
+    "passed": 4,
+    "failed": 2
+  },
+  "corrected": [
+    "explicit input/select labels",
+    "different sibling keys for preview/history (stale DOM leak)",
+    "test assets unique per case and pre-existing fixture asset count retained",
+    "buffer route response before owner scope abort; avoid disposed test response"
+  ]
+}

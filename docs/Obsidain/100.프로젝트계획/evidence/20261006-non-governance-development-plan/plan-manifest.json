@@ -1,0 +1,2014 @@
+{
+  "date": "2026-10-06",
+  "scope": "non-governance; no deadline; planning only",
+  "basis_code_hash": "480250dc7ae6d303fc9576af22f80f8a5c4d2d10",
+  "tasks": [
+    {
+      "id": "DP-01",
+      "title": "요구·화면·검증 기준선 확정",
+      "group": "A",
+      "depends": [],
+      "F": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "T": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62
+      ],
+      "files": [
+        "docs/Obsidain/200.프로젝트실행/220.요구정의/비거버넌스 하위요구 수용기준.md",
+        "docs/Obsidain/200.프로젝트실행/230.분석/업무와 데이터 흐름 분석.md"
+      ],
+      "api": {
+        "contract": "requirement_id → source_row → adopted_behavior → acceptance_id → evidence",
+        "state": [
+          "proposed",
+          "adopted",
+          "verified",
+          "blocked"
+        ]
+      },
+      "data": "F49/IA115/T62 추적 원장. IA 매핑은 구현 완료 상태와 분리. 원본 최초오픈 제외5는 그대로 추적.",
+      "scope": "각 기능을 사용자행동·관리행동·비화면 요구로 분해하고 개인 실험 구현/운영 연계/조건부 인프라로 지정. 115개 화면은 목록·상세·모달 병합안을 별도 기록; 전체 화면을115개 페이지로 만들 필요는 없음.",
+      "tests": [
+        "F49·IA115 ID 중복/누락0",
+        "F050~060 및SCR-GOV 신규 구현 대상0",
+        "기존 not_run은 미실행 유지"
+      ],
+      "done": "추적표 각 행에 담당 작업·역할·권한·입력·결과·시험·근거가 있고 사용자 핵심 흐름의 수용기준을 확정."
+    },
+    {
+      "id": "DP-02",
+      "title": "포털 구조·공통 UX·Home·도움말",
+      "group": "B",
+      "depends": [
+        "DP-01"
+      ],
+      "F": [
+        1,
+        2,
+        3,
+        7,
+        12,
+        17,
+        27
+      ],
+      "T": [
+        61
+      ],
+      "files": [
+        "src/frontend/src/App.tsx",
+        "src/frontend/src/styles.css",
+        "src/frontend/src/HomePage.tsx",
+        "src/frontend/src/HelpPage.tsx",
+        "src/backend/app/portal/routes.py"
+      ],
+      "api": {
+        "GET /api/v1/portal/home": {
+          "tenant_id": "UUID",
+          "capabilities": [
+            "string"
+          ],
+          "available_assets": [
+            "UUID"
+          ],
+          "announcements": [
+            "published metadata"
+          ]
+        },
+        "GET /api/v1/portal/help": "published guide list"
+      },
+      "data": "Home 안내와 도움말; 초기 권한은 현행3역할을 유지하며 DP-16 이후 세분화.",
+      "scope": "사용자/관리자 진입·메뉴·검색·현재조직 표시·업무 단계 안내. 단일SPA 내 경계부터 구현하고 별도 앱 빌드는 배포 필요 시 DP-26에서 분리. 기능 미제공 메뉴는 상태를 표시.",
+      "tests": [
+        "직접 URL/API 우회403/404",
+        "조직전환 이전 응답이 새 화면에 나타나지 않음",
+        "키보드·모바일320px·Edge/Chrome 검증"
+      ],
+      "done": "로그인→조직선택→허용기능→도움말의 경로가 동작하고 미구현 지표/기능을 실동작으로 표시하지 않음."
+    },
+    {
+      "id": "DP-03",
+      "title": "대화 제목·핀·검색·삭제",
+      "group": "B",
+      "depends": [
+        "DP-01"
+      ],
+      "F": [
+        12,
+        17
+      ],
+      "T": [
+        13
+      ],
+      "files": [
+        "src/backend/app/conversations/routes.py",
+        "src/backend/app/conversations/repository.py",
+        "src/backend/app/conversations/pagination.py",
+        "src/backend/migrations/021_conversation_metadata.sql",
+        "src/frontend/src/ChatPage.tsx"
+      ],
+      "api": {
+        "PATCH /api/v1/conversations/{id}": {
+          "title": "1~120자",
+          "pinned": "bool",
+          "expected_revision": "int>=0"
+        },
+        "DELETE /api/v1/conversations/{id}": {
+          "expected_revision": "int>=0"
+        },
+        "GET /api/v1/conversations": "q(최대120자),pinned,cursor,limit<=50"
+      },
+      "data": "title/pinned/metadata_revision/deleted_at; 기존run/message 비용원장은 삭제하지 않음. 동일 revision 재전송은 현재 값과 일치할 때만 안전 재응답; 다른 값은409.",
+      "scope": "owner+tenant 확인과 RLS/SQL 정책 함수를 추가. 제목 원문 검색에 한정한 첫 버전; 삭제 후 신규run/조회 거부. 진행run이 있으면 삭제409로 차단하고 취소 완료 후 재시도. 정렬 커서에 핀/시각/id/query fingerprint를 포함.",
+      "tests": [
+        "A-U1 제목변경→검색→핀→해제",
+        "A-U2/B-user/PADMIN의 개인 대화 수정404",
+        "revision 충돌409·CSRF없음403·tenant payload422",
+        "삭제 후 실행/조회404; 기존 비용/감사 보존"
+      ],
+      "done": "본인대화 관리와 동시수정/회수 차단이 서버·화면에서 일치하며 기존 이력/SSE/run snapshot에 영향 없음."
+    },
+    {
+      "id": "DP-04",
+      "title": "답변 평가·피드백·개선관리",
+      "group": "B",
+      "depends": [
+        "DP-03"
+      ],
+      "F": [
+        13,
+        26
+      ],
+      "T": [
+        12
+      ],
+      "files": [
+        "src/backend/app/feedback/routes.py",
+        "src/backend/app/feedback/repository.py",
+        "src/backend/migrations/022_response_feedback.sql",
+        "src/frontend/src/ChatPage.tsx",
+        "src/frontend/src/FeedbackReviewPage.tsx"
+      ],
+      "api": {
+        "PUT /api/v1/runs/{id}/feedback": {
+          "rating": "positive|negative",
+          "comment": "0~1000자",
+          "expected_revision": "int"
+        },
+        "GET /api/v1/admin/feedback": "tenant-scoped redacted feedback",
+        "PATCH /api/v1/admin/feedback/{id}": "category,status,expected_revision"
+      },
+      "data": "tenant,user,run UNIQUE; revision; open→triaged→resolved; 관리자 조회는 별도 feedback.read capability.",
+      "scope": "완료답변에만 평가; 중복 upsert/변경·철회 동작. 관리자에 기본 rating/분류/마스킹 의견만 제공하고 질문/답변 본문은 권한 별도. 이행/종결 사유 기록.",
+      "tests": [
+        "같은 사용자 재전송은1행",
+        "미완료/다른소유run 차단",
+        "관리자 목록에서 개인 prompt/body/title 노출0",
+        "종결사유/재개 revision 검증"
+      ],
+      "done": "평가→마스킹 목록→분류/처리→종결이 동작하고 개인 대화 접근권한을 확장하지 않음."
+    },
+    {
+      "id": "DP-05",
+      "title": "자기 문서함·업로드·질문 첨부",
+      "group": "B",
+      "depends": [
+        "DP-01"
+      ],
+      "F": [
+        14,
+        15
+      ],
+      "T": [
+        25,
+        26
+      ],
+      "files": [
+        "src/backend/app/documents/user_routes.py",
+        "src/backend/app/documents/policy.py",
+        "src/backend/app/documents/repository.py",
+        "src/backend/app/conversations/routes.py",
+        "src/frontend/src/DocumentsPage.tsx",
+        "src/frontend/src/ChatPage.tsx"
+      ],
+      "api": {
+        "POST /api/v1/documents": "multipart(file,client_upload_id); owner/tenant/share fields forbidden",
+        "GET /api/v1/documents": "owner-private list",
+        "POST /api/v1/runs": "기존 document_refs(document_id,version_id),rules_rag만"
+      },
+      "data": "초기TXT/MD; size·인용·version·Job 제한은 현행 설정 재사용. user 경로는 owner를 세션에서 결정; 조직게시/Grant는 관리자 경로 유지.",
+      "scope": "일반사용자 자신 문서 접수/상태/삭제와 게시완료 version 첨부를 추가. 기존 worker/embedding/gateway/cleanup과 원문권한 검사 재사용. 전송동일ID+다른내용409.",
+      "tests": [
+        "owner/reader/tenant/share 위조422",
+        "접수/처리중 첨부409,게시후 성공",
+        "회수 직후 검색·질문·근거·원문404",
+        "업로드 재전송 중복Job/embedding 호출0"
+      ],
+      "done": "자기 업로드→처리상태→게시→첨부질문→인용→삭제 흐름과 A/B 격리가 검증됨."
+    },
+    {
+      "id": "DP-06",
+      "title": "파일 파서·OCR·수집 검사 확장",
+      "group": "B",
+      "depends": [
+        "DP-05",
+        "DP-18"
+      ],
+      "F": [
+        14,
+        15,
+        41
+      ],
+      "T": [
+        21,
+        23,
+        24,
+        31,
+        47
+      ],
+      "files": [
+        "src/backend/app/documents/parsers.py",
+        "src/backend/app/documents/ingest.py",
+        "src/backend/app/documents/worker.py",
+        "src/backend/app/documents/quarantine.py",
+        "src/common_core/ai_pipeline/parsing.py"
+      ],
+      "api": {
+        "parse(source_bytes,media_type)": "ParsedDocument(text,segments,source_hash,parser_version)",
+        "segment": "page|sheet|slide,index,start,end"
+      },
+      "data": "먼저 텍스트PDF/DOCX/XLSX/PPTX, 다음OCR/HWP adapter. 페이지/시트/셀·슬라이드 위치와 원본hash 보존.",
+      "scope": "확장자+실제시그니처+압축해제크기/파일수/시간 제한; 매크로/암호파일 거부; PII검사 후 게시. parser별 지원표와 실패코드. OCR/HWP는 실제 fixture/엔진 없는 동안 미지원으로 명시. 무중단재색인은 새version 성공후 원자적으로 활성version 전환.",
+      "tests": [
+        "손상/암호/과대압축/임베디드파일 격리",
+        "표 숫자·페이지 인용 일치",
+        "parser 실패는 미게시/비용중복0",
+        "구버전 실행중 새색인 전환 후 snapshot 유지"
+      ],
+      "done": "채택 형식별 정상·실패·출처 평가 통과. 지원하지 않는 형식은 명확히 거부하며 OCR/HWP 성공을 추정하지 않음."
+    },
+    {
+      "id": "DP-07",
+      "title": "일반 문서 요약·재생성·출력",
+      "group": "B",
+      "depends": [
+        "DP-05",
+        "DP-18"
+      ],
+      "F": [
+        12,
+        14,
+        15,
+        18
+      ],
+      "T": [
+        22,
+        24,
+        27,
+        28
+      ],
+      "files": [
+        "src/backend/app/execution/document_summary.py",
+        "src/backend/app/execution/exports.py",
+        "src/backend/app/ai/gateway.py",
+        "src/frontend/src/DocumentSummaryPage.tsx",
+        "src/frontend/src/RagEvidencePanel.tsx"
+      ],
+      "api": {
+        "POST /api/v1/document-summaries": "client_send_id,document_refs,mode(summary|translation)",
+        "POST /api/v1/runs/{id}/regenerate": "new_client_send_id,expected_revision",
+        "GET /api/v1/runs/{id}/export": "format=md|pdf"
+      },
+      "data": "요약 답변은 source version/segment ids,claim/quote,coverage와unsupported/insufficient 상태. 규정 typed fact 계약과 분리.",
+      "scope": "새실행은 중앙permit/ledger를 거침. 재생성은 원run을 덮어쓰지 않음. 처음 Markdown 출력, PDF는 동일근거 템플릿. 발급 시·다운로드 시 현재권한 재확인; URL에원문/비밀값 금지.",
+      "tests": [
+        "원문밖 날짜/금액/담당자 추가 금지",
+        "회수자료 export/재생성 차단",
+        "같은send 중복비용0·취소/unknown 유지",
+        "규정RAG 기존회귀 통과"
+      ],
+      "done": "합성 요약셋의 필수 사실/숫자 일치·인용 정확성과 지원외 처리가 검증되고 출력에 모델추정/출처가 표시됨."
+    },
+    {
+      "id": "DP-08",
+      "title": "회의 보조·권한 내 통합검색",
+      "group": "B",
+      "depends": [
+        "DP-03",
+        "DP-07",
+        "DP-10"
+      ],
+      "F": [
+        12,
+        17,
+        20
+      ],
+      "T": [
+        27,
+        37
+      ],
+      "files": [
+        "src/backend/app/meetings/routes.py",
+        "src/backend/app/search/routes.py",
+        "src/frontend/src/MeetingPage.tsx",
+        "src/frontend/src/SearchPage.tsx"
+      ],
+      "api": {
+        "POST /api/v1/meetings": "title,date,participant_labels,document_refs,client_send_id",
+        "GET /api/v1/search": "q,type=document|conversation|asset,cursor"
+      },
+      "data": "회의 metadata와결정/담당/기한/근거. 검색 type별 cursor·최대50·원문/소유자 ACL 적용.",
+      "scope": "녹취/STT없는 문서기반 회의록부터. 제안 스크립트와 원문결정 분리. 통합검색은 문서·본인대화·허용자산을 서버에서 합침. 비허용 건수·스니펫·캐시 노출 차단.",
+      "tests": [
+        "담당자/기한 없는 원문은 미기재",
+        "A-U2 개인회의/대화404",
+        "회수후 스니펫/건수 삭제",
+        "검색 cursor다른조직/조건 재사용 거부"
+      ],
+      "done": "회의 입력→근거요약→개인저장·검색이 가능하고 추정 결정을 사실로 표시하지 않음."
+    },
+    {
+      "id": "DP-09",
+      "title": "동적 자산 모델·고정 Agent 호환 이전",
+      "group": "C",
+      "depends": [
+        "DP-01"
+      ],
+      "F": [
+        4,
+        19,
+        20,
+        22,
+        24,
+        32,
+        34,
+        46,
+        47,
+        49
+      ],
+      "T": [
+        22,
+        32,
+        38,
+        42
+      ],
+      "files": [
+        "src/backend/app/assets/models.py",
+        "src/backend/app/assets/repository.py",
+        "src/backend/migrations/023_asset_registry.sql",
+        "src/backend/app/conversations/routes.py",
+        "src/backend/app/conversations/repository.py",
+        "src/backend/app/execution/manager.py",
+        "src/frontend/src/types.ts"
+      ],
+      "api": {
+        "Asset": "id,owner_tenant,kind(agent|prompt|workflow|tool|model),visibility,active_version",
+        "AssetVersion": "id,asset_id,revision,state,config_hash,execution_kind(general|rules_rag|document_summary)",
+        "run snapshot": "asset_id,asset_version_id,config_hash"
+      },
+      "data": "고정general/rules_rag는 seeded asset UUID alias로 유지. 기존agent_key 계약은 compatibility resolver로 처리; 기존완료run config_snapshot은 변경하지 않음.",
+      "scope": "새schema RLS/정책함수·immutableversion 추가. 기존DB→새DB expand/backfill/검증/compat읽기/후속contract 단계. 임의execution_kind/URL/key 등록 차단. 사용중버전 hard delete 금지.",
+      "tests": [
+        "기존데이터 migration 전후 row/hash/비용 일치",
+        "고정2종 API호환·기존SSE/run 재조회",
+        "다른 tenant asset조회404",
+        "중간실패 rollback·반복migration 변경0"
+      ],
+      "done": "고정2종과 새자산이 같은 허가경로로 실행되고 대화·근거·snapshot·ledger가 보존됨."
+    },
+    {
+      "id": "DP-10",
+      "title": "카탈로그·My Agent·사용권한·공유",
+      "group": "C",
+      "depends": [
+        "DP-09",
+        "DP-02"
+      ],
+      "F": [
+        4,
+        17,
+        19,
+        20,
+        22,
+        23,
+        33,
+        34,
+        46
+      ],
+      "T": [
+        8,
+        38
+      ],
+      "files": [
+        "src/backend/app/assets/routes.py",
+        "src/backend/app/assets/policy.py",
+        "src/frontend/src/AssetCatalogPage.tsx",
+        "src/frontend/src/MyAgentsPage.tsx"
+      ],
+      "api": {
+        "GET /api/v1/assets": "q,kind,tag,category,cursor",
+        "PUT /api/v1/assets/{id}/pin": "pinned:bool",
+        "POST /api/v1/assets/{id}/access-requests": "reason",
+        "POST /api/v1/admin/asset-grants": "asset_version,subject,scope,expires_at,expected_revision"
+      },
+      "data": "private/tenant/shared-approved; common자산은 소유tenant가공유한 승인version을 참조하며 별도COMMON tenant 자동생성은 하지 않음.",
+      "scope": "허용목록/상세·태그/검색·핀·평가집계. 핀≠권한; 복제는 DP-11에서 비밀/문서Grant 제외. 그룹공유는 targettenant/subject 명시·회수·만료. 부서은 DP-16 이후.",
+      "tests": [
+        "비공개이름/카운트/랭킹 노출0",
+        "핀한 자산 회수 즉시 목록/실행 차단",
+        "공유되지 않은 version 직접조회404",
+        "폐기/만료 자산 새run 차단"
+      ],
+      "done": "검색→상세→이용신청/승인→핀→실행→회수의 실제흐름과 조직격리 검증."
+    },
+    {
+      "id": "DP-11",
+      "title": "Builder·Prompt/RAG Playground·복제",
+      "group": "C",
+      "depends": [
+        "DP-07",
+        "DP-09",
+        "DP-16"
+      ],
+      "F": [
+        16,
+        22,
+        24,
+        32
+      ],
+      "T": [
+        5,
+        22,
+        23,
+        30,
+        32
+      ],
+      "files": [
+        "src/backend/app/assets/builder.py",
+        "src/backend/app/assets/evaluations.py",
+        "src/frontend/src/AgentBuilderPage.tsx",
+        "src/frontend/src/RagPlaygroundPage.tsx"
+      ],
+      "api": {
+        "POST /api/v1/assets": "kind,name",
+        "POST /api/v1/assets/{id}/versions": "expected_revision,execution_kind,prompt,approved_model_ref,rag_settings",
+        "POST /api/v1/assets/{id}/clone": "name,target_tenant",
+        "POST /api/v1/asset-versions/{id}/evaluations": "dataset_id,client_send_id"
+      },
+      "data": "draft version별 prompt/top_k/threshold/chunk settings과evaluation manifest; 모델은 승인 allowlist.",
+      "scope": "처음 기존실행유형/현재단일모델만 조합; 임의 toolkey/secret/freeURL 금지. Prompt 전체조회도capability+마스킹. RAG 비교는 평가dataset+설정snapshot+선택근거로 기록.",
+      "tests": [
+        "revision충돌409·승인version수정409",
+        "clone credentials/Grant/개인문서 참조 복사0",
+        "평가모드 비용stop/cap 적용",
+        "튜닝실행과운영index 분리"
+      ],
+      "done": "draft→설정→모의평가→비교가 재현되며 설계되지 않은 모델/노드가 실행되지 않음."
+    },
+    {
+      "id": "DP-12",
+      "title": "자산 검토·승인·활성화·설정 복귀",
+      "group": "C",
+      "depends": [
+        "DP-11",
+        "DP-17",
+        "DP-18"
+      ],
+      "F": [
+        24,
+        29,
+        31,
+        32,
+        39,
+        41
+      ],
+      "T": [
+        9,
+        18,
+        42,
+        55
+      ],
+      "files": [
+        "src/backend/app/assets/approvals.py",
+        "src/backend/app/assets/releases.py",
+        "src/frontend/src/ApprovalInboxPage.tsx",
+        "src/frontend/src/AssetReleasePage.tsx"
+      ],
+      "api": {
+        "POST /api/v1/asset-versions/{id}/submit": "expected_revision,evaluation_id",
+        "POST /api/v1/asset-versions/{id}/decisions": "approve|reject,reason,expected_revision",
+        "POST /api/v1/assets/{id}/activate": "approved_version_id,expected_revision"
+      },
+      "data": "draft→evaluated→review→approved/rejected→active→retired; 작성자≠승인자; immutable evaluation/config hash와ReleaseManifest.",
+      "scope": "승인함은 자산/과제/반입만 포함. 자기승인 금지. 활성화는 신규run부터 적용; 진행run snapshot 보존. 이전승인version 복귀와 인프라배포rollback을 구분.",
+      "tests": [
+        "작성자 승인403·반려사유 필수",
+        "승인후config/hash변조 차단",
+        "복귀해도기존run/발생비용 변경0",
+        "권한회수·중복결재·동시activation 충돌"
+      ],
+      "done": "승인→활성화→이전승인version 복귀의 감사/권한/버전 일치. 운영DB 접근은 DP-22의별도 권원 없이 허용하지 않음."
+    },
+    {
+      "id": "DP-13",
+      "title": "모델 Registry·다중모델 Gateway",
+      "group": "C",
+      "depends": [
+        "DP-09",
+        "DP-18"
+      ],
+      "F": [
+        12,
+        16,
+        32,
+        46,
+        47
+      ],
+      "T": [
+        1,
+        2,
+        3,
+        5,
+        54
+      ],
+      "files": [
+        "src/backend/app/ai/model_registry.py",
+        "src/backend/app/ai/routing.py",
+        "src/backend/app/ai/gateway.py",
+        "src/frontend/src/ModelAdminPage.tsx"
+      ],
+      "api": {
+        "ModelRef": "id,provider_key,model_name,credential_ref,pricing_version,enabled,capabilities",
+        "resolve_model(ctx,asset_version,operation)": "ApprovedModelBinding",
+        "GET /api/v1/models": "allowed metadata only"
+      },
+      "data": "현재OpenAI설정 seed1개; credential_ref 서버전용. 실제키는 DB평문/UI/trace에 넣지 않음. 모델별token가격/입력·출력상한·허용op.",
+      "scope": "모의provider2개로routing/실패/stop 검증 후 실제허용모델1개 유지. 요청별 자동fallback 기본off; dispatched/unknown 이후 다른모델 재호출 금지. Private 서빙은 DP-27.",
+      "tests": [
+        "임의모델/공급자/keypayload 차단",
+        "미승인모델목록/실행 금지",
+        "가격version snapshot/예약/unknown 정합",
+        "gateway밖provider직접호출 정적/통합 점검"
+      ],
+      "done": "모델선택이 승인binding에서만 이루어지고 현재permit/ledger·실험비용 통제가 유지됨. Mock 다중모델은 Private서빙 완료 아님."
+    },
+    {
+      "id": "DP-14",
+      "title": "사용량·운영 대시보드·CSV Export",
+      "group": "D",
+      "depends": [
+        "DP-01",
+        "DP-02"
+      ],
+      "F": [
+        27,
+        28,
+        35
+      ],
+      "T": [
+        10,
+        11,
+        41,
+        57
+      ],
+      "files": [
+        "src/backend/app/operations/routes.py",
+        "src/backend/app/operations/analytics.py",
+        "src/frontend/src/UsagePage.tsx",
+        "src/frontend/src/PlatformPage.tsx",
+        "src/frontend/src/AdminHomePage.tsx"
+      ],
+      "api": {
+        "GET /api/v1/admin/usage/series": "from,to,grain=day,mode,tenant filters",
+        "GET /api/v1/admin/usage/export": "same authorized filter; CSV",
+        "aggregate": "input/output/context tokens,known/reserved/unknown,calls,agent,latency"
+      },
+      "data": "UTC저장·표시Asia/Seoul; 기간 최대31일/1회; 동일거래중snapshot 집계. 부서dimension은 DP-16 채택 후.",
+      "scope": "기존receipt/ledger로기간별회사/사용자/Agent집계. live latency/TTFT는 actual측정 후 표시; GPU지표 DP-27전 미수집. 실제/모의 분리·추정비용/청구 별도.",
+      "tests": [
+        "합계=원장 필터합·기간경계·unknown 포함",
+        "tenant관리자는 project집계불가",
+        "CSV =,+,-,@ 시작셀 안전화",
+        "project조회와변경capability분리"
+      ],
+      "done": "화면/CSV/원장합계 일치하고 부재수집항목을0이나가상성능으로 표시하지 않음."
+    },
+    {
+      "id": "DP-15",
+      "title": "감사조회·최소 Trace·보존/출력",
+      "group": "D",
+      "depends": [
+        "DP-14"
+      ],
+      "F": [
+        28,
+        38,
+        40
+      ],
+      "T": [
+        13,
+        39,
+        40,
+        52,
+        56
+      ],
+      "files": [
+        "src/backend/app/audit/routes.py",
+        "src/backend/app/audit/policy.py",
+        "src/frontend/src/AuditPage.tsx"
+      ],
+      "api": {
+        "GET /api/v1/admin/audit-events": "request_id,action,from,to,cursor,limit<=50",
+        "audit payload": "actor,tenant,action,target_id,verdict,request/run/job/call IDs,timestamp"
+      },
+      "data": "audit.read/audit.export 명시capability; prompt/body/중간추론 제외. 원인코드/실행노드 상태만 기록. 기본개인내용조회 금지.",
+      "scope": "요청→실행/Job→call검색. 현재DB감사 append행 활용; 외부불변저장/서명은 DP-26 별도. 저장과삭제기간은 source별보존표로확정·법규준수자동주장 없음.",
+      "tests": [
+        "PADMIN이라도개인원문 미노출",
+        "직접ID·cursor타tenant접근0",
+        "감사 Export의권한/마스킹 동일",
+        "감사쓰기사고 시제품mutation rollback계약"
+      ],
+      "done": "허가된최소감사만 조회/추적/Export 가능. chain-of-thought 조회기능은 만들지 않음."
+    },
+    {
+      "id": "DP-16",
+      "title": "역할·조직·SOD·SSO 연계",
+      "group": "D",
+      "depends": [
+        "DP-01"
+      ],
+      "F": [
+        1,
+        6,
+        31,
+        33,
+        35
+      ],
+      "T": [
+        8,
+        15,
+        53,
+        55
+      ],
+      "files": [
+        "src/backend/app/auth/sso.py",
+        "src/backend/app/auth/routes.py",
+        "src/backend/app/authorization/capabilities.py",
+        "src/backend/app/tenants/routes.py",
+        "src/backend/migrations/024_roles_capabilities.sql",
+        "src/frontend/src/RoleAdminPage.tsx"
+      ],
+      "api": {
+        "GET /api/v1/auth/sso/start": "provider alias server allowlist",
+        "GET /api/v1/auth/sso/callback": "code,state",
+        "capability check": "require(ctx,capability,resource) → allow|deny",
+        "role templates": "user,agent_developer,model_operator,data_owner,tenant_operator,group_operator,security_reviewer,approver"
+      },
+      "data": "8역할을capability템플릿으로추가; 기존USER/TADMIN/PADMIN mapping seed. department/assignment valid_from/to; OIDC첫연계·mockIdP먼저, SAML/AD adapter후속.",
+      "scope": "임의claimtenant/role 수용금지; externalidentity와internalmembership mapping. state/nonce/PKCE 검증·issuer/audience/만료·logout회수. 기존로컬개발로그인 유지. SSO실제서비스없는경우 mock완료/운영연계미실행 분리.",
+      "tests": [
+        "자기승인/권한상승403",
+        "위조issuer/aud/state·재사용callback 거부",
+        "부서이동/권한회수 즉시API차단",
+        "기존3role 세션회귀/초기관리잠금 방지"
+      ],
+      "done": "8역할 capability표와SOD음성시험 통과; 실제기관SSO/AD연계는 해당sandbox 증거가 있어야 완료."
+    },
+    {
+      "id": "DP-17",
+      "title": "데이터 Scope·공유·반입 승인",
+      "group": "D",
+      "depends": [
+        "DP-05",
+        "DP-15",
+        "DP-16"
+      ],
+      "F": [
+        33,
+        34,
+        36,
+        40,
+        41,
+        43,
+        44
+      ],
+      "T": [
+        15,
+        18,
+        21,
+        25,
+        44,
+        55
+      ],
+      "files": [
+        "src/backend/app/documents/approvals.py",
+        "src/backend/app/documents/policy.py",
+        "src/backend/app/assets/data_scopes.py",
+        "src/frontend/src/DataImportReviewPage.tsx"
+      ],
+      "api": {
+        "POST /api/v1/data-imports": "source_ref,classification,target_scope",
+        "POST /api/v1/data-imports/{id}/decisions": "approve|reject,reason,expected_revision",
+        "DataScope": "tenant,subject,version_refs,purpose,expires_at"
+      },
+      "data": "수집→quarantined→scanned→review→approved→indexed; 사람검토와파일게시 상태 분리. 조직Scope/reader/공유별수용대상 고정.",
+      "scope": "기존private/org/Grant를reuse; 관리자 승인은 원문owner/권원을 자동부여하지 않음. 암호화파일은 DRM실연계전거부. 모델반입은DP-13등록검사와DP-27실서빙 반입평가 연결.",
+      "tests": [
+        "반입승인≠개인문서강제공유",
+        "승인후hash/source변경시재심사",
+        "자료삭제/Grant회수 중작업게시차단",
+        "모델/문서미검사상태 활성화차단"
+      ],
+      "done": "반입과접근권한의사람승인/검사/원문hash가일치하고 현행회수gate가모든신규화면에적용."
+    },
+    {
+      "id": "DP-18",
+      "title": "PII·콘텐츠 정책·가드레일",
+      "group": "D",
+      "depends": [
+        "DP-01"
+      ],
+      "F": [
+        8,
+        9,
+        10,
+        36,
+        37,
+        38,
+        40
+      ],
+      "T": [
+        45,
+        46,
+        47,
+        49,
+        51,
+        54
+      ],
+      "files": [
+        "src/backend/app/policies/models.py",
+        "src/backend/app/policies/engine.py",
+        "src/backend/app/policies/redaction.py",
+        "src/backend/app/ai/gateway.py",
+        "src/backend/app/documents/worker.py",
+        "src/frontend/src/PolicyAdminPage.tsx"
+      ],
+      "api": {
+        "evaluate_policy(ctx,boundary,payload,policy_version)": "PolicyDecision(action=allow|block|mask,rule_ids,redacted_payload)",
+        "boundaries": [
+          "prompt",
+          "attachment",
+          "index",
+          "retrieval",
+          "model_output",
+          "tool_input",
+          "tool_output"
+        ]
+      },
+      "data": "group최소 기준+tenant강화; policyversion/범위/시행; 합성주민/계좌/전화/이메일+금칙표+공격fixture. 중앙규칙기반 첫구현은 탐지한계 명시.",
+      "scope": "정책engine을입출력/수집/RAGgate에삽입. 강제차단payload외부송신0. 스트리밍출력검사필요 시검사전버퍼링; 입력차단은미dispatch원장동작분리. 예외는사람승인+만료·ACL/예산완화금지.",
+      "tests": [
+        "합성패턴별TP/FP/FN보고·핵심직접pattern누출0",
+        "정책오류는failclosed·미송신",
+        "다른tenant정책/예외조회차단",
+        "마스킹후인용offset/version불일치없는별도표현"
+      ],
+      "done": "정의된정책셋과통과임계값을평가보고서에기록하고 규칙탐지만으로모든PII/공격차단을주장하지않음."
+    },
+    {
+      "id": "DP-19",
+      "title": "데이터 보호·DRM/DLP·권원 adapter",
+      "group": "D",
+      "depends": [
+        "DP-16",
+        "DP-17",
+        "DP-18"
+      ],
+      "F": [
+        40,
+        41,
+        45
+      ],
+      "T": [
+        15,
+        48,
+        49,
+        50,
+        51,
+        56
+      ],
+      "files": [
+        "src/backend/app/protection/contracts.py",
+        "src/backend/app/protection/adapters.py",
+        "src/backend/app/protection/consent.py",
+        "src/frontend/src/DataProtectionPage.tsx"
+      ],
+      "api": {
+        "ProtectionAdapter": "inspect(classification),decrypt(credential_ref,consent_ref,source_ref),encrypt(export_ref)",
+        "ConsentRef": "issuer,subject,purpose,scope,expires_at,revoked_at",
+        "default unavailable": "PROTECTION_PROVIDER_UNAVAILABLE / block"
+      },
+      "data": "합성provider에서권원/expiry/회수와상태검증. 실DRM/동의/암호키는기관샌드박스연계없는동안미실행.",
+      "scope": "원문복호화는허가+동의+승인상태재확인. 캐시/임시파일/백업은분류된저장정책. 사용자/모델이복호화를직접요청/권원조작불가. 외부SDK계약/라이선스/검사근거가없는자료는미지원.",
+      "tests": [
+        "동의회수/만료직후호출차단",
+        "decrypt source/주체/purpose일치검증",
+        "trace/export/key/평문노출0",
+        "provider실패시비보호fallback금지"
+      ],
+      "done": "mock 권원흐름검증과실adapter통합증거를분리. 기관자료없이는실DRM/DLP준수완료로판정하지않음."
+    },
+    {
+      "id": "DP-20",
+      "title": "API Gateway·표준 외부 API",
+      "group": "E",
+      "depends": [
+        "DP-13",
+        "DP-16",
+        "DP-18"
+      ],
+      "F": [
+        6,
+        21,
+        43,
+        44,
+        47,
+        48,
+        49
+      ],
+      "T": [
+        4,
+        8,
+        18,
+        44,
+        54
+      ],
+      "files": [
+        "src/backend/app/api_clients/routes.py",
+        "src/backend/app/api_clients/auth.py",
+        "src/backend/app/api_clients/limits.py",
+        "src/backend/app/main.py"
+      ],
+      "api": {
+        "POST /api/v1/integration/runs": "service principal+asset_version_id+client_send_id+prompt",
+        "ApiClient": "tenant,allowed_assets,allowed_operations,credential_ref,rate_limit,quota,expires_at"
+      },
+      "data": "별도serviceprincipal; 내부session/CSRF경로와별개. tenant는검증clientbinding에서유도. 외부응답도현행에러envelope/requestID/원장.",
+      "scope": "상용GW없는애플리케이션 공통middleware+인증/한도/감사/권한contract. 기존중앙gateway통과만허용; TLS/reverseproxy는DP-26환경작업. OpenAPI명세/scope/버전/오류/read/동일send재전송지원.",
+      "tests": [
+        "client A가body/header tenant B주입실패",
+        "만료/회수client즉시차단",
+        "gateway직접우회/API경로별한도차이0",
+        "실행중재전송중복dispatch0"
+      ],
+      "done": "외부서비스 인증→조직바인딩→허가/한도→단일실행→원장/감사의통합흐름과발급/회수증거 확보."
+    },
+    {
+      "id": "DP-21",
+      "title": "읽기 Tool/MCP Gateway·Connector",
+      "group": "E",
+      "depends": [
+        "DP-12",
+        "DP-18",
+        "DP-20"
+      ],
+      "F": [
+        11,
+        21,
+        32,
+        43,
+        44,
+        48
+      ],
+      "T": [
+        16,
+        17,
+        35,
+        36,
+        39,
+        40,
+        54
+      ],
+      "files": [
+        "src/backend/app/tools/registry.py",
+        "src/backend/app/tools/gateway.py",
+        "src/backend/app/tools/credentials.py",
+        "src/backend/app/connectors/synthetic_catalog.py",
+        "src/frontend/src/ToolAdminPage.tsx"
+      ],
+      "api": {
+        "invoke_tool(ctx,asset_version,tool_version,arguments,client_operation_id)": "ToolResult(data,trace_id,source_refs)",
+        "ToolVersion": "id,operation_allowlist,arg_schema,result_schema,server_binding,credential_ref"
+      },
+      "data": "합성상품/규정readconnector1개→MCP프로토콜 adapter→OpenAPIconnector순. JDBC/WSDL/전문자동wrapping은제각각adapter시험필요.",
+      "scope": "명시등록server·operation/schema/크기/시간/egress검증; arbitraryURL/path/shell금지. user위임credential서버보관; Tool전후scope/정책/현재권한검사. Tool호출원장은모델과별타입이나동일requesttrace. 모델최종답변만중앙모델op.",
+      "tests": [
+        "allowlist밖host/operation차단",
+        "복합arguments형/길이위반차단",
+        "작업ID동일재전송은한번실행",
+        "중간회수/timeout/실패 secret노출0"
+      ],
+      "done": "syntheticread→검증결과→근거→trace가동작. 실제MCP서버/레거시연계는adapter별fixture로판정."
+    },
+    {
+      "id": "DP-22",
+      "title": "RDB/NAS·데이터 가상화·망연계",
+      "group": "E",
+      "depends": [
+        "DP-17",
+        "DP-19",
+        "DP-21"
+      ],
+      "F": [
+        21,
+        41,
+        43,
+        44,
+        45,
+        48
+      ],
+      "T": [
+        14,
+        15,
+        16,
+        17,
+        18,
+        21,
+        50,
+        56
+      ],
+      "files": [
+        "src/backend/app/connectors/relational_views.py",
+        "src/backend/app/connectors/file_source.py",
+        "src/backend/app/connectors/routing.py"
+      ],
+      "api": {
+        "read_view(ctx,approved_view_id,filters,cursor)": "bounded rows,masked schema,lineage",
+        "ingest_source(ctx,connector_version,source_ref)": "import_id",
+        "EnvironmentBinding": "draft→synthetic/test; approved+권원→production"
+      },
+      "data": "미리승인된parameterizedquery/readview만; maxrows100·허용컬럼·timeout고정. 자유SQL/NL-to-SQL제외. NAS검사/원문hash/변경분처리.",
+      "scope": "합성DB/readview와샌드박스파일소스로먼저검증. 운영망는승인manifest·주체·권원·서버binding검사; 인터넷URL임의연결불가. 검사안된자료는index금지.",
+      "tests": [
+        "SQL문문자열/미허용필터거부",
+        "draft의productionbinding차단",
+        "조회row/column/tenantbounded",
+        "NASsource교체/중복/중간실패manifest정합"
+      ],
+      "done": "가상화view·원천lineage·routing·권원/감사증거가연결. 기관망/실DB자료없이는생산연계완료아님."
+    },
+    {
+      "id": "DP-23",
+      "title": "Workflow 모델·실행엔진·Canvas",
+      "group": "E",
+      "depends": [
+        "DP-12",
+        "DP-21"
+      ],
+      "F": [
+        4,
+        22,
+        24,
+        32,
+        39,
+        49
+      ],
+      "T": [
+        33,
+        35,
+        36,
+        39,
+        40,
+        42
+      ],
+      "files": [
+        "src/backend/app/workflows/models.py",
+        "src/backend/app/workflows/runner.py",
+        "src/backend/app/workflows/checkpoints.py",
+        "src/frontend/src/WorkflowCanvasPage.tsx"
+      ],
+      "api": {
+        "WorkflowVersion": "id,revision,nodes,edges,max_steps,max_cost,max_seconds,config_hash",
+        "node types": [
+          "input",
+          "llm",
+          "read_tool",
+          "validate",
+          "output"
+        ],
+        "NodeResult": "state,attempt_id,output_ref,error_code,checkpoint_revision"
+      },
+      "data": "첫버전DAG/선형·노드max20·실행stepmax20·루프금지; 입출력JSONschema·checkpoint/취소·trace.",
+      "scope": "실행engine 먼저→저장/검증→Canvas. 재시작은미dispatch단계만재개; 불확실Tool결과는수동검토/중지. 쓰기Tool/외부sideeffect는첫범위제외.후속Saga보상은작업별contract후추가.",
+      "tests": [
+        "순환graph/unknownnode/shape오류거부",
+        "중간cancel/회수즉시다음node중지",
+        "crash재시작시중복model/tooldispatch0",
+        "Canvas저장 version과실행hash일치"
+      ],
+      "done": "그림→검증→승인version실행→노드trace→취소/재시작흐름증명. 자연어Workflow생성T034는제외유지."
+    },
+    {
+      "id": "DP-24",
+      "title": "업무 Agent 10종 단계별 평가",
+      "group": "E",
+      "depends": [
+        "DP-07",
+        "DP-10",
+        "DP-12",
+        "DP-22"
+      ],
+      "F": [
+        12,
+        19,
+        22,
+        26,
+        32
+      ],
+      "T": [
+        37,
+        43
+      ],
+      "files": [
+        "src/backend/app/use_cases/catalog.py",
+        "src/backend/tests/data/agent_acceptance_cases.json",
+        "src/frontend/src/UseCaseWorkspacePage.tsx"
+      ],
+      "api": {
+        "UseCaseManifest": "use_case_id,approved_asset_version,dataset_version,required_connectors,role_scope,acceptance_evidence",
+        "case verdict": "supported|insufficient|unsupported"
+      },
+      "data": "규정책무/그룹웨어문서/회의/문서작성/고객민원마케팅/광고심의/지식상품/여신/외환/단말내비10종. 각종정상2·근거부족1·권한거부2·회수1 최소6case.",
+      "scope": "규정/문서/회의부터실행유형연결. 그외합성문서+읽기connector로시연; 금융판정은보조초안/원문근거로표시.현업자료·업무API없는종류는미실행을표시. 각종별작업표가별도reviewgate.",
+      "tests": [
+        "각종별원문숫자/규칙일치",
+        "고객/여신/외환결정자동확정금지",
+        "10종최소60case 결과개별기록",
+        "모의60개통과와실제현업수용분리"
+      ],
+      "done": "각Agent별지원범위/실연계/평가근거분리. 종류등록만으로10업무구현완료판정하지않음."
+    },
+    {
+      "id": "DP-25",
+      "title": "공지·CMS·커뮤니티·과제·알림",
+      "group": "F",
+      "depends": [
+        "DP-02",
+        "DP-04",
+        "DP-12",
+        "DP-16"
+      ],
+      "F": [
+        3,
+        7,
+        17,
+        25,
+        27,
+        29,
+        42
+      ],
+      "T": [
+        12,
+        52
+      ],
+      "files": [
+        "src/backend/app/content/routes.py",
+        "src/backend/app/projects/routes.py",
+        "src/backend/app/notifications/routes.py",
+        "src/frontend/src/ContentAdminPage.tsx",
+        "src/frontend/src/ProjectPage.tsx"
+      ],
+      "api": {
+        "Content": "id,tenant,scope,state(draft|published|archived),revision,publish_at",
+        "Project": "id,tenant,owner,state(submitted|approved|running|closed),asset_refs,budget_ref",
+        "Notification": "recipient,tenant,event,target_id,read_at"
+      },
+      "data": "게시글/댓글/도움말/첨부·예약게시; 과제예산은projectbudget을재사용하고이중별도정산금지.",
+      "scope": "XSS방지본문render와게시권한·노출조직; 댓글/첨부도ACL·검사. 과제제출/사람결재/진행/종료·산출물/사용량연결.제품내알림만구현하며외부메일/메신저자동발송없음. 거버넌스위험/연간의무과제제외.",
+      "tests": [
+        "미게시/다른tenant콘텐츠누출0",
+        "예약시각·편집revision·폐기후알림target차단",
+        "자기결재/SOD차단",
+        "종료과제새사용과기존비용보존"
+      ],
+      "done": "공지/업무안내→과제신청→결재→실행/비용→종료가연결되고개인대화내용은공유되지않음."
+    },
+    {
+      "id": "DP-26",
+      "title": "환경 배포·백업 복원·관제·확장",
+      "group": "F",
+      "depends": [
+        "DP-14",
+        "DP-15",
+        "DP-20"
+      ],
+      "F": [
+        5,
+        28,
+        35,
+        39,
+        43,
+        44,
+        47,
+        49
+      ],
+      "T": [
+        11,
+        44,
+        52,
+        58,
+        59,
+        60,
+        61
+      ],
+      "files": [
+        "ops/environment-manifest.json",
+        "ops/runbooks/deploy.md",
+        "ops/runbooks/backup-restore.md",
+        "ops/runbooks/incident.md",
+        "src/backend/scripts/restore_check.py"
+      ],
+      "api": {
+        "EnvironmentManifest": "revision,code_hash,schema_version,config_refs,approved_release_id",
+        "health": "liveness,readiness,queue_lag,storage,latency,error_rate",
+        "restore proof": "new_db,source_backup_hash,table_counts,ledger_totals,acl_cases"
+      },
+      "data": "개발/시험/운영configuration·secret분리. 먼저로컬새DBrestore/새환경재현; stage/HA/K8s는구성file과실설치별증거필요.",
+      "scope": "TLS/proxy/환경릴리스·backup보존·별도DBrestore·런북·중지/복귀.10개합성tenant프로비저닝후교차/캐시/queue/key분리점검. sharedlogical환경완료와Cell/K8s/HA완료를분리. 사용자/관리자 별build는운영경계요구후결정.",
+      "tests": [
+        "동일DB재시작을restore통과로처리금지",
+        "10tenant병렬이름/원문/비용/secret교차0",
+        "backup→새DB hash/원장/권한회귀",
+        "관측없는metric은unknown;failover성능실측"
+      ],
+      "done": "새환경설치/restore/10논리tenant 증거. Cell·HA·DR성능은실운영환경없으면미실행·조건부보존."
+    },
+    {
+      "id": "DP-27",
+      "title": "조건부 Private 서빙·GPU 관리",
+      "group": "F",
+      "depends": [
+        "DP-13",
+        "DP-26"
+      ],
+      "F": [
+        28,
+        30,
+        32,
+        41,
+        47
+      ],
+      "T": [
+        1,
+        2,
+        3,
+        6,
+        7,
+        11,
+        58,
+        59,
+        60
+      ],
+      "files": [
+        "src/backend/app/ai/private_provider.py",
+        "src/backend/app/resources/routes.py",
+        "src/frontend/src/ResourceAdminPage.tsx",
+        "ops/runbooks/private-serving.md"
+      ],
+      "api": {
+        "PrivateBinding": "model_version,endpoint_binding,credential_ref,health,quota",
+        "ResourceSample": "timestamp,node,gpu,cpu,memory,storage,source",
+        "Allocation": "tenant,model,limits,revision"
+      },
+      "data": "현재기기/GPU/모델라이선스/사용필요자료확보가진입조건. 선택할오픈서빙framework는실환경compat측정후확정.",
+      "scope": "Privateprovider등록·반입검사·중앙GW연결·CPU/GPU지표수집·할당/회수·가용성/간섭시험. MIG/vGPU/오토스케일은해당하드웨어에서검증하는하위작업; 공급자API사용량으로대체하지않음.",
+      "tests": [
+        "model/license/secret범위검증",
+        "GPU할당회수/초과/tenant간간섭실측",
+        "healthfail시unapprovedfallback금지",
+        "모델별TTFT/latency/error/원장비교"
+      ],
+      "done": "자체서빙과자원할당실측근거있을때만완료. 개인MVP의필수선행으로두지않음."
+    },
+    {
+      "id": "DP-28",
+      "title": "통합시험·파일럿·이행·인계",
+      "group": "G",
+      "depends": [
+        "DP-02",
+        "DP-03",
+        "DP-04",
+        "DP-05",
+        "DP-07",
+        "DP-09",
+        "DP-10",
+        "DP-14",
+        "DP-15",
+        "DP-18"
+      ],
+      "F": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49
+      ],
+      "T": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9,
+        10,
+        11,
+        12,
+        13,
+        14,
+        15,
+        16,
+        17,
+        18,
+        19,
+        20,
+        21,
+        22,
+        23,
+        24,
+        25,
+        26,
+        27,
+        28,
+        29,
+        30,
+        31,
+        32,
+        33,
+        34,
+        35,
+        36,
+        37,
+        38,
+        39,
+        40,
+        41,
+        42,
+        43,
+        44,
+        45,
+        46,
+        47,
+        48,
+        49,
+        50,
+        51,
+        52,
+        53,
+        54,
+        55,
+        56,
+        57,
+        58,
+        59,
+        60,
+        61,
+        62
+      ],
+      "files": [
+        "docs/Obsidain/200.프로젝트실행/280.통합시스템테스트/비거버넌스 통합검증 결과.md",
+        "docs/Obsidain/200.프로젝트실행/270.파일럿적용/사용자 시나리오 수용 결과.md",
+        "docs/Obsidain/200.프로젝트실행/290.이행/릴리스와 운영 인계.md",
+        "docs/Obsidain/300.프로젝트종료/비거버넌스 완료와 잔여 범위.md"
+      ],
+      "api": {
+        "evidence": "requirement_id,task_id,case_id,code_hash,mode,environment,verdict,output_hash",
+        "verdict": [
+          "pass",
+          "fail",
+          "not_run",
+          "blocked",
+          "excluded"
+        ]
+      },
+      "data": "묶음릴리스별부분수용. DP-06/08/11~13/16~17/19~27은해당묶음이준비될때검증추가; 누락기능은미실행으로남김.",
+      "scope": "A/B3주체음성시험·10tenant/사용자흐름·migration/restore/권한회수/비용한도/중복SSE회귀. 모의먼저, 실제호출은허용한도/사례확정후최소대표질문만. 성능목표는실행장비/동시부하/샘플/분위수계약후측정.",
+      "tests": [
+        "요구별증거없음pass금지",
+        "기존not_run미해결보존",
+        "화면직접수용·서버거부일치",
+        "배포후데이터/secret/비용누출0"
+      ],
+      "done": "수용한범위는요구별시험증거가있고미실행·조건부·원본제외는잔여표로인계. 이번계획작성은구현완료를의미하지않음."
+    }
+  ],
+  "function_mapping": {
+    "1": [
+      "DP-02",
+      "DP-16"
+    ],
+    "2": [
+      "DP-02"
+    ],
+    "3": [
+      "DP-02",
+      "DP-25"
+    ],
+    "4": [
+      "DP-09",
+      "DP-10",
+      "DP-23"
+    ],
+    "5": [
+      "DP-26"
+    ],
+    "6": [
+      "DP-16",
+      "DP-20"
+    ],
+    "7": [
+      "DP-02",
+      "DP-25"
+    ],
+    "8": [
+      "DP-18"
+    ],
+    "9": [
+      "DP-18"
+    ],
+    "10": [
+      "DP-18"
+    ],
+    "11": [
+      "DP-21"
+    ],
+    "12": [
+      "DP-02",
+      "DP-03",
+      "DP-07",
+      "DP-08",
+      "DP-13",
+      "DP-24"
+    ],
+    "13": [
+      "DP-04"
+    ],
+    "14": [
+      "DP-05",
+      "DP-06",
+      "DP-07"
+    ],
+    "15": [
+      "DP-05",
+      "DP-06",
+      "DP-07"
+    ],
+    "16": [
+      "DP-11",
+      "DP-13"
+    ],
+    "17": [
+      "DP-02",
+      "DP-03",
+      "DP-08",
+      "DP-10",
+      "DP-25"
+    ],
+    "18": [
+      "DP-07"
+    ],
+    "19": [
+      "DP-09",
+      "DP-10",
+      "DP-24"
+    ],
+    "20": [
+      "DP-08",
+      "DP-09",
+      "DP-10"
+    ],
+    "21": [
+      "DP-20",
+      "DP-21",
+      "DP-22"
+    ],
+    "22": [
+      "DP-09",
+      "DP-10",
+      "DP-11",
+      "DP-23",
+      "DP-24"
+    ],
+    "23": [
+      "DP-10"
+    ],
+    "24": [
+      "DP-09",
+      "DP-11",
+      "DP-12",
+      "DP-23"
+    ],
+    "25": [
+      "DP-25"
+    ],
+    "26": [
+      "DP-04",
+      "DP-24"
+    ],
+    "27": [
+      "DP-02",
+      "DP-14",
+      "DP-25"
+    ],
+    "28": [
+      "DP-14",
+      "DP-15",
+      "DP-26",
+      "DP-27"
+    ],
+    "29": [
+      "DP-12",
+      "DP-25"
+    ],
+    "30": [
+      "DP-27"
+    ],
+    "31": [
+      "DP-12",
+      "DP-16"
+    ],
+    "32": [
+      "DP-09",
+      "DP-11",
+      "DP-12",
+      "DP-13",
+      "DP-21",
+      "DP-23",
+      "DP-24",
+      "DP-27"
+    ],
+    "33": [
+      "DP-10",
+      "DP-16",
+      "DP-17"
+    ],
+    "34": [
+      "DP-09",
+      "DP-10",
+      "DP-17"
+    ],
+    "35": [
+      "DP-14",
+      "DP-16",
+      "DP-26"
+    ],
+    "36": [
+      "DP-17",
+      "DP-18"
+    ],
+    "37": [
+      "DP-18"
+    ],
+    "38": [
+      "DP-15",
+      "DP-18"
+    ],
+    "39": [
+      "DP-12",
+      "DP-23",
+      "DP-26"
+    ],
+    "40": [
+      "DP-15",
+      "DP-17",
+      "DP-18",
+      "DP-19"
+    ],
+    "41": [
+      "DP-06",
+      "DP-12",
+      "DP-17",
+      "DP-19",
+      "DP-22",
+      "DP-27"
+    ],
+    "42": [
+      "DP-25"
+    ],
+    "43": [
+      "DP-17",
+      "DP-20",
+      "DP-21",
+      "DP-22",
+      "DP-26"
+    ],
+    "44": [
+      "DP-17",
+      "DP-20",
+      "DP-21",
+      "DP-22",
+      "DP-26"
+    ],
+    "45": [
+      "DP-19",
+      "DP-22"
+    ],
+    "46": [
+      "DP-09",
+      "DP-10",
+      "DP-13"
+    ],
+    "47": [
+      "DP-09",
+      "DP-13",
+      "DP-20",
+      "DP-26",
+      "DP-27"
+    ],
+    "48": [
+      "DP-20",
+      "DP-21",
+      "DP-22"
+    ],
+    "49": [
+      "DP-09",
+      "DP-20",
+      "DP-23",
+      "DP-26"
+    ]
+  },
+  "technical_mapping": {
+    "1": [
+      "DP-13",
+      "DP-27"
+    ],
+    "2": [
+      "DP-13",
+      "DP-27"
+    ],
+    "3": [
+      "DP-13",
+      "DP-27"
+    ],
+    "4": [
+      "DP-20"
+    ],
+    "5": [
+      "DP-11",
+      "DP-13"
+    ],
+    "6": [
+      "DP-27"
+    ],
+    "7": [
+      "DP-27"
+    ],
+    "8": [
+      "DP-10",
+      "DP-16",
+      "DP-20"
+    ],
+    "9": [
+      "DP-12"
+    ],
+    "10": [
+      "DP-14"
+    ],
+    "11": [
+      "DP-14",
+      "DP-26",
+      "DP-27"
+    ],
+    "12": [
+      "DP-04",
+      "DP-25"
+    ],
+    "13": [
+      "DP-03",
+      "DP-15"
+    ],
+    "14": [
+      "DP-22"
+    ],
+    "15": [
+      "DP-16",
+      "DP-17",
+      "DP-19",
+      "DP-22"
+    ],
+    "16": [
+      "DP-21",
+      "DP-22"
+    ],
+    "17": [
+      "DP-21",
+      "DP-22"
+    ],
+    "18": [
+      "DP-12",
+      "DP-17",
+      "DP-20",
+      "DP-22"
+    ],
+    "19": [],
+    "20": [],
+    "21": [
+      "DP-06",
+      "DP-17",
+      "DP-22"
+    ],
+    "22": [
+      "DP-07",
+      "DP-09",
+      "DP-11"
+    ],
+    "23": [
+      "DP-06",
+      "DP-11"
+    ],
+    "24": [
+      "DP-06",
+      "DP-07"
+    ],
+    "25": [
+      "DP-05",
+      "DP-17"
+    ],
+    "26": [
+      "DP-05"
+    ],
+    "27": [
+      "DP-07",
+      "DP-08"
+    ],
+    "28": [
+      "DP-07"
+    ],
+    "29": [],
+    "30": [
+      "DP-11"
+    ],
+    "31": [
+      "DP-06"
+    ],
+    "32": [
+      "DP-09",
+      "DP-11"
+    ],
+    "33": [
+      "DP-23"
+    ],
+    "34": [],
+    "35": [
+      "DP-21",
+      "DP-23"
+    ],
+    "36": [
+      "DP-21",
+      "DP-23"
+    ],
+    "37": [
+      "DP-08",
+      "DP-24"
+    ],
+    "38": [
+      "DP-09",
+      "DP-10"
+    ],
+    "39": [
+      "DP-15",
+      "DP-21",
+      "DP-23"
+    ],
+    "40": [
+      "DP-15",
+      "DP-21",
+      "DP-23"
+    ],
+    "41": [
+      "DP-14"
+    ],
+    "42": [
+      "DP-09",
+      "DP-12",
+      "DP-23"
+    ],
+    "43": [
+      "DP-24"
+    ],
+    "44": [
+      "DP-17",
+      "DP-20",
+      "DP-26"
+    ],
+    "45": [
+      "DP-18"
+    ],
+    "46": [
+      "DP-18"
+    ],
+    "47": [
+      "DP-06",
+      "DP-18"
+    ],
+    "48": [
+      "DP-19"
+    ],
+    "49": [
+      "DP-18",
+      "DP-19"
+    ],
+    "50": [
+      "DP-19",
+      "DP-22"
+    ],
+    "51": [
+      "DP-18",
+      "DP-19"
+    ],
+    "52": [
+      "DP-15",
+      "DP-25",
+      "DP-26"
+    ],
+    "53": [
+      "DP-16"
+    ],
+    "54": [
+      "DP-13",
+      "DP-18",
+      "DP-20",
+      "DP-21"
+    ],
+    "55": [
+      "DP-12",
+      "DP-16",
+      "DP-17"
+    ],
+    "56": [
+      "DP-15",
+      "DP-19",
+      "DP-22"
+    ],
+    "57": [
+      "DP-14"
+    ],
+    "58": [
+      "DP-26",
+      "DP-27"
+    ],
+    "59": [
+      "DP-26",
+      "DP-27"
+    ],
+    "60": [
+      "DP-26",
+      "DP-27"
+    ],
+    "61": [
+      "DP-02",
+      "DP-26"
+    ],
+    "62": []
+  },
+  "files": [
+    "docs/Obsidain/100.프로젝트계획/10 비거버넌스 AI 플랫폼 상세 개발 계획서.md",
+    "docs/Obsidain/200.프로젝트실행/240.설계/비거버넌스 확장 개발 계획/01 범위와 기준선 개발 계획.md",
+    "docs/Obsidain/200.프로젝트실행/240.설계/비거버넌스 확장 개발 계획/02 사용자 포털 상세 개발 계획.md",
+    "docs/Obsidain/200.프로젝트실행/240.설계/비거버넌스 확장 개발 계획/03 자산 Agent Builder 상세 개발 계획.md",
+    "docs/Obsidain/200.프로젝트실행/240.설계/비거버넌스 확장 개발 계획/04 관리자 보안 상세 개발 계획.md",
+    "docs/Obsidain/200.프로젝트실행/240.설계/비거버넌스 확장 개발 계획/05 Gateway Tool 업무 Agent 상세 개발 계획.md",
+    "docs/Obsidain/200.프로젝트실행/240.설계/비거버넌스 확장 개발 계획/06 콘텐츠 운영 환경 상세 개발 계획.md",
+    "docs/Obsidain/200.프로젝트실행/240.설계/비거버넌스 확장 개발 계획/07 통합 검증 이행 상세 개발 계획.md",
+    "docs/Obsidain/200.프로젝트실행/220.요구정의/비거버넌스 확장 개발 요구 추적표.md",
+    "docs/Obsidain/200.프로젝트실행/220.요구정의/15 DP-07 문서 요약 1차 수용 기준.md",
+    "docs/Obsidain/200.프로젝트실행/230.분석/08 DP-07 문서 요약 변경 영향 분석.md",
+    "docs/Obsidain/200.프로젝트실행/240.설계/21 DP-07 문서 요약 1차 상세 설계.md",
+    "docs/Obsidain/400.프로젝트관리/비거버넌스 확장 변경요청.md",
+    "docs/Obsidain/200.프로젝트실행/250.구현/15 DP-07 문서 요약 구현 결과.md",
+    "docs/Obsidain/200.프로젝트실행/260.모듈테스트/08 DP-07 문서 요약 모듈 시험 결과.md",
+    "docs/Obsidain/200.프로젝트실행/280.통합시스템테스트/21 DP-07 문서 요약 검증 및 후속 작업.md",
+    "docs/Obsidain/200.프로젝트실행/240.설계/22 DP-07 문서 요약 구현 실행 계획.md",
+    "docs/Obsidain/200.프로젝트실행/280.통합시스템테스트/evidence/DP07-summary/verification.json",
+    "docs/Obsidain/200.프로젝트실행/280.통합시스템테스트/evidence/DP07-summary/README.md"
+  ],
+  "summary": {
+    "tasks": 28,
+    "subplans": 7,
+    "F_included": 49,
+    "IA_included": 115,
+    "T_traced": 62,
+    "original_excluded_T": [
+      19,
+      20,
+      29,
+      34,
+      62
+    ]
+  },
+  "task_statuses": {
+    "DP-01": "baseline_defined/complete; product_acceptance_not_run",
+    "DP-02": "planned/not_started",
+    "DP-03": "implemented/verified_mock; direct_user_acceptance_pending",
+    "DP-04": "implemented/verified_mock; direct_user_acceptance_pending",
+    "DP-05": "implemented/verified_mock (TXT/Markdown owner-private); direct_user_acceptance_pending",
+    "DP-06": "partial/verified_mock (minimum intake, text PDF, restricted DOCX/XLSX); PPTX/OCR deferred_by_user 2026-10-07",
+    "DP-07": "partial/verified_mock (single-version extractive summary, regeneration, Markdown); translation/rewrite/PDF/multi-document/management UI pending; user acceptance pending",
+    "DP-08": "planned/not_started",
+    "DP-09": "planned/not_started",
+    "DP-10": "planned/not_started",
+    "DP-11": "planned/not_started",
+    "DP-12": "planned/not_started",
+    "DP-13": "planned/not_started",
+    "DP-14": "planned/not_started",
+    "DP-15": "planned/not_started",
+    "DP-16": "planned/not_started",
+    "DP-17": "planned/not_started",
+    "DP-18": "partial/verified_mock (document-ingest-v1 + summary minimum policy); general input/output/tool/policy admin pending",
+    "DP-19": "planned/not_started",
+    "DP-20": "planned/not_started",
+    "DP-21": "planned/not_started",
+    "DP-22": "planned/not_started",
+    "DP-23": "planned/not_started",
+    "DP-24": "planned/not_started",
+    "DP-25": "planned/not_started",
+    "DP-26": "planned/not_started",
+    "DP-27": "planned/not_started",
+    "DP-28": "planned/not_started"
+  },
+  "document_sha256": "bda9c9878113b29a444c208cbd54eb362f27ffb982112e3c989503d40deb5ce8",
+  "task_evidence": {
+    "DP-01": "docs/Obsidain/200.프로젝트실행/220.요구정의/evidence/DP01-non-governance-baseline/completion.json",
+    "DP-03": "docs/Obsidain/200.프로젝트실행/280.통합시스템테스트/evidence/DP03-history-management/verification.json",
+    "DP-04": "docs/Obsidain/200.프로젝트실행/280.통합시스템테스트/evidence/DP04-response-feedback/verification.json",
+    "DP-05": "docs/Obsidain/200.프로젝트실행/280.통합시스템테스트/evidence/DP05-personal-documents/verification.json",
+    "DP-06": "docs/Obsidain/200.프로젝트실행/280.통합시스템테스트/evidence/DP06-xlsx/verification.json",
+    "DP-18": "docs/Obsidain/200.프로젝트실행/280.통합시스템테스트/evidence/DP06-text-pdf/verification.json",
+    "DP-07": "docs/Obsidain/200.프로젝트실행/280.통합시스템테스트/evidence/DP07-summary/verification.json"
+  },
+  "scope_changes": [
+    {
+      "id": "CR-001",
+      "date": "2026-10-07",
+      "requested_by": "user",
+      "decision": "PPTX/OCR deferred; DP-07 next; DP-18 summary-specific minimum policy prerequisite",
+      "record": "docs/Obsidain/400.프로젝트관리/비거버넌스 확장 변경요청.md"
+    }
+  ]
+}

@@ -1,0 +1,17 @@
+
+> ai-platform-portal@0.1.0 build:user
+> tsc --noEmit && vite build --mode user && node scripts/verify-portal-builds.mjs user
+
+vite v8.3.2 building client environment for user...
+transforming...
+✓ 48 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/user/.vite/manifest.json          0.21 kB │ gzip:   0.15 kB
+dist/user/apps/user-web/index.html     0.39 kB │ gzip:   0.31 kB
+dist/user/portal-build.json            0.98 kB │ gzip:   0.34 kB
+dist/user/assets/index-CWP8tx5W.css   48.15 kB │ gzip:   9.86 kB
+dist/user/assets/index-CISEu6P_.js   358.74 kB │ gzip: 104.58 kB
+
+✓ built in 237ms
+{"status":"passed","sites":{"user":{"modules":28,"boundary_verified":true}}}

@@ -1,0 +1,17 @@
+{
+  "status": "passed",
+  "backup_private": true,
+  "backup_sha256": "80ff2042e75f3428614818a56c67cd4da97fffe13b87935c2fc4ea6c59e8c29c",
+  "prior_tables": 42,
+  "current_tables": 43,
+  "prior_rows_preserved": true,
+  "prior_checksums_preserved": 32,
+  "new_migration": "032_builder_trials.sql",
+  "current_migrations": 33,
+  "security_functions": 123,
+  "new_tables_empty": true,
+  "rerun_unchanged": true,
+  "primary_seed_reset": false,
+  "primary_assets_runs_policy_mutations": 0,
+  "primary_paid_calls": 0
+}

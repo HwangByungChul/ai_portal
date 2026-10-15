@@ -1,0 +1,3 @@
+﻿run_id,original_run_id,usage_id,party_id,original_krw,corrected_krw,adjustment_krw,mode
+RUN002,RUN001,U001,P001,6000,5000,-1000,PRE_PAYMENT_ADJUSTMENT
+RUN002,RUN001,U001,P002,4000,5000,1000,PRE_PAYMENT_ADJUSTMENT

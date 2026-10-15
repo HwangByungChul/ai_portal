@@ -1,0 +1,21 @@
+{
+  "status": "passed",
+  "backup_private": true,
+  "backup_sha256": "076497c7c2430c6ef1f23a60560fa25da512c5c89807fb660246995213053947",
+  "prior_tables": 50,
+  "current_tables": 51,
+  "prior_rows_existing_columns_preserved": true,
+  "added_default_metadata_columns": 2,
+  "prior_checksums_preserved": 38,
+  "new_migrations": [
+    "038_asset_rollback_history.sql"
+  ],
+  "current_migrations": 39,
+  "security_functions": 140,
+  "event_backfill_rows": 0,
+  "event_backfill_matches_prior_records": true,
+  "rerun_unchanged": true,
+  "primary_seed_reset": false,
+  "primary_assets_runs_policy_mutations": 0,
+  "primary_paid_calls": 0
+}

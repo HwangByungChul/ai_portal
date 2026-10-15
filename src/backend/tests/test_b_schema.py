@@ -21,7 +21,7 @@ def b_rows(db_fixture):
             tenant, actor = key.split(':'); run = uuid4(); runs[key] = run
             conn.execute("INSERT INTO portal.runs(tenant_id,run_id,conversation_id,owner_user_id,client_send_id,"
                 "request_hash,agent_key,config_snapshot,origin_session_id,execution_mode,state,stage,answer_kind,ended_at) "
-                "VALUES(%s,%s,%s,%s,%s,%s,'general','{}',%s,'mock','completed','terminal','answer',clock_timestamp())",
+                "VALUES(%s,%s,%s,%s,%s,%s,'general','{\"agent_key\":\"general\",\"config_version\":1}',%s,'mock','completed','terminal','answer',clock_timestamp())",
                 (f.tenant_ids[tenant],run,cid,f.actor_ids[actor],uuid4(),bytes(32),f.state.session_ids[actor]))
             for seq, role, kind in [(1,'user','user'),(2,'assistant','general_assistant')]:
                 conn.execute('INSERT INTO portal.messages(tenant_id,message_id,conversation_id,owner_user_id,agent_key,'
@@ -40,7 +40,7 @@ def insert_run(f, *, tenant='A', owner='A-U1', conversation=None, session=None, 
         conn.execute('INSERT INTO portal.runs(tenant_id,run_id,conversation_id,owner_user_id,client_send_id,'
             'request_hash,agent_key,config_snapshot,origin_session_id,execution_mode) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)',
             (f.tenant_ids[tenant],run,conversation or f.conversation_ids['A:A-U1'],f.actor_ids[owner],
-             uuid4(),bytes(32),agent,Jsonb({}),session or f.state.session_ids[owner],mode))
+             uuid4(),bytes(32),agent,Jsonb({'agent_key':agent,'config_version':1}),session or f.state.session_ids[owner],mode))
     return run
 
 

@@ -86,19 +86,7 @@ async def read(request,kind,*,agent=None,period=None,cursor=None,limit=20):
     if period.day!=1:raise AppError('REQUEST_INVALID',422)
     digest=window_digest(settings.login_hmac_secret.get_secret_value(),'http_read','principal',str(ctx.user_id)+':'+(str(ctx.tenant_id) if ctx.tenant_id else 'platform'))
     data=await OperationsRepository(request.app.state.pool).read(ctx,kind,period,settings.mode,digest,agent,cursor,limit)
-    manager=getattr(request.app.state,'execution',None)
-    if kind=='agents' and manager is not None:
-        from app.ai.repository import ExecutionError
-        try:readiness=await manager.repository.readiness(ctx,settings.mode)
-        except ExecutionError:raise AppError('STORAGE_UNAVAILABLE',503) from None
-        if manager.gateway.stop_latch:readiness={'available':False,'safe_block_reason':'PROJECT_STOPPED'}
-        for item in data['items']:
-            if item['agent_key']=='general':item.update(readiness)
-            elif item['agent_key']=='rules_rag' and getattr(manager,'rag',None) is not None:
-                try:rag_ready=await manager.repository._rpc(manager.repository.web_pool,'rag_readiness',(ctx.session_id,ctx.tenant_id,settings.budget_period,settings.mode),ctx)
-                except ExecutionError:raise AppError('STORAGE_UNAVAILABLE',503) from None
-                if manager.gateway.stop_latch or manager.rag.query.stop_latch:rag_ready={'available':False,'safe_block_reason':'PROJECT_STOPPED'}
-                item.update(rag_ready)
+    if kind=='agents':await apply_agent_readiness(request,ctx,data)
     return response(request,data)
 
 
@@ -145,3 +133,21 @@ async def platform_availability(request:Request,body:AvailabilityRequest):return
 
 @router.put('/platform/tenant-budgets/{tenant_id}')
 async def allocation(request:Request,tenant_id:UUID,body:AllocationRequest):return await mutate(request,'allocated_budget',body,target=tenant_id)
+
+
+async def apply_agent_readiness(request,ctx,data):
+    settings=request.app.state.settings
+    manager=getattr(request.app.state,'execution',None)
+    if manager is not None:
+        from app.ai.repository import ExecutionError
+        try:readiness=await manager.repository.readiness(ctx,settings.mode)
+        except ExecutionError:raise AppError('STORAGE_UNAVAILABLE',503) from None
+        if manager.gateway.stop_latch:readiness={'available':False,'safe_block_reason':'PROJECT_STOPPED'}
+        for item in data['items']:
+            if item['agent_key']=='general':item.update(readiness)
+            elif item['agent_key']=='rules_rag' and getattr(manager,'rag',None) is not None:
+                try:rag_ready=await manager.repository._rpc(manager.repository.web_pool,'rag_readiness',(ctx.session_id,ctx.tenant_id,settings.budget_period,settings.mode),ctx)
+                except ExecutionError:raise AppError('STORAGE_UNAVAILABLE',503) from None
+                if manager.gateway.stop_latch or manager.rag.query.stop_latch:rag_ready={'available':False,'safe_block_reason':'PROJECT_STOPPED'}
+                item.update(rag_ready)
+    return data

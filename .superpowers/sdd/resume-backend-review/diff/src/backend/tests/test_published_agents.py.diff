@@ -1,0 +1,26 @@
+--- pre/src/backend/tests/test_published_agents.py
++++ post/src/backend/tests/test_published_agents.py
+@@ -103,3 +103,23 @@
+                 assert events>=2
+     f.run(check())
+ 
++
++def test_published_run_http_publication_revision_contract(client,login,ops_rows):
++    from test_operations import headers
++    f=ops_rows
++    async def prepare():
++        async with open_meter_pool(f.db.runtime_dsn('ai_meter')) as meter:
++            return await publish(f,CallRepository(f.pool,meter,date(2026,10,1)))
++    owner,saved,b,d=f.run(prepare());csrf=login(client,'A-U1')['csrf_token'];h=headers(f,csrf=csrf)
++    path='/api/v1/published-agents/'+saved['asset_id']+'/runs'
++    body={'version_id':saved['version_id'],'client_send_id':str(uuid4()),'values':{'audience':'담당','rule':'기준','question':'질문'},'expected_publication_revision':1}
++    for revision in [None,True,'1',1.5,-1,9223372036854775807]:
++        invalid=body.copy()
++        if revision is None:invalid.pop('expected_publication_revision')
++        else:invalid['expected_publication_revision']=revision
++        assert client.post(path,headers=h,json=invalid).status_code==422
++    accepted=client.post(path,headers=h,json=body);assert accepted.status_code==202,accepted.text
++    replay=client.post(path,headers=h,json=body);assert replay.status_code==200,replay.text
++    assert replay.json()['data']['run_id']==accepted.json()['data']['run_id']
++    assert client.post(path,headers=h,json=body|{'expected_publication_revision':0,'client_send_id':str(uuid4())}).status_code==409
++    assert client.post(path,headers=h,json=body|{'version_id':str(uuid4()),'client_send_id':str(uuid4())}).status_code==409

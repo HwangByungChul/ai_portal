@@ -1,0 +1,8 @@
+import {useEffect,useState} from 'react';
+import {get,useScope} from './scoped';
+import type {Member,MemberPage} from './types';
+export function ApprovalAudience({tenantId,audience,members,onChange,disabled}:{tenantId:string;audience:'all'|'restricted';members:string[];onChange:(audience:'all'|'restricted',members:string[])=>void;disabled:boolean}){
+ const scope=useScope(),[items,setItems]=useState<Member[]>([]),[error,setError]=useState<string|null>(null),[loading,setLoading]=useState(true);
+ useEffect(()=>{async function load(){try{const all:Member[]=[];let cursor:string|null=null;do{const page:MemberPage=await get('/admin/memberships?limit=50'+(cursor?'&cursor='+encodeURIComponent(cursor):''),{tenantId,signal:scope.signal});all.push(...page.items);cursor=page.next_cursor;}while(cursor&&scope.current());if(scope.current())setItems(all.filter(m=>m.active));}catch(p){const msg=await scope.fail(p,()=>setItems([]));if(scope.current())setError(msg);}finally{if(scope.current())setLoading(false);}}void load();},[]);
+ return <fieldset disabled={disabled||loading}><legend>공개 대상</legend><label>이용 범위<select value={audience} onChange={e=>onChange(e.target.value as 'all'|'restricted',[])}><option value="restricted">선택한 현재 조직 회원</option><option value="all">현재 조직 전체</option></select></label>{loading&&<p role="status">현재 회원 확인 중</p>}{error&&<p role="alert">{error}</p>}{audience==='restricted'&&<div className="approval-member-list">{items.map(m=><label key={m.user_id}><input type="checkbox" checked={members.includes(m.user_id)} onChange={e=>onChange(audience,e.target.checked?[...members,m.user_id]:members.filter(id=>id!==m.user_id))}/>{m.display_name} · {m.role}</label>)}</div>}</fieldset>;
+}

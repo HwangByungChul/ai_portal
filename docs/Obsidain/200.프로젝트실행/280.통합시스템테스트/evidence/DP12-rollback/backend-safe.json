@@ -1,0 +1,70 @@
+{
+  "status": "passed",
+  "latest_distinct": 35,
+  "single_full_suite": false,
+  "contract_single_run": 34,
+  "legacy_backfill_separate": 1,
+  "runs": [
+    {
+      "run": "first.xml",
+      "total": 12,
+      "passed": 12,
+      "not_passed": 0
+    },
+    {
+      "run": "contracts.xml",
+      "total": 32,
+      "passed": 31,
+      "not_passed": 1
+    },
+    {
+      "run": "contracts-final.xml",
+      "total": 34,
+      "passed": 34,
+      "not_passed": 0
+    },
+    {
+      "run": "backfill-final.xml",
+      "total": 1,
+      "passed": 1,
+      "not_passed": 0
+    }
+  ],
+  "cases": {
+    "tests.test_asset_rollback::test_exact_rollback_current_audience_compare_events_replay_and_execution": "passed",
+    "tests.test_asset_rollback::test_rollback_current_guards_and_rejection[withdraw]": "passed",
+    "tests.test_asset_rollback::test_rollback_current_guards_and_rejection[policy]": "passed",
+    "tests.test_asset_rollback::test_rollback_current_guards_and_rejection[stale]": "passed",
+    "tests.test_asset_rollback::test_rollback_current_guards_and_rejection[mode]": "passed",
+    "tests.test_asset_rollback::test_rollback_current_guards_and_rejection[inactive_member]": "passed",
+    "tests.test_asset_rollback::test_rollback_current_guards_and_rejection[other_tenant]": "passed",
+    "tests.test_asset_rollback::test_rollback_current_guards_and_rejection[same_version]": "passed",
+    "tests.test_asset_rollback::test_concurrent_rollback_same_receipt_and_old_decision_cannot_bypass": "passed",
+    "tests.test_asset_rollback::test_history_http_strict_scope_csrf_and_comparison_owner_boundary": "passed",
+    "tests.test_asset_rollback::test_migration_038_preserves_rows_and_raw_event_privileges": "passed",
+    "tests.test_asset_rollback::test_retired_republication_and_history_pagination": "passed",
+    "tests.test_asset_deployments::test_dynamic_approval_atomic_snapshot_replay_self_denial_retire": "passed",
+    "tests.test_asset_deployments::test_stale_evidence_never_publishes_and_rejection_remains_possible[withdraw]": "passed",
+    "tests.test_asset_deployments::test_stale_evidence_never_publishes_and_rejection_remains_possible[policy]": "passed",
+    "tests.test_asset_deployments::test_stale_evidence_never_publishes_and_rejection_remains_possible[mode]": "passed",
+    "tests.test_asset_deployments::test_stale_evidence_never_publishes_and_rejection_remains_possible[failed]": "passed",
+    "tests.test_published_agents::test_ordinary_user_exact_published_profile_result_and_central_meter": "passed",
+    "tests.test_published_agents::test_dynamic_publication_and_current_policy_gate[restricted]": "passed",
+    "tests.test_published_agents::test_dynamic_publication_and_current_policy_gate[retired]": "passed",
+    "tests.test_published_agents::test_dynamic_publication_and_current_policy_gate[policy]": "passed",
+    "tests.test_published_agents::test_dynamic_publication_and_current_policy_gate[fixed_access]": "passed",
+    "tests.test_published_agents::test_dynamic_publication_and_current_policy_gate[other_tenant]": "passed",
+    "tests.test_dynamic_extended::test_dynamic_rag_exact_user_source_guard_and_zero_empty_dispatch[org]": "passed",
+    "tests.test_dynamic_extended::test_dynamic_rag_exact_user_source_guard_and_zero_empty_dispatch[empty]": "passed",
+    "tests.test_dynamic_extended::test_dynamic_rag_exact_user_source_guard_and_zero_empty_dispatch[private]": "passed",
+    "tests.test_dynamic_extended::test_dynamic_rag_exact_user_source_guard_and_zero_empty_dispatch[withdrawn]": "passed",
+    "tests.test_dynamic_extended::test_competing_requests_only_one_publication_cas_winner": "passed",
+    "tests.test_dynamic_extended::test_published_http_csrf_strict_input_worker_owner_and_no_draft_execution": "passed",
+    "tests.test_dynamic_extended::test_036_037_preserve_prior_rows_checksums_raw_denial_and_rerun": "passed",
+    "tests.test_dynamic_extended::test_dynamic_manager_cancel_unknown_cost_and_retired_late_result[cancel]": "passed",
+    "tests.test_dynamic_extended::test_dynamic_manager_cancel_unknown_cost_and_retired_late_result[retire]": "passed",
+    "tests.test_dynamic_extended::test_dynamic_manager_cancel_unknown_cost_and_retired_late_result[retire_before_read]": "passed",
+    "tests.test_dynamic_extended::test_same_request_concurrent_decisions_share_one_receipt": "passed",
+    "tests.test_asset_rollback::test_legacy_real_approvals_backfill_without_invented_retirement": "passed"
+  }
+}

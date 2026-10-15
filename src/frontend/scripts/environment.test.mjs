@@ -1,0 +1,7 @@
+import {test} from 'node:test';import assert from 'node:assert/strict';
+import {loadEnvironment,validateEnvironment,environments} from './environment.mjs';
+for(const env of environments)test('schema '+env,()=>{const c=loadEnvironment(env,false);assert.equal(c.environment,env);if(env!=='local')assert.throws(()=>loadEnvironment(env),/NOT_CONFIGURED/);});
+test('no fallback for unknown environment',()=>assert.throws(()=>loadEnvironment('../prd'),/UNKNOWN/));
+const cases=[c=>{c.secret='do-not-print';},c=>{c.user.port=0;},c=>{c.user.port=true;},c=>{c.admin.port=c.user.port;},c=>{c.user.origin='http://127.0.0.1:9999';},c=>{c.user.origin='http://localhost:5173';},c=>{c.user.origin='http://127.0.0.1:5173/';},c=>{c.user.origin='http://key:secret@127.0.0.1:5173';},c=>{c.user.origin='http://127.0.0.1:5173?x=y';},c=>{c.user.origin='http://127.0.0.1:5173#x';},c=>{c.user.origin='*';},c=>{c.environment='prd';},c=>{c.configured=false;}];
+cases.forEach((change,n)=>test('reject invalid config '+n,()=>{const c=loadEnvironment();change(c);assert.throws(()=>validateEnvironment(c,'local'),error=>error.message==='PORTAL_CONFIGURATION_INVALID');}));
+test('remote HTTPS IP and ports can be configured without domain',()=>{const c=loadEnvironment('tb',false);c.configured=true;for(const k of ['user','admin','api'])c[k].origin='https://192.0.2.10:'+c[k].port;assert.equal(validateEnvironment(c,'tb').configured,true);c.user.origin='http://192.0.2.10:'+c.user.port;assert.throws(()=>validateEnvironment(c,'tb'),/INVALID/);});

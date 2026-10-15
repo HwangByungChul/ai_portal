@@ -1,0 +1,17 @@
+{
+  "artifact": "backend-recheck-safe.json",
+  "passed": 2,
+  "failed": 0,
+  "tests": [
+    {
+      "test_id": "tests.test_assets_migration::test_additive_migration_preserves_every_existing_row_and_rerun",
+      "status": "passed",
+      "duration_seconds": 1.296
+    },
+    {
+      "test_id": "tests.test_operations::test_fixed_functions_and_content_permissions_no_escalation",
+      "status": "passed",
+      "duration_seconds": 1.427
+    }
+  ]
+}

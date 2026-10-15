@@ -2,6 +2,13 @@ from datetime import datetime, timezone
 from fastapi.responses import JSONResponse
 
 MESSAGES = {
+    'BUILDER_PROFILE_REQUIRED': '구조화 프롬프트는 Agent Builder에서 수정해 주세요.',
+    'BUILDER_TEMPLATE_INVALID': '변수 이름·필수값·템플릿 형식과 길이를 확인해 주세요.',
+    'AGENT_ACCESS_DENIED': '선택한 Agent를 이용할 권한이 없습니다.',
+    'ASSET_LEGACY_READ_ONLY': '기존 운영 Agent는 Agent 관리에서 변경해 주세요.',
+    'ASSET_LIMIT_REACHED': '자산 또는 버전 등록 한도에 도달했습니다.',
+    'APPROVAL_REQUIRED': '운영 설정 변경은 배포 승인 요청이 필요합니다.',
+    'DEPLOYMENT_QUEUE_FULL': '대기 중인 배포 요청 한도에 도달했습니다.',
     'SUMMARY_LIMIT_EXCEEDED': '문서가 요약 처리 한도를 초과했습니다. 내용을 줄여 주세요.',
     'SUMMARY_NOT_READY': '검증이 완료된 요약만 내려받을 수 있습니다.',
     'SUMMARY_OUTPUT_INVALID': '요약 결과를 검증할 수 없습니다.',
@@ -77,6 +84,22 @@ MESSAGES = {
     'RATE_LIMITED': '잠시 후 다시 시도해 주세요.',
     'STORAGE_UNAVAILABLE': '저장소 연결을 확인한 뒤 다시 시도해 주세요.',
     'TENANT_FORBIDDEN': '사용 가능한 조직이 아닙니다.',
+    'GUARDRAIL_INPUT_BLOCKED': '입력에 개인정보 또는 금지된 내용이 포함되어 있습니다. 내용을 확인한 뒤 다시 시도해 주세요.',
+    'GUARDRAIL_OUTPUT_BLOCKED': 'AI 응답이 보호 정책에 의해 차단되었습니다.',
+    'WORKFLOW_QUEUE_LIMIT': '진행 중인 Workflow 실행을 확인한 뒤 다시 요청해 주세요.',
+    'WORKFLOW_BLOCKED': 'Workflow 승인 또는 이용 권한이 변경되었습니다.',
+    'WORKFLOW_BINDING_INVALID': 'Workflow 노드 연결값을 확인해 주세요.',
+    'WORKFLOW_CHILD_FAILED': '연결된 Agent 또는 Tool 실행을 완료하지 못했습니다.',
+    'TOOL_QUEUE_LIMIT': '진행 중인 도구 요청이 많습니다. 결과를 확인한 뒤 다시 요청해 주세요.',
+    'TOOL_NOT_PERMITTED': '현재 조직의 승인 버전과 이용 권한을 확인해 주세요.',
+    'TOOL_NOT_FOUND': '도구를 찾을 수 없습니다.',
+    'TOOL_DISABLED': '도구 사용이 중지되어 있습니다.',
+    'TOOL_ARGUMENTS_INVALID': '도구 입력 항목과 형식을 확인해 주세요.',
+    'TOOL_INPUT_BLOCKED': '도구 입력이 안전 기준에 따라 차단되었습니다.',
+    'EXECUTION_NOT_READY': '실행 엔진 연결이 준비 중입니다. 잠시 후 다시 시도해 주세요.',
+    'PROVIDER_CONFIGURATION_REQUIRED': '실제 AI 모델 연동 설정이 필요합니다.',
+    'MODEL_NOT_PERMITTED': '현재 환경에서 허용되지 않은 모델입니다.',
+    'NOT_FOUND': '요청한 대상을 찾을 수 없습니다.',
 }
 
 

@@ -1,0 +1,16 @@
+{
+  "src/backend/migrations/035_builder_evidence_shares.sql": "632f83343b74a6aafa7a09e0cd26234e7e5af3eb517580ee95e20e1b07c33118",
+  "src/backend/app/builder/shares.py": "781d7bf109a4c5d0e3314c6808a59196a001104447e20e0d3df892f494a7783e",
+  "src/backend/app/main.py": "caea0d0908ecef9245bca1c0c8dbb96e4e7d978d1165b34cdb5036f3064c3a46",
+  "src/backend/tests/test_builder_shares.py": "4ee90c6f52223e6584aa2d26577ee9339ddbff0f43fe9260c6223fc9e872ac15",
+  "src/backend/tests/test_builder_shares_migration.py": "61f1ae00f7beb1c9866342949e481ebb14c0da15f8c7669918c536aa86f0b54b",
+  "src/backend/tests/test_migrations.py": "b4b294e79b75cab3e7452e4fbbc25c1980e57ac4bf33628d284bfe22a2ef44fe",
+  "src/backend/tests/support.py": "ccc02b0c4480a775eb8043de4cad7b4cb9f438e2983260e67d2f6a7206a8f577",
+  "src/backend/scripts/portal_test_control.py": "351d06004bff96cb1814b06325df564090f8cc6277e71086d45fe95e652ef273",
+  "src/frontend/src/BuilderEvidenceShare.tsx": "58f3c084c4fc408e2cd9416b752827dba69377b19b64a8f0ea486c84469d4f4e",
+  "src/frontend/src/SharedEvidenceReview.tsx": "c12e38f90c970a87b2cbc897e0b0264d4399fcb919a2ef86767f4d86dbe9e52c",
+  "src/frontend/src/BuilderEvidence.tsx": "9b786ce89a503af4b0fc8b780e9508894342ed40d1b4ae2cb63acf1abc1232c4",
+  "src/frontend/src/ApprovalsPage.tsx": "b91f41159ddcfbe4372dfc62e3b036ca4049fc91a87f4ea4f92c251c02ea1e2d",
+  "src/frontend/scripts/verify-portal-builds.mjs": "4b8b664a951dcfe8861269995d2d1ca41ee3f42365e1db6d67720bf8f4703a3e",
+  "src/frontend/tests/builder-shares.spec.ts": "e3835b4a3ee0312ce086ee51df24d604210ae2efd63a4cfc341ce6da2ec954e9"
+}

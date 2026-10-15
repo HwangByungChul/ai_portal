@@ -1,0 +1,18 @@
+{
+  "provenance": "Safe reporter JSON read through exec_command before final single-case recheck; transcribed from tool output",
+  "status": "failed",
+  "duration_ms": 21780.643,
+  "runner_errors": 0,
+  "tests": [
+    {
+      "test_id": "D07_10_mobile320_keyboard_flow",
+      "status": "passed",
+      "duration_ms": 7072
+    },
+    {
+      "test_id": "P270_03_private_owner_and_stop_journey",
+      "status": "failed",
+      "duration_ms": 9271
+    }
+  ]
+}

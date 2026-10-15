@@ -1,0 +1,11 @@
+{
+  "src/backend/migrations/039_published_run_history.sql": "0e1989bc311b2d96217ea7b747918c20c34149560195b5e7f0e10d18089ef6cc",
+  "src/backend/app/assets/published.py": "529ea07f36e9a782dff3268cb1216d615cd78e26ed7983bec5368f31f149a4b8",
+  "src/backend/tests/test_published_history.py": "23cfc7f167c039f8c551b2e8f3da2ccf6fd3c88a9ee55048d2092742c34d6962",
+  "src/backend/tests/test_asset_rollback.py": "031b138408560d8ec652bee0e72e6ebdf73e63acebb1ab342392fd00c13f580d",
+  "src/backend/tests/support.py": "295b7087efb5b96e4d7d8db33dccff81a05eb253acd5dcdcbeb480d85a4b2d63",
+  "src/frontend/src/PublishedRunHistory.tsx": "890905db3c8098a126730e2f87f64cb0aa464a8296ee5e1a527b69377f3f6e97",
+  "src/frontend/src/ChatPage.tsx": "c7237ae1396d05d3b600c65809bca091910329e85daabfa7782f32ef14089c6f",
+  "src/frontend/apps/user-web/src/App.tsx": "e6e209a662f243eb14c4834b745b6c2d3a213b611dd03c50eaf79ef11e4cb2d6",
+  "src/frontend/tests/published-history.spec.ts": "7d460044b87c75931377c1257708aa8a6d083957b94f2e168f188700206c9825"
+}

@@ -1,0 +1,22 @@
+{
+  "status": "passed",
+  "checks": {
+    "8000": true,
+    "5173": true,
+    "5174": true,
+    "asset_api": true,
+    "list_instructions_absent": true,
+    "metadata_only": true,
+    "policy_read": true,
+    "my_agent_read": true,
+    "own_session_logout": true
+  },
+  "returned_page_counts": {
+    "catalog_items": 2
+  },
+  "paid_calls": 0,
+  "created_primary_assets": 0,
+  "changed_access_policies": 0,
+  "changed_favorites": 0,
+  "primary_reset": false
+}

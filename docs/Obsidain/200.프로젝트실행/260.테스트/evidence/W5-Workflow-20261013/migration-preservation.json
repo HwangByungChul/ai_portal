@@ -1,0 +1,20 @@
+{
+  "prior_source_baseline": "W4-Tool-20261013/source-migration-hashes.json",
+  "source_baseline_files": 47,
+  "source_baseline_unchanged": true,
+  "048_upgrade_test": {
+    "prior_tables": 62,
+    "after_tables": 64,
+    "prior_migration_checksums_preserved": 48,
+    "legacy_version_seals_remain_null": true,
+    "reapply_changes": 0
+  },
+  "fixture_schema": {
+    "tables": 64,
+    "migrations": 49,
+    "security_functions": 166,
+    "protected_tables": 34
+  },
+  "primary_migrated": false,
+  "primary_history_rewritten": false
+}

@@ -1,0 +1,22 @@
+{
+  "version": 1,
+  "environment": "prd",
+  "configured": false,
+  "bind_host": "127.0.0.1",
+  "session_mode": "site-sessions-required",
+  "user": {
+    "origin": null,
+    "port": 5173,
+    "entry": "/user/home"
+  },
+  "admin": {
+    "origin": null,
+    "port": 5174,
+    "entry": "/manage/admin"
+  },
+  "api": {
+    "origin": null,
+    "port": 8000,
+    "entry": "/api/v1"
+  }
+}

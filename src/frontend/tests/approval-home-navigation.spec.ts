@@ -1,0 +1,25 @@
+import {test,expect} from '@playwright/test';
+import {login,selectTenant} from './support';
+const requestId='10000000-0000-4000-8000-000000000001';
+const assetId='10000000-0000-4000-8000-000000000002';
+const versionId='10000000-0000-4000-8000-000000000003';
+const shareId='10000000-0000-4000-8000-000000000004';
+test('D12_07_home_dynamic_request_and_reload',async({page})=>{
+ test.setTimeout(45000);
+ let settingsDetailRequests=0,dynamicDetailRequests=0;
+ page.on('request',r=>{if(r.url().includes('/admin/agent-deployments/'+requestId))settingsDetailRequests++;if(r.url().includes('/admin/asset-deployments/'+requestId))dynamicDetailRequests++;});
+ await page.route('**/api/v1/admin/overview**',route=>route.fulfill({json:{meta:{tenant_id:route.request().headers()['x-tenant-id'],request_id:requestId},data:{as_of:'2026-10-13T00:00:00Z',period:{from:'2026-10-07',to:'2026-10-13'},timezone:'Asia/Seoul',metrics:{calls:0,confirmed_amount:0,reserved_amount:0,unknown_calls:0},daily_calls:[],pending:{settings:0,dynamic:1,total:1,items:[{request_id:requestId,kind:'dynamic',asset_name:'동적 검토 테스트',created_at:'2026-10-13T00:00:00Z',status:'pending'}]},services:[]}}}));
+ await page.route('**/api/v1/admin/asset-deployments/'+requestId,route=>route.fulfill({json:{meta:{tenant_id:route.request().headers()['x-tenant-id'],request_id:requestId},data:{deployment_kind:'publish',rollback_ready:false,request_id:requestId,asset_id:assetId,version_id:versionId,share_id:shareId,status:'pending',revision:1,can_decide:false,body:{reason:'동선 검증',audience:'all',member_ids:[]},current_publication_revision:0,expected_publication_revision:0,publication_status:null,decision:null,publication_revision:null}}}));
+ await login(page,'P-A');await selectTenant(page,'A');
+ await page.goto('http://127.0.0.1:5174/manage/admin');await selectTenant(page,'A');
+ await expect(page.getByText('동적 검토 테스트',{exact:true})).toBeVisible();
+ await page.getByRole('button').filter({hasText:'동적 검토 테스트'}).click();
+ await expect(page.getByRole('heading',{name:'동적 Agent 승인 대기',exact:true})).toBeVisible();
+ expect(settingsDetailRequests).toBe(0);expect(dynamicDetailRequests).toBeGreaterThan(0);
+ await expect(page).toHaveURL(new RegExp('kind=dynamic'));
+ await page.reload();await selectTenant(page,'A');
+ await expect(page.getByRole('heading',{name:'동적 Agent 승인 대기',exact:true})).toBeVisible();
+ expect(settingsDetailRequests).toBe(0);
+ await expect(page.getByText('관제 상태 미확인',{exact:true})).toBeVisible();
+ await page.screenshot({path:'.runtime/D12_07-home-dynamic.png',fullPage:true});
+});

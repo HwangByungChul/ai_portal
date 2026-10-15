@@ -1,0 +1,3 @@
+﻿rights_version,work_id,party_id,share_units,total_units,valid_from,valid_to_exclusive,recorded_at,approved_at,evidence_id
+RV2,W001,P001,50,100,2026-09-01,2026-10-01,2026-10-04T11:00:00+09:00,2026-10-04T11:10:00+09:00,EV-CORRECTION
+RV2,W001,P002,50,100,2026-09-01,2026-10-01,2026-10-04T11:00:00+09:00,2026-10-04T11:10:00+09:00,EV-CORRECTION

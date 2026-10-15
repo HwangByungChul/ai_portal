@@ -1,0 +1,19 @@
+{
+  "status": "passed",
+  "services": [
+    {
+      "url": "http://127.0.0.1:8000/api/v1/health",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5173/user/home",
+      "status": 200
+    },
+    {
+      "url": "http://127.0.0.1:5174/manage/admin/builder",
+      "status": 200
+    }
+  ],
+  "authenticated_mutations": 0,
+  "paid_calls": 0
+}

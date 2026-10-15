@@ -1,0 +1,58 @@
+{
+  "status": "passed",
+  "duration_ms": 23079.087,
+  "runner_errors": 0,
+  "tests": [
+    {
+      "test_id": "U13_01_real_ports_share_development_session_and_launch",
+      "status": "passed",
+      "duration_ms": 2438
+    },
+    {
+      "test_id": "U13_02_admin_port_actual_request_and_other_approver",
+      "status": "passed",
+      "duration_ms": 1842
+    },
+    {
+      "test_id": "U13_03_origin_csrf_and_cross_port_server_logout",
+      "status": "passed",
+      "duration_ms": 1260
+    },
+    {
+      "test_id": "U13_04_admin_port_does_not_grant_user_permissions",
+      "status": "passed",
+      "duration_ms": 929
+    },
+    {
+      "test_id": "U11_01_home_launch_preserves_prompt_without_sending",
+      "status": "passed",
+      "duration_ms": 2303
+    },
+    {
+      "test_id": "U11_02_admin_home_and_real_request_approval",
+      "status": "passed",
+      "duration_ms": 2835
+    },
+    {
+      "test_id": "U11_03_direct_denial_and_mobile_navigation",
+      "status": "passed",
+      "duration_ms": 1321
+    },
+    {
+      "test_id": "U11_04_org_switch_discards_request_and_prompt",
+      "status": "passed",
+      "duration_ms": 1324
+    },
+    {
+      "test_id": "U11_05_empty_filter_and_pending_submission_recovery",
+      "status": "passed",
+      "duration_ms": 1551
+    },
+    {
+      "test_id": "U11_06_responsive_keyboard_and_private_visual_evidence",
+      "status": "passed",
+      "duration_ms": 1667
+    }
+  ],
+  "steps": []
+}

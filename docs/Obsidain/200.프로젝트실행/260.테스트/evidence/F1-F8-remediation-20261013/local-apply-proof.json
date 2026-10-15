@@ -1,0 +1,14 @@
+{
+  "backup_path": "/private/tmp/portal-remediation-backup-n73tq_73/before-044.dump",
+  "backup_restored_in_disposable_db": true,
+  "old_table_count": 52,
+  "all_rows_columns_preserved": true,
+  "old_migration_count": 41,
+  "old_checksums_preserved": true,
+  "new_044_045_applied": false,
+  "blocked_by": [
+    "040_dynamic_agent_favorites.sql"
+  ],
+  "paid_calls": 0,
+  "synthetic_primary_writes": 0
+}

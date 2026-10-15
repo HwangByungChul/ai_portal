@@ -1,3 +1,4 @@
+import {RunAssetInfo} from './RunAssetInfo';
 import {useEffect,useRef,useState} from 'react';
 import {ApiError,summaryAPI,summaryBlob} from './api';
 import {get,modeLabel,useScope} from './scoped';
@@ -55,7 +56,7 @@ export function DocumentSummaryPage({tenant,user}:{tenant:Tenant;user:User}){
   </section>
   {unresolved&&<div className="notice" role="status"><p>접수 상태 확인 필요 · 같은 접수 ID로 확인합니다. 새 요약 전송을 보류했습니다.</p><button className="secondary" disabled={sending} onClick={()=>void submit('replay')}>요약 접수 확인</button></div>}
   {history.length>1&&<nav className="summary-history" aria-label="이번 방문의 요약 실행">{history.map((id,index)=><button key={id} className="secondary small" disabled={busy||downloading} aria-current={runId===id?'page':undefined} onClick={()=>choose(id)}>요약 실행 {index+1}</button>)}</nav>}
-  {run&&<section className="card summary-result" aria-label="요약 결과"><span className="mode-tag">{modeLabel(run.execution_mode)}</span><p role="status" className="run-status">{run.answer_kind==='insufficient_evidence'?'근거 부족':stateName[run.state]??'상태 확인 중'}</p>
+  {run&&<section className="card summary-result" aria-label="요약 결과"><span className="mode-tag">{modeLabel(run.execution_mode)}</span><RunAssetInfo binding={run.asset_binding}/><p role="status" className="run-status">{run.answer_kind==='insufficient_evidence'?'근거 부족':stateName[run.state]??'상태 확인 중'}</p>
    {run.error_code&&<p role="alert">{new ApiError(422,run.error_code).message}</p>}{!run.is_terminal&&<button className="secondary" disabled={cancelling||run.state==='cancel_requested'} onClick={()=>void cancel()}>요약 취소</button>}
    {final&&<><h2>원문 발췌 요약</h2><p className="scope-note">실제 항목 {run.evidence.length}개 · 요청 {run.bullet_count}개</p><p className="summary-text">{run.result!.text}</p><SummaryEvidencePanel rows={run.evidence} busy={downloading||busy} onDownload={row=>void download(row)}/><div className="summary-actions"><button className="secondary" disabled={!regenerable||busy||downloading} onClick={()=>setConfirm(true)}>다시 요약</button><button className="secondary" disabled={busy||downloading} onClick={()=>void download()}>Markdown 내려받기</button></div></>}
    {confirm&&<div className="confirmation"><p>같은 버전으로 새 실행을 만들며 실제 모드에서는 비용이 발생할 수 있습니다.</p><button className="primary" disabled={sending} onClick={()=>void submit('regenerate')}>새 실행으로 요약</button><button className="secondary" onClick={()=>setConfirm(false)}>재생성 취소</button></div>}

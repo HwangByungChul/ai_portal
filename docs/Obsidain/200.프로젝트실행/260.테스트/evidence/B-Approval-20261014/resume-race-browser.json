@@ -1,0 +1,13 @@
+{
+  "status": "passed",
+  "duration_ms": 10919.775000000001,
+  "runner_errors": 0,
+  "tests": [
+    {
+      "test_id": "WF_11_HTTP_stub_late_selection_and_refresh_response_ignored",
+      "status": "passed",
+      "duration_ms": 3866
+    }
+  ],
+  "steps": []
+}

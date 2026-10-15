@@ -1,0 +1,14 @@
+{
+  "status": "passed",
+  "sites": {
+    "user": {
+      "modules": 23,
+      "boundary_verified": true
+    },
+    "admin": {
+      "modules": 23,
+      "boundary_verified": true
+    }
+  },
+  "prior_failure": "RegExp iterator map corrected using array spread"
+}

@@ -1,0 +1,27 @@
+{
+  "site": "admin",
+  "base": "/manage/",
+  "modules": [
+    "apps/admin-web/src/App.tsx",
+    "apps/admin-web/src/main.tsx",
+    "packages/api-contract/src/api.ts",
+    "packages/api-contract/src/session.ts",
+    "packages/api-contract/src/types.ts",
+    "packages/ui/src/LoginPage.tsx",
+    "packages/ui/src/PortalShell.tsx",
+    "packages/ui/src/TenantHeader.tsx",
+    "packages/ui/src/scoped.ts",
+    "src/AdminHomePage.tsx",
+    "src/AgentSettingsPage.tsx",
+    "src/ApprovalsPage.tsx",
+    "src/AssetsPage.tsx",
+    "src/DocumentJobsPage.tsx",
+    "src/DocumentSharingPanel.tsx",
+    "src/DocumentsPage.tsx",
+    "src/FeedbackSummaryPage.tsx",
+    "src/MembersPage.tsx",
+    "src/PlatformPage.tsx",
+    "src/ReadableDocuments.tsx",
+    "src/UsagePage.tsx"
+  ]
+}

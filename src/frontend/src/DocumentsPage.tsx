@@ -6,9 +6,12 @@ import {ReadableDocuments} from './ReadableDocuments';
 import {DocumentJobsPage,jobState} from './DocumentJobsPage';
 import {DocumentSharingPanel} from './DocumentSharingPanel';
 import type {Tenant,User,ManagedDocument,ReadableDocument,PageResult,UploadReceipt,DocumentJob} from './types';
-export function DocumentsPage({tenant,user,admin=false}:{tenant:Tenant;user:User;admin?:boolean}){
+export function DocumentsPage({tenant,user,admin:requestedAdmin=false}:{tenant:Tenant;user:User;admin?:boolean}){
+ const admin=import.meta.env.PORTAL_SITE==='user'?false:requestedAdmin;
  const ctx=useScope(),org=tenant.tenant_id;const [rows,setRows]=useState<ManagedDocument[]>([]),[readable,setReadable]=useState<ReadableDocument[]>([]),[cursor,setCursor]=useState<string|null>(null),[jobs,setJobs]=useState<DocumentJob[]>([]),[jobCursor,setJobCursor]=useState<string|null>(null),[jobId,setJobId]=useState<string|null>(null);
- const [title,setTitle]=useState(''),[file,setFile]=useState<File|null>(null),[visibility,setVisibility]=useState('org'),[version,setVersion]=useState<ManagedDocument|null>(null),[sharing,setSharing]=useState<{document:string;version:string}|null>(null),[versions,setVersions]=useState<Record<string,string>>({});
+ const [title,setTitle]=useState(''),[file,setFile]=useState<File|null>(null),[visibility,setVisibility]=useState('org'),[selectedVersion,setVersion]=useState<ManagedDocument|null>(null),[selectedSharing,setSharing]=useState<{document:string;version:string}|null>(null),[versions,setVersions]=useState<Record<string,string>>({});
+ const sharing=import.meta.env.PORTAL_SITE==='user'?null:selectedSharing;
+ const version=import.meta.env.PORTAL_SITE==='user'?null:selectedVersion;
  const [error,setError]=useState<string|null>(null),[notice,setNotice]=useState<string|null>(null),[busy,setBusy]=useState(false),[loading,setLoading]=useState(true),[confirm,setConfirm]=useState<ManagedDocument|null>(null);const lock=useRef(false),pending=useRef<{form:FormData;path:string}|null>(null),query=useRef(0),fileInput=useRef<HTMLInputElement>(null);
  function clear(){setRows([]);setReadable([]);setJobs([]);setSharing(null);setJobId(null);setFile(null);pending.current=null;}
  async function failed(problem:unknown){const message=await ctx.fail(problem,clear);if(ctx.current())setError(message);}

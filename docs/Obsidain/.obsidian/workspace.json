@@ -1,0 +1,235 @@
+{
+  "main": {
+    "id": "1e31e303ad7aaa3a",
+    "type": "split",
+    "children": [
+      {
+        "id": "c8c93dfff117b870",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "aa7a52bdd602d017",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "200.프로젝트실행/270.파일럿적용/02 개발 서비스 계정 및 접속 정보 (비공개).md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "02 개발 서비스 계정 및 접속 정보 (비공개)"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "vertical"
+  },
+  "left": {
+    "id": "4f15a3233cbc5c79",
+    "type": "split",
+    "children": [
+      {
+        "id": "b4f3ba0d8dbd0731",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "d729fb2adc8c18d2",
+            "type": "leaf",
+            "state": {
+              "type": "file-explorer",
+              "state": {
+                "sortOrder": "alphabetical",
+                "autoReveal": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-folder-closed",
+              "title": "파일 탐색기"
+            }
+          },
+          {
+            "id": "8254731009abbc3c",
+            "type": "leaf",
+            "state": {
+              "type": "search",
+              "state": {
+                "query": "",
+                "matchingCase": false,
+                "explainSearch": false,
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical"
+              },
+              "icon": "lucide-search",
+              "title": "검색"
+            }
+          },
+          {
+            "id": "bd47882f789cbd05",
+            "type": "leaf",
+            "state": {
+              "type": "bookmarks",
+              "state": {
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-bookmark",
+              "title": "북마크"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300
+  },
+  "right": {
+    "id": "01e310ae3d62e2d4",
+    "type": "split",
+    "children": [
+      {
+        "id": "31c86df3e0686027",
+        "type": "tabs",
+        "children": [
+          {
+            "id": "658c2cebd51874c3",
+            "type": "leaf",
+            "state": {
+              "type": "backlink",
+              "state": {
+                "collapseAll": false,
+                "extraContext": false,
+                "sortOrder": "alphabetical",
+                "showSearch": false,
+                "searchQuery": "",
+                "backlinkCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-coming-in",
+              "title": "백링크"
+            }
+          },
+          {
+            "id": "4e33da226faa7e2e",
+            "type": "leaf",
+            "state": {
+              "type": "outgoing-link",
+              "state": {
+                "linksCollapsed": false,
+                "unlinkedCollapsed": true
+              },
+              "icon": "links-going-out",
+              "title": "나가는 링크"
+            }
+          },
+          {
+            "id": "f632fe99fe9d00ca",
+            "type": "leaf",
+            "state": {
+              "type": "tag",
+              "state": {
+                "sortOrder": "frequency",
+                "useHierarchy": true,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-tags",
+              "title": "태그"
+            }
+          },
+          {
+            "id": "f93e849a7ad41cee",
+            "type": "leaf",
+            "state": {
+              "type": "all-properties",
+              "state": {
+                "sortOrder": "frequency",
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-archive",
+              "title": "모든 속성"
+            }
+          },
+          {
+            "id": "1f5929a4663a6dd8",
+            "type": "leaf",
+            "state": {
+              "type": "outline",
+              "state": {
+                "followCursor": false,
+                "showSearch": false,
+                "searchQuery": ""
+              },
+              "icon": "lucide-list",
+              "title": "개요"
+            }
+          }
+        ]
+      }
+    ],
+    "direction": "horizontal",
+    "width": 300,
+    "collapsed": true
+  },
+  "left-ribbon": {
+    "hiddenItems": {
+      "switcher:빠른 전환기 열기": false,
+      "graph:그래프 뷰 열기": false,
+      "canvas:새 캔버스 만들기": false,
+      "daily-notes:오늘의 일일 노트 열기": false,
+      "templates:템플릿 삽입": false,
+      "command-palette:명령어 팔레트 열기": false,
+      "bases:새 베이스 생성하기": false
+    }
+  },
+  "active": "d729fb2adc8c18d2",
+  "lastOpenFiles": [
+    "200.프로젝트실행/250.구현/2026-10-15 회의록 문서 날짜 및 품질 기록 구현 보고서.md",
+    "200.프로젝트실행/260.테스트/evidence/Meeting-context-20261015/task2-review-result.md",
+    "200.프로젝트실행/260.테스트/evidence/Meeting-context-20261015/evaluation-output.json",
+    "200.프로젝트실행/260.테스트/evidence/Meeting-context-20261015/historical-sql-sha256.json",
+    "200.프로젝트실행/260.테스트/evidence/Meeting-context-20261015/capture-check.json",
+    "200.프로젝트실행/260.테스트/evidence/Meeting-context-20261015/task2-approval-guide.md",
+    "200.프로젝트실행/260.테스트/evidence/Meeting-context-20261015/task2-contract.md",
+    "200.프로젝트실행/260.테스트/evidence/Meeting-context-20261015/task2-report.md",
+    "200.프로젝트실행/260.테스트/evidence/Meeting-context-20261015/task1-review-result.md",
+    "200.프로젝트실행/260.테스트/evidence/Meeting-context-20261015/task1-report.md",
+    "200.프로젝트실행/260.테스트/evidence/Meeting-context-20261015/task1-contract.md",
+    "200.프로젝트실행/260.테스트/evidence/Meeting-context-20261015",
+    "100.프로젝트계획/34 회의록 문서 자료 날짜 처리 및 품질 평가 상세 개발 계획.md",
+    "200.프로젝트실행/250.구현/2026-10-15 기존 계정 데이터 보존 및 040 개발 보류 해소 보고서.md",
+    "200.프로젝트실행/260.테스트/evidence/DB-continuity-20261014/task3-20261015-service-health.json",
+    "200.프로젝트실행/260.테스트/evidence/DB-continuity-20261014/task3-20261015-active-migration-audit.json",
+    "200.프로젝트실행/260.테스트/evidence/DB-continuity-20261014/task3-root-final-audit.json",
+    "200.프로젝트실행/260.테스트/evidence/DB-continuity-20261014/task3-proof.json",
+    "200.프로젝트실행/260.테스트/evidence/DB-continuity-20261014/task3-final-review.md",
+    "200.프로젝트실행/260.테스트/evidence/DB-continuity-20261014/task3-report.md",
+    "200.프로젝트실행/260.테스트/evidence/DB-continuity-20261014/task2-http-validation.json",
+    "200.프로젝트실행/260.테스트/evidence/DB-continuity-20261014/task2-proof.json",
+    "200.프로젝트실행/260.테스트/evidence/DB-continuity-20261014/task2-review.md",
+    "200.프로젝트실행/260.테스트/evidence/DB-continuity-20261014/task2-report.md",
+    "200.프로젝트실행/260.테스트/evidence/DB-continuity-20261014/task1-review.md",
+    "200.프로젝트실행/260.테스트/evidence/DB-continuity-20261014/task1-report.md",
+    "100.프로젝트계획/33 기존 개발 DB 원본 복구 및 최신 기능 이행 계획.md",
+    "200.프로젝트실행/250.구현/2026-10-13 W5a 승인 Workflow 버전 및 승인 API 부분 구현 결과.md",
+    "100.프로젝트계획/30 승인 Workflow 실행과 업무 Agent 연결 상세 작업 계획.md",
+    "200.프로젝트실행/250.구현/2026-10-13 W4 Tool 승인 및 영속 실행 구현 보고서.md",
+    "100.프로젝트계획/29 Tool 승인 버전과 영속 실행 상세 작업 계획.md",
+    "200.프로젝트실행/250.구현/2026-10-13 F1-F8 1차 보완 구현 및 040 원본 검증 보고서.md",
+    "200.프로젝트실행/260.테스트/evidence/F1-F8-remediation-20261013/D12_07-home-dynamic.png",
+    "100.프로젝트계획/28 상세 수정 재검토 F1-F8 잔여 결함 보완 작업 계획서.md",
+    "200.프로젝트실행/230.분석/2026-10-13 상세 수정 계획 이행 및 추가 개발 재검토.md",
+    "100.프로젝트계획/27 포털 High-End UI UX 전면 개편 및 듀얼 아이덴티티 상세 구현 계획.md",
+    "100.프로젝트계획/26 추가 개발 결함 보완 및 실서비스 실행 계약 상세 계획.md",
+    "200.프로젝트실행/270.파일럿적용/evidence/20261006-screen-preview/05-admin-usage.png",
+    "200.프로젝트실행/270.파일럿적용/evidence/20261006-screen-preview/04-admin-agents.png",
+    "200.프로젝트실행/270.파일럿적용/evidence/20261006-screen-preview/03-admin-users.png",
+    "200.프로젝트실행/270.파일럿적용/evidence/20261006-screen-preview/02-admin-documents.png",
+    "200.프로젝트실행/270.파일럿적용/evidence/20261006-screen-preview/01-user-rag.png",
+    "200.프로젝트실행/260.테스트/evidence/A-auth/A05-login-mobile.png",
+    "200.프로젝트실행/260.테스트/evidence/A-auth/A05-login-desktop.png"
+  ]
+}

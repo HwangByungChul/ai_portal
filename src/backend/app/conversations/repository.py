@@ -56,10 +56,12 @@ class ConversationRepository:
             return row['data']
         except (psycopg.Error,ValueError) as error:self.translate(error)
 
-    async def admit(self,ctx,agent,conversation,send,prompt,period,mode,digest,request_id,refs=None,documents=None):
+    async def admit(self,ctx,agent,conversation,send,prompt,period,mode,digest,request_id,refs=None,documents=None,asset_id=None):
         fingerprint=request_fingerprint(agent,conversation,prompt,refs)
         try:
             async with tenant_transaction(self.pool,ctx) as conn:
+                await conn.execute('SELECT security.run_asset_resolve(%s,%s,%s,%s)',
+                    (ctx.session_id,ctx.tenant_id,agent,asset_id))
                 if agent=='rules_rag':
                     if documents is None:raise AppError('FEATURE_NOT_READY',409)
                     from app.documents.search import SearchRepository

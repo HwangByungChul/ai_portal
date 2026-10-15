@@ -1,0 +1,82 @@
+[
+  {
+    "file": "src/backend/migrations/030_builder_profiles.sql",
+    "sha256": "ef8305ca6b79f712510cbfae70cc2c4a422f78313715252d232f4d5e30edfaaa"
+  },
+  {
+    "file": "src/backend/migrations/031_builder_scope_dedup.sql",
+    "sha256": "76ec8c611d58ee65bb40b2105c00553d135d0f4a679d785c6395911da0e4ae19"
+  },
+  {
+    "file": "src/backend/app/builder/schemas.py",
+    "sha256": "e3d8da190bd979329314d9aadaeb4ccf5a3b1e802054992d91e39de6a2c5f692"
+  },
+  {
+    "file": "src/backend/app/builder/repository.py",
+    "sha256": "e1fb9060cbfad3ee363f88d5a290ec2778cf6b33475f4c5102f87a1f1641ce1a"
+  },
+  {
+    "file": "src/backend/app/builder/profile_routes.py",
+    "sha256": "5a74db02c13bbaa9afc8e43999bbda55221f950df366560792bb7dac62b57b27"
+  },
+  {
+    "file": "src/backend/app/main.py",
+    "sha256": "7b69df276c88ce7ed757ea6d4f56ee83d8584eecc430d3a4398952d911dce008"
+  },
+  {
+    "file": "src/backend/app/assets/repository.py",
+    "sha256": "93840c7a2fb59f4f159cc1c57d300a4cb973aca0877d92a88bafe2a43949eb49"
+  },
+  {
+    "file": "src/backend/app/errors.py",
+    "sha256": "474516a499a1b04826f53ffc9a8346e742747b3f281653559b787e2db48cbd1f"
+  },
+  {
+    "file": "src/backend/tests/test_builder_profiles.py",
+    "sha256": "18052023dfd46ba55f99890c8353bded3260f86571eda3616f593976491994b4"
+  },
+  {
+    "file": "src/backend/tests/test_builder_profiles_migration.py",
+    "sha256": "ab0b67a2033c08c4d28f6f312b4675cbaa28c0bfd6590d0108722032477cb0f8"
+  },
+  {
+    "file": "src/backend/tests/test_catalog_migration.py",
+    "sha256": "45745d1bc2f6f6557237bffc71680f74668488294bcc88924b3086f8d224c7fb"
+  },
+  {
+    "file": "src/backend/tests/support.py",
+    "sha256": "da148af983f7375bf20361f7fedea62e1e478534c66e80d829ecac98e5f5c7e5"
+  },
+  {
+    "file": "src/frontend/src/BuilderProfileEditor.tsx",
+    "sha256": "d935b4d6e878110107c788bd35cd5cc9011bff0945d7add037da03f5834e65c7"
+  },
+  {
+    "file": "src/frontend/src/AssetsPage.tsx",
+    "sha256": "a35e6c9fd5ca84bbc72563ad42a6ec1041b10f83585a2275b6cf0e645a986622"
+  },
+  {
+    "file": "src/frontend/src/BuilderPreview.tsx",
+    "sha256": "9557c97540d65f34281387fc83150cf928965b40aef796c27e0c508d609dc75e"
+  },
+  {
+    "file": "src/frontend/src/ReadableDocuments.tsx",
+    "sha256": "f38d84e4392469e83cd6f19e3f66d793069487d77b95cbb81449ccd7eb6c58f3"
+  },
+  {
+    "file": "src/frontend/packages/api-contract/src/api.ts",
+    "sha256": "8e10e484e2d80bcd97fb8c580ee1170e27f4350d2f9bb6255f9b19d772c335c8"
+  },
+  {
+    "file": "src/frontend/scripts/verify-portal-builds.mjs",
+    "sha256": "597ced711f6cfdd7ece61ba8e76d7f2cafc2d63d7ad377bab251583a4d416a8e"
+  },
+  {
+    "file": "src/frontend/tests/builder-profiles.spec.ts",
+    "sha256": "f8738eb900973ffd5d1be1d93e7f0c53049cffe85632d23de29b3ca5e75e0345"
+  },
+  {
+    "file": "src/frontend/tests/builder.spec.ts",
+    "sha256": "ca82f7b4db4ad43e8d3c3c0611844e5a4bad3e5bb44f863fd5ad6f0db5ceef36"
+  }
+]

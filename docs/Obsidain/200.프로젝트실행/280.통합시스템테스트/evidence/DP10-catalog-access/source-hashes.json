@@ -1,0 +1,126 @@
+[
+  {
+    "file": "src/backend/migrations/029_agent_catalog_access.sql",
+    "sha256": "3521d20f246361213867c4d818b7d39a7bfb43a4575258d7e93ba3c6d381466c"
+  },
+  {
+    "file": "src/backend/app/catalog/__init__.py",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "file": "src/backend/app/catalog/repository.py",
+    "sha256": "e0a9744d0d2a1963859ba38f777536b1ede1560ebad39feca65e5f81785c7482"
+  },
+  {
+    "file": "src/backend/app/catalog/routes.py",
+    "sha256": "8cef7b006bd451c886652fe0c408d76b0e908ca1a1e5700733c82c09037732d7"
+  },
+  {
+    "file": "src/backend/app/main.py",
+    "sha256": "058ffac2a0712e2a84c92a9f687f756d4b623abaf3bd53745e5e15f6ece506db"
+  },
+  {
+    "file": "src/backend/app/errors.py",
+    "sha256": "3226bcf14e0718fbf88585e27642b6fa4bd101da41b2ae3d8259b19e7d74de2d"
+  },
+  {
+    "file": "src/backend/app/tenants/repository.py",
+    "sha256": "15261ec0eaf5178a3327f349cc028b9f2f1e68b1af7b1c06e12a92963fcc0d0e"
+  },
+  {
+    "file": "src/backend/app/ai/repository.py",
+    "sha256": "7a1e3f501c36de7b711aaafd8cd9cfa8b72df9f8b1f03c256a95d2f6122de0b2"
+  },
+  {
+    "file": "src/backend/app/operations/routes.py",
+    "sha256": "c5c46770eb34dfb0fe391af48c1d10b93734a2e9abbbba6677c1ceb054b763c9"
+  },
+  {
+    "file": "src/backend/tests/test_catalog.py",
+    "sha256": "b41479f1c70edd20741965ca80eeea716d84fbcc5568821634750d6de95a05f0"
+  },
+  {
+    "file": "src/backend/tests/test_catalog_migration.py",
+    "sha256": "420afbe06646da15423e2e558f96653505fcaa05955ee0f55990f2f94c150de0"
+  },
+  {
+    "file": "src/backend/tests/support.py",
+    "sha256": "620c0866c622efe37e88be761a961e5c12ac53c7aa70d2726604441c4b8faebb"
+  },
+  {
+    "file": "src/backend/tests/test_migrations.py",
+    "sha256": "067bbd045c8ab43f5478553ae415749b67de8ac418c59d64569a6bdb2ca8621f"
+  },
+  {
+    "file": "src/backend/tests/test_run_assets_migration.py",
+    "sha256": "96058cb44229731fe06176d424a9d04356cecab4c5e5ee9db8b036f3c3cf29ab"
+  },
+  {
+    "file": "src/backend/tests/test_b_schema.py",
+    "sha256": "084ad5b76e4e8b8011fdc1ac6a8cd14c6951bce2050b13bc564fc1d7cb11dca7"
+  },
+  {
+    "file": "src/backend/tests/test_auth_restart.py",
+    "sha256": "99477caf771366123ea3ad371ef147e956dde19db1f001b5c34f4f7e47ac8d9c"
+  },
+  {
+    "file": "src/backend/tests/test_operations.py",
+    "sha256": "65c66087ecae20ad5d822495183f7604f26aaff42322405f8ee1720eae5f6f50"
+  },
+  {
+    "file": "src/backend/scripts/portal_test_control.py",
+    "sha256": "4d5904a4a21dd9fe3b98490fd3516452e9eed997611a9cd031d2af2cf69ee4fa"
+  },
+  {
+    "file": "src/frontend/src/CatalogPage.tsx",
+    "sha256": "8762edc40813c37203599c2c7b07bac3cc0581de195610be8c51b7084597fb41"
+  },
+  {
+    "file": "src/frontend/src/AgentAccessEditor.tsx",
+    "sha256": "f443a81b97da08a229821f5f27c38873fd8ffee1f61cb023a159780d06a39fdf"
+  },
+  {
+    "file": "src/frontend/src/HomePage.tsx",
+    "sha256": "7de7621bccea70673dfddc5e8f19f0015c3696aac998693883638d40a71d7ed8"
+  },
+  {
+    "file": "src/frontend/src/ChatPage.tsx",
+    "sha256": "0e2c60a23bc12bc79c1b1029254121539d380d72f47e21910e48b47ad5bcf8aa"
+  },
+  {
+    "file": "src/frontend/src/AgentSettingsPage.tsx",
+    "sha256": "73548be86544448a732aa41657d2c97ee25ccc54f1bfd0dcc8c2144477af1c86"
+  },
+  {
+    "file": "src/frontend/src/App.tsx",
+    "sha256": "59fe285b20a710ee00d39e2d4db421ae05551b56d76e4860b93d0a3c59c837a4"
+  },
+  {
+    "file": "src/frontend/src/styles.css",
+    "sha256": "8b8986ebf5e59832ed939a6d26f10723771d3be0ed605823143b43cb1b784375"
+  },
+  {
+    "file": "src/frontend/apps/user-web/src/App.tsx",
+    "sha256": "81ddb269155d8e9313fd6e3052f8ae99d1aff5defda07508a9a42d2fd4ff89f2"
+  },
+  {
+    "file": "src/frontend/packages/api-contract/src/types.ts",
+    "sha256": "f78cb160d4c13f2e96c7b056ec7700b51736c23c33d0d6edb5871cfeba9b149f"
+  },
+  {
+    "file": "src/frontend/packages/ui/src/styles.css",
+    "sha256": "c9359eecc259c4a678ecc597058b434c2057a765349fe2c21112127e7825b460"
+  },
+  {
+    "file": "src/frontend/scripts/verify-portal-builds.mjs",
+    "sha256": "75dff236443abb465fbdda56b8c8d0738fd9f1aeac4082aa76a834f7298f5813"
+  },
+  {
+    "file": "src/frontend/tests/catalog.spec.ts",
+    "sha256": "72c8e01b511a6d6dd45e5cdf4ac96f9f7d655a5024e4d44aa55dfe3635fff6ec"
+  },
+  {
+    "file": "src/frontend/tests/safe-reporter.ts",
+    "sha256": "a84cef17ce35ebbbe9725085e2c7696b998ad683ed9e28e1a69c7df7f224fc9c"
+  }
+]

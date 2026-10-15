@@ -1,0 +1,13 @@
+{
+  "src/backend/migrations/033_builder_evidence.sql": "63ce130283981092f06e0e2e98b9ff0cd9359349b2b5cc2febef08fc7fe227c5",
+  "src/backend/app/builder/trials.py": "920901e9181dc15a9bbc05d6962569377ee4de818e96884b19f54dce54ff1e98",
+  "src/backend/tests/test_builder_evidence.py": "58337b9d601839cc705ebcb63de72b8c0cef1309245f00378a95cb662bd40c0f",
+  "src/backend/tests/test_builder_evidence_migration.py": "df19ec7a7f26601580b958319b9e2dfc09c238ae889f057eab37ad5a5d39e0e9",
+  "src/backend/tests/test_builder_trials_migration.py": "9d3b0d41907d64b0d0442feb4a38961748c3c1c7ae4f8934bcdf7883c6461157",
+  "src/backend/tests/support.py": "14c634962de55217d4a0b16af1a142fff835992de809a4b520bfdacdb4ba9ef4",
+  "src/backend/scripts/portal_test_control.py": "ef3e50660ec36e186fff8aa355eb10999ac8e2513dc65588f6f38656ca10f47c",
+  "src/frontend/src/BuilderEvidence.tsx": "91da0337e5a3863f1c0ce12b142803f28f2e1120947c4bba3e381d9613b88aec",
+  "src/frontend/src/BuilderTrial.tsx": "11e42798501e6817f10acefe05e61f70325989942514322d60b6ce4352a6a4bc",
+  "src/frontend/scripts/verify-portal-builds.mjs": "e05e97a5ff1bc7e62cc7bb0943accf5f551eba8253c2aecd691ab5e8ad4f274a",
+  "src/frontend/tests/builder-evidence.spec.ts": "12640fdb0c44b182367c6f689de2d77bc171d015d7e7ee2202489777d80e1ee4"
+}

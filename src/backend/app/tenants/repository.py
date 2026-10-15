@@ -4,7 +4,7 @@ from app.db import tenant_transaction
 from app.errors import AppError
 from app.types import TenantView,MembershipView,MemberPage
 
-SQL_ERRORS = {'A0401': ('AUTH_REQUIRED',401), 'A0403': ('REQUEST_FORBIDDEN',403),
+SQL_ERRORS = {'B0340': ('AGENT_ACCESS_DENIED',403), 'A0401': ('AUTH_REQUIRED',401), 'A0403': ('REQUEST_FORBIDDEN',403),
               'A0404': ('RESOURCE_NOT_FOUND',404), 'A0409': ('REVISION_CONFLICT',409),
               'A0422': ('REQUEST_INVALID',422)}
 

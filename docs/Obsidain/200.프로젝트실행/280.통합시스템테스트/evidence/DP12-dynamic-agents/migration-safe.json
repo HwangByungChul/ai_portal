@@ -1,0 +1,20 @@
+{
+  "status": "passed",
+  "backup_private": true,
+  "backup_sha256": "d4a9dcc71e2e092ababdb515c4713b33af99032a98f596b454237d8c0f310577",
+  "prior_tables": 47,
+  "current_tables": 50,
+  "prior_rows_preserved": true,
+  "prior_checksums_preserved": 36,
+  "new_migrations": [
+    "036_asset_deployments.sql",
+    "037_published_agent_execution.sql"
+  ],
+  "current_migrations": 38,
+  "security_functions": 138,
+  "new_tables_empty": true,
+  "rerun_unchanged": true,
+  "primary_seed_reset": false,
+  "primary_assets_runs_policy_mutations": 0,
+  "primary_paid_calls": 0
+}

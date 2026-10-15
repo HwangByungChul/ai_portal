@@ -1,0 +1,1067 @@
+{
+  "status": "passed",
+  "unique_cases": 176,
+  "aggregation": "latest unique cases across runs; not full suite",
+  "cases": [
+    {
+      "case": "case-001",
+      "file": "tests.test_builder_profiles",
+      "test": "test_profiles_saved_atomically_immutable_and_replayed",
+      "status": "passed"
+    },
+    {
+      "case": "case-002",
+      "file": "tests.test_builder_profiles",
+      "test": "test_exact_version_clone_and_same_request_recovery",
+      "status": "passed"
+    },
+    {
+      "case": "case-003",
+      "file": "tests.test_builder_profiles",
+      "test": "test_historical_simple_version_is_derived_without_backfill",
+      "status": "passed"
+    },
+    {
+      "case": "case-004",
+      "file": "tests.test_builder_profiles",
+      "test": "test_version_clone_scope",
+      "status": "passed"
+    },
+    {
+      "case": "case-005",
+      "file": "tests.test_builder_profiles",
+      "test": "test_version_clone_scope",
+      "status": "passed"
+    },
+    {
+      "case": "case-006",
+      "file": "tests.test_builder_profiles",
+      "test": "test_version_clone_scope",
+      "status": "passed"
+    },
+    {
+      "case": "case-007",
+      "file": "tests.test_builder_profiles",
+      "test": "test_version_clone_scope",
+      "status": "passed"
+    },
+    {
+      "case": "case-008",
+      "file": "tests.test_builder_profiles",
+      "test": "test_schema_rejects_invalid_profile_without_partial_save",
+      "status": "passed"
+    },
+    {
+      "case": "case-009",
+      "file": "tests.test_builder_profiles",
+      "test": "test_schema_rejects_invalid_profile_without_partial_save",
+      "status": "passed"
+    },
+    {
+      "case": "case-010",
+      "file": "tests.test_builder_profiles",
+      "test": "test_schema_rejects_invalid_profile_without_partial_save",
+      "status": "passed"
+    },
+    {
+      "case": "case-011",
+      "file": "tests.test_builder_profiles",
+      "test": "test_schema_rejects_invalid_profile_without_partial_save",
+      "status": "passed"
+    },
+    {
+      "case": "case-012",
+      "file": "tests.test_builder_profiles",
+      "test": "test_schema_rejects_invalid_profile_without_partial_save",
+      "status": "passed"
+    },
+    {
+      "case": "case-013",
+      "file": "tests.test_builder_profiles",
+      "test": "test_schema_rejects_invalid_profile_without_partial_save",
+      "status": "passed"
+    },
+    {
+      "case": "case-014",
+      "file": "tests.test_builder_profiles",
+      "test": "test_schema_rejects_invalid_profile_without_partial_save",
+      "status": "passed"
+    },
+    {
+      "case": "case-015",
+      "file": "tests.test_builder_profiles",
+      "test": "test_schema_rejects_invalid_profile_without_partial_save",
+      "status": "passed"
+    },
+    {
+      "case": "case-016",
+      "file": "tests.test_builder_profiles",
+      "test": "test_structured_preview_roles_hash_and_data_not_rebound",
+      "status": "passed"
+    },
+    {
+      "case": "case-017",
+      "file": "tests.test_builder_profiles",
+      "test": "test_partial_profile_failure_rolls_back_asset_version_and_audit",
+      "status": "passed"
+    },
+    {
+      "case": "case-018",
+      "file": "tests.test_builder_profiles",
+      "test": "test_concurrent_saves_and_replays",
+      "status": "passed"
+    },
+    {
+      "case": "case-019",
+      "file": "tests.test_builder_profiles",
+      "test": "test_legacy_send_collision_cannot_add_profile_to_old_version",
+      "status": "passed"
+    },
+    {
+      "case": "case-020",
+      "file": "tests.test_builder_profiles",
+      "test": "test_document_scope_saved_and_revocation_blocks_clone_replay",
+      "status": "passed"
+    },
+    {
+      "case": "case-021",
+      "file": "tests.test_builder_profiles",
+      "test": "test_direct_web_cannot_call_private_registry_or_change_profile",
+      "status": "passed"
+    },
+    {
+      "case": "case-022",
+      "file": "tests.test_builder_profiles_migration",
+      "test": "test_030_preserves_every_prior_row_and_seals_capabilities",
+      "status": "passed"
+    },
+    {
+      "case": "case-023",
+      "file": "tests.test_builder",
+      "test": "test_binding_is_single_pass_and_deterministic",
+      "status": "passed"
+    },
+    {
+      "case": "case-024",
+      "file": "tests.test_builder",
+      "test": "test_template_rejects_invalid_or_unbounded_inputs",
+      "status": "passed"
+    },
+    {
+      "case": "case-025",
+      "file": "tests.test_builder",
+      "test": "test_template_rejects_invalid_or_unbounded_inputs",
+      "status": "passed"
+    },
+    {
+      "case": "case-026",
+      "file": "tests.test_builder",
+      "test": "test_template_rejects_invalid_or_unbounded_inputs",
+      "status": "passed"
+    },
+    {
+      "case": "case-027",
+      "file": "tests.test_builder",
+      "test": "test_template_rejects_invalid_or_unbounded_inputs",
+      "status": "passed"
+    },
+    {
+      "case": "case-028",
+      "file": "tests.test_builder",
+      "test": "test_template_rejects_invalid_or_unbounded_inputs",
+      "status": "passed"
+    },
+    {
+      "case": "case-029",
+      "file": "tests.test_builder",
+      "test": "test_template_rejects_invalid_or_unbounded_inputs",
+      "status": "passed"
+    },
+    {
+      "case": "case-030",
+      "file": "tests.test_builder",
+      "test": "test_template_rejects_invalid_or_unbounded_inputs",
+      "status": "passed"
+    },
+    {
+      "case": "case-031",
+      "file": "tests.test_builder",
+      "test": "test_template_rejects_invalid_or_unbounded_inputs",
+      "status": "passed"
+    },
+    {
+      "case": "case-032",
+      "file": "tests.test_builder",
+      "test": "test_template_rejects_invalid_or_unbounded_inputs",
+      "status": "passed"
+    },
+    {
+      "case": "case-033",
+      "file": "tests.test_builder",
+      "test": "test_template_rejects_invalid_or_unbounded_inputs",
+      "status": "passed"
+    },
+    {
+      "case": "case-034",
+      "file": "tests.test_builder",
+      "test": "test_template_rejects_invalid_or_unbounded_inputs",
+      "status": "passed"
+    },
+    {
+      "case": "case-035",
+      "file": "tests.test_builder",
+      "test": "test_template_rejects_invalid_or_unbounded_inputs",
+      "status": "passed"
+    },
+    {
+      "case": "case-036",
+      "file": "tests.test_builder",
+      "test": "test_template_rejects_invalid_or_unbounded_inputs",
+      "status": "passed"
+    },
+    {
+      "case": "case-037",
+      "file": "tests.test_builder",
+      "test": "test_template_rejects_invalid_or_unbounded_inputs",
+      "status": "passed"
+    },
+    {
+      "case": "case-038",
+      "file": "tests.test_builder",
+      "test": "test_saved_draft_preview_no_provider_or_database_mutations",
+      "status": "passed"
+    },
+    {
+      "case": "case-039",
+      "file": "tests.test_builder",
+      "test": "test_preview_scope",
+      "status": "passed"
+    },
+    {
+      "case": "case-040",
+      "file": "tests.test_builder",
+      "test": "test_preview_scope",
+      "status": "passed"
+    },
+    {
+      "case": "case-041",
+      "file": "tests.test_builder",
+      "test": "test_preview_scope",
+      "status": "passed"
+    },
+    {
+      "case": "case-042",
+      "file": "tests.test_builder",
+      "test": "test_preview_csrf_legacy_extra_query_and_body_size",
+      "status": "passed"
+    },
+    {
+      "case": "case-043",
+      "file": "tests.test_builder",
+      "test": "test_rag_refs_are_explicit_and_private_unpublished_documents_hidden",
+      "status": "passed"
+    },
+    {
+      "case": "case-044",
+      "file": "tests.test_builder",
+      "test": "test_published_rag_scope_then_revoked_is_hidden",
+      "status": "passed"
+    },
+    {
+      "case": "case-045",
+      "file": "tests.test_builder",
+      "test": "test_current_manager_role_revocation_blocks_preview",
+      "status": "passed"
+    },
+    {
+      "case": "case-046",
+      "file": "tests.test_assets",
+      "test": "test_create_versions_and_replay_are_immutable",
+      "status": "passed"
+    },
+    {
+      "case": "case-047",
+      "file": "tests.test_assets",
+      "test": "test_asset_management_scope",
+      "status": "passed"
+    },
+    {
+      "case": "case-048",
+      "file": "tests.test_assets",
+      "test": "test_asset_management_scope",
+      "status": "passed"
+    },
+    {
+      "case": "case-049",
+      "file": "tests.test_assets",
+      "test": "test_asset_management_scope",
+      "status": "passed"
+    },
+    {
+      "case": "case-050",
+      "file": "tests.test_assets",
+      "test": "test_asset_management_scope",
+      "status": "passed"
+    },
+    {
+      "case": "case-051",
+      "file": "tests.test_assets",
+      "test": "test_cross_tenant_detail_cursor_and_append_are_hidden",
+      "status": "passed"
+    },
+    {
+      "case": "case-052",
+      "file": "tests.test_assets",
+      "test": "test_paginated_metadata_has_stable_legacy_aliases_and_no_private_prompt",
+      "status": "passed"
+    },
+    {
+      "case": "case-053",
+      "file": "tests.test_assets",
+      "test": "test_strict_config",
+      "status": "passed"
+    },
+    {
+      "case": "case-054",
+      "file": "tests.test_assets",
+      "test": "test_strict_config",
+      "status": "passed"
+    },
+    {
+      "case": "case-055",
+      "file": "tests.test_assets",
+      "test": "test_strict_config",
+      "status": "passed"
+    },
+    {
+      "case": "case-056",
+      "file": "tests.test_assets",
+      "test": "test_strict_config",
+      "status": "passed"
+    },
+    {
+      "case": "case-057",
+      "file": "tests.test_assets",
+      "test": "test_strict_config",
+      "status": "passed"
+    },
+    {
+      "case": "case-058",
+      "file": "tests.test_assets",
+      "test": "test_strict_config",
+      "status": "passed"
+    },
+    {
+      "case": "case-059",
+      "file": "tests.test_assets",
+      "test": "test_strict_config",
+      "status": "passed"
+    },
+    {
+      "case": "case-060",
+      "file": "tests.test_assets",
+      "test": "test_strict_config",
+      "status": "passed"
+    },
+    {
+      "case": "case-061",
+      "file": "tests.test_assets",
+      "test": "test_strict_revision",
+      "status": "passed"
+    },
+    {
+      "case": "case-062",
+      "file": "tests.test_assets",
+      "test": "test_strict_revision",
+      "status": "passed"
+    },
+    {
+      "case": "case-063",
+      "file": "tests.test_assets",
+      "test": "test_strict_revision",
+      "status": "passed"
+    },
+    {
+      "case": "case-064",
+      "file": "tests.test_assets",
+      "test": "test_strict_revision",
+      "status": "passed"
+    },
+    {
+      "case": "case-065",
+      "file": "tests.test_assets",
+      "test": "test_strict_revision",
+      "status": "passed"
+    },
+    {
+      "case": "case-066",
+      "file": "tests.test_assets",
+      "test": "test_query_and_transport_limits",
+      "status": "passed"
+    },
+    {
+      "case": "case-067",
+      "file": "tests.test_assets",
+      "test": "test_concurrent_versions_only_one_wins",
+      "status": "passed"
+    },
+    {
+      "case": "case-068",
+      "file": "tests.test_assets",
+      "test": "test_db_bypass_and_version_mutation_denied",
+      "status": "passed"
+    },
+    {
+      "case": "case-069",
+      "file": "tests.test_assets",
+      "test": "test_revocation_and_audit_failure_roll_back",
+      "status": "passed"
+    },
+    {
+      "case": "case-070",
+      "file": "tests.test_assets",
+      "test": "test_unapproved_dynamic_asset_cannot_execute",
+      "status": "passed"
+    },
+    {
+      "case": "case-071",
+      "file": "tests.test_assets",
+      "test": "test_versions_survive_http_restart",
+      "status": "passed"
+    },
+    {
+      "case": "case-072",
+      "file": "tests.test_assets",
+      "test": "test_direct_rpc_cannot_bypass_fresh_tenant_authority",
+      "status": "passed"
+    },
+    {
+      "case": "case-073",
+      "file": "tests.test_assets",
+      "test": "test_direct_rpc_cannot_bypass_fresh_tenant_authority",
+      "status": "passed"
+    },
+    {
+      "case": "case-074",
+      "file": "tests.test_assets",
+      "test": "test_direct_rpc_cannot_bypass_fresh_tenant_authority",
+      "status": "passed"
+    },
+    {
+      "case": "case-075",
+      "file": "tests.test_catalog",
+      "test": "test_catalog_search_detail_pagination_and_no_prompt",
+      "status": "passed"
+    },
+    {
+      "case": "case-076",
+      "file": "tests.test_catalog",
+      "test": "test_favorite_cas_idempotency_private_and_persistent",
+      "status": "passed"
+    },
+    {
+      "case": "case-077",
+      "file": "tests.test_catalog",
+      "test": "test_policy_revoke_hides_favorite_and_blocks_key_alias_and_restores",
+      "status": "passed"
+    },
+    {
+      "case": "case-078",
+      "file": "tests.test_catalog",
+      "test": "test_catalog_invalid_filter",
+      "status": "passed"
+    },
+    {
+      "case": "case-079",
+      "file": "tests.test_catalog",
+      "test": "test_catalog_invalid_filter",
+      "status": "passed"
+    },
+    {
+      "case": "case-080",
+      "file": "tests.test_catalog",
+      "test": "test_catalog_invalid_filter",
+      "status": "passed"
+    },
+    {
+      "case": "case-081",
+      "file": "tests.test_catalog",
+      "test": "test_catalog_invalid_filter",
+      "status": "passed"
+    },
+    {
+      "case": "case-082",
+      "file": "tests.test_catalog",
+      "test": "test_catalog_invalid_filter",
+      "status": "passed"
+    },
+    {
+      "case": "case-083",
+      "file": "tests.test_catalog",
+      "test": "test_access_management_scope",
+      "status": "passed"
+    },
+    {
+      "case": "case-084",
+      "file": "tests.test_catalog",
+      "test": "test_access_management_scope",
+      "status": "passed"
+    },
+    {
+      "case": "case-085",
+      "file": "tests.test_catalog",
+      "test": "test_access_management_scope",
+      "status": "passed"
+    },
+    {
+      "case": "case-086",
+      "file": "tests.test_catalog",
+      "test": "test_access_management_scope",
+      "status": "passed"
+    },
+    {
+      "case": "case-087",
+      "file": "tests.test_catalog",
+      "test": "test_cross_tenant_inactive_duplicate_and_draft_rejected",
+      "status": "passed"
+    },
+    {
+      "case": "case-088",
+      "file": "tests.test_catalog",
+      "test": "test_concurrent_favorite_cas_one_winner",
+      "status": "passed"
+    },
+    {
+      "case": "case-089",
+      "file": "tests.test_catalog",
+      "test": "test_running_access_revoke_fails_closed_and_preserves_accounting",
+      "status": "passed"
+    },
+    {
+      "case": "case-090",
+      "file": "tests.test_catalog",
+      "test": "test_running_access_revoke_fails_closed_and_preserves_accounting",
+      "status": "passed"
+    },
+    {
+      "case": "case-091",
+      "file": "tests.test_catalog",
+      "test": "test_running_access_revoke_fails_closed_and_preserves_accounting",
+      "status": "passed"
+    },
+    {
+      "case": "case-092",
+      "file": "tests.test_catalog",
+      "test": "test_running_access_revoke_fails_closed_and_preserves_accounting",
+      "status": "passed"
+    },
+    {
+      "case": "case-093",
+      "file": "tests.test_catalog",
+      "test": "test_running_access_revoke_fails_closed_and_preserves_accounting",
+      "status": "passed"
+    },
+    {
+      "case": "case-094",
+      "file": "tests.test_catalog",
+      "test": "test_strict_favorite_mutation_rejected_without_write",
+      "status": "passed"
+    },
+    {
+      "case": "case-095",
+      "file": "tests.test_catalog",
+      "test": "test_strict_favorite_mutation_rejected_without_write",
+      "status": "passed"
+    },
+    {
+      "case": "case-096",
+      "file": "tests.test_catalog",
+      "test": "test_strict_favorite_mutation_rejected_without_write",
+      "status": "passed"
+    },
+    {
+      "case": "case-097",
+      "file": "tests.test_catalog",
+      "test": "test_strict_favorite_mutation_rejected_without_write",
+      "status": "passed"
+    },
+    {
+      "case": "case-098",
+      "file": "tests.test_catalog",
+      "test": "test_strict_favorite_mutation_rejected_without_write",
+      "status": "passed"
+    },
+    {
+      "case": "case-099",
+      "file": "tests.test_catalog",
+      "test": "test_strict_favorite_mutation_rejected_without_write",
+      "status": "passed"
+    },
+    {
+      "case": "case-100",
+      "file": "tests.test_catalog",
+      "test": "test_inactive_member_rejected_and_audit_atomic_private",
+      "status": "passed"
+    },
+    {
+      "case": "case-101",
+      "file": "tests.test_catalog",
+      "test": "test_direct_sql_intake_bypass_denied_and_regrant_restores_favorite",
+      "status": "passed"
+    },
+    {
+      "case": "case-102",
+      "file": "tests.test_catalog",
+      "test": "test_audit_failure_rolls_back_favorite_and_receipt",
+      "status": "passed"
+    },
+    {
+      "case": "case-103",
+      "file": "tests.test_catalog",
+      "test": "test_fresh_admin_authority_required_before_replay",
+      "status": "passed"
+    },
+    {
+      "case": "case-104",
+      "file": "tests.test_catalog",
+      "test": "test_summary_admission_and_worker_obey_same_agent_access",
+      "status": "passed"
+    },
+    {
+      "case": "case-105",
+      "file": "tests.test_catalog",
+      "test": "test_summary_admission_and_worker_obey_same_agent_access",
+      "status": "passed"
+    },
+    {
+      "case": "case-106",
+      "file": "tests.test_catalog",
+      "test": "test_summary_admission_and_worker_obey_same_agent_access",
+      "status": "passed"
+    },
+    {
+      "case": "case-107",
+      "file": "tests.test_catalog",
+      "test": "test_favorite_and_access_survive_http_restart",
+      "status": "passed"
+    },
+    {
+      "case": "case-108",
+      "file": "tests.test_catalog",
+      "test": "test_rules_rag_direct_admission_revoke_before_feature_processing",
+      "status": "passed"
+    },
+    {
+      "case": "case-109",
+      "file": "tests.test_catalog",
+      "test": "test_catalog_write_stream_size_bound",
+      "status": "passed"
+    },
+    {
+      "case": "case-110",
+      "file": "tests.test_catalog",
+      "test": "test_catalog_write_stream_size_bound",
+      "status": "passed"
+    },
+    {
+      "case": "case-111",
+      "file": "tests.test_catalog",
+      "test": "test_eligible_member_picker_excludes_inactive_accounts_and_memberships",
+      "status": "passed"
+    },
+    {
+      "case": "case-112",
+      "file": "tests.test_catalog_migration",
+      "test": "test_029_preserves_all_rows_prior_sql_and_forced_rls",
+      "status": "passed"
+    },
+    {
+      "case": "case-113",
+      "file": "tests.test_builder_profiles",
+      "test": "test_schema_version_is_strict_and_fixed",
+      "status": "passed"
+    },
+    {
+      "case": "case-114",
+      "file": "tests.test_builder_profiles",
+      "test": "test_schema_version_is_strict_and_fixed",
+      "status": "passed"
+    },
+    {
+      "case": "case-115",
+      "file": "tests.test_schema_rls",
+      "test": "test_web_has_no_context_and_no_role_escalation",
+      "status": "passed"
+    },
+    {
+      "case": "case-116",
+      "file": "tests.test_schema_rls",
+      "test": "test_owner_isolation_without_tenant_where",
+      "status": "passed"
+    },
+    {
+      "case": "case-117",
+      "file": "tests.test_schema_rls",
+      "test": "test_owner_isolation_without_tenant_where",
+      "status": "passed"
+    },
+    {
+      "case": "case-118",
+      "file": "tests.test_schema_rls",
+      "test": "test_owner_isolation_without_tenant_where",
+      "status": "passed"
+    },
+    {
+      "case": "case-119",
+      "file": "tests.test_schema_rls",
+      "test": "test_owner_isolation_without_tenant_where",
+      "status": "passed"
+    },
+    {
+      "case": "case-120",
+      "file": "tests.test_schema_rls",
+      "test": "test_owner_isolation_without_tenant_where",
+      "status": "passed"
+    },
+    {
+      "case": "case-121",
+      "file": "tests.test_schema_rls",
+      "test": "test_owner_isolation_without_tenant_where",
+      "status": "passed"
+    },
+    {
+      "case": "case-122",
+      "file": "tests.test_schema_rls",
+      "test": "test_owner_isolation_without_tenant_where",
+      "status": "passed"
+    },
+    {
+      "case": "case-123",
+      "file": "tests.test_schema_rls",
+      "test": "test_bad_context_denies",
+      "status": "passed"
+    },
+    {
+      "case": "case-124",
+      "file": "tests.test_schema_rls",
+      "test": "test_bad_context_denies",
+      "status": "passed"
+    },
+    {
+      "case": "case-125",
+      "file": "tests.test_schema_rls",
+      "test": "test_bad_context_denies",
+      "status": "passed"
+    },
+    {
+      "case": "case-126",
+      "file": "tests.test_schema_rls",
+      "test": "test_bad_context_denies",
+      "status": "passed"
+    },
+    {
+      "case": "case-127",
+      "file": "tests.test_schema_rls",
+      "test": "test_bad_context_denies",
+      "status": "passed"
+    },
+    {
+      "case": "case-128",
+      "file": "tests.test_schema_rls",
+      "test": "test_bad_context_denies",
+      "status": "passed"
+    },
+    {
+      "case": "case-129",
+      "file": "tests.test_schema_rls",
+      "test": "test_write_policy_and_immutable_binding",
+      "status": "passed"
+    },
+    {
+      "case": "case-130",
+      "file": "tests.test_schema_rls",
+      "test": "test_current_state_revocation_in_same_transaction",
+      "status": "passed"
+    },
+    {
+      "case": "case-131",
+      "file": "tests.test_schema_rls",
+      "test": "test_current_state_revocation_in_same_transaction",
+      "status": "passed"
+    },
+    {
+      "case": "case-132",
+      "file": "tests.test_schema_rls",
+      "test": "test_current_state_revocation_in_same_transaction",
+      "status": "passed"
+    },
+    {
+      "case": "case-133",
+      "file": "tests.test_schema_rls",
+      "test": "test_current_state_revocation_in_same_transaction",
+      "status": "passed"
+    },
+    {
+      "case": "case-134",
+      "file": "tests.test_schema_rls",
+      "test": "test_current_state_revocation_in_same_transaction",
+      "status": "passed"
+    },
+    {
+      "case": "case-135",
+      "file": "tests.test_schema_rls",
+      "test": "test_current_state_revocation_in_same_transaction",
+      "status": "passed"
+    },
+    {
+      "case": "case-136",
+      "file": "tests.test_schema_rls",
+      "test": "test_current_state_revocation_in_same_transaction",
+      "status": "passed"
+    },
+    {
+      "case": "case-137",
+      "file": "tests.test_schema_rls",
+      "test": "test_raw_permissions_and_rls_catalog",
+      "status": "passed"
+    },
+    {
+      "case": "case-138",
+      "file": "tests.test_schema_rls",
+      "test": "test_current_membership_not_global_tenant_access",
+      "status": "passed"
+    },
+    {
+      "case": "case-139",
+      "file": "tests.test_schema_rls",
+      "test": "test_current_membership_not_global_tenant_access",
+      "status": "passed"
+    },
+    {
+      "case": "case-140",
+      "file": "tests.test_schema_rls",
+      "test": "test_current_membership_not_global_tenant_access",
+      "status": "passed"
+    },
+    {
+      "case": "case-141",
+      "file": "tests.test_schema_rls",
+      "test": "test_current_membership_not_global_tenant_access",
+      "status": "passed"
+    },
+    {
+      "case": "case-142",
+      "file": "tests.test_schema_rls",
+      "test": "test_current_membership_not_global_tenant_access",
+      "status": "passed"
+    },
+    {
+      "case": "case-143",
+      "file": "tests.test_schema_rls",
+      "test": "test_current_membership_not_global_tenant_access",
+      "status": "passed"
+    },
+    {
+      "case": "case-144",
+      "file": "tests.test_schema_rls",
+      "test": "test_inactive_session_and_no_membership_denied",
+      "status": "passed"
+    },
+    {
+      "case": "case-145",
+      "file": "tests.test_schema_rls",
+      "test": "test_no_context_insert_and_allowed_own_insert",
+      "status": "passed"
+    },
+    {
+      "case": "case-146",
+      "file": "tests.test_schema_rls",
+      "test": "test_composite_membership_fk_rejects_foreign_owner",
+      "status": "passed"
+    },
+    {
+      "case": "case-147",
+      "file": "tests.test_schema_rls",
+      "test": "test_audit_reads_only_current_managed_tenant",
+      "status": "passed"
+    },
+    {
+      "case": "case-148",
+      "file": "tests.test_schema_rls",
+      "test": "test_audit_reads_only_current_managed_tenant",
+      "status": "passed"
+    },
+    {
+      "case": "case-149",
+      "file": "tests.test_schema_rls",
+      "test": "test_audit_reads_only_current_managed_tenant",
+      "status": "passed"
+    },
+    {
+      "case": "case-150",
+      "file": "tests.test_schema_rls",
+      "test": "test_audit_reads_only_current_managed_tenant",
+      "status": "passed"
+    },
+    {
+      "case": "case-151",
+      "file": "tests.test_schema_rls",
+      "test": "test_platform_and_managed_revoke_recompute_privileges",
+      "status": "passed"
+    },
+    {
+      "case": "case-152",
+      "file": "tests.test_schema_rls",
+      "test": "test_platform_and_managed_revoke_recompute_privileges",
+      "status": "passed"
+    },
+    {
+      "case": "case-153",
+      "file": "tests.test_pool_context",
+      "test": "test_same_connection_cleanup",
+      "status": "passed"
+    },
+    {
+      "case": "case-154",
+      "file": "tests.test_pool_context",
+      "test": "test_same_connection_cleanup",
+      "status": "passed"
+    },
+    {
+      "case": "case-155",
+      "file": "tests.test_pool_context",
+      "test": "test_same_connection_cleanup",
+      "status": "passed"
+    },
+    {
+      "case": "case-156",
+      "file": "tests.test_pool_context",
+      "test": "test_concurrent_tenants_do_not_mix",
+      "status": "passed"
+    },
+    {
+      "case": "case-157",
+      "file": "tests.test_pool_context",
+      "test": "test_internal_context_mismatch_and_missing_tenant_fail",
+      "status": "passed"
+    },
+    {
+      "case": "case-158",
+      "file": "tests.test_pool_context",
+      "test": "test_app_lifespan_uses_web_pool_and_closes",
+      "status": "passed"
+    },
+    {
+      "case": "case-159",
+      "file": "tests.test_pool_context",
+      "test": "test_startup_rejects_admin_dsn",
+      "status": "passed"
+    },
+    {
+      "case": "case-160",
+      "file": "tests.test_pool_context",
+      "test": "test_startup_rejects_foreign_marker",
+      "status": "passed"
+    },
+    {
+      "case": "case-161",
+      "file": "tests.test_run_assets",
+      "test": "test_binding_alias_replay_and_immutable_history",
+      "status": "passed"
+    },
+    {
+      "case": "case-162",
+      "file": "tests.test_run_assets",
+      "test": "test_unapproved_or_wrong_selector_has_no_side_effects",
+      "status": "passed"
+    },
+    {
+      "case": "case-163",
+      "file": "tests.test_run_assets",
+      "test": "test_unapproved_or_wrong_selector_has_no_side_effects",
+      "status": "passed"
+    },
+    {
+      "case": "case-164",
+      "file": "tests.test_run_assets",
+      "test": "test_unapproved_or_wrong_selector_has_no_side_effects",
+      "status": "passed"
+    },
+    {
+      "case": "case-165",
+      "file": "tests.test_run_assets",
+      "test": "test_unapproved_or_wrong_selector_has_no_side_effects",
+      "status": "passed"
+    },
+    {
+      "case": "case-166",
+      "file": "tests.test_run_assets",
+      "test": "test_binding_inputs_are_server_controlled",
+      "status": "passed"
+    },
+    {
+      "case": "case-167",
+      "file": "tests.test_run_assets",
+      "test": "test_binding_inputs_are_server_controlled",
+      "status": "passed"
+    },
+    {
+      "case": "case-168",
+      "file": "tests.test_run_assets",
+      "test": "test_binding_inputs_are_server_controlled",
+      "status": "passed"
+    },
+    {
+      "case": "case-169",
+      "file": "tests.test_run_assets",
+      "test": "test_binding_inputs_are_server_controlled",
+      "status": "passed"
+    },
+    {
+      "case": "case-170",
+      "file": "tests.test_run_assets",
+      "test": "test_binding_rls_worker_and_update_guard",
+      "status": "passed"
+    },
+    {
+      "case": "case-171",
+      "file": "tests.test_run_assets",
+      "test": "test_resolver_direct_rpc_rechecks_session_and_tenant",
+      "status": "passed"
+    },
+    {
+      "case": "case-172",
+      "file": "tests.test_run_assets",
+      "test": "test_rag_and_document_summary_binding_matches_worker",
+      "status": "passed"
+    },
+    {
+      "case": "case-173",
+      "file": "tests.test_run_assets",
+      "test": "test_rag_and_document_summary_binding_matches_worker",
+      "status": "passed"
+    },
+    {
+      "case": "case-174",
+      "file": "tests.test_run_assets",
+      "test": "test_effective_default_instructions_are_fingerprinted",
+      "status": "passed"
+    },
+    {
+      "case": "case-175",
+      "file": "tests.test_run_assets",
+      "test": "test_effective_default_instructions_are_fingerprinted",
+      "status": "passed"
+    },
+    {
+      "case": "case-176",
+      "file": "tests.test_builder_profiles",
+      "test": "test_direct_rpc_canonical_duplicate_document_refs_rejected",
+      "status": "passed"
+    }
+  ],
+  "prior_failures": [
+    "rollback test counted login audit instead of baseline",
+    "catalog inventory expected previous 40 tables/30 migrations/112 functions; updated to current 42/32/116"
+  ]
+}

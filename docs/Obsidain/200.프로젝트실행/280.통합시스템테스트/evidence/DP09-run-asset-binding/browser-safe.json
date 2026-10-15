@@ -1,0 +1,248 @@
+{
+  "status": "passed",
+  "duration_ms": 163733.222,
+  "runner_errors": 0,
+  "tests": [
+    {
+      "test_id": "D09_01_admin_create_append_and_reload",
+      "status": "passed",
+      "duration_ms": 2213
+    },
+    {
+      "test_id": "D09_02_legacy_is_read_only_and_existing_editor_remains",
+      "status": "passed",
+      "duration_ms": 1230
+    },
+    {
+      "test_id": "D09_03_user_and_other_organization_are_denied",
+      "status": "passed",
+      "duration_ms": 2285
+    },
+    {
+      "test_id": "D09_04_conflict_preserves_input_and_requires_latest_version_confirmation",
+      "status": "passed",
+      "duration_ms": 1710
+    },
+    {
+      "test_id": "D09_05_uncertain_create_reuses_request_after_server_commit",
+      "status": "passed",
+      "duration_ms": 1347
+    },
+    {
+      "test_id": "D09_06_organization_change_clears_private_draft",
+      "status": "passed",
+      "duration_ms": 1388
+    },
+    {
+      "test_id": "B05_01_chat_surface",
+      "status": "passed",
+      "duration_ms": 2710
+    },
+    {
+      "test_id": "B05_02_save_reload_history",
+      "status": "passed",
+      "duration_ms": 4181
+    },
+    {
+      "test_id": "B05_03_lost_acceptance_one_provider_call",
+      "status": "passed",
+      "duration_ms": 3720
+    },
+    {
+      "test_id": "B05_04_missing_acceptance_replays_identical_payload_once",
+      "status": "passed",
+      "duration_ms": 3389
+    },
+    {
+      "test_id": "B05_05_double_click_one_admission",
+      "status": "passed",
+      "duration_ms": 3547
+    },
+    {
+      "test_id": "B05_06_stream_eof_queries_saved_state",
+      "status": "passed",
+      "duration_ms": 5136
+    },
+    {
+      "test_id": "B05_07_actual_stream_draft_and_cancel",
+      "status": "passed",
+      "duration_ms": 3395
+    },
+    {
+      "test_id": "B05_08_two_tabs_independent_conversation_scopes",
+      "status": "passed",
+      "duration_ms": 4592
+    },
+    {
+      "test_id": "B05_09_late_A_stream_discarded_after_switch",
+      "status": "passed",
+      "duration_ms": 3465
+    },
+    {
+      "test_id": "B05_10_user_admin_routes_and_APIs_denied",
+      "status": "passed",
+      "duration_ms": 2138
+    },
+    {
+      "test_id": "B05_11_agent_conflict_no_automatic_overwrite",
+      "status": "passed",
+      "duration_ms": 2314
+    },
+    {
+      "test_id": "B05_12_agent_stop_blocks_new_provider_calls",
+      "status": "passed",
+      "duration_ms": 2779
+    },
+    {
+      "test_id": "B05_13_platform_writer_only_no_usage_read",
+      "status": "passed",
+      "duration_ms": 2874
+    },
+    {
+      "test_id": "B05_14_platform_reader_only_no_write",
+      "status": "passed",
+      "duration_ms": 2020
+    },
+    {
+      "test_id": "B05_15_tadmin_local_cap_and_no_allocation",
+      "status": "passed",
+      "duration_ms": 2203
+    },
+    {
+      "test_id": "B05_16_padmin_current_managed_allocation_only",
+      "status": "passed",
+      "duration_ms": 2290
+    },
+    {
+      "test_id": "B05_17_unknown_usage_reservation_preserved",
+      "status": "passed",
+      "duration_ms": 4612
+    },
+    {
+      "test_id": "B05_18_expired_session_removes_stream_body",
+      "status": "passed",
+      "duration_ms": 5897
+    },
+    {
+      "test_id": "B05_19_platform_permission_revoked_clears_summary",
+      "status": "passed",
+      "duration_ms": 3014
+    },
+    {
+      "test_id": "B05_20_mobile_chat_no_page_overflow",
+      "status": "passed",
+      "duration_ms": 3477
+    },
+    {
+      "test_id": "B05_21_conversation_cursor_uses_real_server_pages",
+      "status": "passed",
+      "duration_ms": 3508
+    },
+    {
+      "test_id": "B05_22_GET_retry_bounded_no_new_generation",
+      "status": "passed",
+      "duration_ms": 6994
+    },
+    {
+      "test_id": "B05_23_invalid_stream_gap_canonical_recovery",
+      "status": "passed",
+      "duration_ms": 5838
+    },
+    {
+      "test_id": "B05_24_invalid_stream_epoch_canonical_recovery",
+      "status": "passed",
+      "duration_ms": 5499
+    },
+    {
+      "test_id": "B05_25_invalid_stream_org_canonical_recovery",
+      "status": "passed",
+      "duration_ms": 5349
+    },
+    {
+      "test_id": "B05_26_invalid_stream_size_canonical_recovery",
+      "status": "passed",
+      "duration_ms": 5415
+    },
+    {
+      "test_id": "B05_27_unresolved_admission_blocks_new_requests",
+      "status": "passed",
+      "duration_ms": 2539
+    },
+    {
+      "test_id": "B05_28_chat_logout_clears_other_tab_draft",
+      "status": "passed",
+      "duration_ms": 3937
+    },
+    {
+      "test_id": "B05_29_hidden_state_stops_poll_without_cancelling_run",
+      "status": "passed",
+      "duration_ms": 6311
+    },
+    {
+      "test_id": "B05_30_fragmented_UTF8_CRLF_stream_parser",
+      "status": "passed",
+      "duration_ms": 2411
+    },
+    {
+      "test_id": "B05_31_saved_prompt_rendered_as_text_without_storage",
+      "status": "passed",
+      "duration_ms": 3797
+    },
+    {
+      "test_id": "B05_32_late_A_admin_settings_do_not_replace_B_form",
+      "status": "passed",
+      "duration_ms": 2420
+    },
+    {
+      "test_id": "U12_01_user_artifact_chat_and_history",
+      "status": "passed",
+      "duration_ms": 2248
+    },
+    {
+      "test_id": "U12_02_admin_artifact_approval_and_site_switch",
+      "status": "passed",
+      "duration_ms": 2553
+    },
+    {
+      "test_id": "U12_03_direct_admin_denial_and_global_scope",
+      "status": "passed",
+      "duration_ms": 1684
+    },
+    {
+      "test_id": "U12_04_user_private_document_has_no_admin_requests",
+      "status": "passed",
+      "duration_ms": 3903
+    },
+    {
+      "test_id": "U12_05_org_change_and_cross_port_server_logout",
+      "status": "passed",
+      "duration_ms": 2158
+    },
+    {
+      "test_id": "U12_06_mobile_keyboard_and_artifact_visuals",
+      "status": "passed",
+      "duration_ms": 1823
+    },
+    {
+      "test_id": "U12_07_tenant_hint_cannot_grant_management",
+      "status": "passed",
+      "duration_ms": 1159
+    },
+    {
+      "test_id": "D09_07_run_binding_saved_and_reloaded",
+      "status": "passed",
+      "duration_ms": 3538
+    },
+    {
+      "test_id": "D09_08_alias_replay_and_other_organization_rejected",
+      "status": "passed",
+      "duration_ms": 3169
+    },
+    {
+      "test_id": "D09_09_historical_binding_missing_is_explicit",
+      "status": "passed",
+      "duration_ms": 2850
+    }
+  ],
+  "steps": []
+}

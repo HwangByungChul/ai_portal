@@ -54,12 +54,12 @@ class FixtureState:
 
     def verify_catalog(self):
         with self.db.admin_connection() as conn:
-            assert conn.execute("SELECT count(*) FROM pg_tables WHERE schemaname IN ('security','portal','ops','rag')").fetchone()[0]==34
-            assert conn.execute("SELECT count(*) FROM infra.schema_migrations").fetchone()[0]==26
+            assert conn.execute("SELECT count(*) FROM pg_tables WHERE schemaname IN ('security','portal','ops','rag')").fetchone()[0]==68
+            assert conn.execute("SELECT count(*) FROM infra.schema_migrations").fetchone()[0]==52
             rows=conn.execute("SELECT n.nspname,c.relname,c.relrowsecurity,c.relforcerowsecurity,r.rolname "
                 "FROM pg_class c JOIN pg_namespace n ON n.oid=c.relnamespace JOIN pg_roles r ON r.oid=c.relowner "
-                "WHERE n.nspname IN ('portal','ops') AND c.relname IN ('conversations','agent_configs','audit_events','messages','runs','tenant_budgets','call_attempts','usage_events')").fetchall()
-            assert len(rows)==8 and all(r[2] and r[3] and r[4]=='ai_owner' for r in rows)
+                "WHERE n.nspname IN ('portal','ops') AND c.relname IN ('conversations','agent_configs','audit_events','messages','runs','tenant_budgets','call_attempts','usage_events','assets','asset_versions','builder_profiles','builder_receipts','builder_trials','builder_assessments','builder_cases','builder_evaluations','builder_evidence_shares','asset_deployments','asset_publications','published_agent_runs','asset_publication_events','dynamic_agent_favorites','data_imports','guardrail_policy_versions','guardrail_policy_heads','guardrail_violations','tool_approvals','tool_heads','tool_receipts','workflows','workflow_versions','workflow_heads','workflow_runs','workflow_steps','use_case_heads','meeting_run_contexts','meeting_quality_reviews')").fetchall()
+            assert len(rows)==37 and all(r[2] and r[3] and r[4]=='ai_owner' for r in rows)
             assert conn.execute("SELECT has_table_privilege('ai_policy_executor','portal.conversations','SELECT')").fetchone()[0]
             assert conn.execute("SELECT has_column_privilege('ai_policy_executor','ops.project_budget','accounted_krw','SELECT')").fetchone()[0]
             assert conn.execute("SELECT has_column_privilege('ai_policy_executor','portal.messages','body','SELECT')").fetchone()[0]
@@ -69,7 +69,7 @@ class FixtureState:
                 "EXISTS(SELECT 1 FROM aclexplode(p.proacl) a WHERE a.grantee=0 AND a.privilege_type='EXECUTE') "
                 "FROM pg_proc p JOIN pg_namespace n ON n.oid=p.pronamespace JOIN pg_roles r ON r.oid=p.proowner "
                 "WHERE n.nspname='security'").fetchall()
-            assert len(funcs)==104 and all(r[0] and r[1]==['search_path=pg_catalog, security, pg_temp'] and r[2]=='ai_policy_executor' and not r[3] for r in funcs)
+            assert len(funcs)==184 and all(r[0] and r[1]==['search_path=pg_catalog, security, pg_temp'] and r[2]=='ai_policy_executor' and not r[3] for r in funcs)
             assert conn.execute('SELECT count(*) FROM security.managed_tenants').fetchone()[0]==1
 
 

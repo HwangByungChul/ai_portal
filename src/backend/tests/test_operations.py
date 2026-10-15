@@ -29,8 +29,9 @@ def headers(f,tenant='A',csrf=None):
 
 
 def change_agent(client,f,csrf,revision=1,tenant='A',agent='general',**kwargs):
-    return client.patch('/api/v1/admin/agents/'+agent,headers=headers(f,tenant,csrf),
-        json={'expected_revision':revision,**(kwargs or {'name':'변경 Agent','description':'새 설명','instructions':'새 지침'})})
+    if kwargs:
+        return client.patch('/api/v1/admin/agents/'+agent,headers=headers(f,tenant,csrf),json={'expected_revision':revision,**kwargs})
+    return client.put('/api/v1/admin/agents/'+agent+'/availability',headers=headers(f,tenant,csrf),json={'expected_revision':revision,'enabled':True})
 
 
 def stored_agent(f,tenant='A',agent='general'):
@@ -74,7 +75,7 @@ def test_agent_public_no_instructions_and_pipeline_not_ready(client,login,ops_ro
 def test_agent_changes_cas_audit_and_idle(client,login,ops_rows):
     f=ops_rows;csrf=login(client,'A-ADM')['csrf_token']
     assert change_agent(client,f,csrf).status_code==200
-    enabled,revision,settings=stored_agent(f);assert enabled and revision==2 and settings['name']=='변경 Agent'
+    enabled,revision,settings=stored_agent(f);assert enabled and revision==2 and settings['name']=='공통 Agent'
     assert change_agent(client,f,csrf).status_code==409
     reply=client.put('/api/v1/admin/agents/general/availability',headers=headers(f,csrf=csrf),json={'enabled':False,'expected_revision':2});assert reply.status_code==200
     assert stored_agent(f)[:2]==(False,3)
@@ -195,7 +196,7 @@ def usage_rows(ops_rows):
         for actor,tenant,state in [('A-U1','A','usage_unknown'),('A-U2','A','settled'),('B-U1','B','usage_unknown')]:
             run=uuid4();call=uuid4();calls[actor]=call
             conn.execute('INSERT INTO portal.runs(tenant_id,run_id,conversation_id,owner_user_id,client_send_id,request_hash,agent_key,config_snapshot,origin_session_id,execution_mode) '
-                "VALUES(%s,%s,%s,%s,%s,%s,'general','{}',%s,'mock')",
+                "VALUES(%s,%s,%s,%s,%s,%s,'general',jsonb_build_object('agent_key','general','config_version',1),%s,'mock')",
                 (f.tenant_ids[tenant],run,f.conversation_ids[tenant+':'+actor],f.actor_ids[actor],uuid4(),bytes(32),f.state.session_ids[actor]))
             conn.execute('INSERT INTO ops.call_attempts(tenant_id,call_id,run_id,initiator_user_id,operation,budget_id,mode,agent_key,config_revision,step_key,input_fingerprint,permit_revision,permit_expires_at,reserved_krw,price_snapshot,state,dispatched_at,dispatch_claim_hash,provider_end_status,slot_held) '
                 "VALUES(%s,%s,%s,%s,'generate_general',%s,'mock','general',1,'generation',%s,1,clock_timestamp()+interval '10 seconds',3.64,%s,%s,clock_timestamp(),%s,'observed',false)",
@@ -266,7 +267,7 @@ def test_simultaneous_same_revision_agent_update_one_success(client,login,ops_ro
     f=ops_rows;csrf=login(client,'A-ADM')['csrf_token']
     with ThreadPoolExecutor(max_workers=2) as executor:replies=list(executor.map(lambda _:change_agent(client,f,csrf),range(2)))
     assert sorted(x.status_code for x in replies)==[200,409] and stored_agent(f)[1]==2
-    with f.db.admin_connection() as conn:assert conn.execute("SELECT count(*) FROM ops.audit_events WHERE action='operations_agent_settings'").fetchone()[0]==1
+    with f.db.admin_connection() as conn:assert conn.execute("SELECT count(*) FROM ops.audit_events WHERE action='operations_agent_availability'").fetchone()[0]==1
 
 
 def test_waiting_agent_change_rechecks_committed_demotion(client,login,ops_rows):
@@ -346,7 +347,7 @@ def test_managed_padmin_without_global_capabilities_can_allocate_only_own(client
 
 def test_agent_partial_settings_and_explicit_rag_enable_remain_unavailable(client,login,ops_rows):
     f=ops_rows;csrf=login(client,'A-ADM')['csrf_token']
-    reply=change_agent(client,f,csrf,name='이름만 변경');assert reply.status_code==200
+    reply=change_agent(client,f,csrf,name='이름만 변경');assert reply.status_code==409 and reply.json()['error']['code']=='APPROVAL_REQUIRED'
     assert stored_agent(f)[2]['instructions']=='private-instruction-marker'
     reply=client.put('/api/v1/admin/agents/rules_rag/availability',headers=headers(f,csrf=csrf),json={'enabled':True,'expected_revision':1});assert reply.status_code==200
     public=client.get('/api/v1/agents',headers=headers(f)).json()['data']['items']
@@ -378,8 +379,8 @@ def test_all_operations_over_real_http_and_restart(running_server,ops_rows):
         h=headers(f,csrf=csrf)
         assert admin.get('/api/v1/agents',headers=headers(f)).status_code==200
         assert admin.get('/api/v1/admin/agents/general',headers=headers(f)).status_code==200
-        assert admin.patch('/api/v1/admin/agents/general',headers=h,json={'name':'네트워크 시험','expected_revision':1}).status_code==200
-        assert admin.put('/api/v1/admin/agents/general/availability',headers=h,json={'enabled':False,'expected_revision':2}).status_code==200
+        assert admin.patch('/api/v1/admin/agents/general',headers=h,json={'name':'네트워크 시험','expected_revision':1}).status_code==409
+        assert admin.put('/api/v1/admin/agents/general/availability',headers=h,json={'enabled':False,'expected_revision':1}).status_code==200
         assert admin.get('/api/v1/usage/me',headers=headers(f)).json()['data']['call_count']==0
         assert admin.get('/api/v1/admin/usage',headers=headers(f)).json()['data']['call_count']==0
         assert admin.get('/api/v1/admin/budget',headers=headers(f)).status_code==200
@@ -389,11 +390,11 @@ def test_all_operations_over_real_http_and_restart(running_server,ops_rows):
         assert admin.put('/api/v1/platform/tenant-budgets/'+str(f.tenant_ids['A']),headers=h,json={'allocated_cap_krw':'12000','expected_revision':2}).status_code==200
         assert user.get('/api/v1/admin/usage',headers=headers(f)).status_code==403
         live.restart()
-        assert admin.get('/api/v1/admin/agents/general',headers=headers(f)).json()['data']['config_version']==3
+        assert admin.get('/api/v1/admin/agents/general',headers=headers(f)).json()['data']['config_version']==2
         budget=admin.get('/api/v1/admin/budget',headers=headers(f)).json()['data']
         assert budget['revision']==3 and Decimal(budget['local_cap_krw'])==Decimal('10000') and Decimal(budget['allocated_cap_krw'])==Decimal('12000')
         assert not admin.get('/api/v1/platform/summary').json()['data']['enabled']
         assert admin.get('/api/v1/admin/usage',headers=headers(f)).json()['data']['call_count']==0
     record('B02-live-operations',started,{'native_api_routes_checked':11,'user_admin_denied':True,
-        'restart_preserved_agent_revision':3,'restart_preserved_budget_revision':3,
+        'restart_preserved_agent_revision':2,'restart_preserved_budget_revision':3,
         'restart_preserved_global_stop':True,'provider_calls':0})

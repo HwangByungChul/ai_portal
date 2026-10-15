@@ -1,0 +1,11 @@
+{
+  "config_only_dbname_changed": true,
+  "credentials_hmac_keys_mode_preserved": true,
+  "registry_only_db_changed": true,
+  "health_statuses": {
+    "api": 200,
+    "user": 200,
+    "admin": 200
+  },
+  "source_of_evidence": "independent root scalar comparison and HTTP read only"
+}

@@ -1,0 +1,18 @@
+{
+  "status": "passed",
+  "duration_ms": 13301.903,
+  "runner_errors": 0,
+  "tests": [
+    {
+      "test_id": "WF_01_workflow_canvas_page_view_and_dag_nodes",
+      "status": "passed",
+      "duration_ms": 2815
+    },
+    {
+      "test_id": "WF_02_approved_version_runtime_ui_contract",
+      "status": "passed",
+      "duration_ms": 4822
+    }
+  ],
+  "steps": []
+}

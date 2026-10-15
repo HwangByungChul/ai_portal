@@ -12,7 +12,8 @@ def check_transport(request, settings):
 
 def check_write(request, settings, *, json_body=False):
     check_transport(request, settings)
-    if (request.headers.getlist('origin') != [settings.origin]
+    origins=request.headers.getlist('origin')
+    if (len(origins)!=1 or origins[0] not in settings.trusted_origins
             or request.headers.getlist('x-requested-with') != ['ai-portal']):
         raise AppError('REQUEST_FORBIDDEN', 403)
     if json_body:

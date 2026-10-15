@@ -1,0 +1,6 @@
+{
+  "source_database": "ai_portal_mvp_test_b9a06099c0954eccb570ccbd37c92343",
+  "destination_database": "ai_portal_mvp_test_6b83243d57fe44c3964d5ecf73a9aa26",
+  "marker": "ai-platform:fixture:A-auth:0f5ed7368c5c",
+  "cutover": false
+}

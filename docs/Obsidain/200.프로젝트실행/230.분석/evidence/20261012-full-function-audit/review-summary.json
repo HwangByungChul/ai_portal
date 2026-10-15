@@ -1,0 +1,23 @@
+{
+  "functions": {
+    "부분 구현": 31,
+    "미구현": 29
+  },
+  "functions_49": {
+    "부분 구현": 31,
+    "미구현": 18
+  },
+  "screens": {
+    "부분 구현": 41,
+    "미구현": 109
+  },
+  "technical": {
+    "미구현": 24,
+    "부분 구현": 33,
+    "원본 최초오픈 제외": 5
+  },
+  "completed_full_function_ids": [],
+  "production_release_requested": false,
+  "product_feature_audit_requested": true,
+  "full_function_acceptance_not_verified": 60
+}

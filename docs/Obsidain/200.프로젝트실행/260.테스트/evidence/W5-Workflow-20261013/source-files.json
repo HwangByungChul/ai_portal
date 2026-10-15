@@ -1,0 +1,24 @@
+{
+  "scope": "W5 execution ledger milestone; excludes unrelated working-tree changes",
+  "files": {
+    "src/backend/migrations/048_workflow_execution_ledger.sql": "b0cd1be94d4f7477325a58428ca94ed89f0e36cdabab442c83cc3c169a260d5f",
+    "src/backend/app/workflows/identity.py": "8158a2320faf0ae2399df462af6ccf84246adb2fac0a74c9d3f924fb2f7bb45a",
+    "src/backend/app/workflows/bindings.py": "49db077315375c6f60b7a83caecfecf5cfff547e12244c72feb8f32927d971f8",
+    "src/backend/app/workflows/repository.py": "1a4ca7eb5679af52ae4c63708cfe54108f0127384e5ba4cfb11732ba8278bc82",
+    "src/backend/app/workflows/service.py": "8d920deb5500063307288891004e360790eb41a1c09e9759ea3b5bfc52dab2b7",
+    "src/backend/app/workflows/routes.py": "946bf09f8b4ca4a01823d688db435fc685a515429170429252d6716a38163eed",
+    "src/backend/app/main.py": "a605b24e7c1915782a90239d5208fc7d487a032789aff53281d7b459b8a6e24c",
+    "src/backend/app/errors.py": "de9467a6f1380ea8ecedcb685b9039f317dbbf75bd7c9b32b74e26f7871309a7",
+    "src/backend/scripts/portal_test_control.py": "ba037075c7a1da637aaeed07c6d28c20e3a53fd9854a559ff69e40a7b458f37a",
+    "src/backend/tests/support.py": "23b948541ca3b518921f3c09d58ed572af9915cae651266fc1fec4b2497df7ad",
+    "src/backend/tests/test_workflow_runtime.py": "45692753607d6c76de79e90ae45c1f9485e432924ad6cda11bf138a489e040a8",
+    "src/backend/tests/test_workflow_runtime_migration.py": "449a76fae0e42ad01fc7c81dcbec1b95e2b592977ef00a7bfafdde402eb60aaf",
+    "src/backend/tests/test_workflow_approvals.py": "5c47e2a1f30b5173cbadfeb4d373479eb164c990d561c8b0d9b102bbadb498d1",
+    "src/backend/tests/test_tool_persistent_execution.py": "8f66adbd1002b08a62ae5740448e42971d3461718823ce214737207c60572817",
+    "src/frontend/src/WorkflowCanvasPage.tsx": "ce1c4bdcd925945bd8a6eb80d4f15bc9d0d929ee560faf912a7dec78b88732b1",
+    "src/frontend/packages/api-contract/src/types.ts": "b0fbec34377d95fa25cf5f64fd42fa06d7828e36489324e2c807d931c79388e2",
+    "src/frontend/packages/api-contract/src/api.ts": "b1460313c6ad31b9f99a053290849070989063519aa6d702f88df933fbb75480",
+    "src/frontend/tests/workflow-orchestration.spec.ts": "19d895fbe00aad37e2e8d31caffb2cc67880917b4aa6c64c499d0927d33e6f2f",
+    "src/frontend/tests/safe-reporter.ts": "65810bb49f419db5091ab69e671db3ef1e3ae17fc0c0dbe54d6985c91eef9d6c"
+  }
+}

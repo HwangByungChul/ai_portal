@@ -1,0 +1,1728 @@
+{
+  "validation_database": "ai_portal_mvp_test_d509757eed5f4fd29b4915228f7c174f",
+  "stage_database": "ai_portal_mvp_test_6b83243d57fe44c3964d5ecf73a9aa26",
+  "clone_exact_before_http": true,
+  "accounts": [
+    {
+      "login_id": "a-adm",
+      "active": true,
+      "credential_hash_match": true,
+      "login_status": 200,
+      "me_status": 200,
+      "effective_capabilities": {
+        "can_view_platform_usage": false,
+        "can_change_platform_availability": false
+      },
+      "tenants_status": 200,
+      "tenant_response_shape": [
+        "items"
+      ],
+      "logout_status": 200
+    },
+    {
+      "login_id": "a-u1",
+      "active": true,
+      "credential_hash_match": true,
+      "login_status": 200,
+      "me_status": 200,
+      "effective_capabilities": {
+        "can_view_platform_usage": false,
+        "can_change_platform_availability": false
+      },
+      "tenants_status": 200,
+      "tenant_response_shape": [
+        "items"
+      ],
+      "logout_status": 200
+    },
+    {
+      "login_id": "a-u2",
+      "active": true,
+      "credential_hash_match": true,
+      "login_status": 200,
+      "me_status": 200,
+      "effective_capabilities": {
+        "can_view_platform_usage": false,
+        "can_change_platform_availability": false
+      },
+      "tenants_status": 200,
+      "tenant_response_shape": [
+        "items"
+      ],
+      "logout_status": 200
+    },
+    {
+      "login_id": "b-adm",
+      "active": true,
+      "credential_hash_match": true,
+      "login_status": 200,
+      "me_status": 200,
+      "effective_capabilities": {
+        "can_view_platform_usage": false,
+        "can_change_platform_availability": false
+      },
+      "tenants_status": 200,
+      "tenant_response_shape": [
+        "items"
+      ],
+      "logout_status": 200
+    },
+    {
+      "login_id": "b-u1",
+      "active": true,
+      "credential_hash_match": true,
+      "login_status": 200,
+      "me_status": 200,
+      "effective_capabilities": {
+        "can_view_platform_usage": false,
+        "can_change_platform_availability": false
+      },
+      "tenants_status": 200,
+      "tenant_response_shape": [
+        "items"
+      ],
+      "logout_status": 200
+    },
+    {
+      "login_id": "dual",
+      "active": true,
+      "credential_hash_match": true,
+      "login_status": 200,
+      "me_status": 200,
+      "effective_capabilities": {
+        "can_view_platform_usage": false,
+        "can_change_platform_availability": false
+      },
+      "tenants_status": 200,
+      "tenant_response_shape": [
+        "items"
+      ],
+      "logout_status": 200
+    },
+    {
+      "login_id": "dual-adm",
+      "active": true,
+      "credential_hash_match": true,
+      "login_status": 200,
+      "me_status": 200,
+      "effective_capabilities": {
+        "can_view_platform_usage": false,
+        "can_change_platform_availability": false
+      },
+      "tenants_status": 200,
+      "tenant_response_shape": [
+        "items"
+      ],
+      "logout_status": 200
+    },
+    {
+      "login_id": "inactive",
+      "active": false,
+      "credential_hash_match": true,
+      "login_status": 401
+    },
+    {
+      "login_id": "no_members",
+      "active": true,
+      "credential_hash_match": true,
+      "login_status": 200,
+      "me_status": 200,
+      "effective_capabilities": {
+        "can_view_platform_usage": false,
+        "can_change_platform_availability": false
+      },
+      "tenants_status": 200,
+      "tenant_response_shape": [
+        "items"
+      ],
+      "logout_status": 200
+    },
+    {
+      "login_id": "p-a",
+      "active": true,
+      "credential_hash_match": true,
+      "login_status": 200,
+      "me_status": 200,
+      "effective_capabilities": {
+        "can_view_platform_usage": true,
+        "can_change_platform_availability": true
+      },
+      "tenants_status": 200,
+      "tenant_response_shape": [
+        "items"
+      ],
+      "logout_status": 200
+    },
+    {
+      "login_id": "p_none",
+      "active": true,
+      "credential_hash_match": true,
+      "login_status": 200,
+      "me_status": 200,
+      "effective_capabilities": {
+        "can_view_platform_usage": false,
+        "can_change_platform_availability": false
+      },
+      "tenants_status": 200,
+      "tenant_response_shape": [
+        "items"
+      ],
+      "logout_status": 200
+    },
+    {
+      "login_id": "p_read_only",
+      "active": true,
+      "credential_hash_match": true,
+      "login_status": 200,
+      "me_status": 200,
+      "effective_capabilities": {
+        "can_view_platform_usage": true,
+        "can_change_platform_availability": false
+      },
+      "tenants_status": 200,
+      "tenant_response_shape": [
+        "items"
+      ],
+      "logout_status": 200
+    },
+    {
+      "login_id": "p_write_only",
+      "active": true,
+      "credential_hash_match": true,
+      "login_status": 200,
+      "me_status": 200,
+      "effective_capabilities": {
+        "can_view_platform_usage": false,
+        "can_change_platform_availability": true
+      },
+      "tenants_status": 200,
+      "tenant_response_shape": [
+        "items"
+      ],
+      "logout_status": 200
+    }
+  ],
+  "private_documents": [
+    {
+      "path": "docs/Obsidain/200.\ud504\ub85c\uc81d\ud2b8\uc2e4\ud589/270.\ud30c\uc77c\ub7ff\uc801\uc6a9/00 \ub85c\uceec \uc2dc\uc5f0 \uacc4\uc815 \ubc0f \uc811\uc18d \uc815\ubcf4 (\ube44\uacf5\uac1c).md",
+      "checked_accounts": 13,
+      "matches": 0,
+      "mismatches": [
+        "a-adm",
+        "a-u1",
+        "a-u2",
+        "b-adm",
+        "b-u1",
+        "dual",
+        "dual-adm",
+        "inactive",
+        "no_members",
+        "p-a",
+        "p_none",
+        "p_read_only",
+        "p_write_only"
+      ]
+    },
+    {
+      "path": "docs/Obsidain/200.\ud504\ub85c\uc81d\ud2b8\uc2e4\ud589/270.\ud30c\uc77c\ub7ff\uc801\uc6a9/02 \uac1c\ubc1c \uc11c\ube44\uc2a4 \uacc4\uc815 \ubc0f \uc811\uc18d \uc815\ubcf4 (\ube44\uacf5\uac1c).md",
+      "checked_accounts": 13,
+      "matches": 13,
+      "mismatches": []
+    }
+  ],
+  "routes": [
+    {
+      "login_id": "a-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/catalog/assets",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/published-agents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/published-agent-runs",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/documents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/tools",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/workflows/catalog",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/overview",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/guardrails/policies",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "a-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/guardrails/violations",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "a-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/tool-approvals",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/workflow-approvals",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/data-imports",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/catalog/assets",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/published-agents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/published-agent-runs",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/documents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/tools",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/workflows/catalog",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/overview",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "a-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/guardrails/policies",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "a-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/guardrails/violations",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "a-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/tool-approvals",
+      "status": 403,
+      "error_code": "TOOL_NOT_PERMITTED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "a-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/workflow-approvals",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "a-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/data-imports",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-u2",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/catalog/assets",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-u2",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/published-agents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-u2",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/published-agent-runs",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-u2",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/documents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-u2",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/tools",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-u2",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/workflows/catalog",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "a-u2",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/overview",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "a-u2",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/guardrails/policies",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "a-u2",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/guardrails/violations",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "a-u2",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/tool-approvals",
+      "status": 403,
+      "error_code": "TOOL_NOT_PERMITTED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "a-u2",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/workflow-approvals",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "a-u2",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/data-imports",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "b-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/catalog/assets",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "b-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/published-agents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "b-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/published-agent-runs",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "b-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/documents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "b-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/tools",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "b-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/workflows/catalog",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "b-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/overview",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "b-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/guardrails/policies",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "b-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/guardrails/violations",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "b-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/tool-approvals",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "b-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/workflow-approvals",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "b-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/data-imports",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "b-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/catalog/assets",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "b-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/published-agents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "b-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/published-agent-runs",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "b-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/documents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "b-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/tools",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "b-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/workflows/catalog",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "b-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/overview",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "b-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/guardrails/policies",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "b-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/guardrails/violations",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "b-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/tool-approvals",
+      "status": 403,
+      "error_code": "TOOL_NOT_PERMITTED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "b-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/workflow-approvals",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "b-u1",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/data-imports",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/catalog/assets",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/published-agents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/published-agent-runs",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/documents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/tools",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/workflows/catalog",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/overview",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/guardrails/policies",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/guardrails/violations",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/tool-approvals",
+      "status": 403,
+      "error_code": "TOOL_NOT_PERMITTED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/workflow-approvals",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/data-imports",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/catalog/assets",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/published-agents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/published-agent-runs",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/documents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/tools",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/workflows/catalog",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/overview",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/guardrails/policies",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/guardrails/violations",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/tool-approvals",
+      "status": 403,
+      "error_code": "TOOL_NOT_PERMITTED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/workflow-approvals",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "dual",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/data-imports",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/catalog/assets",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/published-agents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/published-agent-runs",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/documents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/tools",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/workflows/catalog",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/overview",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/guardrails/policies",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/guardrails/violations",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/tool-approvals",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/workflow-approvals",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/data-imports",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/catalog/assets",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/published-agents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/published-agent-runs",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/documents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/tools",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/workflows/catalog",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/overview",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/guardrails/policies",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/guardrails/violations",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/tool-approvals",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/workflow-approvals",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "dual-adm",
+      "role": "TADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000b",
+      "path": "/api/v1/admin/data-imports",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p-a",
+      "role": "PADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/catalog/assets",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p-a",
+      "role": "PADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/published-agents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p-a",
+      "role": "PADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/published-agent-runs",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p-a",
+      "role": "PADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/documents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p-a",
+      "role": "PADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/tools",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p-a",
+      "role": "PADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/workflows/catalog",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p-a",
+      "role": "PADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/overview",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p-a",
+      "role": "PADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/guardrails/policies",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p-a",
+      "role": "PADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/guardrails/violations",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p-a",
+      "role": "PADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/tool-approvals",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p-a",
+      "role": "PADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/workflow-approvals",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p-a",
+      "role": "PADMIN",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/data-imports",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p_none",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/catalog/assets",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p_none",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/published-agents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p_none",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/published-agent-runs",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p_none",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/documents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p_none",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/tools",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p_none",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/workflows/catalog",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p_none",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/overview",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "p_none",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/guardrails/policies",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "p_none",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/guardrails/violations",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "p_none",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/tool-approvals",
+      "status": 403,
+      "error_code": "TOOL_NOT_PERMITTED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "p_none",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/workflow-approvals",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "p_none",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/data-imports",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p_read_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/catalog/assets",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p_read_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/published-agents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p_read_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/published-agent-runs",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p_read_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/documents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p_read_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/tools",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p_read_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/workflows/catalog",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p_read_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/overview",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "p_read_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/guardrails/policies",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "p_read_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/guardrails/violations",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "p_read_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/tool-approvals",
+      "status": 403,
+      "error_code": "TOOL_NOT_PERMITTED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "p_read_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/workflow-approvals",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "p_read_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/data-imports",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p_write_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/catalog/assets",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p_write_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/published-agents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p_write_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/published-agent-runs",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p_write_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/documents",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p_write_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/tools",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p_write_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/workflows/catalog",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    },
+    {
+      "login_id": "p_write_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/overview",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "p_write_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/guardrails/policies",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "p_write_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/guardrails/violations",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "p_write_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/tool-approvals",
+      "status": 403,
+      "error_code": "TOOL_NOT_PERMITTED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "p_write_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/workflow-approvals",
+      "status": 403,
+      "error_code": "MANAGEMENT_DENIED",
+      "expected_status": 403,
+      "passed": true
+    },
+    {
+      "login_id": "p_write_only",
+      "role": "USER",
+      "tenant_id": "10000000-0000-4000-8000-00000000000a",
+      "path": "/api/v1/admin/data-imports",
+      "status": 200,
+      "expected_status": 200,
+      "passed": true
+    }
+  ],
+  "execution_enabled": false,
+  "index_enabled": false,
+  "paid_calls": 0,
+  "runtime_credential_connections": [
+    {
+      "database": "ai_portal_mvp_test_b9a06099c0954eccb570ccbd37c92343",
+      "role": "ai_web",
+      "connected": true
+    },
+    {
+      "database": "ai_portal_mvp_test_b9a06099c0954eccb570ccbd37c92343",
+      "role": "ai_index",
+      "connected": true
+    },
+    {
+      "database": "ai_portal_mvp_test_b9a06099c0954eccb570ccbd37c92343",
+      "role": "ai_meter",
+      "connected": true
+    },
+    {
+      "database": "ai_portal_mvp_test_6b83243d57fe44c3964d5ecf73a9aa26",
+      "role": "ai_web",
+      "connected": true
+    },
+    {
+      "database": "ai_portal_mvp_test_6b83243d57fe44c3964d5ecf73a9aa26",
+      "role": "ai_index",
+      "connected": true
+    },
+    {
+      "database": "ai_portal_mvp_test_6b83243d57fe44c3964d5ecf73a9aa26",
+      "role": "ai_meter",
+      "connected": true
+    }
+  ],
+  "health_status": 200,
+  "child_stopped": true,
+  "pool_connections_after_stop": 0,
+  "stage_52_old_columns_still_exact": true,
+  "primary_53_tables_still_exact": true,
+  "validation_clone_removed": true
+}

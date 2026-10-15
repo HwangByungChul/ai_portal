@@ -1,0 +1,17 @@
+{
+  "date": "2026-10-13",
+  "scope": "Sequential selected backend regression; disposable synthetic DB only",
+  "tests": 57,
+  "failures": 0,
+  "errors": 0,
+  "skipped": 0,
+  "seconds": 76.934,
+  "new_schema_tables": 59,
+  "new_migration_count": 47,
+  "security_functions": 153,
+  "primary_applied": false,
+  "paid_calls": 0,
+  "primary_business_writes": 0,
+  "new_migration_sha256": "fae0cf324c361269695c781b2694190112ccf237c714cf3ac8a160e301933833",
+  "current_040_sha256": "49235a34ddcdb1a3c034c6ac42303cbd3bfadaddb20d3e2bf71830521e07fff4"
+}

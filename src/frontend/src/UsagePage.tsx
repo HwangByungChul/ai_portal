@@ -29,7 +29,8 @@ function BudgetEditor({tenant,user}:{tenant:Tenant;user:User}){
 }
 const operationName:Record<string,string>={generate_general:'일반 답변 생성',generation:'답변 생성',general_generation:'일반 답변 생성',document_embedding:'문서 임베딩',query_embedding:'질의 임베딩'};
 const usageName:Record<string,string>={accounted:'사용량 확인됨',unknown:'사용량 확인 필요 · 예약 유지',pending:'사용량 대기',reserved:'예약 중',released:'예약 해제'};
-export function UsagePage({tenant,user,admin=false}:{tenant:Tenant;user:User;admin?:boolean}){
+export function UsagePage({tenant,user,admin:requestedAdmin=false}:{tenant:Tenant;user:User;admin?:boolean}){
+ const admin=import.meta.env.PORTAL_SITE==='user'?false:requestedAdmin;
  const remote=useRemote<Usage>(admin?'/admin/usage':'/usage/me',tenant.tenant_id);const [items,setItems]=useState<UsageItem[]>([]),[cursor,setCursor]=useState<string|null>(null);const [paging,setPaging]=useState(false);const pageLock=useRef(false);
  useEffect(()=>{if(remote.data&&admin){setItems(remote.data.items);setCursor(remote.data.next_cursor);}},[remote.data]);
  async function more(){if(pageLock.current||!cursor)return;pageLock.current=true;setPaging(true);try{const value=await get<Usage>('/admin/usage?cursor='+encodeURIComponent(cursor??''),{tenantId:tenant.tenant_id,signal:remote.signal});if(remote.current())remote.setData({...value,items:[...items,...value.items]});}catch(problem){const message=await remote.fail(problem,()=>{remote.setData(null);setItems([]);});if(remote.current())remote.setError(message);}finally{if(remote.current()){pageLock.current=false;setPaging(false);}}}

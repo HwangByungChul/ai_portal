@@ -1,0 +1,78 @@
+{
+  "status": "passed",
+  "duration_ms": 86771.208,
+  "runner_errors": 0,
+  "tests": [
+    {
+      "test_id": "D12_07_home_dynamic_request_and_reload",
+      "status": "passed",
+      "duration_ms": 3486
+    },
+    {
+      "test_id": "D12_01_approve_publish_ordinary_user_execution_and_retire",
+      "status": "passed",
+      "duration_ms": 9084
+    },
+    {
+      "test_id": "D12_02_reject_keeps_catalog_unpublished",
+      "status": "passed",
+      "duration_ms": 7000
+    },
+    {
+      "test_id": "WF_03_meeting_ui_scoped_execution_and_structured_result_contract",
+      "status": "passed",
+      "duration_ms": 4240
+    },
+    {
+      "test_id": "U11_02_admin_home_and_real_request_approval",
+      "status": "passed",
+      "duration_ms": 4722
+    },
+    {
+      "test_id": "WF_04_real_DB_API_tool_form_other_PADMIN_user_invoke_revoke",
+      "status": "passed",
+      "duration_ms": 6809
+    },
+    {
+      "test_id": "WF_05_real_DB_API_workflow_form_case03_head_USER_execute_revoke",
+      "status": "passed",
+      "duration_ms": 14382
+    },
+    {
+      "test_id": "WF_06_HTTP_stub_server_search_pagination_CAS_and_uncertain_decision",
+      "status": "passed",
+      "duration_ms": 3623
+    },
+    {
+      "test_id": "WF_07_HTTP_stub_submission_lost_receipt_retains_UUID_and_catalog_owned_descriptor",
+      "status": "passed",
+      "duration_ms": 3473
+    },
+    {
+      "test_id": "WF_08_HTTP_stub_strict_links_wrong_kind_not_found_and_tenant_late_response",
+      "status": "passed",
+      "duration_ms": 4571
+    },
+    {
+      "test_id": "WF_09_HTTP_stub_home_truthful_counts_tool_workflow_links_reload_popstate",
+      "status": "passed",
+      "duration_ms": 4920
+    },
+    {
+      "test_id": "WF_10_HTTP_stub_tool_identity_refresh_publication_binding_and_receipt",
+      "status": "passed",
+      "duration_ms": 3926
+    },
+    {
+      "test_id": "WF_01_workflow_canvas_page_view_and_dag_nodes",
+      "status": "passed",
+      "duration_ms": 3050
+    },
+    {
+      "test_id": "WF_02_approved_version_runtime_ui_contract",
+      "status": "passed",
+      "duration_ms": 4870
+    }
+  ],
+  "steps": []
+}

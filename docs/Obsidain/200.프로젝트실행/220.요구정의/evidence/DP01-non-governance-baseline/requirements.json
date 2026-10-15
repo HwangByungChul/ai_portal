@@ -1,0 +1,3709 @@
+{
+  "definition_status": "baseline_defined",
+  "acceptance_status": "not_run",
+  "functional_subrequirements": [
+    {
+      "id": "REQ-001-01",
+      "source_function": "F-001",
+      "source_name": "역할별 워크스페이스",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 4,
+      "requirement": "SSO·개발자/모델러/데이터담당자 등8역할·SOD·별도 workspace",
+      "retained_current_behavior": "3개 역할과 조직별 메뉴/API 접근 통제",
+      "current_status": "부분 구현",
+      "primary_task": "DP-16",
+      "support_tasks": [
+        "DP-02"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "GET /api/v1/auth/sso/start": "provider alias server allowlist",
+        "GET /api/v1/auth/sso/callback": "code,state",
+        "capability check": "require(ctx,capability,resource) → allow|deny",
+        "role templates": "user,agent_developer,model_operator,data_owner,tenant_operator,group_operator,security_reviewer,approver"
+      },
+      "expected_result": "8역할 capability표와SOD음성시험 통과; 실제기관SSO/AD연계는 해당sandbox 증거가 있어야 완료.",
+      "acceptance_id": "AC-F001-01",
+      "positive_assertion": "역할별 워크스페이스의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: SSO·개발자/모델러/데이터담당자 등8역할·SOD·별도 workspace",
+      "negative_assertions": [
+        "자기승인/권한상승403",
+        "위조issuer/aud/state·재사용callback 거부",
+        "부서이동/권한회수 즉시API차단",
+        "기존3role 세션회귀/초기관리잠금 방지"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "역할별 워크스페이스: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-001-02",
+      "source_function": "F-001",
+      "source_name": "역할별 워크스페이스",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-16",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F001-02",
+      "negative_assertions": [
+        "자기승인/권한상승403",
+        "위조issuer/aud/state·재사용callback 거부",
+        "부서이동/권한회수 즉시API차단",
+        "기존3role 세션회귀/초기관리잠금 방지"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 4,
+      "original_acceptance": "역할별 워크스페이스: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "3개 역할과 조직별 메뉴/API 접근 통제",
+      "support_tasks": [
+        "DP-02"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-002-01",
+      "source_function": "F-002",
+      "source_name": "통합 UX/UI 디자인체계",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 5,
+      "requirement": "승인 디자인체계·전체 화면 일치·접근성 전수 수용",
+      "retained_current_behavior": "공통 스타일·사용자/관리자 화면·모바일 대응",
+      "current_status": "부분 구현",
+      "primary_task": "DP-02",
+      "support_tasks": [],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "본인 일반사용자; 피드백 검토자는 명시 feedback.read 주체",
+      "input_contract": {
+        "GET /api/v1/portal/home": {
+          "tenant_id": "UUID",
+          "capabilities": [
+            "string"
+          ],
+          "available_assets": [
+            "UUID"
+          ],
+          "announcements": [
+            "published metadata"
+          ]
+        },
+        "GET /api/v1/portal/help": "published guide list"
+      },
+      "expected_result": "로그인→조직선택→허용기능→도움말의 경로가 동작하고 미구현 지표/기능을 실동작으로 표시하지 않음.",
+      "acceptance_id": "AC-F002-01",
+      "positive_assertion": "통합 UX/UI 디자인체계의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 승인 디자인체계·전체 화면 일치·접근성 전수 수용",
+      "negative_assertions": [
+        "직접 URL/API 우회403/404",
+        "조직전환 이전 응답이 새 화면에 나타나지 않음",
+        "키보드·모바일320px·Edge/Chrome 검증"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "통합 UX/UI 디자인체계: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-002-02",
+      "source_function": "F-002",
+      "source_name": "통합 UX/UI 디자인체계",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-02",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "본인 일반사용자; 피드백 검토자는 명시 feedback.read 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F002-02",
+      "negative_assertions": [
+        "직접 URL/API 우회403/404",
+        "조직전환 이전 응답이 새 화면에 나타나지 않음",
+        "키보드·모바일320px·Edge/Chrome 검증"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 5,
+      "original_acceptance": "통합 UX/UI 디자인체계: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "공통 스타일·사용자/관리자 화면·모바일 대응",
+      "support_tasks": [],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-003-01",
+      "source_function": "F-003",
+      "source_name": "비즈니스 프로세스 안내",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 6,
+      "requirement": "업무 단계·담당자·입출력·체크리스트 안내 모듈",
+      "retained_current_behavior": "오류/상태 안내는 있음",
+      "current_status": "미구현",
+      "primary_task": "DP-02",
+      "support_tasks": [
+        "DP-25"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "본인 일반사용자; 피드백 검토자는 명시 feedback.read 주체",
+      "input_contract": {
+        "GET /api/v1/portal/home": {
+          "tenant_id": "UUID",
+          "capabilities": [
+            "string"
+          ],
+          "available_assets": [
+            "UUID"
+          ],
+          "announcements": [
+            "published metadata"
+          ]
+        },
+        "GET /api/v1/portal/help": "published guide list"
+      },
+      "expected_result": "로그인→조직선택→허용기능→도움말의 경로가 동작하고 미구현 지표/기능을 실동작으로 표시하지 않음.",
+      "acceptance_id": "AC-F003-01",
+      "positive_assertion": "비즈니스 프로세스 안내의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 업무 단계·담당자·입출력·체크리스트 안내 모듈",
+      "negative_assertions": [
+        "직접 URL/API 우회403/404",
+        "조직전환 이전 응답이 새 화면에 나타나지 않음",
+        "키보드·모바일320px·Edge/Chrome 검증"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "비즈니스 프로세스 안내: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-003-02",
+      "source_function": "F-003",
+      "source_name": "비즈니스 프로세스 안내",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-02",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "본인 일반사용자; 피드백 검토자는 명시 feedback.read 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F003-02",
+      "negative_assertions": [
+        "직접 URL/API 우회403/404",
+        "조직전환 이전 응답이 새 화면에 나타나지 않음",
+        "키보드·모바일320px·Edge/Chrome 검증"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 6,
+      "original_acceptance": "비즈니스 프로세스 안내: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "오류/상태 안내는 있음",
+      "support_tasks": [
+        "DP-25"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-004-01",
+      "source_function": "F-004",
+      "source_name": "공통 AI자산 공유·확장",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 7,
+      "requirement": "Agent/Prompt/Workflow 자산 registry·승인 버전 공유/배포",
+      "retained_current_behavior": "문서 버전 Grant, 조직별 고정 Agent 설정",
+      "current_status": "관련 기반",
+      "primary_task": "DP-09",
+      "support_tasks": [
+        "DP-10",
+        "DP-23"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "Asset": "id,owner_tenant,kind(agent|prompt|workflow|tool|model),visibility,active_version",
+        "AssetVersion": "id,asset_id,revision,state,config_hash,execution_kind(general|rules_rag|document_summary)",
+        "run snapshot": "asset_id,asset_version_id,config_hash"
+      },
+      "expected_result": "고정2종과 새자산이 같은 허가경로로 실행되고 대화·근거·snapshot·ledger가 보존됨.",
+      "acceptance_id": "AC-F004-01",
+      "positive_assertion": "공통 AI자산 공유·확장의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: Agent/Prompt/Workflow 자산 registry·승인 버전 공유/배포",
+      "negative_assertions": [
+        "기존데이터 migration 전후 row/hash/비용 일치",
+        "고정2종 API호환·기존SSE/run 재조회",
+        "다른 tenant asset조회404",
+        "중간실패 rollback·반복migration 변경0"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "공통 AI자산 공유·확장: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-004-02",
+      "source_function": "F-004",
+      "source_name": "공통 AI자산 공유·확장",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-09",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F004-02",
+      "negative_assertions": [
+        "기존데이터 migration 전후 row/hash/비용 일치",
+        "고정2종 API호환·기존SSE/run 재조회",
+        "다른 tenant asset조회404",
+        "중간실패 rollback·반복migration 변경0"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 7,
+      "original_acceptance": "공통 AI자산 공유·확장: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "문서 버전 Grant, 조직별 고정 Agent 설정",
+      "support_tasks": [
+        "DP-10",
+        "DP-23"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-005-01",
+      "source_function": "F-005",
+      "source_name": "공통·계열사 전용영역",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 8,
+      "requirement": "COMMON tenant·Tenant Cell·namespace/저장소/운영환경 독립",
+      "retained_current_behavior": "공유 서버/DB의 tenant RLS·조직별 정책/한도",
+      "current_status": "부분 구현",
+      "primary_task": "DP-26",
+      "support_tasks": [],
+      "scope": "논리격리는 개인 구현; Cell/물리저장은 환경 확장",
+      "actor": "운영/콘텐츠/과제 담당과 환경관리 주체; 개인내용 접근은 별도",
+      "input_contract": {
+        "EnvironmentManifest": "revision,code_hash,schema_version,config_refs,approved_release_id",
+        "health": "liveness,readiness,queue_lag,storage,latency,error_rate",
+        "restore proof": "new_db,source_backup_hash,table_counts,ledger_totals,acl_cases"
+      },
+      "expected_result": "새환경설치/restore/10논리tenant 증거. Cell·HA·DR성능은실운영환경없으면미실행·조건부보존.",
+      "acceptance_id": "AC-F005-01",
+      "positive_assertion": "공통·계열사 전용영역의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: COMMON tenant·Tenant Cell·namespace/저장소/운영환경 독립",
+      "negative_assertions": [
+        "동일DB재시작을restore통과로처리금지",
+        "10tenant병렬이름/원문/비용/secret교차0",
+        "backup→새DB hash/원장/권한회귀",
+        "관측없는metric은unknown;failover성능실측"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "공통·계열사 전용영역: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-005-02",
+      "source_function": "F-005",
+      "source_name": "공통·계열사 전용영역",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-26",
+      "scope": "논리격리는 개인 구현; Cell/물리저장은 환경 확장",
+      "actor": "운영/콘텐츠/과제 담당과 환경관리 주체; 개인내용 접근은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F005-02",
+      "negative_assertions": [
+        "동일DB재시작을restore통과로처리금지",
+        "10tenant병렬이름/원문/비용/secret교차0",
+        "backup→새DB hash/원장/권한회귀",
+        "관측없는metric은unknown;failover성능실측"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 8,
+      "original_acceptance": "공통·계열사 전용영역: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "공유 서버/DB의 tenant RLS·조직별 정책/한도",
+      "support_tasks": [],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-006-01",
+      "source_function": "F-006",
+      "source_name": "SSO·권한 기반 메뉴 노출",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 9,
+      "requirement": "계열사 SSO OIDC/SAML·AD/조직 동기화",
+      "retained_current_behavior": "로컬 로그인·세션·현재소속·역할 검사·메뉴 제한",
+      "current_status": "부분 구현",
+      "primary_task": "DP-16",
+      "support_tasks": [
+        "DP-20"
+      ],
+      "scope": "로컬/모의SSO는 개인 구현; 실제SSO/AD는 기관 연계",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "GET /api/v1/auth/sso/start": "provider alias server allowlist",
+        "GET /api/v1/auth/sso/callback": "code,state",
+        "capability check": "require(ctx,capability,resource) → allow|deny",
+        "role templates": "user,agent_developer,model_operator,data_owner,tenant_operator,group_operator,security_reviewer,approver"
+      },
+      "expected_result": "8역할 capability표와SOD음성시험 통과; 실제기관SSO/AD연계는 해당sandbox 증거가 있어야 완료.",
+      "acceptance_id": "AC-F006-01",
+      "positive_assertion": "SSO·권한 기반 메뉴 노출의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 계열사 SSO OIDC/SAML·AD/조직 동기화",
+      "negative_assertions": [
+        "자기승인/권한상승403",
+        "위조issuer/aud/state·재사용callback 거부",
+        "부서이동/권한회수 즉시API차단",
+        "기존3role 세션회귀/초기관리잠금 방지"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "SSO·권한 기반 메뉴 노출: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-006-02",
+      "source_function": "F-006",
+      "source_name": "SSO·권한 기반 메뉴 노출",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-16",
+      "scope": "로컬/모의SSO는 개인 구현; 실제SSO/AD는 기관 연계",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F006-02",
+      "negative_assertions": [
+        "자기승인/권한상승403",
+        "위조issuer/aud/state·재사용callback 거부",
+        "부서이동/권한회수 즉시API차단",
+        "기존3role 세션회귀/초기관리잠금 방지"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 9,
+      "original_acceptance": "SSO·권한 기반 메뉴 노출: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "로컬 로그인·세션·현재소속·역할 검사·메뉴 제한",
+      "support_tasks": [
+        "DP-20"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-007-01",
+      "source_function": "F-007",
+      "source_name": "온보딩·도움말",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 10,
+      "requirement": "온보딩·역할/기능별 도움말 CMS·튜토리얼",
+      "retained_current_behavior": "일부 화면 설명",
+      "current_status": "미구현",
+      "primary_task": "DP-02",
+      "support_tasks": [
+        "DP-25"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "본인 일반사용자; 피드백 검토자는 명시 feedback.read 주체",
+      "input_contract": {
+        "GET /api/v1/portal/home": {
+          "tenant_id": "UUID",
+          "capabilities": [
+            "string"
+          ],
+          "available_assets": [
+            "UUID"
+          ],
+          "announcements": [
+            "published metadata"
+          ]
+        },
+        "GET /api/v1/portal/help": "published guide list"
+      },
+      "expected_result": "로그인→조직선택→허용기능→도움말의 경로가 동작하고 미구현 지표/기능을 실동작으로 표시하지 않음.",
+      "acceptance_id": "AC-F007-01",
+      "positive_assertion": "온보딩·도움말의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 온보딩·역할/기능별 도움말 CMS·튜토리얼",
+      "negative_assertions": [
+        "직접 URL/API 우회403/404",
+        "조직전환 이전 응답이 새 화면에 나타나지 않음",
+        "키보드·모바일320px·Edge/Chrome 검증"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "온보딩·도움말: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-007-02",
+      "source_function": "F-007",
+      "source_name": "온보딩·도움말",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-02",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "본인 일반사용자; 피드백 검토자는 명시 feedback.read 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F007-02",
+      "negative_assertions": [
+        "직접 URL/API 우회403/404",
+        "조직전환 이전 응답이 새 화면에 나타나지 않음",
+        "키보드·모바일320px·Edge/Chrome 검증"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 10,
+      "original_acceptance": "온보딩·도움말: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "일부 화면 설명",
+      "support_tasks": [
+        "DP-25"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-008-01",
+      "source_function": "F-008",
+      "source_name": "AI 전 과정 가드레일",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 11,
+      "requirement": "PII/유해성/공격 탐지 정책·Tool 전후 통제·정책 위반 이력",
+      "retained_current_behavior": "입력 제한·실행권한·비용 허가·RAG fact/출처 검증",
+      "current_status": "부분 구현",
+      "primary_task": "DP-18",
+      "support_tasks": [],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "evaluate_policy(ctx,boundary,payload,policy_version)": "PolicyDecision(action=allow|block|mask,rule_ids,redacted_payload)",
+        "boundaries": [
+          "prompt",
+          "attachment",
+          "index",
+          "retrieval",
+          "model_output",
+          "tool_input",
+          "tool_output"
+        ]
+      },
+      "expected_result": "정의된정책셋과통과임계값을평가보고서에기록하고 규칙탐지만으로모든PII/공격차단을주장하지않음.",
+      "acceptance_id": "AC-F008-01",
+      "positive_assertion": "AI 전 과정 가드레일의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: PII/유해성/공격 탐지 정책·Tool 전후 통제·정책 위반 이력",
+      "negative_assertions": [
+        "합성패턴별TP/FP/FN보고·핵심직접pattern누출0",
+        "정책오류는failclosed·미송신",
+        "다른tenant정책/예외조회차단",
+        "마스킹후인용offset/version불일치없는별도표현"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "AI 전 과정 가드레일: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-008-02",
+      "source_function": "F-008",
+      "source_name": "AI 전 과정 가드레일",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-18",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F008-02",
+      "negative_assertions": [
+        "합성패턴별TP/FP/FN보고·핵심직접pattern누출0",
+        "정책오류는failclosed·미송신",
+        "다른tenant정책/예외조회차단",
+        "마스킹후인용offset/version불일치없는별도표현"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 11,
+      "original_acceptance": "AI 전 과정 가드레일: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "입력 제한·실행권한·비용 허가·RAG fact/출처 검증",
+      "support_tasks": [],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-009-01",
+      "source_function": "F-009",
+      "source_name": "중요정보 탐지·비식별화",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 12,
+      "requirement": "PII/신용/기밀 탐지·차단·익명화/마스킹·전 경계 적용",
+      "retained_current_behavior": "개인자료 ACL은 별도 구현",
+      "current_status": "미구현",
+      "primary_task": "DP-18",
+      "support_tasks": [],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "evaluate_policy(ctx,boundary,payload,policy_version)": "PolicyDecision(action=allow|block|mask,rule_ids,redacted_payload)",
+        "boundaries": [
+          "prompt",
+          "attachment",
+          "index",
+          "retrieval",
+          "model_output",
+          "tool_input",
+          "tool_output"
+        ]
+      },
+      "expected_result": "정의된정책셋과통과임계값을평가보고서에기록하고 규칙탐지만으로모든PII/공격차단을주장하지않음.",
+      "acceptance_id": "AC-F009-01",
+      "positive_assertion": "중요정보 탐지·비식별화의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: PII/신용/기밀 탐지·차단·익명화/마스킹·전 경계 적용",
+      "negative_assertions": [
+        "합성패턴별TP/FP/FN보고·핵심직접pattern누출0",
+        "정책오류는failclosed·미송신",
+        "다른tenant정책/예외조회차단",
+        "마스킹후인용offset/version불일치없는별도표현"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "중요정보 탐지·비식별화: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-009-02",
+      "source_function": "F-009",
+      "source_name": "중요정보 탐지·비식별화",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-18",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F009-02",
+      "negative_assertions": [
+        "합성패턴별TP/FP/FN보고·핵심직접pattern누출0",
+        "정책오류는failclosed·미송신",
+        "다른tenant정책/예외조회차단",
+        "마스킹후인용offset/version불일치없는별도표현"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 12,
+      "original_acceptance": "중요정보 탐지·비식별화: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "개인자료 ACL은 별도 구현",
+      "support_tasks": [],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-010-01",
+      "source_function": "F-010",
+      "source_name": "금칙어·유해콘텐츠 필터",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 13,
+      "requirement": "금칙어·유해콘텐츠 분류·입출력 필터·정책 버전",
+      "retained_current_behavior": "문서/질문 크기·형식 검증은 있음",
+      "current_status": "미구현",
+      "primary_task": "DP-18",
+      "support_tasks": [],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "evaluate_policy(ctx,boundary,payload,policy_version)": "PolicyDecision(action=allow|block|mask,rule_ids,redacted_payload)",
+        "boundaries": [
+          "prompt",
+          "attachment",
+          "index",
+          "retrieval",
+          "model_output",
+          "tool_input",
+          "tool_output"
+        ]
+      },
+      "expected_result": "정의된정책셋과통과임계값을평가보고서에기록하고 규칙탐지만으로모든PII/공격차단을주장하지않음.",
+      "acceptance_id": "AC-F010-01",
+      "positive_assertion": "금칙어·유해콘텐츠 필터의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 금칙어·유해콘텐츠 분류·입출력 필터·정책 버전",
+      "negative_assertions": [
+        "합성패턴별TP/FP/FN보고·핵심직접pattern누출0",
+        "정책오류는failclosed·미송신",
+        "다른tenant정책/예외조회차단",
+        "마스킹후인용offset/version불일치없는별도표현"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "금칙어·유해콘텐츠 필터: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-010-02",
+      "source_function": "F-010",
+      "source_name": "금칙어·유해콘텐츠 필터",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-18",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F010-02",
+      "negative_assertions": [
+        "합성패턴별TP/FP/FN보고·핵심직접pattern누출0",
+        "정책오류는failclosed·미송신",
+        "다른tenant정책/예외조회차단",
+        "마스킹후인용offset/version불일치없는별도표현"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 13,
+      "original_acceptance": "금칙어·유해콘텐츠 필터: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "문서/질문 크기·형식 검증은 있음",
+      "support_tasks": [],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-011-01",
+      "source_function": "F-011",
+      "source_name": "MCP·Tool 실행 통제",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 14,
+      "requirement": "MCP/Tool 등록·사용자 대리 권한·allowlist·실행 gateway",
+      "retained_current_behavior": "중앙 모델/임베딩 허가 경로",
+      "current_status": "미구현",
+      "primary_task": "DP-21",
+      "support_tasks": [],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "승인된 서비스/사용자 대리 주체와 읽기 도구 실행 capability",
+      "input_contract": {
+        "invoke_tool(ctx,asset_version,tool_version,arguments,client_operation_id)": "ToolResult(data,trace_id,source_refs)",
+        "ToolVersion": "id,operation_allowlist,arg_schema,result_schema,server_binding,credential_ref"
+      },
+      "expected_result": "syntheticread→검증결과→근거→trace가동작. 실제MCP서버/레거시연계는adapter별fixture로판정.",
+      "acceptance_id": "AC-F011-01",
+      "positive_assertion": "MCP·Tool 실행 통제의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: MCP/Tool 등록·사용자 대리 권한·allowlist·실행 gateway",
+      "negative_assertions": [
+        "allowlist밖host/operation차단",
+        "복합arguments형/길이위반차단",
+        "작업ID동일재전송은한번실행",
+        "중간회수/timeout/실패 secret노출0"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "MCP·Tool 실행 통제: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-011-02",
+      "source_function": "F-011",
+      "source_name": "MCP·Tool 실행 통제",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-21",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "승인된 서비스/사용자 대리 주체와 읽기 도구 실행 capability",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F011-02",
+      "negative_assertions": [
+        "allowlist밖host/operation차단",
+        "복합arguments형/길이위반차단",
+        "작업ID동일재전송은한번실행",
+        "중간회수/timeout/실패 secret노출0"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 14,
+      "original_acceptance": "MCP·Tool 실행 통제: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "중앙 모델/임베딩 허가 경로",
+      "support_tasks": [],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-012-01",
+      "source_function": "F-012",
+      "source_name": "생성형 AI 통합 Chat",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 15,
+      "requirement": "다중모델 선택·추천질의·재생성·완전한 이력관리",
+      "retained_current_behavior": "일반/규정 Agent·SSE·취소·저장/세션·이력",
+      "current_status": "부분 구현",
+      "primary_task": "DP-03",
+      "support_tasks": [
+        "DP-02",
+        "DP-07",
+        "DP-08",
+        "DP-13",
+        "DP-24"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "본인 일반사용자; 피드백 검토자는 명시 feedback.read 주체",
+      "input_contract": {
+        "PATCH /api/v1/conversations/{id}": {
+          "title": "1~120자",
+          "pinned": "bool",
+          "expected_revision": "int>=0"
+        },
+        "DELETE /api/v1/conversations/{id}": {
+          "expected_revision": "int>=0"
+        },
+        "GET /api/v1/conversations": "q(최대120자),pinned,cursor,limit<=50"
+      },
+      "expected_result": "본인대화 관리와 동시수정/회수 차단이 서버·화면에서 일치하며 기존 이력/SSE/run snapshot에 영향 없음.",
+      "acceptance_id": "AC-F012-01",
+      "positive_assertion": "생성형 AI 통합 Chat의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 다중모델 선택·추천질의·재생성·완전한 이력관리",
+      "negative_assertions": [
+        "A-U1 제목변경→검색→핀→해제",
+        "A-U2/B-user/PADMIN의 개인 대화 수정404",
+        "revision 충돌409·CSRF없음403·tenant payload422",
+        "삭제 후 실행/조회404; 기존 비용/감사 보존"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "생성형 AI 통합 Chat: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-012-02",
+      "source_function": "F-012",
+      "source_name": "생성형 AI 통합 Chat",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-03",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "본인 일반사용자; 피드백 검토자는 명시 feedback.read 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F012-02",
+      "negative_assertions": [
+        "A-U1 제목변경→검색→핀→해제",
+        "A-U2/B-user/PADMIN의 개인 대화 수정404",
+        "revision 충돌409·CSRF없음403·tenant payload422",
+        "삭제 후 실행/조회404; 기존 비용/감사 보존"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 15,
+      "original_acceptance": "생성형 AI 통합 Chat: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "일반/규정 Agent·SSE·취소·저장/세션·이력",
+      "support_tasks": [
+        "DP-02",
+        "DP-07",
+        "DP-08",
+        "DP-13",
+        "DP-24"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-013-01",
+      "source_function": "F-013",
+      "source_name": "답변 출처·피드백",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 16,
+      "requirement": "좋아요/싫어요/rating/의견 및 관리자 피드백 조회",
+      "retained_current_behavior": "규정 RAG 인용·정확원문·현재권한 재검증",
+      "current_status": "부분 구현",
+      "primary_task": "DP-04",
+      "support_tasks": [],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "본인 일반사용자; 피드백 검토자는 명시 feedback.read 주체",
+      "input_contract": {
+        "PUT /api/v1/runs/{id}/feedback": {
+          "rating": "positive|negative",
+          "comment": "0~1000자",
+          "expected_revision": "int"
+        },
+        "GET /api/v1/admin/feedback": "tenant-scoped redacted feedback",
+        "PATCH /api/v1/admin/feedback/{id}": "category,status,expected_revision"
+      },
+      "expected_result": "평가→마스킹 목록→분류/처리→종결이 동작하고 개인 대화 접근권한을 확장하지 않음.",
+      "acceptance_id": "AC-F013-01",
+      "positive_assertion": "답변 출처·피드백의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 좋아요/싫어요/rating/의견 및 관리자 피드백 조회",
+      "negative_assertions": [
+        "같은 사용자 재전송은1행",
+        "미완료/다른소유run 차단",
+        "관리자 목록에서 개인 prompt/body/title 노출0",
+        "종결사유/재개 revision 검증"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "답변 출처·피드백: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-013-02",
+      "source_function": "F-013",
+      "source_name": "답변 출처·피드백",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-04",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "본인 일반사용자; 피드백 검토자는 명시 feedback.read 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F013-02",
+      "negative_assertions": [
+        "같은 사용자 재전송은1행",
+        "미완료/다른소유run 차단",
+        "관리자 목록에서 개인 prompt/body/title 노출0",
+        "종결사유/재개 revision 검증"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 16,
+      "original_acceptance": "답변 출처·피드백: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "규정 RAG 인용·정확원문·현재권한 재검증",
+      "support_tasks": [],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-014-01",
+      "source_function": "F-014",
+      "source_name": "대화 파일 업로드·활용",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 17,
+      "requirement": "대화 중 사용자 첨부·이미지/OCR·파일 기반 자유 요약/번역",
+      "retained_current_behavior": "관리자 TXT/MD 업로드·비동기 색인",
+      "current_status": "관련 기반",
+      "primary_task": "DP-05",
+      "support_tasks": [
+        "DP-06",
+        "DP-07"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "본인 일반사용자; 피드백 검토자는 명시 feedback.read 주체",
+      "input_contract": {
+        "POST /api/v1/documents": "multipart(file,client_upload_id); owner/tenant/share fields forbidden",
+        "GET /api/v1/documents": "owner-private list",
+        "POST /api/v1/runs": "기존 document_refs(document_id,version_id),rules_rag만"
+      },
+      "expected_result": "자기 업로드→처리상태→게시→첨부질문→인용→삭제 흐름과 A/B 격리가 검증됨.",
+      "acceptance_id": "AC-F014-01",
+      "positive_assertion": "대화 파일 업로드·활용의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 대화 중 사용자 첨부·이미지/OCR·파일 기반 자유 요약/번역",
+      "negative_assertions": [
+        "owner/reader/tenant/share 위조422",
+        "접수/처리중 첨부409,게시후 성공",
+        "회수 직후 검색·질문·근거·원문404",
+        "업로드 재전송 중복Job/embedding 호출0"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "대화 파일 업로드·활용: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-014-02",
+      "source_function": "F-014",
+      "source_name": "대화 파일 업로드·활용",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-05",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "본인 일반사용자; 피드백 검토자는 명시 feedback.read 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F014-02",
+      "negative_assertions": [
+        "owner/reader/tenant/share 위조422",
+        "접수/처리중 첨부409,게시후 성공",
+        "회수 직후 검색·질문·근거·원문404",
+        "업로드 재전송 중복Job/embedding 호출0"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 17,
+      "original_acceptance": "대화 파일 업로드·활용: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "관리자 TXT/MD 업로드·비동기 색인",
+      "support_tasks": [
+        "DP-06",
+        "DP-07"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-015-01",
+      "source_function": "F-015",
+      "source_name": "개인 문서 RAG",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 18,
+      "requirement": "일반사용자 자기 업로드·문서함 관리·확장 파서",
+      "retained_current_behavior": "private owner/reader·격리 벡터/Graph·삭제/회수",
+      "current_status": "부분 구현",
+      "primary_task": "DP-05",
+      "support_tasks": [
+        "DP-06",
+        "DP-07"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "본인 일반사용자; 피드백 검토자는 명시 feedback.read 주체",
+      "input_contract": {
+        "POST /api/v1/documents": "multipart(file,client_upload_id); owner/tenant/share fields forbidden",
+        "GET /api/v1/documents": "owner-private list",
+        "POST /api/v1/runs": "기존 document_refs(document_id,version_id),rules_rag만"
+      },
+      "expected_result": "자기 업로드→처리상태→게시→첨부질문→인용→삭제 흐름과 A/B 격리가 검증됨.",
+      "acceptance_id": "AC-F015-01",
+      "positive_assertion": "개인 문서 RAG의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 일반사용자 자기 업로드·문서함 관리·확장 파서",
+      "negative_assertions": [
+        "owner/reader/tenant/share 위조422",
+        "접수/처리중 첨부409,게시후 성공",
+        "회수 직후 검색·질문·근거·원문404",
+        "업로드 재전송 중복Job/embedding 호출0"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "개인 문서 RAG: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-015-02",
+      "source_function": "F-015",
+      "source_name": "개인 문서 RAG",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-05",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "본인 일반사용자; 피드백 검토자는 명시 feedback.read 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F015-02",
+      "negative_assertions": [
+        "owner/reader/tenant/share 위조422",
+        "접수/처리중 첨부409,게시후 성공",
+        "회수 직후 검색·질문·근거·원문404",
+        "업로드 재전송 중복Job/embedding 호출0"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 18,
+      "original_acceptance": "개인 문서 RAG: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "private owner/reader·격리 벡터/Graph·삭제/회수",
+      "support_tasks": [
+        "DP-06",
+        "DP-07"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-016-01",
+      "source_function": "F-016",
+      "source_name": "전체 프롬프트 조회",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 19,
+      "requirement": "시스템/개발자/템플릿 전체 승인 버전·민감값 치환·읽기권한",
+      "retained_current_behavior": "조직관리자가 고정 Agent 지시문을 조회/편집",
+      "current_status": "부분 구현",
+      "primary_task": "DP-11",
+      "support_tasks": [
+        "DP-13"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "POST /api/v1/assets": "kind,name",
+        "POST /api/v1/assets/{id}/versions": "expected_revision,execution_kind,prompt,approved_model_ref,rag_settings",
+        "POST /api/v1/assets/{id}/clone": "name,target_tenant",
+        "POST /api/v1/asset-versions/{id}/evaluations": "dataset_id,client_send_id"
+      },
+      "expected_result": "draft→설정→모의평가→비교가 재현되며 설계되지 않은 모델/노드가 실행되지 않음.",
+      "acceptance_id": "AC-F016-01",
+      "positive_assertion": "전체 프롬프트 조회의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 시스템/개발자/템플릿 전체 승인 버전·민감값 치환·읽기권한",
+      "negative_assertions": [
+        "revision충돌409·승인version수정409",
+        "clone credentials/Grant/개인문서 참조 복사0",
+        "평가모드 비용stop/cap 적용",
+        "튜닝실행과운영index 분리"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "전체 프롬프트 조회: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-016-02",
+      "source_function": "F-016",
+      "source_name": "전체 프롬프트 조회",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-11",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F016-02",
+      "negative_assertions": [
+        "revision충돌409·승인version수정409",
+        "clone credentials/Grant/개인문서 참조 복사0",
+        "평가모드 비용stop/cap 적용",
+        "튜닝실행과운영index 분리"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 19,
+      "original_acceptance": "전체 프롬프트 조회: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "조직관리자가 고정 Agent 지시문을 조회/편집",
+      "support_tasks": [
+        "DP-13"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-017-01",
+      "source_function": "F-017",
+      "source_name": "개인화·알림·My Agent",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 20,
+      "requirement": "My Agent·핀·개인 설정·알림·자동 권한정리",
+      "retained_current_behavior": "고정 Agent 선택과 본인 최근 대화 조회",
+      "current_status": "관련 기반",
+      "primary_task": "DP-10",
+      "support_tasks": [
+        "DP-02",
+        "DP-03",
+        "DP-08",
+        "DP-25"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "GET /api/v1/assets": "q,kind,tag,category,cursor",
+        "PUT /api/v1/assets/{id}/pin": "pinned:bool",
+        "POST /api/v1/assets/{id}/access-requests": "reason",
+        "POST /api/v1/admin/asset-grants": "asset_version,subject,scope,expires_at,expected_revision"
+      },
+      "expected_result": "검색→상세→이용신청/승인→핀→실행→회수의 실제흐름과 조직격리 검증.",
+      "acceptance_id": "AC-F017-01",
+      "positive_assertion": "개인화·알림·My Agent의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: My Agent·핀·개인 설정·알림·자동 권한정리",
+      "negative_assertions": [
+        "비공개이름/카운트/랭킹 노출0",
+        "핀한 자산 회수 즉시 목록/실행 차단",
+        "공유되지 않은 version 직접조회404",
+        "폐기/만료 자산 새run 차단"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "개인화·알림·My Agent: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-017-02",
+      "source_function": "F-017",
+      "source_name": "개인화·알림·My Agent",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-10",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F017-02",
+      "negative_assertions": [
+        "비공개이름/카운트/랭킹 노출0",
+        "핀한 자산 회수 즉시 목록/실행 차단",
+        "공유되지 않은 version 직접조회404",
+        "폐기/만료 자산 새run 차단"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 20,
+      "original_acceptance": "개인화·알림·My Agent: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "고정 Agent 선택과 본인 최근 대화 조회",
+      "support_tasks": [
+        "DP-02",
+        "DP-03",
+        "DP-08",
+        "DP-25"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-018-01",
+      "source_function": "F-018",
+      "source_name": "대화·문서 출력",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 21,
+      "requirement": "응답/근거 PDF·문서 출력·장기 Export·만료/워터마크",
+      "retained_current_behavior": "원문 다운로드는 답변 문서화와 별개",
+      "current_status": "미구현",
+      "primary_task": "DP-07",
+      "support_tasks": [],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "본인 일반사용자; 피드백 검토자는 명시 feedback.read 주체",
+      "input_contract": {
+        "POST /api/v1/document-summaries": "client_send_id,document_refs,mode(summary|translation)",
+        "POST /api/v1/runs/{id}/regenerate": "new_client_send_id,expected_revision",
+        "GET /api/v1/runs/{id}/export": "format=md|pdf"
+      },
+      "expected_result": "합성 요약셋의 필수 사실/숫자 일치·인용 정확성과 지원외 처리가 검증되고 출력에 모델추정/출처가 표시됨.",
+      "acceptance_id": "AC-F018-01",
+      "positive_assertion": "대화·문서 출력의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 응답/근거 PDF·문서 출력·장기 Export·만료/워터마크",
+      "negative_assertions": [
+        "원문밖 날짜/금액/담당자 추가 금지",
+        "회수자료 export/재생성 차단",
+        "같은send 중복비용0·취소/unknown 유지",
+        "규정RAG 기존회귀 통과"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "대화·문서 출력: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-018-02",
+      "source_function": "F-018",
+      "source_name": "대화·문서 출력",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-07",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "본인 일반사용자; 피드백 검토자는 명시 feedback.read 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F018-02",
+      "negative_assertions": [
+        "원문밖 날짜/금액/담당자 추가 금지",
+        "회수자료 export/재생성 차단",
+        "같은send 중복비용0·취소/unknown 유지",
+        "규정RAG 기존회귀 통과"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 21,
+      "original_acceptance": "대화·문서 출력: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "원문 다운로드는 답변 문서화와 별개",
+      "support_tasks": [],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-019-01",
+      "source_function": "F-019",
+      "source_name": "배포 Agent 검색·권한관리",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 22,
+      "requirement": "배포 Agent 검색·부서/본부·신청/승인/회수",
+      "retained_current_behavior": "허용 고정 Agent 목록·운영 허가",
+      "current_status": "관련 기반",
+      "primary_task": "DP-10",
+      "support_tasks": [
+        "DP-09",
+        "DP-24"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "GET /api/v1/assets": "q,kind,tag,category,cursor",
+        "PUT /api/v1/assets/{id}/pin": "pinned:bool",
+        "POST /api/v1/assets/{id}/access-requests": "reason",
+        "POST /api/v1/admin/asset-grants": "asset_version,subject,scope,expires_at,expected_revision"
+      },
+      "expected_result": "검색→상세→이용신청/승인→핀→실행→회수의 실제흐름과 조직격리 검증.",
+      "acceptance_id": "AC-F019-01",
+      "positive_assertion": "배포 Agent 검색·권한관리의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 배포 Agent 검색·부서/본부·신청/승인/회수",
+      "negative_assertions": [
+        "비공개이름/카운트/랭킹 노출0",
+        "핀한 자산 회수 즉시 목록/실행 차단",
+        "공유되지 않은 version 직접조회404",
+        "폐기/만료 자산 새run 차단"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "배포 Agent 검색·권한관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-019-02",
+      "source_function": "F-019",
+      "source_name": "배포 Agent 검색·권한관리",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-10",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F019-02",
+      "negative_assertions": [
+        "비공개이름/카운트/랭킹 노출0",
+        "핀한 자산 회수 즉시 목록/실행 차단",
+        "공유되지 않은 version 직접조회404",
+        "폐기/만료 자산 새run 차단"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 22,
+      "original_acceptance": "배포 Agent 검색·권한관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "허용 고정 Agent 목록·운영 허가",
+      "support_tasks": [
+        "DP-09",
+        "DP-24"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-020-01",
+      "source_function": "F-020",
+      "source_name": "AI자산 통합 카탈로그",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 23,
+      "requirement": "Agent/Prompt/MCP/Model 공통 카탈로그·다면 검색",
+      "retained_current_behavior": "규정 문서 검색은 자산 검색과 별개",
+      "current_status": "미구현",
+      "primary_task": "DP-10",
+      "support_tasks": [
+        "DP-08",
+        "DP-09"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "GET /api/v1/assets": "q,kind,tag,category,cursor",
+        "PUT /api/v1/assets/{id}/pin": "pinned:bool",
+        "POST /api/v1/assets/{id}/access-requests": "reason",
+        "POST /api/v1/admin/asset-grants": "asset_version,subject,scope,expires_at,expected_revision"
+      },
+      "expected_result": "검색→상세→이용신청/승인→핀→실행→회수의 실제흐름과 조직격리 검증.",
+      "acceptance_id": "AC-F020-01",
+      "positive_assertion": "AI자산 통합 카탈로그의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: Agent/Prompt/MCP/Model 공통 카탈로그·다면 검색",
+      "negative_assertions": [
+        "비공개이름/카운트/랭킹 노출0",
+        "핀한 자산 회수 즉시 목록/실행 차단",
+        "공유되지 않은 version 직접조회404",
+        "폐기/만료 자산 새run 차단"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "AI자산 통합 카탈로그: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-020-02",
+      "source_function": "F-020",
+      "source_name": "AI자산 통합 카탈로그",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-10",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F020-02",
+      "negative_assertions": [
+        "비공개이름/카운트/랭킹 노출0",
+        "핀한 자산 회수 즉시 목록/실행 차단",
+        "공유되지 않은 version 직접조회404",
+        "폐기/만료 자산 새run 차단"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 23,
+      "original_acceptance": "AI자산 통합 카탈로그: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "규정 문서 검색은 자산 검색과 별개",
+      "support_tasks": [
+        "DP-08",
+        "DP-09"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-021-01",
+      "source_function": "F-021",
+      "source_name": "권한 기반 연계·실행환경",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 24,
+      "requirement": "사내 시스템/데이터/MCP connector·사용자 위임·운영 연결",
+      "retained_current_behavior": "현재 외부 연결은 모델 공급자 API",
+      "current_status": "미구현",
+      "primary_task": "DP-22",
+      "support_tasks": [
+        "DP-20",
+        "DP-21"
+      ],
+      "scope": "합성 읽기연계는 개인 구현; 기관DB/망은 실연계",
+      "actor": "승인된 서비스/사용자 대리 주체와 읽기 도구 실행 capability",
+      "input_contract": {
+        "read_view(ctx,approved_view_id,filters,cursor)": "bounded rows,masked schema,lineage",
+        "ingest_source(ctx,connector_version,source_ref)": "import_id",
+        "EnvironmentBinding": "draft→synthetic/test; approved+권원→production"
+      },
+      "expected_result": "가상화view·원천lineage·routing·권원/감사증거가연결. 기관망/실DB자료없이는생산연계완료아님.",
+      "acceptance_id": "AC-F021-01",
+      "positive_assertion": "권한 기반 연계·실행환경의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 사내 시스템/데이터/MCP connector·사용자 위임·운영 연결",
+      "negative_assertions": [
+        "SQL문문자열/미허용필터거부",
+        "draft의productionbinding차단",
+        "조회row/column/tenantbounded",
+        "NASsource교체/중복/중간실패manifest정합"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "권한 기반 연계·실행환경: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-021-02",
+      "source_function": "F-021",
+      "source_name": "권한 기반 연계·실행환경",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-22",
+      "scope": "합성 읽기연계는 개인 구현; 기관DB/망은 실연계",
+      "actor": "승인된 서비스/사용자 대리 주체와 읽기 도구 실행 capability",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F021-02",
+      "negative_assertions": [
+        "SQL문문자열/미허용필터거부",
+        "draft의productionbinding차단",
+        "조회row/column/tenantbounded",
+        "NASsource교체/중복/중간실패manifest정합"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 24,
+      "original_acceptance": "권한 기반 연계·실행환경: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "현재 외부 연결은 모델 공급자 API",
+      "support_tasks": [
+        "DP-20",
+        "DP-21"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-022-01",
+      "source_function": "F-022",
+      "source_name": "검증 AI자산 공유·재사용",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 25,
+      "requirement": "평가/승인 자산의 그룹·부서 공유·구독/복제·재사용",
+      "retained_current_behavior": "문서 특정 버전 공유/회수",
+      "current_status": "관련 기반",
+      "primary_task": "DP-10",
+      "support_tasks": [
+        "DP-09",
+        "DP-11",
+        "DP-23",
+        "DP-24"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "GET /api/v1/assets": "q,kind,tag,category,cursor",
+        "PUT /api/v1/assets/{id}/pin": "pinned:bool",
+        "POST /api/v1/assets/{id}/access-requests": "reason",
+        "POST /api/v1/admin/asset-grants": "asset_version,subject,scope,expires_at,expected_revision"
+      },
+      "expected_result": "검색→상세→이용신청/승인→핀→실행→회수의 실제흐름과 조직격리 검증.",
+      "acceptance_id": "AC-F022-01",
+      "positive_assertion": "검증 AI자산 공유·재사용의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 평가/승인 자산의 그룹·부서 공유·구독/복제·재사용",
+      "negative_assertions": [
+        "비공개이름/카운트/랭킹 노출0",
+        "핀한 자산 회수 즉시 목록/실행 차단",
+        "공유되지 않은 version 직접조회404",
+        "폐기/만료 자산 새run 차단"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "검증 AI자산 공유·재사용: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-022-02",
+      "source_function": "F-022",
+      "source_name": "검증 AI자산 공유·재사용",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-10",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F022-02",
+      "negative_assertions": [
+        "비공개이름/카운트/랭킹 노출0",
+        "핀한 자산 회수 즉시 목록/실행 차단",
+        "공유되지 않은 version 직접조회404",
+        "폐기/만료 자산 새run 차단"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 25,
+      "original_acceptance": "검증 AI자산 공유·재사용: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "문서 특정 버전 공유/회수",
+      "support_tasks": [
+        "DP-09",
+        "DP-11",
+        "DP-23",
+        "DP-24"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-023-01",
+      "source_function": "F-023",
+      "source_name": "모델·Agent 검색·랭킹",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 26,
+      "requirement": "모델/Agent 키워드·태그·카테고리 검색·평가/사용량 랭킹",
+      "retained_current_behavior": "고정 Agent 선택 목록",
+      "current_status": "미구현",
+      "primary_task": "DP-10",
+      "support_tasks": [],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "GET /api/v1/assets": "q,kind,tag,category,cursor",
+        "PUT /api/v1/assets/{id}/pin": "pinned:bool",
+        "POST /api/v1/assets/{id}/access-requests": "reason",
+        "POST /api/v1/admin/asset-grants": "asset_version,subject,scope,expires_at,expected_revision"
+      },
+      "expected_result": "검색→상세→이용신청/승인→핀→실행→회수의 실제흐름과 조직격리 검증.",
+      "acceptance_id": "AC-F023-01",
+      "positive_assertion": "모델·Agent 검색·랭킹의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 모델/Agent 키워드·태그·카테고리 검색·평가/사용량 랭킹",
+      "negative_assertions": [
+        "비공개이름/카운트/랭킹 노출0",
+        "핀한 자산 회수 즉시 목록/실행 차단",
+        "공유되지 않은 version 직접조회404",
+        "폐기/만료 자산 새run 차단"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "모델·Agent 검색·랭킹: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-023-02",
+      "source_function": "F-023",
+      "source_name": "모델·Agent 검색·랭킹",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-10",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F023-02",
+      "negative_assertions": [
+        "비공개이름/카운트/랭킹 노출0",
+        "핀한 자산 회수 즉시 목록/실행 차단",
+        "공유되지 않은 version 직접조회404",
+        "폐기/만료 자산 새run 차단"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 26,
+      "original_acceptance": "모델·Agent 검색·랭킹: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "고정 Agent 선택 목록",
+      "support_tasks": [],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-024-01",
+      "source_function": "F-024",
+      "source_name": "템플릿·승인·배포범위",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 27,
+      "requirement": "템플릿·불변 버전·공개범위 승격·승인·복제·롤백",
+      "retained_current_behavior": "고정 Agent config revision",
+      "current_status": "미구현",
+      "primary_task": "DP-12",
+      "support_tasks": [
+        "DP-09",
+        "DP-11",
+        "DP-23"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "POST /api/v1/asset-versions/{id}/submit": "expected_revision,evaluation_id",
+        "POST /api/v1/asset-versions/{id}/decisions": "approve|reject,reason,expected_revision",
+        "POST /api/v1/assets/{id}/activate": "approved_version_id,expected_revision"
+      },
+      "expected_result": "승인→활성화→이전승인version 복귀의 감사/권한/버전 일치. 운영DB 접근은 DP-22의별도 권원 없이 허용하지 않음.",
+      "acceptance_id": "AC-F024-01",
+      "positive_assertion": "템플릿·승인·배포범위의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 템플릿·불변 버전·공개범위 승격·승인·복제·롤백",
+      "negative_assertions": [
+        "작성자 승인403·반려사유 필수",
+        "승인후config/hash변조 차단",
+        "복귀해도기존run/발생비용 변경0",
+        "권한회수·중복결재·동시activation 충돌"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "템플릿·승인·배포범위: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-024-02",
+      "source_function": "F-024",
+      "source_name": "템플릿·승인·배포범위",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-12",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F024-02",
+      "negative_assertions": [
+        "작성자 승인403·반려사유 필수",
+        "승인후config/hash변조 차단",
+        "복귀해도기존run/발생비용 변경0",
+        "권한회수·중복결재·동시activation 충돌"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 27,
+      "original_acceptance": "템플릿·승인·배포범위: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "고정 Agent config revision",
+      "support_tasks": [
+        "DP-09",
+        "DP-11",
+        "DP-23"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-025-01",
+      "source_function": "F-025",
+      "source_name": "공지·커뮤니티·지식공유",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 28,
+      "requirement": "공지·게시판·댓글·첨부·과제 산출물 공유",
+      "retained_current_behavior": "없음",
+      "current_status": "미구현",
+      "primary_task": "DP-25",
+      "support_tasks": [],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "운영/콘텐츠/과제 담당과 환경관리 주체; 개인내용 접근은 별도",
+      "input_contract": {
+        "Content": "id,tenant,scope,state(draft|published|archived),revision,publish_at",
+        "Project": "id,tenant,owner,state(submitted|approved|running|closed),asset_refs,budget_ref",
+        "Notification": "recipient,tenant,event,target_id,read_at"
+      },
+      "expected_result": "공지/업무안내→과제신청→결재→실행/비용→종료가연결되고개인대화내용은공유되지않음.",
+      "acceptance_id": "AC-F025-01",
+      "positive_assertion": "공지·커뮤니티·지식공유의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 공지·게시판·댓글·첨부·과제 산출물 공유",
+      "negative_assertions": [
+        "미게시/다른tenant콘텐츠누출0",
+        "예약시각·편집revision·폐기후알림target차단",
+        "자기결재/SOD차단",
+        "종료과제새사용과기존비용보존"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "공지·커뮤니티·지식공유: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-025-02",
+      "source_function": "F-025",
+      "source_name": "공지·커뮤니티·지식공유",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-25",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "운영/콘텐츠/과제 담당과 환경관리 주체; 개인내용 접근은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F025-02",
+      "negative_assertions": [
+        "미게시/다른tenant콘텐츠누출0",
+        "예약시각·편집revision·폐기후알림target차단",
+        "자기결재/SOD차단",
+        "종료과제새사용과기존비용보존"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 28,
+      "original_acceptance": "공지·커뮤니티·지식공유: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "없음",
+      "support_tasks": [],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-026-01",
+      "source_function": "F-026",
+      "source_name": "사용자 평가·개선관리",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 29,
+      "requirement": "별점/의견·담당자 분류·개선/종결 workflow",
+      "retained_current_behavior": "호출 기록은 피드백과 별개",
+      "current_status": "미구현",
+      "primary_task": "DP-04",
+      "support_tasks": [
+        "DP-24"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "본인 일반사용자; 피드백 검토자는 명시 feedback.read 주체",
+      "input_contract": {
+        "PUT /api/v1/runs/{id}/feedback": {
+          "rating": "positive|negative",
+          "comment": "0~1000자",
+          "expected_revision": "int"
+        },
+        "GET /api/v1/admin/feedback": "tenant-scoped redacted feedback",
+        "PATCH /api/v1/admin/feedback/{id}": "category,status,expected_revision"
+      },
+      "expected_result": "평가→마스킹 목록→분류/처리→종결이 동작하고 개인 대화 접근권한을 확장하지 않음.",
+      "acceptance_id": "AC-F026-01",
+      "positive_assertion": "사용자 평가·개선관리의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 별점/의견·담당자 분류·개선/종결 workflow",
+      "negative_assertions": [
+        "같은 사용자 재전송은1행",
+        "미완료/다른소유run 차단",
+        "관리자 목록에서 개인 prompt/body/title 노출0",
+        "종결사유/재개 revision 검증"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "사용자 평가·개선관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-026-02",
+      "source_function": "F-026",
+      "source_name": "사용자 평가·개선관리",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-04",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "본인 일반사용자; 피드백 검토자는 명시 feedback.read 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F026-02",
+      "negative_assertions": [
+        "같은 사용자 재전송은1행",
+        "미완료/다른소유run 차단",
+        "관리자 목록에서 개인 prompt/body/title 노출0",
+        "종결사유/재개 revision 검증"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 29,
+      "original_acceptance": "사용자 평가·개선관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "호출 기록은 피드백과 별개",
+      "support_tasks": [
+        "DP-24"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-027-01",
+      "source_function": "F-027",
+      "source_name": "관리자 포털 프레임",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 30,
+      "requirement": "별도 관리자 앱·콘텐츠/사이트·검색/승인함·운영위젯",
+      "retained_current_behavior": "같은 SPA의 관리자 메뉴·문서/사용자/Agent/사용량",
+      "current_status": "부분 구현",
+      "primary_task": "DP-02",
+      "support_tasks": [
+        "DP-14",
+        "DP-25"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "본인 일반사용자; 피드백 검토자는 명시 feedback.read 주체",
+      "input_contract": {
+        "GET /api/v1/portal/home": {
+          "tenant_id": "UUID",
+          "capabilities": [
+            "string"
+          ],
+          "available_assets": [
+            "UUID"
+          ],
+          "announcements": [
+            "published metadata"
+          ]
+        },
+        "GET /api/v1/portal/help": "published guide list"
+      },
+      "expected_result": "로그인→조직선택→허용기능→도움말의 경로가 동작하고 미구현 지표/기능을 실동작으로 표시하지 않음.",
+      "acceptance_id": "AC-F027-01",
+      "positive_assertion": "관리자 포털 프레임의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 별도 관리자 앱·콘텐츠/사이트·검색/승인함·운영위젯",
+      "negative_assertions": [
+        "직접 URL/API 우회403/404",
+        "조직전환 이전 응답이 새 화면에 나타나지 않음",
+        "키보드·모바일320px·Edge/Chrome 검증"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "관리자 포털 프레임: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-027-02",
+      "source_function": "F-027",
+      "source_name": "관리자 포털 프레임",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-02",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "본인 일반사용자; 피드백 검토자는 명시 feedback.read 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F027-02",
+      "negative_assertions": [
+        "직접 URL/API 우회403/404",
+        "조직전환 이전 응답이 새 화면에 나타나지 않음",
+        "키보드·모바일320px·Edge/Chrome 검증"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 30,
+      "original_acceptance": "관리자 포털 프레임: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "같은 SPA의 관리자 메뉴·문서/사용자/Agent/사용량",
+      "support_tasks": [
+        "DP-14",
+        "DP-25"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-028-01",
+      "source_function": "F-028",
+      "source_name": "통합 운영 대시보드",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 31,
+      "requirement": "노드/모델성능·장애 수집·추이·KPI drilldown·Export·청구정산",
+      "retained_current_behavior": "실제/mock 사용량·비용 추정·예약·unknown·한도",
+      "current_status": "부분 구현",
+      "primary_task": "DP-14",
+      "support_tasks": [
+        "DP-15",
+        "DP-26",
+        "DP-27"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "GET /api/v1/admin/usage/series": "from,to,grain=day,mode,tenant filters",
+        "GET /api/v1/admin/usage/export": "same authorized filter; CSV",
+        "aggregate": "input/output/context tokens,known/reserved/unknown,calls,agent,latency"
+      },
+      "expected_result": "화면/CSV/원장합계 일치하고 부재수집항목을0이나가상성능으로 표시하지 않음.",
+      "acceptance_id": "AC-F028-01",
+      "positive_assertion": "통합 운영 대시보드의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 노드/모델성능·장애 수집·추이·KPI drilldown·Export·청구정산",
+      "negative_assertions": [
+        "합계=원장 필터합·기간경계·unknown 포함",
+        "tenant관리자는 project집계불가",
+        "CSV =,+,-,@ 시작셀 안전화",
+        "project조회와변경capability분리"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "통합 운영 대시보드: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-028-02",
+      "source_function": "F-028",
+      "source_name": "통합 운영 대시보드",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-14",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F028-02",
+      "negative_assertions": [
+        "합계=원장 필터합·기간경계·unknown 포함",
+        "tenant관리자는 project집계불가",
+        "CSV =,+,-,@ 시작셀 안전화",
+        "project조회와변경capability분리"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 31,
+      "original_acceptance": "통합 운영 대시보드: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "실제/mock 사용량·비용 추정·예약·unknown·한도",
+      "support_tasks": [
+        "DP-15",
+        "DP-26",
+        "DP-27"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-029-01",
+      "source_function": "F-029",
+      "source_name": "계열사 과제 관리",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 32,
+      "requirement": "과제 등록/검토/결재/이행/종료·과제별 비용/산출물",
+      "retained_current_behavior": "tenant 예산은 과제 모델이 아님",
+      "current_status": "미구현",
+      "primary_task": "DP-25",
+      "support_tasks": [
+        "DP-12"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "운영/콘텐츠/과제 담당과 환경관리 주체; 개인내용 접근은 별도",
+      "input_contract": {
+        "Content": "id,tenant,scope,state(draft|published|archived),revision,publish_at",
+        "Project": "id,tenant,owner,state(submitted|approved|running|closed),asset_refs,budget_ref",
+        "Notification": "recipient,tenant,event,target_id,read_at"
+      },
+      "expected_result": "공지/업무안내→과제신청→결재→실행/비용→종료가연결되고개인대화내용은공유되지않음.",
+      "acceptance_id": "AC-F029-01",
+      "positive_assertion": "계열사 과제 관리의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 과제 등록/검토/결재/이행/종료·과제별 비용/산출물",
+      "negative_assertions": [
+        "미게시/다른tenant콘텐츠누출0",
+        "예약시각·편집revision·폐기후알림target차단",
+        "자기결재/SOD차단",
+        "종료과제새사용과기존비용보존"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "계열사 과제 관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-029-02",
+      "source_function": "F-029",
+      "source_name": "계열사 과제 관리",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-25",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "운영/콘텐츠/과제 담당과 환경관리 주체; 개인내용 접근은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F029-02",
+      "negative_assertions": [
+        "미게시/다른tenant콘텐츠누출0",
+        "예약시각·편집revision·폐기후알림target차단",
+        "자기결재/SOD차단",
+        "종료과제새사용과기존비용보존"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 32,
+      "original_acceptance": "계열사 과제 관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "tenant 예산은 과제 모델이 아님",
+      "support_tasks": [
+        "DP-12"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-030-01",
+      "source_function": "F-030",
+      "source_name": "GPU·CPU 자원 관리",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 33,
+      "requirement": "GPU/CPU 수집·할당/예약·사용률·경보 정책",
+      "retained_current_behavior": "token/비용/동시 제한은 GPU 자원이 아님",
+      "current_status": "미구현",
+      "primary_task": "DP-27",
+      "support_tasks": [],
+      "scope": "자체서빙/GPU 확보 후 조건부",
+      "actor": "운영/콘텐츠/과제 담당과 환경관리 주체; 개인내용 접근은 별도",
+      "input_contract": {
+        "PrivateBinding": "model_version,endpoint_binding,credential_ref,health,quota",
+        "ResourceSample": "timestamp,node,gpu,cpu,memory,storage,source",
+        "Allocation": "tenant,model,limits,revision"
+      },
+      "expected_result": "자체서빙과자원할당실측근거있을때만완료. 개인MVP의필수선행으로두지않음.",
+      "acceptance_id": "AC-F030-01",
+      "positive_assertion": "GPU·CPU 자원 관리의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: GPU/CPU 수집·할당/예약·사용률·경보 정책",
+      "negative_assertions": [
+        "model/license/secret범위검증",
+        "GPU할당회수/초과/tenant간간섭실측",
+        "healthfail시unapprovedfallback금지",
+        "모델별TTFT/latency/error/원장비교"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "GPU·CPU 자원 관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-030-02",
+      "source_function": "F-030",
+      "source_name": "GPU·CPU 자원 관리",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-27",
+      "scope": "자체서빙/GPU 확보 후 조건부",
+      "actor": "운영/콘텐츠/과제 담당과 환경관리 주체; 개인내용 접근은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F030-02",
+      "negative_assertions": [
+        "model/license/secret범위검증",
+        "GPU할당회수/초과/tenant간간섭실측",
+        "healthfail시unapprovedfallback금지",
+        "모델별TTFT/latency/error/원장비교"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 33,
+      "original_acceptance": "GPU·CPU 자원 관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "token/비용/동시 제한은 GPU 자원이 아님",
+      "support_tasks": [],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-031-01",
+      "source_function": "F-031",
+      "source_name": "역할·권한·결재선 관리",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 34,
+      "requirement": "동적 role CRUD·위임/유효기간·결재선·활동 조회·SOD",
+      "retained_current_behavior": "소속 active·USER/TADMIN/PADMIN role 변경·현재권한 검사",
+      "current_status": "부분 구현",
+      "primary_task": "DP-16",
+      "support_tasks": [
+        "DP-12"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "GET /api/v1/auth/sso/start": "provider alias server allowlist",
+        "GET /api/v1/auth/sso/callback": "code,state",
+        "capability check": "require(ctx,capability,resource) → allow|deny",
+        "role templates": "user,agent_developer,model_operator,data_owner,tenant_operator,group_operator,security_reviewer,approver"
+      },
+      "expected_result": "8역할 capability표와SOD음성시험 통과; 실제기관SSO/AD연계는 해당sandbox 증거가 있어야 완료.",
+      "acceptance_id": "AC-F031-01",
+      "positive_assertion": "역할·권한·결재선 관리의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 동적 role CRUD·위임/유효기간·결재선·활동 조회·SOD",
+      "negative_assertions": [
+        "자기승인/권한상승403",
+        "위조issuer/aud/state·재사용callback 거부",
+        "부서이동/권한회수 즉시API차단",
+        "기존3role 세션회귀/초기관리잠금 방지"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "역할·권한·결재선 관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-031-02",
+      "source_function": "F-031",
+      "source_name": "역할·권한·결재선 관리",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-16",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F031-02",
+      "negative_assertions": [
+        "자기승인/권한상승403",
+        "위조issuer/aud/state·재사용callback 거부",
+        "부서이동/권한회수 즉시API차단",
+        "기존3role 세션회귀/초기관리잠금 방지"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 34,
+      "original_acceptance": "역할·권한·결재선 관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "소속 active·USER/TADMIN/PADMIN role 변경·현재권한 검사",
+      "support_tasks": [
+        "DP-12"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-032-01",
+      "source_function": "F-032",
+      "source_name": "AI서비스 운영 생명주기",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 35,
+      "requirement": "동적 서비스/Agent/MCP 등록→검증→게시→폐기",
+      "retained_current_behavior": "고정2개 Agent 설정·중지/재개",
+      "current_status": "부분 구현",
+      "primary_task": "DP-09",
+      "support_tasks": [
+        "DP-11",
+        "DP-12",
+        "DP-13",
+        "DP-21",
+        "DP-23",
+        "DP-24",
+        "DP-27"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "Asset": "id,owner_tenant,kind(agent|prompt|workflow|tool|model),visibility,active_version",
+        "AssetVersion": "id,asset_id,revision,state,config_hash,execution_kind(general|rules_rag|document_summary)",
+        "run snapshot": "asset_id,asset_version_id,config_hash"
+      },
+      "expected_result": "고정2종과 새자산이 같은 허가경로로 실행되고 대화·근거·snapshot·ledger가 보존됨.",
+      "acceptance_id": "AC-F032-01",
+      "positive_assertion": "AI서비스 운영 생명주기의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 동적 서비스/Agent/MCP 등록→검증→게시→폐기",
+      "negative_assertions": [
+        "기존데이터 migration 전후 row/hash/비용 일치",
+        "고정2종 API호환·기존SSE/run 재조회",
+        "다른 tenant asset조회404",
+        "중간실패 rollback·반복migration 변경0"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "AI서비스 운영 생명주기: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-032-02",
+      "source_function": "F-032",
+      "source_name": "AI서비스 운영 생명주기",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-09",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F032-02",
+      "negative_assertions": [
+        "기존데이터 migration 전후 row/hash/비용 일치",
+        "고정2종 API호환·기존SSE/run 재조회",
+        "다른 tenant asset조회404",
+        "중간실패 rollback·반복migration 변경0"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 35,
+      "original_acceptance": "AI서비스 운영 생명주기: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "고정2개 Agent 설정·중지/재개",
+      "support_tasks": [
+        "DP-11",
+        "DP-12",
+        "DP-13",
+        "DP-21",
+        "DP-23",
+        "DP-24",
+        "DP-27"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-033-01",
+      "source_function": "F-033",
+      "source_name": "서비스·Agent 이용권한",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 36,
+      "requirement": "부서/사용자/자산별 ABAC·신청·일괄부여·만료·예외",
+      "retained_current_behavior": "tenant 소속/role·고정 Agent 운영 허가",
+      "current_status": "부분 구현",
+      "primary_task": "DP-10",
+      "support_tasks": [
+        "DP-16",
+        "DP-17"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "GET /api/v1/assets": "q,kind,tag,category,cursor",
+        "PUT /api/v1/assets/{id}/pin": "pinned:bool",
+        "POST /api/v1/assets/{id}/access-requests": "reason",
+        "POST /api/v1/admin/asset-grants": "asset_version,subject,scope,expires_at,expected_revision"
+      },
+      "expected_result": "검색→상세→이용신청/승인→핀→실행→회수의 실제흐름과 조직격리 검증.",
+      "acceptance_id": "AC-F033-01",
+      "positive_assertion": "서비스·Agent 이용권한의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 부서/사용자/자산별 ABAC·신청·일괄부여·만료·예외",
+      "negative_assertions": [
+        "비공개이름/카운트/랭킹 노출0",
+        "핀한 자산 회수 즉시 목록/실행 차단",
+        "공유되지 않은 version 직접조회404",
+        "폐기/만료 자산 새run 차단"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "서비스·Agent 이용권한: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-033-02",
+      "source_function": "F-033",
+      "source_name": "서비스·Agent 이용권한",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-10",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F033-02",
+      "negative_assertions": [
+        "비공개이름/카운트/랭킹 노출0",
+        "핀한 자산 회수 즉시 목록/실행 차단",
+        "공유되지 않은 version 직접조회404",
+        "폐기/만료 자산 새run 차단"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 36,
+      "original_acceptance": "서비스·Agent 이용권한: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "tenant 소속/role·고정 Agent 운영 허가",
+      "support_tasks": [
+        "DP-16",
+        "DP-17"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-034-01",
+      "source_function": "F-034",
+      "source_name": "AI자산 공개·공유범위",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 37,
+      "requirement": "일반 AI자산 공개범위·영향/승인·그룹공통 자산",
+      "retained_current_behavior": "문서 private/org/Grant",
+      "current_status": "관련 기반",
+      "primary_task": "DP-10",
+      "support_tasks": [
+        "DP-09",
+        "DP-17"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "GET /api/v1/assets": "q,kind,tag,category,cursor",
+        "PUT /api/v1/assets/{id}/pin": "pinned:bool",
+        "POST /api/v1/assets/{id}/access-requests": "reason",
+        "POST /api/v1/admin/asset-grants": "asset_version,subject,scope,expires_at,expected_revision"
+      },
+      "expected_result": "검색→상세→이용신청/승인→핀→실행→회수의 실제흐름과 조직격리 검증.",
+      "acceptance_id": "AC-F034-01",
+      "positive_assertion": "AI자산 공개·공유범위의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 일반 AI자산 공개범위·영향/승인·그룹공통 자산",
+      "negative_assertions": [
+        "비공개이름/카운트/랭킹 노출0",
+        "핀한 자산 회수 즉시 목록/실행 차단",
+        "공유되지 않은 version 직접조회404",
+        "폐기/만료 자산 새run 차단"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "AI자산 공개·공유범위: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-034-02",
+      "source_function": "F-034",
+      "source_name": "AI자산 공개·공유범위",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-10",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F034-02",
+      "negative_assertions": [
+        "비공개이름/카운트/랭킹 노출0",
+        "핀한 자산 회수 즉시 목록/실행 차단",
+        "공유되지 않은 version 직접조회404",
+        "폐기/만료 자산 새run 차단"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 37,
+      "original_acceptance": "AI자산 공개·공유범위: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "문서 private/org/Grant",
+      "support_tasks": [
+        "DP-09",
+        "DP-17"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-035-01",
+      "source_function": "F-035",
+      "source_name": "공통·전용 서비스 운영분리",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 38,
+      "requirement": "독립 서비스 cell·일반 자산 운영·위임운영",
+      "retained_current_behavior": "조직관리와 project 읽기/변경 capability 분리",
+      "current_status": "부분 구현",
+      "primary_task": "DP-16",
+      "support_tasks": [
+        "DP-14",
+        "DP-26"
+      ],
+      "scope": "권한/역할운영은 개인 구현; 독립Cell은 환경 확장",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "GET /api/v1/auth/sso/start": "provider alias server allowlist",
+        "GET /api/v1/auth/sso/callback": "code,state",
+        "capability check": "require(ctx,capability,resource) → allow|deny",
+        "role templates": "user,agent_developer,model_operator,data_owner,tenant_operator,group_operator,security_reviewer,approver"
+      },
+      "expected_result": "8역할 capability표와SOD음성시험 통과; 실제기관SSO/AD연계는 해당sandbox 증거가 있어야 완료.",
+      "acceptance_id": "AC-F035-01",
+      "positive_assertion": "공통·전용 서비스 운영분리의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 독립 서비스 cell·일반 자산 운영·위임운영",
+      "negative_assertions": [
+        "자기승인/권한상승403",
+        "위조issuer/aud/state·재사용callback 거부",
+        "부서이동/권한회수 즉시API차단",
+        "기존3role 세션회귀/초기관리잠금 방지"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "공통·전용 서비스 운영분리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-035-02",
+      "source_function": "F-035",
+      "source_name": "공통·전용 서비스 운영분리",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-16",
+      "scope": "권한/역할운영은 개인 구현; 독립Cell은 환경 확장",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F035-02",
+      "negative_assertions": [
+        "자기승인/권한상승403",
+        "위조issuer/aud/state·재사용callback 거부",
+        "부서이동/권한회수 즉시API차단",
+        "기존3role 세션회귀/초기관리잠금 방지"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 38,
+      "original_acceptance": "공통·전용 서비스 운영분리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "조직관리와 project 읽기/변경 capability 분리",
+      "support_tasks": [
+        "DP-14",
+        "DP-26"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-036-01",
+      "source_function": "F-036",
+      "source_name": "계열사별 가드레일 정책",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 39,
+      "requirement": "그룹 강제/계열사 강화 콘텐츠정책·버전/시행·배포",
+      "retained_current_behavior": "프로젝트/조직 stop·cap·Agent enabled",
+      "current_status": "관련 기반",
+      "primary_task": "DP-18",
+      "support_tasks": [
+        "DP-17"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "evaluate_policy(ctx,boundary,payload,policy_version)": "PolicyDecision(action=allow|block|mask,rule_ids,redacted_payload)",
+        "boundaries": [
+          "prompt",
+          "attachment",
+          "index",
+          "retrieval",
+          "model_output",
+          "tool_input",
+          "tool_output"
+        ]
+      },
+      "expected_result": "정의된정책셋과통과임계값을평가보고서에기록하고 규칙탐지만으로모든PII/공격차단을주장하지않음.",
+      "acceptance_id": "AC-F036-01",
+      "positive_assertion": "계열사별 가드레일 정책의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 그룹 강제/계열사 강화 콘텐츠정책·버전/시행·배포",
+      "negative_assertions": [
+        "합성패턴별TP/FP/FN보고·핵심직접pattern누출0",
+        "정책오류는failclosed·미송신",
+        "다른tenant정책/예외조회차단",
+        "마스킹후인용offset/version불일치없는별도표현"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "계열사별 가드레일 정책: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-036-02",
+      "source_function": "F-036",
+      "source_name": "계열사별 가드레일 정책",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-18",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F036-02",
+      "negative_assertions": [
+        "합성패턴별TP/FP/FN보고·핵심직접pattern누출0",
+        "정책오류는failclosed·미송신",
+        "다른tenant정책/예외조회차단",
+        "마스킹후인용offset/version불일치없는별도표현"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 39,
+      "original_acceptance": "계열사별 가드레일 정책: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "프로젝트/조직 stop·cap·Agent enabled",
+      "support_tasks": [
+        "DP-17"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-037-01",
+      "source_function": "F-037",
+      "source_name": "서비스별 가드레일·예외",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 40,
+      "requirement": "서비스별 입출력 정책 적용점·예외 승인/만료/복구",
+      "retained_current_behavior": "기존 ACL/중지/한도는 완화하지 않음",
+      "current_status": "미구현",
+      "primary_task": "DP-18",
+      "support_tasks": [],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "evaluate_policy(ctx,boundary,payload,policy_version)": "PolicyDecision(action=allow|block|mask,rule_ids,redacted_payload)",
+        "boundaries": [
+          "prompt",
+          "attachment",
+          "index",
+          "retrieval",
+          "model_output",
+          "tool_input",
+          "tool_output"
+        ]
+      },
+      "expected_result": "정의된정책셋과통과임계값을평가보고서에기록하고 규칙탐지만으로모든PII/공격차단을주장하지않음.",
+      "acceptance_id": "AC-F037-01",
+      "positive_assertion": "서비스별 가드레일·예외의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 서비스별 입출력 정책 적용점·예외 승인/만료/복구",
+      "negative_assertions": [
+        "합성패턴별TP/FP/FN보고·핵심직접pattern누출0",
+        "정책오류는failclosed·미송신",
+        "다른tenant정책/예외조회차단",
+        "마스킹후인용offset/version불일치없는별도표현"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "서비스별 가드레일·예외: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-037-02",
+      "source_function": "F-037",
+      "source_name": "서비스별 가드레일·예외",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-18",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F037-02",
+      "negative_assertions": [
+        "합성패턴별TP/FP/FN보고·핵심직접pattern누출0",
+        "정책오류는failclosed·미송신",
+        "다른tenant정책/예외조회차단",
+        "마스킹후인용offset/version불일치없는별도표현"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 40,
+      "original_acceptance": "서비스별 가드레일·예외: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "기존 ACL/중지/한도는 완화하지 않음",
+      "support_tasks": [],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-038-01",
+      "source_function": "F-038",
+      "source_name": "가드레일 위반 현황·이력",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 41,
+      "requirement": "가드레일 탐지/차단 이벤트·추세·마스킹 조회",
+      "retained_current_behavior": "정제 오류·행위 감사·unknown usage",
+      "current_status": "관련 기반",
+      "primary_task": "DP-18",
+      "support_tasks": [
+        "DP-15"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "evaluate_policy(ctx,boundary,payload,policy_version)": "PolicyDecision(action=allow|block|mask,rule_ids,redacted_payload)",
+        "boundaries": [
+          "prompt",
+          "attachment",
+          "index",
+          "retrieval",
+          "model_output",
+          "tool_input",
+          "tool_output"
+        ]
+      },
+      "expected_result": "정의된정책셋과통과임계값을평가보고서에기록하고 규칙탐지만으로모든PII/공격차단을주장하지않음.",
+      "acceptance_id": "AC-F038-01",
+      "positive_assertion": "가드레일 위반 현황·이력의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 가드레일 탐지/차단 이벤트·추세·마스킹 조회",
+      "negative_assertions": [
+        "합성패턴별TP/FP/FN보고·핵심직접pattern누출0",
+        "정책오류는failclosed·미송신",
+        "다른tenant정책/예외조회차단",
+        "마스킹후인용offset/version불일치없는별도표현"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "가드레일 위반 현황·이력: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-038-02",
+      "source_function": "F-038",
+      "source_name": "가드레일 위반 현황·이력",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-18",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F038-02",
+      "negative_assertions": [
+        "합성패턴별TP/FP/FN보고·핵심직접pattern누출0",
+        "정책오류는failclosed·미송신",
+        "다른tenant정책/예외조회차단",
+        "마스킹후인용offset/version불일치없는별도표현"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 41,
+      "original_acceptance": "가드레일 위반 현황·이력: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "정제 오류·행위 감사·unknown usage",
+      "support_tasks": [
+        "DP-15"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-039-01",
+      "source_function": "F-039",
+      "source_name": "서비스 배포 관리",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 42,
+      "requirement": "불변 릴리스·승인·환경 승격/배포·Canary·rollback",
+      "retained_current_behavior": "로컬 실행/재시작·Job 복구 검증",
+      "current_status": "미구현",
+      "primary_task": "DP-12",
+      "support_tasks": [
+        "DP-23",
+        "DP-26"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "POST /api/v1/asset-versions/{id}/submit": "expected_revision,evaluation_id",
+        "POST /api/v1/asset-versions/{id}/decisions": "approve|reject,reason,expected_revision",
+        "POST /api/v1/assets/{id}/activate": "approved_version_id,expected_revision"
+      },
+      "expected_result": "승인→활성화→이전승인version 복귀의 감사/권한/버전 일치. 운영DB 접근은 DP-22의별도 권원 없이 허용하지 않음.",
+      "acceptance_id": "AC-F039-01",
+      "positive_assertion": "서비스 배포 관리의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 불변 릴리스·승인·환경 승격/배포·Canary·rollback",
+      "negative_assertions": [
+        "작성자 승인403·반려사유 필수",
+        "승인후config/hash변조 차단",
+        "복귀해도기존run/발생비용 변경0",
+        "권한회수·중복결재·동시activation 충돌"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "서비스 배포 관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-039-02",
+      "source_function": "F-039",
+      "source_name": "서비스 배포 관리",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-12",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F039-02",
+      "negative_assertions": [
+        "작성자 승인403·반려사유 필수",
+        "승인후config/hash변조 차단",
+        "복귀해도기존run/발생비용 변경0",
+        "권한회수·중복결재·동시activation 충돌"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 42,
+      "original_acceptance": "서비스 배포 관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "로컬 실행/재시작·Job 복구 검증",
+      "support_tasks": [
+        "DP-23",
+        "DP-26"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-040-01",
+      "source_function": "F-040",
+      "source_name": "보안·거버넌스 통합관리",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 43,
+      "requirement": "관리자 보안 정책/PII예외·필터·Scope 편집·감사 검색; 거버넌스 전용 업무 제외",
+      "retained_current_behavior": "문서 ACL/Scope 함수·DB 감사 기록",
+      "current_status": "관련 기반",
+      "primary_task": "DP-15",
+      "support_tasks": [
+        "DP-17",
+        "DP-18",
+        "DP-19"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "GET /api/v1/admin/audit-events": "request_id,action,from,to,cursor,limit<=50",
+        "audit payload": "actor,tenant,action,target_id,verdict,request/run/job/call IDs,timestamp"
+      },
+      "expected_result": "허가된최소감사만 조회/추적/Export 가능. chain-of-thought 조회기능은 만들지 않음.",
+      "acceptance_id": "AC-F040-01",
+      "positive_assertion": "보안·거버넌스 통합관리의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 관리자 보안 정책/PII예외·필터·Scope 편집·감사 검색; 거버넌스 전용 업무 제외",
+      "negative_assertions": [
+        "PADMIN이라도개인원문 미노출",
+        "직접ID·cursor타tenant접근0",
+        "감사 Export의권한/마스킹 동일",
+        "감사쓰기사고 시제품mutation rollback계약"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "보안·거버넌스 통합관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-040-02",
+      "source_function": "F-040",
+      "source_name": "보안·거버넌스 통합관리",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-15",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F040-02",
+      "negative_assertions": [
+        "PADMIN이라도개인원문 미노출",
+        "직접ID·cursor타tenant접근0",
+        "감사 Export의권한/마스킹 동일",
+        "감사쓰기사고 시제품mutation rollback계약"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 43,
+      "original_acceptance": "보안·거버넌스 통합관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "문서 ACL/Scope 함수·DB 감사 기록",
+      "support_tasks": [
+        "DP-17",
+        "DP-18",
+        "DP-19"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-041-01",
+      "source_function": "F-041",
+      "source_name": "모델·데이터 반입 승인",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 44,
+      "requirement": "반입 요청·악성코드/라이선스/PII/취약점 검사·사람 승인",
+      "retained_current_behavior": "문서 접수·처리/게시 상태",
+      "current_status": "관련 기반",
+      "primary_task": "DP-17",
+      "support_tasks": [
+        "DP-06",
+        "DP-12",
+        "DP-19",
+        "DP-22",
+        "DP-27"
+      ],
+      "scope": "반입승인/검사는 개인 구현; 실DRM/모델서빙은 조건부",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "POST /api/v1/data-imports": "source_ref,classification,target_scope",
+        "POST /api/v1/data-imports/{id}/decisions": "approve|reject,reason,expected_revision",
+        "DataScope": "tenant,subject,version_refs,purpose,expires_at"
+      },
+      "expected_result": "반입과접근권한의사람승인/검사/원문hash가일치하고 현행회수gate가모든신규화면에적용.",
+      "acceptance_id": "AC-F041-01",
+      "positive_assertion": "모델·데이터 반입 승인의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 반입 요청·악성코드/라이선스/PII/취약점 검사·사람 승인",
+      "negative_assertions": [
+        "반입승인≠개인문서강제공유",
+        "승인후hash/source변경시재심사",
+        "자료삭제/Grant회수 중작업게시차단",
+        "모델/문서미검사상태 활성화차단"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "모델·데이터 반입 승인: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-041-02",
+      "source_function": "F-041",
+      "source_name": "모델·데이터 반입 승인",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-17",
+      "scope": "반입승인/검사는 개인 구현; 실DRM/모델서빙은 조건부",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F041-02",
+      "negative_assertions": [
+        "반입승인≠개인문서강제공유",
+        "승인후hash/source변경시재심사",
+        "자료삭제/Grant회수 중작업게시차단",
+        "모델/문서미검사상태 활성화차단"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 44,
+      "original_acceptance": "모델·데이터 반입 승인: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "문서 접수·처리/게시 상태",
+      "support_tasks": [
+        "DP-06",
+        "DP-12",
+        "DP-19",
+        "DP-22",
+        "DP-27"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-042-01",
+      "source_function": "F-042",
+      "source_name": "공지·콘텐츠·게시판 관리",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 45,
+      "requirement": "공지/콘텐츠 CMS·예약게시·버전·대상조직 노출",
+      "retained_current_behavior": "없음",
+      "current_status": "미구현",
+      "primary_task": "DP-25",
+      "support_tasks": [],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "운영/콘텐츠/과제 담당과 환경관리 주체; 개인내용 접근은 별도",
+      "input_contract": {
+        "Content": "id,tenant,scope,state(draft|published|archived),revision,publish_at",
+        "Project": "id,tenant,owner,state(submitted|approved|running|closed),asset_refs,budget_ref",
+        "Notification": "recipient,tenant,event,target_id,read_at"
+      },
+      "expected_result": "공지/업무안내→과제신청→결재→실행/비용→종료가연결되고개인대화내용은공유되지않음.",
+      "acceptance_id": "AC-F042-01",
+      "positive_assertion": "공지·콘텐츠·게시판 관리의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 공지/콘텐츠 CMS·예약게시·버전·대상조직 노출",
+      "negative_assertions": [
+        "미게시/다른tenant콘텐츠누출0",
+        "예약시각·편집revision·폐기후알림target차단",
+        "자기결재/SOD차단",
+        "종료과제새사용과기존비용보존"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "공지·콘텐츠·게시판 관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-042-02",
+      "source_function": "F-042",
+      "source_name": "공지·콘텐츠·게시판 관리",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-25",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "운영/콘텐츠/과제 담당과 환경관리 주체; 개인내용 접근은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F042-02",
+      "negative_assertions": [
+        "미게시/다른tenant콘텐츠누출0",
+        "예약시각·편집revision·폐기후알림target차단",
+        "자기결재/SOD차단",
+        "종료과제새사용과기존비용보존"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 45,
+      "original_acceptance": "공지·콘텐츠·게시판 관리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "없음",
+      "support_tasks": [],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-043-01",
+      "source_function": "F-043",
+      "source_name": "테넌트 논리적 분리",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 46,
+      "requirement": "10개 cell·namespace·캐시/큐/키·물리저장 경계·운영 검증",
+      "retained_current_behavior": "tenant/user/session RLS·문서/벡터/Graph 권한 검사",
+      "current_status": "부분 구현",
+      "primary_task": "DP-26",
+      "support_tasks": [
+        "DP-17",
+        "DP-20",
+        "DP-21",
+        "DP-22"
+      ],
+      "scope": "10 합성tenant 논리검증은 개인 구현; Cell/K8s는 조건부",
+      "actor": "운영/콘텐츠/과제 담당과 환경관리 주체; 개인내용 접근은 별도",
+      "input_contract": {
+        "EnvironmentManifest": "revision,code_hash,schema_version,config_refs,approved_release_id",
+        "health": "liveness,readiness,queue_lag,storage,latency,error_rate",
+        "restore proof": "new_db,source_backup_hash,table_counts,ledger_totals,acl_cases"
+      },
+      "expected_result": "새환경설치/restore/10논리tenant 증거. Cell·HA·DR성능은실운영환경없으면미실행·조건부보존.",
+      "acceptance_id": "AC-F043-01",
+      "positive_assertion": "테넌트 논리적 분리의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 10개 cell·namespace·캐시/큐/키·물리저장 경계·운영 검증",
+      "negative_assertions": [
+        "동일DB재시작을restore통과로처리금지",
+        "10tenant병렬이름/원문/비용/secret교차0",
+        "backup→새DB hash/원장/권한회귀",
+        "관측없는metric은unknown;failover성능실측"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "테넌트 논리적 분리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-043-02",
+      "source_function": "F-043",
+      "source_name": "테넌트 논리적 분리",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-26",
+      "scope": "10 합성tenant 논리검증은 개인 구현; Cell/K8s는 조건부",
+      "actor": "운영/콘텐츠/과제 담당과 환경관리 주체; 개인내용 접근은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F043-02",
+      "negative_assertions": [
+        "동일DB재시작을restore통과로처리금지",
+        "10tenant병렬이름/원문/비용/secret교차0",
+        "backup→새DB hash/원장/권한회귀",
+        "관측없는metric은unknown;failover성능실측"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 46,
+      "original_acceptance": "테넌트 논리적 분리: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "tenant/user/session RLS·문서/벡터/Graph 권한 검사",
+      "support_tasks": [
+        "DP-17",
+        "DP-20",
+        "DP-21",
+        "DP-22"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-044-01",
+      "source_function": "F-044",
+      "source_name": "계열사 간 데이터 교차방지",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 47,
+      "requirement": "사내 전송·Tool·queue/cache·10계열사 범위의 통제 검증",
+      "retained_current_behavior": "A/B 원문/대화/근거/Graph/벡터 교차 접근·공개 차단 검증",
+      "current_status": "부분 구현",
+      "primary_task": "DP-26",
+      "support_tasks": [
+        "DP-17",
+        "DP-20",
+        "DP-21",
+        "DP-22"
+      ],
+      "scope": "합성tenant 교차차단은 개인 구현; 기관전송/운영망은 실연계",
+      "actor": "운영/콘텐츠/과제 담당과 환경관리 주체; 개인내용 접근은 별도",
+      "input_contract": {
+        "EnvironmentManifest": "revision,code_hash,schema_version,config_refs,approved_release_id",
+        "health": "liveness,readiness,queue_lag,storage,latency,error_rate",
+        "restore proof": "new_db,source_backup_hash,table_counts,ledger_totals,acl_cases"
+      },
+      "expected_result": "새환경설치/restore/10논리tenant 증거. Cell·HA·DR성능은실운영환경없으면미실행·조건부보존.",
+      "acceptance_id": "AC-F044-01",
+      "positive_assertion": "계열사 간 데이터 교차방지의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 사내 전송·Tool·queue/cache·10계열사 범위의 통제 검증",
+      "negative_assertions": [
+        "동일DB재시작을restore통과로처리금지",
+        "10tenant병렬이름/원문/비용/secret교차0",
+        "backup→새DB hash/원장/권한회귀",
+        "관측없는metric은unknown;failover성능실측"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "계열사 간 데이터 교차방지: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-044-02",
+      "source_function": "F-044",
+      "source_name": "계열사 간 데이터 교차방지",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-26",
+      "scope": "합성tenant 교차차단은 개인 구현; 기관전송/운영망은 실연계",
+      "actor": "운영/콘텐츠/과제 담당과 환경관리 주체; 개인내용 접근은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F044-02",
+      "negative_assertions": [
+        "동일DB재시작을restore통과로처리금지",
+        "10tenant병렬이름/원문/비용/secret교차0",
+        "backup→새DB hash/원장/권한회귀",
+        "관측없는metric은unknown;failover성능실측"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 47,
+      "original_acceptance": "계열사 간 데이터 교차방지: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "A/B 원문/대화/근거/Graph/벡터 교차 접근·공개 차단 검증",
+      "support_tasks": [
+        "DP-17",
+        "DP-20",
+        "DP-21",
+        "DP-22"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-045-01",
+      "source_function": "F-045",
+      "source_name": "데이터 보호정책 연계",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 48,
+      "requirement": "DLP/DRM·분류/암복호화·정책 API·동의권원",
+      "retained_current_behavior": "현재 ACL·private 저장은 암호화 정책 연계와 별개",
+      "current_status": "미구현",
+      "primary_task": "DP-19",
+      "support_tasks": [
+        "DP-22"
+      ],
+      "scope": "모의보호adapter는 계약 검증; 실DRM/DLP/동의는 기관 연계",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "ProtectionAdapter": "inspect(classification),decrypt(credential_ref,consent_ref,source_ref),encrypt(export_ref)",
+        "ConsentRef": "issuer,subject,purpose,scope,expires_at,revoked_at",
+        "default unavailable": "PROTECTION_PROVIDER_UNAVAILABLE / block"
+      },
+      "expected_result": "mock 권원흐름검증과실adapter통합증거를분리. 기관자료없이는실DRM/DLP준수완료로판정하지않음.",
+      "acceptance_id": "AC-F045-01",
+      "positive_assertion": "데이터 보호정책 연계의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: DLP/DRM·분류/암복호화·정책 API·동의권원",
+      "negative_assertions": [
+        "동의회수/만료직후호출차단",
+        "decrypt source/주체/purpose일치검증",
+        "trace/export/key/평문노출0",
+        "provider실패시비보호fallback금지"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "데이터 보호정책 연계: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-045-02",
+      "source_function": "F-045",
+      "source_name": "데이터 보호정책 연계",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-19",
+      "scope": "모의보호adapter는 계약 검증; 실DRM/DLP/동의는 기관 연계",
+      "actor": "해당 tenant 관리/보안/감사 capability 보유자; 개인원문 권한은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F045-02",
+      "negative_assertions": [
+        "동의회수/만료직후호출차단",
+        "decrypt source/주체/purpose일치검증",
+        "trace/export/key/평문노출0",
+        "provider실패시비보호fallback금지"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 48,
+      "original_acceptance": "데이터 보호정책 연계: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "현재 ACL·private 저장은 암호화 정책 연계와 별개",
+      "support_tasks": [
+        "DP-22"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-046-01",
+      "source_function": "F-046",
+      "source_name": "공통자산·독립정책 결합",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 49,
+      "requirement": "공통 자산 버전 재사용+tenant connector/credential/정책/모델 바인딩",
+      "retained_current_behavior": "동일 고정 Agent의 tenant config·비용 한도·권한 분리",
+      "current_status": "부분 구현",
+      "primary_task": "DP-09",
+      "support_tasks": [
+        "DP-10",
+        "DP-13"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "Asset": "id,owner_tenant,kind(agent|prompt|workflow|tool|model),visibility,active_version",
+        "AssetVersion": "id,asset_id,revision,state,config_hash,execution_kind(general|rules_rag|document_summary)",
+        "run snapshot": "asset_id,asset_version_id,config_hash"
+      },
+      "expected_result": "고정2종과 새자산이 같은 허가경로로 실행되고 대화·근거·snapshot·ledger가 보존됨.",
+      "acceptance_id": "AC-F046-01",
+      "positive_assertion": "공통자산·독립정책 결합의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 공통 자산 버전 재사용+tenant connector/credential/정책/모델 바인딩",
+      "negative_assertions": [
+        "기존데이터 migration 전후 row/hash/비용 일치",
+        "고정2종 API호환·기존SSE/run 재조회",
+        "다른 tenant asset조회404",
+        "중간실패 rollback·반복migration 변경0"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "공통자산·독립정책 결합: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-046-02",
+      "source_function": "F-046",
+      "source_name": "공통자산·독립정책 결합",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-09",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F046-02",
+      "negative_assertions": [
+        "기존데이터 migration 전후 row/hash/비용 일치",
+        "고정2종 API호환·기존SSE/run 재조회",
+        "다른 tenant asset조회404",
+        "중간실패 rollback·반복migration 변경0"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 49,
+      "original_acceptance": "공통자산·독립정책 결합: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "동일 고정 Agent의 tenant config·비용 한도·권한 분리",
+      "support_tasks": [
+        "DP-10",
+        "DP-13"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-047-01",
+      "source_function": "F-047",
+      "source_name": "신규 계열사·서비스 확장",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 50,
+      "requirement": "tenant 자동 provisioning·동적 Agent/LLM/MCP 등록·승인 활성화",
+      "retained_current_behavior": "tenant 행·고정 모듈·공급자 adapter",
+      "current_status": "관련 기반",
+      "primary_task": "DP-26",
+      "support_tasks": [
+        "DP-09",
+        "DP-13",
+        "DP-20",
+        "DP-27"
+      ],
+      "scope": "논리tenant/자산등록은 개인 구현; Cell/GPU provisioning은 조건부",
+      "actor": "운영/콘텐츠/과제 담당과 환경관리 주체; 개인내용 접근은 별도",
+      "input_contract": {
+        "EnvironmentManifest": "revision,code_hash,schema_version,config_refs,approved_release_id",
+        "health": "liveness,readiness,queue_lag,storage,latency,error_rate",
+        "restore proof": "new_db,source_backup_hash,table_counts,ledger_totals,acl_cases"
+      },
+      "expected_result": "새환경설치/restore/10논리tenant 증거. Cell·HA·DR성능은실운영환경없으면미실행·조건부보존.",
+      "acceptance_id": "AC-F047-01",
+      "positive_assertion": "신규 계열사·서비스 확장의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: tenant 자동 provisioning·동적 Agent/LLM/MCP 등록·승인 활성화",
+      "negative_assertions": [
+        "동일DB재시작을restore통과로처리금지",
+        "10tenant병렬이름/원문/비용/secret교차0",
+        "backup→새DB hash/원장/권한회귀",
+        "관측없는metric은unknown;failover성능실측"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "신규 계열사·서비스 확장: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-047-02",
+      "source_function": "F-047",
+      "source_name": "신규 계열사·서비스 확장",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-26",
+      "scope": "논리tenant/자산등록은 개인 구현; Cell/GPU provisioning은 조건부",
+      "actor": "운영/콘텐츠/과제 담당과 환경관리 주체; 개인내용 접근은 별도",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F047-02",
+      "negative_assertions": [
+        "동일DB재시작을restore통과로처리금지",
+        "10tenant병렬이름/원문/비용/secret교차0",
+        "backup→새DB hash/원장/권한회귀",
+        "관측없는metric은unknown;failover성능실측"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 50,
+      "original_acceptance": "신규 계열사·서비스 확장: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "tenant 행·고정 모듈·공급자 adapter",
+      "support_tasks": [
+        "DP-09",
+        "DP-13",
+        "DP-20",
+        "DP-27"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-048-01",
+      "source_function": "F-048",
+      "source_name": "기존·신규 시스템 표준연계",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 51,
+      "requirement": "레거시/OpenAPI·event·파일/MCP connector 규격·위임·재시도",
+      "retained_current_behavior": "FastAPI API·공통 tenant/CSRF/오류·요청 ID",
+      "current_status": "관련 기반",
+      "primary_task": "DP-20",
+      "support_tasks": [
+        "DP-21",
+        "DP-22"
+      ],
+      "scope": "표준API/합성connector는 개인 구현; 실제전문/DB는 실연계",
+      "actor": "승인된 서비스/사용자 대리 주체와 읽기 도구 실행 capability",
+      "input_contract": {
+        "POST /api/v1/integration/runs": "service principal+asset_version_id+client_send_id+prompt",
+        "ApiClient": "tenant,allowed_assets,allowed_operations,credential_ref,rate_limit,quota,expires_at"
+      },
+      "expected_result": "외부서비스 인증→조직바인딩→허가/한도→단일실행→원장/감사의통합흐름과발급/회수증거 확보.",
+      "acceptance_id": "AC-F048-01",
+      "positive_assertion": "기존·신규 시스템 표준연계의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 레거시/OpenAPI·event·파일/MCP connector 규격·위임·재시도",
+      "negative_assertions": [
+        "client A가body/header tenant B주입실패",
+        "만료/회수client즉시차단",
+        "gateway직접우회/API경로별한도차이0",
+        "실행중재전송중복dispatch0"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "기존·신규 시스템 표준연계: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-048-02",
+      "source_function": "F-048",
+      "source_name": "기존·신규 시스템 표준연계",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-20",
+      "scope": "표준API/합성connector는 개인 구현; 실제전문/DB는 실연계",
+      "actor": "승인된 서비스/사용자 대리 주체와 읽기 도구 실행 capability",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F048-02",
+      "negative_assertions": [
+        "client A가body/header tenant B주입실패",
+        "만료/회수client즉시차단",
+        "gateway직접우회/API경로별한도차이0",
+        "실행중재전송중복dispatch0"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 51,
+      "original_acceptance": "기존·신규 시스템 표준연계: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "FastAPI API·공통 tenant/CSRF/오류·요청 ID",
+      "support_tasks": [
+        "DP-21",
+        "DP-22"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    },
+    {
+      "id": "REQ-049-01",
+      "source_function": "F-049",
+      "source_name": "모듈형 변경영향 최소화",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 52,
+      "requirement": "일반 동적 자산 계약·event·독립 서비스·version route·점진배포",
+      "retained_current_behavior": "모듈화된 AI/문서/실행·고정 adapter·config snapshot",
+      "current_status": "부분 구현",
+      "primary_task": "DP-09",
+      "support_tasks": [
+        "DP-20",
+        "DP-23",
+        "DP-26"
+      ],
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "Asset": "id,owner_tenant,kind(agent|prompt|workflow|tool|model),visibility,active_version",
+        "AssetVersion": "id,asset_id,revision,state,config_hash,execution_kind(general|rules_rag|document_summary)",
+        "run snapshot": "asset_id,asset_version_id,config_hash"
+      },
+      "expected_result": "고정2종과 새자산이 같은 허가경로로 실행되고 대화·근거·snapshot·ledger가 보존됨.",
+      "acceptance_id": "AC-F049-01",
+      "positive_assertion": "모듈형 변경영향 최소화의 채택된 하위 동작이 실제 API/데이터/화면에 연결되고 다음 추가범위를 증거로 대조한다: 일반 동적 자산 계약·event·독립 서비스·version route·점진배포",
+      "negative_assertions": [
+        "기존데이터 migration 전후 row/hash/비용 일치",
+        "고정2종 API호환·기존SSE/run 재조회",
+        "다른 tenant asset조회404",
+        "중간실패 rollback·반복migration 변경0"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "original_acceptance": "모듈형 변경영향 최소화: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출."
+    },
+    {
+      "id": "REQ-049-02",
+      "source_function": "F-049",
+      "source_name": "모듈형 변경영향 최소화",
+      "requirement": "현재 권한·보존·실행 경계를 신규 기능에서도 유지",
+      "current_status": "기존 검증 적용 범위 별도; 신규 경계 미실행",
+      "primary_task": "DP-09",
+      "scope": "개인 구현/합성 데이터 검증",
+      "actor": "자산 작성/운영 capability 보유자; 승인자는 작성자와 다른 주체",
+      "input_contract": {
+        "principal": "server AuthContext or verified ApiClient binding",
+        "target": "tenant/owner scoped ID",
+        "revision": "mutable resources only",
+        "idempotency": "execution/import/tool operations only"
+      },
+      "expected_result": "타소유/타조직 목록·제목·건수·본문·Export 누출0; 현재권한 회수 후 신규 실행/읽기 차단; 비용/감사/snapshot 보존",
+      "acceptance_id": "AC-F049-02",
+      "negative_assertions": [
+        "기존데이터 migration 전후 row/hash/비용 일치",
+        "고정2종 API호환·기존SSE/run 재조회",
+        "다른 tenant asset조회404",
+        "중간실패 rollback·반복migration 변경0"
+      ],
+      "acceptance_status": "not_run",
+      "definition_status": "baseline_defined",
+      "source_book": "02. 기능 명세/BNK_그룹공동AI플랫폼_기능명세서_v1.0.xlsx",
+      "source_sheet": "01_기능명세",
+      "source_row": 52,
+      "original_acceptance": "모듈형 변경영향 최소화: 정상·권한없음·테넌트교차·연계장애 시나리오를 통과하고, 기대 결과와 감사증적이 일치해야 완료. 핵심 API 계약·UI E2E·보안 부정 테스트 증적 제출.",
+      "retained_current_behavior": "모듈화된 AI/문서/실행·고정 adapter·config snapshot",
+      "support_tasks": [
+        "DP-20",
+        "DP-23",
+        "DP-26"
+      ],
+      "positive_assertion": "본인/허가범위의 동작은 성공하며 기존 비용·감사·snapshot·원문 version과 현재권한을 유지"
+    }
+  ],
+  "core_acceptance_cases": [
+    {
+      "case_id": "AC-H01",
+      "functions": [
+        "F-012",
+        "F-017"
+      ],
+      "task": "DP-03",
+      "precondition": "A-U1 로그인 후 본인 대화 제목을 1~120자로 변경",
+      "input": "PATCH title+expected_revision=0",
+      "expected": "200 title 동일,metadata_revision=1; 메타데이터만 변경",
+      "negative": "A-U2/B-user/PADMIN 개인대화 직접 수정404",
+      "status": "not_run",
+      "case_scope": "신규 확장 기능 시험; 기존 F전체 검수와 별도"
+    },
+    {
+      "case_id": "AC-H02",
+      "functions": [
+        "F-012",
+        "F-017"
+      ],
+      "task": "DP-03",
+      "precondition": "본인 대화를 핀/해제",
+      "input": "PATCH pinned bool+현재revision",
+      "expected": "200; pinned desc,created_at desc,id desc로 목록 정렬",
+      "negative": "핀은 대화/Agent 이용권한을 부여하지 않음",
+      "status": "not_run",
+      "case_scope": "신규 확장 기능 시험; 기존 F전체 검수와 별도"
+    },
+    {
+      "case_id": "AC-H03",
+      "functions": [
+        "F-012",
+        "F-017"
+      ],
+      "task": "DP-03",
+      "precondition": "제목 문자열 검색·핀 필터·목록 페이지 이동",
+      "input": "GET q<=120,pinned,cursor,limit<=50",
+      "expected": "본인/현재tenant 비삭제 제목만 검색; 최대limit·next_cursor",
+      "negative": "다른검색조건/사용자/tenant의 cursor422; 본문 검색은 이 범위 제외",
+      "status": "not_run",
+      "case_scope": "신규 확장 기능 시험; 기존 F전체 검수와 별도"
+    },
+    {
+      "case_id": "AC-H04",
+      "functions": [
+        "F-012",
+        "F-017"
+      ],
+      "task": "DP-03",
+      "precondition": "같은 metadata revision으로 다른 수정 동시 제출",
+      "input": "PATCH 서로다른title,동일expected_revision",
+      "expected": "한건200·다른건409; revision 단조 증가",
+      "negative": "같은현재값 재전송만 안전 응답; 값 다른 stale 수정409",
+      "status": "not_run",
+      "case_scope": "신규 확장 기능 시험; 기존 F전체 검수와 별도"
+    },
+    {
+      "case_id": "AC-H05",
+      "functions": [
+        "F-012",
+        "F-017"
+      ],
+      "task": "DP-03",
+      "precondition": "진행run 없는 대화 삭제",
+      "input": "DELETE expected_revision",
+      "expected": "200; deleted_at 설정,목록/메시지/run조회 및 신규run404",
+      "negative": "메시지/run/비용/감사 physical delete0; 삭제대화 replay는 본문/기존 실행결과 재노출 금지",
+      "status": "not_run",
+      "case_scope": "신규 확장 기능 시험; 기존 F전체 검수와 별도"
+    },
+    {
+      "case_id": "AC-H06",
+      "functions": [
+        "F-012",
+        "F-017"
+      ],
+      "task": "DP-03",
+      "precondition": "진행run 있는 대화 삭제",
+      "input": "DELETE expected_revision",
+      "expected": "409 CONVERSATION_BUSY; 취소→terminal 확인 후 재시도 가능",
+      "negative": "수정/취소 race에서새run admission과삭제를같은대화 잠금으로직렬화",
+      "status": "not_run",
+      "case_scope": "신규 확장 기능 시험; 기존 F전체 검수와 별도"
+    },
+    {
+      "case_id": "AC-H07",
+      "functions": [
+        "F-012",
+        "F-017"
+      ],
+      "task": "DP-03",
+      "precondition": "형식·CSRF·소유자 위조 시도",
+      "input": "title빈값/121자/null byte,extra tenant/owner,CSRF없음",
+      "expected": "형식422; 쓰기CSRF없음403; 타소유404",
+      "negative": "동일요청이 제목/핀/revision/감사 변화를 만들지 않음",
+      "status": "not_run",
+      "case_scope": "신규 확장 기능 시험; 기존 F전체 검수와 별도"
+    },
+    {
+      "case_id": "AC-H08",
+      "functions": [
+        "F-013",
+        "F-026"
+      ],
+      "task": "DP-04",
+      "precondition": "완료 답변 평가·변경·철회",
+      "input": "PUT rating/comment/expected_revision; 철회 API는240에서정의",
+      "expected": "tenant/user/run UNIQUE1행; 평가변경revision; 철회는활성평가없음",
+      "negative": "미완료/타소유run차단; 관리자 개인prompt/body/title 열람0",
+      "status": "not_run",
+      "case_scope": "신규 확장 기능 시험; 기존 F전체 검수와 별도"
+    },
+    {
+      "case_id": "AC-H09",
+      "functions": [
+        "F-014",
+        "F-015"
+      ],
+      "task": "DP-05",
+      "precondition": "자기 TXT/MD 접수→처리→게시→질문첨부",
+      "input": "POST file+client_upload_id; existing version document_refs",
+      "expected": "세션owner/private로생성; 게시된허가version만질문; Job/embedding 중복0",
+      "negative": "owner/tenant/reader/share위조422; 같은uploadID다른파일409",
+      "status": "not_run",
+      "case_scope": "신규 확장 기능 시험; 기존 F전체 검수와 별도"
+    },
+    {
+      "case_id": "AC-H10",
+      "functions": [
+        "F-014",
+        "F-015"
+      ],
+      "task": "DP-05",
+      "precondition": "게시전/회수후 첨부·원문조회",
+      "input": "document/version refs→현재resolve_readable_version",
+      "expected": "처리중첨부409; 회수후 질문/검색/근거/원문차단",
+      "negative": "화면선택한old version/Grant라도서버현재권한검사",
+      "status": "not_run",
+      "case_scope": "신규 확장 기능 시험; 기존 F전체 검수와 별도"
+    },
+    {
+      "case_id": "AC-H11",
+      "functions": [
+        "F-012",
+        "F-013",
+        "F-014",
+        "F-015",
+        "F-018"
+      ],
+      "task": "DP-07",
+      "precondition": "자료근거 요약/출력/재생성",
+      "input": "승인문서refs+새sendID; export md|pdf",
+      "expected": "근거version/인용과요약수치일치; 새run생성·원run 불변",
+      "negative": "원문에없는금액/날짜/담당추정확정 금지; 회수자료출력차단",
+      "status": "not_run",
+      "case_scope": "신규 확장 기능 시험; 기존 F전체 검수와 별도"
+    },
+    {
+      "case_id": "AC-H12",
+      "functions": [
+        "F-012",
+        "F-013",
+        "F-014",
+        "F-015",
+        "F-018"
+      ],
+      "task": "DP-07",
+      "precondition": "정책/한도/취소/unknown 비용",
+      "input": "blocked prompt/document; 반복send; timeout/crash",
+      "expected": "차단전외부송신0; 동일send중복dispatch0; 취소/unknown 원장보존",
+      "negative": "재생성/요약/export가중앙GW/ACL/stop을우회하지않음",
+      "status": "not_run",
+      "case_scope": "신규 확장 기능 시험; 기존 F전체 검수와 별도"
+    }
+  ],
+  "note": "98 definition rows are not independent feature completion; original F49 scope/acceptance preserved"
+}

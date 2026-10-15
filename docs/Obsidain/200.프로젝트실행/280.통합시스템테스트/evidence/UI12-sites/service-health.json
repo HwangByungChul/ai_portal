@@ -1,0 +1,20 @@
+{
+  "fixture_cleaned": true,
+  "services": [
+    {
+      "url": "http://127.0.0.1:8000/api/v1/health",
+      "status": 200,
+      "independent_entry": null
+    },
+    {
+      "url": "http://127.0.0.1:5173/user/home",
+      "status": 200,
+      "independent_entry": true
+    },
+    {
+      "url": "http://127.0.0.1:5173/manage/admin",
+      "status": 200,
+      "independent_entry": true
+    }
+  ]
+}

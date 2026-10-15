@@ -17,3 +17,4 @@ data/runtime/*
 **/test-results/
 **/*.tsbuildinfo
 **/.vite/
+docs/Obsidain/**/*(비공개).md

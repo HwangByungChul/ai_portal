@@ -8,6 +8,8 @@ from app.conversations.repository import ConversationRepository
 from app.errors import AppError,response
 from app.operations.routes import Revision,validate_query
 from app.tenants.routes import context
+from app.guardrails.engine import evaluate_input,text_hash
+from app.guardrails.routes import record_violation
 
 router=APIRouter(prefix='/api/v1')
 
@@ -58,6 +60,7 @@ class RunRequest(BaseModel):
     client_send_id:UUID
     conversation_id:UUID|None=None
     agent_key:Literal['general','rules_rag']
+    asset_id:UUID|None=None
     prompt:StrictStr=Field(max_length=4000)
     document_refs:list[DocumentRef]|None=Field(default=None,max_length=5)
 
@@ -124,11 +127,14 @@ async def messages(request:Request,conversation_id:UUID,cursor:str|None=None,lim
 async def runs(request:Request,body:RunRequest):
     ctx=await context(request,write=True);validate_query(request,set())
     if body.agent_key=='general' and 'document_refs' in body.model_fields_set:raise AppError('REQUEST_INVALID',422)
+    g_res=await request.app.state.guardrails.inspect(ctx,body.prompt,direction='input',trace_id=UUID(request.state.request_id))
+    if g_res.action=='block':
+        raise AppError('GUARDRAIL_INPUT_BLOCKED',422)
     settings=request.app.state.settings
     manager=getattr(request.app.state,'execution',None)
     if manager is not None and (manager.closed or manager.gateway.stop_latch):raise AppError('PROJECT_STOPPED',503)
     data=await ConversationRepository(request.app.state.pool).admit(ctx,body.agent_key,body.conversation_id,body.client_send_id,
-        body.prompt,settings.budget_period,settings.mode,digest(request,ctx,'run_admission'),UUID(request.state.request_id),refs=[x.model_dump() for x in body.document_refs] if body.document_refs else None,documents=request.app.state.documents)
+        body.prompt,settings.budget_period,settings.mode,digest(request,ctx,'run_admission'),UUID(request.state.request_id),refs=[x.model_dump() for x in body.document_refs] if body.document_refs else None,documents=request.app.state.documents,asset_id=body.asset_id)
     manager=getattr(request.app.state,'execution',None)
     if manager is not None and not data['replayed'] and not data['is_terminal']:manager.notify(ctx,data['run_id'])
     return response(request,data,status_code=200 if data['is_terminal'] else 202)

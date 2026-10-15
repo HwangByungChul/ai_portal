@@ -1,0 +1,19 @@
+{
+  "src/backend/app/use_cases/routes.py": "bb98963ae412efc0ce422e59025e4196d0ff553b78cad3aef5f25706b090824a",
+  "src/backend/app/use_cases/service.py": "25a46f702f7693b4f24cf6988df65426d8490d4090c45f5f0dc15cc884f7103f",
+  "src/backend/app/use_cases/runtime.py": "4a6597d8bb8f4d14ddbeb8dae85b104d4fd003dd1ccd9a7fdb0d16e972415840",
+  "src/backend/app/workflows/service.py": "a263b9fc88218f384268c025c1953ee89276e885fb7a99b77bd5cee0c9223c18",
+  "src/backend/app/workflows/repository.py": "b151891901a8eb9f7656aa6ba91ca7e0496adfb93fd7e873d9b59ce90e2a2c26",
+  "src/backend/app/workflows/identity.py": "16a9dc8c65c99071af1640b6008f9d5cdf1666e8ef3c78a07db7e7edf3fdf5e4",
+  "src/backend/app/main.py": "e38ab50ed71a6389d0f1720f31c5f404cd732e3de9511a6b960998aeda6085ba",
+  "src/backend/migrations/051_meeting_context_quality.sql": "bd08e496877cfcd9c1570b13631c97ac34e3c67c83e78540ff498e3a6573a3a9",
+  "src/backend/tests/test_meeting_runtime_context.py": "a6fb95b6592bb3909724d844127d540b3164299d668279f7e5cc89ab58df30f1",
+  "src/backend/tests/test_meeting_context_migration.py": "4530e2ebd15bbf1dd72fda092858525d074efb41ec79448420a989377fe444ad",
+  "src/backend/app/ai/repository.py": "3cf5cff95df3e906812760deb30b58d3b1759062537dda96831b9a23af9309d0",
+  "src/backend/app/assets/published.py": "90556c4335a3ff56d34259ac954d0589bf79bd9c1ca0de3392bd77d49ec0837f",
+  "src/backend/tests/support.py": "4952e8e56f130ba4b59087feec7549e32b3f8b34826de78fafbb9d56c3e672cc",
+  "src/backend/scripts/portal_test_control.py": "1fda2f5717dc5de2646192876afc5fe753098fa123cc4c9c91a53d5ee70e6313",
+  "src/backend/tests/test_meeting_workflow.py": "a01854e1c16b33afc746b4f7e734d076cf2ce279fe7f4872e3f47d00df77ed55",
+  "src/backend/scripts/evaluate_meeting_fixture.py": "952a31cca2329a91584214efb920afbfc9308d984691248ba1f10189e61ba4b2",
+  "src/backend/tests/fixtures/meeting-runtime-evaluation-v2.json": "2ca61bdfdc8c8e3887408b6c811bd9fe92ea29b22f7b5327d1eb9b8f2903efa3"
+}

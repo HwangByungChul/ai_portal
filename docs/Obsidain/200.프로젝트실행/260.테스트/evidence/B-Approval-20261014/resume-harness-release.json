@@ -1,0 +1,9 @@
+{
+  "status": "released",
+  "ports": {
+    "5173": "closed",
+    "5174": "closed"
+  },
+  "no_service_kill": true,
+  "no_running_test_session": true
+}

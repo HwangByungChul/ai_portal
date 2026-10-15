@@ -1,0 +1,20 @@
+--- current
++++ primary
+@@ -32,7 +32,7 @@
+  -- Idempotent retry check
+  SELECT * INTO previous FROM portal.catalog_mutations WHERE tenant_id = p_tenant AND user_id = u AND client_request_id = p_client_request_id;
+  IF FOUND THEN
+-  IF previous.action <> 'favorite' OR previous.target_id <> p_asset OR previous.body <> p_body THEN
++  IF previous.action <> 'dynamic_favorite' OR previous.target_id <> p_asset OR previous.body <> p_body THEN
+    RAISE EXCEPTION 'REVISION_CONFLICT' USING ERRCODE='A0409';
+   END IF;
+   RETURN previous.response || jsonb_build_object('replayed', true);
+@@ -55,7 +55,7 @@
+  VALUES(p_trace, 'tenant', p_tenant, u, 'catalog.dynamic_favorite', p_asset, 'ok', jsonb_build_object('revision', expected + 1));
+ 
+  INSERT INTO portal.catalog_mutations(tenant_id, user_id, client_request_id, action, target_id, body, response)
+- VALUES(p_tenant, u, p_client_request_id, 'favorite', p_asset, p_body, res);
++ VALUES(p_tenant, u, p_client_request_id, 'dynamic_favorite', p_asset, p_body, res);
+ 
+  IF NOT security.touch_session(p_session) THEN RAISE EXCEPTION 'AUTH_REQUIRED' USING ERRCODE='A0401'; END IF;
+  RETURN res;

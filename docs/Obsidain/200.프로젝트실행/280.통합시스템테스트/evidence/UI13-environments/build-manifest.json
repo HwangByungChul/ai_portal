@@ -1,0 +1,57 @@
+{
+  "phase": "UI13",
+  "files": [
+    {
+      "path": "src/frontend/dist/admin/.vite/manifest.json",
+      "sha256": "69680ae89f495fdb9050c2a1a5e899dd43c469e0de05c16fe75f09e8fa6d5582"
+    },
+    {
+      "path": "src/frontend/dist/admin/assets/index-CF5mzasb.js",
+      "sha256": "4d7ad6fe2f639bb24185b8abb36d1e7572283843e48d75b6914619a12c8e50b3"
+    },
+    {
+      "path": "src/frontend/dist/admin/assets/index-urEDpYfm.css",
+      "sha256": "0e8e769931a2daae44cf23c26cf7240380933bc0029458e714122ded5ce3b597"
+    },
+    {
+      "path": "src/frontend/dist/admin/index.html",
+      "sha256": "a6a5f8fa48ff219477251ec13735eb4cef5527a3eddb00f7da00e422adcaf1ec"
+    },
+    {
+      "path": "src/frontend/dist/admin/portal-build.json",
+      "sha256": "be387cc82188d20976ae6adfdb9844a92e503b8d88cb0fb4b232472560da2814"
+    },
+    {
+      "path": "src/frontend/dist/assets/index-W6fzABib.js",
+      "sha256": "6ff87efa44eee10005c6a7d4dac51cec5242dbb8c642634e6d30ada4a1ed9a23"
+    },
+    {
+      "path": "src/frontend/dist/assets/index-Wb7qLjXO.css",
+      "sha256": "fea6359955c24329fe66a29b26658771f55f0c5899637fdecc99ce2c39ca1a19"
+    },
+    {
+      "path": "src/frontend/dist/index.html",
+      "sha256": "eb3042be0be1e58209e2724c49a34c6f5b99d0d7f05f9ceaef245728231266b0"
+    },
+    {
+      "path": "src/frontend/dist/user/.vite/manifest.json",
+      "sha256": "9d8ed22aa900b19a6ece218fe417a662a6cc24c1cc271d643b0699545fc00368"
+    },
+    {
+      "path": "src/frontend/dist/user/assets/index-B6vufAgF.js",
+      "sha256": "db4e7d63b9e0a870c6b83572cb801507e7a325fdcb357ed041b4f6c9c3b25948"
+    },
+    {
+      "path": "src/frontend/dist/user/assets/index-urEDpYfm.css",
+      "sha256": "0e8e769931a2daae44cf23c26cf7240380933bc0029458e714122ded5ce3b597"
+    },
+    {
+      "path": "src/frontend/dist/user/index.html",
+      "sha256": "afb5dd6b9b923496af29334d971ad285ad082f024bca02daf6a06d4cc8193d9c"
+    },
+    {
+      "path": "src/frontend/dist/user/portal-build.json",
+      "sha256": "6db8a2215e1223da0a962fa03a4fff21956a2aae625a2e85bd022f9704e0f29d"
+    }
+  ]
+}

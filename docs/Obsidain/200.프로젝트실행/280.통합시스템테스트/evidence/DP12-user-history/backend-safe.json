@@ -1,0 +1,109 @@
+{
+  "status": "passed",
+  "latest_distinct": 52,
+  "single_full_suite": false,
+  "runs": [
+    {
+      "run": "backend-first.xml",
+      "total": 7,
+      "passed": 4,
+      "failed": 3
+    },
+    {
+      "run": "backend-final.xml",
+      "total": 38,
+      "passed": 35,
+      "failed": 3
+    },
+    {
+      "run": "backend-followup.xml",
+      "total": 4,
+      "passed": 4,
+      "failed": 0
+    },
+    {
+      "run": "backend-cancel.xml",
+      "total": 1,
+      "passed": 0,
+      "failed": 1
+    },
+    {
+      "run": "backend-cancel-debug.xml",
+      "total": 1,
+      "passed": 0,
+      "failed": 1
+    },
+    {
+      "run": "backend-recheck.xml",
+      "total": 40,
+      "passed": 40,
+      "failed": 0
+    },
+    {
+      "run": "backend-current.xml",
+      "total": 40,
+      "passed": 40,
+      "failed": 0
+    },
+    {
+      "run": "backend-general-cancel.xml",
+      "total": 12,
+      "passed": 12,
+      "failed": 0
+    }
+  ],
+  "cases": {
+    "tests.test_published_history::test_own_minimum_record_current_guard_and_no_private_payload[retired]": "passed",
+    "tests.test_published_history::test_own_minimum_record_current_guard_and_no_private_payload[publication]": "passed",
+    "tests.test_published_history::test_own_minimum_record_current_guard_and_no_private_payload[fixed_access]": "passed",
+    "tests.test_published_history::test_own_minimum_record_current_guard_and_no_private_payload[sources]": "passed",
+    "tests.test_published_history::test_own_minimum_record_current_guard_and_no_private_payload[membership]": "passed",
+    "tests.test_published_history::test_history_pagination_filter_cursor_scope_and_readonly": "passed",
+    "tests.test_published_history::test_history_http_strict_no_store_and_record_owner": "passed",
+    "tests.test_published_history::test_own_minimum_record_current_guard_and_no_private_payload[audience]": "passed",
+    "tests.test_published_agents::test_ordinary_user_exact_published_profile_result_and_central_meter": "passed",
+    "tests.test_published_agents::test_dynamic_publication_and_current_policy_gate[restricted]": "passed",
+    "tests.test_published_agents::test_dynamic_publication_and_current_policy_gate[retired]": "passed",
+    "tests.test_published_agents::test_dynamic_publication_and_current_policy_gate[policy]": "passed",
+    "tests.test_published_agents::test_dynamic_publication_and_current_policy_gate[fixed_access]": "passed",
+    "tests.test_published_agents::test_dynamic_publication_and_current_policy_gate[other_tenant]": "passed",
+    "tests.test_dynamic_extended::test_dynamic_rag_exact_user_source_guard_and_zero_empty_dispatch[org]": "passed",
+    "tests.test_dynamic_extended::test_dynamic_rag_exact_user_source_guard_and_zero_empty_dispatch[empty]": "passed",
+    "tests.test_dynamic_extended::test_dynamic_rag_exact_user_source_guard_and_zero_empty_dispatch[private]": "passed",
+    "tests.test_dynamic_extended::test_dynamic_rag_exact_user_source_guard_and_zero_empty_dispatch[withdrawn]": "passed",
+    "tests.test_dynamic_extended::test_competing_requests_only_one_publication_cas_winner": "passed",
+    "tests.test_dynamic_extended::test_published_http_csrf_strict_input_worker_owner_and_no_draft_execution": "passed",
+    "tests.test_dynamic_extended::test_036_037_preserve_prior_rows_checksums_raw_denial_and_rerun": "passed",
+    "tests.test_dynamic_extended::test_dynamic_manager_cancel_unknown_cost_and_retired_late_result[cancel]": "passed",
+    "tests.test_dynamic_extended::test_dynamic_manager_cancel_unknown_cost_and_retired_late_result[retire]": "passed",
+    "tests.test_dynamic_extended::test_dynamic_manager_cancel_unknown_cost_and_retired_late_result[retire_before_read]": "passed",
+    "tests.test_dynamic_extended::test_same_request_concurrent_decisions_share_one_receipt": "passed",
+    "tests.test_asset_rollback::test_exact_rollback_current_audience_compare_events_replay_and_execution": "passed",
+    "tests.test_asset_rollback::test_rollback_current_guards_and_rejection[withdraw]": "passed",
+    "tests.test_asset_rollback::test_rollback_current_guards_and_rejection[policy]": "passed",
+    "tests.test_asset_rollback::test_rollback_current_guards_and_rejection[stale]": "passed",
+    "tests.test_asset_rollback::test_rollback_current_guards_and_rejection[mode]": "passed",
+    "tests.test_asset_rollback::test_rollback_current_guards_and_rejection[inactive_member]": "passed",
+    "tests.test_asset_rollback::test_rollback_current_guards_and_rejection[other_tenant]": "passed",
+    "tests.test_asset_rollback::test_rollback_current_guards_and_rejection[same_version]": "passed",
+    "tests.test_asset_rollback::test_concurrent_rollback_same_receipt_and_old_decision_cannot_bypass": "passed",
+    "tests.test_asset_rollback::test_history_http_strict_scope_csrf_and_comparison_owner_boundary": "passed",
+    "tests.test_asset_rollback::test_migration_038_preserves_rows_and_raw_event_privileges": "passed",
+    "tests.test_asset_rollback::test_retired_republication_and_history_pagination": "passed",
+    "tests.test_asset_rollback::test_legacy_real_approvals_backfill_without_invented_retirement": "passed",
+    "tests.test_published_history::test_039_additive_preserves_every_table_and_frozen_checksums": "passed",
+    "tests.test_published_history::test_retired_queued_record_can_cancel_without_answer_or_dispatch": "passed",
+    "tests.test_conversations::test_cancel_and_new_send": "passed",
+    "tests.test_conversations::test_cancel_preserves_terminal_and_pending_states[running-cancel_requested]": "passed",
+    "tests.test_conversations::test_cancel_preserves_terminal_and_pending_states[cancel_requested-cancel_requested]": "passed",
+    "tests.test_conversations::test_cancel_preserves_terminal_and_pending_states[completed-completed]": "passed",
+    "tests.test_conversations::test_cancel_preserves_terminal_and_pending_states[failed-failed]": "passed",
+    "tests.test_conversations::test_cancel_preserves_terminal_and_pending_states[blocked-blocked]": "passed",
+    "tests.test_conversations::test_cancel_preserves_terminal_and_pending_states[interrupted-interrupted]": "passed",
+    "tests.test_conversations::test_cancel_preserves_terminal_and_pending_states[cancelled-cancelled]": "passed",
+    "tests.test_conversations::test_cancel_revision_conflict_and_simultaneous_single_audit": "passed",
+    "tests.test_conversations::test_cancel_audit_failure_rolls_back_state_revision": "passed",
+    "tests.test_conversations::test_accepted_with_existing_call_requires_review_and_preserves_cost": "passed",
+    "tests.test_conversations::test_csrf_query_and_revision_inputs_are_strict": "passed"
+  }
+}

@@ -53,3 +53,17 @@ async def logout(request: Request):
     reply = response(request, {'logout_confirmed': confirmed})
     reply.delete_cookie(settings.session_cookie_name, path='/', secure=settings.profile=='https', httponly=True, samesite='lax')
     return reply
+
+
+@router.get('/sso/start')
+async def sso_start(request: Request, provider: str = 'entra-id', redirect_uri: str = 'http://127.0.0.1:5173/auth/callback'):
+    from app.auth.sso import GLOBAL_SSO_SERVICE
+    return response(request, GLOBAL_SSO_SERVICE.get_auth_url(provider, redirect_uri))
+
+
+@router.get('/sso/callback')
+async def sso_callback(request: Request, provider: str, code: str, state: str):
+    from app.auth.sso import GLOBAL_SSO_SERVICE
+    verified = GLOBAL_SSO_SERVICE.verify_callback(provider, code, state)
+    return response(request, verified)
+

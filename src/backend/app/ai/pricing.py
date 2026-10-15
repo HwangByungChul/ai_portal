@@ -51,4 +51,9 @@ def cost_krw(receipt: UsageReceipt) -> Decimal:
         return _krw(receipt.input_tokens, receipt.output_tokens)
     if receipt.observed_model == 'text-embedding-3-small' and receipt.output_tokens == 0:
         return _krw(receipt.input_tokens, 0, embedding=True)
+    from app.ai.model_registry import APPROVED_MODELS
+    ref = APPROVED_MODELS.get(receipt.observed_model)
+    if ref is not None:
+        usd = (Decimal(receipt.input_tokens) * ref.input_usd_per_million + Decimal(receipt.output_tokens) * ref.output_usd_per_million) / Decimal(1000000)
+        return (usd * PRICE.krw_per_usd * PRICE.protection_factor).quantize(PRICE.quantum_krw, rounding=ROUND_CEILING)
     raise ValueError('USAGE_RECEIPT_REJECTED')

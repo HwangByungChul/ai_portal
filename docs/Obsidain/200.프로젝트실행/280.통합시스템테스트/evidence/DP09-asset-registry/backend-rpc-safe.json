@@ -1,0 +1,22 @@
+{
+  "artifact": "backend-rpc-safe.json",
+  "passed": 3,
+  "failed": 0,
+  "tests": [
+    {
+      "test_id": "tests.test_assets::test_direct_rpc_cannot_bypass_fresh_tenant_authority[A-U1]",
+      "status": "passed",
+      "duration_seconds": 1.548
+    },
+    {
+      "test_id": "tests.test_assets::test_direct_rpc_cannot_bypass_fresh_tenant_authority[P_READ_ONLY]",
+      "status": "passed",
+      "duration_seconds": 1.139
+    },
+    {
+      "test_id": "tests.test_assets::test_direct_rpc_cannot_bypass_fresh_tenant_authority[B-ADM]",
+      "status": "passed",
+      "duration_seconds": 1.231
+    }
+  ]
+}

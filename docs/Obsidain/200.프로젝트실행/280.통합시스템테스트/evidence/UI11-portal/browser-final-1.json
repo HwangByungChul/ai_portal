@@ -1,0 +1,32 @@
+{
+  "status": "passed",
+  "duration_ms": 10809.704,
+  "runner_errors": 0,
+  "tests": [
+    {
+      "test_id": "P270_03_private_owner_and_stop_journey",
+      "status": "passed",
+      "duration_ms": 5591
+    }
+  ],
+  "steps": [
+    {
+      "test_id": "P270_03_private_owner_and_stop_journey",
+      "step_id": "P270_STEP_07_private_owner_API_and_admin_redaction",
+      "status": "passed",
+      "duration_ms": 830
+    },
+    {
+      "test_id": "P270_03_private_owner_and_stop_journey",
+      "step_id": "P270_STEP_08_owner_personal_evidence",
+      "status": "passed",
+      "duration_ms": 1526
+    },
+    {
+      "test_id": "P270_03_private_owner_and_stop_journey",
+      "step_id": "P270_STEP_09_stop_prevents_admission",
+      "status": "passed",
+      "duration_ms": 921
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "applied": [
+    "026_agent_deployment_approval.sql"
+  ],
+  "existing_data_unchanged": true,
+  "backup_created": true,
+  "backup_mode": "0o600",
+  "backup_restore_tested": true,
+  "provider_calls": 0
+}

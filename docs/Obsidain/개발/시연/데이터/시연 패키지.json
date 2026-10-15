@@ -1,0 +1,928 @@
+{
+  "package_version": "demo-0.1.0",
+  "baseline_id": "BASE001",
+  "synthetic": true,
+  "timezone": "Asia/Seoul",
+  "currency": "KRW",
+  "usage_period": "2026-09",
+  "initial_as_of": "2026-10-04T09:30:00+09:00",
+  "correction_as_of": "2026-10-04T11:15:00+09:00",
+  "rules": {
+    "rule_id": "R1",
+    "unit": "integer_KRW",
+    "share": "exact_integer_fraction",
+    "residual_policy": "FLOOR_THEN_ONE_WON_BY_PARTY_ID_ASC",
+    "valid_interval": "[valid_from, valid_to_exclusive)",
+    "receipt_policy": "FULL_RECEIPT_REQUIRED_BEFORE_CONFIRMATION",
+    "fee_krw": 0,
+    "tax_krw": 0,
+    "payment": "DRAFT_ONLY",
+    "correction_policy": "PRESERVE_ORIGINAL_AND_RECORD_DELTA_BEFORE_PAYMENT",
+    "idempotency_key": "CALC-BASE001-RV1-R1-202609",
+    "demo_only": true
+  },
+  "parties": [
+    {
+      "party_id": "P001",
+      "name": "시연 권리자 A",
+      "member_id": "M001",
+      "synthetic": true
+    },
+    {
+      "party_id": "P002",
+      "name": "시연 권리자 B",
+      "member_id": "M002",
+      "synthetic": true
+    },
+    {
+      "party_id": "P003",
+      "name": "시연 권리자 C",
+      "member_id": "M003",
+      "synthetic": true
+    },
+    {
+      "party_id": "P004",
+      "name": "시연 권리자 D",
+      "member_id": "M004",
+      "synthetic": true
+    },
+    {
+      "party_id": "P005",
+      "name": "시연 권리자 E",
+      "member_id": "M005",
+      "synthetic": true
+    }
+  ],
+  "users": [
+    {
+      "user_id": "USER-A",
+      "role": "MEMBER",
+      "party_id": "P001",
+      "department": ""
+    },
+    {
+      "user_id": "USER-B",
+      "role": "MEMBER",
+      "party_id": "P002",
+      "department": ""
+    },
+    {
+      "user_id": "USER-C",
+      "role": "MEMBER",
+      "party_id": "P003",
+      "department": ""
+    },
+    {
+      "user_id": "USER-D",
+      "role": "MEMBER",
+      "party_id": "P004",
+      "department": ""
+    },
+    {
+      "user_id": "USER-E",
+      "role": "MEMBER",
+      "party_id": "P005",
+      "department": ""
+    },
+    {
+      "user_id": "USER-STAFF",
+      "role": "RIGHTS_REVIEWER",
+      "party_id": "",
+      "department": "권리"
+    },
+    {
+      "user_id": "USER-FINANCE",
+      "role": "FINANCE_APPROVER",
+      "party_id": "",
+      "department": "정산"
+    },
+    {
+      "user_id": "USER-GUEST",
+      "role": "PUBLIC",
+      "party_id": "",
+      "department": ""
+    }
+  ],
+  "works": [
+    {
+      "work_id": "W001",
+      "title": "시연곡 봄의 기록",
+      "internal_code": "DEMO-W001",
+      "evidence_id": "EV-W001"
+    },
+    {
+      "work_id": "W002",
+      "title": "시연곡 세 사람의 노래",
+      "internal_code": "DEMO-W002",
+      "evidence_id": "EV-W002"
+    },
+    {
+      "work_id": "W003",
+      "title": "시연곡 봄의 기적",
+      "internal_code": "DEMO-W003",
+      "evidence_id": "EV-W003"
+    }
+  ],
+  "rights": [
+    {
+      "rights_version": "RV1",
+      "work_id": "W001",
+      "party_id": "P001",
+      "share_units": 60,
+      "total_units": 100,
+      "valid_from": "2026-09-01",
+      "valid_to_exclusive": "2026-10-01",
+      "recorded_at": "2026-10-04T09:10:00+09:00",
+      "approved_at": "2026-10-04T09:20:00+09:00",
+      "evidence_id": "EV-W001"
+    },
+    {
+      "rights_version": "RV1",
+      "work_id": "W001",
+      "party_id": "P002",
+      "share_units": 40,
+      "total_units": 100,
+      "valid_from": "2026-09-01",
+      "valid_to_exclusive": "2026-10-01",
+      "recorded_at": "2026-10-04T09:10:00+09:00",
+      "approved_at": "2026-10-04T09:20:00+09:00",
+      "evidence_id": "EV-W001"
+    },
+    {
+      "rights_version": "RV1",
+      "work_id": "W002",
+      "party_id": "P003",
+      "share_units": 1,
+      "total_units": 3,
+      "valid_from": "2026-09-01",
+      "valid_to_exclusive": "2026-10-01",
+      "recorded_at": "2026-10-04T09:10:00+09:00",
+      "approved_at": "2026-10-04T09:20:00+09:00",
+      "evidence_id": "EV-W002"
+    },
+    {
+      "rights_version": "RV1",
+      "work_id": "W002",
+      "party_id": "P004",
+      "share_units": 1,
+      "total_units": 3,
+      "valid_from": "2026-09-01",
+      "valid_to_exclusive": "2026-10-01",
+      "recorded_at": "2026-10-04T09:10:00+09:00",
+      "approved_at": "2026-10-04T09:20:00+09:00",
+      "evidence_id": "EV-W002"
+    },
+    {
+      "rights_version": "RV1",
+      "work_id": "W002",
+      "party_id": "P005",
+      "share_units": 1,
+      "total_units": 3,
+      "valid_from": "2026-09-01",
+      "valid_to_exclusive": "2026-10-01",
+      "recorded_at": "2026-10-04T09:10:00+09:00",
+      "approved_at": "2026-10-04T09:20:00+09:00",
+      "evidence_id": "EV-W002"
+    }
+  ],
+  "corrected_rights": [
+    {
+      "rights_version": "RV2",
+      "work_id": "W001",
+      "party_id": "P001",
+      "share_units": 50,
+      "total_units": 100,
+      "valid_from": "2026-09-01",
+      "valid_to_exclusive": "2026-10-01",
+      "recorded_at": "2026-10-04T11:00:00+09:00",
+      "approved_at": "2026-10-04T11:10:00+09:00",
+      "evidence_id": "EV-CORRECTION"
+    },
+    {
+      "rights_version": "RV2",
+      "work_id": "W001",
+      "party_id": "P002",
+      "share_units": 50,
+      "total_units": 100,
+      "valid_from": "2026-09-01",
+      "valid_to_exclusive": "2026-10-01",
+      "recorded_at": "2026-10-04T11:00:00+09:00",
+      "approved_at": "2026-10-04T11:10:00+09:00",
+      "evidence_id": "EV-CORRECTION"
+    }
+  ],
+  "licenses": [
+    {
+      "license_id": "LC001",
+      "work_id": "W001",
+      "status": "APPROVED",
+      "valid_from": "2026-09-01",
+      "valid_to_exclusive": "2026-10-01",
+      "tariff_version": "T001",
+      "evidence_id": "EV-LC001"
+    },
+    {
+      "license_id": "LC002",
+      "work_id": "W002",
+      "status": "APPROVED",
+      "valid_from": "2026-09-01",
+      "valid_to_exclusive": "2026-10-01",
+      "tariff_version": "T002",
+      "evidence_id": "EV-LC002"
+    }
+  ],
+  "usage": [
+    {
+      "usage_id": "U001",
+      "file_id": "FILE001",
+      "source_record_key": "ROW001",
+      "usage_date": "2026-09-15",
+      "title": "시연곡 봄의 기록",
+      "internal_code": "DEMO-W001",
+      "quantity": 100,
+      "unit_rate_krw": 100,
+      "license_id": "LC001"
+    },
+    {
+      "usage_id": "U002",
+      "file_id": "FILE001",
+      "source_record_key": "ROW002",
+      "usage_date": "2026-09-16",
+      "title": "시연곡 세 사람의 노래",
+      "internal_code": "DEMO-W002",
+      "quantity": 1,
+      "unit_rate_krw": 1001,
+      "license_id": "LC002"
+    }
+  ],
+  "receipts": [
+    {
+      "invoice_id": "INV001",
+      "usage_id": "U001",
+      "billed_krw": 10000,
+      "received_krw": 10000,
+      "receipt_id": "RECEIPT001",
+      "mode": "MOCK"
+    },
+    {
+      "invoice_id": "INV002",
+      "usage_id": "U002",
+      "billed_krw": 1001,
+      "received_krw": 1001,
+      "receipt_id": "RECEIPT002",
+      "mode": "MOCK"
+    }
+  ],
+  "evidence": [
+    {
+      "evidence_id": "EV-W001",
+      "path": "원본/EV-W001.txt",
+      "sha256": "f042e26e5d4a5e3ff98c5606b867694e359dbe9816f5fe173b41c2d89e328589",
+      "mode": "MOCK_TEXT"
+    },
+    {
+      "evidence_id": "EV-W002",
+      "path": "원본/EV-W002.txt",
+      "sha256": "72843667cee8eae7122b602e64089241d7fc749fdf34c32a2c0c648ab0c2a720",
+      "mode": "MOCK_TEXT"
+    },
+    {
+      "evidence_id": "EV-W003",
+      "path": "원본/EV-W003.txt",
+      "sha256": "bc2a5cea3538f23a6ef7315fee1339049efd6363534ff50dbf1282107aaa0335",
+      "mode": "MOCK_TEXT"
+    },
+    {
+      "evidence_id": "EV-LC001",
+      "path": "원본/EV-LC001.txt",
+      "sha256": "487d155cb167075cdde643c369fb05ad89fd1eeafb64167270bdd907dd2f707b",
+      "mode": "MOCK_TEXT"
+    },
+    {
+      "evidence_id": "EV-LC002",
+      "path": "원본/EV-LC002.txt",
+      "sha256": "8e90def5f41ea64570fa2f23bdecbbac42696cb786cd5b22faef0ede930fb099",
+      "mode": "MOCK_TEXT"
+    },
+    {
+      "evidence_id": "EV-TRUST",
+      "path": "원본/EV-TRUST.txt",
+      "sha256": "2ddb94e606a365fd7e138feb31103853a32bb3fc8d7dc4bdacc5b95013589c80",
+      "mode": "MOCK_TEXT"
+    },
+    {
+      "evidence_id": "EV-CORRECTION",
+      "path": "원본/EV-CORRECTION.txt",
+      "sha256": "20b146071bdcdf99e1e7a3133fb922a21a9b39222c08768ef766828c4a14b0e1",
+      "mode": "MOCK_TEXT"
+    }
+  ],
+  "knowledge": [
+    {
+      "knowledge_id": "KB-PUBLIC",
+      "visibility": "PUBLIC",
+      "department": "",
+      "title": "시연 서비스 신청 안내",
+      "content": "합성 시연 서비스에서 회원은 신청서를 제출하고 처리상태를 확인할 수 있습니다. 보완 요청이 있으면 다시 제출합니다."
+    },
+    {
+      "knowledge_id": "KB-RIGHTS",
+      "visibility": "INTERNAL",
+      "department": "권리",
+      "title": "시연 권리 검수 규칙",
+      "content": "합성 시연 규칙에서는 지분 합계가 1이어야 승인할 수 있습니다. 미달 또는 초과는 검수 보류합니다."
+    },
+    {
+      "knowledge_id": "KB-FINANCE",
+      "visibility": "INTERNAL",
+      "department": "정산",
+      "title": "시연 분배 계산 규칙",
+      "content": "합성 시연의 분배는 승인된 기준시점 지분을 사용합니다. 원 단위 절사 후 남은 금액은 party_id 오름차순으로 1원씩 배정합니다. 지급은 별도 승인합니다."
+    }
+  ],
+  "application_events": [
+    {
+      "event_id": "APP-E01",
+      "application_id": "APP001",
+      "seq": 1,
+      "actor": "USER-A",
+      "from_state": "DRAFT",
+      "to_state": "SUBMITTED",
+      "reason": "시연 신청",
+      "evidence_id": "EV-TRUST"
+    },
+    {
+      "event_id": "APP-E02",
+      "application_id": "APP001",
+      "seq": 2,
+      "actor": "USER-STAFF",
+      "from_state": "SUBMITTED",
+      "to_state": "NEEDS_SUPPLEMENT",
+      "reason": "시연 보완 요청",
+      "evidence_id": "EV-TRUST"
+    },
+    {
+      "event_id": "APP-E03",
+      "application_id": "APP001",
+      "seq": 3,
+      "actor": "USER-A",
+      "from_state": "NEEDS_SUPPLEMENT",
+      "to_state": "RESUBMITTED",
+      "reason": "시연 보완 제출",
+      "evidence_id": "EV-TRUST"
+    },
+    {
+      "event_id": "APP-E04",
+      "application_id": "APP001",
+      "seq": 4,
+      "actor": "USER-STAFF",
+      "from_state": "RESUBMITTED",
+      "to_state": "APPROVED",
+      "reason": "시연 승인",
+      "evidence_id": "EV-TRUST"
+    },
+    {
+      "event_id": "APP-E05",
+      "application_id": "APP001",
+      "seq": 5,
+      "actor": "USER-A",
+      "from_state": "APPROVED",
+      "to_state": "MOCK_SIGNED",
+      "reason": "모의 서명·실제 효력 없음",
+      "evidence_id": "EV-TRUST"
+    }
+  ],
+  "expected_distributions": [
+    {
+      "run_id": "RUN001",
+      "usage_id": "U001",
+      "party_id": "P001",
+      "floor_krw": 6000,
+      "residual_bonus_krw": 0,
+      "expected_distribution_krw": 6000,
+      "payment_state": "DRAFT_NOT_EXECUTED"
+    },
+    {
+      "run_id": "RUN001",
+      "usage_id": "U001",
+      "party_id": "P002",
+      "floor_krw": 4000,
+      "residual_bonus_krw": 0,
+      "expected_distribution_krw": 4000,
+      "payment_state": "DRAFT_NOT_EXECUTED"
+    },
+    {
+      "run_id": "RUN001",
+      "usage_id": "U002",
+      "party_id": "P003",
+      "floor_krw": 333,
+      "residual_bonus_krw": 1,
+      "expected_distribution_krw": 334,
+      "payment_state": "DRAFT_NOT_EXECUTED"
+    },
+    {
+      "run_id": "RUN001",
+      "usage_id": "U002",
+      "party_id": "P004",
+      "floor_krw": 333,
+      "residual_bonus_krw": 1,
+      "expected_distribution_krw": 334,
+      "payment_state": "DRAFT_NOT_EXECUTED"
+    },
+    {
+      "run_id": "RUN001",
+      "usage_id": "U002",
+      "party_id": "P005",
+      "floor_krw": 333,
+      "residual_bonus_krw": 0,
+      "expected_distribution_krw": 333,
+      "payment_state": "DRAFT_NOT_EXECUTED"
+    }
+  ],
+  "expected_adjustments": [
+    {
+      "run_id": "RUN002",
+      "original_run_id": "RUN001",
+      "usage_id": "U001",
+      "party_id": "P001",
+      "original_krw": 6000,
+      "corrected_krw": 5000,
+      "adjustment_krw": -1000,
+      "mode": "PRE_PAYMENT_ADJUSTMENT"
+    },
+    {
+      "run_id": "RUN002",
+      "original_run_id": "RUN001",
+      "usage_id": "U001",
+      "party_id": "P002",
+      "original_krw": 4000,
+      "corrected_krw": 5000,
+      "adjustment_krw": 1000,
+      "mode": "PRE_PAYMENT_ADJUSTMENT"
+    }
+  ],
+  "scenarios": [
+    {
+      "scenario_id": "SC001",
+      "title": "정상 분배",
+      "kind": "normal",
+      "baseline": "BASE001",
+      "reset_before_run": true,
+      "precondition": "공통 기준 데이터·계약·지분 승인, 모의 입금 완료",
+      "action": "U001/U002 분배 실행",
+      "patch": {},
+      "expected": {
+        "status": "CALCULATED",
+        "total_krw": 11001,
+        "distribution_rows": 5,
+        "payment_execution_count": 0
+      },
+      "test_id": "TC-CALC-001"
+    },
+    {
+      "scenario_id": "SC002",
+      "title": "소급 지분 정정",
+      "kind": "normal",
+      "baseline": "BASE001",
+      "reset_before_run": true,
+      "precondition": "RUN001 생성 후 지급 전",
+      "action": "RV2 승인 후 U001 재산출",
+      "patch": {
+        "rights_version": "RV2",
+        "as_of": "2026-10-04T11:15:00+09:00"
+      },
+      "expected": {
+        "status": "ADJUSTMENT_DRAFT",
+        "adjustments": {
+          "P001": -1000,
+          "P002": 1000
+        },
+        "adjustment_sum_krw": 0,
+        "original_run_immutable": true
+      },
+      "test_id": "TC-CALC-002"
+    },
+    {
+      "scenario_id": "SC003",
+      "title": "지분 합 미달",
+      "kind": "exception",
+      "baseline": "BASE001",
+      "reset_before_run": true,
+      "precondition": "RV1 복제본",
+      "action": "W001 지분 검수",
+      "patch": {
+        "replace": {
+          "rights.RV1.W001.P002.share_units": 30
+        }
+      },
+      "expected": {
+        "error": "RIGHTS_SHARE_UNDER",
+        "share_total": "9/10",
+        "new_distribution_rows": 0
+      },
+      "test_id": "TC-RIGHTS-001"
+    },
+    {
+      "scenario_id": "SC004",
+      "title": "지분 합 초과",
+      "kind": "exception",
+      "baseline": "BASE001",
+      "reset_before_run": true,
+      "precondition": "RV1 복제본",
+      "action": "W001 지분 검수",
+      "patch": {
+        "replace": {
+          "rights.RV1.W001.P002.share_units": 50
+        }
+      },
+      "expected": {
+        "error": "RIGHTS_SHARE_OVER",
+        "share_total": "11/10",
+        "new_distribution_rows": 0
+      },
+      "test_id": "TC-RIGHTS-002"
+    },
+    {
+      "scenario_id": "SC005",
+      "title": "효력기간 중첩",
+      "kind": "exception",
+      "baseline": "BASE001",
+      "reset_before_run": true,
+      "precondition": "동일 버전·권리자 기준",
+      "action": "W001 지분 승인",
+      "patch": {
+        "append": {
+          "work_id": "W001",
+          "party_id": "P001",
+          "rights_version": "RV1",
+          "share_units": 60,
+          "total_units": 100,
+          "valid_from": "2026-09-10",
+          "valid_to_exclusive": "2026-09-20"
+        }
+      },
+      "expected": {
+        "error": "RIGHTS_PERIOD_OVERLAP",
+        "new_distribution_rows": 0
+      },
+      "test_id": "TC-RIGHTS-003"
+    },
+    {
+      "scenario_id": "SC006",
+      "title": "동일 파일 재접수",
+      "kind": "exception",
+      "baseline": "BASE001",
+      "reset_before_run": true,
+      "precondition": "FILE001 첫 접수 완료",
+      "action": "동일 내용 파일 재접수",
+      "patch": {
+        "resubmit_file_id": "FILE001"
+      },
+      "expected": {
+        "status": "DUPLICATE_IGNORED",
+        "new_usage_rows": 0,
+        "new_distribution_rows": 0
+      },
+      "test_id": "TC-INGEST-001"
+    },
+    {
+      "scenario_id": "SC007",
+      "title": "다른 파일명 동일 내용",
+      "kind": "exception",
+      "baseline": "BASE001",
+      "reset_before_run": true,
+      "precondition": "FILE001 첫 접수 완료",
+      "action": "내용 동일, 파일명 변경 후 접수",
+      "patch": {
+        "resubmit_filename": "usage-renamed.csv",
+        "same_bytes": true
+      },
+      "expected": {
+        "status": "DUPLICATE_IGNORED",
+        "new_usage_rows": 0
+      },
+      "test_id": "TC-INGEST-002"
+    },
+    {
+      "scenario_id": "SC008",
+      "title": "음수 사용량",
+      "kind": "exception",
+      "baseline": "BASE001",
+      "reset_before_run": true,
+      "precondition": "사용자료 1건 복제",
+      "action": "입력 검증",
+      "patch": {
+        "replace": {
+          "usage.U001.quantity": -1
+        }
+      },
+      "expected": {
+        "error": "INVALID_QUANTITY",
+        "quarantined_rows": 1,
+        "new_distribution_rows": 0
+      },
+      "test_id": "TC-INGEST-003"
+    },
+    {
+      "scenario_id": "SC009",
+      "title": "알 수 없는 저작물",
+      "kind": "exception",
+      "baseline": "BASE001",
+      "reset_before_run": true,
+      "precondition": "사용자료 1건 복제",
+      "action": "매칭 후보 검수",
+      "patch": {
+        "replace": {
+          "usage.U001.internal_code": "DEMO-UNKNOWN",
+          "usage.U001.title": "시연곡 미등록"
+        }
+      },
+      "expected": {
+        "status": "UNMATCHED",
+        "new_distribution_rows": 0
+      },
+      "test_id": "TC-MATCH-001"
+    },
+    {
+      "scenario_id": "SC010",
+      "title": "유사곡 오매칭 반려",
+      "kind": "exception",
+      "baseline": "BASE001",
+      "reset_before_run": true,
+      "precondition": "W001/W003 유사 제목 후보",
+      "action": "W003 후보 반려 후 W001 수동 지정",
+      "patch": {
+        "candidate_fixture": {
+          "usage_id": "U001",
+          "candidate_work_id": "W003",
+          "score": 0.82,
+          "score_source": "SCRIPTED_NOT_MODEL"
+        }
+      },
+      "expected": {
+        "status": "MANUAL_CONFIRMED",
+        "final_work_id": "W001",
+        "rejected_work_id": "W003",
+        "reviewer": "USER-STAFF",
+        "audit_required": true
+      },
+      "test_id": "TC-MATCH-002"
+    },
+    {
+      "scenario_id": "SC011",
+      "title": "계약 미승인",
+      "kind": "exception",
+      "baseline": "BASE001",
+      "reset_before_run": true,
+      "precondition": "기준 데이터 복제",
+      "action": "U001 계산 요청",
+      "patch": {
+        "replace": {
+          "licenses.LC001.status": "PENDING"
+        }
+      },
+      "expected": {
+        "error": "LICENSE_NOT_APPROVED",
+        "new_distribution_rows": 0
+      },
+      "test_id": "TC-CONTRACT-001"
+    },
+    {
+      "scenario_id": "SC012",
+      "title": "미입금",
+      "kind": "exception",
+      "baseline": "BASE001",
+      "reset_before_run": true,
+      "precondition": "계약·지분 승인",
+      "action": "U001 분배 확정 요청",
+      "patch": {
+        "replace": {
+          "receipts.INV001.received_krw": 0
+        }
+      },
+      "expected": {
+        "status": "HELD_UNPAID",
+        "held_krw": 10000,
+        "confirmed_distribution_rows": 0,
+        "payment_execution_count": 0
+      },
+      "test_id": "TC-CASH-001"
+    },
+    {
+      "scenario_id": "SC013",
+      "title": "부분 입금",
+      "kind": "exception",
+      "baseline": "BASE001",
+      "reset_before_run": true,
+      "precondition": "계약·지분 승인",
+      "action": "U001 분배 확정 요청",
+      "patch": {
+        "replace": {
+          "receipts.INV001.received_krw": 9000
+        }
+      },
+      "expected": {
+        "status": "HELD_PARTIAL_RECEIPT",
+        "held_krw": 10000,
+        "unreceived_krw": 1000,
+        "confirmed_distribution_rows": 0
+      },
+      "test_id": "TC-CASH-002"
+    },
+    {
+      "scenario_id": "SC014",
+      "title": "타인 분배 조회",
+      "kind": "exception",
+      "baseline": "BASE001",
+      "reset_before_run": true,
+      "precondition": "USER-A 로그인·RUN001 존재",
+      "action": "P002 분배 조회",
+      "patch": {
+        "request": {
+          "user_id": "USER-A",
+          "resource_party_id": "P002"
+        }
+      },
+      "expected": {
+        "status": "FORBIDDEN",
+        "returned_rows": 0,
+        "sensitive_fields_returned": false
+      },
+      "test_id": "TC-AUTH-001"
+    },
+    {
+      "scenario_id": "SC015",
+      "title": "게스트 개인정보 조회",
+      "kind": "exception",
+      "baseline": "BASE001",
+      "reset_before_run": true,
+      "precondition": "USER-GUEST",
+      "action": "P001 회원 분배 조회",
+      "patch": {
+        "request": {
+          "user_id": "USER-GUEST",
+          "resource_party_id": "P001"
+        }
+      },
+      "expected": {
+        "status": "UNAUTHORIZED",
+        "returned_rows": 0
+      },
+      "test_id": "TC-AUTH-002"
+    },
+    {
+      "scenario_id": "SC016",
+      "title": "원본 누락",
+      "kind": "exception",
+      "baseline": "BASE001",
+      "reset_before_run": true,
+      "precondition": "W001 승인 전 검수",
+      "action": "없는 증빙 ID로 승인 요청",
+      "patch": {
+        "replace": {
+          "rights.RV1.W001.evidence_id": "EV-MISSING"
+        }
+      },
+      "expected": {
+        "error": "EVIDENCE_NOT_FOUND",
+        "approval_allowed": false
+      },
+      "test_id": "TC-EVIDENCE-001"
+    },
+    {
+      "scenario_id": "SC017",
+      "title": "무권한 지식 조회",
+      "kind": "exception",
+      "baseline": "BASE001",
+      "reset_before_run": true,
+      "precondition": "USER-A",
+      "action": "정산 내부 문서 질의",
+      "patch": {
+        "request": {
+          "user_id": "USER-A",
+          "knowledge_id": "KB-FINANCE"
+        }
+      },
+      "expected": {
+        "status": "NO_AUTHORIZED_EVIDENCE",
+        "citations": [],
+        "internal_content_exposed": false
+      },
+      "test_id": "TC-RAG-001"
+    },
+    {
+      "scenario_id": "SC018",
+      "title": "근거 없는 질문",
+      "kind": "exception",
+      "baseline": "BASE001",
+      "reset_before_run": true,
+      "precondition": "USER-GUEST",
+      "action": "실제 협회의 다음 달 요율은?",
+      "patch": {
+        "request": {
+          "user_id": "USER-GUEST",
+          "question": "실제 협회의 다음 달 요율은?"
+        }
+      },
+      "expected": {
+        "status": "NO_EVIDENCE",
+        "answer_policy": "확인 불가·담당부서 안내",
+        "invented_numeric_answer": false
+      },
+      "test_id": "TC-RAG-002"
+    },
+    {
+      "scenario_id": "SC019",
+      "title": "재시도 중복 분배 방지",
+      "kind": "exception",
+      "baseline": "BASE001",
+      "reset_before_run": true,
+      "precondition": "RUN001 성공 후 응답 전달 실패",
+      "action": "동일 계산키로 재시도",
+      "patch": {
+        "retry_idempotency_key": "CALC-BASE001-RV1-R1-202609"
+      },
+      "expected": {
+        "status": "EXISTING_RESULT",
+        "returned_run_id": "RUN001",
+        "total_runs": 1,
+        "total_krw": 11001
+      },
+      "test_id": "TC-JOB-001"
+    },
+    {
+      "scenario_id": "SC020",
+      "title": "정정 전 시점 재현",
+      "kind": "normal",
+      "baseline": "BASE001",
+      "reset_before_run": true,
+      "precondition": "RV2가 나중에 승인됨",
+      "action": "09:30 기준 RV1, 11:15 기준 RV2 각각 조회",
+      "patch": {
+        "as_of_before": "2026-10-04T09:30:00+09:00",
+        "as_of_after": "2026-10-04T11:15:00+09:00"
+      },
+      "expected": {
+        "before_version": "RV1",
+        "after_version": "RV2",
+        "before_w001": {
+          "P001": 6000,
+          "P002": 4000
+        },
+        "after_w001": {
+          "P001": 5000,
+          "P002": 5000
+        }
+      },
+      "test_id": "TC-TEMPORAL-001"
+    },
+    {
+      "scenario_id": "SC021",
+      "title": "효력기간 끝 경계",
+      "kind": "exception",
+      "baseline": "BASE001",
+      "reset_before_run": true,
+      "precondition": "기간은 시작 포함·끝 제외",
+      "action": "2026-10-01 U001 검수",
+      "patch": {
+        "replace": {
+          "usage.U001.usage_date": "2026-10-01"
+        }
+      },
+      "expected": {
+        "error": "NO_EFFECTIVE_LICENSE_OR_RIGHTS",
+        "new_distribution_rows": 0
+      },
+      "test_id": "TC-TEMPORAL-002"
+    }
+  ],
+  "tariffs": [
+    {
+      "tariff_version": "T001",
+      "currency": "KRW",
+      "unit_rate_krw": 100,
+      "fee_krw": 0,
+      "tax_krw": 0,
+      "demo_only": true
+    },
+    {
+      "tariff_version": "T002",
+      "currency": "KRW",
+      "unit_rate_krw": 1001,
+      "fee_krw": 0,
+      "tax_krw": 0,
+      "demo_only": true
+    }
+  ],
+  "trust_contracts": [
+    {
+      "trust_contract_id": "TRUST001",
+      "application_id": "APP001",
+      "party_id": "P001",
+      "initial_state": "DRAFT",
+      "expected_state_after_events": "MOCK_SIGNED",
+      "evidence_id": "EV-TRUST",
+      "mode": "MOCK"
+    }
+  ]
+}

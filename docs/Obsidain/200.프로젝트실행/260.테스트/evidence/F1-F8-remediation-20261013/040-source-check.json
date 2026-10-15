@@ -1,0 +1,30 @@
+{
+  "checked_on": "2026-10-13",
+  "file": "/Users/jwpios/antigravity/202610_AI 플랫폼/src/backend/migrations/040_dynamic_agent_favorites.sql",
+  "line_count_splitlines": 169,
+  "file_sha256": "49235a34ddcdb1a3c034c6ac42303cbd3bfadaddb20d3e2bf71830521e07fff4",
+  "database_recorded_sha256": "ca78a8d3c17ee6c104d5703a01c500edda3efcb7c398b2f6d26e2ae64c661adb",
+  "exact_match": false,
+  "existing_migration_count": 41,
+  "pending_versions": [
+    "041_rbac_capabilities_and_data_import.sql",
+    "042_guardrail_policy_and_violations.sql",
+    "043_admin_overview.sql",
+    "044_guardrail_runtime_policy.sql",
+    "045_admin_overview_observation_boundary.sql"
+  ],
+  "primary_writes": 0,
+  "checksums_modified": false,
+  "function_body_matches": {
+    "dynamic_favorite_mutate": false,
+    "published_agent_read": true
+  },
+  "favorite_function_literal_difference": {
+    "database": "dynamic_favorite",
+    "current_file": "favorite",
+    "positions": [
+      "retry action comparison",
+      "catalog_mutations insert"
+    ]
+  }
+}

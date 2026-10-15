@@ -1,3 +1,4 @@
+import os
 from datetime import date
 from pathlib import Path
 from typing import Literal
@@ -11,6 +12,8 @@ class Settings(BaseSettings):
     model_config = SettingsConfigDict(env_prefix="AI_", extra="forbid", env_file=None)
 
     profile: Literal["local", "https"] = "local"
+    environment: Literal['local','dev','tb','prd'] = 'local'
+    portal_origins: tuple[str, ...] = ()
     origin: str = "http://127.0.0.1:5173"
     mode: Literal["mock", "real"] = "mock"
     budget_period: date = date(2026, 10, 1)
@@ -29,12 +32,36 @@ class Settings(BaseSettings):
     def validate_origin(self) -> "Settings":
         parsed = urlsplit(self.origin)
         if self.profile == "local":
-            if self.origin != "http://127.0.0.1:5173":
+            if self.portal_origins:
+                for origin in self.portal_origins:
+                    value=urlsplit(origin)
+                    if value.scheme!='http' or value.hostname!='127.0.0.1' or value.username or value.password or value.path or value.query or value.fragment or not value.port:
+                        raise ValueError('local origins must be configured loopback origins')
+                if self.origin not in self.portal_origins or len(set(self.portal_origins))!=len(self.portal_origins):
+                    raise ValueError('invalid configured local origins')
+            elif self.origin != "http://127.0.0.1:5173":
                 raise ValueError("local origin must match the configured loopback portal")
         elif (parsed.scheme != "https" or not parsed.hostname or parsed.username
               or parsed.password or parsed.path or parsed.query or parsed.fragment):
             raise ValueError("HTTPS origin must contain only a scheme, host and optional port")
+        if self.profile=='https' and self.portal_origins:
+            if self.origin not in self.portal_origins or len(set(self.portal_origins))!=len(self.portal_origins):raise ValueError('invalid configured HTTPS origins')
+            for origin in self.portal_origins:
+                value=urlsplit(origin)
+                if value.scheme!='https' or not value.hostname or value.username or value.password or value.path or value.query or value.fragment:raise ValueError('invalid configured HTTPS origin')
         return self
+
+    @classmethod
+    def from_environment(cls):
+        from app.environment import load_environment,ConfigurationError
+        environment=os.environ.get('AI_ENVIRONMENT','local')
+        config=load_environment(environment)
+        # Commercial auth/DB profile must be implemented before a fixture-based app can run there.
+        if environment!='local':raise ConfigurationError('COMMERCIAL_RUNTIME_PROFILE_NOT_READY')
+        return cls(environment=environment,profile='local',origin=config['user']['origin'],portal_origins=(config['user']['origin'],config['admin']['origin']))
+
+    @property
+    def trusted_origins(self):return self.portal_origins or (self.origin,)
 
     @property
     def session_cookie_name(self) -> str:

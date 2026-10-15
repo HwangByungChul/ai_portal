@@ -1,0 +1,32 @@
+{
+  "date": "2026-10-13",
+  "scope": "selected regression; not whole suite, institution acceptance, or production",
+  "backend_runs": [
+    {
+      "selection": "workflow runtime/migration/approval/strict schema/controlled DAG/tool receipts/agent approval/published execution/history/migrations/uncontrolled boundaries/base schema",
+      "passed": 157,
+      "seconds": 229.02,
+      "stage": "before final pre-claim revocation and unclaimed timeout hardening"
+    },
+    {
+      "selection": "workflow runtime/migration/approval/strict schema/migrations",
+      "passed": 40,
+      "seconds": 55.47,
+      "stage": "final source, after last hardening"
+    }
+  ],
+  "browser": {
+    "passed": 2,
+    "case_01": "real fixture authentication/catalog/tenant-CSRF DAG validation/empty approved list",
+    "case_02": "stubbed HTTP runtime UI contract; version-only request/poll/retry UUID after lost receipt"
+  },
+  "build": {
+    "node": "22.23.1",
+    "user_modules": 26,
+    "admin_modules": 37,
+    "boundary_verified": true
+  },
+  "production_provider_tested": false,
+  "primary_migrated": false,
+  "paid_calls": 0
+}

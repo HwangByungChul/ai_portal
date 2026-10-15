@@ -1,0 +1,427 @@
+--- a/src/backend/app/use_cases/meeting.py
++++ b/src/backend/app/use_cases/meeting.py
+@@ -3,59 +3,95 @@
+ import json
+ from datetime import date
+ from pathlib import Path
+-from typing import Annotated
+-from pydantic import BaseModel,ConfigDict,Field,StrictStr,field_validator
++from typing import Annotated, Mapping, Literal
++from uuid import UUID
++from pydantic import BaseModel,ConfigDict,Field,StrictStr,field_validator,model_validator
+ from app.use_cases.catalog import get_use_case
++from app.use_cases.meeting_dates import resolve_deadline
+ 
+ Text=Annotated[StrictStr,Field(min_length=1,max_length=4000)]
+ 
+ class StrictModel(BaseModel):
+     model_config=ConfigDict(extra='forbid')
+ 
++class DocumentRef(StrictModel):
++    document_id: UUID
++    version_id: UUID
++
+ class MeetingInput(StrictModel):
+-    memo:Text
++    memo:Annotated[StrictStr,Field(max_length=4000)]=''
+     meeting_date:date|None=None
++    document_refs:list[DocumentRef]=Field(default_factory=list,max_length=3)
++
++    @field_validator('meeting_date',mode='before')
++    @classmethod
++    def valid_date(cls,value):
++        if value is not None and type(value) is not date:
++            if not isinstance(value,str) or len(value)!=10 or date.fromisoformat(value).isoformat()!=value:
++                raise ValueError('MEETING_DATE_INVALID')
++        return value
+ 
+     @field_validator('memo')
+     @classmethod
+     def valid_memo(cls,value):
+-        if not value.strip() or '\x00' in value:raise ValueError('MEETING_INPUT_INVALID')
++        if '\x00' in value:raise ValueError('MEETING_INPUT_INVALID')
+         value.encode('utf-8')
+         return value
++
++    @model_validator(mode='after')
++    def valid_sources(self):
++        if not self.memo.strip() and not self.document_refs:raise ValueError('MEETING_INPUT_INVALID')
++        if len({ref.document_id for ref in self.document_refs})!=len(self.document_refs) or len({ref.version_id for ref in self.document_refs})!=len(self.document_refs):
++            raise ValueError('MEETING_DOCUMENT_DUPLICATE')
++        return self
+ 
+ class EvidenceItem(StrictModel):
+     text:Text
+     quote:Text
++    source_ref:Annotated[StrictStr,Field(min_length=1,max_length=100)]='memo'
+ 
+ class ActionItem(EvidenceItem):
+     assignee:Annotated[StrictStr,Field(min_length=1,max_length=100)]|None=None
+     due_date:date|None=None
++    due_expression:Text|None=None
++    deadline_status:Literal['unspecified','resolved','unresolved']='unspecified'
++    deadline_reason:StrictStr|None=None
+ 
+ class MeetingResult(StrictModel):
+     decisions:list[EvidenceItem]=Field(max_length=50)
+     unresolved:list[EvidenceItem]=Field(max_length=50)
+     actions:list[ActionItem]=Field(max_length=50)
+ 
+-    def check_evidence(self,source:MeetingInput):
++    def check_evidence(self,source:MeetingInput,document_sources:Mapping[str,str]|None=None):
++        allowed={f'document:{ref.version_id}' for ref in source.document_refs}
++        sources={'memo':source.memo}
++        sources.update({key:value for key,value in (document_sources or {}).items() if key in allowed and isinstance(value,str)})
+         for item in [*self.decisions,*self.unresolved,*self.actions]:
+-            if not item.quote.strip() or item.quote not in source.memo:
++            if not item.quote.strip() or item.source_ref not in sources or item.quote not in sources[item.source_ref]:
+                 raise ValueError('MEETING_EVIDENCE_INVALID')
+             if isinstance(item,ActionItem):
+                 if item.assignee is not None and (not item.assignee.strip() or item.assignee not in item.quote):
+                     raise ValueError('MEETING_ASSIGNEE_UNCONFIRMED')
+-                # Relative dates require a future explicit resolver; never infer them here.
+-                if item.due_date is not None and item.due_date.isoformat() not in item.quote:
++                resolved=resolve_deadline(item.quote,source.meeting_date,item.due_expression)
++                if item.due_date is not None and item.due_date != resolved.due_date:
+                     raise ValueError('MEETING_DEADLINE_UNCONFIRMED')
++                if resolved.reason == 'expression_not_in_quote':
++                    raise ValueError('MEETING_DEADLINE_UNCONFIRMED')
++                item.due_date=resolved.due_date
++                item.due_expression=resolved.expression
++                item.deadline_status=resolved.status
++                item.deadline_reason=resolved.reason
+         return self
+ 
+ 
+ def meeting_contract():
+     manifest=get_use_case('AGENT_03')
+-    body={'use_case_id':manifest.use_case_id,'contract_revision':1,
++    body={'use_case_id':manifest.use_case_id,'contract_revision':2,
+           'role_scope':manifest.role_scope,'required_tools':manifest.required_tools,
+           'auto_decision_prohibited':manifest.auto_decision_prohibited,
+           'system_prompt':manifest.system_prompt,'input_schema':MeetingInput.model_json_schema(),
+           'output_schema':MeetingResult.model_json_schema(),
+-          'validator_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
++          'validator_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
++          'rules_sha256':{name:hashlib.sha256(Path(__file__).with_name(name).read_bytes()).hexdigest() for name in ('meeting_dates.py','meeting_quality.py')}}
+     encoded=json.dumps(body,ensure_ascii=False,sort_keys=True,separators=(',',':')).encode()
+     return body|{'manifest_digest':hashlib.sha256(encoded).hexdigest()}
+--- a/src/backend/app/use_cases/meeting_dates.py
++++ b/src/backend/app/use_cases/meeting_dates.py
+@@ -0,0 +1,63 @@
++"""Deterministic calendar deadlines, relative to the meeting (never wall clock).
++
++Weeks begin Monday. 이번주 includes elapsed weekdays; 다음주 is the next
++Monday-based week. No holiday, business-day or time-of-day inference is made.
++"""
++from dataclasses import dataclass
++from datetime import date, timedelta
++import re
++
++EXPRESSION = re.compile(r'(?<![\d-])\d{4}-\d{2}-\d{2}(?!\d)|오늘|내일|모레|(?<![\d-])\d+\s*일\s*후|(?:이번|다음)\s*주\s*[월화수목금토일]요일')
++AMBIGUOUS = re.compile(r'영업일|조속히|다음\s*주(?!\s*[월화수목금토일]요일)|이번\s*주(?!\s*[월화수목금토일]요일)')
++
++# Recognize a bounded set of unsupported calendar periods without computing dates.
++UNSUPPORTED = re.compile(r'월말|월초|분기말|연내|연말|연초|(?:다음|이번|이)\s*달|주말')
++
++@dataclass(frozen=True)
++class DeadlineResolution:
++    due_date: date | None
++    expression: str | None
++    status: str
++    reason: str | None
++    human_review_required: bool
++
++
++def resolve_deadline(quote: str, meeting_date: date | None, expression: str | None = None) -> DeadlineResolution:
++    def unresolved(reason, expr=expression):
++        return DeadlineResolution(None, expr, 'unresolved', reason, True)
++    if expression is not None and (not expression.strip() or expression not in quote):
++        return unresolved('expression_not_in_quote')
++    matches = list(dict.fromkeys(EXPRESSION.findall(quote)))
++    if AMBIGUOUS.search(quote):
++        return unresolved('ambiguous_expression')
++    unsupported = UNSUPPORTED.search(quote)
++    if unsupported:
++        return unresolved('unsupported_expression', expression or unsupported.group())
++    if not matches:
++        return unresolved('unsupported_expression') if expression else DeadlineResolution(None, None, 'unspecified', None, False)
++    if expression is not None and expression not in matches:
++        return unresolved('unsupported_expression')
++    dates = []
++    for value in matches:
++        if re.fullmatch(r'\d{4}-\d{2}-\d{2}', value):
++            try: dates.append(date.fromisoformat(value))
++            except ValueError: return unresolved('invalid_calendar_date', value)
++            continue
++        if meeting_date is None: return unresolved('meeting_date_required', value)
++        try:
++            if value in ('오늘', '내일', '모레'):
++                resolved = meeting_date + timedelta(days=('오늘', '내일', '모레').index(value))
++            elif '후' in value:
++                # Bound before integer conversion; reject absurd or overflow-prone offsets.
++                digits = re.match(r'\d+', value).group()
++                if len(digits) > 4 or int(digits) > 3660: return unresolved('offset_out_of_bounds', value)
++                resolved = meeting_date + timedelta(days=int(digits))
++            else:
++                weekday = '월화수목금토일'.index(value[-3])
++                resolved = meeting_date + timedelta(days=-meeting_date.weekday()+weekday+(7 if value.startswith('다음') else 0))
++            dates.append(resolved)
++        except (OverflowError, ValueError): return unresolved('calendar_out_of_bounds', value)
++    if len(set(dates)) != 1: return unresolved('conflicting_expressions')
++    resolved = dates[0]
++    past = meeting_date is not None and resolved < meeting_date
++    return DeadlineResolution(resolved, expression or matches[0], 'resolved', 'past_due' if past else None, past)
+--- a/src/backend/app/use_cases/meeting_quality.py
++++ b/src/backend/app/use_cases/meeting_quality.py
+@@ -0,0 +1,29 @@
++"""Structural evidence checks are not a semantic quality or approval decision."""
++from dataclasses import dataclass
++from typing import Mapping
++from app.use_cases.meeting import MeetingInput, MeetingResult
++
++HUMAN_RUBRIC = {
++    'accuracy': 'Compare every decision and unresolved issue with the verified originals; identify unsupported interpretation.',
++    'omission': 'Compare the complete originals with the draft for missing material decisions, issues and actions.',
++    'owner': 'Confirm the quoted name is the actual action owner rather than a mentioned participant.',
++    'deadline': 'Confirm the quoted expression is the action deadline rather than an unrelated date; review ambiguity and past dates.',
++}
++
++@dataclass(frozen=True)
++class StructuralQuality:
++    evidence_valid: bool
++    item_count: int
++    unresolved_deadlines: int
++    past_deadlines: int
++    error: str | None
++    human_review_required: bool = True
++
++
++def evaluate_structure(result: MeetingResult, source: MeetingInput, document_sources: Mapping[str,str] | None = None) -> StructuralQuality:
++    # Evaluation must not mutate a persisted or caller-owned historical result.
++    checked = result.model_copy(deep=True)
++    count = len(checked.decisions)+len(checked.unresolved)+len(checked.actions)
++    try: checked.check_evidence(source,document_sources)
++    except ValueError as error: return StructuralQuality(False,count,0,0,str(error))
++    return StructuralQuality(True,count,sum(a.deadline_status=='unresolved' for a in checked.actions),sum(a.deadline_reason=='past_due' for a in checked.actions),None)
+--- a/src/backend/tests/test_meeting_contract.py
++++ b/src/backend/tests/test_meeting_contract.py
+@@ -39,3 +39,65 @@
+     assert contract==meeting_contract() and contract['use_case_id']=='AGENT_03'
+     assert contract['required_tools']==[] and len(contract['manifest_digest'])==64
+     with pytest.raises(ValidationError):MeetingInput(memo='메모',system_prompt='override')
++
++from datetime import date
++from uuid import UUID
++
++REF={'document_id':'00000000-0000-0000-0000-000000000001','version_id':'00000000-0000-0000-0000-000000000002'}
++KEY='document:'+REF['version_id']
++
++def action_result(quote,**fields):
++    return MeetingResult.model_validate({'decisions':[],'unresolved':[],'actions':[{'text':'자료 준비','quote':quote,**fields}]})
++
++def test_documents_only_exact_selected_version_and_owner():
++    source=MeetingInput(memo='',document_refs=[REF],meeting_date='2026-10-15')
++    item=action_result('김담당이 내일까지 제출',source_ref=KEY,assignee='김담당').check_evidence(source,{KEY:'김담당이 내일까지 제출'}).actions[0]
++    assert item.due_date==date(2026,10,16) and item.deadline_status=='resolved'
++    for sources in ({}, {'document:other':'김담당이 내일까지 제출'}, {KEY:'다른 원문'}):
++        with pytest.raises(ValueError,match='MEETING_EVIDENCE_INVALID'):
++            action_result('김담당이 내일까지 제출',source_ref=KEY).check_evidence(source,sources)
++    with pytest.raises(ValueError,match='MEETING_EVIDENCE_INVALID'):
++        action_result('김담당이 내일까지 제출',source_ref='document:other').check_evidence(source,{'document:other':'김담당이 내일까지 제출'})
++
++@pytest.mark.parametrize('values',[
++    {'memo':'x'*4001}, {'memo':'메모','document_refs':[REF]*2},
++    {'memo':'메모','document_refs':[REF]*4}, {'memo':'메모','meeting_date':'20261015'},
++    {'memo':'메모','meeting_date':123}, {'memo':'메모','meeting_date':'2026-02-29'},
++])
++def test_input_bounds_and_strict_date(values):
++    with pytest.raises(ValidationError):MeetingInput(**values)
++
++def test_server_overwrites_claimed_status_and_requires_quote_date():
++    source=MeetingInput(memo='내일 제출')
++    action=action_result(source.memo,deadline_status='resolved',deadline_reason='model claim').check_evidence(source).actions[0]
++    assert action.due_date is None and action.deadline_status=='unresolved' and action.deadline_reason=='meeting_date_required'
++    with pytest.raises(ValueError,match='MEETING_DEADLINE_UNCONFIRMED'):
++        action_result(source.memo,due_date='2026-10-16').check_evidence(source)
++    with pytest.raises(ValueError,match='MEETING_DEADLINE_UNCONFIRMED'):
++        action_result(source.memo,due_expression='2026-10-16').check_evidence(source)
++
++def test_legacy_result_default_source_and_original_null_fields():
++    source=MeetingInput(memo='검토하기로 했다.')
++    result=action_result(source.memo)
++    assert result.actions[0].source_ref=='memo'
++    assert result.check_evidence(source).actions[0].deadline_status=='unspecified'
++    assert meeting_contract()['contract_revision']==2
++    assert set(meeting_contract()['rules_sha256'])=={'meeting_dates.py','meeting_quality.py'}
++
++from datetime import datetime
++
++@pytest.mark.parametrize('value',[datetime(2026,10,15),True,20261015, '2026-10-15T00:00:00'])
++def test_meeting_date_rejects_coercion(value):
++    with pytest.raises(ValidationError):MeetingInput(memo='메모',meeting_date=value)
++
++def test_relative_model_date_mismatch_is_rejected():
++    source=MeetingInput(memo='내일까지 제출',meeting_date='2026-10-15')
++    with pytest.raises(ValueError,match='MEETING_DEADLINE_UNCONFIRMED'):
++        action_result(source.memo,due_date='2026-10-17').check_evidence(source)
++    assert action_result(source.memo,due_date='2026-10-16').check_evidence(source).actions[0].due_date==date(2026,10,16)
++
++def test_equivalent_expressions_are_idempotent():
++    source=MeetingInput(memo='오늘 즉 2026-10-15 제출',meeting_date='2026-10-15')
++    result=action_result(source.memo).check_evidence(source)
++    before=result.model_dump()
++    assert result.check_evidence(source).model_dump()==before
+--- a/src/backend/tests/test_meeting_dates.py
++++ b/src/backend/tests/test_meeting_dates.py
+@@ -0,0 +1,62 @@
++from datetime import date
++import pytest
++from app.use_cases.meeting_dates import resolve_deadline
++
++@pytest.mark.parametrize('base,expression,expected',[
++    ('2024-02-28','내일','2024-02-29'),('2024-02-29','모레','2024-03-02'),
++    ('2026-12-31','1일 후','2027-01-01'),('2026-10-15','오늘','2026-10-15'),
++    ('2026-10-18','이번주 월요일','2026-10-12'),('2026-12-31','다음주 월요일','2027-01-04'),
++    ('2026-10-19','다음주 일요일','2026-11-01'),('2026-10-15','0일후','2026-10-15'),
++])
++def test_calendar_rules(base,expression,expected):
++    resolved=resolve_deadline(expression+'까지 제출',date.fromisoformat(base))
++    assert resolved.due_date==date.fromisoformat(expected) and resolved.status=='resolved'
++
++@pytest.mark.parametrize('quote,base,reason',[
++    ('내일 제출',None,'meeting_date_required'),('다음주 제출',date(2026,10,15),'ambiguous_expression'),
++    ('조속히 제출',date(2026,10,15),'ambiguous_expression'),('2영업일 후 제출',date(2026,10,15),'ambiguous_expression'),
++    ('오늘 또는 내일 제출',date(2026,10,15),'conflicting_expressions'),
++    ('2026-02-29 제출',None,'invalid_calendar_date'),('99999일후 제출',date(2026,10,15),'offset_out_of_bounds'),
++    ('1일후 제출',date(9999,12,31),'calendar_out_of_bounds'),
++])
++def test_unresolved_dates(quote,base,reason):
++    result=resolve_deadline(quote,base)
++    assert result.due_date is None and result.reason==reason and result.human_review_required
++
++def test_explicit_iso_without_meeting_base_and_past_flag():
++    assert resolve_deadline('2026-10-20 제출',None).due_date==date(2026,10,20)
++    assert resolve_deadline('2026-10-10 제출',date(2026,10,15)).reason=='past_due'
++
++def test_expression_must_be_verbatim_and_all_conflicts_considered():
++    assert resolve_deadline('오늘 제출',date(2026,10,15),'내일').reason=='expression_not_in_quote'
++    assert resolve_deadline('오늘 또는 내일 제출',date(2026,10,15),'오늘').reason=='conflicting_expressions'
++    assert resolve_deadline('월말 제출',date(2026,10,15),'월말').reason=='unsupported_expression'
++    assert resolve_deadline('오늘 즉 2026-10-15 제출',date(2026,10,15)).status=='resolved'
++
++
++@pytest.mark.parametrize('phrase', ['월말', '월초', '분기말', '연내', '다음달', '이달', '주말'])
++@pytest.mark.parametrize('base', [None, date(2026, 10, 15)])
++def test_unsupported_periods_survive_optional_expression_omission(phrase, base):
++    quote = phrase + '까지 제출'
++    omitted = resolve_deadline(quote, base)
++    supplied = resolve_deadline(quote, base, phrase)
++    assert omitted == supplied
++    assert omitted.status == 'unresolved' and omitted.reason == 'unsupported_expression'
++    assert omitted.due_date is None and omitted.human_review_required
++
++@pytest.mark.parametrize('expression', [None, '오늘', '월말'])
++def test_supported_date_cannot_hide_unsupported_period(expression):
++    result = resolve_deadline('오늘 또는 월말까지 제출', date(2026, 10, 15), expression)
++    assert result.status == 'unresolved' and result.due_date is None
++    assert result.reason == 'unsupported_expression' and result.human_review_required
++
++@pytest.mark.parametrize('expression', [None, '이번주'])
++def test_this_week_without_weekday_remains_ambiguous(expression):
++    result = resolve_deadline('이번주 안까지 제출', date(2026, 10, 15), expression)
++    assert result.status == 'unresolved' and result.reason == 'ambiguous_expression'
++    assert result.due_date is None and result.human_review_required
++
++def test_quote_without_deadline_remains_unspecified():
++    result = resolve_deadline('보고서를 제출하기로 결정했다', date(2026, 10, 15))
++    assert result.status == 'unspecified' and result.expression is None
++    assert result.due_date is None and result.reason is None and not result.human_review_required
+--- a/src/backend/tests/test_meeting_quality.py
++++ b/src/backend/tests/test_meeting_quality.py
+@@ -0,0 +1,72 @@
++import json
++from pathlib import Path
++import pytest
++from app.use_cases.meeting import MeetingInput,MeetingResult
++from app.use_cases.meeting_quality import evaluate_structure,HUMAN_RUBRIC
++
++CASES=json.loads(Path(__file__).with_name('fixtures').joinpath('meeting-evaluation-v2.json').read_text())['cases']
++
++@pytest.mark.parametrize('case',CASES,ids=lambda c:c['id'])
++def test_synthetic_evaluation(case):
++    source=MeetingInput.model_validate(case['input']);result=MeetingResult.model_validate(case['result'])
++    original=result.model_dump()
++    stats=evaluate_structure(result,source)
++    assert stats.evidence_valid==case['expected']['evidence_valid'] and stats.human_review_required
++    assert result.model_dump()==original
++    if stats.evidence_valid:
++        normalized=result.model_copy(deep=True).check_evidence(source)
++        due=normalized.actions[0].due_date
++        assert (due.isoformat() if due else None)==case['expected']['due_date']
++        assert stats.unresolved_deadlines==case['expected']['unresolved_deadlines']
++
++def test_human_rubric_has_no_semantic_pass_or_numeric_accuracy():
++    assert set(HUMAN_RUBRIC)=={'accuracy','omission','owner','deadline'}
++    source=MeetingInput(memo='2026-10-10까지 제출',meeting_date='2026-10-15')
++    result=MeetingResult(decisions=[],unresolved=[],actions=[{'text':'제출','quote':source.memo}])
++    stats=evaluate_structure(result,source)
++    assert stats.past_deadlines==1 and stats.human_review_required
++    assert not hasattr(stats,'semantic_pass')
++
++
++@pytest.mark.parametrize('base', [None, '2026-10-15'])
++@pytest.mark.parametrize('expression', [None, '월말'])
++def test_unsupported_deadline_normalization_and_quality_count(base, expression):
++    source = MeetingInput(memo='월말까지 제출', meeting_date=base)
++    result = MeetingResult(decisions=[], unresolved=[], actions=[{
++        'text': '제출', 'quote': source.memo, 'due_expression': expression,
++        'deadline_status': 'resolved', 'deadline_reason': None,
++    }])
++    original = result.model_dump()
++    stats = evaluate_structure(result, source)
++    assert stats.evidence_valid and stats.unresolved_deadlines == 1
++    assert stats.past_deadlines == 0 and stats.human_review_required
++    assert result.model_dump() == original
++    action = result.check_evidence(source).actions[0]
++    assert action.due_date is None and action.due_expression == '월말'
++    assert action.deadline_status == 'unresolved' and action.deadline_reason == 'unsupported_expression'
++
++@pytest.mark.parametrize('quote,count', [
++    ('보고서를 제출하기로 결정했다', 0),
++    ('오늘 또는 월말까지 제출', 1),
++    ('이번주 안까지 제출', 1),
++])
++def test_deadline_count_without_model_expression(quote, count):
++    source = MeetingInput(memo=quote, meeting_date='2026-10-15')
++    result = MeetingResult(decisions=[], unresolved=[], actions=[{'text': '제출', 'quote': quote}])
++    stats = evaluate_structure(result, source)
++    assert stats.evidence_valid and stats.unresolved_deadlines == count
++    action = result.check_evidence(source).actions[0]
++    assert action.due_date is None
++    assert action.deadline_status == ('unresolved' if count else 'unspecified')
++
++
++@pytest.mark.parametrize('expression', [None, '월말'])
++def test_model_date_cannot_confirm_unsupported_deadline(expression):
++    source = MeetingInput(memo='월말까지 제출', meeting_date='2026-10-15')
++    result = MeetingResult(decisions=[], unresolved=[], actions=[{
++        'text': '제출', 'quote': source.memo, 'due_expression': expression,
++        'due_date': '2026-10-31',
++    }])
++    stats = evaluate_structure(result, source)
++    assert not stats.evidence_valid and 'MEETING_DEADLINE_UNCONFIRMED' in stats.error
++    assert stats.human_review_required
+--- a/src/backend/tests/fixtures/meeting-evaluation-v2.json
++++ b/src/backend/tests/fixtures/meeting-evaluation-v2.json
+@@ -0,0 +1,10 @@
++{
++  "fixture_revision": 2,
++  "provenance": "synthetic; no provider call or institutional source",
++  "cases": [
++    {"id":"relative-date", "input":{"memo":"김담당이 내일까지 자료를 제출한다.","meeting_date":"2024-02-28"},"result":{"decisions":[],"unresolved":[],"actions":[{"text":"자료 제출","quote":"김담당이 내일까지 자료를 제출한다.","assignee":"김담당"}]},"expected":{"evidence_valid":true,"due_date":"2024-02-29","unresolved_deadlines":0}},
++    {"id":"missing-base", "input":{"memo":"내일 자료를 제출한다."},"result":{"decisions":[],"unresolved":[],"actions":[{"text":"자료 제출","quote":"내일 자료를 제출한다."}]},"expected":{"evidence_valid":true,"due_date":null,"unresolved_deadlines":1}},
++    {"id":"invented-owner", "input":{"memo":"자료를 제출한다."},"result":{"decisions":[],"unresolved":[],"actions":[{"text":"자료 제출","quote":"자료를 제출한다.","assignee":"김담당"}]},"expected":{"evidence_valid":false}},
++    {"id":"unrelated-owner-semantic-review", "input":{"memo":"김담당에게 보고하고 이담당이 자료를 제출한다."},"result":{"decisions":[],"unresolved":[],"actions":[{"text":"자료 제출","quote":"김담당에게 보고하고 이담당이 자료를 제출한다.","assignee":"김담당"}]},"expected":{"evidence_valid":true,"due_date":null,"unresolved_deadlines":0},"human_expected":"owner incorrect despite literal structural validity"}
++  ]
++}

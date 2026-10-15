@@ -1,0 +1,136 @@
+{
+  "package_version": "demo-0.1.0",
+  "source_of_truth": "데이터/시연 패키지.json",
+  "files": [
+    {
+      "path": "데이터/권리자.csv",
+      "sha256": "aa8f09fda2b738b0bf4c1a6e67d94197bdd8378a3b15ada8b996ae1ddb15da50",
+      "bytes": 213
+    },
+    {
+      "path": "데이터/모의 신탁계약.csv",
+      "sha256": "deb802e05f4c6e032871c677aadaebe7d700eef7a29ea3a7f5ff3940d6f00636",
+      "bytes": 159
+    },
+    {
+      "path": "데이터/모의 입금.csv",
+      "sha256": "025ee1faf73f3f1aa70ec6e6c6231f1e6a7d24769582c9e1b69b60bf08f122ce",
+      "bytes": 144
+    },
+    {
+      "path": "데이터/분배 기대값.csv",
+      "sha256": "e756e787fec440ac1a322fd4fee0c1ddd0705ee9bfc54edbb3075783d053af87",
+      "bytes": 337
+    },
+    {
+      "path": "데이터/사용자 역할.csv",
+      "sha256": "a8728bca10d6553a7af075001e34464ebed8228716ec0ddd4f92965ea9cac858",
+      "bytes": 238
+    },
+    {
+      "path": "데이터/소급 조정 기대값.csv",
+      "sha256": "ad119f299ed439501530af9763dc10465aa29272c51097735e4b80019b53ad55",
+      "bytes": 219
+    },
+    {
+      "path": "데이터/시연 요율.csv",
+      "sha256": "ce68371d575ec05a0a377d8dd130feba3d2dd6ca3c317b7a6698c8f53a6f0e45",
+      "bytes": 115
+    },
+    {
+      "path": "데이터/시연 패키지.json",
+      "sha256": "2f0eba35aceb5cd1d98a0d19565646db0b5807fc68032f8def7019d5dfd2eacf",
+      "bytes": 24785
+    },
+    {
+      "path": "데이터/신청 상태 이벤트.csv",
+      "sha256": "b9bcd939ff6dad597b550fae1afc1e85d339fb1eb9b03e72574b3fd87d2bcba8",
+      "bytes": 475
+    },
+    {
+      "path": "데이터/예외 시나리오.json",
+      "sha256": "e83920a2c5a957e6bef6337a6b86335c3b1f0f74db0a3a8da8944a8192df55e0",
+      "bytes": 10980
+    },
+    {
+      "path": "데이터/음악사용자료.csv",
+      "sha256": "da73d65efce110f633336bb2d51dcb8c68fee0badc1cd6c44d2e93e5337c548c",
+      "bytes": 270
+    },
+    {
+      "path": "데이터/이용계약.csv",
+      "sha256": "ccdb51d5f5650ccbc2a373b30ce38b6a6d10b06fd6a17b82a208ae864fe72a8b",
+      "bytes": 201
+    },
+    {
+      "path": "데이터/저작물.csv",
+      "sha256": "38315d407d2294b06c191ce52c7b655c5d7a479b5f9fc8c5b9ec4e6d817e3c7f",
+      "bytes": 195
+    },
+    {
+      "path": "데이터/정정 지분.csv",
+      "sha256": "6e70524dc1a032a871dd85096a963ce961079a9949a2841322e774d3a6555d4e",
+      "bytes": 346
+    },
+    {
+      "path": "데이터/증빙 목록.csv",
+      "sha256": "5ac2962b218edb47c96ec323fbe55d7c16e203b2d335aaf7b84c78ab4069ece5",
+      "bytes": 772
+    },
+    {
+      "path": "데이터/초기 지분.csv",
+      "sha256": "67d91100f2930c25e029d23259a4515c72d237548cb5057b08a09a4cf57a7d1d",
+      "bytes": 637
+    },
+    {
+      "path": "원본/EV-CORRECTION.txt",
+      "sha256": "20b146071bdcdf99e1e7a3133fb922a21a9b39222c08768ef766828c4a14b0e1",
+      "bytes": 181
+    },
+    {
+      "path": "원본/EV-LC001.txt",
+      "sha256": "487d155cb167075cdde643c369fb05ad89fd1eeafb64167270bdd907dd2f707b",
+      "bytes": 176
+    },
+    {
+      "path": "원본/EV-LC002.txt",
+      "sha256": "8e90def5f41ea64570fa2f23bdecbbac42696cb786cd5b22faef0ede930fb099",
+      "bytes": 176
+    },
+    {
+      "path": "원본/EV-TRUST.txt",
+      "sha256": "2ddb94e606a365fd7e138feb31103853a32bb3fc8d7dc4bdacc5b95013589c80",
+      "bytes": 176
+    },
+    {
+      "path": "원본/EV-W001.txt",
+      "sha256": "f042e26e5d4a5e3ff98c5606b867694e359dbe9816f5fe173b41c2d89e328589",
+      "bytes": 175
+    },
+    {
+      "path": "원본/EV-W002.txt",
+      "sha256": "72843667cee8eae7122b602e64089241d7fc749fdf34c32a2c0c648ab0c2a720",
+      "bytes": 175
+    },
+    {
+      "path": "원본/EV-W003.txt",
+      "sha256": "bc2a5cea3538f23a6ef7315fee1339049efd6363534ff50dbf1282107aaa0335",
+      "bytes": 175
+    },
+    {
+      "path": "지식/KB-FINANCE.md",
+      "sha256": "20e8225b1180f1d127d5771fb878503c1c598e4c8c299fcf98ac497b9a55a36c",
+      "bytes": 449
+    },
+    {
+      "path": "지식/KB-PUBLIC.md",
+      "sha256": "0aaf4ec9ae9a520a3e1c58ab7a41249328cc9550994395b1a0573a26ef5087aa",
+      "bytes": 413
+    },
+    {
+      "path": "지식/KB-RIGHTS.md",
+      "sha256": "998c905e2c3d581c65cb8aadf674d6a49abd14e40737e0565037df7e90413e33",
+      "bytes": 380
+    }
+  ]
+}

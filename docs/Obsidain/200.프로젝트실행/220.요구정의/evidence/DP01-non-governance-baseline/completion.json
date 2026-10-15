@@ -1,0 +1,41 @@
+{
+  "task": "DP-01",
+  "definition_status": "complete",
+  "product_implementation_status": "not_started",
+  "product_acceptance_status": "not_run",
+  "F_count": 49,
+  "subrequirement_count": 98,
+  "IA_count": 115,
+  "T_count": 62,
+  "core_acceptance_cases": 12,
+  "source_code_head": "480250dc7ae6d303fc9576af22f80f8a5c4d2d10",
+  "document_files": [
+    "docs/Obsidain/200.프로젝트실행/220.요구정의/비거버넌스 하위요구 수용기준.md",
+    "docs/Obsidain/200.프로젝트실행/230.분석/업무와 데이터 흐름 분석.md",
+    "docs/Obsidain/200.프로젝트실행/220.요구정의/evidence/DP01-non-governance-baseline/screen-baseline.md",
+    "docs/Obsidain/200.프로젝트실행/220.요구정의/08 DP-01 요구 기준선 확정 결과와 구현 전달.md"
+  ],
+  "previous_plan_manifest_sha256": "16cb1359efdbf3b189fb5821a7b00e988c694118b02cd298fdf440d7cad75993",
+  "governance_included": false,
+  "deadline_applied": false,
+  "verification": {
+    "F49_coverage": true,
+    "IA115_coverage": true,
+    "T62_coverage": true,
+    "governance_excluded": true,
+    "new_product_cases_not_run": true,
+    "source_and_original_unchanged": true,
+    "existing_evidence_unchanged": true,
+    "local_links_valid": true
+  },
+  "artifact_sha256": {
+    "docs/Obsidain/200.프로젝트실행/220.요구정의/비거버넌스 하위요구 수용기준.md": "391711ffedf4e34bfea513aab332afbe42c8997cded520047c6c9d48cc0974e2",
+    "docs/Obsidain/200.프로젝트실행/230.분석/업무와 데이터 흐름 분석.md": "959eea0bed33c001b811e9a3ca792daf280cc89c5a87289c1c3af129a46a3cd6",
+    "docs/Obsidain/200.프로젝트실행/220.요구정의/evidence/DP01-non-governance-baseline/screen-baseline.md": "9f83d026750d28793c820b24a620db7303163cba95147fd365533a4fabf94aa8",
+    "docs/Obsidain/200.프로젝트실행/220.요구정의/08 DP-01 요구 기준선 확정 결과와 구현 전달.md": "735643ad9d03e7202e742999d60b76f053858d2ebb18b98ef279f8a8b853f5bf",
+    "docs/Obsidain/200.프로젝트실행/220.요구정의/evidence/DP01-non-governance-baseline/requirements.json": "badf7997085a7489f61dc58d86989ca3dde44641c9e0b4b38457aa672f8c881d",
+    "docs/Obsidain/200.프로젝트실행/220.요구정의/evidence/DP01-non-governance-baseline/screen-baseline.json": "6d36956094a8dc5a50a499b84c47bb98733eec9ab1ea92f613e0623cabd79527",
+    "docs/Obsidain/200.프로젝트실행/220.요구정의/evidence/DP01-non-governance-baseline/technical-baseline.json": "974831fd7a5fc011505711b7c05778bf6e9a772f43394349a9307e3a4acacff9",
+    "docs/Obsidain/200.프로젝트실행/220.요구정의/evidence/DP01-non-governance-baseline/existing-verification.json": "24ce9f76875c83bd297f706f704b169b94badefb731245b5e574763243ed2959"
+  }
+}

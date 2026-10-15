@@ -314,3 +314,13 @@ PDF는 공식 지문을 확인한 pypdf 6.19.0을 사용하며 라이선스는 t
 이 폴더에서 `./start.sh`로 백그라운드 실행하고 `./stop.sh`로 종료한다. 스크립트가 실행한 PID·시각이 일치하는 프로세스만 종료하며 중복 실행과 포트 충돌을 확인한다. 로그는 `.runtime/service-control/service.log`에 기록한다. 기존 설치·설정이 필요하며 데이터 초기화나 패키지 설치는 수행하지 않는다.
 백엔드 시작 시 준비된 전용 DB를 구동하고 기존 `.runtime/app.env`를 읽는다. 백엔드 종료는 DB를 유지한다. DB도 종료하려면 관련 서버 종료 후 `.venv/bin/python -m scripts.devdb stop`을 별도로 실행한다.
 전체 사용 안내: `docs/Obsidain/200.프로젝트실행/270.파일럿적용/01 개발 서비스 시작 및 종료 안내.md`.
+
+## 2026-10-11 · 포털 UI와 Agent 설정 배포 승인
+
+기본 진입 `/`·`/home`은 실제 API에 연결된 사용자 업무 홈이다. `/workspace` 대화와 기존 문서·요약·사용량 경로는 유지한다. 관리자 기본 진입은 `/admin`, 요청 목록·상세는 `/admin/approvals`이며 사용자·관리자 메뉴를 분리했다. 현재 빌드·출처는 공통이다. 독립 앱·SSO·운영 출처 전환 기준은 Obsidian의 `100.프로젝트계획/12 사용자 관리자 사이트 분리와 상용 이행 설계.md`를 따른다.
+
+Agent의 이름·설명·지시문 변경은 직접 PATCH로 저장하지 않는다. 조직 관리자가 `POST /api/v1/admin/agent-deployments`로 봉인된 변경안을 제출하고 해당 조직을 관리하는 다른 PADMIN이 결정한다. 승인과 기존 설정의 버전 CAS·감사가 한 transaction에서 수행된다. 자기 승인·오래된 버전·다른 조직·직접 RPC 우회는 거부한다. 운영 중지/재개와 비용·예약은 유지한다. 모델·도구·코드·인프라 배포 승인까지 확장한 기능은 아니다.
+
+기존 직접 PATCH `/admin/agents/{key}`는 `APPROVAL_REQUIRED` 409를 반환한다. 클라이언트는 제출 API로 전환해야 한다. 새 migration026만 추가하고 000~025 checksum은 보존한다. 기존 환경의 이행은 소유·주 DB 확인과 사적 백업·데이터 지문 대조 후 수행하며 재seed하지 않는다.
+
+시험: backend `tests/test_agent_approvals.py`, frontend `tests/portal-ui.spec.ts`. 기존 회귀의 메뉴 이동 도우미는 사용자·관리자 사이트 이동과 모바일 메뉴 열기를 명시한다. 최종 시험 결과와 적용 범위는 Obsidian 작업 로그와 UI 통합 결과에 기록한다. 현재 합성 계정·fixture DB와 모의 모델 시험은 상용 운영 준비 완료를 의미하지 않는다.

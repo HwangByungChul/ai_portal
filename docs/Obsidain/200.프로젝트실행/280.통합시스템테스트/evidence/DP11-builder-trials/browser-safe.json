@@ -1,0 +1,58 @@
+{
+  "status": "passed",
+  "duration_ms": 26851.049,
+  "runner_errors": 0,
+  "tests": [
+    {
+      "test_id": "D11_04_structured_roles_historical_version_clone_and_reload",
+      "status": "passed",
+      "duration_ms": 2589
+    },
+    {
+      "test_id": "D11_05_uncertain_clone_retries_same_id_without_duplicate_assets",
+      "status": "passed",
+      "duration_ms": 1514
+    },
+    {
+      "test_id": "D11_06_conflict_preserves_profile_and_shows_latest_profile",
+      "status": "passed",
+      "duration_ms": 1639
+    },
+    {
+      "test_id": "D11_07_trial_completed_mock_cost_and_dirty_lock",
+      "status": "passed",
+      "duration_ms": 3442
+    },
+    {
+      "test_id": "D11_08_lost_trial_receipt_recovers_same_run_once",
+      "status": "passed",
+      "duration_ms": 1884
+    },
+    {
+      "test_id": "D11_09_trial_cancel_preserves_unknown_ledger_without_partial_text",
+      "status": "passed",
+      "duration_ms": 2053
+    },
+    {
+      "test_id": "D11_10_empty_explicit_rag_scope_does_not_call_provider",
+      "status": "passed",
+      "duration_ms": 3793
+    },
+    {
+      "test_id": "D11_01_saved_template_preview_dirty_and_reload",
+      "status": "passed",
+      "duration_ms": 1717
+    },
+    {
+      "test_id": "D11_02_malformed_template_and_empty_rag_scope",
+      "status": "passed",
+      "duration_ms": 1369
+    },
+    {
+      "test_id": "D11_03_late_preview_cannot_cross_organization",
+      "status": "passed",
+      "duration_ms": 1336
+    }
+  ],
+  "steps": []
+}

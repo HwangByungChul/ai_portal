@@ -1,0 +1,24 @@
+import {test,expect,type Page} from '@playwright/test';
+import {control,password,fixture} from './support';
+import {loadEnvironment} from '../scripts/environment.mjs';
+const config=loadEnvironment(),userURL=config.user.origin!+config.user.entry,adminURL=config.admin.origin!+config.admin.entry;
+async function signIn(page:Page,actor:string,url:string){await page.goto(url);await page.getByLabel('로그인 ID',{exact:true}).fill(actor.toLowerCase());await page.getByLabel('비밀번호',{exact:true}).fill(password(actor));await page.getByRole('button',{name:'로그인',exact:true}).click();await expect(page.getByRole('button',{name:'로그아웃',exact:true})).toBeVisible();}
+async function nav(page:Page,name:string){await page.locator('#portal-navigation').getByRole('button',{name,exact:true}).click();}
+test.beforeEach(async({request})=>{control('case-start');await expect.poll(async()=>{try{return (await request.get(config.admin.origin!+'/api/v1/health')).status();}catch{return 0;}}).toBe(200);});
+test('U13_01_real_ports_share_development_session_and_launch',async({page})=>{
+ await signIn(page,'A-ADM',userURL);await expect(page).toHaveURL(userURL);await page.getByLabel('시작할 업무 질문',{exact:true}).fill('포트 분리 합성 질문');await page.getByRole('button',{name:'AI 채팅에서 시작',exact:true}).click();await page.getByRole('button',{name:'질문 보내기',exact:true}).click();await expect(page.getByText('완료 · 저장 확인됨',{exact:true})).toBeVisible();
+ await nav(page,'홈');await page.locator('#portal-navigation').getByRole('link',{name:'관리자 사이트',exact:true}).click();await expect(page).toHaveURL(adminURL);await expect(page.getByRole('heading',{name:'운영 현황',exact:true})).toBeVisible();expect(new URL(page.url()).port).toBe(String(config.admin.port));
+ expect((await page.request.get(config.admin.origin!+'/api/v1/auth/me')).status()).toBe(200);await page.locator('#portal-navigation').getByRole('link',{name:'사용자 사이트',exact:true}).click();await expect(page).toHaveURL(userURL);await expect(page.getByRole('heading',{name:'업무 홈',exact:true})).toBeVisible();
+});
+test('U13_02_admin_port_actual_request_and_other_approver',async({page,browser})=>{
+ await signIn(page,'A-ADM',adminURL);await nav(page,'Agent 관리');const editor=page.getByRole('region',{name:'일반 대화 설정'});await editor.getByLabel('이름',{exact:true}).fill('환경 설정 포트 Agent');await editor.getByLabel('변경 목적',{exact:true}).fill('두 포트 실제 승인 검증');await editor.getByRole('button',{name:'배포 승인 요청',exact:true}).click();await expect(editor.getByRole('status')).toContainText('배포 요청이 저장되었습니다.');await nav(page,'승인·검증');await page.locator('.approval-row').filter({hasText:'환경 설정 포트 Agent'}).click();await expect(page.getByRole('button',{name:'배포 승인',exact:true})).toHaveCount(0);
+ const context=await browser.newContext(),approver=await context.newPage();try{await signIn(approver,'P-A',adminURL+'/approvals');await approver.locator('.approval-row').filter({hasText:'환경 설정 포트 Agent'}).click();await approver.getByLabel('검토 의견',{exact:true}).fill('설정 파일과 승인 확인');await approver.getByRole('button',{name:'배포 승인',exact:true}).click();await approver.getByRole('button',{name:'검토 결정 저장',exact:true}).click();await expect(approver.locator('.approval-detail')).toContainText('승인·설정 반영 완료');}finally{await context.close();}
+});
+test('U13_03_origin_csrf_and_cross_port_server_logout',async({page,context})=>{
+ await signIn(page,'A-ADM',userURL);const admin=await context.newPage();await admin.goto(adminURL);await expect(admin.getByRole('heading',{name:'운영 현황',exact:true})).toBeVisible();const csrf=(await (await admin.request.get(config.admin.origin!+'/api/v1/auth/me')).json()).data.csrf_token;
+ const endpoint=config.admin.origin!+'/api/v1/auth/logout',headers={'X-Requested-With':'ai-portal','X-CSRF-Token':csrf};expect((await admin.request.post(endpoint,{headers:{...headers,Origin:'http://127.0.0.1:5175'}})).status()).toBe(403);expect((await admin.request.post(endpoint,{headers:{...headers,Origin:config.admin.origin!,'X-CSRF-Token':'invalid'}})).status()).toBe(403);expect((await admin.request.get(config.admin.origin!+'/api/v1/auth/me')).status()).toBe(200);
+ await admin.getByRole('button',{name:'로그아웃',exact:true}).click();await expect(admin.getByLabel('로그인 ID',{exact:true})).toBeVisible();expect((await page.request.get(config.user.origin!+'/api/v1/auth/me')).status()).toBe(401);await page.reload();await expect(page.getByLabel('로그인 ID',{exact:true})).toBeVisible();
+});
+test('U13_04_admin_port_does_not_grant_user_permissions',async({page})=>{
+ await signIn(page,'A-U1',userURL);await page.goto(adminURL+'/approvals');await expect(page.getByRole('heading',{name:'관리자 접근 권한이 없습니다.',exact:true})).toBeVisible();expect((await page.request.get(config.admin.origin!+'/api/v1/admin/agent-deployments',{headers:{'X-Tenant-ID':fixture().tenants.A}})).status()).toBe(403);await expect(page.locator('.approval-detail')).toHaveCount(0);
+});

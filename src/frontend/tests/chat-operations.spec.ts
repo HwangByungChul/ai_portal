@@ -1,5 +1,5 @@
 import {test,expect,type Page} from '@playwright/test';
-import {control,fixture,login,selectTenant} from './support';
+import {control,fixture,login,selectTenant,navigate} from './support';
 const output='모의 AI 응답입니다. 실제 모델 호출 없이 실행·권한·사용량 흐름을 검증했습니다.';
 const errors=new Map<string,number>();
 test.beforeEach(({context},info)=>{control('case-start');errors.set(info.title,0);context.on('page',page=>page.on('pageerror',()=>errors.set(info.title,(errors.get(info.title)??0)+1)));});
@@ -51,7 +51,7 @@ test('B05_07_actual_stream_draft_and_cancel',async({page})=>{
 });
 test('B05_08_two_tabs_independent_conversation_scopes',async({page,context})=>{
  await login(page,'DUAL');await selectTenant(page,'A');await question(page,'A 전용 합성 질문');await completed(page);
- const second=await context.newPage();await second.goto('/');await selectTenant(second,'B');await question(second,'B 전용 합성 질문');await completed(second);
+ const second=await context.newPage();await second.goto('/workspace');await selectTenant(second,'B');await question(second,'B 전용 합성 질문');await completed(second);
  await expect(page.getByLabel('현재 조직')).toHaveValue(fixture().tenants.A);await expect(second.getByLabel('현재 조직')).toHaveValue(fixture().tenants.B);
  await expect(page.getByText('B 전용 합성 질문',{exact:true})).toHaveCount(0);await expect(second.getByText('A 전용 합성 질문',{exact:true})).toHaveCount(0);
  expect(control('b05-counts').provider_calls).toBe(2);
@@ -75,45 +75,46 @@ test('B05_09_late_A_stream_discarded_after_switch',async({page})=>{
 test('B05_10_user_admin_routes_and_APIs_denied',async({page})=>{
  await login(page,'A-U1');for(const name of ['Agent 관리','조직 사용량','플랫폼 운영'])await expect(page.getByRole('button',{name,exact:true})).toHaveCount(0);
  for(const path of ['/admin/agents/general','/admin/usage','/admin/budget'])expect((await page.request.get('/api/v1'+path,{headers:{'X-Tenant-ID':fixture().tenants.A}})).status()).toBe(403);
- await page.goto('/admin/agents');await expect(page.getByRole('heading',{name:'AI 업무',exact:true})).toBeVisible();await expect(page.getByLabel('기본 지시문')).toHaveCount(0);
+ await page.goto('/admin/agents');await expect(page.getByRole('heading',{name:'업무 홈',exact:true})).toBeVisible();await expect(page.getByLabel('기본 지시문')).toHaveCount(0);
 });
 test('B05_11_agent_conflict_no_automatic_overwrite',async({page})=>{
- await login(page,'A-ADM');await page.getByRole('button',{name:'Agent 관리',exact:true}).click();const editor=page.getByRole('region',{name:'일반 대화 설정'});
+ await login(page,'A-ADM');await navigate(page,'Agent 관리');const editor=page.getByRole('region',{name:'일반 대화 설정'});
  await expect(editor.getByLabel('이름',{exact:true})).toHaveValue('일반 대화');
- expect((await page.request.patch('/api/v1/admin/agents/general',{headers:await headers(page),data:{name:'먼저 저장된 설정',expected_revision:1}})).status()).toBe(200);
- let writes=0;page.on('request',request=>{if(request.method()==='PATCH')writes++;});await editor.getByLabel('이름',{exact:true}).fill('덮어쓸 초안');await editor.getByRole('button',{name:'설정 저장',exact:true}).click();
- await expect(editor.getByRole('alert')).toContainText('다른 변경이 먼저 적용되었습니다.');await expect(editor.getByLabel('이름',{exact:true})).toHaveValue('먼저 저장된 설정');expect(writes).toBe(1);
- await editor.getByLabel('이름',{exact:true}).fill('명시적 재편집');await editor.getByRole('button',{name:'설정 저장',exact:true}).click();await expect(editor.getByText('저장되었습니다.',{exact:true})).toBeVisible();expect(writes).toBe(2);
+ expect((await page.request.put('/api/v1/admin/agents/general/availability',{headers:await headers(page),data:{enabled:true,expected_revision:1}})).status()).toBe(200);
+ let writes=0;page.on('request',request=>{if(request.method()==='POST'&&request.url().endsWith('/agent-deployments'))writes++;});await editor.getByLabel('이름',{exact:true}).fill('덮어쓸 초안');await editor.getByLabel('변경 목적',{exact:true}).fill('버전 충돌 검증');await editor.getByRole('button',{name:'배포 승인 요청',exact:true}).click();
+ await expect(editor.getByRole('alert')).toContainText('다른 변경이 먼저 적용되었습니다.');await expect(editor.getByLabel('이름',{exact:true})).toHaveValue('일반 대화');expect(writes).toBe(1);
+ await editor.getByLabel('이름',{exact:true}).fill('명시적 재편집');await editor.getByRole('button',{name:'배포 승인 요청',exact:true}).click();await expect(editor.getByRole('status')).toContainText('배포 요청이 저장되었습니다.');expect(writes).toBe(2);
+
 });
 test('B05_12_agent_stop_blocks_new_provider_calls',async({page})=>{
- await login(page,'A-ADM');await page.getByRole('button',{name:'Agent 관리',exact:true}).click();const editor=page.getByRole('region',{name:'일반 대화 설정'});
- await editor.getByRole('button',{name:'Agent 중지',exact:true}).click();await editor.getByRole('button',{name:'운영 변경 확인',exact:true}).click();await expect(editor.getByText('저장되었습니다.',{exact:true})).toBeVisible();
- await page.getByRole('button',{name:'AI 업무',exact:true}).click();await page.getByLabel('질문',{exact:true}).fill('중지 후 질문');await expect(page.getByRole('button',{name:'질문 보내기',exact:true})).toBeDisabled();
+ await login(page,'A-ADM');await navigate(page,'Agent 관리');const editor=page.getByRole('region',{name:'일반 대화 설정'});
+ await editor.getByRole('button',{name:'Agent 중지',exact:true}).click();await editor.getByRole('button',{name:'운영 변경 확인',exact:true}).click();await expect(editor.getByText('운영 상태가 저장되었습니다.',{exact:true})).toBeVisible();
+ await navigate(page,'AI 업무');await page.getByLabel('질문',{exact:true}).fill('중지 후 질문');await expect(page.getByRole('button',{name:'질문 보내기',exact:true})).toBeDisabled();
  const reply=await page.request.post('/api/v1/runs',{headers:await headers(page),data:{client_send_id:crypto.randomUUID(),agent_key:'general',prompt:'직접 중지 우회'}});expect(reply.status()).toBe(409);expect(control('b05-counts').provider_calls).toBe(0);
 });
 test('B05_13_platform_writer_only_no_usage_read',async({page})=>{
- let summaries=0;page.on('request',req=>{if(req.url().includes('/platform/summary'))summaries++;});await login(page,'P_WRITE_ONLY');await page.getByRole('button',{name:'플랫폼 운영',exact:true}).click();
+ let summaries=0;page.on('request',req=>{if(req.url().includes('/platform/summary'))summaries++;});await login(page,'P_WRITE_ONLY');await navigate(page,'플랫폼 운영');
  await page.getByRole('button',{name:'프로젝트 전체 중지',exact:true}).click();await page.getByRole('button',{name:'프로젝트 운영 변경 확인',exact:true}).click();
  await expect(page.getByText('프로젝트 전체 운영 중지',{exact:true})).toBeVisible();await expect(page.getByText('확인된 사용량의 추정 금액',{exact:true})).toHaveCount(0);expect(summaries).toBe(0);
- await page.getByRole('button',{name:'AI 업무',exact:true}).click();await page.getByLabel('질문',{exact:true}).fill('공통 중지 확인');await expect(page.getByRole('button',{name:'질문 보내기',exact:true})).toBeDisabled();expect(control('b05-counts').provider_calls).toBe(0);
+ await navigate(page,'AI 업무');await page.getByLabel('질문',{exact:true}).fill('공통 중지 확인');await expect(page.getByRole('button',{name:'질문 보내기',exact:true})).toBeDisabled();expect(control('b05-counts').provider_calls).toBe(0);
 });
 test('B05_14_platform_reader_only_no_write',async({page})=>{
- await login(page,'P_READ_ONLY');await page.getByRole('button',{name:'플랫폼 운영',exact:true}).click();await expect(page.getByText('확인된 사용량의 추정 금액',{exact:true})).toBeVisible();
+ await login(page,'P_READ_ONLY');await navigate(page,'플랫폼 운영');await expect(page.getByText('확인된 사용량의 추정 금액',{exact:true})).toBeVisible();
  await expect(page.getByRole('button',{name:'프로젝트 전체 중지',exact:true})).toHaveCount(0);
 });
 test('B05_15_tadmin_local_cap_and_no_allocation',async({page})=>{
- await login(page,'A-ADM');await page.getByRole('button',{name:'조직 사용량',exact:true}).click();await page.getByLabel('조직 제한 금액 (원)').fill('12000');await page.getByRole('button',{name:'조직 제한 저장',exact:true}).click();
+ await login(page,'A-ADM');await navigate(page,'조직 사용량');await page.getByLabel('조직 제한 금액 (원)').fill('12000');await page.getByRole('button',{name:'조직 제한 저장',exact:true}).click();
  await expect(page.getByText('한도가 저장되었습니다.',{exact:true})).toBeVisible();await expect(page.getByLabel('현재 조직 상위 배정 (원)')).toHaveCount(0);
  const reply=await page.request.put('/api/v1/platform/tenant-budgets/'+fixture().tenants.A,{headers:await headers(page),data:{allocated_cap_krw:'12000',expected_revision:2}});expect(reply.status()).toBe(403);
 });
 test('B05_16_padmin_current_managed_allocation_only',async({page})=>{
- await login(page,'P-A');await page.getByRole('button',{name:'조직 사용량',exact:true}).click();await page.getByLabel('현재 조직 상위 배정 (원)').fill('12300');await page.getByRole('button',{name:'상위 배정 저장',exact:true}).click();
+ await login(page,'P-A');await navigate(page,'조직 사용량');await page.getByLabel('현재 조직 상위 배정 (원)').fill('12300');await page.getByRole('button',{name:'상위 배정 저장',exact:true}).click();
  await expect(page.getByText('한도가 저장되었습니다.',{exact:true})).toBeVisible();expect((await page.request.get('/api/v1/admin/budget',{headers:{'X-Tenant-ID':fixture().tenants.B}})).status()).toBe(403);
  const reply=await page.request.put('/api/v1/platform/tenant-budgets/'+fixture().tenants.B,{headers:await headers(page,'B'),data:{allocated_cap_krw:'12000',expected_revision:1}});expect(reply.status()).toBe(403);
 });
 test('B05_17_unknown_usage_reservation_preserved',async({page})=>{
  control('unknown-provider');await login(page,'A-U1');await question(page);await expect(page.getByText('사용량 확인 필요 · 예약 유지',{exact:true})).toBeVisible();expect(control('b05-counts').unknown).toBe(1);
- await page.getByRole('button',{name:'내 사용량',exact:true}).click();await expect(page.getByText('3.640000 원',{exact:true})).toBeVisible();await expect(page.getByText('1 건',{exact:true})).toBeVisible();
+ await navigate(page,'내 사용량');await expect(page.getByText('3.640000 원',{exact:true})).toBeVisible();await expect(page.getByText('1 건',{exact:true})).toBeVisible();
  await expect(page.getByText('사용량 확인 필요 · 예약 유지. 비용을 0원으로 확정하지 않습니다.',{exact:true})).toBeVisible();expect(control('b05-counts').provider_calls).toBe(1);
 });
 test('B05_18_expired_session_removes_stream_body',async({page})=>{
@@ -121,13 +122,13 @@ test('B05_18_expired_session_removes_stream_body',async({page})=>{
  await expect(page.getByLabel('로그인 ID',{exact:true})).toBeVisible();await expect(page.getByText('저장 전 모의 초안',{exact:true})).toHaveCount(0);
 });
 test('B05_19_platform_permission_revoked_clears_summary',async({page})=>{
- await login(page,'P_READ_ONLY');await page.getByRole('button',{name:'플랫폼 운영',exact:true}).click();await expect(page.getByText('확인된 사용량의 추정 금액',{exact:true})).toBeVisible();
+ await login(page,'P_READ_ONLY');await navigate(page,'플랫폼 운영');await expect(page.getByText('확인된 사용량의 추정 금액',{exact:true})).toBeVisible();
  control('revoke-platform','P_READ_ONLY');await page.getByRole('button',{name:'운영 상태 새로고침',exact:true}).click();await expect(page.getByText('확인된 사용량의 추정 금액',{exact:true})).toHaveCount(0);
  await expect(page.getByRole('button',{name:'프로젝트 전체 중지',exact:true})).toHaveCount(0);await expect(page.getByRole('button',{name:'플랫폼 운영',exact:true})).toHaveCount(0);
 });
 test('B05_20_mobile_chat_no_page_overflow',async({page})=>{
  await page.setViewportSize({width:390,height:844});await login(page,'P-A');await expect(page.locator('.conversation-link')).toHaveCount(0);await page.getByRole('button',{name:'목록 열기',exact:true}).click();await expect(page.getByText('저장된 대화가 없습니다.',{exact:true})).toBeVisible();await page.getByRole('button',{name:'목록 닫기',exact:true}).click();await question(page);await completed(page);await expect(page.locator('.conversation-link').first()).toBeHidden();await page.getByRole('button',{name:'목록 열기',exact:true}).click();await expect(page.locator('.conversation-link').first()).toBeVisible();await page.getByRole('button',{name:'목록 닫기',exact:true}).click();
- expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);await page.getByRole('button',{name:'조직 사용량',exact:true}).click();await expect(page.getByLabel('현재 조직 상위 배정 (원)')).toBeVisible();
+ expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);await navigate(page,'조직 사용량');await expect(page.getByLabel('현재 조직 상위 배정 (원)')).toBeVisible();
  expect(await page.evaluate(()=>document.documentElement.scrollWidth<=window.innerWidth)).toBe(true);
 });
 test('B05_21_conversation_cursor_uses_real_server_pages',async({page})=>{
@@ -164,7 +165,7 @@ test('B05_27_unresolved_admission_blocks_new_requests',async({page})=>{
 });
 test('B05_28_chat_logout_clears_other_tab_draft',async({page,context})=>{
  control('slow-provider');await login(page,'A-U1');await question(page);await expect(page.getByText('저장 전 모의 초안',{exact:true})).toBeVisible();
- const second=await context.newPage();await second.goto('/');await expect(second.getByRole('button',{name:'로그아웃',exact:true})).toBeVisible();
+ const second=await context.newPage();await second.goto('/workspace');await expect(second.getByRole('button',{name:'로그아웃',exact:true})).toBeVisible();
  await second.getByRole('button',{name:'로그아웃',exact:true}).click();await expect(page.getByLabel('로그인 ID',{exact:true})).toBeVisible();await expect(page.getByText('저장 전 모의 초안',{exact:true})).toHaveCount(0);
 });
 test('B05_29_hidden_state_stops_poll_without_cancelling_run',async({page})=>{
@@ -210,11 +211,11 @@ test('B05_32_late_A_admin_settings_do_not_replace_B_form',async({page})=>{
   const response=await route.fetch();const body=await response.json();body.data.name='A 이전 조직 보호 설정';ready();await gate;
   try{await route.fulfill({response,json:body});}catch{}finally{done();}
  });
- await page.getByRole('button',{name:'Agent 관리',exact:true}).click();await waiting;
+ await navigate(page,'Agent 관리');await waiting;
  await selectTenant(page,'B');const editor=page.getByRole('region',{name:'일반 대화 설정'});
  await expect(editor.getByLabel('이름',{exact:true})).toHaveValue('일반 대화');release();await delivered;
  await expect(editor.getByLabel('이름',{exact:true})).toHaveValue('일반 대화');await expect(page.getByText('A 이전 조직 보호 설정',{exact:true})).toHaveCount(0);
- let savedTenant='';page.on('request',req=>{if(req.method()==='PATCH'&&req.url().endsWith('/admin/agents/general'))savedTenant=req.headers()['x-tenant-id'];});
- await editor.getByLabel('이름',{exact:true}).fill('B 현재 조직 설정');await editor.getByRole('button',{name:'설정 저장',exact:true}).click();
- await expect(editor.getByText('저장되었습니다.',{exact:true})).toBeVisible();expect(savedTenant).toBe(fixture().tenants.B);
+ let savedTenant='';page.on('request',req=>{if(req.method()==='POST'&&req.url().endsWith('/agent-deployments'))savedTenant=req.headers()['x-tenant-id'];});
+ await editor.getByLabel('이름',{exact:true}).fill('B 현재 조직 설정');await editor.getByLabel('변경 목적',{exact:true}).fill('B 조직 배포');await editor.getByRole('button',{name:'배포 승인 요청',exact:true}).click();
+ await expect(editor.getByRole('status')).toContainText('배포 요청이 저장되었습니다.');expect(savedTenant).toBe(fixture().tenants.B);
 });

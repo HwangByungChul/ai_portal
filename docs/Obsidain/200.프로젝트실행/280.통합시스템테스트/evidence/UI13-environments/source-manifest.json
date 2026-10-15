@@ -1,0 +1,110 @@
+{
+  "date": "2026-10-12",
+  "phase": "UI13",
+  "files": [
+    {
+      "path": "config/environments/local.json",
+      "sha256": "93fef1254ea5f5d3ffd34c062673100493864495be783a202e402833216ba69f"
+    },
+    {
+      "path": "config/environments/dev.json",
+      "sha256": "b3f7714b5467e5dc8f2d5220ee09d406302b8e321d89824fb482fe3ad0daf9f2"
+    },
+    {
+      "path": "config/environments/tb.json",
+      "sha256": "6e34ca6c580900062df9e244a1ec5e96bdfe85809ea279ed2d93bb3b3dc57e9b"
+    },
+    {
+      "path": "config/environments/prd.json",
+      "sha256": "734de20a7da0fd89e5d589275887a240dd1cd85945246881f4628987ed786bab"
+    },
+    {
+      "path": "src/backend/app/environment.py",
+      "sha256": "65d73b61c529b0b84334e6ee280b8fae1bb5fac5372512cacb9268966c0e0541"
+    },
+    {
+      "path": "src/backend/app/config.py",
+      "sha256": "aff2410daa1211b512cd4f275fe257b5d33d54438b726edd144214c42c9ae03c"
+    },
+    {
+      "path": "src/backend/app/main.py",
+      "sha256": "f0c18528b461fb3a48b81406c8f249a1a23947b38eff54ca7a96a33da1cdb7a4"
+    },
+    {
+      "path": "src/backend/app/auth/guards.py",
+      "sha256": "65a144c5a729d316ccbb98e705e5cb512a790e0aee053091b325a317e0d41424"
+    },
+    {
+      "path": "src/frontend/scripts/environment.mjs",
+      "sha256": "562ba236dc2bebb6ec5f88f7d9dd64121d234e6e39e8eef238d515750121c441"
+    },
+    {
+      "path": "src/frontend/scripts/environment.d.mts",
+      "sha256": "1e278fb78b3ef5e1e235d7befdf273add1c623f36693c330035bef23dea8e4ea"
+    },
+    {
+      "path": "src/frontend/scripts/check-environments.mjs",
+      "sha256": "3c50ac2c9e698888e26ea0095e5a90d01bf620b163ce270597888cc5f9e051b9"
+    },
+    {
+      "path": "src/frontend/vite.config.ts",
+      "sha256": "2e8c017a3fdbf08ad701d1d5524e665d4a059ec1e050a98094b6eebc3e38e3cf"
+    },
+    {
+      "path": "src/frontend/packages/ui/src/PortalShell.tsx",
+      "sha256": "44bdba1b1218c6c3ffc0aba64718306f59638967353b8e2ceea845eb34acc6a8"
+    },
+    {
+      "path": "src/frontend/package.json",
+      "sha256": "0c48c428df7a271908b57214a9f3f58274e9aff5d8ea1029ed3d36b66c97d310"
+    },
+    {
+      "path": "scripts/service_control.py",
+      "sha256": "9715757f6a89d7c70347440d11aebaa2b105251d629f5171564a3be7811fc767"
+    },
+    {
+      "path": "src/frontend/admin-start.sh",
+      "sha256": "6fae97404c8445a0b489e8a84c96cea40ee61fe80c24a43e8b673c555ac0378b"
+    },
+    {
+      "path": "src/frontend/admin-stop.sh",
+      "sha256": "af7ef4b9c2423a45fc745f386da358a6e5edfd9a9be282b60edd55c4e3b4a370"
+    },
+    {
+      "path": "config/environments/README.md",
+      "sha256": "6c7d97fefaf1c07e474347d961aac3b20394e4559a29d706be3c295867fdb474"
+    },
+    {
+      "path": "src/frontend/scripts/environment.test.mjs",
+      "sha256": "435fccf11e400003ee762ac96e0ca1efdc06c1973847b172b2dce184fb15b84a"
+    },
+    {
+      "path": "src/backend/tests/test_environment.py",
+      "sha256": "caa4c341dd16578f7afe20837a10b48732213b84d5d82e956c75c90c2ba0393e"
+    },
+    {
+      "path": "src/backend/scripts/portal_test_server.py",
+      "sha256": "9479db374abb4853d3e2bc34826ac1b1fb6ba2c10999fd0ead33c2c92b5f75c9"
+    },
+    {
+      "path": "src/backend/scripts/portal_test_app.py",
+      "sha256": "c57df565b8858a2d7098c02498f336bbd7b5237d38a59ff76afbc173ab5ed1f5"
+    },
+    {
+      "path": "src/frontend/tests/safe-reporter.ts",
+      "sha256": "3b3b941fca635bfd8bb6c5bfda7865bd090f45e9527a9ea66d4ce0ae5c390bf5"
+    },
+    {
+      "path": "src/frontend/tests/portal-ports.spec.ts",
+      "sha256": "48148f488720d52c055021e7a29f4b7eee8712aa2c38b1a4b3653dc314a0ac3b"
+    },
+    {
+      "path": "src/frontend/playwright.config.ts",
+      "sha256": "b20d29f400b4fd59f693956fcca1ef5d968dd5c8347265828f6a5945a1dfff59"
+    },
+    {
+      "path": "src/frontend/tests/portal-sites.spec.ts",
+      "sha256": "b0e82cab09ef05e61a2d24e28c103bc712c9b8c0f3e669613f9103d5506ff2fa"
+    }
+  ]
+}

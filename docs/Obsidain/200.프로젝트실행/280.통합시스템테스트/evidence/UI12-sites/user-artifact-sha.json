@@ -1,0 +1,10 @@
+{
+  "site": "user",
+  "files": {
+    "index.html": "a954f2cde50cae1607e135f68352254fec5797c4da1d61be472fe8347a71b0e2",
+    "portal-build.json": "6db8a2215e1223da0a962fa03a4fff21956a2aae625a2e85bd022f9704e0f29d",
+    "assets/index-cujNc7iu.js": "3742c9bf41d953cacb1a9b874e6816c54c498d9df5687c9dda83d9ff8ec076bb",
+    "assets/index-urEDpYfm.css": "0e8e769931a2daae44cf23c26cf7240380933bc0029458e714122ded5ce3b597",
+    ".vite/manifest.json": "2ae683e19f399d477fb49ba66c803ef3c6a6a0ed50c235ccb87f41603d7edca2"
+  }
+}

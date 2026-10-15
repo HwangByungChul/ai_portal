@@ -1,0 +1,20 @@
+{
+  "src/backend/migrations/032_builder_trials.sql": "4f87056dce373e90daac2bde483d9f84edd3a21f67f3ba8703bde23bb24f6870",
+  "src/backend/app/builder/trials.py": "dbfbc476e6c98039d181c53bdd47debcd371b282060e0071f5e659a0559dc8a1",
+  "src/backend/app/builder/execution.py": "efc9bcf6d59919680de0b386d997f9878c9a8e698a0aeff6e9d84275ca77a076",
+  "src/backend/app/builder/model_contracts.py": "1dde893eadb712b56ec0d9d21155fe6fd087402ae32f86660d0ead1bdd3f3da4",
+  "src/backend/app/ai/repository.py": "2d942e89dd2c2358d4a328b3c1ee4480d8ea2a149daa02851ee8ca92021618b4",
+  "src/backend/app/execution/manager.py": "487ac915035b1b72d362efdce89701926299888c5ae5da34cf4b4990b21aec80",
+  "src/backend/app/execution/rag.py": "a7afc5d6dc8e7d6a5380062bf21a92d2b60daecb4ed6fe9fc96291207fa360b9",
+  "src/backend/app/main.py": "842fa26b916af86f8d04e7acef20e0daeb355c6c3c70d306fe22592d4eda3864",
+  "src/backend/tests/test_builder_trials.py": "ec69d39688c5d931801a586cacf1311101a7ec440592d56f9e1cc01980fce189",
+  "src/backend/tests/test_builder_trials_migration.py": "a47733b7d0424b61085faedc356aeeb38b32030b4f401a67e2f1d8647e6b429a",
+  "src/backend/tests/test_builder_profiles_migration.py": "d831a99f814b0492c084539fff4e71616af1cf4c389645b6773d7a4ea22d27aa",
+  "src/backend/tests/support.py": "9ac41baa2abd0898f6af2658a340133ec64dcdf2822f499159d93bbbf4b0bc81",
+  "src/backend/scripts/portal_test_control.py": "69952c45ab2b2f59a6a0f3e5f717ae9c283a4b74aa34683e14d5f9429b6134a3",
+  "src/frontend/src/BuilderTrial.tsx": "c0ff14919c0962f79540ba67044ba53055e6df39cb911bfa1129fa7dbbbf6720",
+  "src/frontend/src/BuilderPreview.tsx": "53497c7f214efaf1b3fb7b55d07fcd62dc6b0d2df7da5feb3000588ea8686edf",
+  "src/frontend/src/AssetsPage.tsx": "b42ef94d763f9a8b6aafef8b8049e72bdb845478eaa0939ef7ee5c69b27e84fe",
+  "src/frontend/scripts/verify-portal-builds.mjs": "a8eff63454d5ec0ab2e24729cb5b6a941d67cbc29a83daf1a5015065582b9082",
+  "src/frontend/tests/builder-trials.spec.ts": "0422ab5c7db59c1e7389a0fc8db7b0ac78a50a0a99fdc19d636b280694e471da"
+}

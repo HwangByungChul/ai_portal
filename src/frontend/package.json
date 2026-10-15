@@ -8,8 +8,14 @@
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc --noEmit && vite build",
-    "test:e2e": "playwright test"
+    "build": "tsc --noEmit && vite build --mode user && vite build --mode admin && node scripts/verify-portal-builds.mjs",
+    "test:e2e": "playwright test",
+    "build:user": "tsc --noEmit && vite build --mode user && node scripts/verify-portal-builds.mjs user",
+    "build:admin": "tsc --noEmit && vite build --mode admin && node scripts/verify-portal-builds.mjs admin",
+    "build:combined": "tsc --noEmit && vite build",
+    "verify:builds": "node scripts/verify-portal-builds.mjs",
+    "check:environments": "node scripts/check-environments.mjs",
+    "test:config": "node --test scripts/environment.test.mjs"
   },
   "dependencies": {
     "react": "19.3.0",

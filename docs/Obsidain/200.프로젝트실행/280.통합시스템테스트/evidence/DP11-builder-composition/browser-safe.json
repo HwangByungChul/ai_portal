@@ -1,0 +1,52 @@
+{
+  "status": "passed",
+  "unique_cases": 9,
+  "cases": [
+    {
+      "test_id": "D09_01_admin_create_append_and_reload",
+      "status": "passed",
+      "duration_ms": 3269
+    },
+    {
+      "test_id": "D09_02_legacy_is_read_only_and_existing_editor_remains",
+      "status": "passed",
+      "duration_ms": 1969
+    },
+    {
+      "test_id": "D09_03_user_and_other_organization_are_denied",
+      "status": "passed",
+      "duration_ms": 3704
+    },
+    {
+      "test_id": "D09_04_conflict_preserves_input_and_requires_latest_version_confirmation",
+      "status": "passed",
+      "duration_ms": 2574
+    },
+    {
+      "test_id": "D09_05_uncertain_create_reuses_request_after_server_commit",
+      "status": "passed",
+      "duration_ms": 2214
+    },
+    {
+      "test_id": "D09_06_organization_change_clears_private_draft",
+      "status": "passed",
+      "duration_ms": 2277
+    },
+    {
+      "test_id": "D11_01_saved_template_preview_dirty_and_reload",
+      "status": "passed",
+      "duration_ms": 3074
+    },
+    {
+      "test_id": "D11_02_malformed_template_and_unavailable_rag_scope",
+      "status": "passed",
+      "duration_ms": 2489
+    },
+    {
+      "test_id": "D11_03_late_preview_cannot_cross_organization",
+      "status": "passed",
+      "duration_ms": 2074
+    }
+  ],
+  "aggregation": "6 existing asset tests from first run + 3 Builder tests from registered rerun"
+}

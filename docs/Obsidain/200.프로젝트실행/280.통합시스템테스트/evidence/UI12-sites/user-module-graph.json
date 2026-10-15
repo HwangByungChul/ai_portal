@@ -1,0 +1,27 @@
+{
+  "site": "user",
+  "base": "/user/",
+  "modules": [
+    "apps/user-web/src/App.tsx",
+    "apps/user-web/src/main.tsx",
+    "packages/api-contract/src/api.ts",
+    "packages/api-contract/src/session.ts",
+    "packages/api-contract/src/types.ts",
+    "packages/ui/src/LoginPage.tsx",
+    "packages/ui/src/PortalShell.tsx",
+    "packages/ui/src/TenantHeader.tsx",
+    "packages/ui/src/scoped.ts",
+    "src/ChatPage.tsx",
+    "src/ConversationHistory.tsx",
+    "src/DocumentJobsPage.tsx",
+    "src/DocumentSummaryPage.tsx",
+    "src/DocumentsPage.tsx",
+    "src/HomePage.tsx",
+    "src/RagEvidencePanel.tsx",
+    "src/ReadableDocuments.tsx",
+    "src/ResponseFeedback.tsx",
+    "src/SummaryEvidencePanel.tsx",
+    "src/UsagePage.tsx",
+    "src/stream.ts"
+  ]
+}

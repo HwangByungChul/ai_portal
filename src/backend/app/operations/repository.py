@@ -43,6 +43,8 @@ class OperationsRepository:
 
     @staticmethod
     def translate(error):
+        if isinstance(error,psycopg.Error) and error.sqlstate=='D0409':
+            raise AppError('APPROVAL_REQUIRED',409) from None
         if isinstance(error,psycopg.Error) and error.sqlstate in ('B0209','B0210'):
             raise AppError('BUDGET_LIMIT_CONFLICT' if error.sqlstate=='B0209' else 'REVIEW_REQUIRED',409) from None
         TenantRepository.translate(error)

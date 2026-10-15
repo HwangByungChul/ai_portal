@@ -1,0 +1,19 @@
+{
+  "src/backend/migrations/027_asset_registry.sql": "a8818a7f24b457391b35b6225bb7d2211f79feaa47bf8347549b72b6642a681e",
+  "src/backend/app/assets/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+  "src/backend/app/assets/repository.py": "63478a58cfc32a2f490c20d30980a87a26fe2c9d1b59fab61912e1631ac085c6",
+  "src/backend/app/assets/routes.py": "903f061ad867deaeb02f53596001fc48e02616f444614280c593264f6adce7fc",
+  "src/backend/app/main.py": "358e7230bbdbad66836ea6cb1bde135241d217de5da97131f0787eb0be56c2df",
+  "src/backend/tests/test_assets.py": "2ab1697feb557f573005f31b4a6b9e2a1fa3b74c71f32c365bb157b157b1fcce",
+  "src/frontend/src/AssetsPage.tsx": "df93579e9024e5d7a61215c22422c8c1c4dac872a37bafc575f9d27fbdec78a5",
+  "src/frontend/packages/api-contract/src/types.ts": "d8a4e9aca6211b702d7d73e7c4b801eafaff6fbb6af3e59950d823511079d5dd",
+  "src/frontend/apps/admin-web/src/App.tsx": "c6714dea42374954b7245a462befa12f545d51ff90b6d5af5662926e69a551ba",
+  "src/frontend/scripts/verify-portal-builds.mjs": "c25de70be3189a1c6285c6760454df31fbd8e48120d916a978a91ac7c808918c",
+  "src/frontend/packages/api-contract/src/api.ts": "a57dc5842bbd236bcd985fbe888ec862eda00d044978773c0857649fd1655bc6",
+  "src/frontend/tests/assets.spec.ts": "acad5e3c1e7874facd70d302c8bdf5eba43a8cb65f5902aa7491a58f869bd5c5",
+  "src/backend/tests/test_migrations.py": "0ba0fd7d858a416f1eb52d337dd9f94971da86bd21118607189d556cbe306848",
+  "src/backend/tests/test_assets_migration.py": "fcd76c0402b3230beac38d5b8f19f3d96fd2993be84a6497d9826826a636f7a5",
+  "src/backend/app/errors.py": "554b6a18d71228813771b1e162c0b1bae4cf989826b4f33d873fa617b4c642f1",
+  "src/frontend/tests/safe-reporter.ts": "60569fb5947fc49e214c3379ea5aacbbd38b0f2f2ea31f899348503ebfd1d631",
+  "src/backend/tests/support.py": "58a9ea7d014da47be863c1ea45abb80f3edf8db1e81832a42131a35aabc2f3c4"
+}

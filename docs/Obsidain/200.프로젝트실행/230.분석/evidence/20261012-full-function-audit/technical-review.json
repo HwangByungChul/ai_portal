@@ -1,0 +1,814 @@
+[
+  {
+    "id": "T-001",
+    "source_row": 64,
+    "requirement": "필수 모델 관리: 모델 등록·추가·버전관리·삭제, 오픈소스 및 자체 파인튜닝 모델 카탈로그화",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "모델 등록/서빙·버전/삭제 카탈로그 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-002",
+    "source_row": 65,
+    "requirement": "다중 LLM(Multi-LLM) 지원: 이기종·다중 LLM 동시 서빙 및 멀티 모델 런타임",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "고정 OpenAI 생성/임베딩; 이기종 다중모델 서빙 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-003",
+    "source_row": 66,
+    "requirement": "하이브리드 LLM 통합 관리: Private/Public LLM 중앙 제어·라우팅·API Key 통제 및 확장 로드맵",
+    "priority": "권고",
+    "original_scope": "부분반영",
+    "status": "부분 구현",
+    "finding": "중앙공급자 adapter·private key 설정; Private/Public 라우팅 없음. 원본Public 운영 제외와 현재OpenAI 실험 선택은 다름",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-004",
+    "source_row": 67,
+    "requirement": "API 기반 외부 서빙: 계열사 레거시 시스템/앱에서 RESTful API/gRPC로 LLM 호출",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "인증된 포털 REST API; 레거시용 서비스인증·외부 LLM 서빙/gRPC 제품 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-005",
+    "source_row": 68,
+    "requirement": "모델별 플레이그라운드: 모델별 웹 테스트, System Prompt/Temperature/Top-P/Max Token 조정",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "고정 지시문 설정/대화; 모델/temperature/top-p/max token Playground 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-006",
+    "source_row": 69,
+    "requirement": "모델별 GPU 할당 및 가상화: 모델별 GPU 독립 할당·회수, vGPU/MIG 등 자원 간섭 차단",
+    "priority": "권고",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "GPU/vGPU/MIG 운영 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-007",
+    "source_row": 70,
+    "requirement": "GPU 동적/가변 배분: Traffic 기반 GPU Auto-scaling/가변 배분",
+    "priority": "권고",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "GPU 자동 scale/분배 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-008",
+    "source_row": 71,
+    "requirement": "RBAC 기반 권한 및 상한선 관리: RBAC+K8s Namespace 기반 계열사/부서/사용자 모델 접근 통제 및 Token Quota",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "tenant/role·원장 cap/입력 상한; K8s/부서/모델별 정책 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-009",
+    "source_row": 72,
+    "requirement": "승인 기반 에이전트 배포 관리: 승인·배포 라이프사이클 및 결재 연계, 상태별 데이터소스 접근 통제",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "고정2 Agent 설정의 요청/타인 승인/반려/반영; 환경·운영DB 권원 routing 없음",
+    "evidence_groups": [
+      "approval"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-010",
+    "source_row": 73,
+    "requirement": "토큰 사용량 측정: 회사/부서/사용자별 Input/Output/Context 토큰 실시간 Metering",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "call receipt/usage 원장·tenant/owner; 부서/세부 실시간 통계 미완성",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-011",
+    "source_row": 74,
+    "requirement": "모델 성능 모니터링 및 관측: Latency/TTFT/Tokens Sec/Error KPI 추적·시각화·Alert",
+    "priority": "권고",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "기존 request ID/단위시험은 운영 KPI 관측제품이 아님; Latency/TTFT/Token/s/Error 수집·시각화·경보 없음",
+    "evidence_groups": [
+      "usage"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-012",
+    "source_row": 75,
+    "requirement": "LLM 응답 사용자 피드백: LLM 응답 피드백 수집 및 개선 프로세스",
+    "priority": "권고",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "응답 긍정/부정·의견/철회·최소집계; 개선 담당/종결 프로세스 없음",
+    "evidence_groups": [
+      "feedback"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-013",
+    "source_row": 76,
+    "requirement": "질문·응답 사용기록 로깅: 질문/답변 사용기록 로깅 및 민감정보 마스킹·삭제",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "본인 질문/답변 이력; 전문 마스킹·보존/삭제 정책 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-014",
+    "source_row": 77,
+    "requirement": "데이터 가상화 계층: AI 플랫폼과 계열사 DB 사이 DV 레이어를 통한 Virtual View 기반 보안정책 적용",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "DV/Virtual View 연결 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-015",
+    "source_row": 78,
+    "requirement": "사내 RDB 및 금융 DB 보안·거버넌스: 메타데이터/운영 RDB, 테넌트 격리, 기록·감사·접근제어·암호화·SOD",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "현재 앱 DB RLS/role·감사; 금융 레거시DB·암호화/SOD 전체 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-016",
+    "source_row": 79,
+    "requirement": "비정형 데이터 연동: 파일서버/NAS 등 비정형 데이터 표준 연계 및 MCP 기반 인터페이스",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "NAS/파일서버/MCP connector 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-017",
+    "source_row": 80,
+    "requirement": "레거시 DBMS 비정형화 활용: RDB/NoSQL 데이터 컨텍스트화 및 MCP/전문 어댑터 기반 Tool 생성",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "레거시DB context·전문Tool 변환 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-018",
+    "source_row": 81,
+    "requirement": "망연계 및 DB 동적 라우팅: 미승인 Agent는 개발/테스트 DB, 승인 Agent만 운영 DB 접근하도록 라우팅·접근제어",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "승인에 따른 개발/운영 DB routing 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-019",
+    "source_row": 82,
+    "requirement": "자연어 기반 데이터 추출(NL-to-SQL): 자연어 질의→SQL 생성→데이터 조회/추출",
+    "priority": "권고",
+    "original_scope": "최초오픈 제외",
+    "status": "원본 최초오픈 제외",
+    "finding": "원본에서 제외된 권고 항목; 현재미구현을 필수 결함/새 포함 범위로 처리하지 않음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-020",
+    "source_row": 83,
+    "requirement": "자연어 쿼리 보안 가드레일: RLS/CLS, Max Row Limit, 다운로드 차단, SQL 사전검증 및 이상징후 차단",
+    "priority": "권고",
+    "original_scope": "최초오픈 제외",
+    "status": "원본 최초오픈 제외",
+    "finding": "원본에서 제외된 권고 항목; 현재미구현을 필수 결함/새 포함 범위로 처리하지 않음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-021",
+    "source_row": 84,
+    "requirement": "자동 메타데이터 생성 및 사람 검증: 원천 패턴/샘플 기반 메타데이터 자동생성 후 Data Owner HITL 승인",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "규정 entity/relation 추출·검증; Data Owner metadata HITL 제품 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-022",
+    "source_row": 85,
+    "requirement": "시스템 프롬프트 관리: System Role Prompt 템플릿화·버전관리·중앙제어",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "고정instructions/config snapshot·승인; 템플릿/일반 Prompt 자산 없음",
+    "evidence_groups": [
+      "approval"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-023",
+    "source_row": 86,
+    "requirement": "데이터 전처리 및 임베딩 모델 유연성: Fixed/Semantic/Sliding Window 청킹 및 데이터소스별 임베딩 모델 선택",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "고정TXT/MD 청킹·embedding 모델; 전략/소스별 선택 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-024",
+    "source_row": 87,
+    "requirement": "고성능 파서 및 OCR: DOCX/PPTX/XLSX/PDF/HWP/TXT 파서 및 OCR 엔진 연계",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "TXT/MD·텍스트 PDF·제한 DOCX/XLSX; PPTX/OCR 보류·HWP 미구현·스캔/암호/다양한 요소/대용량 미지원",
+    "evidence_groups": [
+      "docs"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-025",
+    "source_row": 88,
+    "requirement": "테넌트/에이전트별 데이터소스 저장소: 계열사/팀/부서 독립 문서 원본 및 비정형 데이터 저장소·관리",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "tenant/private/version/원문·index 경계; 팀/부서·전용 저장소관리 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-026",
+    "source_row": 89,
+    "requirement": "Vector DB 연동 및 독립성: 오픈소스/상용 Vector DB 표준 커넥터 및 계열사별 Index/Collection 격리",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "pgvector/현재RLS; 다중 Vector 표준 connector/제품교체 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-027",
+    "source_row": 90,
+    "requirement": "하이브리드 서치: 키워드+하이브리드 검색 및 Re-ranking",
+    "priority": "권고",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "권한내 vector+Graph·문자 매칭; 독립 keyword 엔진/reranker 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-028",
+    "source_row": 91,
+    "requirement": "그래프 RAG 지원: Knowledge Graph 기반 Advanced RAG",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "규정관계 typed Graph·근거 검증; 범용 Knowledge Graph Advanced RAG 전수 미검증",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-029",
+    "source_row": 92,
+    "requirement": "온톨로지 플랫폼 연계: 도메인 특화 온톨로지와 LLM/RAG 연계 및 AI 거버넌스 연계",
+    "priority": "권고",
+    "original_scope": "최초오픈 제외",
+    "status": "원본 최초오픈 제외",
+    "finding": "원본에서 제외된 권고 항목; 현재미구현을 필수 결함/새 포함 범위로 처리하지 않음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-030",
+    "source_row": 93,
+    "requirement": "RAG 전용 플레이그라운드: Prompt/Chunk/Top-K/Score Threshold 변경에 따른 결과·답변 비교 테스트",
+    "priority": "권고",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "RAG 설정 비교 Playground 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-031",
+    "source_row": 94,
+    "requirement": "무중단 리인덱싱: 임베딩 변경에 따른 자동/수동 Re-indexing 및 Re-chunking",
+    "priority": "권고",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "원문 버전·게시/index 전환·실패/재처리; 임베딩 교체/전략변경 자동 reindex와 운영무중단 미검증",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-032",
+    "source_row": 95,
+    "requirement": "에이전트 빌더: Prompt/Tool/API/LLM을 결합한 Agent 생성·관리",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "고정 Agent instructions 변경은 있음; Prompt/Tool/API/LLM 결합 신규 Agent 생성·Builder 없음",
+    "evidence_groups": [
+      "approval",
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-033",
+    "source_row": 96,
+    "requirement": "로우코드/노코드 워크플로우: Drag&Drop 기반 AI 업무절차, Agent-to-Agent/App, Long-running 체크포인트 복구",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "Canvas/범용노드·A2A/장기 workflow 실행 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-034",
+    "source_row": 97,
+    "requirement": "자연어 기반 워크플로우 생성: 자연어 업무 프로세스 해석 및 Workflow Pipeline 자동 생성",
+    "priority": "권고",
+    "original_scope": "최초오픈 제외",
+    "status": "원본 최초오픈 제외",
+    "finding": "원본에서 제외된 권고 항목; 현재미구현을 필수 결함/새 포함 범위로 처리하지 않음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-035",
+    "source_row": 98,
+    "requirement": "MCP 및 Tool 연동: MCP/외부 Tool, OpenAPI/WSDL/JDBC/금융전문 Auto-Wrapping 기반 노코딩 Tool 생성",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "MCP/Tool Auto-Wrapping 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-036",
+    "source_row": 99,
+    "requirement": "사전 정의 컴포넌트 라이브러리: 입출력 폼, 조건문, 데이터소스 커넥터, LLM/Agent 노드 등",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "승인된 Workflow 노드 라이브러리 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-037",
+    "source_row": 100,
+    "requirement": "그룹 공동 사용 에이전트: 10개 필수 Use Case 구현",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "일반/규정 고정 Agent·요약 기반; 제안 업무10종 별도 product/평가 미구현",
+    "evidence_groups": [
+      "chat",
+      "summary"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-038",
+    "source_row": 101,
+    "requirement": "에이전트 마켓플레이스 연동: 계열사 간 Agent/Workflow 템플릿 공유·검색·구독",
+    "priority": "권고",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "문서 공유는 있음; Agent/Workflow Marketplace/구독/템플릿 공유 없음",
+    "evidence_groups": [
+      "sharing"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-039",
+    "source_row": 102,
+    "requirement": "실행 Trace 및 디버깅: 단계별 상태/오류 추적 및 Saga 보상 트랜잭션",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "run/Job/call/epoch·상태·재시작; 범용단계 디버그/Tool Saga 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-040",
+    "source_row": 103,
+    "requirement": "에이전트 실행 로그 분석: 단계별 로그·입출력·중간 추론과정 기록/관리",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "대화·ID 감사·usage; 제품 단계별 로그 분석/API 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-041",
+    "source_row": 104,
+    "requirement": "에이전트별 미터링: Agent별 사용자/회사 호출량 및 Token 통계",
+    "priority": "권고",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "call에run·Agent 연결; Agent별 집계/조회 제품 미완성",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-042",
+    "source_row": 105,
+    "requirement": "버전 관리 및 배포 이력 통합: 변경 이력·Rollback 및 DevOps 이관/배포 관리",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "고정 설정 승인·revision·두 UI build·환경파일; 일반 자산 Release/운영승격/rollback 없음",
+    "evidence_groups": [
+      "approval",
+      "env"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-043",
+    "source_row": 106,
+    "requirement": "에이전트/모델 성능 측정 및 점검: 성능·편향성·윤리성 등 자동 점검",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "개발용 합성 평가/테스트 도구는 있음; 자동 성능/편향/윤리 점검 제품 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-044",
+    "source_row": 107,
+    "requirement": "테넌트 격리: 10개 이상 계열사 Control Plane/Data Plane/Storage 격리",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "A/B 논리 격리 시험; 10개 Cell/Plane/Storage·실측격리 미구축",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-045",
+    "source_row": 108,
+    "requirement": "AI 가드레일 및 PII 마스킹: Prompt/Output PII 탐지·마스킹, Prompt Injection/Jailbreak/유해어 필터링",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "수집/요약 PII후보·지시문 우회 후보 차단; 일반 Prompt/Output/Tool·마스킹·유해성/정책 관리 없음",
+    "evidence_groups": [
+      "policy"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-046",
+    "source_row": 109,
+    "requirement": "프롬프트 입력 민감정보 실시간 차단: 텍스트/첨부파일 금융민감정보·기밀정보 탐지·차단·로깅",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "첨부 수집·요약 제한후보 차단; 일반 Chat 금융/기밀 탐지·실시간 전체입력 통제 없음",
+    "evidence_groups": [
+      "policy"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-047",
+    "source_row": 110,
+    "requirement": "민감정보 차단 필터링: 데이터 연동/인덱싱 파이프라인의 민감·기밀정보 사전 차단",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "색인 전 주민번호/전화/메일/계좌 후보와 지시문 우회 검사; 기밀 분류/기업 정책/평가 전범위 없음",
+    "evidence_groups": [
+      "policy"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-048",
+    "source_row": 111,
+    "requirement": "계열사별 DRM 자동 암·복호화 연동: DRM API/SDK 연동 및 문서 수집/인덱싱 시 자동 복호화·보안암호화",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "DRM 암복호화 연동 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-049",
+    "source_row": 112,
+    "requirement": "중앙 정책 기반 자동 익명화: 식별자/민감정보 조회 시 마스킹·비식별화·토큰화",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "중앙익명화/토큰화 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-050",
+    "source_row": 113,
+    "requirement": "동의 권원 기반 동적 복호화 및 저장 통제: Approved+법적 권원 시 운영DB 복호화, Draft는 100% 익명화 DB 접근",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "동의권원·운영DB 복호화 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-051",
+    "source_row": 114,
+    "requirement": "프롬프트/파일 비식별화 처리: 저장·재활용 시 원본 식별 불가 비식별화",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "파일/Prompt 저장 비식별화 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-052",
+    "source_row": 115,
+    "requirement": "관리자 및 사용자 감사 추적 로그: 관리자/개발자/사용자 행위에 대한 상세 보안 실행 로그",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "행위/ID/revision 감사; 전체행위·외부불변저장·서명/보존 검증 미완성",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-053",
+    "source_row": 116,
+    "requirement": "SSO 및 AD 연동: 계열사별 AD 표준 연동 및 접근통제",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "로컬 로그인·권한/회수 있음; 계열사 SSO/AD adapter·동기화 없음",
+    "evidence_groups": [
+      "auth"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-054",
+    "source_row": 117,
+    "requirement": "LLM Gateway 아키텍처: LLM API 단일 통로, 라우팅/인증/가드레일/토큰 과금 총괄",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "AI4작업 중앙허가·모드/비용·timeout; 다중모델/정책 engine routing 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-055",
+    "source_row": 118,
+    "requirement": "직무 분리(SOD) 기반 RBAC: 개발자/승인권자 분리 및 승인 기반 운영DB 접근 활성화",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "고정 설정 자기승인 금지·PADMIN 타인 승인; 전용 개발자/승인자/배포자·운영 DB 권원 없음",
+    "evidence_groups": [
+      "approval",
+      "auth"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-056",
+    "source_row": 119,
+    "requirement": "금융 감사 로그 및 동의 이력 연동: 복호화 데이터 조회의 주체·Agent·동의권원 포함 End-to-End Audit Trail",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "현재 request/run/call 감사 기반은 있음; 금융 복호화·동의권원 end-to-end 연계 없음",
+    "evidence_groups": [
+      "auth",
+      "policy"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-057",
+    "source_row": 120,
+    "requirement": "토큰 기반 회사별 과금: 회사/부서 Token 및 가상화 쿼리 사용량 기반 Internal Billing/정산 리포트",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "tenant internal estimate/receipt·예약; 부서/DV query/청구확정/정산리포트 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-058",
+    "source_row": 121,
+    "requirement": "실시간 통합 리소스 모니터링: GPU/CPU/Storage/K8s Pod 실시간 관제",
+    "priority": "권고",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "GPU/CPU/Storage/Pod 관제 없음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-059",
+    "source_row": 122,
+    "requirement": "클라우드 확장 및 이식성 표준 MSA: K8s 기반 표준 MSA 및 무중단 HA, 향후 Public/Hybrid Cloud 확장",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "미구현",
+    "finding": "현재 모듈화 FastAPI·독립 UI 산출물은 있음; K8s 표준 MSA/HA·무중단 운영 이행 제품 없음",
+    "evidence_groups": [
+      "arch",
+      "env"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-060",
+    "source_row": 123,
+    "requirement": "개발 환경 구축: 운영 외 Playground 개념 개발 클러스터 및 AI 플랫폼 환경",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "local두port/API·네 환경파일·독립 UI build; 외부 dev/tb/prd 미설정·개발cluster/운영승격 미구축",
+    "evidence_groups": [
+      "env"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-061",
+    "source_row": 124,
+    "requirement": "반응형 웹 방식 구축: 웹 접근성·반응형 및 Edge/Chrome 등 브라우저 호환",
+    "priority": "필수",
+    "original_scope": "포함",
+    "status": "부분 구현",
+    "finding": "A/A+B·공통 Shell·모바일/키보드 local시험; 전수접근성·Edge 실기/전체 명세화면 미수용",
+    "evidence_groups": [
+      "portal"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  },
+  {
+    "id": "T-062",
+    "source_row": 125,
+    "requirement": "계열사 독립 플랫폼 추가 제안: 계열사 별도 구축안 및 공동 AI 플랫폼 연계 전략",
+    "priority": "권고",
+    "original_scope": "최초오픈 제외",
+    "status": "원본 최초오픈 제외",
+    "finding": "원본에서 제외된 권고 항목; 현재미구현을 필수 결함/새 포함 범위로 처리하지 않음",
+    "evidence_groups": [
+      "arch"
+    ],
+    "full_acceptance": "미검증/미완료; 과거 좁은 테스트를 명세 전수 수용으로 확대하지 않음"
+  }
+]

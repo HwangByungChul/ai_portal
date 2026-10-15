@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "duration_ms": 17056.93,
+  "runner_errors": 0,
+  "tests": [
+    {
+      "test_id": "U12_01_user_artifact_chat_and_history",
+      "status": "passed",
+      "duration_ms": 2108
+    },
+    {
+      "test_id": "U12_02_admin_artifact_approval_and_site_switch",
+      "status": "passed",
+      "duration_ms": 1960
+    },
+    {
+      "test_id": "U12_03_direct_admin_denial_and_global_scope",
+      "status": "passed",
+      "duration_ms": 1246
+    },
+    {
+      "test_id": "U12_04_user_private_document_has_no_admin_requests",
+      "status": "passed",
+      "duration_ms": 3638
+    },
+    {
+      "test_id": "U12_05_org_change_and_same_origin_logout",
+      "status": "passed",
+      "duration_ms": 1274
+    },
+    {
+      "test_id": "U12_06_mobile_keyboard_and_artifact_visuals",
+      "status": "passed",
+      "duration_ms": 1306
+    }
+  ],
+  "steps": []
+}

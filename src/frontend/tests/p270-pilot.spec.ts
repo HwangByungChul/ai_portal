@@ -1,5 +1,5 @@
 import {test,expect,type Page,type Browser} from '@playwright/test';
-import {control,fixture,login} from './support';
+import {control,fixture,login,navigate} from './support';
 
 test.setTimeout(60000);
 const errors=new Map<string,number>();
@@ -23,12 +23,12 @@ async function headers(page:Page,tenant='A'){
 test('P270_01_admin_user_saved_rag_journey',async({page,browser})=>{
  let user;
  try{
-  await test.step('P270_STEP_01_admin_publish',async()=>{await login(page,'A-ADM');await page.getByRole('button',{name:'문서 관리',exact:true}).click();await upload(page,'파일럿 합성 규정','여신심사의 담당 부서는 심사1팀이다.');});
+  await test.step('P270_STEP_01_admin_publish',async()=>{await login(page,'A-ADM');await navigate(page,'문서 관리');await upload(page,'파일럿 합성 규정','여신심사의 담당 부서는 심사1팀이다.');});
   user=await tracked(browser);const u=await user.newPage();
   await test.step('P270_STEP_02_general_usage_history',async()=>{
    await login(u,'A-U1');await ask(u,'일반 업무 리허설');await expect(u.getByText('모의 AI 응답입니다. 실제 모델 호출 없이 실행·권한·사용량 흐름을 검증했습니다.',{exact:true})).toBeVisible();
-   await u.getByRole('button',{name:'내 사용량',exact:true}).click();await expect(u.getByText('확인된 사용량의 추정 금액',{exact:true})).toBeVisible();
-   await u.getByRole('button',{name:'AI 업무',exact:true}).click();await u.reload();await u.locator('.conversation-link').filter({hasText:'완료'}).click();await expect(u.getByText('완료 · 저장 확인됨',{exact:true})).toBeVisible();
+   await navigate(u,'내 사용량');await expect(u.getByText('확인된 사용량의 추정 금액',{exact:true})).toBeVisible();
+   await navigate(u,'AI 업무');await u.reload();await u.locator('.conversation-link').filter({hasText:'완료'}).click();await expect(u.getByText('완료 · 저장 확인됨',{exact:true})).toBeVisible();
   });
   await test.step('P270_STEP_03_rag_source_download',async()=>{
    await u.getByRole('button',{name:'새 대화',exact:true}).click();await u.getByLabel('Agent',{exact:true}).selectOption('rules_rag');
@@ -45,7 +45,7 @@ test('P270_02_mobile_shared_version_revoke_journey',async({page,browser})=>{
  let recipient;let requestBody:any;let runId='';let sourceUrl='';
  try{
   await test.step('P270_STEP_04_share_version_and_update',async()=>{
-   await login(page,'A-ADM');await page.getByRole('button',{name:'문서 관리',exact:true}).click();await upload(page,'파일럿 공유 규정','여신심사의 담당 부서는 심사1팀이다.');
+   await login(page,'A-ADM');await navigate(page,'문서 관리');await upload(page,'파일럿 공유 규정','여신심사의 담당 부서는 심사1팀이다.');
    await page.getByRole('button',{name:'버전 공유 관리',exact:true}).click();await page.getByLabel('수신 조직').selectOption(fixture().tenants.B);await page.getByRole('button',{name:'이 버전 공유',exact:true}).click();await expect(page.getByRole('region',{name:'버전 공유'})).toContainText('공유 중');
    await page.getByRole('button',{name:'새 버전',exact:true}).click();await upload(page,'파일럿 미공유 v2','여신심사의 담당 부서는 숨김2팀이다.');
   });
@@ -72,14 +72,14 @@ test('P270_03_private_owner_and_stop_journey',async({page,browser})=>{
    const metadata={client_upload_id:crypto.randomUUID(),title:'개인 파일럿 자료',visibility:'private',owner_user_id:fixture().actors['A-U1'],reader_ids:[],media_type:'text/plain'};
    const reply=await page.request.post('/api/v1/admin/documents',{headers:await headers(page),multipart:{metadata:JSON.stringify(metadata),file:{name:'private.txt',mimeType:'text/plain',buffer:Buffer.from('가상사용자의 개인 시연 리허설은 수요일 정오에 진행한다.')}}});expect(reply.status()).toBe(202);
    const job=(await reply.json()).data.job_id;await expect.poll(async()=>(await (await page.request.get('/api/v1/admin/jobs/'+job,{headers:{'X-Tenant-ID':fixture().tenants.A}})).json()).data.state).toBe('completed');
-   await page.getByRole('button',{name:'문서 관리',exact:true}).click();await expect(page.locator('.document-card')).toContainText('개인 문서');await expect(page.getByText('개인 파일럿 자료',{exact:false})).toHaveCount(0);await expect(page.getByRole('button',{name:'버전 공유 관리',exact:true})).toHaveCount(0);
+   await navigate(page,'문서 관리');await expect(page.locator('.document-card')).toContainText('개인 문서');await expect(page.getByText('개인 파일럿 자료',{exact:false})).toHaveCount(0);await expect(page.getByRole('button',{name:'버전 공유 관리',exact:true})).toHaveCount(0);
   });
   owner=await tracked(browser);const u=await owner.newPage();
   await test.step('P270_STEP_08_owner_personal_evidence',async()=>{
    await login(u,'A-U1');await u.getByLabel('Agent',{exact:true}).selectOption('rules_rag');await u.getByLabel('개인 파일럿 자료 · v1 · 개인',{exact:true}).check();await ask(u,'내 개인 리허설 일정은?');await expect(u.locator('.message.assistant')).toContainText('수요일 정오');
   });
   await test.step('P270_STEP_09_stop_prevents_admission',async()=>{
-   await page.getByRole('button',{name:'Agent 관리',exact:true}).click();const region=page.getByRole('region',{name:'일반 대화 설정'});await region.getByRole('button',{name:'Agent 중지',exact:true}).click();await region.getByRole('button',{name:'운영 변경 확인',exact:true}).click();await expect(region.getByText('저장되었습니다.',{exact:true})).toBeVisible();
+   await navigate(page,'Agent 관리');const region=page.getByRole('region',{name:'일반 대화 설정'});await region.getByRole('button',{name:'Agent 중지',exact:true}).click();await region.getByRole('button',{name:'운영 변경 확인',exact:true}).click();await expect(region.getByText('운영 상태가 저장되었습니다.',{exact:true})).toBeVisible();
    const before=control('b05-counts').provider_calls;const response=await u.request.post('/api/v1/runs',{headers:await headers(u),data:{client_send_id:crypto.randomUUID(),agent_key:'general',prompt:'중지 후 접수'}});expect(response.status()).toBe(409);expect(control('b05-counts').provider_calls).toBe(before);
   });
  }finally{await owner?.close();}

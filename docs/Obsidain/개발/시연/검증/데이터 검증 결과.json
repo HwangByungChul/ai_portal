@@ -1,0 +1,400 @@
+{
+  "package_version": "demo-0.1.0",
+  "checked_on": "2026-10-04",
+  "scope": "DATA_PACKAGE_ONLY",
+  "application_tests_executed": false,
+  "application_scenarios_pending": 21,
+  "status": "PASS",
+  "checks_count": 96,
+  "checks": [
+    {
+      "check": "package marked synthetic, no live payment",
+      "result": "PASS"
+    },
+    {
+      "check": "unique master IDs",
+      "result": "PASS"
+    },
+    {
+      "check": "rights foreign keys",
+      "result": "PASS"
+    },
+    {
+      "check": "users, licenses, works foreign keys",
+      "result": "PASS"
+    },
+    {
+      "check": "RV1 exact shares W001",
+      "result": "PASS"
+    },
+    {
+      "check": "RV1 exact shares W002",
+      "result": "PASS"
+    },
+    {
+      "check": "RV2 exact shares",
+      "result": "PASS"
+    },
+    {
+      "check": "trust contract references",
+      "result": "PASS"
+    },
+    {
+      "check": "usage tariff rates",
+      "result": "PASS"
+    },
+    {
+      "check": "usage period and approved license U001",
+      "result": "PASS"
+    },
+    {
+      "check": "independent allocation U001/P001",
+      "result": "PASS"
+    },
+    {
+      "check": "independent allocation U001/P002",
+      "result": "PASS"
+    },
+    {
+      "check": "usage period and approved license U002",
+      "result": "PASS"
+    },
+    {
+      "check": "independent allocation U002/P003",
+      "result": "PASS"
+    },
+    {
+      "check": "independent allocation U002/P004",
+      "result": "PASS"
+    },
+    {
+      "check": "independent allocation U002/P005",
+      "result": "PASS"
+    },
+    {
+      "check": "distribution reconciliation",
+      "result": "PASS"
+    },
+    {
+      "check": "billed/received reconciliation",
+      "result": "PASS"
+    },
+    {
+      "check": "correction P001",
+      "result": "PASS"
+    },
+    {
+      "check": "correction P002",
+      "result": "PASS"
+    },
+    {
+      "check": "adjustment conservation",
+      "result": "PASS"
+    },
+    {
+      "check": "application event APP-E01",
+      "result": "PASS"
+    },
+    {
+      "check": "application event APP-E02",
+      "result": "PASS"
+    },
+    {
+      "check": "application event APP-E03",
+      "result": "PASS"
+    },
+    {
+      "check": "application event APP-E04",
+      "result": "PASS"
+    },
+    {
+      "check": "application event APP-E05",
+      "result": "PASS"
+    },
+    {
+      "check": "final application state",
+      "result": "PASS"
+    },
+    {
+      "check": "21 unique scenarios/test IDs",
+      "result": "PASS"
+    },
+    {
+      "check": "scenario isolation",
+      "result": "PASS"
+    },
+    {
+      "check": "exception fixture expected share totals",
+      "result": "PASS"
+    },
+    {
+      "check": "CSV/JSON 권리자.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "CSV/JSON 사용자 역할.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "CSV/JSON 저작물.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "CSV/JSON 초기 지분.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "CSV/JSON 정정 지분.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "CSV/JSON 이용계약.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "CSV/JSON 음악사용자료.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "CSV/JSON 모의 입금.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "CSV/JSON 분배 기대값.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "CSV/JSON 소급 조정 기대값.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "CSV/JSON 신청 상태 이벤트.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "CSV/JSON 증빙 목록.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "CSV/JSON 시연 요율.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "CSV/JSON 모의 신탁계약.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "scenarios JSON equals primary",
+      "result": "PASS"
+    },
+    {
+      "check": "evidence hash EV-W001",
+      "result": "PASS"
+    },
+    {
+      "check": "evidence hash EV-W002",
+      "result": "PASS"
+    },
+    {
+      "check": "evidence hash EV-W003",
+      "result": "PASS"
+    },
+    {
+      "check": "evidence hash EV-LC001",
+      "result": "PASS"
+    },
+    {
+      "check": "evidence hash EV-LC002",
+      "result": "PASS"
+    },
+    {
+      "check": "evidence hash EV-TRUST",
+      "result": "PASS"
+    },
+    {
+      "check": "evidence hash EV-CORRECTION",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 데이터/권리자.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 데이터/모의 신탁계약.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 데이터/모의 입금.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 데이터/분배 기대값.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 데이터/사용자 역할.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 데이터/소급 조정 기대값.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 데이터/시연 요율.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 데이터/시연 패키지.json",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 데이터/신청 상태 이벤트.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 데이터/예외 시나리오.json",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 데이터/음악사용자료.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 데이터/이용계약.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 데이터/저작물.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 데이터/정정 지분.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 데이터/증빙 목록.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 데이터/초기 지분.csv",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 원본/EV-CORRECTION.txt",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 원본/EV-LC001.txt",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 원본/EV-LC002.txt",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 원본/EV-TRUST.txt",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 원본/EV-W001.txt",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 원본/EV-W002.txt",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 원본/EV-W003.txt",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 지식/KB-FINANCE.md",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 지식/KB-PUBLIC.md",
+      "result": "PASS"
+    },
+    {
+      "check": "manifest 지식/KB-RIGHTS.md",
+      "result": "PASS"
+    },
+    {
+      "check": "wikilink 개발/시연/02 금액 기대값과 예외 검증표",
+      "result": "PASS"
+    },
+    {
+      "check": "wikilink 개발/시연/01 데이터 사전과 계산 규칙",
+      "result": "PASS"
+    },
+    {
+      "check": "wikilink 개발/시연/02 금액 기대값과 예외 검증표",
+      "result": "PASS"
+    },
+    {
+      "check": "wikilink 개발/시연/03 적재 초기화와 시연 실행 순서",
+      "result": "PASS"
+    },
+    {
+      "check": "wikilink 개발/시연/데이터/시연 패키지.json",
+      "result": "PASS"
+    },
+    {
+      "check": "wikilink 개발/시연/패키지 목록.json",
+      "result": "PASS"
+    },
+    {
+      "check": "wikilink 개발/03 시연 시나리오와 완료 기준",
+      "result": "PASS"
+    },
+    {
+      "check": "wikilink 개발/00 개발 대시보드",
+      "result": "PASS"
+    },
+    {
+      "check": "wikilink 개발/시연/데이터/예외 시나리오.json",
+      "result": "PASS"
+    },
+    {
+      "check": "wikilink 개발/01 내부 개발 전환 검토",
+      "result": "PASS"
+    },
+    {
+      "check": "wikilink 개발/02 전체 구축 범위와 단계별 대응",
+      "result": "PASS"
+    },
+    {
+      "check": "wikilink 개발/03 시연 시나리오와 완료 기준",
+      "result": "PASS"
+    },
+    {
+      "check": "wikilink 개발/04 목표 구조와 데이터 설계 원칙",
+      "result": "PASS"
+    },
+    {
+      "check": "wikilink 개발/05 단계별 실행계획과 자원 산정",
+      "result": "PASS"
+    },
+    {
+      "check": "wikilink 개발/06 요구사항 추적대장",
+      "result": "PASS"
+    },
+    {
+      "check": "wikilink 개발/07 리스크 의사결정 및 확인사항",
+      "result": "PASS"
+    },
+    {
+      "check": "wikilink 개발/08 출처와 문서 관리 규칙",
+      "result": "PASS"
+    },
+    {
+      "check": "wikilink 개발/시연/00 시연 데이터 안내",
+      "result": "PASS"
+    }
+  ],
+  "limitations": [
+    "앱 적재·권한·업무 상태·재시도 동작 미실행",
+    "AI/OCR 모델 성능 미측정",
+    "실제 기관 규칙·실데이터·서명·송금 미검증"
+  ]
+}

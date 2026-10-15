@@ -1,0 +1,10 @@
+{
+  "status": "passed",
+  "command": "npm run build",
+  "typescript": "passed",
+  "user_boundary": "passed",
+  "admin_boundary": "passed",
+  "user_modules": 22,
+  "admin_modules": 21,
+  "basis": "actual build tool exit0 and boundary output; manifests retained separately"
+}

@@ -1,0 +1,68 @@
+{
+  "status": "passed",
+  "duration_ms": 24959.148,
+  "runner_errors": 0,
+  "tests": [
+    {
+      "test_id": "D09_01_admin_create_append_and_reload",
+      "status": "passed",
+      "duration_ms": 1782
+    },
+    {
+      "test_id": "D09_02_legacy_is_read_only_and_existing_editor_remains",
+      "status": "passed",
+      "duration_ms": 1236
+    },
+    {
+      "test_id": "D09_03_user_and_other_organization_are_denied",
+      "status": "passed",
+      "duration_ms": 2226
+    },
+    {
+      "test_id": "D09_04_conflict_preserves_input_and_requires_latest_version_confirmation",
+      "status": "passed",
+      "duration_ms": 1523
+    },
+    {
+      "test_id": "D09_05_uncertain_create_reuses_request_after_server_commit",
+      "status": "passed",
+      "duration_ms": 1341
+    },
+    {
+      "test_id": "D09_06_organization_change_clears_private_draft",
+      "status": "passed",
+      "duration_ms": 1233
+    },
+    {
+      "test_id": "D11_04_structured_roles_historical_version_clone_and_reload",
+      "status": "passed",
+      "duration_ms": 2099
+    },
+    {
+      "test_id": "D11_05_uncertain_clone_retries_same_id_without_duplicate_assets",
+      "status": "passed",
+      "duration_ms": 1693
+    },
+    {
+      "test_id": "D11_06_conflict_preserves_profile_and_shows_latest_profile",
+      "status": "passed",
+      "duration_ms": 1604
+    },
+    {
+      "test_id": "D11_01_saved_template_preview_dirty_and_reload",
+      "status": "passed",
+      "duration_ms": 1797
+    },
+    {
+      "test_id": "D11_02_malformed_template_and_empty_rag_scope",
+      "status": "passed",
+      "duration_ms": 1406
+    },
+    {
+      "test_id": "D11_03_late_preview_cannot_cross_organization",
+      "status": "passed",
+      "duration_ms": 1330
+    }
+  ],
+  "steps": []
+}
