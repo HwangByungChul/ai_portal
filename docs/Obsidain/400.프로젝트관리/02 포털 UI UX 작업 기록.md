@@ -865,3 +865,87 @@ local SQL029 적용 전 private backup, 기존37표 행·prior29개 checksum 보
 사용자는 별도 정의된 기준은 없으며 **결정사항·액션아이템 정확성을 우선**한다고 답변했다. 이에 정확성을 첫 평가 항목으로 표시하고 실제 품질 수용의 최우선 기준으로 삼는다. 누락·담당자·기한 검토는 보조 확인 항목으로 유지한다. 아직 정량 합격선·업무 정답 세트는 확정되지 않았으므로 임의 합격 점수나 실제 모델 품질 통과를 선언하지 않는다.
 
 마지막 작업 확인: 백엔드 계약/원문·날짜·품질 API와 문서 권한 동시성 보완은 독립 재검토 통과. 사용자·관리자 빌드는 통과했으나 화면 브라우저 검증이 2개 통과/1개 실패 상태에서 중단되어, 해당 실패부터 원인을 확인하고 이어서 진행한다. 신규051 실제 개발 DB 적용과 서비스 재구동은 아직 미완료다. [[2026-10-15 회의록 문서 날짜 및 품질 기록 구현 보고서]] 참조.
+
+
+## 2026-10-15 · 시각적 블록 조립형(Drag & Drop) UI Studio 개발 검토 및 상세 계획 수립
+사용자 요청으로 제안 시안(`4.4-03_Workflow_Canvas.png`)에 부합하는 시각적 블록 조립형(Drag & Drop) UI Studio 개발 검토 및 Obsidian 기록을 진행했다.
+- **사용자 결정**: 제안 시안 수준의 완전한 비주얼 캔버스(Component Library + 드래그 앤 드롭 노드/엣지 + 속성 인스펙터 + 위저드 연계) 및 `@xyflow/react`(React Flow v12) 라이브러리 도입 확정.
+- **생성 문서**: [[100.프로젝트계획/35 시각적 블록 조립형 UI Studio 상세 구현 계획]]
+- **핵심 아키텍처**: 3-Pane 구조(컴포넌트 라이브러리, 무한 캔버스, 노드 인스펙터), 7단계 위저드 상단 바, 커스텀 노드 7종, 백엔드 WorkflowDefinition DAG 양방향 변환 계층 및 실행 모니터링 시각화.
+- **다음 작업**: `@xyflow/react` 의존성 설치, 3-Pane 캔버스 레이아웃 쉘 및 드래그 앤 드롭 컴포넌트 팔레트 구현 착수.
+
+
+## 2026-10-15 · 시각적 블록 조립형 UI Studio 1차 구현 및 포털 빌드 검증 완료
+사용자 승인에 따라 제안 시안(`4.4-03_Workflow_Canvas.png`) 규격의 시각적 블록 조립형(Drag & Drop) UI Studio를 구현하고 포털 빌드 경계 검증을 완료했다.
+- **구현 파일**:
+  - `src/frontend/src/workflow/workflowTypes.ts`: 7대 컴포넌트 팔레트 카테고리(트리거, 프롬프트, LLM, RAG, Tool, 로직, 응답) 및 StudioNodeData 정의
+  - `src/frontend/src/workflow/workflowStudio.css`: 글래스모피즘 기반 3-Pane 레이아웃, 커스텀 노드/핸들 및 위저드 스타일링
+  - `src/frontend/src/workflow/WorkflowCustomNodes.tsx`: 입출력 포트 핸들, 카테고리 컬러 코딩, 복제/삭제 액션 및 실행 상태 배지를 지원하는 커스텀 Flow 노드
+  - `src/frontend/src/workflow/WorkflowPalette.tsx`: HTML5 Drag & Drop 지원 좌측 컴포넌트 라이브러리 및 검색 필터링
+  - `src/frontend/src/workflow/WorkflowInspector.tsx`: 선택 노드별 파라미터(모델, 프롬프트, 도구, 지식베이스 등) 동적 편집 우측 패널
+  - `src/frontend/src/workflow/workflowAdapter.ts`: React Flow Graph ↔ 백엔드 WorkflowDefinition DAG 양방향 변환 및 위상 정렬/순환 검증 유틸리티
+  - `src/frontend/src/workflow/WorkflowStudio.tsx`: 7단계 위저드 상단 바, 자동 정렬, DAG 유효성 검사, 실행 모니터링 콘솔을 포함한 메인 에디터
+  - `src/frontend/src/WorkflowCanvasPage.tsx`: 기존 승인 실행 기능과 시각적 UI Studio를 탭으로 통합 연동
+- **검증 결과**:
+  - `@xyflow/react`(React Flow v12) 설치 및 Node 22 환경 컴파일 검증
+  - `npm run build:admin` 통과 (`modules: 49, boundary_verified: true`)
+  - `npm run build:user` 통과 (`modules: 28, boundary_verified: true`)
+  - `npm run build` 통합 빌드 스크립트 전원 통과 (오류 0건)
+  - 실제 브라우저 포털(`http://127.0.0.1:5174/manage/admin/workflows`) 접속 및 관리자 로그인 검증 완료
+  - 3-Pane 레이아웃(상단 7단계 위저드 바, 좌측 컴포넌트 팔레트, 중앙 React Flow 캔버스, 우측 속성 인스펙터) 및 노드 선택 상호작용 정상 동작 확인
+  - 스크린샷 증적 보존: `workflow_studio_view_1792039895112.png`
+- **다음 작업**: 드래그 앤 드롭 노드 추가 및 저장/불러오기 시나리오 고도화, 실제 백엔드 DAG 저장/실행 연계 시험.
+
+
+## 2026-10-15 · AI Studio 통합 메뉴 및 Hub 구조 상세 구현 계획 수립 (개선안 1안)
+사용자의 개선안 1안(사이드바 메뉴 그룹화 및 통합 Hub 구축) 승인에 따라 상세 구현 방안 검토 및 Obsidian 기록을 완료했다.
+- **사용자 요청·결정**: Agent Builder와 Workflow Canvas의 분산으로 인한 혼선을 해소하기 위해 단일 진입점인 `AI Studio` 대분류 메뉴 통합 및 상단 탭 전환 Hub 구조 채택.
+- **생성 문서**: [[100.프로젝트계획/36 AI Studio 통합 메뉴 및 Hub 구조 상세 구현 방안]]
+- **핵심 설계**:
+  - 관리자 사이드바에 `AI Studio (제작)` 단일 Hub 메뉴 제공 및 분산된 중복 메뉴 정리
+  - AI Studio 진입 시 상단 서브 탭으로 `[ 🤖 단일 Agent 빌더 ]` ↔ `[ ⚡ 다단계 Workflow 캔버스 ]` 즉시 전환
+  - 기존 경로(`/manage/admin/builder`, `/manage/admin/workflows`) 하위 호환성 및 URL 쿼리 파라미터 연동
+  - Agent Builder와 Workflow Studio 간 유기적 상호 이동 안내 배너(Bridge) 배치
+- **다음 작업**: `AIStudioHubPage.tsx` 컴포넌트 구현 및 `apps/admin-web/src/App.tsx` 라우팅 통합 반영.
+
+
+## 2026-10-15 · AI Studio 통합 메뉴 및 Hub 구조 1차 구현 및 포털 빌드 검증 완료
+사용자 승인(개선안 1안)에 따라 단일 진입점인 `AI Studio` 통합 Hub 컴포넌트를 구현하고 관리자 사이드바 네비게이션을 개편했다.
+- **구현 파일**:
+  - `src/frontend/src/AIStudioHubPage.tsx`: 상단 탭 전환(`[ 🤖 단일 Agent 빌더 ]` ↔ `[ ⚡ 다단계 Workflow 캔버스 ]`), URL 쿼리 파라미터(`?tab=builder|workflow`) 동기화 및 탭별 상호 연계 안내 배너(Bridge) 탑재
+  - `src/frontend/apps/admin-web/src/App.tsx`: 사이드바 메뉴에 `✨ AI Studio (제작)` 단일 Hub 메뉴 등록, 중복 메뉴 정리 및 기존 경로(`/manage/admin/builder`, `/manage/admin/workflows`) 하위 호환 매핑
+- **검증 결과**:
+  - `npm run build:admin` 통과 (`modules: 50, boundary_verified: true`)
+  - `npm run build:user` 통과 (`modules: 28, boundary_verified: true`)
+  - `npm run build` 통합 빌드 스크립트 전원 통과 (오류 0건)
+  - `admin-frontend` 서비스(포트 5174) 재기동 완료 및 정상 서비스 중
+- **다음 작업**: 실제 관리자 화면에서 Agent 제작 후 워크플로우 캔버스로의 데이터 연동 고도화.
+
+## 2026-10-15 · MCP 및 외부 Tool 연동·노코딩 자동변환 상세 구현 계획서 수립 (T-035)
+사용자 요청(기술요건 T-035 필수 항목의 완료 여부 문의 및 잔여 작업 계획 수립 지시)에 따라 MCP 및 외부 Tool 연동, 배포 승인 상태별 동적 엔드포인트 전환, 노코딩 Auto-Wrapping 생성 환경의 상세 구현 계획서를 수립하고 Obsidian에 기록했다.
+- **사용자 요청**: T-035 필수 기술요건(배포 승인 상태에 따른 Dev/Prd 동적 전환 아키텍처 및 OpenAPI/WSDL/JDBC/금융전문 자동변환 노코딩 환경)의 개발 완료 여부 검토 및 잔여 작업에 대한 상세 구현 계획서 보고.
+- **검토 결과**: 현재 코드는 고정 사전정의 Tool 3종 및 Fixture Mock 어댑터 수준이며, 본 기능은 **미구현(개발 미완료)** 상태로 분류됨.
+- **생성 문서**: [[200.프로젝트실행/240.설계/35 MCP 및 외부 Tool 연동 노코딩 자동변환 상세 구현 계획서]]
+- **핵심 아키텍처 및 계획**:
+  - 에이전트 배포 승인 상태(Draft vs Approved/Published)에 연동되는 동적 라우팅 게이트웨이 및 암호화 Credential Vault 설계
+  - 수동 코딩 없는 4대 인터페이스(OpenAPI 3.0, WSDL SOAP, JDBC RDB, 금융 전문 ISO 8583/EAI/FEP) Auto-Wrapping 변환 엔진 설계
+  - DB 신규 마이그레이션(`041_tool_mcp_autowrap_schema.sql`) 및 `tool_definitions`, `tool_versions`, `tool_endpoint_profiles`, `tool_audit_logs` 테이블 정의
+  - 관리자 노코딩 마법사 UI(`ToolAdminPage.tsx`) 및 4단계 추진 일정(Phase 1~4) 수립
+- **다음 작업**: 사용자 검토 및 개발 착수 승인 시 Phase 1(DB 스키마 마이그레이션 및 동적 라우팅 게이트웨이 코어) 구현 진행.
+
+## 2026-10-15 · T-035 MCP 및 외부 Tool 연동·노코딩 자동변환 1차 구현 및 검증 완료
+사용자 승인("네 진행 바랍니다.")에 따라 기술요건 T-035(배포 승인 상태별 Dev/Prd 동적 분기 라우팅 아키텍처 및 OpenAPI/WSDL/JDBC/금융전문 노코딩 Auto-Wrapping 생성 환경)을 구현하고 검증을 완료했다.
+- **구현 파일**:
+  - `src/backend/migrations/052_mcp_tool_autowrap_and_dynamic_routing.sql`: 정의·버전·프로파일·감사로그 4대 테이블 스키마
+  - `src/backend/app/tools/credentials.py`: 표준 라이브러리 기반 안전한 자격증명 인증 암호화 볼트
+  - `src/backend/app/tools/parsers/`: 4대 규격(OpenAPI 3.0, WSDL SOAP, JDBC 가상화 뷰, 금융 전문 바이트 패커) 파서 모듈
+  - `src/backend/app/tools/dynamic_gateway.py`: 배포 승인 상태(`draft` vs `approved_published`) 연동 동적 라우팅 게이트웨이
+  - `src/backend/app/tools/autowrap_routes.py`: 노코딩 스펙 파싱, 등록, 동적 도구 목록 및 라우팅 호출 API
+  - `src/frontend/src/ToolAdminPage.tsx`: 연계 Connector & MCP Tool 관리 및 노코딩 마법사 페이지
+  - `src/frontend/apps/admin-web/src/App.tsx`: `🔌 연계 Tool & MCP` 사이드바 메뉴 및 라우트 연결
+  - `src/backend/tests/test_mcp_tool_autowrap.py`: 7개 핵심 단위/통합 테스트 스위트
+- **생성 문서**: [[200.프로젝트실행/250.구현/36 T-035 MCP 및 외부 Tool 연동 노코딩 자동변환 구현 결과]]
+- **검증 결과**:
+  - 백엔드 테스트: `pytest tests/test_mcp_tool_autowrap.py` 7개 전원 통과 (0.53s, 암복호화, 4대 파서, 동적 라우팅, 보안 차단)
+  - 프론트엔드 빌드: `npm run build:admin` (`modules: 51`), `npm run build:user` (`modules: 28`), `npm run build` 통합 빌드 전원 통과 (오류 0건)
+- **다음 작업**: 실제 외부 레거시/금융 FEP 시스템 연계 검증 및 워크플로우 캔버스 내 Tool 노드 데이터 매핑 고도화.

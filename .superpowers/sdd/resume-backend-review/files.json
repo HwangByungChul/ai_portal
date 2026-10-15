@@ -1,6 +1,0 @@
-[
-  "src/backend/migrations/050_tool_workflow_approval_reviews.sql",
-  "src/backend/tests/test_tool_workflow_review_http.py",
-  "src/backend/tests/test_published_agents.py",
-  "src/backend/app/assets/published.py"
-]

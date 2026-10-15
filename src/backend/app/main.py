@@ -46,6 +46,7 @@ from app.documents.worker import DocumentWorker
 from app.documents.manager import DocumentManager
 from app.documents.data_imports import router as data_imports_router
 from app.tools.routes import router as tools_router
+from app.tools.autowrap_routes import router as autowrap_tools_router
 from app.tools.repository import ToolRepository
 from app.tools.execution import ToolExecutionService
 from app.tools.registry import ToolRegistry
@@ -170,6 +171,7 @@ def create_app(settings: Settings | None = None, *, health_only: bool = False) -
         app.include_router(models_router)
         app.include_router(data_imports_router)
         app.include_router(tools_router)
+        app.include_router(autowrap_tools_router)
         app.include_router(workflows_router)
         app.include_router(workflow_approvals_router)
         app.include_router(guardrails_router)

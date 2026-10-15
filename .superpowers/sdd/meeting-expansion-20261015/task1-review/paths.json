@@ -1,9 +1,0 @@
-[
-  "src/backend/app/use_cases/meeting.py",
-  "src/backend/app/use_cases/meeting_dates.py",
-  "src/backend/app/use_cases/meeting_quality.py",
-  "src/backend/tests/test_meeting_contract.py",
-  "src/backend/tests/test_meeting_dates.py",
-  "src/backend/tests/test_meeting_quality.py",
-  "src/backend/tests/fixtures/meeting-evaluation-v2.json"
-]

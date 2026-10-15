@@ -1,7 +1,0 @@
-{
-  "pre_manifest_verified": true,
-  "post_manifest_verified": true,
-  "files": 10,
-  "production_backend_files_changed": 0,
-  "note": "portal_test_app.py is disposable harness only"
-}

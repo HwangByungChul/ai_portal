@@ -93,7 +93,12 @@ export interface WorkflowExecutionRun {run_id:string;version_id:string;workflow_
 
 export interface MeetingDocument {document_id:string;version_id:string;version_no:number;title:string;character_length:number;source_sha256:string;ready:boolean;unavailable_reason:string|null}
 export interface MeetingContext {meeting_date:string|null;memo_character_count:number;aggregate_character_count:number;documents:{document_id:string;version_id:string;source_ref:string;title:string|null;current_available:boolean}[]}
-export interface MeetingEvidenceItem {text:string;quote:string;source_ref:string;source_display?:{title:string;version_id:string;page_start?:number;page_end?:number;structure_locations?:string[];location_ambiguous:boolean}}
+export type MeetingStructureLocation =
+ | {kind:'paragraph';paragraph:number}
+ | {kind:'table_cell';table:number;row:number;column:number}
+ | {kind:'sheet';sheet_index:number;sheet_name:string}
+ | {kind:'cell';sheet_index:number;sheet_name:string;cell:string};
+export interface MeetingEvidenceItem {text:string;quote:string;source_ref:string;source_display?:{title:string;version_id:string;page_start?:number;page_end?:number;structure_locations?:MeetingStructureLocation[];location_ambiguous:boolean}}
 export interface MeetingActionItem extends MeetingEvidenceItem {assignee:string|null;due_date:string|null;due_expression?:string|null;deadline_status?:string;deadline_reason?:string|null}
 export interface MeetingResult {decisions:MeetingEvidenceItem[];unresolved:MeetingEvidenceItem[];actions:MeetingActionItem[]}
 

@@ -1,8 +1,0 @@
-{
-  "src/frontend/src/UseCaseWorkspacePage.tsx": "5943ad8fe23a9cd58f8c25c665c80582ea789a515d148d6d0efefd8b98519455",
-  "src/frontend/packages/api-contract/src/types.ts": "c2d7db3ebaccb717c2f7e82b6b7344f2c76a94ef16ed9f62c36da1e590bb1e20",
-  "src/frontend/src/MeetingDocuments.tsx": "c522f9ede2b0e0664632ce4b8dbc87dfde853b8f80c519be484b3afd09c5c8ca",
-  "src/frontend/src/MeetingQualityPanel.tsx": "91204524f4268f4490f5c6afe90076b15b86cce0048eab996f7ce644d97fa1af",
-  "src/frontend/tests/tool-workflow-approvals.spec.ts": "bf5e6eebdbb7a36721f820096aeb64c0c0fe7f38e7bbef4e20bfea67da1c6d16",
-  "src/frontend/tests/meeting-runtime.spec.ts": "77f107d1eac7c270498013b12f4d04818cb32178cb842018c95709a76142b030"
-}

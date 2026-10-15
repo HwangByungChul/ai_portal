@@ -88,4 +88,19 @@ export function UseCaseWorkspacePage({tenant,user}:{tenant:Tenant;user:User}){
 
 const deadlineLabels:Record<string,string>={resolved:'확정',unresolved:'미확정',unspecified:'기한 언급 없음',past_due:'회의일 이전 기한',meeting_date_required:'회의일 필요',ambiguous_expression:'모호한 기한 표현',unsupported_expression:'지원하지 않는 기한 표현',expression_not_in_quote:'인용에서 기한 표현 확인 불가',invalid_calendar_date:'유효하지 않은 날짜',offset_out_of_bounds:'일수 범위 초과',calendar_out_of_bounds:'날짜 범위 초과',conflicting_expressions:'기한 표현 간 날짜 불일치'};
 function deadlineLabel(value:string|null|undefined,reason:boolean){return value==null?(reason?'없음':'과거 정보 없음'):(deadlineLabels[value]??'확인 필요 (알 수 없는 기한 정보)');}
-function Evidence({item}:{item:MeetingEvidenceItem}){const display=item.source_display;return <><p>출처: {item.source_ref==='memo'?'회의 메모':display?.title??'과거 출처 정보 없음'}{display&&<> · 버전 {display.version_id.slice(0,8)}{display.page_start!==undefined&&' · 페이지 '+display.page_start+(display.page_end!==undefined?'~'+display.page_end:'')}{display.structure_locations?.length?' · '+display.structure_locations.join(', '):''}{display.location_ambiguous?' · 동일 인용 위치가 여러 곳: 사람 확인 필요':''}</>}</p><details><summary>정확한 출처·버전 식별자</summary><p>{item.source_ref??'과거 출처 정보 없음'}</p>{display&&<p>버전: {display.version_id}</p>}</details><blockquote>{item.quote}</blockquote></>;}
+function Evidence({item}:{item:MeetingEvidenceItem}){const display=item.source_display;return <><p>출처: {item.source_ref==='memo'?'회의 메모':display?.title??'과거 출처 정보 없음'}{display&&<> · 버전 {display.version_id.slice(0,8)}{display.page_start!==undefined&&' · 페이지 '+display.page_start+(display.page_end!==undefined?'~'+display.page_end:'')}{display.structure_locations?.length?' · '+display.structure_locations.map(formatStructureLocation).join(', '):''}{display.location_ambiguous?' · 동일 인용 위치가 여러 곳: 사람 확인 필요':''}</>}</p><details><summary>정확한 출처·버전 식별자</summary><p>{item.source_ref??'과거 출처 정보 없음'}</p>{display&&<p>버전: {display.version_id}</p>}</details><blockquote>{item.quote}</blockquote></>;}
+
+// Display only server mapping fields; future or malformed DTOs must not invent a location.
+function formatStructureLocation(value:unknown):string {
+ const fallback='위치 확인 필요';
+ if(!value||typeof value!=='object')return fallback;
+ const loc=value as Record<string,unknown>;
+ const positive=(n:unknown):n is number=>typeof n==='number'&&Number.isSafeInteger(n)&&n>0;
+ if(loc.kind==='paragraph'&&positive(loc.paragraph))return `문단 ${loc.paragraph}`;
+ if(loc.kind==='table_cell'&&positive(loc.table)&&positive(loc.row)&&positive(loc.column))return `표 ${loc.table} · ${loc.row}행 ${loc.column}열`;
+ if((loc.kind==='sheet'||loc.kind==='cell')&&positive(loc.sheet_index)&&typeof loc.sheet_name==='string'&&loc.sheet_name.trim()){
+  if(loc.kind==='sheet')return `시트 ${loc.sheet_index} (${loc.sheet_name})`;
+  if(typeof loc.cell==='string'&&/^[A-Z]{1,3}[1-9][0-9]{0,6}$/.test(loc.cell))return `시트 ${loc.sheet_index} (${loc.sheet_name}) · 셀 ${loc.cell}`;
+ }
+ return fallback;
+}

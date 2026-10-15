@@ -1,2 +1,0 @@
-Final I1 correction command: src/backend/.venv/bin/python -m pytest src/backend/tests/test_meeting_contract.py src/backend/tests/test_meeting_dates.py src/backend/tests/test_meeting_quality.py -q
-76 passed in 0.31s
