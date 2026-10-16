@@ -949,3 +949,61 @@ local SQL029 적용 전 private backup, 기존37표 행·prior29개 checksum 보
   - 백엔드 테스트: `pytest tests/test_mcp_tool_autowrap.py` 7개 전원 통과 (0.53s, 암복호화, 4대 파서, 동적 라우팅, 보안 차단)
   - 프론트엔드 빌드: `npm run build:admin` (`modules: 51`), `npm run build:user` (`modules: 28`), `npm run build` 통합 빌드 전원 통과 (오류 0건)
 - **다음 작업**: 실제 외부 레거시/금융 FEP 시스템 연계 검증 및 워크플로우 캔버스 내 Tool 노드 데이터 매핑 고도화.
+## 2026-10-16 · 미완료 기능 잔여 상세개발 계획 작성
+
+사용자 요청: 현재 미완료건의 상세개발서를 작성하고 Obsidian에 기록.
+
+- 최신 기능 감사보고서(2026-10-12), 화면·기술 대조표, 계획29~36, 회의록 Task1~3 증거, W4/W5, 관리 B 구현, T-035 구현, 기존 계정 DB 전환 보고서를 확인했다.
+- 통합 상세계획 [[100.프로젝트계획/37 미완료 기능 잔여 개발 통합 상세 계획]]을 작성했다. 회의록 migration051 이행 및 서비스 복구, AGENT_03 업무 품질 수용, UI Studio 저장·승인·실행 연결, T-035 connector 실연동, 장기 Workflow 수동복구, F/IA/T 잔여 재대조와 독립 기능 패키지를 포함한다.
+- 완료된 구현과 남은 실연동·업무 수용·운영 배포를 분리했고, 과거 F/IA/T 집계는 10월 12일 기준으로 표시했다. PPTX/OCR 보류·거버넌스 제외·나머지9 Agent 후속 결정과 기존 SQL checksum 보존 조건을 유지했다.
+- 변경 파일: 계획37 및 본 작업 로그. 앱 코드·DB·서비스·운영 설정 변경 없음. 검증은 문서/증거/소스 현황 대조이며 신규 시험을 실행하지 않았다.
+- 미완료: 계획 문서이므로 개별 Workstream의 별도 착수 승인·개발·실제 수용은 아직 수행하지 않았다. 우선순위는 계획37 §13에 기록했다.
+
+## 2026-10-16 · 잔여 기능 개발 진행 — migration 051 및 Workflow Studio 안전 보정
+
+사용자 요청: 미완료 기능 잔여 개발 진행.
+
+- **회의록 DB 이행**: 활성 개발 DB를 식별하고 000~050 checksum 보존을 확인했다. 비공개 runtime 경로에 전체 백업을 생성한 뒤 별도 fixture DB에 복원해 기존 67개 테이블 데이터와 스키마/RLS/정책/함수·trigger·constraint를 대조했다. 활성 DB에는 051만 적용했다. 신규 회의록 표는 비어 있고 FORCE RLS 적용, 052 미적용이다.
+- **서비스 생존 확인**: API8000 health, 사용자5173 `/user/home`, 관리자5174 `/manage/admin` 모두 HTTP 200. 서비스는 로컬 개발용으로 기동 중이다.
+- **Workflow Studio 코드**: `src/frontend/src/workflow/WorkflowStudio.tsx`에 승인 버전 선택을 추가했고, 실행 실패를 모의 성공으로 표시하던 폴백을 제거했다. 캔버스 편집 데이터 미저장 및 캔버스 그래프와 승인 버전 실행의 비연결 상태를 UI에 안내한다.
+- **계약 조사 결과**: 기존 승인 Workflow API로 개인 초안을 저장/조회할 수 없고 별도 영속 초안 테이블도 없다. 승인 endpoint 오용은 피했다. CAS/RLS를 갖춘 draft API·schema 및 그래프↔strict definition 변환이 다음 구현이다.
+- **실제 변경 파일**: `src/frontend/src/workflow/WorkflowStudio.tsx`; Obsidian 계획 [[100.프로젝트계획/37 미완료 기능 잔여 개발 통합 상세 계획]], 구현 중간 보고 [[200.프로젝트실행/250.구현/2026-10-16 잔여 기능 개발 중간 보고서]], 작업 로그.
+- **검증·증거**: DB backup/restore 대조 및 적용 후 구조 증거는 비공개 `src/backend/.runtime/backups/migration051-20261016/`에 보존했다. 051 checksum은 `27ee90023c2ed9172b16cef74aecfc90906d05698d73f95ddd0fb1cf2bc2db09`. 사용자/admin/API의 세 HTTP 확인은 통과했다. 자동 테스트·build·브라우저 검증은 실행하지 않았다.
+- **미완료 범위**: 기존 계정 로그인/핵심 API와 회의록 권한 시나리오 회귀, 실제 회의 업무 품질 수용, Workflow Draft 저장/복원·승인 제출/trace 연결, 장애 재개, T-035 실기관 연결, F/IA/T 최신 재대조.
+- **다음 작업**: Workflow Draft tenant/owner RLS·revision/CAS 계약을 새 migration/API로 설계·구현하고 Studio에서 저장·불러오기 및 승인 definition 변환을 연결한다. 회의록 API 및 기존 흐름 수용은 별도 검증 단계에서 진행한다.
+
+## 2026-10-16 · Workflow Studio 초안 저장 구현 및 migration 이행
+
+사용자 요청: 남은 기능 개발 계속 진행.
+
+- **설계·구현 결정**: 기존 승인 Workflow API는 immutable approval version을 관리하므로 개인 편집 초안에 재사용하지 않았다. 별도 개인/테넌트 초안 revision 저장을 추가했다. 저장된 초안은 승인·게시·실행 권한을 주지 않는다.
+- **변경한 실제 파일**:
+  - `src/backend/migrations/053_workflow_studio_drafts.sql`: immutable owner-scoped revision rows, CAS/idempotent request key, strict size/shape constraints, audit event, FORCE RLS 및 최소 권한 function을 추가.
+  - `src/backend/app/workflows/routes.py`: `/api/v1/workflows/drafts` 목록·저장 및 `/drafts/{draft_id}` 상세 endpoint, strict request schema, owner-management gate 입력 검증을 추가.
+  - `src/frontend/src/workflow/WorkflowStudio.tsx`: draft 저장/불러오기 UI, 저장 요청 replay ID 보존, 승인 exact version 선택 실행, 실패 모의 성공 제거 및 draft/execution 상태 안내를 구현.
+- **DB 이행**: 기존 pending 052와 새 053을 적용하기 전 private custom backup을 생성하고 별도 fixture DB에 복원했다. 복원 전후 기존 테이블 행 digest가 일치했으며, clone에서 052·053 순차 적용을 먼저 확인한 뒤 활성 DB에 같은 순서로 이행했다. 기존 000~051 checksum과 business row digests가 유지됐고 초안 table은 0행/FORCE RLS=true. 052 checksum `e8663b23e121343ba644ec7f44dda1ca194e67f3751d9ba66056ea0bb72d867e`, 053 checksum `62b8624d036d3b8d823585ec4d6754157683ab72bd16c101fe98c5118fdaf288`. 비공개 증거와 backup SHA는 중간 보고서 참조.
+- **복원 시험 중 오류 처리**: 첫 053 SQL parse 오류는 clone transaction에서 감지되어 전부 rollback되고 활성 DB에는 영향이 없었다. 식을 수정한 뒤 다시 별도 clone에서 두 migration 적용을 확인했다.
+- **서비스 및 빌드**: backend 정상 재기동, health HTTP 200. 초안 API 익명 GET은 401 AUTH_REQUIRED. `npm run build:admin` 통과(51 modules, boundary true), `npm run build:user` 통과(28 modules, boundary true). 첫 build의 UUID state type 오류를 수정 후 재통과했다.
+- **미완료·제한**: 인증된 draft save/load 및 CAS/role denial 시나리오, 브라우저 왕복은 아직 미검증. 캔버스 노드를 strict 승인 정의로 변환하고 기존 승인 B 제출/receipt와 실행 trace에 연결하는 기능이 남았다. 회의록 업무 의미 품질, 장기 run 복구, T-035 실제 기관 연결, 최신 F/IA/T 재대조도 미완료다.
+- **다음 작업**: `workflowAdapter.ts`에서 UI 좌표/편집 설정과 실행 config를 분리하고 지원 노드만 승인 schema로 매핑한다. 저장된 exact revision 검증·타인 승인 제출 연결 후 권한/CAS/browser 수용을 진행한다.
+
+## 2026-10-16 · Workflow Studio 승인 제출 연결
+
+사용자 지시: 잔여 개발을 계속 진행. 다음 항목인 캔버스 초안→기존 Workflow 타인 승인 흐름 연결을 진행했다.
+
+- **변경한 실제 파일**: `src/frontend/src/workflow/workflowAdapter.ts`, `src/frontend/src/CanvasWorkflowApprovalRequest.tsx`, `src/frontend/src/workflow/WorkflowStudio.tsx`. 계획37 및 구현 중간 보고서도 갱신했다.
+- **동작**: 현재 캔버스 fingerprint가 저장 성공 당시 exact revision과 일치할 때만 승인 요청 UI를 연다. 저장 후 편집이 바뀌면 요청 UI가 닫히며 재저장 전 제출할 수 없다. 승인 변환은 선형 입력→선택 Tool→exact 게시 Agent→출력으로 제한하고 prompt·knowledge·logic 및 분기/병합은 거부한다. Agent binding은 입력/선행 Tool 결과/문자열 중 변수마다 명시 선택이다. Tool descriptor digest와 Agent version/publication revision을 봉인하고 기존 strict 서버 validation 및 타인 승인 제출 API와 승인 B receipt를 사용한다. 승인된 Workflow의 input_key로 실행 입력을 전달한다.
+- **승인 경계**: 요청 접수는 승인·게시·실행 상태가 아니다. Studio 실행은 기존 승인 exact version을 대상으로 한다. saved draft revision 자체에 approval receipt backlink를 저장하지 않는다.
+- **검증**: `npm run build:admin` 통과(52 modules, boundary true), `npm run build:user` 통과(28 modules, boundary true). 최종 admin 번들 705.78 kB 경고. 최초 타입 검사에서 pagination 응답 implicit-any를 발견해 명시 타입으로 보정한 뒤 두 빌드를 순차 통과했다. 자동 테스트와 인증 브라우저 수용은 실행하지 않았다.
+- **미완료**: 별도 계정의 draft owner/tenant/RLS denial·CAS/idempotent retry와 브라우저 왕복, 타인 PADMIN 제출/반려/재신청 실수용, 게시 후 exact version 실행 및 trace, draft↔approval 탐색 연결, 장애 복구·회의록 업무 품질·T-035 기관 연결·F/IA/T 재대조.
+- **다음 작업**: 별도 권한 계정과 fixture에서 draft·승인 수용 시나리오를 확인하고 Workflow 수동복구 단위를 진행한다. 이후 계획37의 다른 잔여 범위를 계속 수행한다.
+
+
+## 2026-10-16 · Workflow 중단 실행 수동 복구 구현
+사용자 요청: 미완료 기능 잔여 개발 계속 진행. 계획37의 수동 Workflow 복구 Workstream을 진행했다.
+
+- **구현**: 신청자 본인 요청 → 다른 PADMIN의 승인/반려 → 신청자 재개 확정 흐름과 owner/admin UI를 추가했다. 성공 checkpoint는 이어쓰고 알 수 없는 Tool receipt 및 미종료 Agent child는 재호출하지 않는다. 재시도 idempotency 및 stale head 검증을 055로 보완했다.
+- **실제 변경 파일**: `src/backend/migrations/054_workflow_manual_recovery.sql`, `055_workflow_recovery_retry_guards.sql`, `src/backend/app/workflows/repository.py`, `service.py`, `routes.py`, `src/frontend/packages/api-contract/src/types.ts`, `src/frontend/src/WorkflowCanvasPage.tsx`. 정식 상세 결과 [[200.프로젝트실행/250.구현/37 Workflow 중단 실행 수동 복구 구현 결과]] 및 통합 중간 보고 [[200.프로젝트실행/250.구현/2026-10-16 잔여 기능 개발 중간 보고서]].
+- **DB/증거**: 백업 후 별도 fixture clone restore 및 migration 055 선적용 검증, 기존 74개 테이블 행 digest와 55개 기존 migration checksum 보존, 활성 DB 이행 후 stale service-control 기록으로 listener가 응답하지 않아 backend 및 두 frontend 소유 프로세스를 정상 재시작했고 API8000·사용자5173·관리자5174 HTTP 200을 확인했다. migration SHA `b4b23c6cde5d27cd2640b51fa8ea93b8698c89b11e30871d0468aa4bddf8e958`, backup SHA `e50a873323ec37df56f9f5ac70aa6f4d7d4d4a3ad9837922be209d5e5bf7aead`; 상세 proof는 private runtime 경로에 보관했다.
+- **검증**: Python compileall, admin build(52 modules, boundary true), user build(28 modules, boundary true) 통과. admin bundle 712.24 kB 크기 경고. 자동 tests 및 authenticated browser/2-user approval-resume 수용은 미실행이며 그 범위는 완료 판정하지 않았다.
+- **미완료/다음 작업**: 인증된 신청자/PADMIN 왕복, denial/CAS/replay 시나리오; 외부 Tool/Agent 결과의 기관별 조회·조정; 기존 meeting 품질, T-035 실기관 수용, 전체 기능 재대조.

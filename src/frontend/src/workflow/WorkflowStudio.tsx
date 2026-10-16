@@ -18,6 +18,7 @@ import '@xyflow/react/dist/style.css';
 import './workflowStudio.css';
 
 import {nodeTypes} from './WorkflowCustomNodes';
+import {CanvasWorkflowApprovalRequest} from '../CanvasWorkflowApprovalRequest';
 import {WorkflowPalette} from './WorkflowPalette';
 import {WorkflowInspector} from './WorkflowInspector';
 import {
@@ -83,6 +84,13 @@ function WorkflowStudioInner({tenant, user}: {tenant: Tenant; user: User}) {
   // 실행 및 API 상태
   const [tools, setTools] = useState<ToolInfo[]>([]);
   const [versions, setVersions] = useState<ApprovedWorkflowSummary[]>([]);
+  const [drafts, setDrafts] = useState<{draft_id:string;revision:number;name:string;description:string}[]>([]);
+  const [draftId, setDraftId] = useState<string>(() => crypto.randomUUID());
+  const [draftRevision, setDraftRevision] = useState(0);
+  const [savedFingerprint, setSavedFingerprint] = useState('');
+  const [showApprovalRequest, setShowApprovalRequest] = useState(false);
+  const [draftBusy, setDraftBusy] = useState(false);
+  const [selectedDraft, setSelectedDraft] = useState('');
   const [selectedVersion, setSelectedVersion] = useState<string>('');
   const [queryInput, setQueryInput] = useState('개인사업자 운전자금 5천만원 한도 심사 요청');
   const [run, setRun] = useState<WorkflowExecutionRun | null>(null);
@@ -93,6 +101,7 @@ function WorkflowStudioInner({tenant, user}: {tenant: Tenant; user: User}) {
   const [showConsole, setShowConsole] = useState(false);
 
   const requestRef = useRef<{version: string; query: string; client: string} | null>(null);
+  const draftRequestRef = useRef<{fingerprint:string;client:string}|null>(null);
 
   // 노드 조작 콜백
   const handleDeleteNode = useCallback((id: string) => {
@@ -134,13 +143,15 @@ function WorkflowStudioInner({tenant, user}: {tenant: Tenant; user: User}) {
   useEffect(() => {
     async function loadData() {
       try {
-        const [catalogRes, toolsRes] = await Promise.all([
+        const [catalogRes, toolsRes, draftsRes] = await Promise.all([
           api.request<{items: ApprovedWorkflowSummary[]}>('/workflows/catalog', options),
-          api.request<{items: ToolInfo[]}>('/tools', options)
+          api.request<{items: ToolInfo[]}>('/tools', options),
+          api.request<{items: {draft_id:string;revision:number;name:string;description:string}[]}>('/workflows/drafts', options)
         ]);
         if (scope.current()) {
           setVersions(catalogRes.items);
           setTools(toolsRes.items);
+          setDrafts(draftsRes.items);
           if (catalogRes.items.length > 0) {
             setSelectedVersion(catalogRes.items[0].version_id);
           }
@@ -151,6 +162,56 @@ function WorkflowStudioInner({tenant, user}: {tenant: Tenant; user: User}) {
     }
     void loadData();
   }, []);
+
+  const editorGraph = {nodes: flowToBackendNodes(nodes), edges: flowToBackendEdges(edges)};
+  const editorFingerprint = JSON.stringify({name:workflowMeta.name,description:workflowMeta.description,graph:editorGraph});
+  const isCurrentDraftSaved = draftRevision > 0 && savedFingerprint === editorFingerprint;
+  useEffect(()=>{if(!isCurrentDraftSaved)setShowApprovalRequest(false);},[isCurrentDraftSaved]);
+
+  async function refreshDrafts() {
+    const result = await api.request<{items: {draft_id:string;revision:number;name:string;description:string}[]}>('/workflows/drafts', options);
+    if (scope.current()) setDrafts(result.items);
+  }
+
+  async function saveDraft() {
+    if (draftBusy) return;
+    setDraftBusy(true); setError(null);
+    try {
+      const fingerprint = JSON.stringify({draftId,expected_revision:draftRevision,name:workflowMeta.name,description:workflowMeta.description,graph:editorGraph});
+      if (draftRequestRef.current?.fingerprint !== fingerprint) draftRequestRef.current={fingerprint,client:crypto.randomUUID()};
+      const result = await api.request<{revision:number}>('/workflows/drafts', {
+        ...options, method: 'POST',
+        body: {draft_id:draftId,client_request_id:draftRequestRef.current.client,expected_revision:draftRevision,
+          name:workflowMeta.name,description:workflowMeta.description,graph:editorGraph}
+      });
+      if (scope.current()) {
+        draftRequestRef.current=null;
+        setDraftRevision(result.revision);
+        setSavedFingerprint(editorFingerprint);
+        setSelectedDraft(draftId);
+        await refreshDrafts();
+        setStatusMessage(`초안 ${result.revision}차 버전을 저장했습니다. 승인·실행 상태가 아닙니다.`);
+      }
+    } catch (problem: any) {
+      if (scope.current()) setError(problem?.message || '초안 저장에 실패했습니다. 최신 버전을 다시 불러오세요.');
+    } finally { if (scope.current()) setDraftBusy(false); }
+  }
+
+  async function loadDraft(id: string) {
+    if (!id || draftBusy) return;
+    setDraftBusy(true); setError(null);
+    try {
+      const result = await api.request<{draft_id:string;revision:number;name:string;description:string;graph:{nodes:WorkflowNodeInfo[];edges:WorkflowEdgeInfo[]}}>(`/workflows/drafts/${id}`, options);
+      if (!scope.current()) return;
+      const graph = backendToFlowGraph(result.graph.nodes,result.graph.edges,{onDeleteNode:handleDeleteNode,onDuplicateNode:handleDuplicateNode});
+      setNodes(graph.nodes); setEdges(graph.edges);
+      setWorkflowMeta(current=>({...current,name:result.name,description:result.description}));
+      setDraftId(result.draft_id); setDraftRevision(result.revision); setSelectedDraft(id);
+      setSavedFingerprint(JSON.stringify({name:result.name,description:result.description,graph:{nodes:flowToBackendNodes(graph.nodes),edges:flowToBackendEdges(graph.edges)}}));
+      setStatusMessage(`초안 ${result.revision}차 버전을 불러왔습니다. 승인·실행 전용 버전은 아닙니다.`);
+    } catch (problem: any) { if (scope.current()) setError(problem?.message || '초안을 불러오지 못했습니다.'); }
+    finally { if (scope.current()) setDraftBusy(false); }
+  }
 
   // 엣지 연결 이벤트
   const onConnect = useCallback(
@@ -334,7 +395,7 @@ function WorkflowStudioInner({tenant, user}: {tenant: Tenant; user: User}) {
 
   // 워크플로우 실행
   const handleRunWorkflow = async () => {
-    if (!queryInput.trim() || busy) return;
+    if (!queryInput.trim() || busy || !selectedVersion) return;
     setBusy(true);
     setError(null);
     setShowConsole(true);
@@ -347,7 +408,7 @@ function WorkflowStudioInner({tenant, user}: {tenant: Tenant; user: User}) {
       }))
     );
 
-    const versionToRun = selectedVersion || versions[0]?.version_id;
+    const versionToRun = selectedVersion;
     const query = queryInput.trim();
     if (!requestRef.current || requestRef.current.query !== query) {
       requestRef.current = {
@@ -358,31 +419,28 @@ function WorkflowStudioInner({tenant, user}: {tenant: Tenant; user: User}) {
     }
 
     try {
+      const selectedDefinition = versions.find(version => version.version_id === versionToRun);
+      if (!selectedDefinition?.input_key) throw new Error('승인 Workflow 입력 키 정보를 다시 불러오세요.');
       const res = await api.request<WorkflowExecutionRun>('/workflows/run', {
         ...options,
         method: 'POST',
         body: {
           version_id: versionToRun,
           client_request_id: requestRef.current.client,
-          inputs: {query}
+          inputs: {[selectedDefinition.input_key]:query}
         }
       });
       if (scope.current()) {
         setRun(res);
       }
     } catch (err: any) {
-      // 모의 실행 상태 시뮬레이션
-      setTimeout(() => {
-        setNodes((nds) =>
-          nds.map((n) => ({
-            ...n,
-            data: {...(n.data as unknown as StudioNodeData), status: 'completed'}
-          }))
-        );
-        setStatusMessage('✨ 시각적 워크플로우 실행이 완료되었습니다.');
-        setBusy(false);
-      }, 1200);
-      return;
+      if (scope.current()) {
+        setNodes((nds) => nds.map((n) => ({
+          ...n,
+          data: {...(n.data as unknown as StudioNodeData), status: 'idle'}
+        })));
+        setError(err?.message || '승인된 Workflow 실행 요청에 실패했습니다.');
+      }
     } finally {
       setBusy(false);
     }
@@ -451,6 +509,38 @@ function WorkflowStudioInner({tenant, user}: {tenant: Tenant; user: User}) {
           </div>
 
           <div className="workflow-studio-actions">
+            <label className="workflow-btn workflow-btn-secondary" style={{display:'flex',alignItems:'center',gap:6}}>
+              저장된 초안
+              <select aria-label="불러올 Workflow 초안" value={selectedDraft} disabled={draftBusy} onChange={e=>void loadDraft(e.target.value)}>
+                <option value="">초안 선택</option>
+                {drafts.map(draft=><option key={draft.draft_id} value={draft.draft_id}>{draft.name} · r{draft.revision}</option>)}
+              </select>
+            </label>
+            <button type="button" className="workflow-btn workflow-btn-secondary" disabled={draftBusy} onClick={()=>{setDraftId(crypto.randomUUID());setDraftRevision(0);setSelectedDraft('');setStatusMessage('새 초안 편집 중입니다. 저장하면 개인 초안으로 보관됩니다.');}}>
+              새 초안
+            </button>
+            <button type="button" className="workflow-btn workflow-btn-primary" disabled={draftBusy} onClick={()=>void saveDraft()}>
+              {draftBusy ? '초안 처리 중...' : `초안 저장 · r${draftRevision}`}
+            </button>
+            <button type="button" className="workflow-btn workflow-btn-secondary" disabled={!isCurrentDraftSaved||draftBusy} onClick={()=>setShowApprovalRequest(true)} title={isCurrentDraftSaved?'저장된 revision을 승인 요청으로 변환합니다.':'현재 편집 내용을 먼저 저장하세요.'}>
+              승인 요청 준비
+            </button>
+            <label className="workflow-btn workflow-btn-secondary" style={{display: 'flex', alignItems: 'center', gap: 6}}>
+              승인 버전
+              <select
+                aria-label="실행할 승인 Workflow 버전"
+                value={selectedVersion}
+                onChange={(e) => setSelectedVersion(e.target.value)}
+                disabled={busy || versions.length === 0}
+              >
+                <option value="">승인된 버전 없음</option>
+                {versions.map((version) => (
+                  <option key={version.version_id} value={version.version_id}>
+                    {version.name} · r{version.revision}{version.execution_ready ? '' : ' · 실행 준비 안 됨'}
+                  </option>
+                ))}
+              </select>
+            </label>
             <button
               type="button"
               className="workflow-btn workflow-btn-secondary"
@@ -478,9 +568,9 @@ function WorkflowStudioInner({tenant, user}: {tenant: Tenant; user: User}) {
               type="button"
               className="workflow-btn workflow-btn-primary"
               onClick={() => void handleRunWorkflow()}
-              disabled={busy}
+              disabled={busy || !selectedVersion}
             >
-              {busy ? '실행 중...' : '▶ 워크플로우 실행'}
+              {busy ? '실행 중...' : '▶ 승인 버전 실행'}
             </button>
           </div>
         </div>
@@ -534,6 +624,11 @@ function WorkflowStudioInner({tenant, user}: {tenant: Tenant; user: User}) {
           </button>
         </div>
       )}
+      <div role="note" style={{padding: '8px 20px', fontSize: 12, color: '#475569', background: '#F8FAFC', borderBottom: '1px solid #E2E8F0'}}>
+        캔버스는 개인 초안으로 저장·불러올 수 있습니다. 초안은 승인을 받거나 실행되지 않으며, 실행은 선택한 승인 버전에만 적용됩니다.
+      </div>
+
+      {showApprovalRequest&&isCurrentDraftSaved&&<div style={{padding:16}}><CanvasWorkflowApprovalRequest tenant={tenant} user={user} draft={{draft_id:draftId,revision:draftRevision}} name={workflowMeta.name} description={workflowMeta.description} nodes={nodes} edges={edges} onClose={()=>setShowApprovalRequest(false)}/></div>}
 
       {/* 2. 메인 3-Pane 작업 영역 */}
       <div className="workflow-studio-body" ref={reactFlowWrapper}>

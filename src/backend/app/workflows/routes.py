@@ -1,9 +1,9 @@
 """Approval-gated immutable Workflow version APIs."""
 from typing import Any,Literal
 from uuid import UUID
-from pydantic import BaseModel,ConfigDict,Field,StrictInt,StrictStr
+from pydantic import BaseModel,ConfigDict,Field,StrictInt,StrictStr,model_validator
 from fastapi import APIRouter,Request
-from app.workflows.models import WorkflowDefinition
+from app.workflows.models import WorkflowDefinition,WorkflowNode,WorkflowEdge
 from app.approval_reviews.models import ReviewComment
 from app.approval_reviews.repository import ReviewRepository,query_page,secret
 from app.use_cases.meeting import meeting_contract
@@ -47,6 +47,42 @@ class LegacyRunWorkflow(BaseModel):
  workflow:WorkflowDefinition
  inputs:dict[str,Any]=Field(default_factory=dict)
 
+class StudioDraftGraph(BaseModel):
+ model_config=ConfigDict(extra='forbid')
+ nodes:list[WorkflowNode]=Field(min_length=1,max_length=20)
+ edges:list[WorkflowEdge]=Field(max_length=30)
+ @model_validator(mode='after')
+ def endpoints(self):
+  ids={node.node_id for node in self.nodes}
+  if len(ids)!=len(self.nodes) or any(edge.source_node not in ids or edge.target_node not in ids or edge.source_node==edge.target_node for edge in self.edges):
+   raise ValueError('WORKFLOW_DRAFT_GRAPH_INVALID')
+  if len({(edge.source_node,edge.target_node) for edge in self.edges})!=len(self.edges):raise ValueError('WORKFLOW_DRAFT_GRAPH_INVALID')
+  return self
+
+class SaveStudioDraft(BaseModel):
+ model_config=ConfigDict(extra='forbid')
+ draft_id:UUID
+ client_request_id:UUID
+ expected_revision:StrictInt=Field(ge=0,le=9223372036854775806)
+ name:StrictStr=Field(min_length=1,max_length=120)
+ description:StrictStr=Field(max_length=500)
+ graph:StudioDraftGraph
+ @model_validator(mode='after')
+ def clean(self):
+  if not self.name.strip() or self.name!=self.name.strip() or '\x00' in self.name or '\x00' in self.description:raise ValueError('WORKFLOW_DRAFT_TEXT_INVALID')
+  serialized=self.graph.model_dump(mode='json')
+  if len(str(serialized).encode('utf-8'))>24576:raise ValueError('WORKFLOW_DRAFT_TOO_LARGE')
+  forbidden=('password','secret','token','credential','api_key','apikey','client_secret')
+  def scan(value):
+   if isinstance(value,dict):
+    for key,item in value.items():
+     if any(part in str(key).casefold() for part in forbidden):raise ValueError('WORKFLOW_DRAFT_SECRET_FIELD')
+     scan(item)
+   elif isinstance(value,list):
+    for item in value:scan(item)
+  scan(serialized)
+  return self
+
 def repository(request):
  value=getattr(request.app.state,'workflow_repository',None)
  if value is None:raise AppError('EXECUTION_NOT_READY',409)
@@ -58,6 +94,28 @@ async def catalog(request:Request):
  result=await repository(request).approval(ctx,'catalog',None,{},request.app.state.settings.mode)
  ready=bool(getattr(request.app.state,'workflow_execution',None)) and request.app.state.settings.execution_enabled
  return response(request,{'items':[item|{'execution_ready':ready} for item in result['items']]})
+
+@router.get('/drafts')
+async def list_studio_drafts(request:Request):
+ ctx=await context(request)
+ if request.query_params:raise AppError('REQUEST_INVALID',422)
+ data=await repository(request).call(ctx,'workflow_studio_draft_control',(ctx.session_id,ctx.tenant_id,'list',None,WorkflowRepository.json({}),UUID(request.state.request_id)))
+ return response(request,data)
+
+@router.get('/drafts/{draft_id}')
+async def read_studio_draft(request:Request,draft_id:UUID,revision:StrictInt|None=None):
+ ctx=await context(request)
+ if len(request.query_params)>1 or 'revision' in request.query_params and (revision is None or revision<1):raise AppError('REQUEST_INVALID',422)
+ data=await repository(request).call(ctx,'workflow_studio_draft_control',(ctx.session_id,ctx.tenant_id,'detail',draft_id,WorkflowRepository.json({'revision':revision} if revision else {}),UUID(request.state.request_id)))
+ return response(request,data)
+
+@router.post('/drafts')
+async def save_studio_draft(request:Request,body:SaveStudioDraft):
+ ctx=await context(request,write=True)
+ if request.query_params:raise AppError('REQUEST_INVALID',422)
+ payload=body.model_dump(mode='json',exclude={'draft_id'})
+ data=await repository(request).call(ctx,'workflow_studio_draft_control',(ctx.session_id,ctx.tenant_id,'save',body.draft_id,WorkflowRepository.json(payload),UUID(request.state.request_id)))
+ return response(request,data,status_code=200 if data.get('replayed') else 201)
 
 @router.post('/validate')
 async def validate_workflow(request:Request,body:WorkflowDefinition):
@@ -88,6 +146,34 @@ class CancelWorkflow(BaseModel):
  model_config=ConfigDict(extra='forbid')
  expected_revision:StrictInt=Field(ge=1,le=9223372036854775806)
 
+class WorkflowRecoveryRequest(BaseModel):
+ model_config=ConfigDict(extra='forbid')
+ client_request_id:UUID
+ expected_run_revision:StrictInt=Field(ge=1,le=9223372036854775806)
+ resume_node_id:StrictStr=Field(min_length=1,max_length=64)
+ reason:StrictStr=Field(min_length=8,max_length=1000)
+ @model_validator(mode='after')
+ def clean_reason(self):
+  if self.reason!=self.reason.strip() or '\x00' in self.reason:raise ValueError('RECOVERY_REASON_INVALID')
+  return self
+
+class WorkflowRecoveryDecision(BaseModel):
+ model_config=ConfigDict(extra='forbid')
+ client_request_id:UUID
+ expected_run_revision:StrictInt=Field(ge=1,le=9223372036854775806)
+ decision:Literal['approve','reject']
+ comment:StrictStr=Field(min_length=8,max_length=1000)
+ @model_validator(mode='after')
+ def clean_comment(self):
+  if self.comment!=self.comment.strip() or '\x00' in self.comment:raise ValueError('RECOVERY_COMMENT_INVALID')
+  return self
+
+class WorkflowResume(BaseModel):
+ model_config=ConfigDict(extra='forbid')
+ client_request_id:UUID
+ request_id:UUID
+ expected_run_revision:StrictInt=Field(ge=1,le=9223372036854775806)
+
 @router.post('/runs/{run_id}/cancel')
 async def cancel_workflow(request:Request,run_id:UUID,body:CancelWorkflow):
  ctx=await context(request,write=True)
@@ -95,6 +181,36 @@ async def cancel_workflow(request:Request,run_id:UUID,body:CancelWorkflow):
  service=getattr(request.app.state,'workflow_control',None)
  if service is None:raise AppError('EXECUTION_NOT_READY',409)
  return response(request,await service.cancel(ctx,run_id,body.expected_revision,UUID(request.state.request_id)))
+
+@router.post('/runs/{run_id}/recovery-requests')
+async def request_workflow_recovery(request:Request,run_id:UUID,body:WorkflowRecoveryRequest):
+ ctx=await context(request,write=True)
+ data=await repository(request).recovery(ctx,'request',run_id,body.model_dump(mode='json'),UUID(request.state.request_id))
+ return response(request,data,status_code=200 if data.get('replayed') else 201)
+
+@router.get('/runs/{run_id}/recovery-requests')
+async def own_workflow_recovery(request:Request,run_id:UUID):
+ ctx=await context(request)
+ if request.query_params:raise AppError('REQUEST_INVALID',422)
+ return response(request,await repository(request).recovery(ctx,'mine',run_id))
+
+@router.post('/runs/{run_id}/resume')
+async def resume_workflow(request:Request,run_id:UUID,body:WorkflowResume):
+ ctx=await context(request,write=True)
+ service=getattr(request.app.state,'workflow_control',None)
+ if service is None:raise AppError('EXECUTION_NOT_READY',409)
+ return response(request,await service.resume(ctx,run_id,body.model_dump(mode='json'),UUID(request.state.request_id)))
+
+@router.get('/admin/recovery')
+async def list_workflow_recovery(request:Request):
+ ctx=await context(request)
+ if request.query_params:raise AppError('REQUEST_INVALID',422)
+ return response(request,await repository(request).recovery(ctx,'list'))
+
+@router.post('/admin/recovery/{request_id}/decision')
+async def decide_workflow_recovery(request:Request,request_id:UUID,body:WorkflowRecoveryDecision):
+ ctx=await context(request,write=True)
+ return response(request,await repository(request).recovery(ctx,'decide',request_id,body.model_dump(mode='json'),UUID(request.state.request_id)))
 
 @admin.get('')
 async def list_approvals(request:Request):

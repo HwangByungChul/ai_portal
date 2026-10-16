@@ -119,6 +119,12 @@ class WorkflowExecutionService:
         if task is not None:task.cancel()
         return data
 
+    async def resume(self,ctx,parent,body,trace=None):
+        result=await self.repository.recovery(ctx,'resume',parent,body,trace)
+        if result.get('state')=='accepted' and not result.get('replayed'):
+            self.notify(ctx,parent)
+        return await self.read(ctx,parent)|{'recovery_request_id':result['request_id'],'recovery_replayed':result['replayed']}
+
     async def _run(self,ctx,parent):
         token=uuid4();heartbeat=None;reason=None
         async def beat(driver):
@@ -131,13 +137,14 @@ class WorkflowExecutionService:
         try:
             work=await self.repository.runtime(ctx,'claim',parent,token=token)
             if work is None:return
-            definition=ApprovedWorkflow.model_validate(work['definition']);results={}
+            definition=ApprovedWorkflow.model_validate(work['definition']);results=await self.repository.checkpoints(ctx,parent)
             binding=await self.repository.meeting(ctx,parent)
             sealed=await self.meetings.context(ctx,parent) if self.meetings is not None else None
             heartbeat=asyncio.create_task(beat(asyncio.current_task()))
             policy=await self.guardrails.snapshot(ctx)
             nodes={n.node_id:n for n in definition.nodes}
             for node_id in definition.order():
+                if node_id in results:continue
                 node=nodes[node_id]
                 if self.meetings is not None:sealed=await self.meetings.context(ctx,parent)
                 await self.repository.runtime(ctx,'step',parent,{'node_id':node_id},token)

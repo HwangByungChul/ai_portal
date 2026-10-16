@@ -71,6 +71,12 @@ class WorkflowRepository:
                     return (await (await conn.execute('SELECT security.workflow_recover(%s) AS data',(self.mode,))).fetchone())['data']
         except psycopg.Error:raise AppError('STORAGE_UNAVAILABLE',503) from None
 
+    async def recovery(self,ctx,action,target=None,body=None,trace=None):
+        return await self.call(ctx,'workflow_recovery_control',(ctx.session_id,ctx.tenant_id,action,target,Jsonb(body or {}),self.mode,runtime_digest(),self.period,trace or uuid4()))
+
+    async def checkpoints(self,ctx,parent):
+        return await self.call(ctx,'workflow_checkpoint_load',(ctx.session_id,ctx.tenant_id,parent))
+
 
 class WorkflowToolRepository:
     """Injects parent capability into every existing Tool admission/dispatch/finish/read."""
