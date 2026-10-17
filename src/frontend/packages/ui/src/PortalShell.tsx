@@ -73,7 +73,7 @@ function getNavIcon(label: string) {
 
 export function PortalShell({state,site,items,children,canEnterAdmin=false}:{state:ReturnType<typeof session.getSnapshot>;site:'user'|'admin';items:{label:string;active:boolean;onClick:()=>void}[];children:ReactNode;canEnterAdmin?:boolean}){
  const [mobileOpen,setMobileOpen]=useState(false);
- if(state.phase==='login')return <LoginPage notice={state.notice}/>;
+ if(state.phase==='login')return <LoginPage site={site} notice={state.notice}/>;
  if(state.phase==='logout_pending')return <main className="center-state"><h1>로그아웃 확인 중</h1>{state.failure?<><p role="alert">{state.failure}</p><button className="primary" onClick={()=>void session.logout()}>로그아웃 다시 확인</button></>:<p role="status">서버에서 로그아웃을 확인하고 있습니다.</p>}</main>;
  if(state.phase==='error')return <main className="center-state"><h1>연결 확인이 필요합니다.</h1><p role="alert">{state.failure}</p><button className="primary" onClick={()=>void session.restore()}>다시 확인</button></main>;
  if(state.phase!=='ready'||!state.user)return <main className="center-state"><p role="status">로그인과 조직 권한 확인 중</p></main>;

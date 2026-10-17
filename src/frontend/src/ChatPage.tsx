@@ -184,6 +184,7 @@ export function ChatPage({tenant,user,initial={},onPublishedHistory}:{tenant:Ten
 
    {error&&<div style={{padding:'12px 24px 0'}}><p role="alert" className="error-message" style={{margin:0}}>{error}</p></div>}
    {notice&&<div style={{padding:'12px 24px 0'}}><p role="status" className="notice" style={{margin:0}}>{notice}</p></div>}
+   {/* [RAG 모드 전용 UI: 참조할 사내 문서 선택기] agent가 'rules_rag'일 때만 노출 */}
    {agent==='rules_rag'&&<div style={{padding:'12px 24px 0'}}><ReadableDocuments tenantId={org} selected={documentRefs} onChange={setDocumentRefs} disabled={sending||busy||unresolved}/></div>}
 
    {/* 중앙: 대화 메시지 스크롤 영역 */}
@@ -192,6 +193,7 @@ export function ChatPage({tenant,user,initial={},onPublishedHistory}:{tenant:Ten
      {messages.map(m=><article className={`chat-message-bubble ${m.role}`} key={m.message_id}>
       <div className="bubble-role-header">{m.role==='user'?'내 질문':'답변'}</div>
       <p style={{margin:0,whiteSpace:'pre-wrap'}}>{m.text}</p>
+      {/* [RAG 답변 근거 패널] AI 답변 메시지 하단에 인용 출처(문서명, 위치, 원문)를 확인할 수 있는 패널 연동 */}
       {m.role==='assistant'&&agent==='rules_rag'&&<RagEvidencePanel tenantId={org} runId={m.run_id} onUnavailable={()=>hideAnswer(m.run_id)}/>}
       {m.role==='assistant'&&m.run_state==='completed'&&m.answer_kind==='answer'&&<ResponseFeedback key={org+':'+m.run_id} tenantId={org} runId={m.run_id} csrf={user.csrf_token} onUnavailable={()=>hideAnswer(m.run_id)}/>}
      </article>)}
@@ -200,14 +202,17 @@ export function ChatPage({tenant,user,initial={},onPublishedHistory}:{tenant:Ten
 
      {run&&<article className="run-card" aria-label="실행 상태" style={{width:'100%',boxSizing:'border-box'}}>
       <p className="mode-tag">{modeLabel(run.execution_mode)}</p>
+      {/* [RAG 실시간 진행 상태 안내] retrieval(자료 검색) -> generation(근거 선택) -> finalizing(근거 검증·저장) 단계 표시 */}
       <p role="status" className="run-status">{stateName[run.state]??'상태 확인 중'}{agent==='rules_rag'&&!run.is_terminal?' · '+({retrieval:'자료 검색',generation:'근거 선택',finalizing:'근거 검증·저장'}[run.stage]??'처리 중'):''}</p>
       {draft&&!run.is_terminal&&<div className="draft"><strong>작성 중 · 저장 미확정</strong><p>{draft}</p></div>}
       {final&&!messages.some(m=>m.run_id===run.run_id&&m.role==='assistant')&&<div className="chat-message-bubble assistant">
        <div className="bubble-role-header">저장된 답변</div>
        <p style={{margin:0,whiteSpace:'pre-wrap'}}>{run.result!.text}</p>
+       {/* RAG 완료 시 최종 답변 하단 근거 패널 표출 */}
        {agent==='rules_rag'&&<RagEvidencePanel tenantId={org} runId={run.run_id} onUnavailable={()=>hideAnswer(run.run_id)}/>}
        {run.answer_kind==='answer'&&<ResponseFeedback key={org+':'+run.run_id} tenantId={org} runId={run.run_id} csrf={user.csrf_token} onUnavailable={()=>hideAnswer(run.run_id)}/>}
       </div>}
+      {/* [RAG 근거 부족 안내] 관련 사내 문서가 없어 허위 답변을 차단한 경우 */}
       {run.is_terminal&&run.answer_kind==='insufficient_evidence'&&<p className="scope-note">현재 허용 자료에서 필요한 근거를 확인하지 못했습니다.</p>}
       {run.is_terminal&&run.content_status==='unavailable'&&<p className="muted">답변을 표시할 수 없습니다. 실행 결과와 현재 권한을 확인해 주세요.</p>}
       <RunAssetInfo binding={run.asset_binding}/>

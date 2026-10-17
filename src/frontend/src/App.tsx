@@ -38,7 +38,7 @@ export default function App(){
  const globalAccess=!!(state.user?.capabilities.can_view_platform_usage||state.user?.capabilities.can_change_platform_availability);
  const denied=state.phase==='ready'&&(view==='platform'?!globalAccess:adminViews.includes(view)&&tenant&&!tenant.can_manage);
  useEffect(()=>{if(denied){history.replaceState(null,'','/home');setView('home');setLaunch({});setRequestId(undefined);}},[denied]);
- if(state.phase==='login')return <LoginPage notice={state.notice}/>;
+ if(state.phase==='login')return <LoginPage site={adminViews.includes(view)?'admin':'user'} notice={state.notice}/>;
  if(state.phase==='logout_pending')return <main className="center-state"><span className="brand-small">AI</span><h1>로그아웃 확인 중</h1>{state.failure?<><p role="alert">{state.failure}</p><button className="primary" onClick={()=>void session.logout()}>로그아웃 다시 확인</button></>:<p role="status">서버에서 로그아웃을 확인하고 있습니다.</p>}</main>;
  if(state.phase==='error')return <main className="center-state"><h1>연결 확인이 필요합니다.</h1><p role="alert">{state.failure}</p><button className="primary" onClick={()=>void session.restore()}>다시 확인</button></main>;
  if(state.phase==='boot'||!state.user)return <main className="center-state"><span className="brand-small">AI</span><p role="status">로그인과 조직 권한 확인 중</p></main>;

@@ -1007,3 +1007,75 @@ local SQL029 적용 전 private backup, 기존37표 행·prior29개 checksum 보
 - **DB/증거**: 백업 후 별도 fixture clone restore 및 migration 055 선적용 검증, 기존 74개 테이블 행 digest와 55개 기존 migration checksum 보존, 활성 DB 이행 후 stale service-control 기록으로 listener가 응답하지 않아 backend 및 두 frontend 소유 프로세스를 정상 재시작했고 API8000·사용자5173·관리자5174 HTTP 200을 확인했다. migration SHA `b4b23c6cde5d27cd2640b51fa8ea93b8698c89b11e30871d0468aa4bddf8e958`, backup SHA `e50a873323ec37df56f9f5ac70aa6f4d7d4d4a3ad9837922be209d5e5bf7aead`; 상세 proof는 private runtime 경로에 보관했다.
 - **검증**: Python compileall, admin build(52 modules, boundary true), user build(28 modules, boundary true) 통과. admin bundle 712.24 kB 크기 경고. 자동 tests 및 authenticated browser/2-user approval-resume 수용은 미실행이며 그 범위는 완료 판정하지 않았다.
 - **미완료/다음 작업**: 인증된 신청자/PADMIN 왕복, denial/CAS/replay 시나리오; 외부 Tool/Agent 결과의 기관별 조회·조정; 기존 meeting 품질, T-035 실기관 수용, 전체 기능 재대조.
+
+## 2026-10-16 · RAG 학습 문서 및 시퀀스 다이어그램 작성
+사용자 요청: 파이썬 배경지식이 없는 사용자도 RAG 동작을 쉽게 이해할 수 있는 시퀀스 다이어그램 작성 및 Obsidian '학습' 폴더 내 문서 생성 관리.
+
+- **생성 파일**: `docs/Obsidain/학습/01 RAG 동작 원리 및 시퀀스 다이어그램.md`
+- **내용**:
+  - RAG 개념의 직관적 비유(기억 의존 vs 도서관 오픈북 테스트)
+  - 사용자 질문부터 문서 권한 검증, pgvector 유사도 검색, 프롬프트 조립, LLM 답변 생성, 근거 검증(render_answer), 최종 화면 표출까지의 Mermaid Sequence Diagram 작성
+  - 각 단계별 비전공자용 동작 원리 상세 설명
+  - 플랫폼 내 실제 파이썬/타입스크립트 소스 코드 파일(rag.py, search.py, rag_gateway.py, answer.py, ChatPage.tsx, RagEvidencePanel.tsx) 매핑 제공
+- **검증**: Mermaid 다이어그램 렌더링 문법 유효성 및 마크다운 링크 정상 확인.
+
+## 2026-10-16 · RAG 핵심 소스 코드 상세 학습 주석 보강
+사용자 요청: RAG 관련 주요 백엔드/프론트엔드 소스에 학습 목적의 친절하고 상세한 한국어 주석 작성.
+
+- **대상 파일**:
+  - `src/backend/app/execution/rag.py`: RAG 총괄 오케스트레이션 단계별 흐름 주석
+  - `src/backend/app/documents/search.py`: 권한 필터링, pgvector 코사인 유사도 검색, FactPacket 생성 주석
+  - `src/backend/app/ai/rag_gateway.py`: 질문 임베딩 변환, 토큰 가드, 사용량 원장 정산 주석
+  - `src/common_core/ai_pipeline/graphrag/answer.py`: AI 환각 차단 및 출처 팩트 대조 검증 주석
+  - `src/frontend/src/RagEvidencePanel.tsx`: 출처 비동기 로딩, 위치 파싱(문단/셀/페이지), 원문 다운로드 주석
+  - `src/frontend/src/ChatPage.tsx`: RAG 모드 분기, 실시간 진행 단계(검색/선택/검증), 결과 렌더링 주석
+- **검증**: Python compileall 문법 검사 통과, Frontend `tsc --noEmit` 타입 검사 통과.
+
+## 2026-10-17 · 포털 첫 화면 사용자/관리자 구분 Mock 시안 작성
+
+- **사용자 요청**: 현재 사용자와 관리자 사이트(포트 5173 vs 5174)의 첫 화면(로그인 및 진입 화면)이 거의 동일하여 화면이 명확히 구분될 수 있도록 검토하고, 시안 두 개에 대한 Mock 화면 제공 요청.
+- **분석 및 상태**:
+  - `packages/ui/src/PortalShell.tsx`에서 비인증 로그인 상태(`state.phase === 'login'`)일 때 `site` prop 분기 없이 동일한 `LoginPage`를 렌더링하고 있어 시각적 차이가 전혀 없음을 확인.
+  - 현재 상태는 **UI/UX Mock 시연 및 제안 상태**이며, 실제 앱 코드 통합 또는 운영 배포 상태가 아니다.
+- **제작한 실제 파일**:
+  - 인터랙티브 Mock HTML: `/Users/jwpios/antigravity/지능형 차세대 정보시스템 구축/UI_UX_제안_20261011/첫화면_구분_시안_비교.html`
+  - 확정 검토 노트: `docs/Obsidain/200.프로젝트실행/240.설계/25 포털 첫 화면 사용자 관리자 구분 시안 검토.md`
+- **시안 구성**:
+  - **시안 1 (기능 및 도메인 정체성 차별화 안 · 추천)**: 2분할 레이아웃 유지, 사용자(딥 틸 `#087f78` + 업무 비서 `✨ AI WORKSPACE` + 임직원 로그인) vs 관리자(다크 슬레이트 `#0f172a` + 통제 방패 `🛡️ ADMIN CONSOLE` + 관리자 인증 & 감사 경고).
+  - **시안 2 (구조 완전 분리형 안)**: 사용자(소프트 그라데이션 플로팅 카드 + 인기 업무 칩) vs 관리자(실시간 시스템 헬스체크 관제 패널 + 전용 보안 게이트웨이 카드).
+  - **Mock 기능**: 상단 탭으로 시안 1/시안 2 전환, 서브 탭으로 좌우 나란히 비교(Split View), 사용자(5173) 단독, 관리자(5174) 단독 뷰 인터랙티브 지원.
+- **검증 및 증거**: HTML5 표준 마크업, CSS 변수 및 반응형 미디어 쿼리(1200px/900px 분기), Pretendard 웹폰트 및 SVG 아이콘 렌더링 확인.
+- **미완료 및 다음 작업**: 사용자 검토 및 최종 시안 선택 확인 후, `PortalShell.tsx`와 `LoginPage.tsx`에 실제 코드 반영 및 5173/5174 분리 검증 수행.
+
+## 2026-10-17 · 시안 1 채택 확정 및 실제 앱 코드 적용
+
+- **사용자 결정**: 사용자가 Mock 화면을 직접 확인한 후 **시안 1 방안**으로 진행 승인 및 확정.
+- **적용 및 구현 내용**:
+  - `src/frontend/packages/ui/src/LoginPage.tsx`: `site?: 'user' | 'admin'` prop 분기 구현. 사용자(딥 틸 & `AI WORKSPACE`, 임직원 로그인)와 관리자(다크 인디고 & `ADMIN CONSOLE`, 관리자 콘솔 인증 및 보안 감사 경고, 3대 거버넌스 안내) 비주얼 및 카피 적용.
+  - `src/frontend/packages/ui/src/PortalShell.tsx`: 비로그인 시 `LoginPage` 호출부에 현재 사이트 속성(`site={site}`) 전달 연계.
+  - `src/frontend/src/App.tsx`: 단일 앱 호환 엔트리에서도 `site={adminViews.includes(view)?'admin':'user'}` 조건부 전달 보완.
+  - `src/frontend/packages/ui/src/styles.css`: 관리자 웰컴 패널 전용 다크 그라데이션, 사이버 격자 패턴, 보안 알림 박스, 버튼 테마 스타일 추가.
+- **검증 및 증거**:
+  - `npm run build:user` 빌드 통과 (28 modules, boundary_verified: true).
+  - `npm run build:admin` 빌드 통과 (52 modules, boundary_verified: true).
+  - TypeScript(`tsc --noEmit`) 컴파일 에러 0건.
+  - 로컬 HTTP 응답 확인: 사용자 5173(200 OK), 관리자 5174(302 Found → `/manage/` 200 OK) 정상 구동.
+  - 설계 문서 확정 갱신: `docs/Obsidain/200.프로젝트실행/240.설계/25 포털 첫 화면 사용자 관리자 구분 시안 검토.md`.
+- **현 상태**: 실제 앱 적용 완료 (로컬 5173 및 5174 브라우저 새로고침 시 즉시 반영 확인 가능). 운영 배포 환경 반영은 추후 릴리스 계획에 따름.
+
+## 2026-10-18 · Codex CLI 프로젝트 지침 반영
+
+- **사용자 요청**: 앞서 안내한 저장소별 Codex CLI 작업 기준을 `GGENTS.md`에 적용 요청. 저장소의 실제 지침 파일명이 `AGENTS.md`이므로 해당 파일에 반영했다.
+- **변경 파일**: 저장소 루트 `AGENTS.md`에 `Codex CLI 프로젝트 작업 원칙` 절 추가. `Codex`를 저장소 루트에서 시작, 작업 범위와 완료 기준 지정, 화면 설계 선행 확인, additive migration·백업/clone·checksum 보존, 승인/검증 상태 구분, Obsidian 기록 갱신 원칙을 포함했다.
+- **검증**: 기존 지침을 보존하면서 새 절이 들어간 것을 확인하고 diff whitespace 검사를 수행했다. 애플리케이션 코드·DB·서비스는 변경하지 않았으며 자동 테스트나 빌드는 실행하지 않았다.
+- **미완료 범위**: Codex CLI에서 새 지침을 사용한 구현 세션은 아직 수행하지 않았다.
+- **다음 작업**: 다음 Codex CLI 작업부터 이 지침을 적용한다.
+
+## 2026-10-18 · 현재 작업 GitHub 반영 준비
+
+- **사용자 요청**: 현재까지 작업한 내용을 GitHub에 업데이트.
+- **대상 작업**: RAG 학습용 한국어 주석과 시퀀스 다이어그램, 사용자/관리자 첫 화면 구분 적용, Codex CLI 프로젝트 지침 추가를 포함한 현재 미커밋 작업을 확인했다. 이전 커밋 `0ed40b7`의 T-037 Workflow Studio/수동 복구 작업은 이미 `origin/main`에 있다.
+- **리뷰 및 보정**: Codex CLI의 `review --uncommitted`와 사용자 지정 프롬프트 조합은 설치 버전에서 지원되지 않아, 메인 화면 네 파일 diff를 대상으로 읽기 전용 리뷰를 실행했다. 모바일 관리자 화면의 안내 목록이 로그인 폼을 밀어내는 문제와 근거가 확인되지 않은 접속 감사 문구를 발견해, 모바일 목록을 숨기고 로그인 후 역할별 권한 안내로 수정했다. 설계25도 같은 문구로 갱신했다.
+- **검증**: `git diff --check` 통과. 이번 업데이트 요청에서는 자동 테스트와 빌드를 실행하지 않았다. Codex 리뷰 외 별도 브라우저 수용 검증은 미수행이다.
+- **변경 파일**: 저장소 `AGENTS.md`; RAG backend/common/frontend 소스 6개; 로그인 UI 및 공통 shell/style/호환 앱 소스 4개; 설계25; 학습 RAG 문서; 본 작업 로그.
+- **미완료 범위**: 모바일 실제 화면 브라우저 확인과 접속 감사 이벤트의 별도 구현 검증은 범위 밖이다. 접속 기록을 보장한다는 문구는 제거했다.
