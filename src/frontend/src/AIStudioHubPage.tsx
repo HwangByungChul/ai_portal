@@ -211,7 +211,7 @@ export function AIStudioHubPage({
               ← Agent Builder로 이동
             </button>
           </div>
-          <WorkflowCanvasPage tenant={tenant} user={user} />
+          <WorkflowCanvasPage tenant={tenant} user={user} quickStart={mode==='quick'} />
         </div>
       )}
     </div>

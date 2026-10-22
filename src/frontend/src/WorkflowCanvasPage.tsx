@@ -38,7 +38,7 @@ const NODE_COLORS: Record<string,{bg:string;border:string;badge:string}> = {
 
 import {WorkflowStudio} from './workflow/WorkflowStudio';
 
-export function WorkflowCanvasPage({tenant,user}:{tenant:Tenant;user:User}){
+export function WorkflowCanvasPage({tenant,user,quickStart=true}:{tenant:Tenant;user:User;quickStart?:boolean}){
   const scope=useScope();
   const options={tenantId:tenant.tenant_id,csrf:user.csrf_token,signal:scope.signal};
   const [activeTab,setActiveTab]=useState<'studio'|'execution'>('studio');
@@ -226,7 +226,7 @@ export function WorkflowCanvasPage({tenant,user}:{tenant:Tenant;user:User}){
 
     {activeTab==='studio'?(
       <section style={{marginBottom:24}} aria-label="시각적 블록 조립형 UI Studio">
-        <WorkflowStudio tenant={tenant} user={user}/>
+        <WorkflowStudio tenant={tenant} user={user} quickStart={quickStart}/>
       </section>
     ):(
       <>

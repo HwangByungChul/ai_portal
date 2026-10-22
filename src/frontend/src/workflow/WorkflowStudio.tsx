@@ -21,11 +21,14 @@ import {nodeTypes} from './WorkflowCustomNodes';
 import {CanvasWorkflowApprovalRequest} from '../CanvasWorkflowApprovalRequest';
 import {WorkflowPalette} from './WorkflowPalette';
 import {WorkflowInspector} from './WorkflowInspector';
+import {WorkflowScaffoldPanel} from '../WorkflowScaffoldPanel';
 import {
   flowToBackendNodes,
   flowToBackendEdges,
   backendToFlowGraph,
-  validateDAG
+  validateDAG,
+  workflowProposalToCanvas,
+  type WorkflowProposal
 } from './workflowAdapter';
 import type {ComponentPaletteItem, StudioNodeData} from './workflowTypes';
 import type {
@@ -65,7 +68,7 @@ const INITIAL_EDGES: WorkflowEdgeInfo[] = [
   {source_node: 'step4_llm', target_node: 'step5_output'}
 ];
 
-function WorkflowStudioInner({tenant, user}: {tenant: Tenant; user: User}) {
+function WorkflowStudioInner({tenant, user, quickStart=false}: {tenant: Tenant; user: User; quickStart?:boolean}) {
   const scope = useScope();
   const options = {tenantId: tenant.tenant_id, csrf: user.csrf_token, signal: scope.signal};
   const reactFlowWrapper = useRef<HTMLDivElement>(null);
@@ -99,6 +102,7 @@ function WorkflowStudioInner({tenant, user}: {tenant: Tenant; user: User}) {
   const [statusMessage, setStatusMessage] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [showConsole, setShowConsole] = useState(false);
+  const [pendingScaffoldProposal,setPendingScaffoldProposal]=useState<WorkflowProposal|null>(null);
 
   const requestRef = useRef<{version: string; query: string; client: string} | null>(null);
   const draftRequestRef = useRef<{fingerprint:string;client:string}|null>(null);
@@ -393,6 +397,23 @@ function WorkflowStudioInner({tenant, user}: {tenant: Tenant; user: User}) {
     }
   };
 
+  function commitScaffoldProposal(proposal:WorkflowProposal){
+    try{
+      const graph=workflowProposalToCanvas(proposal,{onSelectNode:setSelectedNodeId,onDeleteNode:handleDeleteNode,onDuplicateNode:handleDuplicateNode});
+      const validation=validateDAG(graph.nodes,graph.edges);
+      if(!validation.isValid){setError(validation.error??'Workflow 그래프가 유효하지 않습니다.');return;}
+      setNodes(graph.nodes);setEdges(graph.edges);setSelectedNodeId(null);
+      setWorkflowMeta(current=>({...current,name:proposal.name,description:proposal.description}));
+      setDraftId(crypto.randomUUID());setDraftRevision(0);setSelectedDraft('');setSavedFingerprint('');draftRequestRef.current=null;
+      setActiveStep(3);setStatusMessage('제안을 Canvas에 가져왔습니다. 노드와 미연결 Agent·Tool 참조를 확인한 뒤 초안 저장을 눌러야 저장됩니다.');setError(null);
+    }catch(problem){setError(problem instanceof Error?problem.message:'Workflow 제안을 Canvas에 가져오지 못했습니다.');}
+  }
+
+  function applyScaffoldProposal(proposal:WorkflowProposal){
+    if(nodes.length>0){setPendingScaffoldProposal(proposal);return;}
+    commitScaffoldProposal(proposal);
+  }
+
   // 워크플로우 실행
   const handleRunWorkflow = async () => {
     if (!queryInput.trim() || busy || !selectedVersion) return;
@@ -595,6 +616,18 @@ function WorkflowStudioInner({tenant, user}: {tenant: Tenant; user: User}) {
         </div>
       </header>
 
+      {quickStart&&(tenant.effective_role==='TADMIN'||tenant.effective_role==='PADMIN'
+        ?<WorkflowScaffoldPanel tenant={tenant} user={user} onApplyProposal={applyScaffoldProposal} />
+        :<section className="card" aria-label="빠른 시작 사용 권한"><h2>자연어 Workflow 초안 제안</h2><p className="scope-note">현업 제작자 전용 권한이 준비되기 전까지는 승인된 Agent Builder 관리자 역할에서만 사용할 수 있습니다.</p></section>)}
+      {pendingScaffoldProposal&&<div role="alertdialog" aria-modal="true" aria-labelledby="scaffold-replace-title" className="confirmation">
+        <h2 id="scaffold-replace-title">현재 Canvas 내용을 바꿀까요?</h2>
+        <p>현재 노드와 연결을 지우고 “{pendingScaffoldProposal.name}” 제안을 가져옵니다. 저장되지 않은 편집 내용도 사라집니다.</p>
+        <div className="button-row">
+          <button type="button" className="secondary" onClick={()=>setPendingScaffoldProposal(null)}>취소</button>
+          <button type="button" className="primary" onClick={()=>{const proposal=pendingScaffoldProposal;setPendingScaffoldProposal(null);commitScaffoldProposal(proposal);}}>현재 Canvas 교체 후 가져오기</button>
+        </div>
+      </div>}
+
       {/* 상태 메시지 알림 바 */}
       {(statusMessage || error) && (
         <div
@@ -761,10 +794,10 @@ function WorkflowStudioInner({tenant, user}: {tenant: Tenant; user: User}) {
   );
 }
 
-export function WorkflowStudio({tenant, user}: {tenant: Tenant; user: User}) {
+export function WorkflowStudio({tenant, user, quickStart=false}: {tenant: Tenant; user: User; quickStart?:boolean}) {
   return (
     <ReactFlowProvider>
-      <WorkflowStudioInner tenant={tenant} user={user} />
+      <WorkflowStudioInner tenant={tenant} user={user} quickStart={quickStart} />
     </ReactFlowProvider>
   );
 }

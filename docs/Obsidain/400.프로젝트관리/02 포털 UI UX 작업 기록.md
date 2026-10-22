@@ -1613,3 +1613,14 @@ local SQL029 적용 전 private backup, 기존37표 행·prior29개 checksum 보
 **검증:** `npm run build:admin`, `npm run build:user` 통과 및 각각 `boundary_verified: true`. 집중 Playwright는 `reuseExistingServer:false` 설정에서 `127.0.0.1:5173/api/v1/health` 포트 사용 중 오류로 시작되지 않았다. Admin 빌드의 500 kB 초과 bundle warning은 남아 있다.
 
 **권한·미완료:** API가 현재 허용하는 `TADMIN`/`PADMIN`만 자연어 제안 UI에 접근한다. 현업 일반 제작자용 역할은 아직 API capability로 연결되지 않았다. Workflow 자연어 UI는 미구현이다. Task 2 migration 069은 미적용이며 disposable clone/runtime 검증이 남아 있다. provider/UAT/운영 배포 승인을 뜻하지 않는다.
+
+
+## 2026-10-22 · AI Builder Workflow 자연어 초안 제안 UI
+
+**요청·결정:** 승인된 Workflow Canvas 계획의 Task 1·2를 이어서 구현했다. 빠른 시작에서 자연어 Workflow 제안을 검토하고, 기존 Canvas 편집기로 가져온 뒤 명시적으로 tenant-scoped 초안 저장을 한다. 기존 Canvas가 있으면 교체 전 확인한다.
+
+**변경:** `WorkflowScaffoldPanel.tsx`, `workflowAdapter.ts`, `WorkflowStudio.tsx`, `WorkflowCanvasPage.tsx`, `AIStudioHubPage.tsx`, frontend types 및 `workflow-scaffolds.spec.ts`를 수정했다. Proposal schema의 node/config/edge/bounds/secret 검증 후 `backendToFlowGraph`와 `validateDAG`를 사용한다. LLM Agent 버전과 read_tool Tool은 자동 바인딩하지 않고 미연결 단계로 표시한다. 적용은 저장하지 않으며, 명시 저장은 기존 CAS와 idempotency 경로를 재사용한다. [[200.프로젝트실행/240.설계/2026-10-21 Workflow Canvas 자연어 초안 연결 구현 계획]]
+
+**검증:** Node 22.23.1에서 `npx tsc --noEmit`, `npm run build:admin`, `npm run build:user` 통과. 빌드 boundary 검증도 양쪽 모두 통과했다. Playwright `--list`는 집중 6개 테스트를 발견했다. 실제 브라우저 실행은 `reuseExistingServer:false` 설정이 이미 실행 중인 `127.0.0.1:5173` listener를 재사용하지 않아 서버 시작에 실패했다. 기존 listener PID 43769는 건드리지 않았다.
+
+**권한·미완료·다음:** 자연어 제안 API의 `agent_admin` capability와 맞춰 UI는 `TADMIN`/`PADMIN` tenant에서만 제안 요청을 보이고, 일반 USER에게는 관리자 역할 제한을 안내한다. DP16 현업 제작자 권한 연계와 UAT는 미완료다. Revision-conflict 브라우저 시나리오와 포트 충돌 없는 Playwright 실행을 후속 확인한다. 제안은 승인·게시·운영 실행이 아니며 운영 배포는 하지 않았다.

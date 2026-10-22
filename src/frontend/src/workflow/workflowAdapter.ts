@@ -3,6 +3,56 @@ import type {WorkflowNodeInfo, WorkflowEdgeInfo} from '../types';
 import type {ApprovedWorkflow,ApprovedNode,PublishedWorkflowAsset,ToolSupportItem,WorkflowBinding} from '../types';
 import type {StudioNodeData, StudioNodeCategory} from './workflowTypes';
 
+export interface WorkflowProposal {
+  name:string;
+  description:string;
+  nodes:WorkflowNodeInfo[];
+  edges:WorkflowEdgeInfo[];
+  missing_questions:string[];
+  warnings:string[];
+}
+
+const PROPOSAL_NODE_TYPES=new Set(['input','read_tool','llm','validate','output']);
+const SAFE_ID=/^[A-Za-z0-9_-]{1,64}$/;
+const SENSITIVE_VALUE=/(?:https?:\/\/|\bwww\.|\bbearer\s+\S+|\b(?:api[_ -]?key|password|client[_ -]?secret|secret|token|credential|authorization|endpoint|url)\s*["']?\s*[:=]\s*\S+|\bsk-[a-z0-9_-]{16,})/i;
+
+/** Client-side defense in depth for the server-validated, never-saved proposal contract. */
+export function validateWorkflowProposal(value:WorkflowProposal):string|null {
+  if(!value||typeof value!=='object'||typeof value.name!=='string'||!value.name.trim()||value.name.length>120||value.name.includes('\0')||typeof value.description!=='string'||value.description.length>500||value.description.includes('\0'))return 'Workflow 이름이나 설명이 올바르지 않습니다.';
+  if(!Array.isArray(value.nodes)||value.nodes.length<3||value.nodes.length>20||!Array.isArray(value.edges)||value.edges.length<2||value.edges.length>30)return 'Workflow 노드·연결 개수가 허용 범위를 벗어났습니다.';
+  if(!Array.isArray(value.missing_questions)||value.missing_questions.length>8||!Array.isArray(value.warnings)||value.warnings.length>12)return 'Workflow 안내 내용이 올바르지 않습니다.';
+  const nodeIds=new Set<string>();
+  for(const node of value.nodes){
+    if(!node||typeof node.node_id!=='string'||!SAFE_ID.test(node.node_id)||nodeIds.has(node.node_id)||typeof node.title!=='string'||!node.title.trim()||node.title.length>128||node.title.includes('\0')||!PROPOSAL_NODE_TYPES.has(node.node_type)||!node.config||typeof node.config!=='object'||Array.isArray(node.config))return '지원하지 않는 Workflow 노드가 포함되어 있습니다.';
+    nodeIds.add(node.node_id);
+    const allowed=node.node_type==='input'?new Set(['input_key']):new Set<string>();
+    if(Object.keys(node.config).some(key=>!allowed.has(key)))return '제안에서 Agent·Tool ID 또는 임의 설정을 허용하지 않습니다.';
+    if(node.node_type==='input'&&typeof node.config.input_key!=='string'||node.node_type==='input'&&!/^[A-Za-z][A-Za-z0-9_]{0,39}$/.test(String(node.config.input_key??'')))return '입력 키 형식이 올바르지 않습니다.';
+    if(JSON.stringify(node).match(SENSITIVE_VALUE))return 'URL 또는 비밀 정보가 포함된 제안은 사용할 수 없습니다.';
+  }
+  if(value.nodes.filter(node=>node.node_type==='input').length!==1||value.nodes.filter(node=>node.node_type==='output').length!==1||value.nodes.filter(node=>node.node_type==='llm').length!==1)return '입력·AI·출력 노드가 각각 하나씩 있어야 합니다.';
+  const pairs=new Set<string>();
+  for(const edge of value.edges){
+    if(!edge||!nodeIds.has(edge.source_node)||!nodeIds.has(edge.target_node)||edge.source_node===edge.target_node)return '연결에 없는 노드가 포함되어 있습니다.';
+    const pair=edge.source_node+'\0'+edge.target_node;if(pairs.has(pair))return '중복 연결이 포함되어 있습니다.';pairs.add(pair);
+  }
+  const graph=backendToFlowGraph(value.nodes,value.edges,{}),dag=validateDAG(graph.nodes,graph.edges);
+  if(!dag.isValid)return dag.error??'순환 연결을 포함한 Workflow 제안입니다.';
+  const outgoing=new Map<string,string[]>(),incoming=new Map<string,string[]>();
+  for(const id of nodeIds){outgoing.set(id,[]);incoming.set(id,[]);}
+  for(const edge of value.edges){outgoing.get(edge.source_node)!.push(edge.target_node);incoming.get(edge.target_node)!.push(edge.source_node);}
+  const walk=(start:string,edges:Map<string,string[]>)=>{const seen=new Set([start]),queue=[start];while(queue.length){for(const next of edges.get(queue.shift()!)??[])if(!seen.has(next)){seen.add(next);queue.push(next);}}return seen;};
+  const input=value.nodes.find(node=>node.node_type==='input')!.node_id,output=value.nodes.find(node=>node.node_type==='output')!.node_id;
+  if(walk(input,outgoing).size!==nodeIds.size||walk(output,incoming).size!==nodeIds.size)return '모든 노드가 입력에서 출력까지 연결되어야 합니다.';
+  for(const text of [...value.missing_questions,...value.warnings])if(typeof text!=='string'||!text.trim()||text.length>500||text.includes('\0')||SENSITIVE_VALUE.test(text))return '안내 문구 형식이 올바르지 않습니다.';
+  return null;
+}
+
+export function workflowProposalToCanvas(value:WorkflowProposal,callbacks:{onSelectNode?:(id:string)=>void;onDeleteNode?:(id:string)=>void;onDuplicateNode?:(id:string)=>void}={}){
+  const issue=validateWorkflowProposal(value);if(issue)throw new Error(issue);
+  return backendToFlowGraph(value.nodes,value.edges,callbacks);
+}
+
 export function flowToBackendNodes(nodes: Node[]): WorkflowNodeInfo[] {
   return nodes.map((node) => {
     const data = node.data as unknown as StudioNodeData;

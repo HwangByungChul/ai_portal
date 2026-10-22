@@ -20,7 +20,7 @@ tags: [ai-platform, workflow, studio, no-code]
 ## Global Constraints
 
 - Do not edit migrations 000–064. Workflow-specific migration is not expected.
-- Allowed node types follow WorkflowNode: input, read_tool, llm, validate, output. Draft bounds are 1–20 nodes and 0–30 edges; approval conversion remains stricter.
+- Allowed node types follow the proposal schema: input, read_tool, llm, validate, output. Proposal bounds are 3–20 nodes and 2–30 edges; approval conversion remains stricter.
 - Never accept natural-language model/provider/URL/credential/secret values or raw Tool arguments. Tool IDs come from current authorized registry choices.
 - An llm node binds only to an exact published Agent version selected by the user. Never synthesize IDs or connect a draft Agent automatically.
 - Generation/display do not save, test, run, approve, publish, or call Tools.
@@ -33,14 +33,15 @@ tags: [ai-platform, workflow, studio, no-code]
 - Create: src/frontend/src/WorkflowScaffoldPanel.tsx
 - Modify: src/frontend/src/WorkflowCanvasPage.tsx
 - Modify: src/frontend/src/workflow/workflowAdapter.ts
-- Modify: src/frontend/src/workflow/workflowTypes.ts
+- Modify: src/frontend/src/workflow/WorkflowStudio.tsx
+- Modify: src/frontend/src/AIStudioHubPage.tsx and src/frontend/src/types.ts
 - Test: src/frontend/tests/workflow-scaffolds.spec.ts
 
 **Interfaces:** WorkflowScaffoldPanel receives tenant/user and callbacks onApplyProposal(WorkflowProposal), onDiscard(). Applying maps through backendToFlowGraph and returns unsaved Canvas state; it never calls a save/run API.
 
-- [ ] **Step 1: Write mapping tests.** Test valid input→llm→output and input→read_tool→llm→output proposals, duplicate/missing endpoints, cycle, unsupported node, forged Agent/Tool ID, secret/URL field, 21-node and 31-edge cases.
-- [ ] **Step 2: Implement the proposal panel.** Show intent, missing questions, warnings and proposed node sequence as accessible text. Require “Canvas에 가져와 편집”. Keep output escaped; do not use dangerouslySetInnerHTML.
-- [ ] **Step 3: Map through current adapter safely.** Use backendToFlowGraph and rebind callbacks. Run validateDAG. Require exact published asset selection for llm and authorized registry selection for read_tool. Unresolved references remain visible as incomplete and cannot be described as approval-ready.
+- [x] **Step 1: Write mapping tests.** `workflow-scaffolds.spec.ts` covers both valid chains, missing endpoints, cycle, unsupported node, forged Agent/Tool IDs, URL/secret, 21-node and 31-edge overflow.
+- [x] **Step 2: Implement the proposal panel.** Accessible intent/question/warning/node review and explicit “Canvas에 가져와 편집”; text renders normally without HTML injection. Existing Canvas content requires a second explicit replacement confirmation.
+- [x] **Step 3: Map through current adapter safely.** Proposal client validation and `validateDAG` run before `backendToFlowGraph` mapping and again when applying. LLM and read_tool nodes are labeled as unbound; exact published Agent version and authorized Tool selection remain manual Canvas work.
 
 ### Task 2: Save only through current Workflow draft contract
 
@@ -53,9 +54,9 @@ tags: [ai-platform, workflow, studio, no-code]
 
 **Interface:** Save posts to /api/v1/workflows/drafts with draft_id, client_request_id, expected_revision, name, description and typed graph. Draft success is not approval-ready, approval, publication or execution. Only an approved immutable version can enter the current approved run path.
 
-- [ ] **Step 1: Test explicit save and no-run boundary.** Applying/editing a proposal sends no request. Clicking Save sends one drafts POST. Assert there are no /validate, approval, Tool, or /workflows/run requests before independent approval. Retry keeps the same client_request_id; revision conflict preserves local edits and latest server revision.
-- [ ] **Step 2: Integrate save and truthful state.** Preserve draft CAS/idempotency and receipt. Show “저장된 Workflow 초안 · 승인/실행 전용 버전 아님”. If a graph is outside the current approval subset, identify exact missing node/binding and do not imply it can run.
-- [ ] **Step 3: Run focused browser/build checks.** Run from src/frontend: npx playwright test tests/workflow-scaffolds.spec.ts tests/workflow-orchestration.spec.ts; npm run build:admin; npm run build:user. Expected: editable proposal, explicit draft save only, no /workflows/run before independent approval.
+- [x] **Step 1: Test explicit save and no-run boundary.** Browser contract asserts proposal/apply do not save or validate/run, explicit save does, and a failed-save retry reuses `client_request_id`. Revision-conflict browser behavior remains unverified.
+- [x] **Step 2: Integrate save and truthful state.** Existing tenant-scoped CAS/idempotent draft save is reused. The UI distinguishes a saved draft from an approved or executable version and identifies unbound Agent/Tool steps.
+- [ ] **Step 3: Run focused browser/build checks.** Admin/User production builds pass. Playwright test discovery lists all 6 tests, but browser execution could not start because the configured `webServer` refuses to reuse the existing listener on `127.0.0.1:5173` (`reuseExistingServer:false`). Existing process was left running.
 
 ## Handoff
 
