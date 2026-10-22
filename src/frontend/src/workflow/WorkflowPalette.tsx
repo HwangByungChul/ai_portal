@@ -33,11 +33,12 @@ export function WorkflowPalette({onAddNode}: WorkflowPaletteProps) {
         <input
           type="text"
           className="workflow-palette-search"
+          aria-label="컴포넌트 검색"
           placeholder="컴포넌트 검색..."
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
-        <div style={{display: 'flex', gap: 4, marginTop: 8, overflowX: 'auto', paddingBottom: 2}}>
+        <div className="workflow-palette-filters" aria-label="컴포넌트 분류">
           <button
             type="button"
             className="workflow-btn-secondary"

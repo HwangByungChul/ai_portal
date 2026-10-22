@@ -2,7 +2,8 @@
 .workflow-studio-root {
   display: flex;
   flex-direction: column;
-  height: calc(100vh - 110px);
+  height: auto;
+  min-width: 0;
   min-height: 720px;
   background: #F8FAFC;
   border-radius: 12px;
@@ -26,16 +27,25 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  flex-wrap: wrap;
   gap: 16px;
 }
 
 .workflow-studio-title-area {
+  flex: 1 1 100%;
+  min-width: 0;
+  max-width: 100%;
+  flex-wrap: wrap;
   display: flex;
   align-items: center;
   gap: 12px;
 }
 
 .workflow-studio-title-input {
+  width: auto;
+  flex: 1 1 240px;
+  min-width: 0;
+  max-width: 100%;
   font-size: 18px;
   font-weight: 700;
   color: #0F172A;
@@ -54,6 +64,8 @@
 }
 
 .workflow-studio-badge {
+  flex-shrink: 0;
+  white-space: nowrap;
   font-size: 12px;
   font-weight: 600;
   padding: 3px 8px;
@@ -65,12 +77,17 @@
 
 .workflow-studio-actions {
   display: flex;
+  flex-wrap: wrap;
+  min-width: 0;
+  max-width: 100%;
   align-items: center;
   gap: 8px;
 }
 
 .workflow-btn {
   display: inline-flex;
+  flex-shrink: 0;
+  white-space: nowrap;
   align-items: center;
   gap: 6px;
   padding: 7px 14px;
@@ -127,6 +144,7 @@
 }
 
 .workflow-wizard-step {
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   gap: 6px;
@@ -155,6 +173,8 @@
 /* 2. 메인 3-Pane 작업 영역 */
 .workflow-studio-body {
   display: flex;
+  min-width: 0;
+  min-height: 560px;
   flex: 1;
   position: relative;
   overflow: hidden;
@@ -163,7 +183,9 @@
 /* 좌측 컴포넌트 팔레트 */
 .workflow-palette {
   width: 280px;
-  min-width: 260px;
+  min-width: 0;
+  flex: 0 0 260px;
+  max-height: 560px;
   background: #FFFFFF;
   border-right: 1px solid #E2E8F0;
   display: flex;
@@ -281,7 +303,8 @@
 /* 중앙 Flow 캔버스 */
 .workflow-canvas-container {
   flex: 1;
-  height: 100%;
+  min-width: 0;
+  height: 560px;
   position: relative;
   background: #FAFBFD;
 }
@@ -289,7 +312,9 @@
 /* 우측 노드 인스펙터 */
 .workflow-inspector {
   width: 320px;
-  min-width: 300px;
+  min-width: 0;
+  flex: 0 0 300px;
+  max-height: 560px;
   background: #FFFFFF;
   border-left: 1px solid #E2E8F0;
   display: flex;
@@ -464,4 +489,147 @@
 @keyframes pulse {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.6; }
+}
+
+/* Allow controls to wrap while preserving readable labels and editor space. */
+.workflow-canvas-page {
+  padding: 24px;
+  min-width: 0;
+  container-type: inline-size;
+}
+
+.workflow-page-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  max-width: 100%;
+}
+
+.workflow-page-tabs button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.workflow-studio-root *,
+.workflow-studio-root *::before,
+.workflow-studio-root *::after {
+  box-sizing: border-box;
+}
+
+.workflow-studio-actions > label {
+  flex-wrap: wrap;
+  max-width: 100%;
+}
+
+.workflow-studio-actions select {
+  width: 220px;
+  min-width: 0;
+  max-width: 100%;
+  padding: 4px;
+}
+
+.workflow-palette-filters {
+  display: flex;
+  gap: 4px;
+  margin-top: 8px;
+  padding-bottom: 4px;
+  overflow-x: auto;
+}
+
+.workflow-palette-filters button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+.workflow-palette-item-info {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.workflow-console-heading,
+.workflow-console-input-row,
+.workflow-console-run-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+  overflow-wrap: anywhere;
+}
+
+.workflow-console-heading {
+  justify-content: space-between;
+}
+
+.workflow-console-input-row input {
+  min-width: 0;
+  flex-basis: 200px !important;
+}
+
+@container (max-width: 1100px) {
+  .workflow-studio-body {
+    flex-direction: column;
+    overflow: visible;
+  }
+
+  .workflow-palette,
+  .workflow-inspector {
+    width: 100%;
+    flex: none;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid #E2E8F0;
+  }
+
+  .workflow-palette-list {
+    flex: none;
+    flex-direction: row;
+    overflow: auto;
+    max-height: 260px;
+    align-items: flex-start;
+  }
+
+  .workflow-palette-list > div {
+    flex: 0 0 220px;
+  }
+
+  .workflow-canvas-container {
+    flex: none;
+    width: 100%;
+    height: 480px;
+    min-height: 480px;
+  }
+
+  .workflow-inspector {
+    max-height: 480px;
+    border-top: 1px solid #E2E8F0;
+  }
+}
+
+@media (max-width: 620px) {
+  .workflow-canvas-page {
+    padding: 12px;
+  }
+
+  .workflow-studio-header {
+    padding: 12px;
+  }
+
+  .workflow-studio-title-input {
+    flex-basis: calc(100% - 34px);
+    font-size: 16px;
+  }
+
+  .workflow-studio-actions > label {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .workflow-studio-actions select {
+    flex: 1 1 150px;
+  }
+
+  .workflow-canvas-container .react-flow__minimap {
+    display: none;
+  }
 }

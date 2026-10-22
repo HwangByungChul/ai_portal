@@ -177,13 +177,13 @@ export function WorkflowCanvasPage({tenant,user,quickStart=false}:{tenant:Tenant
     finally{if(scope.current())setValidating(false);}
   }
   const panel={background:'#FFFFFF',border:'1px solid #E2E8F0',borderRadius:10,padding:20,marginBottom:20};
-  return <div className="admin-a-container" style={{maxWidth:1600,margin:'0 auto',padding:24}}>
+  return <div className="admin-a-container workflow-canvas-page" style={{maxWidth:1600,margin:'0 auto'}}>
     <header style={{marginBottom:20,display:'flex',justifyContent:'space-between',alignItems:'flex-end',flexWrap:'wrap',gap:16}}>
       <div>
-        <h1 style={{margin:'0 0 6px 0',fontSize:24,fontWeight:800}}>시각적 Workflow Studio &amp; 오케스트레이션 (DP-20 ~ DP-23)</h1>
-        <p style={{margin:0,color:'#64748B'}}>제안 시안(4.4-03) 규격의 컴포넌트 라이브러리, 드래그 앤 드롭 비주얼 캔버스 및 실행 오케스트레이션을 제공합니다.</p>
+        <h1 style={{margin:'0 0 6px 0',fontSize:24,fontWeight:800}}>Workflow Canvas</h1>
+        <p style={{margin:0,color:'#64748B'}}>노드를 추가하고 연결해 업무 흐름을 구성하세요. 초안을 저장하고, 승인된 버전의 실행 결과를 확인할 수 있습니다.</p>
       </div>
-      <div style={{display:'flex',gap:8,background:'#F1F5F9',padding:4,borderRadius:8}}>
+      <div className="workflow-page-tabs" style={{background:'#F1F5F9',padding:4,borderRadius:8}}>
         <button
           type="button"
           onClick={()=>setActiveTab('studio')}
@@ -199,7 +199,7 @@ export function WorkflowCanvasPage({tenant,user,quickStart=false}:{tenant:Tenant
             boxShadow:activeTab==='studio'?'0 2px 6px rgba(79,70,229,0.25)':'none'
           }}
         >
-          🧩 시각적 UI Studio (Canvas)
+          🧩 초안 편집
         </button>
         <button
           type="button"
@@ -216,7 +216,7 @@ export function WorkflowCanvasPage({tenant,user,quickStart=false}:{tenant:Tenant
             boxShadow:activeTab==='execution'?'0 2px 6px rgba(79,70,229,0.25)':'none'
           }}
         >
-          ⚡ 승인 버전 실행 &amp; 체크포인트
+          ⚡ 승인·실행 관리
         </button>
       </div>
     </header>

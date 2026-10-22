@@ -44,13 +44,13 @@ import {api} from '../api';
 import {useScope, modeLabel} from '../scoped';
 
 const WIZARD_STEPS = [
-  {id: 1, label: '1. 기본 정보'},
-  {id: 2, label: '2. 데이터 소스'},
-  {id: 3, label: '3. 노드 배치'},
-  {id: 4, label: '4. 파라미터 설정'},
-  {id: 5, label: '5. 테스트 & 디버그'},
-  {id: 6, label: '6. 검증 & 평가'},
-  {id: 7, label: '7. 배포 & 게시'}
+  {id: 1, label: '기본 정보'},
+  {id: 2, label: '자료와 도구'},
+  {id: 3, label: '노드 배치'},
+  {id: 4, label: '노드 설정'},
+  {id: 5, label: '구성 검증'},
+  {id: 6, label: '실행 결과 확인'},
+  {id: 7, label: '승인 요청'}
 ];
 
 const INITIAL_NODES: WorkflowNodeInfo[] = [
@@ -517,6 +517,7 @@ function WorkflowStudioInner({tenant, user, quickStart=false}: {tenant: Tenant; 
             <input
               type="text"
               className="workflow-studio-title-input"
+              aria-label="Workflow 이름"
               value={workflowMeta.name}
               onChange={(e) => handleUpdateMeta('name', e.target.value)}
             />
@@ -525,7 +526,7 @@ function WorkflowStudioInner({tenant, user, quickStart=false}: {tenant: Tenant; 
               className="workflow-studio-badge"
               style={{background: '#ECFDF5', color: '#059669', borderColor: '#A7F3D0'}}
             >
-              초안 편집 모드
+              초안 편집
             </span>
           </div>
 
@@ -644,9 +645,10 @@ function WorkflowStudioInner({tenant, user, quickStart=false}: {tenant: Tenant; 
             alignItems: 'center'
           }}
         >
-          <span>{error || statusMessage}</span>
+          <span role={error ? 'alert' : 'status'}>{error || statusMessage}</span>
           <button
             type="button"
+            aria-label="알림 닫기"
             style={{background: 'none', border: 'none', cursor: 'pointer', fontWeight: 700}}
             onClick={() => {
               setError(null);
@@ -658,7 +660,7 @@ function WorkflowStudioInner({tenant, user, quickStart=false}: {tenant: Tenant; 
         </div>
       )}
       <div role="note" style={{padding: '8px 20px', fontSize: 12, color: '#475569', background: '#F8FAFC', borderBottom: '1px solid #E2E8F0'}}>
-        캔버스는 개인 초안으로 저장·불러올 수 있습니다. 초안은 승인을 받거나 실행되지 않으며, 실행은 선택한 승인 버전에만 적용됩니다.
+        편집 내용은 개인 초안으로 저장됩니다. 승인 요청과 실행은 별도 절차이며, 실행은 선택한 승인 버전에만 적용됩니다.
       </div>
 
       {showApprovalRequest&&isCurrentDraftSaved&&<div style={{padding:16}}><CanvasWorkflowApprovalRequest tenant={tenant} user={user} draft={{draft_id:draftId,revision:draftRevision}} name={workflowMeta.name} description={workflowMeta.description} nodes={nodes} edges={edges} onClose={()=>setShowApprovalRequest(false)}/></div>}
@@ -669,7 +671,7 @@ function WorkflowStudioInner({tenant, user, quickStart=false}: {tenant: Tenant; 
         <WorkflowPalette onAddNode={handleAddFromPalette} />
 
         {/* 중앙 인터랙티브 캔버스 */}
-        <main className="workflow-canvas-container">
+        <main className="workflow-canvas-container" aria-label="Workflow 노드 캔버스">
           <ReactFlow
             nodes={nodes}
             edges={edges}
@@ -725,7 +727,7 @@ function WorkflowStudioInner({tenant, user, quickStart=false}: {tenant: Tenant; 
           }}
           aria-label="실행 모니터링 콘솔"
         >
-          <div style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 12}}>
+          <div className="workflow-console-heading">
             <h3 style={{margin: 0, fontSize: 14, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6}}>
               <span>📊</span> 실행 모니터링 &amp; 체크포인트
             </h3>
@@ -739,9 +741,9 @@ function WorkflowStudioInner({tenant, user, quickStart=false}: {tenant: Tenant; 
             </button>
           </div>
 
-          <div style={{display: 'flex', gap: 12, alignItems: 'center', marginBottom: 10}}>
+          <div className="workflow-console-input-row">
             <label htmlFor="wf-test-query" style={{fontSize: 12, fontWeight: 600}}>
-              테스트 입력 질의:
+              승인 버전 실행 질문:
             </label>
             <input
               id="wf-test-query"
@@ -763,7 +765,7 @@ function WorkflowStudioInner({tenant, user, quickStart=false}: {tenant: Tenant; 
 
           {run && (
             <div style={{fontSize: 12, color: '#334155'}}>
-              <div style={{display: 'flex', gap: 16, marginBottom: 8}}>
+              <div className="workflow-console-run-meta">
                 <span><strong>실행 ID:</strong> {run.run_id}</span>
                 <span><strong>상태:</strong> {run.state}</span>
                 <span><strong>모드:</strong> {modeLabel(run.execution_mode)}</span>
