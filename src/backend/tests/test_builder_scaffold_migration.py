@@ -70,6 +70,7 @@ def test_failure_receipt_waits_for_shared_ledger_terminal_state():
 
 def test_070_lifecycle_uses_original_admission_revision_and_current_call_permit_binding():
     sql = (MIGRATIONS / "070_builder_scaffold_lifecycle_revision.sql").read_text(encoding="utf-8")
+    assert "IF p_revision IS NULL OR p_revision<1 THEN" in sql
     assert "q.state='generating' AND q.revision=p_revision+1" in sql
     assert "c.permit_revision<>q.revision" in sql
     assert "q.revision<>p_revision+1 OR q.state<>'generating'" in sql

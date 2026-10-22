@@ -176,6 +176,11 @@ class _RevisionTrackingRepository(_MeteredRepository):
         self.proposal_revision += 1  # Mirrors reserve's admitted -> generating CAS.
         return await super().reserve(ticket, fingerprint)
 
+    async def fail(self, ctx, proposal_id, revision, code):
+        if revision < 1 or self.proposal_revision != revision + 1:
+            raise AssertionError("failure must use the admitted revision and exact reserved successor")
+        return await super().fail(ctx, proposal_id, revision, code)
+
 
 def test_metered_reserve_settle_complete_keeps_original_revision_token():
     repo = _RevisionTrackingRepository()
@@ -195,11 +200,11 @@ def test_metered_failure_uses_admission_revision_after_reserve_increment():
     svc = ScaffoldGenerationService(gateway, repo, _Guardrails(), _Documents(), "mock")
     ctx, proposal_id, trace_id = SimpleNamespace(tenant_id=uuid4()), uuid4(), uuid4()
     try:
-        asyncio.run(svc.generate(ctx, proposal_id, trace_id, 9, _request()))
+        asyncio.run(svc.generate(ctx, proposal_id, trace_id, 1, _request()))
     except Exception as error:
         assert getattr(error, "code", None) == "USAGE_INVALID"
     else:
         raise AssertionError("unknown usage must fail the proposal")
     assert repo.proposal_revision == 2
-    assert repo.failed[0][2] == 9
+    assert repo.failed[0][2] == 1
     assert repo.settlements and repo.settlements[0][2] is True
