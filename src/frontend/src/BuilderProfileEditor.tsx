@@ -2,7 +2,37 @@ import {useEffect,useRef,useState,useId} from 'react';
 import {ReadableDocuments} from './ReadableDocuments';
 import {get,useScope} from './scoped';
 import {api} from './api';
-import type {AssetDetail,AssetConfig,DocumentRef,ModelInfo} from './types';
+import type {AssetDetail,AssetConfig,DocumentRef,ModelRegistryItem} from './types';
+
+type BuilderModel = {
+  model_id: string;
+  provider_key: string;
+  name: string;
+  context_window?: number;
+  max_output?: number;
+  input_price?: string;
+  output_price?: string;
+  capabilities: string[];
+};
+
+function normalizeModels(items: unknown): BuilderModel[] {
+  if (!Array.isArray(items)) return [];
+  return (items as unknown[]).filter((item): item is ModelRegistryItem =>
+    !!item && typeof item === 'object' && typeof (item as {model_id?: unknown}).model_id === 'string'
+  ).filter(m => 'active' in m ? m.active : m.enabled).map(m => {
+    const legacy = 'max_output_tokens' in m;
+    return {
+      model_id: m.model_id,
+      provider_key: typeof m.provider_key === 'string' ? m.provider_key : 'unknown',
+      name: ('display_name' in m && typeof m.display_name === 'string' && m.display_name.trim()) || m.model_name || m.model_id,
+      context_window: typeof m.context_window === 'number' ? m.context_window : undefined,
+      max_output: legacy ? m.max_output_tokens : m.max_output,
+      input_price: legacy ? m.input_usd_per_million : undefined,
+      output_price: legacy ? m.output_usd_per_million : undefined,
+      capabilities: Array.isArray(m.capabilities) ? m.capabilities : []
+    };
+  });
+}
 
 export type BuilderProfile = {
   schema_version: 1;
@@ -49,14 +79,14 @@ export function BuilderProfileEditor({
 }) {
   const id = useId();
   const scope = useScope();
-  const [models, setModels] = useState<ModelInfo[]>([]);
+  const [models, setModels] = useState<BuilderModel[]>([]);
 
   useEffect(() => {
     let active = true;
     async function loadModels() {
       try {
-        const data = await api.request<ModelInfo[]>('/models', { signal: scope.signal });
-        if (active && scope.current()) setModels(data);
+        const data = await api.request<{items?: unknown}>('/models', { signal: scope.signal });
+        if (active && scope.current()) setModels(normalizeModels(data?.items));
       } catch {
         // Fallback: models remain empty, default options still work
       }
@@ -109,7 +139,7 @@ export function BuilderProfileEditor({
           </option>
           {models.map(m => (
             <option key={m.model_id} value={m.model_id}>
-              {m.model_name} ({m.provider_key.toUpperCase()}) — 입력 ${m.input_usd_per_million} / 출력 ${m.output_usd_per_million} per 1M
+              {m.name} ({m.provider_key.toUpperCase()}){m.input_price !== undefined && m.output_price !== undefined ? ` — 입력 $${m.input_price} / 출력 $${m.output_price} per 1M` : ''}
             </option>
           ))}
         </select>
@@ -118,9 +148,9 @@ export function BuilderProfileEditor({
           <div style={{ marginTop: '8px', padding: '10px 12px', background: '#F8FAFC', borderRadius: '6px', border: '1px solid #E2E8F0', fontSize: '13px' }}>
             <div style={{ display: 'flex', gap: '16px', flexWrap: 'wrap', alignItems: 'center' }}>
               <span><strong>제공자:</strong> {selectedModel.provider_key.toUpperCase()}</span>
-              <span><strong>문맥 한도:</strong> {selectedModel.context_window.toLocaleString()} 토큰</span>
-              <span><strong>최대 출력:</strong> {selectedModel.max_output_tokens.toLocaleString()} 토큰</span>
-              <span><strong>단가:</strong> 입력 ${selectedModel.input_usd_per_million} / 출력 ${selectedModel.output_usd_per_million} (1M당)</span>
+              <span><strong>문맥 한도:</strong> {selectedModel.context_window !== undefined ? `${selectedModel.context_window.toLocaleString()} 토큰` : '정보 없음'}</span>
+              <span><strong>최대 출력:</strong> {selectedModel.max_output !== undefined ? `${selectedModel.max_output.toLocaleString()} 토큰` : '정보 없음'}</span>
+              <span><strong>단가:</strong> {selectedModel.input_price !== undefined && selectedModel.output_price !== undefined ? `입력 $${selectedModel.input_price} / 출력 $${selectedModel.output_price} (1M당)` : '정보 없음'}</span>
             </div>
             <div style={{ marginTop: '6px', display: 'flex', gap: '6px', alignItems: 'center' }}>
               <span style={{ color: '#64748B' }}>지원 기능:</span>

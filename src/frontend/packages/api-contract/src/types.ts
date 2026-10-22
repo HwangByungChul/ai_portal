@@ -57,7 +57,16 @@ export interface AssetReceipt {asset_id:string;revision:number;version_id:string
 export interface CatalogItem {asset_id:string;agent_key:AgentKey;revision:number;name:string;description:string;category:'general'|'knowledge';available:boolean;safe_block_reason:string|null;favorite:boolean;favorite_revision:number}
 export interface AgentAccess {agent_key:AgentKey;mode:'all'|'restricted';member_ids:string[];revision:number;replayed?:boolean}
 
-export interface ModelInfo {model_id:string;provider_key:string;model_name:string;pricing_version:string;input_usd_per_million:string;output_usd_per_million:string;context_window:number;max_output_tokens:number;enabled:boolean;capabilities:string[]}
+/** Legacy in-memory model registry entry. */
+export interface LegacyModelInfo {model_id:string;provider_key:string;model_name:string;pricing_version:string;input_usd_per_million:string;output_usd_per_million:string;context_window:number;max_output_tokens:number;enabled:boolean;capabilities:string[]}
+/** Current database-backed public model registry entry. Credentials and pricing are intentionally absent. */
+export interface DatabaseModelInfo {model_id:string;provider_key:string;model_name:string;display_name?:string|null;context_window:number;max_output:number;is_default:boolean;active:boolean;capabilities:string[]}
+/** Admin-only pricing fields returned with DB-backed model registry rows. */
+export interface AdminDatabaseModelInfo extends DatabaseModelInfo {price_input_usd?:string|null;price_out_usd?:string|null}
+export type ModelRegistryItem = LegacyModelInfo | DatabaseModelInfo;
+export type AdminModelRegistryItem = LegacyModelInfo | AdminDatabaseModelInfo;
+/** Kept for admin registry UI, which still consumes the legacy pricing snapshot. */
+export type ModelInfo = LegacyModelInfo;
 
 export interface DataImportItem {import_id:string;tenant_id:string;requester_id:string;document_id:string;version_id:string;classification:'internal'|'confidential'|'restricted';target_scope:'org'|'department'|'team';reason:string;status:'pending'|'approved'|'rejected';revision:number;decided_by?:string|null;decided_at?:string|null;comment?:string|null;created_at:string;updated_at:string}
 export interface DataImportRequest {client_request_id:string;document_id:string;version_id:string;classification:'internal'|'confidential'|'restricted';target_scope:'org'|'department'|'team';reason:string}

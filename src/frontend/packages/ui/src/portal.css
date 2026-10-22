@@ -1635,3 +1635,160 @@ body, button, input, select, textarea {
 @media(max-width:1100px){.topbar-admin{height:auto;min-height:64px;padding:12px 20px;flex-wrap:wrap;gap:12px}.topbar-admin .topbar-left,.topbar-admin .topbar-right{min-width:0;max-width:100%;flex-wrap:wrap;gap:12px}.topbar-admin .topbar-breadcrumbs{flex-wrap:wrap}.topbar-admin .tenant-controls{min-width:0;max-width:100%;flex-wrap:wrap}.topbar-admin .tenant-controls select{max-width:100%}.topbar-admin .account-controls{margin-left:0}.topbar-admin .user-name{white-space:nowrap}.topbar-admin .admin-status-indicator{white-space:nowrap}}
 
 .workflow-review-dag{align-items:flex-start}
+
+/* Selected A direction: distinct portal accents, restrained depth, and clear focus. */
+.portal-user-theme {
+  --color-brand-primary: #4f46e5;
+  --color-brand-dark: #4338ca;
+  --color-brand-light: #eef2ff;
+  --color-border: #e1e5f0;
+  --user-accent: #4f46e5;
+  --user-accent-hover: #4338ca;
+  --user-soft: #eef2ff;
+  --portal-focus-ring: rgba(79, 70, 229, 0.28);
+}
+
+.portal-admin-theme {
+  --color-brand-primary: #12635c;
+  --color-brand-dark: #0d4a45;
+  --color-brand-light: #edf6f4;
+  --admin-chart-bar: #b7d8d0;
+  --portal-focus-ring: rgba(18, 99, 92, 0.28);
+}
+
+.portal-user-theme .primary,
+.portal-user-theme .brand-small,
+.portal-user-theme .brand-mark {
+  background: var(--color-brand-primary);
+}
+
+.portal-user-theme .primary:hover:not(:disabled),
+.portal-user-theme .agent-start-btn:hover:not(:disabled) {
+  background: var(--color-brand-dark);
+}
+
+.portal-user-theme .agent-start-btn {
+  background: var(--color-brand-primary);
+}
+
+.portal-user-theme .home-a-container {
+  max-width: 1500px;
+  margin-inline: auto;
+}
+
+.portal-user-theme .home-prompt-card {
+  border-color: #d9ddfa;
+  background: linear-gradient(145deg, #ffffff 0%, #fafaff 100%);
+  box-shadow: 0 12px 32px rgba(42, 48, 98, 0.07), 0 2px 6px rgba(42, 48, 98, 0.035);
+}
+
+.portal-user-theme .home-guide-card {
+  background: linear-gradient(145deg, #f8f8ff 0%, #f0f1ff 100%);
+  border-color: #e1e3fc;
+  box-shadow: 0 8px 24px rgba(42, 48, 98, 0.05);
+}
+
+.portal-user-theme .home-chip-btn,
+.portal-user-theme .agent-category-tag,
+.portal-user-theme .agent-icon-box {
+  background: #f0f0ff;
+  border-color: #dedffc;
+  color: #4338ca;
+}
+
+.portal-user-theme .home-scope-pill {
+  background: #f7f7ff;
+  border-color: #e5e6f7;
+}
+
+.portal-user-theme .home-start-chat-btn {
+  box-shadow: 0 4px 12px rgba(79, 70, 229, 0.2);
+}
+
+.portal-user-theme .agent-card-a,
+.portal-user-theme .home-recent-card,
+.portal-user-theme .home-notice-card {
+  box-shadow: 0 3px 12px rgba(42, 48, 98, 0.045);
+}
+
+.portal-user-theme .agent-card-a {
+  border-radius: 16px;
+  transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
+}
+
+.portal-user-theme .recent-item-action {
+  color: var(--color-brand-primary);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.portal-admin-theme .admin-scope-banner {
+  background: linear-gradient(110deg, #ffffff 0%, #f3f8f7 100%);
+  border-color: #d6e6e2;
+}
+
+.portal-admin-theme .metric-card-a,
+.portal-admin-theme .admin-chart-card,
+.portal-admin-theme .admin-requests-card,
+.portal-admin-theme .admin-service-status-card {
+  box-shadow: 0 4px 16px rgba(20, 47, 45, 0.045);
+}
+
+.portal-admin-theme .metric-card-a {
+  border-radius: 16px;
+}
+
+.portal-admin-theme .approval-tab-btn[aria-pressed="true"] {
+  color: var(--color-brand-primary);
+  box-shadow: 0 1px 3px rgba(18, 99, 92, 0.12);
+}
+
+.portal-user-theme :focus-visible {
+  outline: 3px solid var(--portal-focus-ring);
+  outline-offset: 2px;
+}
+
+.portal-admin-theme :focus-visible {
+  outline: 3px solid var(--portal-focus-ring);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .portal-user-theme .agent-card-a:hover {
+    transform: translateY(-2px);
+    border-color: #b7baf2;
+    box-shadow: 0 12px 26px rgba(53, 55, 127, 0.1);
+  }
+}
+
+@media (max-width: 720px) {
+  .portal-user-theme .home-greeting-bar,
+  .portal-user-theme .home-prompt-actions,
+  .portal-user-theme .section-header,
+  .portal-admin-theme .admin-header-row {
+    align-items: flex-start;
+  }
+
+  .portal-user-theme .home-date-badge {
+    align-self: flex-start;
+  }
+
+  .portal-user-theme .home-prompt-actions > *,
+  .portal-admin-theme .admin-header-row > * {
+    max-width: 100%;
+  }
+
+  .portal-admin-theme .admin-scope-banner {
+    align-items: flex-start;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .portal-user-theme .agent-card-a,
+  .portal-user-theme .home-chip-btn,
+  .portal-admin-theme .metric-card-a,
+  .portal-admin-theme [style*="transition"] {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}

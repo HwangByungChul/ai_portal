@@ -167,7 +167,7 @@ export function HomePage({tenant,user,onChat,onDocuments,onSummary,onCatalog,onM
        <strong>{conversation.title}</strong>
        <span>{new Date(conversation.updated_at).toLocaleString('ko-KR')}</span>
       </div>
-      <span style={{fontSize: '12px', color: '#12635c', fontWeight: 600}}>이어서 대화 →</span>
+      <span className="recent-item-action">이어서 대화 →</span>
      </button>)}
      {recent.data&&!recent.data.items.length&&<p className="hub-empty">아직 대화 이력이 없습니다. 첫 업무를 시작해 보세요.</p>}
     </div>

@@ -16,7 +16,7 @@ function BarChart({data,maxVal}:{data:{date:string;calls:number}[];maxVal:number
       const pct=maxVal>0?Math.round((d.calls/maxVal)*100):0;
       const label=d.date.slice(5)+' · '+d.calls+'건';
       return <div key={d.date} title={label} aria-label={label} style={{flex:1,display:'flex',flexDirection:'column',alignItems:'center',gap:'2px'}}>
-        <div style={{width:'100%',background:'#c3dafe',borderRadius:'3px 3px 0 0',height:pct+'%',minHeight:d.calls>0?'4px':'0',transition:'height .3s'}}/>
+        <div style={{width:'100%',background:'var(--admin-chart-bar, #c3dafe)',borderRadius:'3px 3px 0 0',height:pct+'%',minHeight:d.calls>0?'4px':'0',transition:'height .18s ease'}}/>
         <span style={{fontSize:'9px',color:'#6b7280',writingMode:'vertical-rl',transform:'rotate(180deg)',maxHeight:'40px',overflow:'hidden'}}>{d.date.slice(8)}</span>
       </div>;
     })}
