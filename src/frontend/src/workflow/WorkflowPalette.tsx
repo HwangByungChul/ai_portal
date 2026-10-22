@@ -25,10 +25,10 @@ export function WorkflowPalette({onAddNode}: WorkflowPaletteProps) {
   };
 
   return (
-    <aside className="workflow-palette" aria-label="컴포넌트 라이브러리">
+    <aside className="workflow-palette" aria-label="노드 목록">
       <div className="workflow-palette-header">
         <h3>
-          <span>🧩</span> 컴포넌트 라이브러리
+          <span>🧩</span> 노드 목록
         </h3>
         <input
           type="text"

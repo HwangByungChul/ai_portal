@@ -79,6 +79,7 @@ test('WF_02_approved_version_runtime_ui_contract',async({page})=>{
   await page.route('**/api/v1/workflows/runs/'+run,async route=>route.fulfill({json:envelope({...record,state:'completed',revision:3,is_terminal:true,result_access:'final',result:'계약 검증 최종 결과',steps:record.steps.map(s=>({...s,state:'succeeded'}))})}));
   await page.goto('/manage/admin/workflows');
   await page.getByRole('button',{name:'⚡ 승인·실행 관리',exact:true}).click();
+  await expect(page.locator('.workflow-canvas-page')).not.toContainText(/DAG|revision|체크포인트|제안 시안|4\.4-03/);
   await page.getByLabel('실행 질문',{exact:true}).fill('승인 버전 질문');
   await page.getByRole('button',{name:'Workflow 실행',exact:true}).click();
   await expect(page.getByRole('heading',{name:'최종 결과',exact:true})).toBeVisible();

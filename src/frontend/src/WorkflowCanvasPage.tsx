@@ -172,7 +172,7 @@ export function WorkflowCanvasPage({tenant,user,quickStart=false}:{tenant:Tenant
     setValidating(true);setError(null);setValidationMsg(null);
     try{
       const value=await api.request<{node_count:number;execution_order:string[]}>('/workflows/validate',{...options,method:'POST',body:{workflow_id:'wf-financial-preview',name:'구조 검토 예시',nodes:DEFAULT_NODES,edges:DEFAULT_EDGES}});
-      if(scope.current())setValidationMsg(`예시 DAG 구조 검증: ${value.node_count}개 노드, ${value.execution_order.join(' → ')}. 승인·실행 검증은 별도입니다.`);
+        if(scope.current())setValidationMsg(`예시 흐름 구조 검증: ${value.node_count}개 노드, ${value.execution_order.join(' → ')}. 승인·실행 검증은 별도입니다.`);
     }catch(problem){await fail(problem);}
     finally{if(scope.current())setValidating(false);}
   }
@@ -250,9 +250,9 @@ export function WorkflowCanvasPage({tenant,user,quickStart=false}:{tenant:Tenant
           </button>
           {active&&<button type="button" className="secondary" onClick={()=>void cancel()} disabled={busy}>Workflow 취소</button>}
         </section>
-        <section style={panel} aria-label="실행 체크포인트">
-          <h2>단계별 실행 체크포인트</h2>
-          {!run?<p>승인 버전을 실행하면 단계 상태와 자식 실행 번호가 여기에 표시됩니다.</p>:<>
+        <section style={panel} aria-label="실행 상태">
+          <h2>단계별 실행 상태</h2>
+          {!run?<p>승인 버전을 실행하면 각 단계의 진행 상태와 연결된 실행 정보가 여기에 표시됩니다.</p>:<>
             <p role="status">{states[run.state]??run.state} · {modeLabel(run.execution_mode)}</p>
             <p style={{overflowWrap:'anywhere'}}>실행 번호: {run.run_id}</p>
             <button type="button" className="secondary" onClick={()=>void refreshRun()}>결과 새로고침</button>
@@ -271,7 +271,7 @@ export function WorkflowCanvasPage({tenant,user,quickStart=false}:{tenant:Tenant
             <label style={{display:'block'}}>복구 사유<textarea value={recoveryReason} onChange={e=>setRecoveryReason(e.target.value)} maxLength={1000} rows={2} disabled={recoveryBusy}/></label>
             <button type="button" className="secondary" onClick={()=>void submitRecoveryRequest()} disabled={recoveryBusy||recoveryReason.trim().length<8||!run.steps.some(step=>step.state==='interrupted')}>다른 PADMIN에게 재개 검토 요청</button>
             {recoveryRequests.map(item=><div key={item.request_id} style={{marginTop:8,padding:8,background:'#fff',borderRadius:6}}>
-              <p>요청 {item.request_id} · 상태 {item.status==='requested'?'검토 대기':item.status==='approved'?'승인 완료':item.status==='rejected'?'반려':'재개됨'} · revision {item.expected_run_revision}</p>
+              <p>요청 {item.request_id} · 상태 {item.status==='requested'?'검토 대기':item.status==='approved'?'승인 완료':item.status==='rejected'?'반려':'재개됨'} · 실행 기록 변경 번호 {item.expected_run_revision}</p>
               {item.status==='approved'&&<button type="button" className="primary" onClick={()=>void resumeApprovedRecovery(item)} disabled={recoveryBusy||run.revision!==item.expected_run_revision}>승인된 복구 재개 확정</button>}
             </div>)}
             <button type="button" className="secondary" onClick={()=>void loadRecoveryRequests(run.run_id)} disabled={recoveryBusy}>복구 요청 상태 새로고침</button>
@@ -283,17 +283,17 @@ export function WorkflowCanvasPage({tenant,user,quickStart=false}:{tenant:Tenant
           {!recoveryQueue.length&&<p>복구 요청이 없습니다.</p>}
           {recoveryQueue.map(item=><article key={item.request_id} style={{padding:12,marginTop:12,border:'1px solid #E2E8F0',borderRadius:8}}>
             <p><strong>상태:</strong> {item.status} · <strong>run:</strong> {item.run_id} · <strong>요청자:</strong> {item.requester_id}</p>
-            <p>중단 단계 {item.resume_node_id} · run revision {item.current_run_revision}/{item.expected_run_revision} · {item.created_at}</p><p>{item.reason}</p>
+            <p>중단 단계 {item.resume_node_id} · 실행 기록 변경 번호 {item.current_run_revision}/{item.expected_run_revision} · {item.created_at}</p><p>{item.reason}</p>
             <ul>{item.steps.map(step=><li key={step.node_id}>{step.node_id} · {step.node_type} · {step.state}{step.error_code?` · ${step.error_code}`:''}</li>)}</ul>
             {item.status==='requested'&&<><label style={{display:'block'}}>결정 사유<textarea value={recoveryComment} onChange={e=>setRecoveryComment(e.target.value)} maxLength={1000} rows={2} disabled={recoveryBusy}/></label>
               <button type="button" className="primary" onClick={()=>void decideRecovery(item,'approve')} disabled={recoveryBusy||recoveryComment.trim().length<8||item.current_run_revision!==item.expected_run_revision}>재개 승인</button>
               <button type="button" className="secondary" onClick={()=>void decideRecovery(item,'reject')} disabled={recoveryBusy||recoveryComment.trim().length<8}>반려</button></>}
           </article>)}
         </section>}
-        <section style={panel} aria-label="워크플로우 DAG 시각화">
-          <h2>다단계 실행 파이프라인 흐름 (DAG)</h2>
-          <p>아래 5개 노드는 구조 검토용 예시입니다. 선택한 승인 버전의 실행 결과는 위 체크포인트에 표시됩니다.</p>
-          <button type="button" className="secondary" onClick={()=>void handleValidate()} disabled={validating}>DAG 구조 검증</button>
+        <section style={panel} aria-label="Workflow 흐름 예시">
+          <h2>다단계 업무 흐름 예시</h2>
+          <p>아래 5개 노드는 구성 예시입니다. 선택한 승인 버전의 실행 결과는 위 단계별 실행 상태에 표시됩니다.</p>
+          <button type="button" className="secondary" onClick={()=>void handleValidate()} disabled={validating}>흐름 구조 검증</button>
           <div style={{display:'flex',gap:12,overflowX:'auto',padding:'16px 0'}}>{DEFAULT_NODES.map(node=>{
             const color=NODE_COLORS[node.node_type];
             return <article key={node.node_id} style={{minWidth:190,padding:16,border:`1px solid ${color.border}`,background:color.bg,borderRadius:8}}>

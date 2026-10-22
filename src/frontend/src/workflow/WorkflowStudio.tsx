@@ -385,12 +385,12 @@ function WorkflowStudioInner({tenant, user, quickStart=false}: {tenant: Tenant; 
         }
       );
       setStatusMessage(
-        `✅ 워크플로우 DAG 검증 성공: 총 ${res.node_count}개 노드, 실행 순서: [${res.execution_order.join(' → ')}]`
+        `✅ Workflow 흐름 구조 검증 성공: 총 ${res.node_count}개 노드, 실행 순서: [${res.execution_order.join(' → ')}]`
       );
       setActiveStep(5);
     } catch (e: any) {
       setStatusMessage(
-        `✅ 로컬 DAG 검증 통과: 총 ${nodes.length}개 노드 정상 연결. (백엔드 승인 검증은 별도입니다)`
+        `✅ 편집기 흐름 구조 검증 통과: 총 ${nodes.length}개 노드가 연결되었습니다. 승인 검증은 별도로 진행합니다.`
       );
     } finally {
       setValidating(false);
@@ -535,16 +535,16 @@ function WorkflowStudioInner({tenant, user, quickStart=false}: {tenant: Tenant; 
               저장된 초안
               <select aria-label="불러올 Workflow 초안" value={selectedDraft} disabled={draftBusy} onChange={e=>void loadDraft(e.target.value)}>
                 <option value="">초안 선택</option>
-                {drafts.map(draft=><option key={draft.draft_id} value={draft.draft_id}>{draft.name} · r{draft.revision}</option>)}
+                {drafts.map(draft=><option key={draft.draft_id} value={draft.draft_id}>{draft.name} · 버전 {draft.revision}</option>)}
               </select>
             </label>
             <button type="button" className="workflow-btn workflow-btn-secondary" disabled={draftBusy} onClick={()=>{setDraftId(crypto.randomUUID());setDraftRevision(0);setSelectedDraft('');setStatusMessage('새 초안 편집 중입니다. 저장하면 개인 초안으로 보관됩니다.');}}>
               새 초안
             </button>
             <button type="button" className="workflow-btn workflow-btn-primary" disabled={draftBusy} onClick={()=>void saveDraft()}>
-              {draftBusy ? '초안 처리 중...' : `초안 저장 · r${draftRevision}`}
+              {draftBusy ? '초안 처리 중...' : `초안 저장 · 버전 ${draftRevision}`}
             </button>
-            <button type="button" className="workflow-btn workflow-btn-secondary" disabled={!isCurrentDraftSaved||draftBusy} onClick={()=>setShowApprovalRequest(true)} title={isCurrentDraftSaved?'저장된 revision을 승인 요청으로 변환합니다.':'현재 편집 내용을 먼저 저장하세요.'}>
+            <button type="button" className="workflow-btn workflow-btn-secondary" disabled={!isCurrentDraftSaved||draftBusy} onClick={()=>setShowApprovalRequest(true)} title={isCurrentDraftSaved?'저장된 버전을 승인 요청합니다.':'현재 편집 내용을 먼저 저장하세요.'}>
               승인 요청 준비
             </button>
             <label className="workflow-btn workflow-btn-secondary" style={{display: 'flex', alignItems: 'center', gap: 6}}>
@@ -558,7 +558,7 @@ function WorkflowStudioInner({tenant, user, quickStart=false}: {tenant: Tenant; 
                 <option value="">승인된 버전 없음</option>
                 {versions.map((version) => (
                   <option key={version.version_id} value={version.version_id}>
-                    {version.name} · r{version.revision}{version.execution_ready ? '' : ' · 실행 준비 안 됨'}
+                    {version.name} · 버전 {version.revision}{version.execution_ready ? '' : ' · 실행 준비 안 됨'}
                   </option>
                 ))}
               </select>
@@ -729,7 +729,7 @@ function WorkflowStudioInner({tenant, user, quickStart=false}: {tenant: Tenant; 
         >
           <div className="workflow-console-heading">
             <h3 style={{margin: 0, fontSize: 14, fontWeight: 700, display: 'flex', alignItems: 'center', gap: 6}}>
-              <span>📊</span> 실행 모니터링 &amp; 체크포인트
+              <span>📊</span> 실행 상태 확인
             </h3>
             <button
               type="button"

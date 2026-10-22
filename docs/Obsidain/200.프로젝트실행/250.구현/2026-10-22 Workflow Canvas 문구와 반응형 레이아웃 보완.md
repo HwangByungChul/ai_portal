@@ -24,7 +24,7 @@ Workflow 화면의 내부 개발 단계 번호·과거 제안 시안 문구, 압
 1. Node22.23.1로 `node src/frontend/node_modules/typescript/bin/tsc --noEmit -p src/frontend/tsconfig.json`: 종료0.
 2. `git diff --check`: 종료0.
 3. 독립 컴포넌트 HTTP 대역 브라우저 검사: `node src/frontend/.runtime/workflow-layout-check.cjs` (저장소 루트, 기존 Vite5173 필요), 종료0. 이 스크립트는 실제 WorkflowCanvasPage 및 공통 CSS를 임시 진입 화면에서 마운트한다. 모든 `/api/v1/**` 요청을 Playwright에서 대역 처리하며 합성 사용자·조직 props를 사용한다. 실제 세션·API·DB 연결 검증은 아니다. 임시 HTML/TSX 진입 파일은 실행 후 제거한다.
-4. 1920·1440·1024·768·390px 모두 문서 가로 넘침0, 버튼/select 잘림0, 분류 칩 수축0, JavaScript 오류0. 독립 리뷰에서 알림 live region에 닫기 버튼을 넣지 말라는 P2 지적을 반영해 메시지 텍스트와 닫기 조작을 분리했으며, 관련 assertion을 회귀 테스트에 추가했다. Node22 TypeScript와 `git diff --check` 재통과. 캔버스 높이는1920/1440에서560px, 1024/768/390에서480px였다. 아래3폭에서 패널 적층, 팔레트 가로 스크롤 및 속성 입력→제목 동기화, 콘솔 질문 입력 유지를 확인했다. 390·1440px 스크린샷을 시각 확인했다.
+4. 1920·1440·1024·768·390px 모두 문서 가로 넘침0, 버튼/select 잘림0, 분류 칩 수축0, JavaScript 오류0. 독립 리뷰에서 알림 live region과 닫기 조작 분리(P2), 실행 기록 변경 번호와 승인 Workflow 버전 혼동 방지(P2)를 반영했다. 메시지 텍스트만 alert/status로 알리고 닫기 버튼은 바깥에 두었으며 관련 assertion을 회귀 테스트에 추가했다. 실행 관리 화면의 DAG·revision·체크포인트는 흐름·버전·실행 상태로 정리했다. Node22 TypeScript와 `git diff --check` 재통과. 최종 독립 재리뷰 PASS, 중요 잔여 결함 없음. 캔버스 높이는1920/1440에서560px, 1024/768/390에서480px였다. 아래3폭에서 패널 적층, 팔레트 가로 스크롤 및 속성 입력→제목 동기화, 콘솔 질문 입력 유지를 확인했다. 390·1440px 스크린샷을 시각 확인했다.
 
 증거(로컬, Git 제외):
 
