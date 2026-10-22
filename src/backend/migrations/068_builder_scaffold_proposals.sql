@@ -53,7 +53,8 @@ BEGIN
  OR p_payload-ARRAY['intent','answers','document_refs']::text[]<>'{}'::jsonb
  OR NOT p_payload ?& ARRAY['intent','answers','document_refs']
  OR jsonb_typeof(p_payload->'intent')<>'string' OR octet_length(p_payload->>'intent') NOT BETWEEN 1 AND 4000
- OR jsonb_typeof(p_payload->'answers')<>'object' OR jsonb_object_length(p_payload->'answers')>20
+ OR jsonb_typeof(p_payload->'answers')<>'object'
+ OR (SELECT count(*) FROM jsonb_object_keys(p_payload->'answers'))>20
  OR jsonb_typeof(p_payload->'document_refs')<>'array' OR jsonb_array_length(p_payload->'document_refs')>5
  OR p_model_id IS NULL OR p_model_id !~ '^[a-z0-9][a-z0-9._-]{0,63}$'
  OR p_policy_revision IS NULL OR p_policy_revision !~ '^[A-Za-z0-9._-]{1,64}$'

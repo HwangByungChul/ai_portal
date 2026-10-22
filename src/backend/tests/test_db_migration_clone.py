@@ -82,6 +82,8 @@ def test_068_builder_proposals_are_owner_scoped_and_idempotent():
     assert "UNIQUE(tenant_id,owner_user_id,client_request_id)" in content
     assert "pg_advisory_xact_lock" in content
     assert "old.request_hash<>h" in content
+    assert "jsonb_object_keys(p_payload->'answers')" in content
+    assert "jsonb_object_length" not in content
     assert "security.builder_scaffold_read" in content
     assert "security.builder_scaffold_discard" in content
     assert "portal.messages" not in content
