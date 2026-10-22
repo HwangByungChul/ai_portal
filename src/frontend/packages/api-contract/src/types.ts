@@ -106,7 +106,7 @@ export interface MeetingResult {decisions:MeetingEvidenceItem[];unresolved:Meeti
 // Administrative review DTOs: status records the historical decision, head records current availability.
 export type ApprovalKind='settings'|'evidence'|'dynamic'|'tool'|'workflow';
 export type ApprovalStatus='pending'|'approved'|'rejected';
-export interface ToolDescriptor {tool_id:string;mode:Mode;adapter_revision:string;registry_module_sha256:string;adapter_module_sha256:string;arg_schema:Record<string,unknown>;timeout_seconds:number;read_only:true;digest:string}
+export interface ToolDescriptor {tool_id:string;mode:Mode;adapter_revision?:string;registry_module_sha256?:string;adapter_module_sha256?:string;arg_schema?:Record<string,unknown>;timeout_seconds?:number;read_only?:boolean;digest:string;revision_number?:number;name?:string;description?:string;source_type?:string;input_schema?:Record<string,unknown>;risk_class?:string;risk_basis?:string;risk_policy_id?:string;risk_policy_revision?:number;risk_reason?:string;data_classification?:string;approval_scope?:string;approval_policy?:string;execution_ready?:boolean}
 export interface ToolApproval {request_id:string;tool_id:string;descriptor:ToolDescriptor;audience:'all'|'restricted';member_ids:string[];expected_head_revision:number;status:ApprovalStatus;revision:number;requester_id:string;decided_by:string|null;created_at:string;decided_at:string|null}
 export interface NodeReference {node_id:string;path:string[]}
 export type WorkflowBinding=string|NodeReference;
@@ -116,7 +116,7 @@ export interface WorkflowApproval {version_id:string;workflow_id:string;revision
 export type ReviewRequest=ToolApproval|WorkflowApproval;
 export interface ApprovalDetail<T extends ReviewRequest=ReviewRequest> {request:T;current_head:(T & {head_revision:number;enabled:boolean})|null;validation:{valid:boolean;checked_at:string;checks:{code:string;status:'pass'|'fail'|'unavailable';message:string}[]};diff:{baseline_available:boolean;changes:{field:string;before:unknown;after:unknown}[]};history:{action:string;actor_id:string;created_at:string;comment:string|null;revision:number|null}[];can_approve:boolean;can_reject:boolean;can_revoke:boolean;decision_reason:string|null}
 export interface ApprovalPage<T extends ReviewRequest=ReviewRequest> extends PageResult<T> {total_pending:number;actionable_pending:number}
-export interface ToolSupportItem extends ToolInfo {descriptor:ToolDescriptor;head_revision:number;current_head:ApprovalDetail<ToolApproval>['current_head']}
+export interface ToolSupportItem extends ToolInfo {descriptor:ToolDescriptor;head_revision:number;current_head:ApprovalDetail<ToolApproval>['current_head'];dynamic?:boolean;risk_class?:string;input_schema?:Record<string,unknown>}
 export interface WorkflowSupport {workflow_heads:{workflow_id:string;version_id:string;revision:number;enabled:boolean}[];use_case_heads:{use_case_id:string;version_id:string;revision:number}[];meeting_contract:Record<string,unknown>;published_assets_endpoint:string}
 export interface PublishedWorkflowAsset {asset_id:string;version_id:string;publication_revision:number;name:string;variables:string[];execution_mode:Mode;required_tools?:string[]}
 

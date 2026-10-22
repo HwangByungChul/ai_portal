@@ -249,3 +249,74 @@ def test_approved_workflow_current_head_and_case_identity(ops_rows):
                 assert not (await reviews.detail(approver,second_id))['validation']['valid']
             finally:await service.close();await agent.close()
     f.run(check())
+
+
+def test_dynamic_tool_registration_review_replay_and_fail_closed(client, login, ops_rows):
+    from uuid import uuid4
+
+    f = ops_rows
+    csrf = login(client, 'A-ADM')['csrf_token']
+    h = headers(f, csrf=csrf)
+    tool_id = 'dynamic_review_gate_test'
+    registration = {
+        'tool_id': tool_id,
+        'name': '격리 검토 테스트 도구',
+        'description': '동적 승인 gate HTTP 검증용 합성 Tool',
+        'source_type': 'custom_mcp',
+        'input_schema': {'type': 'object', 'properties': {'query': {'type': 'string'}}},
+        'raw_meta': {'test_fixture': True},
+        'dev_profile': {'base_endpoint_url': 'https://dev.example.invalid/mcp'},
+        'prd_profile': {'base_endpoint_url': 'https://prd.example.invalid/mcp'},
+    }
+    registered = client.post('/api/v1/tools/auto-wrap/register', headers=h, json=registration)
+    assert registered.status_code == 200, registered.text
+
+    support = client.get('/api/v1/admin/tool-approvals/submission-support', headers=h)
+    assert support.status_code == 200, support.text
+    item = next(x for x in support.json()['data']['items'] if x['tool_id'] == tool_id)
+    assert item['dynamic'] is True and item['risk_class'] == 'financial_side_effect'
+    assert item['execution_ready'] is False
+
+    body = {
+        'tool_id': tool_id,
+        'client_request_id': str(uuid4()),
+        'audience': 'all',
+        'member_ids': [],
+        'expected_head_revision': 0,
+    }
+    submitted = client.post('/api/v1/admin/tool-approvals', headers=h, json=body)
+    assert submitted.status_code == 200, submitted.text
+    result = submitted.json()['data']
+    assert result['status'] == 'pending' and result['replayed'] is False
+    assert result['execution_ready'] is False
+    request_id = result['request_id']
+
+    replay = client.post('/api/v1/admin/tool-approvals', headers=h, json=body)
+    assert replay.status_code == 200, replay.text
+    assert replay.json()['data']['request_id'] == request_id
+    assert replay.json()['data']['replayed'] is True
+
+    login(client, 'B-ADM')
+    other_tenant = client.get(f'/api/v1/admin/tool-approvals/{request_id}', headers=headers(f, 'B'))
+    assert other_tenant.status_code == 404, other_tenant.text
+
+    csrf = login(client, 'P-A')['csrf_token']
+    h = headers(f, csrf=csrf)
+    detail = client.get(f'/api/v1/admin/tool-approvals/{request_id}', headers=h)
+    assert detail.status_code == 200, detail.text
+    assert detail.json()['data']['can_approve'] is False
+    assert detail.json()['data']['request']['descriptor']['risk_policy_id'] == 'dynamic-default-v1'
+    assert detail.json()['data']['request']['descriptor']['approval_scope'] == 'registration_review_only'
+    approved = client.post(f'/api/v1/admin/tool-approvals/{request_id}/decision', headers=h,
+                           json={'decision': 'approve', 'expected_revision': 1, 'comment': '위험 분류 확인'})
+    assert approved.status_code == 409 and approved.json()['error']['code'] == 'TOOL_DYNAMIC_REVIEW_ONLY'
+
+    import psycopg
+    with f.db.admin_connection() as conn:
+        with pytest.raises(psycopg.Error, match='TOOL_DYNAMIC_REVIEW_ONLY'):
+            conn.execute("UPDATE portal.tool_approvals SET status='approved' WHERE request_id=%s", (request_id,))
+
+    rejected = client.post(f'/api/v1/admin/tool-approvals/{request_id}/decision', headers=h,
+                           json={'decision': 'reject', 'expected_revision': 1, 'comment': '격리 검증 반려'})
+    assert rejected.status_code == 200, rejected.text
+    assert rejected.json()['data']['status'] == 'rejected'

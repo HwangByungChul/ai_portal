@@ -14,6 +14,7 @@ export function AIStudioHubPage({
   initialTab?: 'builder' | 'workflow';
   onLegacy?: () => void;
 }) {
+  const [mode, setMode] = useState<'quick' | 'guided'>('guided');
   const [activeTab, setActiveTab] = useState<'builder' | 'workflow'>(() => {
     const params = new URLSearchParams(window.location.search);
     const tabParam = params.get('tab');
@@ -23,10 +24,11 @@ export function AIStudioHubPage({
   });
 
   const setTab = (nextTab: 'builder' | 'workflow') => {
+    if (activeTab === nextTab) return;
     setActiveTab(nextTab);
     const url = new URL(window.location.href);
     url.searchParams.set('tab', nextTab);
-    window.history.replaceState(null, '', url.pathname + url.search);
+    window.history.pushState(null, '', url.pathname + url.search);
   };
 
   useEffect(() => {
@@ -60,10 +62,10 @@ export function AIStudioHubPage({
       >
         <div>
           <h1 style={{margin: '0 0 4px 0', fontSize: 22, fontWeight: 800, color: '#0F172A', display: 'flex', alignItems: 'center', gap: 8}}>
-            <span>✨</span> AI Studio (통합 제작 허브)
+            <span>✨</span> 생성형 AI 플랫폼 · AI Studio
           </h1>
           <p style={{margin: 0, fontSize: 13, color: '#64748B'}}>
-            독립된 <strong>단일 에이전트(부품)</strong>를 제작하거나, 이들을 엮어 <strong>다단계 자동화 워크플로우(완성품)</strong>를 조립합니다.
+            Agent와 Workflow를 한 Studio에서 만들고, 저장 전 제안을 검토하거나 단계별로 직접 구성합니다.
           </p>
         </div>
 
@@ -85,7 +87,7 @@ export function AIStudioHubPage({
               boxShadow: activeTab === 'builder' ? '0 2px 8px rgba(79,70,229,0.25)' : 'none'
             }}
           >
-            🤖 단일 Agent 빌더
+            🤖 Agent Builder
           </button>
           <button
             type="button"
@@ -103,10 +105,38 @@ export function AIStudioHubPage({
               boxShadow: activeTab === 'workflow' ? '0 2px 8px rgba(79,70,229,0.25)' : 'none'
             }}
           >
-            ⚡ 다단계 Workflow 캔버스
+            ⚡ Workflow Canvas
           </button>
         </div>
       </div>
+
+      <section aria-labelledby="studio-start-title" className="card" style={{marginBottom: 20}}>
+        <div className="page-heading">
+          <div>
+            <p className="eyebrow teal">작업 방식</p>
+            <h2 id="studio-start-title">어떻게 시작할까요?</h2>
+            <p className="muted">자연어로 초안을 제안받거나, 편집 화면에서 직접 구성할 수 있습니다.</p>
+          </div>
+          <div role="group" aria-label="시작 방식" className="tab-list">
+            <button type="button" className={mode === 'quick' ? 'primary' : 'secondary'} aria-pressed={mode === 'quick'} onClick={() => setMode('quick')}>
+              빠른 시작
+            </button>
+            <button type="button" className={mode === 'guided' ? 'primary' : 'secondary'} aria-pressed={mode === 'guided'} onClick={() => setMode('guided')}>
+              단계별 제작
+            </button>
+          </div>
+        </div>
+        {mode === 'quick' ? (
+          <div className="confirmation" role="status">
+            <strong>{activeTab === 'builder' ? 'Agent 빠른 시작' : 'Workflow 빠른 시작'}</strong>
+            <p>업무 목적과 필요한 입력·결과를 설명하면 검토 가능한 초안을 제안합니다. 생성만으로 저장하거나 실행하지 않습니다.</p>
+            <p className="muted">자연어 초안 생성 연결을 준비 중입니다. 아래 편집 화면에서 단계별 제작을 계속할 수 있습니다.</p>
+            <button type="button" className="secondary" onClick={() => setMode('guided')}>단계별 제작으로 이동</button>
+          </div>
+        ) : (
+          <p className="scope-note">기존 편집기에서 설정을 직접 작성하고, 저장·시험·승인은 각각 명시적으로 진행합니다.</p>
+        )}
+      </section>
 
       {/* 탭별 컨텍스트 연계 안내 배너 */}
       {activeTab === 'builder' ? (
@@ -126,7 +156,7 @@ export function AIStudioHubPage({
             }}
           >
             <span>
-              💡 <strong>안내:</strong> 여기서 제작한 단일 에이전트는 [Workflow 캔버스]에서 부품 노드로 불러와 기간계 시스템(Tool/API) 및 조건 분기와 결합할 수 있습니다.
+              💡 <strong>연결 안내:</strong> Workflow에서는 승인·게시된 정확한 Agent 버전과 현재 권한이 있는 Tool만 지원 노드로 선택할 수 있습니다. 저장 전 Agent 제안은 Workflow에서 자동으로 실행되지 않습니다.
             </span>
             <button
               type="button"
@@ -142,7 +172,7 @@ export function AIStudioHubPage({
                 cursor: 'pointer'
               }}
             >
-              Workflow 캔버스로 이동 →
+              Workflow Canvas로 이동 →
             </button>
           </div>
           <AssetsPage builder tenant={tenant} user={user} onLegacy={onLegacy} />
@@ -164,7 +194,7 @@ export function AIStudioHubPage({
             }}
           >
             <span>
-              💡 <strong>안내:</strong> 새로운 특화 상담/분석 에이전트가 필요하신가요? [단일 Agent 빌더]에서 에이전트를 먼저 제작한 후 본 캔버스에 배치하세요.
+              💡 <strong>연결 안내:</strong> Agent 제안은 별도 검토·저장 과정을 거칩니다. Workflow에서 사용할 때는 승인·게시된 정확한 버전을 선택해야 합니다.
             </span>
             <button
               type="button"
@@ -180,7 +210,7 @@ export function AIStudioHubPage({
                 cursor: 'pointer'
               }}
             >
-              ← 단일 Agent 빌더로 이동
+              ← Agent Builder로 이동
             </button>
           </div>
           <WorkflowCanvasPage tenant={tenant} user={user} />

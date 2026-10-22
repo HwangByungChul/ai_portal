@@ -1,9 +1,8 @@
-"""Dynamic Tool Gateway with Approval-State-Based Environment Routing.
+"""Dynamic Tool Gateway for development simulation.
 
 Enforces T-035:
-- Automatically switches between Development and Production endpoints/credentials
-  based on the calling Agent's publication status ('draft' | 'approved_published').
-- Prevents unauthorized access to production endpoints from draft/unapproved agents.
+- Keeps production dispatch closed until an exact-revision publication gate exists.
+- Routes draft/unapproved agents to development simulation profiles.
 - Provides protocol adapters for REST/HTTP, SOAP/XML, JDBC View, and TCP Financial Packets.
 """
 import asyncio
@@ -15,10 +14,12 @@ from uuid import UUID, uuid4
 from app.errors import AppError
 from app.tools.adapters import validate_tool_argument_safety
 from app.tools.credentials import decrypt_credential
+from app.tools.dispatch import ConnectorDispatcher
 
 
 class DynamicToolGateway:
-    def __init__(self):
+    def __init__(self, dispatcher: ConnectorDispatcher | None = None):
+        self._dispatcher = dispatcher or ConnectorDispatcher()
         # In-memory registry for dynamic tools (persisted in DB table portal.mcp_tool_definitions)
         self._tools: dict[str, dict[str, Any]] = {}
         # tool_id -> {'development': profile_dict, 'production': profile_dict}
@@ -27,6 +28,10 @@ class DynamicToolGateway:
         self._idempotency_cache: dict[str, str] = {}
         # Audit log buffer
         self._audit_logs: list[dict[str, Any]] = []
+
+    @staticmethod
+    def _key(tool_id: str, tenant_id: str) -> str:
+        return f"{tenant_id}:{tool_id}"
 
     def register_tool(
         self,
@@ -38,6 +43,7 @@ class DynamicToolGateway:
         raw_meta: dict[str, Any] | None = None,
         dev_profile: dict[str, Any] | None = None,
         prd_profile: dict[str, Any] | None = None,
+        tenant_id: str = "default_tenant",
     ) -> dict[str, Any]:
         """Register a newly auto-wrapped or configured Tool."""
         tool_entry = {
@@ -50,28 +56,30 @@ class DynamicToolGateway:
             "enabled": True,
             "created_at": time.time(),
         }
-        self._tools[tool_id] = tool_entry
+        key = self._key(tool_id, tenant_id)
+        tool_entry["tenant_id"] = tenant_id
+        self._tools[key] = tool_entry
 
-        self._profiles[tool_id] = {
+        self._profiles[key] = {
             "development": dev_profile or {
                 "protocol_type": "rest_http",
-                "base_endpoint_url": f"https://dev-api.internal.bank/tools/{tool_id}",
+                "base_endpoint_url": f"https://dev.example.invalid/tools/{tool_id}",
                 "credential": {"api_key": "dev_test_mock_token_123"},
                 "active": True,
             },
             "production": prd_profile or {
                 "protocol_type": "rest_http",
-                "base_endpoint_url": f"https://api.internal.bank/tools/{tool_id}",
+                "base_endpoint_url": f"https://production.example.invalid/tools/{tool_id}",
                 "credential": {"api_key": "prd_secure_token_secret_999"},
                 "active": True,
             },
         }
         return tool_entry
 
-    def get_tool(self, tool_id: str) -> dict[str, Any] | None:
-        return self._tools.get(tool_id)
+    def get_tool(self, tool_id: str, tenant_id: str = "default_tenant") -> dict[str, Any] | None:
+        return self._tools.get(self._key(tool_id, tenant_id))
 
-    def list_tools(self) -> list[dict[str, Any]]:
+    def list_tools(self, tenant_id: str = "default_tenant") -> list[dict[str, Any]]:
         return [
             {
                 "tool_id": t["tool_id"],
@@ -80,11 +88,11 @@ class DynamicToolGateway:
                 "source_type": t["source_type"],
                 "input_schema": t["input_schema"],
                 "enabled": t["enabled"],
-                "has_dev_profile": bool(self._profiles.get(t["tool_id"], {}).get("development")),
-                "has_prd_profile": bool(self._profiles.get(t["tool_id"], {}).get("production")),
+                "has_dev_profile": bool(self._profiles.get(self._key(t["tool_id"], tenant_id), {}).get("development")),
+                "has_prd_profile": bool(self._profiles.get(self._key(t["tool_id"], tenant_id), {}).get("production")),
             }
             for t in self._tools.values()
-            if t["enabled"]
+            if t["enabled"] and t["tenant_id"] == tenant_id
         ]
 
     def set_endpoint_profile(
@@ -95,9 +103,11 @@ class DynamicToolGateway:
         base_endpoint_url: str,
         encrypted_credential: str | None = None,
         raw_credential: dict[str, Any] | None = None,
+        tenant_id: str = "default_tenant",
     ) -> None:
         """Update environment-specific endpoint and credentials."""
-        if tool_id not in self._tools:
+        key = self._key(tool_id, tenant_id)
+        if key not in self._tools:
             raise AppError("TOOL_NOT_FOUND", 404)
         if target_env not in ["development", "production"]:
             raise AppError("INVALID_TARGET_ENV", 422)
@@ -106,10 +116,10 @@ class DynamicToolGateway:
         if encrypted_credential and not cred:
             cred = decrypt_credential(encrypted_credential)
 
-        if tool_id not in self._profiles:
-            self._profiles[tool_id] = {}
+        if key not in self._profiles:
+            self._profiles[key] = {}
 
-        self._profiles[tool_id][target_env] = {
+        self._profiles[key][target_env] = {
             "protocol_type": protocol_type,
             "base_endpoint_url": base_endpoint_url,
             "credential": cred,
@@ -126,9 +136,12 @@ class DynamicToolGateway:
         user_id: str = "default_user",
         asset_id: str | None = None,
     ) -> dict[str, Any]:
-        """Invoke Tool with dynamic environment routing based on publication status."""
+        """Invoke development simulation; publication status cannot authorize production."""
+        if publication_status == "approved_published":
+            raise AppError("TOOL_DYNAMIC_REVIEW_ONLY", 409)
+
         start_time = time.time()
-        tool = self.get_tool(tool_id)
+        tool = self.get_tool(tool_id, tenant_id)
         if not tool:
             raise AppError("TOOL_NOT_FOUND", 404)
         if not tool.get("enabled", True):
@@ -147,19 +160,16 @@ class DynamicToolGateway:
         # 3. Idempotency check
         if client_request_id:
             args_hash = hashlib.sha256(json.dumps(arguments, sort_keys=True).encode("utf-8")).hexdigest()
-            prior = self._idempotency_cache.get(client_request_id)
+            idempotency_key = f"{tenant_id}:{user_id}:{tool_id}:{client_request_id}"
+            prior = self._idempotency_cache.get(idempotency_key)
             if prior is not None and prior != args_hash:
                 raise AppError("REVISION_CONFLICT", 409)
-            self._idempotency_cache[client_request_id] = args_hash
+            self._idempotency_cache[idempotency_key] = args_hash
 
-        # 4. Determine Target Environment dynamically
-        # Only 'approved_published' can access the Production endpoint!
-        if publication_status == "approved_published":
-            routed_env: Literal["development", "production"] = "production"
-        else:
-            routed_env = "development"
+        # 4. Only development simulation is available until publication is gated.
+        routed_env = "development"
 
-        env_profiles = self._profiles.get(tool_id, {})
+        env_profiles = self._profiles.get(self._key(tool_id, tenant_id), {})
         profile = env_profiles.get(routed_env)
         if not profile or not profile.get("active", True):
             raise AppError(f"PROFILE_NOT_READY_FOR_{routed_env.upper()}", 503)
@@ -235,6 +245,23 @@ class DynamicToolGateway:
         routed_env: str,
     ) -> dict[str, Any]:
         """Dispatch protocol-specific execution with safe deterministic fallback."""
+        # If production routed, execute via ConnectorDispatcher with full security and resilience gates
+        if routed_env == "production" and endpoint_url:
+            connector_res = await self._dispatcher.dispatch(
+                tenant_id="default_tenant",
+                actor_id="system",
+                trace_id=f"gw-{uuid4()}",
+                tool_id=str(tool_meta.get("tool_id", "dynamic_tool")),
+                source_type=source_type,
+                endpoint_url=endpoint_url,
+                credential_ref=credential if isinstance(credential, str) else None,
+                tool_meta=tool_meta,
+                arguments=arguments,
+            )
+            if connector_res.status != "success":
+                raise AppError(connector_res.error_code or "TOOL_EXECUTION_FAILED", 502)
+            return connector_res.body or {}
+
         # Simulated or fixture execution for local development / testing
         await asyncio.sleep(0.01)
 

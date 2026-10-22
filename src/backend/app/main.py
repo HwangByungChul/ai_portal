@@ -5,6 +5,7 @@ from fastapi import FastAPI, Request
 from fastapi.exceptions import RequestValidationError
 from app.auth.routes import router as auth_router
 from app.auth.service import AuthService
+from app.auth.idp_verifier import IdpVerifier, SubjectDigestKeyring, SubjectDigestService, SubjectKeyProvider
 from app.tenants.routes import router as tenants_router
 from app.operations.routes import router as operations_router
 from app.approvals.routes import router as approvals_router
@@ -61,7 +62,8 @@ from app.operations.overview import router as overview_router
 from app.db import open_index_pool
 
 
-def create_app(settings: Settings | None = None, *, health_only: bool = False) -> FastAPI:
+def create_app(settings: Settings | None = None, *, health_only: bool = False,
+               subject_key_provider: SubjectKeyProvider | None = None) -> FastAPI:
     settings = settings or Settings.from_environment()
     if not health_only:
         settings.require_auth_configuration()
@@ -72,6 +74,25 @@ def create_app(settings: Settings | None = None, *, health_only: bool = False) -
     async def lifespan(app):
         async with AsyncExitStack() as stack:
             app.state.pool=None;app.state.execution=None;app.state.document_manager=None
+            app.state.idp_verifier=IdpVerifier()
+            if subject_key_provider is not None:
+                if settings.idp_subject_hmac_key is not None:
+                    raise ValueError('IDP_SUBJECT_KEY_SOURCE_AMBIGUOUS')
+                if settings.idp_subject_hmac_key_version is None or not settings.idp_subject_hmac_key_versions:
+                    raise ValueError('IDP_SUBJECT_KEY_VERSION_POLICY_REQUIRED')
+                app.state.idp_subject_digest=SubjectDigestKeyring.from_provider(
+                    subject_key_provider,
+                    key_versions=settings.idp_subject_hmac_key_versions,
+                    active_version=settings.idp_subject_hmac_key_version,
+                )
+            elif settings.idp_subject_hmac_key is not None:
+                app.state.idp_subject_digest=SubjectDigestService(
+                    settings.idp_subject_hmac_key, settings.idp_subject_hmac_key_version
+                )
+            elif settings.idp_subject_hmac_key_version is not None:
+                raise ValueError('IDP_SUBJECT_KEY_PROVIDER_REQUIRED')
+            else:
+                app.state.idp_subject_digest=None
             app.state.tool_control=None;app.state.tool_execution=None;app.state.workflow_repository=None;app.state.workflow_control=None;app.state.workflow_execution=None;app.state.use_case_execution=None
             if settings.web_dsn is not None:
                 pool=await stack.enter_async_context(open_web_pool(settings.web_dsn.get_secret_value()));app.state.pool=pool

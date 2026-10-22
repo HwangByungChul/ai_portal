@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import type { Tenant, User } from './types';
+import { api } from './api';
+import { simulateUnsavedTool } from './toolSimulation';
 
 interface DynamicToolItem {
   tool_id: string;
@@ -98,13 +100,10 @@ export function ToolAdminPage({ tenant, user }: { tenant: Tenant; user: User }) 
   const [selectedParsedIndex, setSelectedParsedIndex] = useState(0);
 
   // Dev & Prd Endpoint profiles
-  const [devEndpoint, setDevEndpoint] = useState('https://dev-api.bnk.internal/gateway/tools');
-  const [devApiKey, setDevApiKey] = useState('dev_test_mock_token_777');
-  const [prdEndpoint, setPrdEndpoint] = useState('https://api.bnk.internal/gateway/tools');
-  const [prdApiKey, setPrdApiKey] = useState('prd_secured_vault_key_999');
+  const [devEndpoint, setDevEndpoint] = useState('https://dev.example.invalid/gateway/tools');
+  const [prdEndpoint, setPrdEndpoint] = useState('https://production.example.invalid/gateway/tools');
 
   // Test Execution State
-  const [testEnv, setTestEnv] = useState<'draft' | 'approved_published'>('draft');
   const [testArgs, setTestArgs] = useState('{}');
   const [testResult, setTestResult] = useState<any>(null);
   const [invoking, setInvoking] = useState(false);
@@ -112,16 +111,15 @@ export function ToolAdminPage({ tenant, user }: { tenant: Tenant; user: User }) 
 
   useEffect(() => {
     fetchTools();
-  }, []);
+  }, [tenant.tenant_id]);
 
   const fetchTools = async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/v1/tools/dynamic');
-      if (res.ok) {
-        const data = await res.json();
-        setTools(data.items || []);
-      }
+      const data = await api.request<{ items: DynamicToolItem[] }>('/tools/dynamic', {
+        tenantId: tenant.tenant_id,
+      });
+      setTools(data.items || []);
     } catch (err) {
       console.error('Failed to fetch dynamic tools', err);
     } finally {
@@ -151,22 +149,15 @@ export function ToolAdminPage({ tenant, user }: { tenant: Tenant; user: User }) 
         }
       }
 
-      const res = await fetch('/api/v1/tools/auto-wrap/parse', {
+      const data = await api.request<{ tools: any[] }>('/tools/auto-wrap/parse', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+        tenantId: tenant.tenant_id,
+        csrf: user.csrf_token,
+        body: {
           source_type: sourceType,
           raw_content: bodyContent
-        })
+        }
       });
-
-      if (!res.ok) {
-        const err = await res.json();
-        alert(`파싱 실패: ${err.message || '명세 형식을 확인하세요.'}`);
-        return;
-      }
-
-      const data = await res.json();
       setParsedTools(data.tools || []);
       setSelectedParsedIndex(0);
 
@@ -196,20 +187,10 @@ export function ToolAdminPage({ tenant, user }: { tenant: Tenant; user: User }) 
     setTestResult(null);
 
     try {
-      let parsedArgs = {};
-      try {
-        parsedArgs = JSON.parse(testArgs);
-      } catch {
-        alert('테스트 인자 JSON 형식이 올바르지 않습니다.');
-        setInvoking(false);
-        return;
-      }
-
-      // First register temporarily to gateway if not yet present
-      await fetch('/api/v1/tools/auto-wrap/register', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+      const data = await simulateUnsavedTool(
+        api.request.bind(api),
+        { tenantId: tenant.tenant_id, csrf: user.csrf_token },
+        {
           tool_id: curTool.tool_id,
           name: curTool.name,
           description: curTool.description,
@@ -219,27 +200,10 @@ export function ToolAdminPage({ tenant, user }: { tenant: Tenant; user: User }) 
           dev_profile: {
             protocol_type: sourceType === 'wsdl' ? 'soap_xml' : sourceType === 'jdbc' ? 'jdbc_view' : sourceType === 'financial_packet' ? 'tcp_socket' : 'rest_http',
             base_endpoint_url: devEndpoint,
-            credential: { api_key: devApiKey }
           },
-          prd_profile: {
-            protocol_type: sourceType === 'wsdl' ? 'soap_xml' : sourceType === 'jdbc' ? 'jdbc_view' : sourceType === 'financial_packet' ? 'tcp_socket' : 'rest_http',
-            base_endpoint_url: prdEndpoint,
-            credential: { api_key: prdApiKey }
-          }
-        })
-      });
-
-      // Now invoke with dynamic environment routing
-      const res = await fetch(`/api/v1/tools/dynamic/${curTool.tool_id}/invoke`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          arguments: parsedArgs,
-          publication_status: testEnv
-        })
-      });
-
-      const data = await res.json();
+        },
+        testArgs,
+      );
       setTestResult(data);
     } catch (err: any) {
       alert(`테스트 호출 실패: ${err.message}`);
@@ -254,10 +218,11 @@ export function ToolAdminPage({ tenant, user }: { tenant: Tenant; user: User }) 
     setRegistering(true);
 
     try {
-      const res = await fetch('/api/v1/tools/auto-wrap/register', {
+      await api.request('/tools/auto-wrap/register', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
+        tenantId: tenant.tenant_id,
+        csrf: user.csrf_token,
+        body: {
           tool_id: curTool.tool_id,
           name: curTool.name,
           description: curTool.description,
@@ -267,23 +232,17 @@ export function ToolAdminPage({ tenant, user }: { tenant: Tenant; user: User }) 
           dev_profile: {
             protocol_type: sourceType === 'wsdl' ? 'soap_xml' : sourceType === 'jdbc' ? 'jdbc_view' : sourceType === 'financial_packet' ? 'tcp_socket' : 'rest_http',
             base_endpoint_url: devEndpoint,
-            credential: { api_key: devApiKey }
           },
           prd_profile: {
             protocol_type: sourceType === 'wsdl' ? 'soap_xml' : sourceType === 'jdbc' ? 'jdbc_view' : sourceType === 'financial_packet' ? 'tcp_socket' : 'rest_http',
             base_endpoint_url: prdEndpoint,
-            credential: { api_key: prdApiKey }
           }
-        })
+        }
       });
 
-      if (res.ok) {
-        alert('🎉 MCP Tool 및 Dev/Prd 엔드포인트 프로파일이 성공적으로 등록되었습니다!');
-        setShowModal(false);
-        fetchTools();
-      } else {
-        alert('등록 실패');
-      }
+      alert('모의 Tool 정의를 테넌트별 영속 Registry에 저장했습니다. 호출은 개발 프로파일의 fixture 모의 실행이며 실제 MCP 서버나 금융 시스템 연결은 제공하지 않습니다.');
+      setShowModal(false);
+      fetchTools();
     } catch (err: any) {
       alert(`오류: ${err.message}`);
     } finally {
@@ -319,12 +278,12 @@ export function ToolAdminPage({ tenant, user }: { tenant: Tenant; user: User }) 
               padding: '4px 10px',
               borderRadius: 20
             }}>
-              T-035 필수 요건 준수
+              구현 진행 중
             </span>
           </div>
           <p style={{ margin: '6px 0 0 0', fontSize: 14, color: '#64748B' }}>
             OpenAPI, WSDL, JDBC 명세 및 금융 전문(ISO 8583, EAI, FEP)을 코딩 없이 <strong>MCP Tool로 자동 변환</strong>하고,
-            에이전트 승인 상태에 따라 <strong>개발계 ↔ 운영계 엔드포인트를 동적으로 분기</strong>합니다.
+            명세를 Tool 초안으로 변환합니다. 정의는 테넌트별 Registry에 저장하고, 호출은 개발 프로파일 fixture로 모의 실행하며 실제 금융 시스템에는 연결하지 않습니다.
           </p>
         </div>
 
@@ -657,41 +616,7 @@ export function ToolAdminPage({ tenant, user }: { tenant: Tenant; user: User }) 
                     {/* 즉시 호출 테스트 패널 */}
                     <div style={{ background: '#FFFFFF', padding: 14, borderRadius: 8, border: '1px solid #E2E8F0', marginBottom: 16 }}>
                       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 8 }}>
-                        <span style={{ fontSize: 13, fontWeight: 700, color: '#0F172A' }}>🧪 동적 라우팅 시뮬레이션 테스트</span>
-                        <div style={{ display: 'flex', gap: 6 }}>
-                          <button
-                            type="button"
-                            onClick={() => setTestEnv('draft')}
-                            style={{
-                              padding: '3px 8px',
-                              fontSize: 11,
-                              fontWeight: 700,
-                              borderRadius: 4,
-                              border: testEnv === 'draft' ? '1px solid #059669' : '1px solid #CBD5E1',
-                              background: testEnv === 'draft' ? '#DCFCE7' : '#FFFFFF',
-                              color: testEnv === 'draft' ? '#166534' : '#64748B',
-                              cursor: 'pointer'
-                            }}
-                          >
-                            Draft 상태 (Dev 분기)
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setTestEnv('approved_published')}
-                            style={{
-                              padding: '3px 8px',
-                              fontSize: 11,
-                              fontWeight: 700,
-                              borderRadius: 4,
-                              border: testEnv === 'approved_published' ? '1px solid #2563EB' : '1px solid #CBD5E1',
-                              background: testEnv === 'approved_published' ? '#DBEAFE' : '#FFFFFF',
-                              color: testEnv === 'approved_published' ? '#1E40AF' : '#64748B',
-                              cursor: 'pointer'
-                            }}
-                          >
-                            배포승인 상태 (Prd 분기)
-                          </button>
-                        </div>
+                        <span style={{ fontSize: 12, color: '#64748B' }}>개발 프로파일 모의 실행 · 운영 호출 불가</span>
                       </div>
 
                       <textarea
@@ -730,11 +655,11 @@ export function ToolAdminPage({ tenant, user }: { tenant: Tenant; user: User }) 
 
                       {testResult && (
                         <div style={{ marginTop: 10, padding: 10, background: '#F8FAFC', borderRadius: 6, border: '1px solid #E2E8F0' }}>
-                          <div style={{ fontSize: 12, fontWeight: 700, color: testResult.routed_env === 'production' ? '#1E40AF' : '#166534', marginBottom: 4 }}>
-                            {testResult.routed_env === 'production' ? '🚀 [운영계 라우팅 성공]' : '🧪 [개발계 라우팅 성공]'} ({testResult.duration_ms}ms)
+                          <div style={{ fontSize: 12, fontWeight: 700, color: '#166534', marginBottom: 4 }}>
+                            🧪 [개발 프로파일 모의 결과] ({testResult.duration_ms}ms)
                           </div>
                           <code style={{ fontSize: 11, color: '#334155', display: 'block', marginBottom: 4 }}>
-                            호출 엔드포인트: {testResult.routed_endpoint}
+                            선택된 모의 프로파일: {testResult.routed_endpoint}
                           </code>
                           <pre style={{ margin: 0, fontSize: 11, fontFamily: 'monospace', maxHeight: 120, overflow: 'auto', background: '#0F172A', color: '#38BDF8', padding: 8, borderRadius: 4 }}>
                             {JSON.stringify(testResult.result, null, 2)}
@@ -761,7 +686,7 @@ export function ToolAdminPage({ tenant, user }: { tenant: Tenant; user: User }) 
                         boxShadow: '0 4px 12px rgba(16, 185, 129, 0.3)'
                       }}
                     >
-                      {registering ? '저장 중...' : '💾 플랫폼에 MCP Tool 및 프로파일 영구 등록'}
+                      {registering ? '등록 중...' : '💾 모의 Tool 등록'}
                     </button>
                   </div>
                 )}

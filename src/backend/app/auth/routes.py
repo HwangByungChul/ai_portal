@@ -1,7 +1,11 @@
+from typing import Literal
+from uuid import UUID
 from fastapi import APIRouter, Request
-from pydantic import BaseModel, ConfigDict, Field, SecretStr
+from pydantic import BaseModel, ConfigDict, Field, SecretStr, StrictInt
 from app.auth.guards import check_csrf, check_transport, check_write, cookie_token
 from app.errors import AppError, response
+from app.auth.subject_mapping import SubjectMappingRepository
+from app.tenants.routes import context
 
 router = APIRouter(prefix='/api/v1/auth')
 
@@ -10,6 +14,14 @@ class LoginRequest(BaseModel):
     model_config = ConfigDict(extra='forbid')
     login_id: str = Field(min_length=1, max_length=64)
     password: SecretStr = Field(min_length=1, max_length=128)
+
+
+class SubjectMappingRequest(BaseModel):
+    model_config = ConfigDict(extra='forbid')
+    action: Literal['link', 'revoke']
+    evidence_id: UUID
+    client_request_id: UUID
+    expected_mapping_revision: StrictInt = Field(ge=0, le=9223372036854775806)
 
 
 @router.post('/login')
@@ -53,6 +65,18 @@ async def logout(request: Request):
     reply = response(request, {'logout_confirmed': confirmed})
     reply.delete_cookie(settings.session_cookie_name, path='/', secure=settings.profile=='https', httponly=True, samesite='lax')
     return reply
+
+
+@router.post('/idp/subject-mapping')
+async def idp_subject_mapping(request: Request, body: SubjectMappingRequest):
+    if request.query_params:
+        raise AppError('REQUEST_INVALID', 422)
+    ctx = await context(request, write=True)
+    data = await SubjectMappingRepository(request.app.state.pool).control(
+        ctx, body.action, body.evidence_id, body.client_request_id,
+        body.expected_mapping_revision,
+    )
+    return response(request, data, status_code=200 if data.get('replayed') else 201)
 
 
 @router.get('/sso/start')

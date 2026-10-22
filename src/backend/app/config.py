@@ -4,12 +4,14 @@ from pathlib import Path
 from typing import Literal
 from urllib.parse import urlsplit
 
-from pydantic import Field, SecretStr, model_validator
+from pydantic import Field, SecretStr, StrictInt, model_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
-    model_config = SettingsConfigDict(env_prefix="AI_", extra="forbid", env_file=None)
+    model_config = SettingsConfigDict(
+        env_prefix="AI_", extra="forbid", env_file=None, hide_input_in_errors=True
+    )
 
     profile: Literal["local", "https"] = "local"
     environment: Literal['local','dev','tb','prd'] = 'local'
@@ -27,6 +29,41 @@ class Settings(BaseSettings):
     web_dsn: SecretStr | None = Field(default=None, repr=False)
     meter_dsn: SecretStr | None = Field(default=None, repr=False)
     login_hmac_secret: SecretStr | None = Field(default=None, repr=False)
+    # Reserved for server-side IdP subject pseudonymization. No secret is checked in.
+    idp_subject_hmac_key: SecretStr | None = Field(default=None, repr=False)
+    idp_subject_hmac_key_version: StrictInt | None = Field(default=None, ge=1, le=32767)
+    idp_subject_hmac_key_versions: tuple[StrictInt, ...] = ()
+
+    @classmethod
+    def settings_customise_sources(cls, settings_cls, init_settings, env_settings,
+                                   dotenv_settings, file_secret_settings):
+        def subject_version_environment():
+            values = env_settings()
+            field_name = "idp_subject_hmac_key_version"
+            raw, key, _ = env_settings.get_field_value(settings_cls.model_fields[field_name], field_name)
+            if raw is not None:
+                # Decode only environment integers; direct values retain StrictInt validation.
+                values[key] = int(raw) if raw.isascii() and raw.isdecimal() else raw
+            return values
+
+        return init_settings, subject_version_environment, dotenv_settings, file_secret_settings
+
+    @model_validator(mode="after")
+    def validate_idp_subject_key(self) -> "Settings":
+        key = self.idp_subject_hmac_key.get_secret_value() if self.idp_subject_hmac_key else None
+        version = self.idp_subject_hmac_key_version
+        versions = self.idp_subject_hmac_key_versions
+        if len(set(versions)) != len(versions) or any(not 1 <= item <= 32767 for item in versions):
+            raise ValueError("IDP_SUBJECT_KEY_VERSION_INVALID")
+        if key is not None and version is None:
+            raise ValueError("IDP_SUBJECT_KEY_AND_VERSION_REQUIRED_TOGETHER")
+        if version is not None and versions and version not in versions:
+            raise ValueError("IDP_SUBJECT_ACTIVE_KEY_MISSING")
+        if versions and version is None:
+            raise ValueError("IDP_SUBJECT_ACTIVE_KEY_MISSING")
+        if key is not None and len(key.encode("utf-8")) < 32:
+            raise ValueError("IDP_SUBJECT_KEY_TOO_SHORT")
+        return self
 
     @model_validator(mode="after")
     def validate_origin(self) -> "Settings":

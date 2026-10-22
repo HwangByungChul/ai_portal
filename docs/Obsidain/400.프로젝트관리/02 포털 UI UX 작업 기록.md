@@ -1079,3 +1079,491 @@ local SQL029 적용 전 private backup, 기존37표 행·prior29개 checksum 보
 - **검증**: `git diff --check` 통과. 이번 업데이트 요청에서는 자동 테스트와 빌드를 실행하지 않았다. Codex 리뷰 외 별도 브라우저 수용 검증은 미수행이다.
 - **변경 파일**: 저장소 `AGENTS.md`; RAG backend/common/frontend 소스 6개; 로그인 UI 및 공통 shell/style/호환 앱 소스 4개; 설계25; 학습 RAG 문서; 본 작업 로그.
 - **미완료 범위**: 모바일 실제 화면 브라우저 확인과 접속 감사 이벤트의 별도 구현 검증은 범위 밖이다. 접속 기록을 보장한다는 문구는 제거했다.
+
+
+## 2026-10-18 노코딩 MCP Tool 마법사 설명 요청
+
+사용자가 화면 기능 설명을 요청하여 실제 코드를 읽었다. 명세→AI 도구 정의 변환 및 Dev/Prd 접속 분기를 의도한 기능이나, 현재 동적 호출은 모의 응답이며 등록은 메모리 기반이다. 실제 시스템 연동 완료로 표현하지 않았다. 이 마법사의 2환경은 확정된 local/dev/tb/prd 4환경 구현과 구분한다. 실제 통신/권한/영속성/화면 연결 시험은 미수행이다. 파일·확인 범위·미완료는 [[2026-10-18 노코딩 MCP Tool 자동 생성 화면 기능 설명 및 구현 범위]] 참조. 회의록 잔여 통합 수정·실제 DB 적용 작업을 이 기능의 완료 근거로 혼용하지 않는다.
+
+## 2026-10-18 · 프로젝트 작업 지침 정리
+
+**요청:** 토큰 사용량을 고려해 AGENTS.md를 프로젝트 전용으로 정리하고, 실제 Obsidian Vault 위치를 반영.
+
+**변경:** 프로젝트 루트 `AGENTS.md`에 화면 확정사항, 권한·데이터·보안 원칙, DB 변경 주의사항, 작업 종류별 문서 확인·기록 기준을 정리했다. Vault 경로는 `/Users/jwpios/antigravity/202610_AI 플랫폼/docs/Obsidain`으로 명시했다.
+
+**검증:** AGENTS.md 내용을 재확인했다. 저장소 메타데이터가 없어 git diff/status 검증은 수행하지 않았다. 지침 변경이며 앱 동작 검증 대상은 아니다.
+
+**미완료:** AGENTS.md 수정사항을 다른 동기화 위치에 반영했는지는 확인하지 않았다.
+
+## 2026-10-18 · 금융 특화 MCP Tool Gateway 상세 구현 계획안
+
+**요청:** 최근 MCP 보안·거버넌스 동향과 현재 Tool 제작 기능을 비교 검토한 결과를 바탕으로 상세 구현 계획안을 작성하고 Obsidian에 기록.
+
+**결정·범위:** 기존 T-035 파서/마법사/모의 라우팅을 기반으로 분류하고 실기관 연동 완료로 간주하지 않는다. 영속 Registry, Streamable HTTP 및 사양 호환, 실제 connector dispatcher, tenant/user/agent RBAC·Secret lifecycle, 금융 Human-in-the-loop 승인, metadata/input/output guardrails·hybrid routing, 감사·복원력, 관리자 UX 및 단계별 수용 gate로 계획을 나눴다. WebSocket을 표준 MCP 전송으로 가정하지 않고, 현재 MCP 사양 및 SDK 지원표를 구현 시 재확인하도록 했다.
+
+**변경 문서:** [[100.프로젝트계획/38 금융 특화 MCP Tool Gateway 상세 구현 계획안]]. 계획은 새로운 개발 승인이나 기관 연결·운영 배포 승인을 의미하지 않는다.
+
+**근거·검증:** 현재 `dynamic_gateway.py`, `autowrap_routes.py`, `ToolAdminPage.tsx`, migration 052 및 최신 T-035 구현/화면 범위 기록을 읽어 기준선을 반영했다. 공개 MCP 사양 draft changelog, 2026-07-28 MCP spec release candidate, Microsoft Tools Gateway/AI Gateway, AWS Agentic AI 보안 가이드를 참고했다. 문서의 검토·작성만 수행했으며 애플리케이션 테스트, DB migration 적용, 브라우저/실기관 연동은 실행하지 않았다.
+
+**미완료:** 보안·DB·승인 원장과 실제 현행 상태를 구현 착수 직전에 재확인해야 한다. Secret Manager/IdP 및 기관 sandbox 계약, 담당자·MFA·보존정책 등 외부 선행조건은 미확정이다. 계획 문서 작성은 코드 구현·기능 승인·게시·운영 배포가 아니다.
+
+**다음 작업:** T035-A 기준선/위협 모델 확정부터 별도 승인된 단계로 진행한다. 이후 migration은 기존 파일을 수정하지 않고 현재 적용 상태를 확인한 뒤 신규 번호로 추가하며 백업·별도 fixture clone·checksum/기존 행 보존 절차를 따른다.
+
+## 2026-10-18 · MCP Tool Gateway 단계별 구현 시작
+
+**요청:** 금융 특화 MCP Tool Gateway 상세 구현 계획을 코드로 진행하고, 작업 중 생성 문서를 `MCP Tool Gateway 상세 구현` Obsidian 폴더에 모으며 작업 이력을 관리.
+
+**완료한 수직 단위:** 노코딩 Gateway의 mock 등록소를 tenant별 memory namespace로 격리했다. 등록/목록/모의 호출 API에 TADMIN/PADMIN 역할 확인을 적용했다. 클라이언트가 보내는 `publication_status`/`asset_id`를 API 계약에서 제거하고 모든 모의 호출을 draft 개발 프로파일에 고정했다. endpoint profile inline credential 입력을 제거했다. 화면에서 가짜 API key·production 라우팅 선택·영구 저장 완료 문구를 제거하고 실제 시스템에 연결되지 않은 모의 기능임을 표시했다. 상세 변경은 [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 Gateway 모의 등록 격리 및 라우팅 경계 보강 구현 결과]]에 기록했다.
+
+**변경 코드:** `src/backend/app/tools/autowrap_routes.py`, `src/backend/app/tools/dynamic_gateway.py`, `src/frontend/src/ToolAdminPage.tsx`, `src/backend/tests/test_mcp_tool_autowrap.py`.
+
+**검증:** `pytest src/backend/tests/test_mcp_tool_autowrap.py -q` 9 passed. Codex bundled Node 환경에서 admin build 52 modules/boundary verified, user build 28 modules/boundary verified. Admin 번들 500 kB 초과 경고가 남는다. 최초 시스템 Node 21.4.0 빌드는 `node:util.styleText` export 오류로 실패해 bundled Node로 재실행했다.
+
+**미완료:** registry/endpoint/audit는 여전히 memory 기반이다. 실제 MCP 전송·외부 connector·Secret Manager/IdP·기존 승인/게시/실행 receipt 연결·금융 HITL·SSRF/egress 가드·불변 감사/서킷브레이커·기관 sandbox는 미구현 또는 미검증이다. DB migration이나 실제 시스템 통신은 수행하지 않았다.
+
+**다음 단계:** [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]]에 적은 T035-B 기준선 조사부터 진행한다. migration 052 적용 상태·checksum·RLS 및 승인/receipt RPC를 대조한 뒤, 필요한 경우 기존 migration은 수정하지 않고 새 migration을 백업·별도 fixture clone 검증으로 추가한다.
+
+
+## 2026-10-18 · MCP Tool Gateway 영속 Registry 코드 연결
+
+**요청:** 상세 구현 계획에 따라 개발하고, `MCP Tool Gateway 상세 구현` 폴더에 문서와 작업 이력을 관리.
+
+**변경:** 052에 이미 정의된 tenant-scoped MCP 테이블을 이용하도록 `dynamic_repository.py`와 자동변환 route를 연결하고, 제한된 `security.mcp_tool_registry_control` RPC를 additive migration 056으로 추가했다. schema revision은 append하고 endpoint 메타데이터만 저장하며 이 RPC는 자격증명을 받지 않는다. 목록은 DB를 읽고 모의 invoke는 프로세스 재시작 뒤 DB 정의로 simulation cache를 재수화하도록 했다.
+
+**기준선:** 활성 fixture는 055까지 적용, 052 적용, 적용 migration checksum 불일치 0건, MCP 정의/버전/profile/audit 행은 각 0건. 기준선 DB 질의는 읽기 전용이었다.
+
+**검증:** Python `py_compile` 및 `git diff --check` 통과. 별도 fixture RPC 검증 시도는 PostgreSQL이 중지되어 `CLUSTER_NOT_RUNNING`으로 종료. migration 056 미적용, 활성 DB 미변경. 상세 내용은 [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 영속 Registry RPC 연결 구현 결과]] 참조.
+
+**미완료:** 056의 clone 적용/권한·tenant denial·revision 검증, 영속 Registry 전체 경로 시험, approval/receipt 연계, 실제 MCP transport/connector, Secret Manager/IdP, 금융 HITL, guardrail/egress, 불변 audit 및 기관 수용.
+
+**다음:** PostgreSQL 소유 상태가 복구되면 별도 fixture clone에서 056을 검증하고, backup/restore·보존 gate에 따라 활성 개발 DB 적용 여부를 결정한다.
+
+
+## 2026-10-18 · MCP Registry clone 검증 및 migration 056 적용
+
+**작업:** T035-B 영속 Registry의 fixture 검증과 활성 개발 fixture 적용을 진행했다.
+
+**안전 기준:** 활성 fixture의 055 적용 상태와 source checksum 일치, MCP 테이블 0행을 사전 확인했다. 사설 custom backup을 만들고 별도 marker DB로 복원해 전체 업무 테이블 row/digest 및 기존 migration checksum 일치를 검증했다. clone에서 신규 056만 적용한 뒤 다시 보존을 확인하고, 활성 fixture에도 056만 적용했다. 활성 적용 후 기존 행 지문·checksum 보존, 최신 migration 056, source checksum mismatch 0건을 확인했다. 백업은 private `.runtime/backups/mcp-gateway-20261018/`에 유지한다.
+
+**검증:** clone RPC에서 등록/목록/revision 1→2/재조회, USER 등록 거부, 타 tenant 조회 차단이 통과했다. `pytest src/backend/tests/test_mcp_tool_autowrap.py -q` 9 passed, `py_compile` 및 `git diff --check` 통과. 첫 clone RPC 검증에서 nested aggregate SQL 오류를 찾아 `EXISTS` 쿼리로 수정한 뒤 전 시나리오 통과.
+
+**변경 기록:** [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 Registry clone 검증 및 056 적용 결과]].
+
+**미완료:** 자동생성 Tool의 기존 승인·게시·receipt gate 연계, Secret Manager/IdP, MCP transport/connector, HITL, egress/SSRF·metadata 무결성, 불변 audit·복원력, 브라우저·기관 수용. 이번 migration은 registry metadata 영속화만 제공한다.
+
+
+## 2026-10-18 · 영속 Registry 상태 문구 및 최종 검증
+
+**화면 변경:** 관리 Tool 화면 설명/등록 결과 안내를 실제 상태에 맞춰 수정했다. Tool 정의는 DB Registry에 저장되며 invoke는 개발 profile fixture simulation만 제공한다. 레이아웃은 변경하지 않았다. `npm run build:admin` 통과(227 modules, boundary verified); 500kB 초과 chunk 경고는 남는다.
+
+**프로세스 상태:** DB는 active 056 적용 후 실행 중이다. API는 `--reload` 없이 실행 중이지만 service_control 소유 기록이 없어 사용자 공유 프로세스를 임의로 종료/재기동하지 않았다. 새 코드의 현재 backend 프로세스 로드와 인증 브라우저 왕복은 미검증이며 관리형 재기동 후 확인해야 한다.
+
+
+## 2026-10-18 · 동적 Tool 승인 gate 계약 조사
+- 요청: 다음 단계로 자동 생성 MCP Tool을 기존 승인·게시·receipt gate에 연결한다.
+- 확인: 고정 Tool RPC는 tool ID 3개만 허용하며 정적 registry descriptor와 정적 handler를 사용한다. 050 wrapper의 PADMIN/자기승인/CAS/audit 계약을 보존해야 한다. 동적 승인 제출은 현재 불가하며, 제출만 억지 연결하면 실행 가능 상태로 오인될 수 있다.
+- 결정: 승인 RPC와 revision-bound 서버 digest를 신규 additive migration으로 구현하고, 등록 검토 승인과 운영 게시/실행 승인을 구분한다. 동적 execution adapter/receipt는 별도 단계에서 연결한다.
+- 변경: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 동적 Tool 승인 gate 계약 조사 결과]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]] 기록만 갱신.
+- 검증: 관련 SQL/API 소스를 읽어 계약 확인. 이번 회차는 migration/API 변경 및 시험을 수행하지 않음.
+- 미완료: 057 migration, clone 검증, active fixture apply, UI, dynamic execution/receipt, browser roundtrip.
+- 다음: additive 057 approval RPC + server-computed revision digest 구현.
+## 2026-10-18 · 동적 Tool 검토 접수 구현
+- 요청: 자동 생성 MCP Tool을 기존 승인 gate로 이어가는 다음 단계 진행.
+- 결정: 위험 미분류 Tool은 검토요청만 접수하고 PADMIN 승인은 API와 DB trigger에서 막는다. 요청 접수를 승인·게시·실행으로 표시하지 않는다.
+- 변경: 057 additive migration 및 동적 descriptor/revision digest RPC, Tool 요청 API와 폼, 타입 계약, 상세 validation을 갱신했다. [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 동적 Tool 검토 접수 구현 결과]] 참조.
+- 검증: 별도 복원 clone에서 056/057 적용, 기존 migration checksum 56건 및 업무 데이터 정규화 지문 보존, trigger/RLS/DB 직접 권한 경계를 확인했다. `pytest -q tests/test_tool_workflow_review_http.py` 14 passed. `git diff --check` 및 Python 내장 compile 확인 통과.
+- 동적 검토 HTTP 종단 간 시험: 합성 Tool 등록, submission support 노출, 검토 요청 제출과 동일 client_request_id replay, 타 tenant 상세 404, 미분류 승인 409, 반려 성공, DB trigger 직접 승인 거부를 확인했다. 첫 수행에서 `TOOL_RISK_UNCLASSIFIED` 사용자 메시지 매핑 누락으로 500을 발견해 `src/backend/app/errors.py`에 메시지를 추가했다. 수정 후 신규 시나리오 1 passed 및 `pytest -q tests/test_tool_workflow_review_http.py` 15 passed.
+- 변경 파일(이번 회차): `src/backend/app/errors.py`, `src/backend/tests/test_tool_workflow_review_http.py`. `git diff --check` 통과.
+- 제한/상태: 검증은 격리 합성 fixture 기준이다. Migration 057은 active fixture에 적용되지 않았고 브라우저 왕복·기관 sandbox·실제 connector는 미검증이다. PADMIN 승인은 위험 미분류 상태에서 계속 차단되며 게시, dynamic execution/receipt 연결은 미구현. backend 재시작은 service-control 소유권 미확인으로 수행하지 않았다.
+- 다음: 관리형 backend 절차 승인 후 인증 브라우저 왕복, 이후 risk classification과 exact revision publish/execution gate를 진행한다.
+
+
+## 2026-10-18 · 동적 Tool 검토 UI 브라우저 확인 준비
+- 요청: 동적 Tool 검토 API 종단 간 통과 후 인증 브라우저 UI 왕복을 진행한다.
+- 확인: 프로젝트 환경 계획상 local은 사용자 5173, 관리자 5174, API 8000이다. 현재 공유 포트 서비스의 `service_control` 기록은 프로세스 소유권 검사에서 세 서비스 모두 unowned-or-stale로 판정됐다. 사용자 공유 프로세스를 재기동하지 않았다.
+- 브라우저: `browse` 스킬 확인에서 Aside 사용 불가, gstack browser fallback은 one-time setup이 필요한 상태다. setup 승인 질문을 전달했고 회신 대기 중이므로 이번 회차 브라우저 확인은 시작하지 않았다.
+- 결과: 브라우저 로그인/검토 요청 UI는 미검증. 별도 fixture API 종단 간 및 15개 승인 HTTP 시험 통과 결과를 현재 기록으로 유지한다.
+- 다음: 사용자 확인 후 browser runtime을 준비하고, 소유권이 확인된 격리 backend/API와 fixture에서 인증된 브라우저 왕복을 수행한다.
+
+
+## 2026-10-18 · MCP 검토 UI 브라우저 재개와 JSX 수정
+- 요청: 인증된 관리자 브라우저에서 동적 Tool 검토 화면 왕복을 확인한다.
+- 환경: 사용자 승인 후 gstack browser fallback setup 실행. `gstack-browser-ensure`는 checkout root `node_modules/playwright` 검사에서 `bun install` package.json 누락 오류를 반환했으나, 생성된 browser binary 자체는 실행되고 Chromium daemon health 확인을 통과했다. B CLI loopback 접근은 elevated run이 필요했다.
+- 브라우저: 새 탭에서 `http://127.0.0.1:5174/manage/admin`을 열었다. 최초 화면에서 `ApprovalReviewPanel.tsx` JSX parse error가 나타났다. 해당 세 갈래 conditional JSX를 명시적인 wrapper/괄호로 정리했다.
+- 변경 파일: `src/frontend/src/ApprovalReviewPanel.tsx`. 검증 `npm run build:admin` 통과(227 modules, boundary verified). 브라우저 재조회에서 parser overlay가 사라지고 관리자 로그인 화면을 확인했다. 최초 로그의 500은 수정 전 HMR 오류이며 로그인 없는 초기 API 요청은 401로 기록됐다. 수정 후 console을 clear하여 새 오류만 확인하는 작업은 미완료다.
+- 운영 경계: backend/frontend/admin frontend 세 프로세스의 service_control ownership 검증이 실패해 공유 프로세스를 재시작하지 않았다. 활성 DB에 데이터를 submit하지 않았다.
+- 현재 상태: 로그인 자격정보 입력은 사용자에게 맡겨 visible browser handoff 상태다. 사용자가 직접 로그인했다고 알린 뒤에만 이어서 UI를 확인한다. 비밀번호/MFA는 Codex에 공유하지 않는다.
+
+## 2026-10-18 · 관리자 로그인 장애 읽기 전용 진단
+- 요청: 기존 테스트 계정으로 관리자 로그인이 되지 않는 문제를 확인한다. 계정 테스트 허용을 받았으나, 대화에 암호가 노출되어 해당 값을 재사용하거나 기록하지 않았다.
+- 관찰: 관리 화면 console에 503이 있었고 API health는 200이었다. DB 상태 조회는 `stopped`, backend 로그에는 `127.0.0.1:55432 connection refused`가 반복됐다. 현재 확인된 우선 원인은 DB 연결 불가이며 실제 로그인은 미검증이다.
+- 경계: backend/admin frontend는 service_control이 소유하지 않는 프로세스였다. 재기동, DB 기동, 로그인 시도 및 데이터 변경은 수행하지 않았다.
+- 다음: 관리형 로컬 환경에서 DB/backend를 안전하게 기동한 뒤 회전된 테스트 암호로 UI 로그인 왕복을 확인한다.
+- 관련 기록: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 동적 Tool 검토 접수 구현 결과]]
+- 후속: 사용자의 테스트 계정 사용 허용에 따라 프로젝트 전용 devdb를 `scripts/devdb.py start`로 기동했고 상태 `running`을 확인했다. 소유권이 확인되지 않은 backend/admin frontend는 재기동하지 않았다. 관리자 로그인 폼 표시를 재확인했으며, 미인증 요청 401만 보여 로그인 성공은 여전히 미검증이다. 브라우저 정책상 자격정보 입력은 사용자가 직접 수행한다.
+- 사용자가 로그인 완료를 알린 후 사용자의 Chrome 관리자 탭을 읽기 전용 확인했으나 `/manage/admin/tools`에서 인증 폼이 계속 표시됐다. 암호값은 읽지 않았다. 이후 devdb 상태가 재차 `stopped`여서 로그인 완료 상태로 검증하지 못했다.
+- 재개 요청에 따라 프로젝트 전용 devdb를 다시 기동했고, 상태 조회에서 `running`을 확인했다. Chrome 관리자 탭은 인증 폼 상태여서 인증 성공은 미검증이다. 사용자가 같은 탭에서 다시 로그인하도록 handoff했다.
+- 사용자가 첨부한 관리자 화면으로 A-ADM 로그인 상태와 `/manage/admin/tools`를 확인했다. 동적 MCP Tool 0개, 자동 생성 wizard 진입 버튼이 표시된다. 앞선 미로그인 판정은 자동화가 붙은 별도/오래된 탭 기준이었으므로 정정한다. 별도 새 탭은 인증 화면을 표시해 첨부된 로그인 세션과의 동일성은 확인되지 않았다. wizard 제출은 미수행이다.
+- 사용자가 로그인한 Chrome 탭을 새로 열어 인증된 Tool 관리 UI를 확인했다. 샘플 Parse가 `REQUEST_INVALID`로 실패했으며 원인은 direct `fetch`가 필수 `X-Tenant-ID`를 보내지 않는 것이었다. Tool 목록도 같은 이유로 실패를 빈 목록처럼 표시할 수 있었다.
+- 변경: `src/frontend/src/ToolAdminPage.tsx`의 목록·Parse·등록·모의 호출을 공통 `api.request`로 통합해 tenant, CSRF, X-Requested-With 및 표준 오류 처리를 적용했다. 화면 레이아웃 변경은 없다.
+- 검증: `npm run build:admin` 통과(227 modules, boundary verified; 500 kB 초과 chunk 경고 유지). 로그인된 Chrome에서 목록 조회 0개 정상 응답 및 OpenAPI sample Parse 성공, `check_loan_limit` 초안 생성 확인. 저장과 invoke는 하지 않았다. `git diff --check` 통과.
+- 관련: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 동적 Tool 검토 접수 구현 결과]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]]
+## 2026-10-18 · 동적 Tool 위험 기본정책 및 승인 fail-closed
+- 요청: “네 진행 바랍니다”에 따라 동적 Tool 위험 분류와 승인 정책 구현을 진행.
+- 결정: connector 의미/읽기 전용 동작을 서버가 증명하지 못하므로 모든 동적 Tool을 `financial_side_effect` 및 `restricted_or_unknown`으로 보수 분류한다. `dynamic-default-v1` descriptor에는 정책 revision, 근거, 등록 검토 전용 scope 및 `execution_ready=false`를 digest와 함께 봉인한다.
+- 승인 경계: 등록 검토 요청은 접수하나 기존 approval RPC가 승인 시 head를 활성화하므로 이 단계에서는 PADMIN 승인도 API와 DB trigger에서 차단한다. 실제 publish/execution/receipt/MFA 승인 gate가 연결되기 전 동적 Tool은 실행되지 않는다.
+- 변경 파일: `src/backend/migrations/058_mcp_tool_risk_policy.sql`, `src/backend/app/tools/routes.py`, `src/backend/app/tools/repository.py`, `src/backend/app/errors.py`, `src/frontend/packages/api-contract/src/types.ts`, `src/frontend/src/ApprovalReviewPanel.tsx`, `src/frontend/src/ToolApprovalRequest.tsx`, `src/backend/tests/test_tool_workflow_review_http.py`.
+- 화면 기준: UI 확정 노트23의 관리 B 요청 목록·상세 패널 구조를 유지하고 상세에 위험 등급/근거/정책/승인 범위를 표시했다. 세부 변경은 [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 동적 Tool 보수적 위험정책 구현 결과]].
+- 검증 상태: Python 4개 파일 내장 compile 및 `git diff --check` 통과. `npm run build:admin` 통과(227 modules, boundary verified, 500 kB 초과 경고). pytest·migration clone apply는 이번 회차에서 실행하지 않았다. 058 active fixture 미적용, 기존 DB checksum·row 변경 없음. migration/회귀 수용은 미검증이다.
+- 미완료: 편집 가능한 정책 UI, 2인 승인/MFA, exact revision publish/execution adapter·receipt, Secret Manager/IdP, metadata/SSRF guardrails. 다음은 058 clone 검증과 등록 검토 approval route fail-closed 확인이다.
+
+
+## 2026-10-18 · Migration 058 격리 clone 검증
+- 요청: 다음 단계 진행.
+- 수행: private backup dump를 disposable PostgreSQL clone에 복원하고 056~058을 clone 내부에서 적용했다.
+- 검증: migration head 058 / 59 entries / source checksum mismatch 0; 74개 업무 테이블 322행의 정규화 지문 적용 전후 동일. `ai_web`의 RPC 권한과 직접 민감 테이블 조회 거부, trigger 활성/소유자 확인. 합성 승인 직접 전이는 SQLSTATE A0403 `TOOL_DYNAMIC_REVIEW_ONLY`로 차단, probe rollback 확인. clone은 marker를 검증해 종료·삭제.
+- 상태: active fixture·실제 금융 시스템에는 적용/호출하지 않았다. pytest 및 정확한 descriptor/RPC tenant 회귀는 미실행.
+- 기록: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 동적 Tool 보수적 위험정책 구현 결과]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]].
+- 다음: 별도 clone에서 pytest 및 descriptor/RPC tenant 경계 회귀를 보강한 뒤, exact-revision 다중 승인/MFA와 publish/execution receipt 계약으로 진행.
+
+
+## 2026-10-18 · Exact revision MFA gate 의존성 조사
+- 요청: 다음 단계 진행.
+- 조사: 기존 approval gate와 세션 스키마를 확인. `security.sessions` 및 로그인 경로에 신뢰된 IdP MFA assurance claim/검증시각이 없어 이 세션만으로 실제 MFA를 검증할 수 없다. tool approval은 기존 PADMIN 타인 승인/CAS/audit을 제공하지만 dynamic approval은 registration-review-only이며 동적 실행 handler/receipt도 없다.
+- 결정: 클라이언트 제공 MFA 완료 flag는 인증 근거로 받지 않는다. 기관 IdP, assurance claim/사용자 매핑/freshness 계약이 정해지기 전 dynamic 승인은 계속 fail-closed한다. exact descriptor digest와 policy/tool revision에 묶인 독립 승인 + publish와 execution receipt는 분리 구현한다.
+- 변경: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 exact revision 승인 gate IdP 의존성 조사 결과]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]] 기록 갱신. 코드·DB 변경은 없음.
+- 검증/상태: 관련 migration/API 소스 확인. active fixture 불변. pytest/DB/API 미실행.
+- 다음: 기관 IdP와 assurance 계약 확정 후 인증 검증부터 구현하고, 별도 clone에서 MFA·2인 승인·revision/payload 변경·tenant 격리를 검증한다.
+
+
+## 2026-10-18 · OIDC/SAML exact revision gate 설계
+- 요청: MFA 연동 대상을 기존 OIDC/SAML IdP로 지정하고 다음 단계 진행.
+- 결정: 특정 IdP 제품/claim 값을 가정하지 않고 검증 계약을 설계했다. assertion은 backend cryptographic validation 후 immutable subject와 로컬 사용자를 매핑하고 최소 assurance evidence만 보관한다. 클라이언트 MFA flag는 거부한다.
+- 설계: Tool revision publication 승인과 부작용 call approval을 분리; exact tuple/digest, 다중 독립 승인, CAS/append-only ledger, step-up freshness, publish 재검증, 실행 직전 재검증 및 durable receipt/unknown 처리를 정의. 상세는 [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 exact revision 승인 gate OIDC-SAML 설계]].
+- 상태: 설계 문서·추적표만 갱신. 코드/migration/DB/API/IdP 설정 변경 없음. 실제 승인·게시·호출은 계속 fail-closed. `git diff --check` 통과; IdP/DB/API/pytest 검증은 미실행.
+- 미결/다음: 기관 issuer/metadata, immutable subject mapping, assurance allowlist와 freshness, key rollover 담당 및 sandbox를 확정한 다음 verifier부터 구현한다. 이후 별도 clone에서 assertion/2인 approval/revision race/tenant 경계를 검증한다.
+
+
+## 2026-10-18 · OIDC/SAML assurance 저장 계약 migration
+- 요청: “네 진행 바랍니다” — 기존 OIDC/SAML 대상으로 fail-closed MFA 기반 다음 단계 진행.
+- 확인: 현재 `app/auth/sso.py` callback은 synthetic/mock identity를 생성하며 실제 signature/issuer/audience 검증기가 아니다. 이를 step-up 증거로 사용하지 않는다.
+- 변경: 신규 additive `src/backend/migrations/059_idp_assurance_evidence_contract.sql` 추가. tenant-scoped OIDC/SAML policy revision과 session assurance evidence 저장 계약, RLS/FORCE RLS, web/index/meter 직접 권한 차단, immutable update/delete trigger를 둔다. 기존 migration/DB 미변경. 상세 [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 exact revision 승인 gate OIDC-SAML 설계]].
+- 상태: issuer policy/evidence는 비어 있으며 migration 미적용. MFA verifier, provider config, multi-approval/publish/call gate 미구현. Dynamic approval fail-closed 유지.
+- 검증: migration 구조 assertion 및 `git diff --check` 통과. DB clone 적용, SQL 권한, pytest, API 및 실제 IdP 시험은 미실행.
+- 다음: IdP issuer/metadata, immutable subject mapping, assurance allowlist/freshness 및 key rollover 계약 확인 후 verifier/RPC를 구현하고 별도 fixture clone에서 059를 적용·검증.
+
+
+## 2026-10-18 · 기관 IdP 설정값 수집 가이드
+- 요청: 기관 IdP issuer/metadata, subject 매핑, MFA assurance 및 유효시간을 어떻게 정할지 안내.
+- 조사 근거: OIDC Core `iss/sub/aud/auth_time/acr/amr` 요구와 OASIS SAML persistent NameID/AuthnContext/AuthnInstant, NIST 재인증 시간 정책 안내를 확인했다.
+- 결정/권고: claim semantics는 IdP와 기관이 합의한 exact allowlist로만 인정한다. Subject는 `(issuer, protocol, immutable subject)`에서 local user UUID로 명시 매핑하고 email/login 자동 연결은 금지한다. 금융 side-effect 승인에 승인자별 직전 step-up 및 300초 freshness를 프로젝트 제안값으로 기록하되 기관 보안 정책 승인 전 확정값이 아님을 표시한다.
+- 제약: migration 059에는 subject 필드 선택값과 evidence 보관만 있고 subject-to-user mapping table/RPC 및 실제 verifier가 없음을 문서에 명시했다. 이를 구현 전까지 MFA approval은 fail-closed다.
+- 기록: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 exact revision 승인 gate OIDC-SAML 설계]].
+
+
+## 2026-10-18 · Assurance 및 subject mapping schema clone 검증
+- 요청: 059 clone 검증 후 비활성 기본값의 subject-account mapping 구조를 진행.
+- 변경: additive migrations 059(tenant-scoped IdP assurance policy/evidence), 060(원문 subject 비저장 append-only mapping event ledger) 추가. `ai_web` direct grants 없음, RLS/FORCE RLS, immutable trigger. 기존 migrations 및 active fixture 미변경. 상세 [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 exact revision 승인 gate OIDC-SAML 설계]].
+- 검증: private backup baseline과 clone을 대조, head 060 / 61 migration entries / source checksum mismatch 0; 기존 74개 테이블 322행의 개별 fingerprint 일치. 신규 3개 테이블 각 0행. RLS/FORCE RLS와 trigger 활성 확인, `ai_web` direct read 권한 부재 및 runtime-role read 거부 확인. disposable clone 및 baseline DB/cluster 종료·삭제 완료.
+- 제한: API, pytest, actual trigger mutation behavior, IdP assertion verifier는 미검증. Subject map writer/resolver RPC와 digest HMAC service가 없어 신규 ledger는 비어 있으며 MFA approval은 fail-closed.
+- 다음: IdP 계약 수집 이후 server verifier와 keyed subject digest, mapping transition RPC를 추가하고 별도 clone에서 subject collision/revoke/relink 및 cross-tenant 검증.
+
+
+## 2026-10-18 · Verified subject mapping RPC 구현
+- 요청: 기관 IdP 연결 전 단계에서 안전한 verified subject mapping RPC를 진행한다.
+- 결정: 현 mock SSO를 assurance로 승격하지 않는다. 클라이언트 subject/digest/user 입력을 금지하고, 검증된 evidence에서 issuer·subject digest·key version을 가져와 현재 사용자 계정 본인만 연결/해제하도록 제한했다. policy head는 존재하지 않는 기본 상태이며 비활성 제약으로 닫아 둔다.
+- 변경: 신규 additive `src/backend/migrations/061_verified_idp_subject_mapping_rpc.sql`. fresh assurance 검사, issuer/policy digest/session/tenant 일치, AAL2/3 및 freshness, idempotency key, revision CAS, advisory lock, link/revoke collision 확인, append-only mapping event 및 audit event를 정의했다. table 직접 권한 대신 RPC 실행권한만 `ai_web`에 부여했다.
+- 상태: 구현 추가. API route, actual OIDC/SAML verifier, HMAC secret service/key rotation, policy management와 resolver는 미구현. 실 issuer/MFA 설정도 없음.
+- 검증: `git status`에서 신규 migration 확인. 기본 devdb status가 `UNOWNED_RUNTIME`을 반환해 clone restore/apply 및 SQL 런타임 검증은 미수행. pytest, active fixture 적용/수정 모두 미수행. 운영/기관 수용 완료로 보지 않는다.
+- 관련: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 verified subject mapping RPC 구현 결과]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 exact revision 승인 gate OIDC-SAML 설계]].
+- 다음: 관리되지 않는 기본 devdb는 건드리지 않고, 별도의 marker 검증 disposable clone을 준비해 migration 061 및 cross-tenant/replay/revision 경계를 확인한다.
+
+
+## 2026-10-18 · Verified subject mapping migration clone 검증
+- 요청: 신규 RPC migration을 별도 backup clone에서 검증하고 기존 데이터 보존을 확인한다.
+- 수행: private backup head 055에서 baseline DB와 test DB를 분리 복원했다. isolated cluster port 55433에서 056–061 적용 후 schema migration ledger를 검증했다. migration 파일 선택 실수로 처음에는 050 migration이 시작되어 duplicate-table 오류가 발생했으나 해당 migration 트랜잭션은 커밋되지 않았다. 056–061로 선택 범위를 고쳐 fresh restore clone에서 전부 재적용했다.
+- 결과: head 061 / entries 62 / source checksum mismatch 0. baseline 74개 테이블 322행의 JSONB 지문 변경 0, 누락 0. 신규 4개 assurance/evidence/mapping/policy-head 테이블은 빈 상태. 모두 ENABLE/FORCE RLS; ai_web 직접 SELECT/INSERT 거부; mapping RPC는 ai_web EXECUTE 허용 및 PUBLIC 거부. self-scoped evidence INSERT 정책 1개, immutable trigger 3개 활성 확인.
+- 정리: disposable cluster 중지·임시 디렉터리 및 socket 제거, port 55433 clear. 정규 devdb는 stopped로 확인했고 migration 미적용.
+- 제한: 실제 assertion이 없으므로 RPC 성공·replay·revocation·collision 실행 경로는 호출하지 않았다. IdP verifier, HMAC service, API route/UI 및 실제 기관 연동은 계속 미완료다.
+- 관련: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 verified subject mapping RPC 구현 결과]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]].
+
+
+## 2026-10-18 · Subject mapping API 접점 구현
+- 요청: clone 검증 다음 단계로 verified subject mapping RPC를 인증된 API 경로에 연결한다.
+- 변경: `src/backend/app/auth/subject_mapping.py` repository와 `POST /api/v1/auth/idp/subject-mapping` route를 추가했다. 기존 auth cookie/CSRF와 tenant context resolver를 재사용하고, `extra=forbid`, query 미허용, action/evidence UUID/idempotency UUID/expected revision만 수신한다. user/session/tenant는 서버 context에서 공급한다. `app/errors.py`에 assurance 누락·mapping 충돌용 고정 메시지를 추가했다.
+- 보안 경계: route는 raw subject/digest/대상 user를 수신·반환하지 않는다. SQLSTATE와 고정 primary message만 대응 코드로 변환한다. 유효한 서버 검증 evidence가 현재 없으므로 정상 매핑은 계속 거부된다. mock SSO callback은 verifier/evidence writer로 사용하지 않는다.
+- 검증: `git diff --check` 통과. pytest와 HTTP 왕복은 실행하지 않았다. migration 056–061의 별도 backup clone 검증 결과는 직전 기록에 포함했다. 활성 fixture/API 프로세스는 변경하거나 재시작하지 않았다.
+- 미완료/다음: actual OIDC/SAML verifier, issuer/metadata 및 assurance allowlist 정책, keyed subject HMAC/rotation, evidence issuer/resolver, UI 및 실제 HTTP 회귀는 미완료다. 관련: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 verified subject mapping RPC 구현 결과]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]].
+
+
+## 2026-10-18 · IdP 검증 경계 및 subject digest 구현
+- 요청: IdP 연동 준비 전 서버 verifier 및 keyed subject digest 작업을 진행한다.
+- 결정: 고객/기관 issuer와 claim 정책이 없으므로 verifier는 backend 미주입 상태로 fail-closed를 유지한다. 토큰·SAML assertion을 검증 없이 파싱하거나 MFA evidence를 만들지 않는다. HMAC subject digest는 서버 설정으로만 제공하며 verifier 활성화와 분리한다.
+- 변경: `src/backend/app/auth/idp_verifier.py`, `app/config.py`, `app/main.py`, `app/auth/sso.py`, `app/errors.py`. mock callback은 synthetic/미검증임을 반환한다. 실제 crypto backend, evidence writer, policy 활성화, Secret Manager/key rotation은 미구현이다.
+- 검증: Python AST parse 7개 파일 통과, `git diff --check` 통과. `py_compile`은 `__pycache__` 쓰기 권한 오류로 완료되지 않았다. pytest, HTTP/DB 및 기관 IdP 검증은 미수행.
+- 상태: 코드 준비 경계 구현. 실제 인증·MFA 수용이나 운영 연동 완료가 아니다. 다음은 기관 IdP 설정 계약과 crypto backend/Secret Manager 검토다.
+- 관련: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 IdP 검증 경계 및 subject digest 구현 결과]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 exact revision 승인 gate OIDC-SAML 설계]].
+
+
+## 2026-10-18 · Subject digest 키 버전·회전 경계
+- 요청: IdP 연동 전 진행할 수 있는 secret lifecycle 기반 작업을 이어간다.
+- 결정: 특정 클라우드 Secret Manager를 가정하지 않고 server-only `SubjectKeyProvider` 경계와 버전별 HMAC keyring을 제공한다. 활성 버전은 새 digest 생성에 쓰고, 보존 버전은 기존 digest 재현용으로만 선택한다. provider/key 누락과 알 수 없는 버전은 거부한다.
+- 변경: `src/backend/app/auth/idp_verifier.py`에 `SubjectKeyProvider`와 immutable `SubjectDigestKeyring`을 추가했다. 기존 단일-key service는 새 keyring을 사용한다.
+- 검증: Python `py_compile` 및 `git diff --check` 통과. pytest, 외부 Secret Manager 및 rotation/DB mapping migration 시험은 미수행. 실제 provider를 앱에 연결하지 않아 운영 rotation은 아직 제공되지 않는다.
+- 다음: 기관 배포 환경의 Secret Manager 선택 후 adapter와 key reference/rotation·retention·retire runbook을 구현한다. 그 다음 exact-revision MFA 승인 gate를 구현하되 유효 IdP evidence가 없으면 승인과 publish는 계속 거부한다.
+- 관련: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 IdP 검증 경계 및 subject digest 구현 결과]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]], [[400.프로젝트관리/02 포털 UI UX 작업 기록]].
+
+
+## 2026-10-18 · Secret provider 주입 경계
+- 요청: Secret Manager 연동 준비를 이어간다.
+- 확인: 환경별 설정 계획/결과에는 dev/tb/prd의 실제 secret management가 미완료이며, Vault에는 승인된 Secret Manager 제품/계정이 지정되어 있지 않다. 특정 클라우드 SDK를 임의 선택하지 않았다.
+- 변경: `src/backend/app/main.py`에 `SubjectKeyProvider` 의존성 주입, `app/config.py`에 버전 집합/활성 버전 설정과 유효성 검사, `app/auth/idp_verifier.py`에 provider load 오류를 비밀 값 없이 실패 처리하도록 연결했다. provider 지정 시 설정된 모든 키 버전을 시작 시 읽고, active key 누락·구성 모호성 시 앱 시작을 거부한다.
+- 검증: Python `py_compile` 및 `git diff --check` 통과. 실제 Secret Manager 호출, pytest, key rotation 및 DB digest migration은 미수행.
+- 미완료/다음: 기관이 운영할 Secret Manager 제품과 workload identity/권한/secret reference/rotation 정책을 지정하면 해당 provider SDK adapter와 운영 절차를 추가한다. 이후 exact-revision MFA approval gate는 provider assertion/evidence가 유효해지기 전까지 fail-closed 상태로 둔다.
+- 관련: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 IdP 검증 경계 및 subject digest 구현 결과]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]], [[100.프로젝트계획/14 환경별 설정 관리와 local 포트 분리 실행 계획]], [[400.프로젝트관리/02 포털 UI UX 작업 기록]].
+
+
+## 2026-10-18 · 동적 Tool revision digest 불변성 migration source 추가
+- 요청: Secret Manager 제품 선택 전에도 진행할 수 있는 Gateway 보안 작업을 계속한다.
+- 확인/결정: 환경/배포 문서에는 AWS/Azure/GCP/Vault 중 승인된 provider가 없다. 제품 SDK를 추정해 추가하지 않는다. exact-revision 승인 기반으로 동적 Tool revision 무결성 migration을 새 파일로만 추가한다.
+- 변경: `src/backend/migrations/062_mcp_tool_version_integrity.sql`은 schema와 imported source metadata의 canonical SHA-256 digest를 backfill/저장하고 신규 row insert trigger에서 계산·검증하며 버전 update/delete를 거부한다. 기존 migration은 수정하지 않았다.
+- 상태: migration source 추가, 미적용. source 파일 작성 외 active DB, fixture, migration ledger 변경 없음.
+- 검증: `git diff --check`와 수동 SQL 구조 검토만 수행. 별도 backup clone의 SQL 실행, row fingerprint/checksum/RLS 권한 및 trigger denial 검증은 아직이다.
+- 다음: 기존 데이터 백업을 기준으로 폐기 가능한 fixture clone에만 062를 적용·검증한다. 결과 전까지 migration을 활성 fixture에 적용하지 않는다. exact-revision 승인·publish는 MFA evidence 부재로 계속 닫혀 있다.
+- 관련: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 동적 Tool revision digest 불변성 migration 구현안]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 동적 Tool 승인 gate 계약 조사 결과]], [[400.프로젝트관리/02 포털 UI UX 작업 기록]].
+
+
+## 2026-10-18 · 062 backup clone 적용 검증
+- 요청/승인: 사용자가 다음 단계 진행을 승인해 backup 기반 폐기 가능한 clone 검증을 수행했다.
+- 실행: private fixture backup을 독립 PostgreSQL 15 임시 cluster/DB에 복원하고 056–062를 적용했다. 개발 fixture/공유 DB에는 적용하지 않았다.
+- 결과: migration head `062_mcp_tool_version_integrity.sql`; 기존 74개 업무 테이블/322행 count 보존; source checksum mismatch 0; version digest 누락 0 및 길이 오류 0; integrity trigger enabled; table RLS/ FORCE RLS 모두 true. 임시 clone은 종료·정리했다. 백업 기준 version row가 0개여서 backfill 대상은 없었고, synthetic insert/update/delete trigger SQLSTATE probe는 미수행이다.
+- 미완료: 실행 role별 권한 probe, API 통합/pytest, active fixture 적용, 실제 기관/운영 검증.
+- 다음: 실행 role 권한/API 계약을 확인한다. active fixture 적용은 별도 승인·백업 gate 후에만 검토한다.
+- 관련: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 062 backup clone 검증 결과]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 동적 Tool revision digest 불변성 migration 구현안]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]].
+
+## 2026-10-18 · MCP Gateway native DB pool 경계 검증
+- 요청: 멀티 에이전트 개발 스킬을 적용해 다음 MCP Gateway 작업을 진행한다.
+- 결정/범위: test-only pool adapter가 우회한 native pool 포트·DB ownership marker 경계를 테스트한다. DB/공유 fixture를 실행하지 않으며, 격리된 구현 copy에서 시작했다. handoff 후 임시 copy가 사라져 같은 단일 테스트 파일을 원본 backend working tree에 복원하고 재검증했다.
+- 변경: `src/backend/tests/test_db_native_boundary.py`에 비정상 포트의 pool 생성 전 거부와 foreign marker 거부/오류 비노출 단위 테스트를 추가했다. 원본 main checkout의 기존 미커밋 변경은 보존했다. 새 테스트는 현재 미커밋 상태이며 다른 기존 변경을 섞지 않기 위해 commit은 만들지 않았다. production 코드와 migration은 변경하지 않았다.
+- 검증: 원본 backend에서 `PYTHONDONTWRITEBYTECODE=1 .venv/bin/pytest -q -p no:cacheprovider tests/test_db_native_boundary.py` 결과 `2 passed in 0.05s`. 테스트 검토와 전체 변경 검토 모두 승인/clean. PostgreSQL service 및 fixture는 기동하지 않았다.
+- 한계: live PostgreSQL native pool startup, 기관 sandbox, 실제 MCP connector 및 운영 검증은 미실행. dynamic external call은 MFA/IdP 및 publication gate 준비 전까지 차단 유지.
+- 다음: 기관 IdP issuer/metadata, immutable subject, assurance freshness/replay 및 key rotation 계약이 확정되기 전에는 verifier를 활성화하지 않고, fail-closed 경계를 유지한다.
+- 관련: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 native DB pool 경계 단위 검증]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]].
+
+
+## 2026-10-18 · IdP verifier fail-closed 단위 검증
+- 요청: 기관 IdP 설정이 미정인 동안 진행 가능한 fail-closed boundary 검증을 계속한다.
+- 결정/범위: 실제 issuer/claim/MFA 정책 또는 Secret Manager가 미정이므로 verifier는 비활성으로 유지하고, 현재 `IdpVerifier`/versioned digest keyring의 합성 단위 동작만 확인한다.
+- 변경: `src/backend/tests/test_idp_verifier_boundary.py` 추가. 미설정 OIDC/SAML 거부, synthetic backend 입력 전달 및 identity 반환, key rotation/도메인 분리, key 누락/provider 예외의 고정 오류·secret 미노출을 검증한다. production code/migration/config는 변경하지 않았다.
+- 검증: `.venv/bin/python -m pytest --noconftest -p no:cacheprovider tests/test_idp_verifier_boundary.py -q` 결과 `10 passed in 0.45s`. Task review spec/quality 모두 PASS. DB/fixture/network/실제 IdP를 사용하지 않았다.
+- 한계/다음: 실제 IdP signature 검증, evidence 발급, MFA 정책, Secret Manager/key rotation 및 기관 수용은 미구현이다. 기관 설정값과 provider 결정 전 fail-closed 유지.
+- 관련: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 IdP verifier fail-closed 단위 검증]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]].
+
+
+## 2026-10-18 · 동적 production dispatch fail-closed 보강
+- 요청/결정: IdP/MFA와 exact-revision 승인 gate가 미완성인 동안 동적 Tool의 `approved_published` 값만으로 production dispatch가 열리지 않도록 차단한다.
+- 변경: `src/backend/app/tools/dynamic_gateway.py`에서 invocation 첫 단계에 `TOOL_DYNAMIC_REVIEW_ONLY` 409를 반환하고 production routing branch를 제거했다. 개발 simulation은 유지했다. `tests/test_mcp_tool_autowrap.py`에 side effect 없는 거부 회귀 검증을 추가/갱신했다. 공개 route의 server-forced draft는 그대로다.
+- 실제 검증: focused pytest `9 passed in 0.58s`; 지정 diff `git diff --check` 통과; 독립 task review PASS. DB/fixture/실제 connector/IdP는 사용하지 않았다.
+- 미완료: 실제 IdP/MFA, Secret Manager, exact-revision quorum/publish/call gate, production connector 및 영속 audit. 운영 dispatch는 차단 상태이며 기관 수용/배포로 간주하지 않는다. 변경은 미커밋이다.
+- 다음: 기관 보안 설정 결정 전 fail-closed 유지. 이후 승인 상태 전이와 revision-bound call authorization 계약을 구체화한다.
+- 관련: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 동적 production dispatch fail-closed 보강]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]].
+
+
+## 2026-10-18 · exact revision 게시 준비도 fail-closed 계약 구현
+- 요청/결정: IdP/MFA와 exact-revision 승인 workflow가 미정이므로 게시·실행 허가를 열지 않고, 요청 snapshot과 현재 descriptor의 일치 여부 및 차단 이유를 관리자 상세에 명시한다.
+- 변경: `src/backend/app/tools/publication_gate.py` pure comparator와 `GET /admin/tool-approvals/{request_id}`의 동적 상세 응답 decoration을 추가했다. `publishable`/`execution_ready`는 항상 false다. 정적 Tool 응답, 승인 decision, list/call 및 DB schema는 변경하지 않았다. 신규 focused unit tests를 추가했다.
+- 실제 검증: `tests/test_dynamic_publication_gate.py` `5 passed in 0.15s`; scoped diff check 통과; 독립 리뷰 PASS. API HTTP 왕복, DB/fixture/IdP/실 connector는 사용하지 않았다.
+- 미완료: issuer/MFA 설정, exact-revision quorum/decision/publish transaction, 실제 connector/durable receipt. 결과는 게시 승인이 아니며 production dispatch는 계속 닫혀 있다. 변경 미커밋·미배포.
+- 다음: 승인·게시 ledger/RPC 계약을 새 additive migration으로 설계하고 backup disposable clone에서 검증한다. IdP/MFA 결정 전에는 fail-closed 유지.
+- 관련: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-18 exact revision 게시 준비도 fail-closed 계약 구현]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]].
+
+
+## 2026-10-19 · 게시 준비도 route 계약 테스트
+- 요청: SDD 방식으로 남은 MCP Gateway 안전 구현을 이어간다.
+- 변경: `src/backend/tests/test_mcp_tool_publication_gate_routes.py`를 추가해 동적 상세 응답의 일치/불일치 및 static response shape를 실제 endpoint/helper/serializer를 통해 확인했다. 애플리케이션 코드나 DB schema는 변경하지 않았다.
+- 검증: 지정 focused pytest 3 passed in 0.92s, 신규 파일 diff check 통과, task review spec/quality PASS. mock 격리 단위 시험이며 실제 HTTP 인증·DB·IdP·기관 수용 증거는 아니다.
+- 제한/다음: 다음 migration clone 검증에 필요한 기존 기록 backup `.runtime/backups/mcp-gateway-20261018/active-fixture.dump`를 현재 저장소에서 확인하지 못했다. native DB는 stopped로 유지하고 재기동하지 않는다. backup artifact 복구/검증 및 disposable clone을 준비한 뒤 migration 작업을 재개한다. IdP/MFA/Secret Manager 미정 상태에서 게시·실행 권한은 계속 차단한다.
+- 관련: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-19 게시 준비도 route 계약 테스트]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]].
+
+
+## 2026-10-19 · Registry 목록 RPC와 HMAC 환경 버전 수정
+- 요청/결정: 전체 변경 리뷰의 두 지적을 테스트부터 보강한다. 기존 migration056은 보존하고 새063에 tenant-authorized 단일 배열 집계 RPC를 추가한다. 단일 HMAC 버전은 환경 문자열만 명시적으로 변환하며 직접 bool/float/string과 잘못된 범위를 계속 거부한다.
+- 변경: `src/backend/migrations/063_mcp_tool_registry_list_rpc.sql`, `app/tools/dynamic_repository.py`, `app/config.py`, `tests/test_dynamic_registry_list.py`, `tests/test_idp_subject_settings.py`. 기존 repository/route 반환 계약과 오류 변환을 유지했다.
+- 검증: focused unit RED 3 failed/26 passed (1.06s), GREEN 47 passed (0.75s), scoped diff check 수행. 056 전후 SHA-256 동일. PostgreSQL/fixture/network/공유 서비스는 실행하지 않았다.
+- 미완료/다음: 기록된 backup 파일 존재 여부 false. clone 검증 BLOCKED, 063 소스 미적용. 검증된 백업 확보 후 disposable clone에서 다중 Tool/빈 목록/RLS/권한/행·checksum 보존을 확인한다. active runtime 수정·기관 수용·운영 배포 완료가 아니며 미커밋 상태다.
+- 관련: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-19 Registry 목록 RPC와 HMAC 환경 버전 수정]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]].
+
+## 2026-10-20 MCP Tool Gateway 최종 리뷰 보완
+- 요청: 최종 리뷰 잔여 finding을 수정하고 상세 구현·검증 이력을 남김.
+- 결정: dynamic simulation은 저장하지 않고 요청 단위 fixture Gateway에서 처리한다. 영속 등록은 관리자의 별도 등록 동작으로 한정한다. 동적 등록은 reserved static Tool ID를 거부한다. validation 오류에 입력값을 표시하지 않으며 승인 라벨은 위험 분류와 일치시킨다.
+- 변경: backend 설정/라우트, frontend 승인 패널·Tool 관리, migration 064 및 집중 테스트.
+- 검증: backend 84 passed; simulation helper 4 passed; approval label 6 passed; scoped diff check 통과. 최종 whole-branch review Spec/Quality PASS, Critical/Important 잔여 없음. TypeScript 통과, Vite build는 sandbox EPERM으로 중단.
+- 미완료: 검증 백업과 disposable clone 부재로 migration 063/064 미적용. 실제 DB RLS/ACL/checksum 및 기관 connector/IdP 검증, 전체 build, UAT, 배포는 미완료. 테스트는 기관 수용 증거가 아님.
+- 다음: clone 검증 경로 확보 후 migration 순차 검증; 허용된 Vite cache 환경에서 전체 관리자 build 수행.
+
+
+## 2026-10-20 · MCP Tool Gateway 063/064 clone 검증
+- 요청: 마지막 작업을 확인하고 SDD 방식으로 남은 MCP Gateway 작업을 계속 진행한다.
+- 결정: 기록된 backup을 별도 PostgreSQL 15 disposable cluster에서만 복원·검증한다. active fixture/native DB에는 migration을 적용하지 않는다.
+- 변경: 코드 추가 변경 없음. 063/064 검증 결과, checksum·데이터 보존 및 synthetic gate 결과를 기록했다.
+- 검증: 056–064 순차 적용, migration source checksum 65/65 일치, 기존 75개 테이블의 행 수 및 fingerprint 보존, owner/ACL/RLS/trigger 통과. 063 empty/multi-tool aggregation 및 cross-tenant denial, 064 reserved-ID 세 건 차단 통과. Synthetic changes rollback. 전용 clone/runtime 정리 완료, 55432/55433 listener 없음.
+- 미완료: active fixture/native 적용, IdP/MFA/Secret Manager/실 connector, browser UAT 및 운영 배포·기관 수용은 별도 미완료. fail-closed 유지. 관리자 full build 재실행 통과 (TypeScript/Vite/admin boundary verified; 229 modules); 500KB 초과 JS chunk 경고 1건. 소스는 미커밋.
+- 다음: 활성 환경 변경은 별도 승인된 배포 창·백업/복구 절차에서 수행하고, IdP/MFA·connector 계약과 실제 운영 검증을 진행한다.
+- 관련: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-20 063-064 백업 클론 검증 결과]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]].
+
+
+## 2026-10-20 · 관리자 UI 빌드 재검증
+- 요청/결정: sandbox의 Vite cache 쓰기 제한으로 중단됐던 관리자 UI build를 로컬 허용 환경에서 재실행한다.
+- 검증: `npm run build:admin` 성공. TypeScript, Vite(229 modules), `verify-portal-builds.mjs admin`의 admin boundary 검증 통과. minified JS chunk 718.52 kB (gzip 207.07 kB)로 500 kB 초과 warning 발생.
+- 한계: 로컬 build 산출이며 서비스 배포나 브라우저/UAT 검증은 아니다.
+- 관련: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-20 최종 리뷰 수정 및 검증 결과]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]].
+
+
+## 2026-10-20 · MCP Streamable HTTP discovery adapter
+- 요청: 다음 MCP Gateway 작업을 SDD 방식으로 진행한다.
+- 결정: T035-C의 첫 증분으로 official MCP Python SDK `mcp==2.3.0`을 exact pin/hash lock하고 읽기 전용 `tools/list` discovery만 구현한다. SDK protocol negotiation/reconnect는 멱등 discovery 범위에서만 허용; app-level retry 없음. exact HTTPS hostname allowlist 및 redirect 차단 적용.
+- 변경: `src/backend/app/tools/transports/streamable_http.py`, `src/backend/app/tools/transports/__init__.py`, `src/backend/tests/test_mcp_streamable_http.py`, `src/backend/requirements.in`, `src/backend/requirements.lock`. 최신 MCP status와 결정은 [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-20 Streamable HTTP 도구 탐색 어댑터 구현]]에 기록.
+- 검증: backend Python 3.13, `mcp==2.3.0`; `tests/test_mcp_streamable_http.py` 35 passed; `pip check` 정상; 55 locked distributions 모두 hash 포함, 기존 locked versions 유지; `git diff --check`; independent review Spec PASS/quality PASS with Minor report-count correction fixed.
+- 제한: test는 injected MockTransport만 사용. 실 MCP server, DB/fixture/service, endpoint profile, credentials, tool call, approval dispatch, external connector/UAT/deployment 없음. DNS rebinding, total JSON body limit, CPU parsing bound 미해결; fail-closed production dispatch 유지.
+- 다음: 실제 adapter 통합 전 기관 승인 endpoint/egress allowlist·DNS pinning, auth delegation/Secret Manager 계약을 설계하고 `tools/list` API를 등록·정책·RLS와 연결한다. 그 이후에만 `tools/call`을 별도 approval/audit/cost gate 작업으로 설계한다.
+- 관련: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-20 Streamable HTTP 도구 탐색 어댑터 구현]].
+
+
+## 2026-10-21 · MCP Streamable HTTP 누적 응답 한도
+- 요청/결정: SDD 방식으로 MCP Gateway 남은 작업을 계속한다. discovery 전체 응답에 누적 한도를 두고, 압축 응답을 통한 byte cap 우회와 동시 GET 오류 흡수를 차단한다.
+- 변경: bounded transport가 negotiation 및 모든 JSON/SSE 응답 스트림을 호출 단위 2 MiB로 합산하고, `Accept-Encoding: identity`를 설정한다. 비identity encoding은 body read 전에 고정 오류로 거부하고 stream을 닫는다. SDK·HTTP cleanup 뒤 latched rejection flag를 확인해 background GET overflow/encoding 예외가 있어도 성공 catalog를 반환하지 않는다. 실제 수정은 `streamable_http.py`, `test_mcp_streamable_http.py`에 한정된다.
+- 실제 검증: 집중 pytest `53 passed in 1.52s`; 독립 SDD review에서 재현된 Important 동시 GET 문제 수정 후 Spec/Quality PASS, 잔여 finding 없음. injected MockTransport만 사용했다.
+- 미완료/제한: endpoint·registry API·`tools/call`, DNS rebinding/SSRF 완화, egress/DNS pinning, 인증·Secret Manager, 기관 sandbox/UAT 및 배포는 미완료다. IdP/MFA가 미설정되어 production dispatch는 fail-closed다. 이 작업은 기관 수용 또는 운영 완료가 아니다. 변경은 미커밋이다.
+- 다음: connector 통합 전에 기관 승인 endpoint/egress·DNS pinning 및 자격증명 위임 계약을 확정한 뒤 제한된 `tools/list` API 통합을 별도 검토한다. `tools/call`은 승인·감사·비용 gate가 준비될 때까지 추가하지 않는다.
+- 관련: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-21 Streamable HTTP 누적 응답 한도 보강]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-20 Streamable HTTP 도구 탐색 어댑터 구현]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]].
+
+
+## 2026-10-21 · MCP Tool Gateway 서비스 적용 전 위험 점검
+- 요청: 현재 구현을 마무리 상태로 둘 때 서비스 영향 가능성이 있는지 검토하고, 적용 전 할 일을 Obsidian에 남긴다.
+- 점검 결과: 소스 기준 즉시 발생 중인 운영 장애는 확인하지 못했다. 코드 변경은 미커밋·미배포이며 active service/DB/customer consumers/UAT 상태는 이 점검에서 확인하지 않았다. 따라서 무장애 보증이나 운영 승인으로 기록하지 않는다.
+- 확인한 적용 전 작업: (1) runtime migration 상태와 063/064 코드 순서를 확인한다. 063/064는 backup clone 검증까지만 수행했다. (2) TADMIN/PADMIN role mapping과 기존 API client의 credential payload 호환을 확인한다. (3) 인증 사용자에게 노출된 명세 parse endpoint의 role/body size/파서 자원 제한을 점검한다. (4) synthetic SSO callback이 인증 성공으로 표현되지 않는지 UI 소비자를 확인한다. (5) 승인된 staging에서 역할·tenant·parse·register/list/simulate 경로를 확인한다.
+- MCP 경계: Streamable HTTP discovery adapter 호출처를 현재 app route/service에서 찾지 못했다. 실제 원격 MCP/금융 endpoint, `tools/call`, production dispatch는 연결되지 않았고 fail-closed다. 테스트/clone/build 증거는 운영 연결이나 배포가 아니다.
+- 다음: 사용자가 마무리한 현재 구현을 보존하고, 서비스 적용 결정 시 이 체크리스트를 release gate로 사용한다. 실제 MCP 대상/IdP 설정은 추후 확정 후 별도 진행한다.
+- 관련: [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-21 MCP Tool Gateway 서비스 적용 전 위험 점검]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적]], [[200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/2026-10-21 Streamable HTTP 누적 응답 한도 보강]].
+
+
+## 2026-10-21 · AI Builder 고도화 통합 Studio 검토
+
+- **요청:** 현재 구현된 AI Builder를 검토하고, 비전문가 현업 사용자를 위한 high-end AI Builder 고도화 방향을 brainstorming으로 설계.
+- **결정:** 제작자 생산성·노코드 UX 우선. Agent와 Workflow를 하나의 AI Studio에서 탭으로 전환하되 편집 모델은 별도 유지. Agent/Workflow 모두 자연어 빠른 시작과 수동 제작을 지원하고, 자연어 결과는 저장 전 사람이 검토하는 제안으로 제한. 초안의 실행/공개 금지, tenant/owner·자료 ACL·비용/감사 원장·기존 승인 gate 유지. 제작자 권한과 운영 승인 권한은 분리.
+- **변경:** [[2026-10-21 AI Builder 고도화 통합 Studio 설계]] 새 설계 문서 작성. 앱 코드와 DB는 변경하지 않음.
+- **검증·근거:** AIStudioHubPage, Agent Builder profile/trial/evaluation/evidence, Workflow Canvas 및 최신 DP11 잔여/Workflow 복구 기록을 읽어 구현 상태와 미완료 범위를 구분했다. 자동 테스트·빌드·브라우저·기관 UAT는 실행하지 않았다.
+- **미완료:** 사용자 최종 문서 검토 대기. 설계 승인은 구현·역할 부여·게시·운영 실행/배포 승인이 아니다.
+- **다음:** 사용자가 작성 설계를 검토·승인한 뒤 범위를 반영한 단계별 구현 계획을 별도로 작성한다.
+
+
+## 2026-10-21 · AI Builder 고도화 구현 계획 수립
+
+- **요청:** 승인된 AI Builder 고도화 설계에서 단계별 구현 계획 작성.
+- **결정:** 공통 Studio UX, 공유 자연어 proposal API와 Agent 연결, Workflow Canvas 연결의 세 독립 수용 묶음으로 나눴다. 현업 이용은 DP16 agent_developer capability/심사자 분리 확인을 선행 조건으로 두며, 저장 전 제안은 초안 저장·시험·Tool 호출·승인·게시를 자동 수행하지 않는다.
+- **변경 문서:** [[2026-10-21 AI Builder 고도화 구현 계획 목차]], [[2026-10-21 AI Studio 공통 제작 흐름 구현 계획]], [[2026-10-21 AI Builder 자연어 초안 생성 서비스 구현 계획]], [[2026-10-21 Workflow Canvas 자연어 초안 연결 구현 계획]].
+- **검증:** 계획은 승인된 설계와 현재 AIStudioHubPage, AssetsPage, Builder profile/trial, Workflow drafts/Canvas, DP16 권한 계획을 대조해 작성했다. 계획 간 의존/API/승인 상태를 문서 자체 점검했다. 앱 코드·migration·DB·테스트·브라우저 검증은 변경하거나 실행하지 않았다.
+- **미완료:** 구현은 수행하지 않았다. DP16 역할 수용과 실제 provider/기관 업무 품질은 별도 gate다.
+- **다음:** 사용자에게 인라인 순차 실행 방식을 제안하고 선택을 기다린다.
+
+
+## 2026-10-21 · AI Builder 고도화 구현 착수
+
+사용자의 구현 시작 지시에 따라 승인된 계획의 첫 단위를 시작했다. `src/frontend/src/AIStudioHubPage.tsx`에 빠른 시작/단계별 제작 선택을 추가하고, Agent 제안과 Workflow 실행 간 연결 안내를 게시된 정확한 버전·현재 Tool 권한에 맞게 조정했다. `src/backend/app/builder/scaffold_schemas.py`에는 Agent/Workflow proposal 계약, 입력 제한, secret field 차단, DAG 유효성 검사를 추가했다.
+
+공통 proposal provider 호출은 기존 `portal.runs` admission과 비용 원장에 임의 task를 추가하는 migration, owner 전용 저장 및 replay/delete gate와 함께 구현해야 한다. 이 연결 전에는 provider API를 노출하지 않는다. 현업 사용자 권한, Workflow Canvas 연결, proposal 저장 API, DB migration은 미완료다. 코드 테스트는 추가·실행하지 않았다. 다음은 migration/RLS/settlement 계약과 Mock provider 경로를 구현하며, 기존 migration 000–064는 수정하지 않는다.
+
+### 2026-10-21 · AI Builder 구현 이어서 진행
+
+사용자의 계속 진행 지시에 따라 `AIStudioHubPage.tsx` 탭 전환을 브라우저 뒤로/앞으로 이동에 반영하고, 기존 탭 문구의 Agent/Workflow 직접 연결 오해를 승인·게시된 정확한 버전 및 현재 Tool 권한 기준으로 수정했다. `scaffold_schemas.py`와 신규 `scaffold_prompts.py`에 Agent/Workflow 계약, 사용자 입력 분리, Agent/Tool ID를 모델이 발명하지 못하게 하는 제안 규칙, Workflow graph 연결·순환 검사를 추가했다.
+
+아직 provider API, owner-only 저장/replay/discard, RLS/cost settlement migration, Canvas/Agent 편집기 연결은 미완료이며 제안 API를 노출하지 않았다. 기존 migration이나 DB는 변경·적용하지 않았다. 테스트는 추가·실행하지 않았다. 다음 단계는 065 신규 migration을 기존 conversation/run 접근 경계와 충돌 없이 설계하고 별도 fixture clone에서 검증한 뒤 연결하는 것이다.
+
+### 2026-10-21 · AI Builder proposal 실행 경계 진행
+
+`scaffold_service.py`를 추가해 승인된 구조화 proposal만 기존 Gateway 응답에서 해석하고, Gateway가 usage 정산 및 출력 guardrail 처리를 마친 뒤 strict schema 검증을 수행하도록 구성했다. 기존 `RunTicket`은 worker·검증된 실행 상태를 담는 frozen capability 객체이므로, 요청 메시지를 바꿀 때 직접 mutate하지 않고 불변 복사본을 사용하도록 수정했다. Gateway 미연결 환경, provider 오류, 비정상 JSON/schema 결과는 proposal로 반환하지 않는다.
+
+변경 파일: `src/backend/app/builder/scaffold_service.py`. 검토 근거는 `CallRepository`의 claim/reserve/dispatch/settle 순서, `AiGateway.execute`, migration 032의 builder trial 전용 RLS·admission·claim·finish 경계다. API, migration, DB, 테스트는 추가·적용·실행하지 않았다. 일반 대화 `run_view`와 conversation 접근에서 감춰지는 신규 task kind 및 proposal owner/replay/delete/terminal RPC가 미완료라 UI에 연결하지 않았다. 다음 단계는 신규 migration으로 private proposal admission과 정산 결과 저장·폐기 gate를 구현하고, 별도 fixture clone 검증 후 API를 노출하는 것이다.
+
+### 2026-10-21 · AI Builder proposal 출력 안전성 보강
+
+후속 검토에서 Agent 제안의 자연어 지침·프로필 문자열이 민감정보 검사 범위 밖에 있음을 확인했다. `scaffold_schemas.py`에서 Agent와 Workflow proposal 전체를 재귀 검사하고, URL/endpoint/authorization 키와 URL scheme, Bearer 문자열, API key·password 형식이 포함되면 proposal을 거부하도록 보강했다.
+
+변경 파일: `src/backend/app/builder/scaffold_schemas.py`. 테스트는 추가·실행하지 않았으며 migration/API/DB는 변경하지 않았다. 다음은 별도 실행 capability 및 cost ledger와 연결되는 proposal 전용 admission·저장 경계를 구현하는 것이다.
+
+### 2026-10-21 · AI Builder 전용 실행 ticket 강제
+
+기존 실행 구조를 대조한 결과, 일반 대화 ticket으로 proposal을 생성하면 run 조회·conversation 가시성 및 사용자 메시지 기록 경계를 공유하게 된다. `ScaffoldGenerationService.generate`에서 `task_kind='builder_scaffold'`인 전용 ticket만 허용하도록 fail-closed 검사를 추가했다. 이는 전용 DB admission이 연결될 때까지 일반 대화 경로를 통한 proposal 생성을 차단한다.
+
+변경 파일: `src/backend/app/builder/scaffold_service.py`. 신규 migration, API, DB 적용은 아직 없고 테스트도 실행하지 않았다. 다음 단계는 task kind 제약, 전용 admission/claim/terminal settlement, conversation·run 비가시성, owner-scoped proposal receipt를 하나의 migration 수용 단위로 구현하는 것이다.
+
+## 2026-10-22 · 금융 특화 MCP Tool Gateway 잔여 3대 범위 구현
+
+- **요청:** 사용자 요청에 따라 [[00 구현 추적]] 및 [[100.프로젝트계획/38 금융 특화 MCP Tool Gateway 상세 구현 계획안]]의 잔여 3대 범위(Connector Dispatch, 승인·게시·실행, 감사·복원력) 상세 계획서 수립 및 구현 진행.
+- **결정:** 승인된 계획서에 따라 4종 Typed Connector(OpenAPI, WSDL, JDBC, 금융전문)를 구현하고, MockTransport 및 mock socket 기반 contract test로 외부 의존 없이 검증. 게시 원장(065) 및 감사 원장(067, Append-only 트리거) migration 파일 작성. Token Bucket Rate Limiter, Circuit Breaker, Concurrency Limiter 복원력 및 SHA-256 해시체인 무결성 검증, 관리자 감사/헬스체크 API route를 통합 구현.
+- **변경 파일:**
+  - `src/backend/app/tools/connectors/base.py` (공통 Connector 인터페이스 및 ConnectorResult DTO)
+  - `src/backend/app/tools/connectors/openapi_connector.py` (HTTPS 강제, 파라미터 분리, 크기 제한)
+  - `src/backend/app/tools/connectors/wsdl_connector.py` (defusedxml 기반 XXE 차단, SOAP Action 검증)
+  - `src/backend/app/tools/connectors/jdbc_connector.py` (사전 승인 뷰, DDL/DML 차단, psycopg read-only)
+  - `src/backend/app/tools/connectors/financial_packet_connector.py` (고정길이 패킷 레이아웃, LRC 체크섬)
+  - `src/backend/app/tools/connectors/__init__.py`
+  - `src/backend/app/tools/resilience.py` (RateLimiter, CircuitBreaker, ConcurrencyLimiter)
+  - `src/backend/app/tools/audit.py` (AuditLedgerService, SHA-256 해시체인 무결성 검증)
+  - `src/backend/app/tools/dispatch.py` (ConnectorDispatcher 통합 디스패처)
+  - `src/backend/app/tools/publication_gate.py` (exact_gate_enabled, active_publication, retired 평가)
+  - `src/backend/app/tools/dynamic_gateway.py` (ConnectorDispatcher 실제 연동)
+  - `src/backend/app/tools/routes.py` (GET /api/v1/admin/tool-audit, GET /api/v1/admin/tool-health)
+  - `src/backend/app/errors.py` (도구 실행/보안 관련 새 에러 메시지 7종 추가)
+  - `src/backend/migrations/065_mcp_tool_publication_ledger.sql` (게시 원장 및 RLS)
+  - `src/backend/migrations/067_mcp_tool_audit_ledger.sql` (감사 원장 및 불변 트리거)
+  - `src/backend/tests/test_connector_openapi.py` (12 tests)
+  - `src/backend/tests/test_connector_wsdl.py` (3 tests)
+  - `src/backend/tests/test_connector_jdbc.py` (3 tests)
+  - `src/backend/tests/test_connector_financial.py` (2 tests)
+  - `src/backend/tests/test_resilience.py` (3 tests)
+  - `src/backend/tests/test_audit_ledger.py` (3 tests)
+  - `src/backend/tests/test_audit_routes.py` (2 tests)
+  - `src/backend/tests/test_dispatch.py` (3 tests)
+  - `src/backend/tests/test_dynamic_publication_gate.py` (8 tests)
+- **검증·증거:** 신규 및 확장된 9개 테스트 파일의 총 39개 단위/계약 테스트 전체 통과(GREEN, 0.93s). `test_mcp_tool_simulation_routes.py` 8개 테스트 호환 통과.
+- **미완료:** 실제 금융기관 sandbox 연결 검증(접속정보 확보 후), 활성 PostgreSQL 클러스터에 065/067 migration 적용(disposable backup clone 선적용 절차 필요), Secret Manager 실제 제품 어댑터 연동.
+- **다음:** 다중 승인 및 quorum 상세화(E2-4), Discovery→Registry 동기화(C2-4), 별도 복원 clone에서 065–067 migration 검증.
+
+## 2026-10-22 · 금융 특화 MCP Tool Gateway 후속 3대 제안 구현 완료
+- **요청:** 후속 제안한 3가지 항목(066 게시 통제 RPC 및 Clone 검증, 다중 승인 Quorum, Discovery Import API)에 대한 상세 구현 방안 보고 및 구현 완료.
+- **결정:**
+  - **게시 통제 RPC & Clone 정적 검증 (Step 1, 2):** 신규 `066_mcp_tool_publication_rpc.sql`(`security.mcp_tool_publication_control`)을 작성하여 PADMIN 자격 검증, 요청자 본인 승인 차단, 구버전 active 원자적 `superseded` 전환 및 신규 `active` 등록을 PostgreSQL RPC로 구현. 000~067 마이그레이션 68개 연속성 및 065~067 DDL/RLS/트리거 정적 보안 검증 통과.
+  - **다중 승인 Quorum & 4-Eyes Principle (Step 3):** `src/backend/app/tools/quorum.py`에 `evaluate_quorum()` 구현. 요청자 자기 승인 차단(403), 동일 관리자 중복 승인 차단(409), `read_only` 위험 등급은 1인 단독 승인 즉시 완료, `financial_side_effect`는 2인 Quorum 필수화(1차 시 `partially_approved`, 2차 시 `approved`), 1인이라도 반려 시 즉시 `rejected` 종결.
+  - **Discovery → Registry Import API (Step 4):** `src/backend/app/tools/autowrap_routes.py`에 `POST /api/v1/tools/import-mcp` 엔드포인트 구현. HTTPS 강제, Host allowlist 검증, `discover_tools()` 연계를 통한 원격 MCP 도구 일괄/선택 동적 등록 처리.
+- **변경 파일:**
+  - `src/backend/migrations/066_mcp_tool_publication_rpc.sql`
+  - `src/backend/app/tools/quorum.py`
+  - `src/backend/app/tools/autowrap_routes.py`
+  - `src/backend/tests/test_db_migration_clone.py` (4 tests)
+  - `src/backend/tests/test_tool_quorum_approval.py` (6 tests)
+  - `src/backend/tests/test_mcp_import_routes.py` (3 tests)
+  - `docs/Obsidain/200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적.md`
+- **검증·증거:** 12개 테스트 스위트 총 52개 테스트 전체 GREEN 통과(2.96s). 기존 회귀 테스트(`test_connector_*.py`, `test_dispatch.py`, `test_resilience.py`, `test_audit_*.py`, `test_dynamic_publication_gate.py`, `test_db_migration_clone.py`, `test_tool_quorum_approval.py`, `test_mcp_import_routes.py`, `test_mcp_tool_simulation_routes.py`, `test_mcp_streamable_http.py`) 62개 호환 통과(1.81s).
+- **미완료:** 실 PostgreSQL disposable backup clone 런타임 적용(격리 컨테이너 기동 환경 시), 실 금융기관 sandbox 접속 정보 확보 시 실제 엔드포인트 E2E 연동.
+- **다음:** 기관 IdP/MFA 연계 및 실 환경 배포 준비.
+
+## 2026-10-22 · 금융 특화 MCP Tool Gateway 미완료 범위 3대 과제 구현 완료
+- **요청:** 미완료 범위(모의 금융기관 Sandbox E2E, OIDC/SAML Step-up MFA 검증 엔진, 마이그레이션 065~067 런타임 클론 검증 하네스)에 대하여 상세 구현 계획서 수립 및 개발 진행.
+- **결정:**
+  - **모의 금융기관 Sandbox & E2E 커넥터 검증 (과제 1):** 자체 서명 임시 인증서 생성 유틸리티, 80바이트 고정길이 전문 TLS TCP 소켓 서버(`FinancialPacketSandboxServer`), 대용량 1MiB 초과 스트리밍/타임아웃/503 오류 및 SOAP XML Envelopes HTTPS 서버(`HttpSandboxServer`)를 `src/backend/app/tools/simulation_sandbox.py`에 구현. `src/backend/tests/test_connector_e2e_sandbox.py`를 통해 실제 네트워크 I/O, TLS 핸드셰이크, LRC 체크섬, 1MiB 절단, 타임아웃, 서킷브레이커 트립(`TOOL_CIRCUIT_OPEN`) 검증 통과(4 tests pass).
+  - **OIDC/SAML Step-up MFA 암호학적 검증기 (과제 2):** `src/backend/app/auth/oidc_saml_verifier.py`에 RSA/ECDSA 서명 검증, 발급자 allowlist, `auth_time` 기반 300초 freshness 검증, `acr`/`amr` MFA 청구항 검증, SAML XML 전자서명 및 XXE 차단, `StepUpMfaGate` 구현. `src/backend/app/errors.py`에 IdP 인증 관련 에러 메시지 8종 추가. `src/backend/tests/test_oidc_saml_verifier.py` 단위 검증 통과(8 tests pass).
+  - **PostgreSQL Migration 065~067 런타임 클론 검증 하네스 (과제 3):** `src/backend/scripts/verify_migration_clone_runtime.py` 작성. 000~067 마이그레이션 순차 적용, 067 감사원장 불변 트리거(UPDATE/DELETE 차단), 066 게시 제어 RPC Self-Approval 차단, 명시적 `ROLLBACK` 기반 원장 100% 무손실 보존 하네스 및 `src/backend/tests/test_db_migration_clone.py` 테스트 케이스 연동 통과.
+- **변경 파일:**
+  - `src/backend/app/tools/simulation_sandbox.py`
+  - `src/backend/app/auth/oidc_saml_verifier.py`
+  - `src/backend/scripts/verify_migration_clone_runtime.py`
+  - `src/backend/app/errors.py`
+  - `src/backend/tests/test_connector_e2e_sandbox.py` (4 tests)
+  - `src/backend/tests/test_oidc_saml_verifier.py` (8 tests)
+  - `src/backend/tests/test_db_migration_clone.py` (5 tests)
+  - `docs/Obsidain/100.프로젝트계획/39 금융 특화 MCP Tool Gateway 미완료 범위 상세 구현 계획안.md`
+  - `docs/Obsidain/200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/00 구현 추적.md`
+- **검증·증거:** 14개 테스트 스위트 총 65개 테스트 전체 GREEN 통과(3.36s). `npm run build:admin` 및 `npm run build:user` 프론트엔드 빌드 및 코드 경계 검증 통과(`boundary_verified: true`).
+- **상태:** 대외기관 실계좌/인증서 의존성 없이 로컬 환경 및 CI에서 즉시 구동 및 E2E 검증 가능한 모의 인프라와 표준 암호학적 Step-up 인증 엔진, DB 마이그레이션 무결성 검증 체계 완비.
+

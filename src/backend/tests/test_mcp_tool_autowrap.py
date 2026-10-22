@@ -1,5 +1,6 @@
 """Unit & Integration Tests for MCP Tool Auto-Wrapping and Dynamic Environment Routing (T-035)."""
 import asyncio
+from unittest.mock import AsyncMock, Mock
 import pytest
 from app.errors import AppError
 from app.tools.parsers.openapi_parser import parse_openapi_spec
@@ -12,6 +13,48 @@ from app.tools.parsers.packet_parser import (
 )
 from app.tools.dynamic_gateway import DynamicToolGateway
 from app.tools.credentials import encrypt_credential, decrypt_credential
+from app.tools.autowrap_routes import DynamicToolInvokeRequest, EndpointProfileInput
+from pydantic import ValidationError
+
+
+def test_dynamic_tool_api_rejects_client_routing_state_and_inline_credentials():
+    with pytest.raises(ValidationError):
+        DynamicToolInvokeRequest.model_validate({"arguments": {}, "publication_status": "approved_published"})
+
+    with pytest.raises(ValidationError):
+        EndpointProfileInput.model_validate({
+            "base_endpoint_url": "https://example.invalid",
+            "credential": {"api_key": "must-not-be-sent-by-the-client"},
+        })
+
+
+def test_dynamic_gateway_isolates_tenant_registrations():
+    gw = DynamicToolGateway()
+    gw.register_tool(
+        tool_id="shared_name",
+        name="Tenant A tool",
+        description="fixture",
+        source_type="openapi",
+        input_schema={"type": "object", "properties": {}},
+        tenant_id="tenant-a",
+    )
+    gw.register_tool(
+        tool_id="shared_name",
+        name="Tenant B tool",
+        description="fixture",
+        source_type="openapi",
+        input_schema={"type": "object", "properties": {}},
+        tenant_id="tenant-b",
+    )
+    assert [item["name"] for item in gw.list_tools(tenant_id="tenant-a")] == ["Tenant A tool"]
+    assert [item["name"] for item in gw.list_tools(tenant_id="tenant-b")] == ["Tenant B tool"]
+
+    async def invoke_other_tenant():
+        with pytest.raises(AppError) as exc:
+            await gw.invoke_routed("shared_name", {}, tenant_id="tenant-c")
+        assert exc.value.code == "TOOL_NOT_FOUND"
+
+    asyncio.run(invoke_other_tenant())
 
 
 def test_credential_encryption_and_decryption():
@@ -158,8 +201,8 @@ def test_financial_packet_auto_wrap_and_pack_unpack():
     assert unpacked["TX_AMOUNT"] == 50000
 
 
-def test_dynamic_environment_routing_draft_vs_approved():
-    """Test dynamic routing: Draft agents route to Dev, Approved agents route to Prd."""
+def test_dynamic_environment_routing_draft_and_published_denial(monkeypatch):
+    """Draft simulation uses development; published status cannot authorize dispatch."""
     gw = DynamicToolGateway()
     gw.register_tool(
         tool_id="test_credit_checker",
@@ -194,15 +237,28 @@ def test_dynamic_environment_routing_draft_vs_approved():
         assert res_draft["routed_env"] == "development"
         assert res_draft["routed_endpoint"] == "https://dev-gateway.bank.internal/credit/check"
 
-        # 2. Approved published agent call -> MUST route to Production endpoint
-        res_prd = await gw.invoke_routed(
-            tool_id="test_credit_checker",
-            arguments={"ssn_hash": "hash_sample_001"},
-            publication_status="approved_published",
-            client_request_id="req-test-prd-001",
-        )
-        assert res_prd["routed_env"] == "production"
-        assert res_prd["routed_endpoint"] == "https://prd-gateway.bank.internal/credit/check"
+        assert res_draft["result"]["environment"] == "development"
+        audit_before = list(gw._audit_logs)
+        idempotency_before = dict(gw._idempotency_cache)
+        profiles = Mock(wraps=gw._profiles)
+        dispatch = AsyncMock(side_effect=AssertionError("Published dispatch must remain closed"))
+        monkeypatch.setattr(gw, "_profiles", profiles)
+        monkeypatch.setattr(gw, "_execute_protocol", dispatch)
+
+        # Caller-supplied publication state must fail before profile lookup or dispatch.
+        with pytest.raises(AppError) as exc:
+            await gw.invoke_routed(
+                tool_id="test_credit_checker",
+                arguments={"ssn_hash": "hash_sample_001"},
+                publication_status="approved_published",
+                client_request_id="req-test-prd-001",
+            )
+        assert exc.value.code == "TOOL_DYNAMIC_REVIEW_ONLY"
+        assert exc.value.status == 409
+        profiles.get.assert_not_called()
+        dispatch.assert_not_called()
+        assert gw._audit_logs == audit_before
+        assert gw._idempotency_cache == idempotency_before
 
     asyncio.run(run_checks())
 

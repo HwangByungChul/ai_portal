@@ -1,6 +1,6 @@
 """Private bodies stay in memory. Fixed OpenAI endpoint, no automatic retry/fallback."""
 import asyncio
-import httpx2
+import httpx
 from typing import Protocol
 from openai import AsyncOpenAI,APIStatusError,APITimeoutError,APIConnectionError,APIResponseValidationError
 from openai.types.chat import ChatCompletionChunk
@@ -36,7 +36,7 @@ class OpenAIProvider:
     max_completion_tokens=1024
     def __init__(self,api_key,*,http_client=None):
         # Passing empty optional identity values prevents unrelated environment defaults.
-        http_client=http_client or httpx2.AsyncClient(trust_env=False,timeout=60.0)
+        http_client=http_client or httpx.AsyncClient(trust_env=False,timeout=60.0)
         self.client=StrictReceiptClient(api_key=api_key,base_url='https://api.openai.com/v1',max_retries=0,timeout=60.0,
             organization='',project='',admin_api_key='',webhook_secret='',http_client=http_client,
             _strict_response_validation=True)

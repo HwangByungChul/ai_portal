@@ -98,9 +98,10 @@ class SsoService:
 
         return {
             "provider": provider,
-            "external_sub": f"sub-{secrets.token_hex(8)}",
+            "identity_kind": "synthetic",
             "login_id": login_id,
-            "verified": True,
+            "verified": False,
+            "assurance_evidence_created": False,
         }
 
 GLOBAL_SSO_SERVICE = SsoService()
