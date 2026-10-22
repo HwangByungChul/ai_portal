@@ -58,6 +58,8 @@ tags: [ai-platform, workflow, studio, no-code]
 - [x] **Step 2: Integrate save and truthful state.** Existing tenant-scoped CAS/idempotent draft save is reused. The UI distinguishes a saved draft from an approved or executable version and identifies unbound Agent/Tool steps.
 - [ ] **Step 3: Run focused browser/build checks.** Admin/User production builds pass. Playwright test discovery lists all 6 tests, but browser execution could not start because the configured `webServer` refuses to reuse the existing listener on `127.0.0.1:5173` (`reuseExistingServer:false`). Existing process was left running.
 
+**Final review note (2026-10-22):** Independent review found no blocking defect. `WorkflowCanvasPage.quickStart` now defaults to `false`; the Studio passes the selected mode explicitly. A subsequent build attempt was blocked by `EPERM` while Vite wrote its temporary config file, so the earlier successful build evidence predates this one-line default change. Browser execution and disposable-clone migration/RLS verification remain pending.
+
 ## Handoff
 
 The deliverable is a typed Workflow proposal that can be reviewed and saved as an owner-scoped draft. It is not approval-ready, published, executing, institutionally accepted or deployed.

@@ -1624,3 +1624,5 @@ local SQL029 적용 전 private backup, 기존37표 행·prior29개 checksum 보
 **검증:** Node 22.23.1에서 `npx tsc --noEmit`, `npm run build:admin`, `npm run build:user` 통과. 빌드 boundary 검증도 양쪽 모두 통과했다. Playwright `--list`는 집중 6개 테스트를 발견했다. 실제 브라우저 실행은 `reuseExistingServer:false` 설정이 이미 실행 중인 `127.0.0.1:5173` listener를 재사용하지 않아 서버 시작에 실패했다. 기존 listener PID 43769는 건드리지 않았다.
 
 **권한·미완료·다음:** 자연어 제안 API의 `agent_admin` capability와 맞춰 UI는 `TADMIN`/`PADMIN` tenant에서만 제안 요청을 보이고, 일반 USER에게는 관리자 역할 제한을 안내한다. DP16 현업 제작자 권한 연계와 UAT는 미완료다. Revision-conflict 브라우저 시나리오와 포트 충돌 없는 Playwright 실행을 후속 확인한다. 제안은 승인·게시·운영 실행이 아니며 운영 배포는 하지 않았다.
+
+**최종 확인:** 독립 최종 리뷰에서 tenant/owner 경계, 공유 호출 원장·revision 처리, 제안 UI의 저장/실행 경계를 검토했고 차단 결함은 발견되지 않았다. `WorkflowCanvasPage`의 `quickStart` 기본값을 `false`로 정리했다. 통합 Studio는 모드를 명시해 전달한다. 변경은 `fix(builder): keep workflow quick start opt-in`으로 별도 커밋하려 했으나 `.git/index.lock` 생성이 `EPERM`으로 차단되어 미커밋 상태다. 기존 `workspace.json` 변경은 보존했다. 이번 재빌드는 Vite 임시 설정 파일 쓰기에서 `EPERM`으로 중단됐다. 앞선 빌드 통과 기록은 유지하되 이번 기본값 변경 이후 빌드는 확인되지 않았다. Playwright 실환경 실행과 폐기 가능한 DB clone의 migration/RLS 검증은 미완료다.
