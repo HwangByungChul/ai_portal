@@ -31,7 +31,7 @@ test('D11_12_agent_proposal_is_reviewed_and_applied_without_implicit_save_or_exe
  await panel.getByRole('button',{name:'제안 삭제',exact:true}).click();await expect(panel.getByText('제안 내용을 삭제했습니다.')).toBeVisible();expect(deletes).toBe(1);expect(forbiddenPosts).toBe(0);
 });
 
-async function mockExplicitSave(page:Page,failSave:boolean,events:string[]){
+async function mockExplicitSave(page:Page,failSave:boolean,events:string[],failFirstDelete=false){
  const proposalId='00000000-0000-4000-8000-000000000123',assetId='00000000-0000-4000-8000-000000000234',versionId='00000000-0000-4000-8000-000000000345';
  const detail={asset_id:assetId,owner_id:'00000000-0000-4000-8000-000000000001',kind:'agent',latest_revision:1,created_at:'2026-10-22T00:00:00Z',legacy_agent_key:null,version_id:versionId,config_hash:'a'.repeat(64),state:'draft',name:proposal.config.name,description:proposal.config.description,execution_kind:'general',config:proposal.config,versions:[],history_more:false};
  const version={asset_id:assetId,revision:1,version_id:versionId,config:proposal.config,config_hash:'a'.repeat(64),profile:proposal.profile,profile_hash:'b'.repeat(64),profile_source:'stored',parent_version_id:null};
@@ -39,7 +39,8 @@ async function mockExplicitSave(page:Page,failSave:boolean,events:string[]){
   const request=route.request(),url=new URL(request.url()),path=url.pathname,method=request.method();
   const respond=(status:number,data:unknown)=>route.fulfill({status,contentType:'application/json',body:JSON.stringify(status>=400?{error:{code:'REQUEST_INVALID'},meta:{tenant_id:fixture().tenants.A,request_id:'mock-error'}}:{data,meta:{tenant_id:fixture().tenants.A,request_id:'mock-builder'}})});
   if(path==='/api/v1/admin/builder/scaffolds'&&method==='POST'){events.push('proposal');await respond(201,{proposal_id:proposalId,state:'ready',revision:1,proposal});return;}
-  if(path==='/api/v1/admin/builder/scaffolds/'+proposalId&&method==='DELETE'){events.push('discard');await respond(200,{proposal_id:proposalId,state:'discarded',revision:2});return;}
+  if(path==='/api/v1/admin/builder/scaffolds/'+proposalId&&method==='DELETE'){events.push('discard');if(failFirstDelete&&events.filter(event=>event==='discard').length===1){await respond(503,null);return;}await respond(200,{proposal_id:proposalId,state:'discarded',revision:2});return;}
+  if(path==='/api/v1/admin/builder/scaffolds/'+proposalId&&method==='GET'){events.push('proposal-read');await respond(200,{proposal_id:proposalId,state:'ready',revision:1,proposal});return;}
   if(path==='/api/v1/admin/builder/assets'&&method==='POST'){events.push('save');await respond(failSave?422:201,failSave?null:{asset_id:assetId,revision:1,version_id:versionId,config_hash:'a'.repeat(64),replayed:false});return;}
   if(path==='/api/v1/admin/assets'&&method==='GET'){await respond(200,{items:[],next_cursor:null});return;}
   if(path==='/api/v1/admin/assets/'+assetId&&method==='GET'){await respond(200,detail);return;}
@@ -61,4 +62,14 @@ test('D11_13_only_explicit_save_creates_version_then_discards_proposal',async({p
 test('D11_14_failed_explicit_save_keeps_proposal_without_discard',async({page})=>{
  await start(page);const events:string[]=[];await mockExplicitSave(page,true,events);const panel=await generateAndApply(page);
  await page.getByRole('button',{name:'초안 등록',exact:true}).click();await expect(page.getByRole('alert')).toBeVisible();expect(events).toEqual(['proposal','save']);expect(events).not.toContain('discard');await expect(panel.getByRole('button',{name:'제안 삭제',exact:true})).toBeEnabled();
+});
+
+test('D11_15_delete_failure_after_save_preserves_receipt_and_retries_only_discard',async({page})=>{
+ await start(page);const events:string[]=[];await mockExplicitSave(page,false,events,true);const panel=await generateAndApply(page);
+ await page.getByRole('button',{name:'초안 등록',exact:true}).click();
+ await expect(page.getByText('초안 버전 1은 저장되었습니다. 제안 내용은 아직 남아 있습니다. 아래에서 삭제를 다시 시도해 주세요.',{exact:true})).toBeVisible();
+ await expect(page.getByRole('button',{name:'제안 삭제 다시 시도',exact:true})).toBeVisible();expect(events).toEqual(['proposal','save','discard','proposal-read']);
+ await page.getByRole('button',{name:'제안 삭제 다시 시도',exact:true}).click();
+ await expect(page.getByText('저장한 Agent 초안과 제안 정리를 완료했습니다.',{exact:true})).toBeVisible();expect(events).toEqual(['proposal','save','discard','proposal-read','discard']);expect(events.filter(event=>event==='save')).toHaveLength(1);
+ await expect(panel.getByRole('button',{name:'제안 삭제',exact:true})).toHaveCount(0);
 });
