@@ -129,9 +129,7 @@ export function AIStudioHubPage({
         {mode === 'quick' ? (
           <div className="confirmation" role="status">
             <strong>{activeTab === 'builder' ? 'Agent 빠른 시작' : 'Workflow 빠른 시작'}</strong>
-            <p>업무 목적과 필요한 입력·결과를 설명하면 검토 가능한 초안을 제안합니다. 생성만으로 저장하거나 실행하지 않습니다.</p>
-            <p className="muted">자연어 초안 생성 연결을 준비 중입니다. 아래 편집 화면에서 단계별 제작을 계속할 수 있습니다.</p>
-            <button type="button" className="secondary" onClick={() => setMode('guided')}>단계별 제작으로 이동</button>
+            {activeTab === 'builder' ? <p>업무 설명을 입력해 저장 전 Agent 제안을 만들고, 검토한 뒤 편집기로 가져오세요. 아래 빠른 시작 영역에서 진행할 수 있습니다.</p> : <><p>업무 순서를 설명해 Workflow 초안 제안을 만들 수 있습니다. 제안은 저장이나 실행을 대신하지 않습니다.</p><p className="muted">Workflow 제안 검토 화면은 아직 연결되지 않았습니다. 지금은 단계별 제작을 이용해 주세요.</p><button type="button" className="secondary" onClick={() => setMode('guided')}>단계별 제작으로 이동</button></>}
           </div>
         ) : (
           <p className="scope-note">기존 편집기에서 설정을 직접 작성하고, 저장·시험·승인은 각각 명시적으로 진행합니다.</p>
@@ -175,7 +173,7 @@ export function AIStudioHubPage({
               Workflow Canvas로 이동 →
             </button>
           </div>
-          <AssetsPage builder tenant={tenant} user={user} onLegacy={onLegacy} />
+          <AssetsPage builder tenant={tenant} user={user} onLegacy={onLegacy} quickStart={mode==='quick'} />
         </div>
       ) : (
         <div>

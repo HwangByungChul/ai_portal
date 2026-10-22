@@ -81,9 +81,9 @@ tags: [ai-platform, builder, workflow, generation, backend]
 
 **Interfaces:** BuilderScaffold receives tenant/user and callbacks onUseProposal(AgentProposal), onDiscard(). Applying fills editable form state only. Existing Asset save handler remains the only path that creates an immutable version.
 
-- [ ] **Step 1: Write browser contract tests.** Verify escaped output, editable fields, warnings/missing questions, discard, explicit review confirmation, and no save/trial/approval call when generating/viewing.
-- [ ] **Step 2: Implement quick-start panel.** Add bounded intent inputs, progress/error/recovery states, proposal review for name/description/instructions/prompts/model/docs, and explicit “이 제안으로 편집” action. Do not render raw JSON as HTML.
-- [ ] **Step 3: Reuse immutable save.** Copy accepted values into the existing editor; allow edits; save only through current profile API. On successful save, discard proposal; if discard fails preserve the asset receipt and show a retry notice.
+- [x] **Step 1: Write browser contract tests.** Verify escaped output, editable fields, warnings/missing questions, discard, explicit review confirmation, and no save/trial/approval call when generating/viewing.
+- [x] **Step 2: Implement quick-start panel.** Add bounded intent inputs, progress/error/recovery states, proposal review for name/description/instructions/prompts/model/docs, and explicit “이 제안으로 편집” action. Do not render raw JSON as HTML.
+- [x] **Step 3: Reuse immutable save.** Copy accepted values into the existing editor; allow edits; save only through current profile API. On successful save, discard proposal; if discard fails preserve the asset receipt and show a retry notice.
 - [ ] **Step 4: Run focused browser/build checks.** Run from src/frontend: npx playwright test tests/builder-scaffolds.spec.ts; npm run build:admin; npm run build:user. Expected: generation/display are side-effect free; only explicit save creates a version.
 
 ## Handoff
@@ -96,3 +96,14 @@ This plan covers mock-tested local proposal generation and Agent integration. It
 - Task 2 코드는 구현했으며, 069 migration은 기존 shared call/usage ledger와 `security.call_meter`를 확장한다. `portal.messages`에는 프롬프트를 쓰지 않는다.
 - 집중 backend 검증 115 passed, `git diff --check` 통과.
 - Task 2 Step 3의 실제 disposable-clone 적용/롤백과 기존 데이터 지문 대조는 아직 실행하지 않았다. migration 미적용 상태이며 런타임 SQL/RLS 검증은 미완료다. 자세한 변경 파일과 제한은 [[250.구현/28 AI Builder 자연어 초안 생성 Task 2 구현 결과]]에 기록했다.
+
+
+## Task 3 실행 기록 (2026-10-22)
+
+- Agent Builder 빠른 시작에 자연어 입력, 누락 질문·주의점, 이름/설명/지침/개발자·사용자 프롬프트 검토를 추가했다. 기존 `BuilderProfileEditor`의 모델 선택과 tenant ACL 기반 자료 선택을 재사용하며 실행 방식도 제안 검토 중 바꿀 수 있다. Agent와 Workflow 탭은 Studio 안에 유지하고, Workflow 빠른 시작 UI는 아직 연결되지 않았다고 화면에 표시한다.
+- 적용은 기존 편집기 상태 복사만 수행한다. 새 Agent/다른 자산으로 이동해도 제안 삭제 기회를 유지하고, 단계별/빠른 시작 전환에서도 제안 검토 상태를 보존한다. 기존 불변 저장 핸들러만 asset POST를 수행한다. 저장 성공 뒤 proposal DELETE를 시도하고, 삭제가 실패하면 저장 영수증을 보존한 채 재시도를 제공한다.
+- 현재 백엔드가 `TADMIN`/`PADMIN`만 허용하므로 UI에서도 해당 역할만 생성 기능을 보여준다. `USER`에게는 현업 제작자 권한이 아직 연결되지 않았음을 안내한다.
+- 브라우저 계약 테스트에 생성/보기의 무저장·무시험·무승인, 경고문 escape, 적용 전환 보존, 명시적 저장 후 삭제, 저장 실패 시 삭제 안 함을 추가했다. 실행 시 Playwright 설정의 `127.0.0.1:5173/api/v1/health`가 이미 사용 중이라 `reuseExistingServer:false` 검사에서 시작하지 못했다. 기존 서비스는 중단하지 않았다.
+- `npm run build:admin`, `npm run build:user` 통과(각 `boundary_verified: true`). Admin 빌드에는 기존 500 kB 초과 번들 안내가 있다.
+- 미완료: Playwright 브라우저 실행, Workflow 자연어 초안 검토/편집 UI. Task 2 migration 069 미적용, disposable clone/runtime 검증 미완료이며 이 Task 3 완료는 provider 품질, 기관 수용 또는 운영 배포를 의미하지 않는다.
+- 변경 파일: `src/frontend/src/BuilderScaffold.tsx`, `src/frontend/src/AssetsPage.tsx`, `src/frontend/src/AIStudioHubPage.tsx`, `src/frontend/src/types.ts`, `src/frontend/tests/builder-scaffolds.spec.ts`.

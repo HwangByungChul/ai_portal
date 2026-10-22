@@ -1602,3 +1602,14 @@ local SQL029 적용 전 private backup, 기존37표 행·prior29개 checksum 보
 **검증:** 관련 pytest 116 passed, `git diff --check` 통과. 068 migration SHA-256 assertion을 추가했다. migration은 어느 DB에도 적용하지 않았다. 따라서 SQL/RLS 런타임과 데이터 지문 검증은 완료로 표현하지 않는다.
 
 **미완료·다음:** 소유된 disposable PostgreSQL clone에서 migration chain/checksum/data fingerprint를 검증하고 독립 코드 검토를 마친다. 실제 유료 provider, 기관 UAT, 운영 배포는 미실행이다.
+
+
+## 2026-10-22 · AI Builder Task 3 Agent 자연어 제안 검토 UI
+
+**요청·결정:** 승인된 AI Studio 설계에 따라 Agent 빠른 시작을 기존 Builder 편집기와 연결했다. 제안 생성/검토는 저장·시험·승인과 구분하며, 기존 저장 동작만 불변 버전을 만든다.
+
+**변경:** `BuilderScaffold.tsx`를 추가하고 `AssetsPage.tsx`, `AIStudioHubPage.tsx`, frontend API types에 연결했다. 모델과 자료 선택은 기존 모델 Registry 및 tenant ACL 기반 UI를 재사용한다. 적용 후 새 초안/자산을 열거나 시작 방식 탭을 전환해도 proposal 삭제 기회가 유지된다. 저장 성공 뒤 제안 삭제, 실패 재시도를 연결했다. `builder-scaffolds.spec.ts`에 proposal-only 경계 및 explicit save 성공/실패 계약을 추가했다. [[200.프로젝트실행/240.설계/2026-10-21 AI Builder 자연어 초안 생성 서비스 구현 계획]]
+
+**검증:** `npm run build:admin`, `npm run build:user` 통과 및 각각 `boundary_verified: true`. 집중 Playwright는 `reuseExistingServer:false` 설정에서 `127.0.0.1:5173/api/v1/health` 포트 사용 중 오류로 시작되지 않았다. Admin 빌드의 500 kB 초과 bundle warning은 남아 있다.
+
+**권한·미완료:** API가 현재 허용하는 `TADMIN`/`PADMIN`만 자연어 제안 UI에 접근한다. 현업 일반 제작자용 역할은 아직 API capability로 연결되지 않았다. Workflow 자연어 UI는 미구현이다. Task 2 migration 069은 미적용이며 disposable clone/runtime 검증이 남아 있다. provider/UAT/운영 배포 승인을 뜻하지 않는다.

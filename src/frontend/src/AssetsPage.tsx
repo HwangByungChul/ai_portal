@@ -2,13 +2,16 @@ import {useEffect,useRef,useState} from 'react';
 import {api,ApiError} from './api';
 import {BuilderPreview} from './BuilderPreview';
 import {BuilderProfileEditor,BuilderVersionPanel,emptyProfile,type BuilderProfile,type BuilderVersion} from './BuilderProfileEditor';
+import {BuilderScaffold} from './BuilderScaffold';
 import {get,useScope} from './scoped';
-import type {AssetConfig,AssetDetail,AssetItem,AssetReceipt,PageResult,Tenant,User} from './types';
+import type {AgentScaffoldProposal,AssetConfig,AssetDetail,AssetItem,AssetReceipt,PageResult,Tenant,User} from './types';
 const empty=():AssetConfig=>({name:'',description:'',instructions:'',execution_kind:'general'});
-export function AssetsPage({tenant,user,onLegacy,builder=false}:{tenant:Tenant;user:User;onLegacy:()=>void;builder?:boolean}){
+export function AssetsPage({tenant,user,onLegacy,builder=false,quickStart=false}:{tenant:Tenant;user:User;onLegacy:()=>void;builder?:boolean;quickStart?:boolean}){
  const scope=useScope(),org=tenant.tenant_id;
+ const contextKey=useRef(org+':'+user.user_id);
  const [items,setItems]=useState<AssetItem[]>([]),[cursor,setCursor]=useState<string|null>(null),[selected,setSelected]=useState<string|null>(null),[detail,setDetail]=useState<AssetDetail|null>(null);
  const [profile,setProfile]=useState<BuilderProfile>(emptyProfile),[storedProfile,setStoredProfile]=useState<BuilderProfile|null>(null);
+ const [acceptedScaffold,setAcceptedScaffold]=useState<{proposalId:string;revision:number;applied:boolean}|null>(null),[discardedProposalId,setDiscardedProposalId]=useState<string|null>(null),[discardRetry,setDiscardRetry]=useState(false);
  const [config,setConfig]=useState<AssetConfig>(empty),[loading,setLoading]=useState(false),[reading,setReading]=useState(false),[busy,setBusy]=useState(false),[conflict,setConflict]=useState(false);
  const [error,setError]=useState<string|null>(null),[notice,setNotice]=useState<string|null>(null),[uncertain,setUncertain]=useState(false);
  const pending=useRef<{path:string;body:Record<string,unknown>}|null>(null),lock=useRef(false),listQuery=useRef(0),detailQuery=useRef(0);
@@ -23,15 +26,22 @@ export function AssetsPage({tenant,user,onLegacy,builder=false}:{tenant:Tenant;u
   catch(problem){if(version===detailQuery.current){if(!preserve)setConfig(empty());await fail(problem);}}finally{if(scope.current()&&version===detailQuery.current)setReading(false);}
  }
  useEffect(()=>{void list();},[]);
- function choose(id:string){if(busy||uncertain)return;setError(null);setNotice(null);setConflict(false);void read(id);}
- function newDraft(){detailQuery.current++;setSelected(null);setDetail(null);setReading(false);setConfig(empty());setProfile(emptyProfile());setStoredProfile(null);setConflict(false);setError(null);setNotice(null);}
+ useEffect(()=>{const next=org+':'+user.user_id;if(contextKey.current!==next){contextKey.current=next;setAcceptedScaffold(null);setDiscardRetry(false);setDiscardedProposalId(null);}},[org,user.user_id]);
+ function choose(id:string){if(busy||uncertain)return;if(acceptedScaffold?.applied)setAcceptedScaffold({...acceptedScaffold,applied:false});setError(null);setNotice(acceptedScaffold?'제안 내용은 저장되지 않았습니다. 빠른 시작에서 다시 적용하거나 삭제할 수 있습니다.':null);setConflict(false);void read(id);}
+ function newDraft(){detailQuery.current++;if(acceptedScaffold?.applied)setAcceptedScaffold({...acceptedScaffold,applied:false});setSelected(null);setDetail(null);setReading(false);setConfig(empty());setProfile(emptyProfile());setStoredProfile(null);setConflict(false);setError(null);setNotice(acceptedScaffold?'제안 내용은 저장되지 않았습니다. 빠른 시작에서 다시 적용하거나 삭제할 수 있습니다.':null);}
  async function save(){
   if(lock.current||reading||conflict||detail?.state==='legacy'||selected&&!detail)return;
   lock.current=true;setBusy(true);setError(null);setNotice(null);
-  const request=pending.current??{path:selected?(builder?'/admin/builder/assets/':'/admin/assets/')+selected+'/versions':builder?'/admin/builder/assets':'/admin/assets',body:{client_request_id:crypto.randomUUID(),config,...(builder?{profile:{...profile,system_prompt:config.instructions,model_ref:'default_'+config.execution_kind,document_refs:config.execution_kind==='general'?[]:profile.document_refs}}:{}),...(detail?{expected_revision:detail.latest_revision}:{})}};
+  const request=pending.current??{path:selected?(builder?'/admin/builder/assets/':'/admin/assets/')+selected+'/versions':builder?'/admin/builder/assets':'/admin/assets',body:{client_request_id:crypto.randomUUID(),config,...(builder?{profile:{...profile,system_prompt:config.instructions,model_ref:profile.model_ref.startsWith('default_')?'default_'+config.execution_kind:profile.model_ref,document_refs:config.execution_kind==='general'?[]:profile.document_refs}}:{}),...(detail?{expected_revision:detail.latest_revision}:{})}};
   pending.current=request;
   try{const receipt=await api.request<AssetReceipt>(request.path,{method:'POST',tenantId:org,csrf:user.csrf_token,signal:scope.signal,body:request.body});
-   if(scope.current()){pending.current=null;setUncertain(false);await read(receipt.asset_id);await list();setNotice('초안 버전 '+receipt.revision+' 저장됨 · 운영 활성화 전');}}
+   if(scope.current()){
+    pending.current=null;setUncertain(false);await read(receipt.asset_id);await list();setNotice('초안 버전 '+receipt.revision+' 저장됨 · 운영 활성화 전');
+    if(acceptedScaffold?.applied){
+     try{await deleteAcceptedScaffold(acceptedScaffold);if(scope.current()){setAcceptedScaffold(null);setDiscardRetry(false);setDiscardedProposalId(acceptedScaffold.proposalId);setNotice('초안 버전 '+receipt.revision+' 저장됨 · 제안 내용 삭제 완료');}}
+     catch{if(scope.current()){setDiscardRetry(true);setNotice('초안 버전 '+receipt.revision+'은 저장되었습니다. 제안 내용은 아직 남아 있습니다. 아래에서 삭제를 다시 시도해 주세요.');}}
+    }
+   }}
   catch(problem){
    if(problem instanceof ApiError&&problem.status>0&&problem.status<500){pending.current=null;setUncertain(false);}else if(scope.current())setUncertain(true);
    await fail(problem);
@@ -39,13 +49,34 @@ export function AssetsPage({tenant,user,onLegacy,builder=false}:{tenant:Tenant;u
    else if(scope.current()&&(!(problem instanceof ApiError)||problem.status===0||problem.status>=500))setNotice('저장 결과 확인이 필요합니다. 같은 요청 확인으로 중복 없이 결과를 조회하세요.');
   }finally{if(scope.current()){setBusy(false);lock.current=false;}}
  }
+ async function deleteAcceptedScaffold(target:{proposalId:string;revision:number}){
+  try{return await api.request('/admin/builder/scaffolds/'+target.proposalId+'?expected_revision='+target.revision,{method:'DELETE',tenantId:org,csrf:user.csrf_token,signal:scope.signal});}
+  catch(problem){
+   try{const current=await api.request<{state:string;revision:number}>('/admin/builder/scaffolds/'+target.proposalId,{tenantId:org,signal:scope.signal});if(current.state==='discarded')return current;if(current.revision!==target.revision)setAcceptedScaffold({...target,revision:current.revision,applied:acceptedScaffold?.applied??false});}
+   catch{}
+   throw problem;
+  }
+ }
+ async function retryScaffoldDiscard(){
+  if(!acceptedScaffold||busy)return;setBusy(true);
+  try{await deleteAcceptedScaffold(acceptedScaffold);if(scope.current()){setDiscardedProposalId(acceptedScaffold.proposalId);setAcceptedScaffold(null);setDiscardRetry(false);setNotice('저장한 Agent 초안과 제안 정리를 완료했습니다.');}}
+  catch(problem){if(scope.current())setNotice((problem instanceof ApiError?problem.message:'제안 삭제 결과를 확인할 수 없습니다.')+' 저장된 Agent 초안은 유지됩니다. 다시 시도할 수 있습니다.');}
+  finally{if(scope.current())setBusy(false);}
+ }
+ function applyScaffold(proposal:AgentScaffoldProposal,proposalId:string,revision:number){
+  if(disabled||dirty)return;
+  setConfig(proposal.config);setProfile(proposal.profile);setSelected(null);setDetail(null);setStoredProfile(null);setAcceptedScaffold({proposalId,revision,applied:true});setDiscardRetry(false);setError(null);setNotice('제안 내용을 편집기에 복사했습니다. 확인하고 저장 버튼을 눌러야 Agent 초안이 만들어집니다.');
+ }
  async function cloneVersion(version:string){if(lock.current||uncertain||!selected)return;pending.current={path:'/admin/builder/assets/'+selected+'/clone',body:{client_request_id:crypto.randomUUID(),source_version_id:version}};await save();}
  const [trialLocked,setTrialLocked]=useState(false);
  const disabled=trialLocked||busy||reading||uncertain||detail?.state==='legacy';
  const valid=config.name.trim()&&config.instructions.trim()&&(!builder||profile.user_template.trim());
- const dirty=busy||uncertain||conflict||JSON.stringify(config)!==JSON.stringify(detail?.config)||!!storedProfile&&JSON.stringify({...profile,system_prompt:config.instructions,model_ref:'default_'+config.execution_kind,document_refs:config.execution_kind==='general'?[]:profile.document_refs})!==JSON.stringify(storedProfile);
+ const dirty=busy||uncertain||conflict||(selected?JSON.stringify(config)!==JSON.stringify(detail?.config)||!!storedProfile&&JSON.stringify({...profile,system_prompt:config.instructions,model_ref:profile.model_ref.startsWith('default_')?'default_'+config.execution_kind:profile.model_ref,document_refs:config.execution_kind==='general'?[]:profile.document_refs})!==JSON.stringify(storedProfile):!!(config.name||config.description||config.instructions||profile.developer_prompt||profile.user_template!=='{{question}}'||profile.document_refs.length));
  return <section aria-labelledby="assets-title"><div className="page-heading"><div><p className="eyebrow teal">AI ASSETS</p><h1 id="assets-title">{builder?'Agent Builder':'AI 자산 관리'}</h1><p className="muted">{tenant.display_name} · Agent 초안과 수정 이력을 관리합니다.</p></div><button className="primary" disabled={trialLocked||busy||uncertain} onClick={newDraft}>새 Agent 초안</button></div>
   {builder&&<p className="scope-note">지시문에 {'{{audience}}'} 형식의 변수를 넣고 저장 버전을 조합 검증할 수 있습니다. 저장한 버전으로 모델·RAG 시험을 실행하고 사용량과 결과를 확인할 수 있습니다.</p>}
+  {builder&&(tenant.effective_role==='TADMIN'||tenant.effective_role==='PADMIN')&&<BuilderScaffold key={tenant.tenant_id+':'+user.user_id+':'+(discardedProposalId??'new-proposal')} tenant={tenant} user={user} hidden={!quickStart} disabled={disabled||!!dirty||!!acceptedScaffold?.applied} onUseProposal={(proposal,id,revision)=>applyScaffold(proposal,id,revision)} onDiscard={()=>{setAcceptedScaffold(null);setDiscardRetry(false);}}/>}
+  {builder&&quickStart&&tenant.effective_role==='USER'&&<section className="card" aria-label="빠른 시작 사용 권한"><h2>자연어 초안 제안</h2><p className="scope-note">현업 제작자 전용 권한이 준비되기 전까지는 승인된 Agent Builder 관리자 역할에서만 사용할 수 있습니다.</p></section>}
+  {builder&&discardRetry&&<div className="notice" role="status"><p>저장된 Agent 초안은 유지되고 제안 삭제가 남아 있습니다.</p><button type="button" className="secondary" disabled={busy} onClick={()=>void retryScaffoldDiscard()}>제안 삭제 다시 시도</button></div>}
   <p className="scope-note">새 자산은 초안으로 저장됩니다. 운영에 사용할 수 있는 Agent는 기존 Agent 관리에서 확인하세요.</p>
   {error&&<p role="alert" className="error-message">{error}</p>}{notice&&<p role="status" className="notice">{notice}</p>}
   <div className="approval-layout"><section className="approval-list" aria-label="AI 자산 목록"><div className="panel-heading"><h2>등록 자산</h2><button className="secondary small" disabled={trialLocked||loading||busy||uncertain} onClick={()=>{setError(null);void list();}}>목록 새로고침</button></div>
