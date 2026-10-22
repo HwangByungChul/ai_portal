@@ -1634,4 +1634,4 @@ local SQL029 적용 전 private backup, 기존37표 행·prior29개 checksum 보
 
 **원인·변경:** 대상 사용자/입력/출력은 실제 select가 아닌 값이 없는 일반 input이었고, 전용 레이아웃이 없어 라벨과 입력이 한 줄에 붙어 있었다. 세 항목에 안내 placeholder와 한국어 선택지를 추가하고 “직접 입력”을 제공했다. 설명 입력은 전체 폭, 보조 선택지는 넓은 화면 3열·중간 2열·좁은 화면 1열로 정렬했다. 생성 API의 `answers` 문자열 계약과 제안만 생성하는 동작은 유지했다. [[200.프로젝트실행/240.설계/2026-10-21 AI Builder 자연어 초안 생성 서비스 구현 계획]]
 
-**검증:** 회귀 Playwright 사례에 옵션 표시와 직접 입력 값의 API 전달 확인을 추가했다. 독립 리뷰 PASS, `tsc --noEmit` 통과. Admin Vite build는 output HTML 경로를 찾지 못해 완료되지 않았고, 브라우저에서 수정 화면을 실행해 확인하는 작업도 아직 남아 있다. 테스트를 실행 완료로 표현하지 않는다.
+**검증:** 회귀 Playwright 사례에 옵션 표시와 직접 입력 값의 API 전달 확인을 추가했다. 독립 리뷰 PASS, `tsc --noEmit` 통과. 로컬 Admin Studio 브라우저에서 placeholder/옵션 표시, “직접 입력” 선택 시 입력칸 노출, 데스크톱 배열을 시각 확인했다. Playwright 시나리오는 실행하지 않았다. Admin Vite build는 코드 변환 뒤 `portal-sites` 플러그인이 예상 입력 HTML 경로를 찾지 못해 완료되지 않았다.
