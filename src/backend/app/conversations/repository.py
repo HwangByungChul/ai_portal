@@ -97,6 +97,32 @@ class ConversationRepository:
             return row['data']
         except (psycopg.Error,ValueError) as error:self.translate(error)
 
+    async def get_context_for_regeneration(self,ctx,conversation_id,message_id):
+        try:
+            async with tenant_transaction(self.pool,ctx) as conn:
+                row=await (await conn.execute(
+                    """
+                    SELECT m_user.body AS prompt,
+                           r.agent_key,
+                           r.asset_id,
+                           r.config_snapshot->'document_refs' AS document_refs
+                    FROM portal.messages m_assist
+                    JOIN portal.runs r ON r.tenant_id = m_assist.tenant_id AND r.run_id = m_assist.run_id
+                    JOIN portal.messages m_user ON m_user.tenant_id = m_assist.tenant_id
+                                                AND m_user.conversation_id = m_assist.conversation_id
+                                                AND m_user.run_id = m_assist.run_id
+                                                AND m_user.role = 'user'
+                    WHERE m_assist.tenant_id = %s
+                      AND m_assist.conversation_id = %s
+                      AND m_assist.message_id = %s
+                      AND m_assist.role = 'assistant'
+                    """,
+                    (ctx.tenant_id,conversation_id,message_id)
+                )).fetchone()
+                if not row:raise AppError('MESSAGE_NOT_FOUND',404)
+                return dict(row)
+        except (psycopg.Error,ValueError) as error:self.translate(error)
+
     @staticmethod
     def translate(error):
         if isinstance(error,psycopg.Error) and error.sqlstate in SQL_ERRORS:

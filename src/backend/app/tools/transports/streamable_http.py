@@ -12,7 +12,7 @@ from urllib.parse import urlsplit
 import anyio
 import httpx
 from jsonschema import Draft202012Validator
-from mcp import Client
+from mcp import ClientSession as Client
 from mcp.client.streamable_http import streamable_http_client
 
 MAX_CATALOG_ENTRIES = 100

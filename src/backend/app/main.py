@@ -64,6 +64,8 @@ from app.use_cases.routes import router as use_cases_router
 from app.use_cases.service import UseCaseExecutionService
 from app.operations.overview import router as overview_router
 from app.db import open_index_pool
+from app.ai.model_routes_db import router as model_registry_db_router
+from app.data_import.routes import router as data_import_router
 
 
 def create_app(settings: Settings | None = None, *, health_only: bool = False,
@@ -207,6 +209,8 @@ def create_app(settings: Settings | None = None, *, health_only: bool = False,
         app.include_router(guardrails_router)
         app.include_router(use_cases_router)
         app.include_router(overview_router)
+        app.include_router(model_registry_db_router)   # DP-13: DB-backed model registry
+        app.include_router(data_import_router)          # DP-17: Data import approval
     return app
 
 

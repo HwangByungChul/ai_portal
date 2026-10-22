@@ -8,7 +8,7 @@ import {subscribe} from './stream';
 import {ConversationHistory,type HistoryFilter} from './ConversationHistory';
 import {ResponseFeedback} from './ResponseFeedback';
 import type {AgentKey,AgentSummary,Conversation,DocumentRef,Message,PageResult,Run,Tenant,User,ChatLaunch} from './types';
-type Submission={asset_id?:string;client_send_id:string;agent_key:AgentKey;prompt:string;conversation_id?:string;document_refs?:DocumentRef[]};
+type Submission={asset_id?:string;model_id?:string;client_send_id:string;agent_key:AgentKey;prompt:string;conversation_id?:string;document_refs?:DocumentRef[]};
 const stateName:Record<string,string>={queued:'접수됨',running:'답변 작성 중',cancel_requested:'취소 요청됨 · 결과 확인 중',completed:'완료 · 저장 확인됨',cancelled:'취소됨',failed:'처리 실패',blocked:'현재 처리할 수 없음',interrupted:'처리가 중단됨'};
 export function ChatPage({tenant,user,initial={},onPublishedHistory}:{tenant:Tenant;user:User;initial?:ChatLaunch;onPublishedHistory?:()=>void}){
  const context=useScope();const org=tenant.tenant_id;
@@ -22,6 +22,8 @@ export function ChatPage({tenant,user,initial={},onPublishedHistory}:{tenant:Ten
  const lock=useRef(false);const pending=useRef<Submission|null>(null);const selection=useRef(0);const listQuery=useRef(0);const chosen=useRef<string|null>(null);
  const historyFilter=useRef<HistoryFilter>({q:'',pinned:null});
  const currentRun=useRef<Run|null>(null);const historyQuery=useRef(0),authorityBusy=useRef(false);
+ const [models,setModels]=useState<Array<{model_id:string;display_name:string;provider_key:string;is_default:boolean}>>([]);
+ const [selectedModel,setSelectedModel]=useState<string>('');
  const active=agents.find(a=>a.agent_key===agent);const busy=!!run&&!run.is_terminal;
  function publishRun(value:Run){
   if(!context.current()||value.tenant_id!==org)return;
@@ -48,6 +50,14 @@ export function ChatPage({tenant,user,initial={},onPublishedHistory}:{tenant:Ten
   setLoading(true);setError(null);
   try{const value=await get<{items:AgentSummary[]}>('/agents',{tenantId:org,signal:context.signal});if(context.current())setAgents(value.items);}
   catch(problem){await failed(problem);}
+  try{
+   const mRes=await get<{items:Array<{model_id:string;display_name:string;provider_key:string;is_default:boolean}>}>('/models',{tenantId:org,signal:context.signal});
+   if(context.current()&&mRes?.items?.length){
+    setModels(mRes.items);
+    const def=mRes.items.find(m=>m.is_default)??mRes.items[0];
+    setSelectedModel(def.model_id);
+   }
+  }catch{/* 모델 목록 로드 실패 시 기본값 유지 */}
   await list();await currentAuthority();if(context.current())setLoading(false);
  }
  useEffect(()=>{void initialize().then(()=>{if(initial.conversation?.tenant_id===org&&context.current())void choose(initial.conversation);});},[]);
@@ -94,12 +104,25 @@ export function ChatPage({tenant,user,initial={},onPublishedHistory}:{tenant:Ten
   if(lock.current||busy||unresolved||!active?.available||!prompt.trim())return;
   if(prompt.length>4000||new TextEncoder().encode(prompt).byteLength>16384){setError('질문은 4,000자와 16KB 이내로 입력해 주세요.');return;}
   lock.current=true;setSending(true);setError(null);setNotice(null);selection.current++;
-  const payload:Submission={...(initial?.assetId&&agent===initial.agentKey?{asset_id:initial.assetId}:{}),...(agent==='rules_rag'&&documentRefs.length?{document_refs:documentRefs}:{}),client_send_id:crypto.randomUUID(),agent_key:agent,prompt,...(selected?{conversation_id:selected}:{})};pending.current=payload;
+  const payload:Submission={...(initial?.assetId&&agent===initial.agentKey?{asset_id:initial.assetId}:{}),...(selectedModel?{model_id:selectedModel}:{}),...(agent==='rules_rag'&&documentRefs.length?{document_refs:documentRefs}:{}),client_send_id:crypto.randomUUID(),agent_key:agent,prompt,...(selected?{conversation_id:selected}:{})};pending.current=payload;
   try{accept(await api.request<Run>('/runs',{method:'POST',tenantId:org,csrf:user.csrf_token,body:payload,signal:context.signal}));}
   catch(problem){
    if(problem instanceof ApiError&&(problem.status===0||problem.status>=500)){await recover(payload,true);}
    else{pending.current=null;await failed(problem);void initialize();}
   }finally{if(context.current()){lock.current=false;setSending(false);}}
+ }
+ async function regenerate(messageId:string){
+  if(lock.current||busy||unresolved||!selected)return;
+  lock.current=true;setSending(true);setError(null);setNotice(null);selection.current++;
+  const sendId=crypto.randomUUID();
+  try{
+   const data=await api.request<Run>(`/conversations/${selected}/messages/${messageId}/regenerate`,{
+    method:'POST',tenantId:org,csrf:user.csrf_token,
+    body:{client_send_id:sendId,model_id:selectedModel||undefined},signal:context.signal
+   });
+   accept(data);
+  }catch(problem){await failed(problem);}
+  finally{if(context.current()){lock.current=false;setSending(false);}}
  }
  async function confirmAdmission(){
   if(lock.current||!pending.current)return;lock.current=true;setSending(true);setError(null);
@@ -173,6 +196,12 @@ export function ChatPage({tenant,user,initial={},onPublishedHistory}:{tenant:Ten
      <select id="agent-choice" value={agent} disabled={sending||busy||unresolved||!!selected} onChange={e=>{setAgent(e.target.value as AgentKey);setDocumentRefs([]);}}>
       {agents.map(a=><option key={a.agent_key} value={a.agent_key}>{a.name}</option>)}
      </select>
+     {models.length>0&&<div style={{display:'inline-flex',alignItems:'center',gap:'4px',marginLeft:'8px'}}>
+      <label htmlFor="model-choice" style={{fontSize:'12px'}}><strong>모델</strong></label>
+      <select id="model-choice" value={selectedModel} disabled={sending||busy||unresolved} onChange={e=>setSelectedModel(e.target.value)} style={{fontSize:'12px',padding:'2px 6px'}}>
+       {models.map(m=><option key={m.model_id} value={m.model_id}>{m.display_name}{m.is_default?' (기본)':''}</option>)}
+      </select>
+     </div>}
      <span className="chat-agent-desc">{active?.description||'질문에 대한 답변을 작성합니다.'} · {agent==='general'?'일반 대화':'자료 검색'}</span>
      {active&&!active.available&&<span className="blocked-note" style={{padding:'2px 8px',margin:0,fontSize:'11px'}}>{blockReason[active.safe_block_reason??'']??'현재 사용 불가'}</span>}
     </div>
@@ -196,6 +225,9 @@ export function ChatPage({tenant,user,initial={},onPublishedHistory}:{tenant:Ten
       {/* [RAG 답변 근거 패널] AI 답변 메시지 하단에 인용 출처(문서명, 위치, 원문)를 확인할 수 있는 패널 연동 */}
       {m.role==='assistant'&&agent==='rules_rag'&&<RagEvidencePanel tenantId={org} runId={m.run_id} onUnavailable={()=>hideAnswer(m.run_id)}/>}
       {m.role==='assistant'&&m.run_state==='completed'&&m.answer_kind==='answer'&&<ResponseFeedback key={org+':'+m.run_id} tenantId={org} runId={m.run_id} csrf={user.csrf_token} onUnavailable={()=>hideAnswer(m.run_id)}/>}
+      {m.role==='assistant'&&selected&&<div style={{marginTop:'6px',display:'flex',gap:'8px'}}>
+       <button type="button" className="quiet small" disabled={sending||busy||unresolved} onClick={()=>void regenerate(m.message_id)} title="동일 질문을 현재 선택된 모델로 다시 생성합니다">↻ 답변 재생성</button>
+      </div>}
      </article>)}
 
      {messageCursor&&selected&&<button type="button" className="secondary small" style={{alignSelf:'center'}} onClick={()=>void moreMessages()}>메시지 더 보기</button>}

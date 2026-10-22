@@ -58,3 +58,29 @@ async def access_set(request:Request,agent_key:Literal['general','rules_rag'],bo
 @router.get('/admin/agent-access/{agent_key}/members')
 async def eligible_members(request:Request,agent_key:Literal['general','rules_rag'],limit:int=Query(default=50,ge=1,le=50),cursor:UUID|None=None):
     return await execute(request,'members',agent=agent_key,body={'agent_key':agent_key,'limit':limit,'cursor':str(cursor) if cursor else None})
+
+
+@router.get('/catalog/unified')
+async def unified_catalog(
+    request: Request,
+    q: str = Query(default='', max_length=80),
+    type: Literal['all', 'agent', 'tool', 'workflow'] = 'all',
+    category: str | None = None,
+    limit: int = Query(default=20, ge=1, le=50),
+    cursor: str | None = None
+):
+    try: q.encode('utf-8')
+    except UnicodeError: raise AppError('REQUEST_INVALID', 422) from None
+    if '\x00' in q: raise AppError('REQUEST_INVALID', 422)
+    ctx = await context(request, write=False)
+    repo = CatalogRepository(request.app.state.pool)
+    data = await repo.unified_search(ctx, query=q.strip() or None, asset_type=type, category=category, limit=limit, cursor=cursor)
+    return response(request, data)
+
+
+@router.get('/catalog/unified/{asset_id}')
+async def unified_asset_detail(request: Request, asset_id: UUID):
+    ctx = await context(request, write=False)
+    repo = CatalogRepository(request.app.state.pool)
+    data = await repo.unified_detail(ctx, asset_id)
+    return response(request, data)

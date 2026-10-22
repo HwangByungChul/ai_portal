@@ -1647,3 +1647,20 @@ local SQL029 적용 전 private backup, 기존37표 행·prior29개 checksum 보
 **접근성 보완:** 독립 리뷰에서 알림의 live region 안에 닫기 버튼이 포함된 문제와 실행 기록 revision을 승인 Workflow 버전으로 오인할 수 있는 표현(P2)이 확인됐다. 메시지 텍스트만 `alert/status`로 알리고 닫기 버튼은 바깥에 둔 뒤 `알림 닫기` accessible name을 추가했다. 실행 기록 번호는 `실행 기록 변경 번호`로 분리 표기했다. TypeScript 재검증과 diff whitespace 검사를 통과했고, 최종 독립 재리뷰에서 잔여 중요 결함이 없음을 확인했다.
 
 **미완료:** 실제 로그인/DB fixture 회귀와 기관 사용자 수용은 미검증이며, 이 화면 변경은 승인·게시·운영 배포가 아니다. 기존 `workspace.json` 및 동시 진행 중인 MCP 파일 변경은 이번 변경에서 제외한다.
+
+## 2026-10-22 · P1 즉시 착수 항목(DP13 모델 Registry DB, Chat 재생성, 통합 카탈로그, 역할 SOD 및 자료 반입, 요약 PDF) 구축
+- **요청·결정:** 기능명세서 기준 P1 핵심 잔여 항목에 대한 즉시 착수 상세 구축 계획서를 바탕으로 백엔드 엔드포인트 및 관련 데이터 로직 구축 진행.
+- **변경:**
+  - P1-1(DP-13): `071_model_registry_db.sql` 마이그레이션 및 `model_registry_db.py`, `model_routes_db.py` 라우터 구현, `main.py` 라우터 등록.
+  - P1-2: `conversations/repository.py` 및 `conversations/routes.py`에 assistant 답변 재생성(`POST /api/v1/conversations/{conv_id}/messages/{msg_id}/regenerate`)과 `model_id` 선택 파라미터 구현 (이전 원본 답변 불변 보존 및 신규 run 생성).
+  - P1-3: `072_asset_catalog_unified.sql` 마이그레이션 뷰 기반으로 `catalog/repository.py` 및 `catalog/routes.py`에 Agent, Tool, Workflow 통합 검색 및 상세 조회 API(`GET /api/v1/catalog/unified`, `GET /api/v1/catalog/unified/{asset_id}`) 구현.
+  - P1-4(DP-16/17): `073_role_sod_policy.sql`(BUILDER/REVIEWER/DEPLOYER 직무분리 SOD 정책) 및 `074_data_import_ledger.sql`(자료 반입 원장), `role_sod.py`, `data_import/scanner.py`, `data_import/routes.py` 구현 및 `main.py` 등록.
+  - P1-5(DP-07): `exports.py` 및 `summary_routes.py`에 PDF 요약 내보내기 엔드포인트(`GET /api/v1/document-summaries/{id}/pdf` 및 format=pdf 지원) 추가.
+  - MCP 임포트 호환성: `streamable_http.py`의 `mcp` 라이브러리 `ClientSession` 임포트 호환성 수정.
+- **검증:**
+  - Python pytest 단위 테스트 총 28개 전체 통과 (`test_model_registry_db.py`, `test_role_sod_and_import.py`, `test_p1_features.py`, `test_mcp_import_routes.py` 모두 100% GREEN).
+  - 프론트엔드 Node v22 기반 분리 빌드 검증: `npm run build:user` (28 modules, boundary_verified: true) 및 `npm run build:admin` (56 modules, boundary_verified: true) 통과.
+- **미완료·다음:**
+  - 소유된 PostgreSQL disposable fixture cluster에서의 migration 071~074 런타임 적용 및 RLS/함수 스키마 검증.
+  - 프론트엔드 UI 컴포넌트(ChatPage 재생성 버튼/모델 드롭다운, CatalogPage 탭 연동, RoleManagePage/DataImportPage) 연결 및 E2E 브라우저 검증.
+  - 실제 유료 LLM 호출 및 기관 UAT, 운영 환경 배포는 별도 후속 단계로 관리.

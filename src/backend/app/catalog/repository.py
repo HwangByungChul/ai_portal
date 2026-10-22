@@ -29,3 +29,29 @@ class CatalogRepository:
         except (psycopg.Error, ValueError) as error:
             if isinstance(error,psycopg.Error) and error.sqlstate in ('22P02','22003','22021','22P05'): raise AppError('REQUEST_INVALID',422) from None
             TenantRepository.translate(error)
+
+    async def unified_search(self, ctx, query=None, asset_type='all', category=None, limit=20, cursor=None):
+        try:
+            async with tenant_transaction(self.pool, ctx) as conn:
+                row = await (await conn.execute(
+                    'SELECT security.catalog_unified_search(%s,%s,%s,%s,%s,%s,%s) AS data',
+                    (ctx.session_id, ctx.tenant_id, query, asset_type, category, limit, cursor)
+                )).fetchone()
+                return row['data']
+        except (psycopg.Error, ValueError) as error:
+            if isinstance(error, psycopg.Error) and error.sqlstate in ('22P02','22003','22021','22P05'):
+                raise AppError('REQUEST_INVALID', 422) from None
+            TenantRepository.translate(error)
+
+    async def unified_detail(self, ctx, asset_id):
+        try:
+            async with tenant_transaction(self.pool, ctx) as conn:
+                row = await (await conn.execute(
+                    'SELECT security.catalog_unified_detail(%s,%s,%s) AS data',
+                    (ctx.session_id, ctx.tenant_id, asset_id)
+                )).fetchone()
+                return row['data']
+        except (psycopg.Error, ValueError) as error:
+            if isinstance(error, psycopg.Error) and error.sqlstate == 'A0404':
+                raise AppError('ASSET_NOT_FOUND', 404) from None
+            TenantRepository.translate(error)

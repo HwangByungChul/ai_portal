@@ -61,6 +61,7 @@ class RunRequest(BaseModel):
     conversation_id:UUID|None=None
     agent_key:Literal['general','rules_rag']
     asset_id:UUID|None=None
+    model_id:UUID|None=None
     prompt:StrictStr=Field(max_length=4000)
     document_refs:list[DocumentRef]|None=Field(default=None,max_length=5)
 
@@ -76,6 +77,12 @@ class RunRequest(BaseModel):
 class CancelRequest(BaseModel):
     model_config=ConfigDict(extra='forbid')
     expected_revision:Revision
+
+
+class RegenerateRequest(BaseModel):
+    model_config=ConfigDict(extra='forbid')
+    client_send_id:UUID
+    model_id:UUID|None=None
 
 
 def digest(request,ctx,purpose):
@@ -151,4 +158,24 @@ async def cancel(request:Request,run_id:UUID,body:CancelRequest):
     data=await ConversationRepository(request.app.state.pool).cancel(ctx,run_id,body.expected_revision,UUID(request.state.request_id))
     manager=getattr(request.app.state,'execution',None)
     if manager is not None:manager.cancel(ctx,run_id)
+    return response(request,data,status_code=200 if data['is_terminal'] else 202)
+
+
+@router.post('/conversations/{conversation_id}/messages/{message_id}/regenerate')
+async def regenerate_message(request:Request,conversation_id:UUID,message_id:UUID,body:RegenerateRequest):
+    ctx=await context(request,write=True);validate_query(request,set())
+    settings=request.app.state.settings
+    manager=getattr(request.app.state,'execution',None)
+    if manager is not None and (manager.closed or manager.gateway.stop_latch):raise AppError('PROJECT_STOPPED',503)
+    repo=ConversationRepository(request.app.state.pool)
+    prev_ctx=await repo.get_context_for_regeneration(ctx,conversation_id,message_id)
+    raw_refs=prev_ctx.get('document_refs')
+    document_refs=[
+        {'document_id':UUID(x['document_id']),'version_id':UUID(x['version_id'])}
+        for x in (raw_refs or []) if isinstance(x,dict) and 'document_id' in x and 'version_id' in x
+    ]
+    data=await repo.admit(ctx,prev_ctx['agent_key'],conversation_id,body.client_send_id,
+        prev_ctx['prompt'],settings.budget_period,settings.mode,digest(request,ctx,'run_admission'),UUID(request.state.request_id),
+        refs=document_refs if document_refs else None,documents=request.app.state.documents,asset_id=prev_ctx.get('asset_id'))
+    if manager is not None and not data['replayed'] and not data['is_terminal']:manager.notify(ctx,data['run_id'])
     return response(request,data,status_code=200 if data['is_terminal'] else 202)

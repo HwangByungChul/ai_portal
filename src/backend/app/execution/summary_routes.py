@@ -9,7 +9,7 @@ from app.operations.routes import validate_query,Revision
 from app.conversations.routes import DocumentRef,digest,CancelRequest
 from app.conversations.repository import ConversationRepository
 from app.execution.summary_repository import SummaryRepository,stored
-from app.execution.exports import markdown_attachment
+from app.execution.exports import markdown_attachment, pdf_attachment
 from app.documents.storage import SourceStorageError,validate_origin
 from app.documents.formats import DOCX_MEDIA_TYPE,XLSX_MEDIA_TYPE
 from app.db import tenant_transaction
@@ -63,9 +63,17 @@ async def cancel(request:Request,run_id:UUID,body:CancelRequest):
     if manager:manager.cancel(ctx,run_id)
     return response(request,data,status_code=200 if data['is_terminal'] else 202)
 @router.get('/{run_id}/export')
-async def export(request:Request,run_id:UUID,format:Literal['md']='md'):
+async def export(request:Request,run_id:UUID,format:Literal['md','pdf']='md'):
     ctx=await context(request);validate_query(request,{'format'});data=await read(request,ctx,run_id)
+    if format=='pdf':
+        return pdf_attachment(data,request.state.request_id)
     return markdown_attachment(data,request.state.request_id)
+
+
+@router.get('/{run_id}/pdf')
+async def export_pdf(request:Request,run_id:UUID):
+    ctx=await context(request);validate_query(request,set());data=await read(request,ctx,run_id)
+    return pdf_attachment(data,request.state.request_id)
 @router.get('/{run_id}/evidence/{ordinal}/source')
 async def source(request:Request,run_id:UUID,ordinal:int=Path(ge=0,le=4)):
     ctx=await context(request);validate_query(request,set());data=await read(request,ctx,run_id)

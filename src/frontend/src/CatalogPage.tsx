@@ -31,6 +31,11 @@ export function CatalogPage({tenant,user,mine=false,onChat}:{tenant:Tenant;user:
  const frozen=busy||!!pending;
  return <section><div className="page-heading"><div><p className="eyebrow teal">{mine?'MY AGENT':'AI CATALOG'}</p><h1>{mine?'My Agent':'AI 카탈로그'}</h1><p className="muted">{tenant.display_name} · 이용 권한이 있는 업무 도우미를 찾아 시작하세요.</p></div><button className="secondary" disabled={frozen||loading} onClick={()=>void load()}>새로고침</button></div>
  {!mine&&<PublishedAgents tenant={tenant} user={user} onFavoriteChange={()=>void load()}/>}{mine&&<PublishedAgents tenant={tenant} user={user} onFavoriteChange={()=>void load()}/>}<p className="scope-note">즐겨찾기는 개인 목록입니다. 관리자가 이용 권한을 회수하면 목록에서 숨겨지고 신규·후속 실행이 제한됩니다.</p>
+ {!mine&&<div style={{display:'flex',gap:'8px',marginBottom:'12px'}}>
+  {(['all','agent','tool','workflow'] as const).map(t=><button key={t} type="button" className={category===t||(t==='all'&&category==='all')?'primary small':'secondary small'} onClick={()=>{setCategory(t);filter.current={q,category:t};void load();}}>
+   {{all:'전체 자산',agent:'AI 에이전트',tool:'도구 (MCP)',workflow:'워크플로우'}[t]}
+  </button>)}
+ </div>}
  <form className="hub-actions catalog-filters" onSubmit={e=>{e.preventDefault();filter.current={q,category};void load();}}><label htmlFor="catalog-query">도우미 검색</label><input id="catalog-query" value={q} maxLength={80} disabled={frozen} onChange={e=>setQ(e.target.value)}/><label htmlFor="catalog-category">업무 구분</label><select id="catalog-category" value={category} disabled={frozen} onChange={e=>setCategory(e.target.value)}><option value="all">전체 업무</option><option value="general">일반 업무</option><option value="knowledge">지식 검색</option></select><button className="primary" disabled={frozen||loading}>검색</button></form>
  {error&&<p role="alert" className="error-message">{error}</p>}{notice&&<p role="status" className="notice">{notice}</p>}{pending&&<button className="primary" disabled={busy} onClick={()=>void favorite()}>같은 즐겨찾기 요청 확인</button>}
  {loading&&<p role="status">도우미 조회 중</p>}
