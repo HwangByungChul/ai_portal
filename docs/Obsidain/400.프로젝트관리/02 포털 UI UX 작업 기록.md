@@ -1626,3 +1626,12 @@ local SQL029 적용 전 private backup, 기존37표 행·prior29개 checksum 보
 **권한·미완료·다음:** 자연어 제안 API의 `agent_admin` capability와 맞춰 UI는 `TADMIN`/`PADMIN` tenant에서만 제안 요청을 보이고, 일반 USER에게는 관리자 역할 제한을 안내한다. DP16 현업 제작자 권한 연계와 UAT는 미완료다. Revision-conflict 브라우저 시나리오와 포트 충돌 없는 Playwright 실행을 후속 확인한다. 제안은 승인·게시·운영 실행이 아니며 운영 배포는 하지 않았다.
 
 **최종 확인:** 독립 최종 리뷰에서 tenant/owner 경계, 공유 호출 원장·revision 처리, 제안 UI의 저장/실행 경계를 검토했고 차단 결함은 발견되지 않았다. `WorkflowCanvasPage`의 `quickStart` 기본값을 `false`로 정리했다. 통합 Studio는 모드를 명시해 전달한다. 변경은 `fix(builder): keep workflow quick start opt-in`으로 별도 커밋하려 했으나 `.git/index.lock` 생성이 `EPERM`으로 차단되어 미커밋 상태다. 기존 `workspace.json` 변경은 보존했다. 이번 재빌드는 Vite 임시 설정 파일 쓰기에서 `EPERM`으로 중단됐다. 앞선 빌드 통과 기록은 유지하되 이번 기본값 변경 이후 빌드는 확인되지 않았다. Playwright 실환경 실행과 폐기 가능한 DB clone의 migration/RLS 검증은 미완료다.
+
+
+## 2026-10-22 · AI Builder 빠른 시작 선택지와 화면 배열 수정
+
+**요청:** Agent 초안 만들기 화면에서 선택 영역이 비어 보이고, 필드 배열이 어색하다는 보고를 확인해 수정했다.
+
+**원인·변경:** 대상 사용자/입력/출력은 실제 select가 아닌 값이 없는 일반 input이었고, 전용 레이아웃이 없어 라벨과 입력이 한 줄에 붙어 있었다. 세 항목에 안내 placeholder와 한국어 선택지를 추가하고 “직접 입력”을 제공했다. 설명 입력은 전체 폭, 보조 선택지는 넓은 화면 3열·중간 2열·좁은 화면 1열로 정렬했다. 생성 API의 `answers` 문자열 계약과 제안만 생성하는 동작은 유지했다. [[200.프로젝트실행/240.설계/2026-10-21 AI Builder 자연어 초안 생성 서비스 구현 계획]]
+
+**검증:** 회귀 Playwright 사례에 옵션 표시와 직접 입력 값의 API 전달 확인을 추가했다. 독립 리뷰 PASS, `tsc --noEmit` 통과. Admin Vite build는 output HTML 경로를 찾지 못해 완료되지 않았고, 브라우저에서 수정 화면을 실행해 확인하는 작업도 아직 남아 있다. 테스트를 실행 완료로 표현하지 않는다.

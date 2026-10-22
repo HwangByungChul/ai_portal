@@ -21,7 +21,15 @@ test('D11_12_agent_proposal_is_reviewed_and_applied_without_implicit_save_or_exe
   await route.continue();
  });
  const panel=page.getByRole('region',{name:'업무 설명으로 Agent 초안 만들기'});
- await panel.getByLabel('어떤 업무를 돕는 Agent인가요?').fill('복리후생 질문에 답하고 관련 규정 근거를 안내');await panel.getByLabel('주로 누가 사용하나요?').fill('전 임직원');await panel.getByLabel('어떤 질문이나 정보를 받나요?').fill('제도 적용 질문');await panel.getByLabel('어떤 답변이나 결과가 필요하나요?').fill('적용 절차와 근거 조항');
+ await panel.getByLabel('어떤 업무를 돕는 Agent인가요?').fill('복리후생 질문에 답하고 관련 규정 근거를 안내');
+ const audience=panel.getByLabel(/주로 누가 사용하나요/),inputs=panel.getByLabel(/어떤 질문이나 정보를 받나요/),outputs=panel.getByLabel(/어떤 답변이나 결과가 필요하나요/);
+ await expect(audience.locator('option')).toHaveText(['선택하세요','사내 임직원','고객','관리자','협력사','직접 입력']);
+ await expect(inputs.locator('option')).toHaveText(['선택하세요','사용자 질문','문서·파일','업무 정보','질문과 참고 자료','직접 입력']);
+ await expect(outputs.locator('option')).toHaveText(['선택하세요','근거를 포함한 답변','요약·정리','분석·권고','절차·다음 단계 안내','직접 입력']);
+ await expect(panel.locator('.builder-scaffold-choice-grid')).toHaveCount(1);
+ await audience.selectOption('custom');await panel.getByLabel('사용 대상 직접 입력').fill('전 임직원');
+ await inputs.selectOption('custom');await panel.getByLabel('입력 정보 직접 입력').fill('제도 적용 질문');
+ await outputs.selectOption('custom');await panel.getByLabel('원하는 결과 직접 입력').fill('적용 절차와 근거 조항');
  await panel.getByRole('button',{name:'Agent 초안 제안 만들기',exact:true}).click();await expect(panel.getByRole('region',{name:'Agent 초안 제안 검토'})).toBeVisible();
  expect(postBody).toMatchObject({target:'agent',intent:'복리후생 질문에 답하고 관련 규정 근거를 안내',answers:{audience:'전 임직원',inputs:'제도 적용 질문',outputs:'적용 절차와 근거 조항'}});
  await expect(panel).toContainText('적용할 규정의 기준일을 정해 주세요.');await expect(panel).toContainText('외부 자료를 연결하기 전에 접근 권한을 확인하세요.');await expect(panel.locator('img')).toHaveCount(0);

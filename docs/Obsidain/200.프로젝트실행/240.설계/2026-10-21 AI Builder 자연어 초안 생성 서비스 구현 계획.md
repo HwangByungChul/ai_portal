@@ -90,6 +90,13 @@ tags: [ai-platform, builder, workflow, generation, backend]
 
 This plan covers mock-tested local proposal generation and Agent integration. It does not claim actual provider quality, workflow execution, role rollout, institutional UAT or deployment.
 
+## 2026-10-22 · 빠른 시작 입력 선택지와 배열 보완
+
+- 화면 점검에서 대상 사용자·입력 정보·원하는 결과 필드는 선택지가 제공되는 select가 아니라 placeholder 없는 일반 텍스트 input이었다. 라벨과 컨트롤에도 전용 배치 규칙이 없어 한 줄에 붙어 보였다.
+- 세 필드를 “선택하세요” placeholder가 있는 한국어 select로 바꾸고, 각 목록에 “직접 입력” 옵션과 조건부 텍스트 입력을 추가했다. 기존 API `answers`의 문자열 계약은 유지한다.
+- 작업 설명은 전체 폭, 보조 필드는 넓은 화면 3열/중간 화면 2열/좁은 화면 1열로 배치한다. CSS는 Builder quick-start 전용으로 제한했다.
+- Playwright 회귀 사례는 선택지 노출과 직접 입력 값의 요청 전달을 확인한다. `tsc --noEmit` 통과. Admin 빌드는 코드 변환까지 수행했으나 현재 `portal-sites` 플러그인의 입력 HTML 경로를 찾지 못해 마무리되지 않았다. 실제 브라우저 실행은 아직 완료하지 않았다.
+
 
 ## Task 2 실행 기록 (2026-10-22)
 
