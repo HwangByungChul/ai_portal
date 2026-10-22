@@ -13,8 +13,9 @@ class _Guardrails:
     def __init__(self):
         self.inputs = []
 
-    async def inspect(self, ctx, text, *, direction, trace_id):
+    async def inspect(self, ctx, text, *, direction, trace_id=None, **kwargs):
         self.inputs.append((direction, text, trace_id))
+        return SimpleNamespace(action="allow", masked_text=None, rule_ids=[], revision=4)
 
     async def snapshot(self, ctx):
         return SimpleNamespace(revision=4)
@@ -153,3 +154,52 @@ def test_model_cannot_invent_document_refs_even_if_schema_is_valid():
         raise AssertionError("provider-invented document refs must be rejected")
     assert not repo.completed
     assert repo.failed[0][3] == "SCAFFOLD_PROPOSAL_INVALID"
+
+
+class _ObservedScaffoldProvider:
+    async def generate(self, claim, messages, on_delta):
+        import json
+        payload = {
+            "config": {"name": "업무 도우미", "description": "검토용 초안", "instructions": "친절하게 답변하세요.", "execution_kind": "general"},
+            "profile": {"schema_version": 1, "system_prompt": "친절하게 답변하세요.", "developer_prompt": "", "user_template": "{{question}}", "model_ref": "default_general", "document_refs": []},
+            "missing_questions": [], "warnings": [],
+        }
+        return ProviderOutcome(json.dumps(payload, ensure_ascii=False), UsageReceipt(20, 15, 35, "gpt-4o-mini", "default", None), "observed", None)
+
+
+class _RevisionTrackingRepository(_MeteredRepository):
+    def __init__(self):
+        super().__init__()
+        self.proposal_revision = 1
+
+    async def reserve(self, ticket, fingerprint):
+        self.proposal_revision += 1  # Mirrors reserve's admitted -> generating CAS.
+        return await super().reserve(ticket, fingerprint)
+
+
+def test_metered_reserve_settle_complete_keeps_original_revision_token():
+    repo = _RevisionTrackingRepository()
+    gateway = AiGateway(repo, _ObservedScaffoldProvider(), guardrails=_Guardrails())
+    svc = ScaffoldGenerationService(gateway, repo, _Guardrails(), _Documents(), "mock")
+    ctx, proposal_id, trace_id = SimpleNamespace(tenant_id=uuid4()), uuid4(), uuid4()
+    result = asyncio.run(svc.generate(ctx, proposal_id, trace_id, 1, _request()))
+    assert result["state"] == "ready"
+    assert repo.proposal_revision == 2
+    assert repo.completed[0][2] == 1
+    assert len(repo.settlements) == 1 and repo.settlements[0][1] == "observed"
+
+
+def test_metered_failure_uses_admission_revision_after_reserve_increment():
+    repo = _RevisionTrackingRepository()
+    gateway = AiGateway(repo, _Provider(), guardrails=_Guardrails())
+    svc = ScaffoldGenerationService(gateway, repo, _Guardrails(), _Documents(), "mock")
+    ctx, proposal_id, trace_id = SimpleNamespace(tenant_id=uuid4()), uuid4(), uuid4()
+    try:
+        asyncio.run(svc.generate(ctx, proposal_id, trace_id, 9, _request()))
+    except Exception as error:
+        assert getattr(error, "code", None) == "USAGE_INVALID"
+    else:
+        raise AssertionError("unknown usage must fail the proposal")
+    assert repo.proposal_revision == 2
+    assert repo.failed[0][2] == 9
+    assert repo.settlements and repo.settlements[0][2] is True

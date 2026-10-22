@@ -66,3 +66,13 @@ def test_failure_receipt_waits_for_shared_ledger_terminal_state():
     assert "IF q.state='generating' THEN" in sql
     assert "c.call_id IS NULL OR c.state NOT IN ('settled','usage_unknown','released_no_dispatch')" in sql
     assert "SETTLEMENT_PENDING" in sql
+
+
+def test_070_lifecycle_uses_original_admission_revision_and_current_call_permit_binding():
+    sql = (MIGRATIONS / "070_builder_scaffold_lifecycle_revision.sql").read_text(encoding="utf-8")
+    assert "q.state='generating' AND q.revision=p_revision+1" in sql
+    assert "c.permit_revision<>q.revision" in sql
+    assert "q.revision<>p_revision+1 OR q.state<>'generating'" in sql
+    assert "c.state<>'settled' OR c.provider_end_status<>'observed'" in sql
+    assert "CREATE OR REPLACE FUNCTION security.builder_scaffold_complete(" in sql
+    assert "CREATE OR REPLACE FUNCTION security.builder_scaffold_fail(" in sql
