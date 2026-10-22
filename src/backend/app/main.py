@@ -11,6 +11,7 @@ from app.operations.routes import router as operations_router
 from app.approvals.routes import router as approvals_router
 from app.assets.routes import router as assets_router
 from app.builder.routes import router as builder_router
+from app.builder.scaffold_routes import router as builder_scaffold_router
 from app.builder.profile_routes import router as builder_profiles_router
 from app.catalog.routes import router as catalog_router
 from app.conversations.routes import router as conversations_router
@@ -18,6 +19,9 @@ from app.feedback.routes import router as feedback_router
 from app.config import Settings
 from app.db import open_web_pool,open_meter_pool
 from app.ai.repository import CallRepository
+from app.builder.scaffold_repository import ScaffoldRepository
+from app.builder.scaffold_service import ScaffoldGenerationService
+from app.ai.gateway import AiGateway
 from app.ai.providers import MockProvider,OpenAIProvider
 from app.ai.routing import build_model_router
 from app.guardrails.service import GuardrailService
@@ -93,7 +97,7 @@ def create_app(settings: Settings | None = None, *, health_only: bool = False,
                 raise ValueError('IDP_SUBJECT_KEY_PROVIDER_REQUIRED')
             else:
                 app.state.idp_subject_digest=None
-            app.state.tool_control=None;app.state.tool_execution=None;app.state.workflow_repository=None;app.state.workflow_control=None;app.state.workflow_execution=None;app.state.use_case_execution=None
+            app.state.tool_control=None;app.state.tool_execution=None;app.state.workflow_repository=None;app.state.workflow_control=None;app.state.workflow_execution=None;app.state.use_case_execution=None;app.state.builder_scaffold=None
             if settings.web_dsn is not None:
                 pool=await stack.enter_async_context(open_web_pool(settings.web_dsn.get_secret_value()));app.state.pool=pool
                 if not health_only:
@@ -110,6 +114,10 @@ def create_app(settings: Settings | None = None, *, health_only: bool = False,
                         validate_general_input('질문에 답해 주세요.',[],'준비 확인')
                         provider=OpenAIProvider(settings.openai_api_key.get_secret_value()) if settings.mode=='real' else MockProvider()
                         repository=CallRepository(pool,meter,settings.budget_period)
+                        scaffold_repository=ScaffoldRepository(pool,meter,settings.budget_period)
+                        app.state.builder_scaffold=ScaffoldGenerationService(
+                            AiGateway(scaffold_repository,router=build_model_router(settings),guardrails=app.state.guardrails),
+                            scaffold_repository,app.state.guardrails,app.state.documents,settings.mode)
                         rag=RagExecutor(repository,app.state.documents,OpenAIEmbeddingProvider(settings.openai_api_key.get_secret_value()) if settings.mode=='real' else MockEmbeddingProvider(),RagOpenAIProvider(settings.openai_api_key.get_secret_value()) if settings.mode=='real' else RagMockProvider())
                         summary=SummaryExecutor(repository,app.state.documents,SummaryOpenAIProvider(settings.openai_api_key.get_secret_value()) if settings.mode=='real' else SummaryMockProvider())
                         manager=ExecutionManager(repository,provider,settings.mode,StreamHub(),rag=rag,summary=summary,router=build_model_router(settings),guardrails=app.state.guardrails)
@@ -174,6 +182,7 @@ def create_app(settings: Settings | None = None, *, health_only: bool = False,
         app.include_router(approvals_router)
         app.include_router(assets_router)
         app.include_router(builder_router)
+        app.include_router(builder_scaffold_router)
         app.include_router(builder_profiles_router)
         app.include_router(builder_trial_router)
         app.include_router(builder_evaluations_router)

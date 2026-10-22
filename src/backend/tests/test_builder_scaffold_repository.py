@@ -29,6 +29,7 @@ class _Connection:
 def test_admit_uses_fixed_function_and_excludes_client_id_from_payload(monkeypatch):
     conn = _Connection()
     ctx = SimpleNamespace(session_id=uuid4(), tenant_id=uuid4())
+    trace_id = uuid4()
 
     class _Transaction:
         async def __aenter__(self):
@@ -45,17 +46,17 @@ def test_admit_uses_fixed_function_and_excludes_client_id_from_payload(monkeypat
     repo = ScaffoldRepository(object())
 
     result = asyncio.run(repo.admit(
-        ctx, request, model_id="gpt-4o-mini", policy_revision=4, budget_period=date(2026, 10, 1),
+        ctx, request, trace_id=trace_id, model_id="gpt-4o-mini", policy_revision=4, budget_period=date(2026, 10, 1),
     ))
 
     sql, args = conn.calls[0]
     assert "security.builder_scaffold_admit" in sql
-    assert args[:4] == (ctx.session_id, ctx.tenant_id, request.client_request_id, "agent")
-    assert isinstance(args[4], Jsonb)
-    assert args[4].obj == {
+    assert args[:5] == (ctx.session_id, ctx.tenant_id, trace_id, request.client_request_id, "agent")
+    assert isinstance(args[5], Jsonb)
+    assert args[5].obj == {
         "intent": "심사 결과를 요약하는 Agent",
         "answers": {"audience": "담당자"},
         "document_refs": [],
     }
-    assert args[5:] == ("gpt-4o-mini", "4", date(2026, 10, 1))
+    assert args[6:] == ("gpt-4o-mini", "4", date(2026, 10, 1))
     assert result["state"] == "admitted"

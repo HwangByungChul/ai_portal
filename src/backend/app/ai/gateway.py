@@ -80,7 +80,8 @@ class AiGateway:
                 tid=str(getattr(t_run,'tenant_id',''));uid=str(getattr(t_ctx,'user_id',''))
                 if self.guardrails is not None:
                     try:
-                        out_res=await self.guardrails.inspect(ticket.ctx,outcome.body,direction='output',run_id=t_run.run_id,previous=policy_before)
+                        out_res=await self.guardrails.inspect(ticket.ctx,outcome.body,direction='output',
+                            run_id=getattr(t_run,'run_id',None),trace_id=getattr(ticket,'trace_id',None),previous=policy_before)
                     except Exception:
                         outcome=ProviderOutcome(None,outcome.receipt,outcome.end_status,'STORAGE_UNAVAILABLE')
                         code=await self._meter(ticket,claim,outcome)

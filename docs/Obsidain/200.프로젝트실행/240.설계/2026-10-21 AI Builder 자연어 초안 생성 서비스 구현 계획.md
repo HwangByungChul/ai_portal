@@ -64,12 +64,12 @@ tags: [ai-platform, builder, workflow, generation, backend]
 - ScaffoldRepository.read(ctx, proposal_id) -> ScaffoldResponse is current owner/tenant only.
 - ScaffoldRepository.discard(ctx, proposal_id, expected_revision) -> Receipt removes proposal payload but retains minimal cost/audit receipt.
 
-- [ ] **Step 1: Test migration/RPC boundaries.** Assert forced RLS, no direct ai_web/ai_index/ai_meter payload access, owner-only executor, immutable cost receipt, idempotency conflict and conditional discard. Compare prior migration source hashes.
-- [ ] **Step 2: Implement admission and receipt.** Reuse AiGateway reserve/dispatch/settle semantics; store validated proposal separately from assets/approved versions. Persist request/result only behind owner RLS so a replay recovers exactly the same proposal without another provider call. Never persist credentials.
+- [x] **Step 1: Test migration/RPC boundaries.** Assert forced RLS, no direct ai_web/ai_index/ai_meter payload access, owner-only executor, immutable cost receipt, idempotency conflict and conditional discard. Compare prior migration source hashes.
+- [x] **Step 2: Implement admission and receipt.** Reuse AiGateway reserve/dispatch/settle semantics; store validated proposal separately from assets/approved versions. Persist request/result only behind owner RLS so a replay recovers exactly the same proposal without another provider call. Never persist credentials.
 - [ ] **Step 3: Run migration test on disposable clone.** Run from src/backend: .venv/bin/python -m pytest tests/test_builder_scaffold_migration.py -q. Expected: old rows/checksums unchanged; cross-tenant/owner cases denied; no active/shared DB is touched by this test.
-- [ ] **Step 4: Implement provider-backed typed generation.** Inject MockProvider in tests. Parse strictly to target schema; reject invented IDs, models, documents, Tools, endpoints or unsupported nodes. Recheck current ACL for selected document refs before return. Store minimal terminal failure receipt for malformed/blocked/unknown usage and return no proposal body.
-- [ ] **Step 5: Expose bounded API.** Add POST /api/v1/admin/builder/scaffolds, GET /api/v1/admin/builder/scaffolds/{proposal_id}, DELETE /api/v1/admin/builder/scaffolds/{proposal_id}; register router in main.py. Apply CSRF, strict body/query, no-store, request-id, rate/window limits and current capability checks. Do not bypass DP16; until agent_developer capability is implemented, use the existing authorized fixture principal only.
-- [ ] **Step 6: Run backend contract tests.** Run from src/backend: .venv/bin/python -m pytest tests/test_builder_scaffolds.py -q. Expected: same id/body has one admission, different body conflicts, unknown settle is not success, cross-user/tenant reads 404, revocation blocks replay, mock calls have no production charge.
+- [x] **Step 4: Implement provider-backed typed generation.** Inject MockProvider in tests. Parse strictly to target schema; reject invented IDs, models, documents, Tools, endpoints or unsupported nodes. Recheck current ACL for selected document refs before return. Store minimal terminal failure receipt for malformed/blocked/unknown usage and return no proposal body.
+- [x] **Step 5: Expose bounded API.** Add POST /api/v1/admin/builder/scaffolds, GET /api/v1/admin/builder/scaffolds/{proposal_id}, DELETE /api/v1/admin/builder/scaffolds/{proposal_id}; register router in main.py. Apply CSRF, strict body/query, no-store, request-id, rate/window limits and current capability checks. Do not bypass DP16; until agent_developer capability is implemented, use the existing authorized fixture principal only.
+- [x] **Step 6: Run backend contract tests.** Run from src/backend: .venv/bin/python -m pytest tests/test_builder_scaffolds.py -q. Expected: same id/body has one admission, different body conflicts, unknown settle is not success, cross-user/tenant reads 404, revocation blocks replay, mock calls have no production charge.
 
 ### Task 3: Connect Agent proposal review to explicit save
 
@@ -89,3 +89,10 @@ tags: [ai-platform, builder, workflow, generation, backend]
 ## Handoff
 
 This plan covers mock-tested local proposal generation and Agent integration. It does not claim actual provider quality, workflow execution, role rollout, institutional UAT or deployment.
+
+
+## Task 2 실행 기록 (2026-10-22)
+
+- Task 2 코드는 구현했으며, 069 migration은 기존 shared call/usage ledger와 `security.call_meter`를 확장한다. `portal.messages`에는 프롬프트를 쓰지 않는다.
+- 집중 backend 검증 115 passed, `git diff --check` 통과.
+- Task 2 Step 3의 실제 disposable-clone 적용/롤백과 기존 데이터 지문 대조는 아직 실행하지 않았다. migration 미적용 상태이며 런타임 SQL/RLS 검증은 미완료다. 자세한 변경 파일과 제한은 [[250.구현/28 AI Builder 자연어 초안 생성 Task 2 구현 결과]]에 기록했다.

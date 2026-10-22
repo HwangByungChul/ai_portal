@@ -1591,3 +1591,14 @@ local SQL029 적용 전 private backup, 기존37표 행·prior29개 checksum 보
 - **미완료:** PR 리뷰 및 main 브랜치 병합은 별도 승인 절차 필요. 실계좌/운영 환경 배포는 후속.
 - **다음 작업:** Pull Request 생성 및 코드 리뷰 진행 또는 다음 기능 개발 계획 수립.
 
+
+
+## 2026-10-22 · AI Builder Task 2 비대화형 Metered 초안 생성
+
+**요청·결정:** 승인 구현 계획의 Task 2를 계속 진행했다. 자연어 Agent/Workflow 결과는 owner-only 미저장 초안으로 제공하며, 기존 비용 원장과 승인/권한 경계를 유지한다.
+
+**변경:** migration 069에서 `ops.call_attempts`에 proposal 바인딩을 추가하고, 예약/dispatch/정산을 기존 `ops.usage_events`·`security.call_meter`로 연결했다. 프롬프트는 `portal.messages`에 쓰지 않는다. Builder 전용 Gateway ticket/repository/service, POST/GET/DELETE API와 라우터 등록, 실패·폐기 감사 receipt 및 explicit disposable-clone harness를 추가했다. 변경 파일과 세부는 [[200.프로젝트실행/250.구현/28 AI Builder 자연어 초안 생성 Task 2 구현 결과]] 및 [[200.프로젝트실행/240.설계/2026-10-21 AI Builder 자연어 초안 생성 서비스 구현 계획]]에 기록했다.
+
+**검증:** 관련 pytest 116 passed, `git diff --check` 통과. 068 migration SHA-256 assertion을 추가했다. migration은 어느 DB에도 적용하지 않았다. 따라서 SQL/RLS 런타임과 데이터 지문 검증은 완료로 표현하지 않는다.
+
+**미완료·다음:** 소유된 disposable PostgreSQL clone에서 migration chain/checksum/data fingerprint를 검증하고 독립 코드 검토를 마친다. 실제 유료 provider, 기관 UAT, 운영 배포는 미실행이다.
