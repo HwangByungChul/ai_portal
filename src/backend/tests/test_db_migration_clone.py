@@ -1,4 +1,4 @@
-"""Static and boundary validation for new migrations 065, 066, and 067."""
+"""Static and boundary validation for migrations 065 through 068."""
 from pathlib import Path
 import re
 import pytest
@@ -15,7 +15,7 @@ def test_migrations_numbering_continuity():
             numbers.append(int(match.group(1)))
 
     assert numbers, "No migrations found"
-    # Ensure sequential numbering from 0 to 67 without duplicates or missing gaps
+    # Ensure sequential numbering from 0 to the newest migration without gaps.
     expected = list(range(len(numbers)))
     assert numbers == expected, f"Migration sequence gap or duplicate detected: {numbers}"
 
@@ -63,10 +63,25 @@ def test_runtime_clone_harness_structure():
     import verify_migration_clone_runtime as harness
 
     migration_files = harness.get_migration_files()
-    assert len(migration_files) >= 68
-    assert migration_files[-1].name == "067_mcp_tool_audit_ledger.sql"
+    assert len(migration_files) >= 69
+    assert migration_files[-1].name == "068_builder_scaffold_proposals.sql"
 
     # Run check against target database if available, or confirm graceful fallback
     res = harness.run_runtime_clone_verification("postgresql://invalid-host-probing:5432/nonexistent")
     assert res["connected"] is False
     assert "rollback_verified" in res
+
+
+def test_068_builder_proposals_are_owner_scoped_and_idempotent():
+    path = MIGRATIONS_DIR / "068_builder_scaffold_proposals.sql"
+    assert path.exists()
+    content = path.read_text(encoding="utf-8")
+
+    assert "ALTER TABLE portal.builder_scaffold_proposals FORCE ROW LEVEL SECURITY" in content
+    assert "owner_user_id=nullif(current_setting('app.user_id',true),'')::uuid" in content
+    assert "UNIQUE(tenant_id,owner_user_id,client_request_id)" in content
+    assert "pg_advisory_xact_lock" in content
+    assert "old.request_hash<>h" in content
+    assert "security.builder_scaffold_read" in content
+    assert "security.builder_scaffold_discard" in content
+    assert "portal.messages" not in content
