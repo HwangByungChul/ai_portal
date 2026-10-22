@@ -3,21 +3,31 @@
 ALTER TABLE ops.call_attempts ALTER COLUMN run_id DROP NOT NULL;
 ALTER TABLE ops.call_attempts ADD COLUMN proposal_id uuid;
 
-DO $body$
-DECLARE c record;
-BEGIN
- FOR c IN SELECT conname FROM pg_constraint
-  WHERE conrelid='ops.call_attempts'::regclass AND contype='c'
-   AND pg_get_constraintdef(oid) ILIKE '%operation%'
- LOOP
-  EXECUTE format('ALTER TABLE ops.call_attempts DROP CONSTRAINT %I',c.conname);
- END LOOP;
-END;$body$;
+-- Extend the existing call taxonomy without dropping typed usage or parent-kind fences.
+ALTER TABLE ops.call_attempts DROP CONSTRAINT IF EXISTS call_attempts_operation_check;
 ALTER TABLE ops.call_attempts ADD CONSTRAINT call_attempts_operation_check
- CHECK(operation IN ('generate_general','builder_scaffold'));
+ CHECK(operation IN ('generate_general','generate_rag','embed_query','embed_document','builder_scaffold'));
+ALTER TABLE ops.call_attempts DROP CONSTRAINT call_parent_kind;
+ALTER TABLE ops.call_attempts ADD CONSTRAINT call_parent_kind CHECK(
+ (run_id IS NOT NULL AND job_id IS NULL AND index_id IS NULL AND batch_ordinal IS NULL AND proposal_id IS NULL AND
+  ((operation='generate_general' AND agent_key='general' AND step_key='generation' AND input_sources='[]'::jsonb) OR
+   (agent_key='rules_rag' AND ((operation='embed_query' AND step_key='query_embedding') OR (operation='generate_rag' AND step_key='generation'))))) OR
+ (run_id IS NULL AND job_id IS NOT NULL AND index_id IS NOT NULL AND batch_ordinal IS NOT NULL AND proposal_id IS NULL AND
+  operation='embed_document' AND agent_key='rules_rag' AND step_key='batch-'||batch_ordinal::text AND input_sources='[]'::jsonb) OR
+ (run_id IS NULL AND job_id IS NULL AND index_id IS NULL AND batch_ordinal IS NULL AND proposal_id IS NOT NULL AND
+  operation='builder_scaffold' AND agent_key='general' AND step_key='generation' AND input_sources='[]'::jsonb));
+ALTER TABLE ops.call_attempts DROP CONSTRAINT call_usage_typed;
+ALTER TABLE ops.call_attempts ADD CONSTRAINT call_usage_typed CHECK(usage_snapshot IS NULL OR
+ (jsonb_typeof(usage_snapshot)='object' AND usage_snapshot - ARRAY['input_tokens','output_tokens','total_tokens','observed_model','observed_tier','provider_request_id']::text[]='{}'::jsonb
+ AND ops.valid_token_counts(usage_snapshot - ARRAY['observed_model','observed_tier','provider_request_id']::text[])
+ AND usage_snapshot->>'observed_tier'='default'
+ AND ((operation IN ('generate_general','generate_rag','builder_scaffold') AND usage_snapshot->>'observed_model' IN ('gpt-4o-mini','gpt-4o-mini-2024-07-18')) OR
+  (operation IN ('embed_document','embed_query') AND usage_snapshot->>'observed_model'='text-embedding-3-small' AND usage_snapshot->>'output_tokens'='0'))
+ AND (usage_snapshot->'provider_request_id'='null'::jsonb OR (jsonb_typeof(usage_snapshot->'provider_request_id')='string' AND usage_snapshot->>'provider_request_id' ~ '^[!-~]{1,255}[!-~]?$'))));
 ALTER TABLE ops.call_attempts ADD CONSTRAINT call_attempts_proposal_binding
- CHECK((run_id IS NOT NULL AND proposal_id IS NULL AND operation='generate_general')
-    OR (run_id IS NULL AND proposal_id IS NOT NULL AND operation='builder_scaffold'));
+ CHECK((run_id IS NOT NULL AND proposal_id IS NULL AND operation IN ('generate_general','generate_rag','embed_query'))
+    OR (run_id IS NULL AND job_id IS NOT NULL AND proposal_id IS NULL AND operation='embed_document')
+    OR (run_id IS NULL AND job_id IS NULL AND proposal_id IS NOT NULL AND operation='builder_scaffold'));
 ALTER TABLE ops.call_attempts ADD CONSTRAINT call_attempts_proposal_fk
  FOREIGN KEY(tenant_id,proposal_id) REFERENCES portal.builder_scaffold_proposals(tenant_id,proposal_id);
 CREATE UNIQUE INDEX call_attempts_builder_scaffold_once

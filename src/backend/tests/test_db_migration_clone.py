@@ -94,7 +94,7 @@ def test_069_builder_shared_meter_has_no_second_ledger_and_preserves_068_checksu
     migration = (MIGRATIONS_DIR / "069_builder_scaffold_shared_meter.sql").read_text(encoding="utf-8")
     prior = (MIGRATIONS_DIR / "068_builder_scaffold_proposals.sql").read_bytes()
     assert hashlib.sha256(prior).hexdigest() == "d70eb773d2e252c4336dcf6d3ff3e0671ab509a774c47e32681567ac04fbda1b"
-    assert "proposal_id uuid" in migration and "run_id IS NULL AND proposal_id IS NOT NULL" in migration
+    assert "proposal_id uuid" in migration and "run_id IS NULL AND job_id IS NULL AND proposal_id IS NOT NULL" in migration
     assert "security.call_meter" not in migration  # settlement remains the existing capability
     assert "portal.messages" not in migration
     assert "GRANT EXECUTE ON FUNCTION security.builder_scaffold_dispatch" in migration

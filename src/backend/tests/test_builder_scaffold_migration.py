@@ -7,7 +7,7 @@ MIGRATIONS = Path(__file__).resolve().parent.parent / "migrations"
 def test_builder_calls_reuse_call_attempts_and_call_meter_without_conversation_rows():
     sql = (MIGRATIONS / "069_builder_scaffold_shared_meter.sql").read_text(encoding="utf-8")
     assert "ALTER TABLE ops.call_attempts ADD COLUMN proposal_id uuid" in sql
-    assert "run_id IS NULL AND proposal_id IS NOT NULL AND operation='builder_scaffold'" in sql
+    assert "run_id IS NULL AND job_id IS NULL AND proposal_id IS NOT NULL AND operation='builder_scaffold'" in sql
     assert "CREATE UNIQUE INDEX call_attempts_builder_scaffold_once" in sql
     assert "INSERT INTO ops.usage_events" in sql
     assert "security.call_release_internal" in sql
@@ -43,6 +43,22 @@ def test_owner_and_tenant_fences_and_terminal_failure_receipt_are_encoded():
     assert "proposal_payload=NULL" in sql
     assert "'usage',c.usage_snapshot-ARRAY['provider_request_id']::text[]" in sql
     assert "GRANT SELECT,INSERT,UPDATE ON portal.builder_scaffold_proposals TO ai_web" not in sql
+
+
+def test_069_preserves_existing_operation_parent_and_typed_usage_contracts():
+    sql = (MIGRATIONS / "069_builder_scaffold_shared_meter.sql").read_text(encoding="utf-8")
+    assert "operation IN ('generate_general','generate_rag','embed_query','embed_document','builder_scaffold')" in sql
+    assert "ALTER TABLE ops.call_attempts DROP CONSTRAINT call_parent_kind" in sql
+    assert "operation='generate_general' AND agent_key='general' AND step_key='generation'" in sql
+    assert "operation='generate_rag' AND step_key='generation'" in sql
+    assert "operation='embed_query' AND step_key='query_embedding'" in sql
+    assert "operation='embed_document' AND agent_key='rules_rag'" in sql
+    assert "ALTER TABLE ops.call_attempts DROP CONSTRAINT call_usage_typed" in sql
+    assert "operation IN ('generate_general','generate_rag','builder_scaffold')" in sql
+    assert "operation IN ('embed_document','embed_query')" in sql
+    assert "ops.valid_token_counts(usage_snapshot - ARRAY['observed_model','observed_tier','provider_request_id']::text[])" in sql
+    assert "usage_snapshot->>'observed_tier'='default'" in sql
+    assert "ILIKE '%operation%'" not in sql
 
 
 def test_failure_receipt_waits_for_shared_ledger_terminal_state():
