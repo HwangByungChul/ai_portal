@@ -1567,3 +1567,27 @@ local SQL029 적용 전 private backup, 기존37표 행·prior29개 checksum 보
 - **검증·증거:** 14개 테스트 스위트 총 65개 테스트 전체 GREEN 통과(3.36s). `npm run build:admin` 및 `npm run build:user` 프론트엔드 빌드 및 코드 경계 검증 통과(`boundary_verified: true`).
 - **상태:** 대외기관 실계좌/인증서 의존성 없이 로컬 환경 및 CI에서 즉시 구동 및 E2E 검증 가능한 모의 인프라와 표준 암호학적 Step-up 인증 엔진, DB 마이그레이션 무결성 검증 체계 완비.
 
+## 2026-10-22 · MCP Tool Gateway 전체 구현 GitHub 업로드
+
+**요청:** MCP Tool Gateway 개발 완료 내용을 GitHub에 업로드.
+
+**브랜치:** `codex/mcp-gateway-sdd-20261018`
+
+**커밋 대상 (150개 오브젝트, 227.96 KiB):**
+- **신규 생성 파일 (주요):**
+  - `src/backend/app/tools/connectors/` (OpenAPI / WSDL / JDBC / FinancialPacket / base)
+  - `src/backend/app/tools/transports/streamable_http.py`
+  - `src/backend/app/tools/dispatch.py`, `quorum.py`, `resilience.py`, `audit.py`, `publication_gate.py`, `simulation_sandbox.py`, `dynamic_repository.py`
+  - `src/backend/app/auth/oidc_saml_verifier.py`, `idp_verifier.py`, `subject_mapping.py`
+  - `src/backend/app/builder/scaffold_prompts.py`, `scaffold_schemas.py`, `scaffold_service.py`
+  - `src/backend/migrations/056~067_*.sql` (12개 Migration)
+  - `src/backend/scripts/verify_migration_clone_runtime.py`
+  - `src/backend/tests/` 신규 테스트 18개 파일
+  - `src/frontend/src/toolReviewLabel.ts`, `toolSimulation.ts`
+  - `docs/Obsidain/100.프로젝트계획/38·39 금융 특화 MCP Tool Gateway 구현 계획안.md`
+  - `docs/Obsidain/200.프로젝트실행/250.구현/MCP Tool Gateway 상세 구현/` 전체
+- **수정 파일:** `app/errors.py`, `app/main.py`, `app/config.py`, `app/tools/routes.py`, `pyproject.toml`, `requirements.in/lock`, 프론트엔드 주요 컴포넌트 6개 등
+- **검증·증거:** `git push origin codex/mcp-gateway-sdd-20261018` 성공 (exit code 0). 150 오브젝트, 4.38 MiB/s 속도로 전송 완료. GitHub PR 생성 URL 수신: `https://github.com/HwangByungChul/ai_portal/pull/new/codex/mcp-gateway-sdd-20261018`.
+- **미완료:** PR 리뷰 및 main 브랜치 병합은 별도 승인 절차 필요. 실계좌/운영 환경 배포는 후속.
+- **다음 작업:** Pull Request 생성 및 코드 리뷰 진행 또는 다음 기능 개발 계획 수립.
+
